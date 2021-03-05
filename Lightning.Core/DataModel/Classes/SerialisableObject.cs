@@ -4,6 +4,12 @@ using System.Text;
 
 namespace Lightning.Core
 {
+
+    /// <summary>
+    /// Lightning
+    /// 
+    /// Copyright © 2021 starfrost
+    /// </summary>
     public class SerialisableObject : Instance
     {
     }
