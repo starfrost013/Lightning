@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />
+    <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
