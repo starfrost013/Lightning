@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,3 +28,4 @@ namespace Lightning.Core.NativeInterop.Win32
         SW_RESTORE = 9 
     } // many ways of showing windows
 }
+#endif

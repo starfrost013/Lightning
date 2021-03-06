@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection; 
 using System.Text;
 
 namespace Lightning.Core
@@ -10,6 +11,8 @@ namespace Lightning.Core
     /// 2021-03-03
     /// 
     /// Provides auxillary support for the DataModel. Creates an instance of the class specified to its CreateInstance method.
+    /// 
+    /// Modified 2021-03-06 to facilitate attributing.
     /// </summary>
     public static class Instancer //SHOULD BE GENERIC TYPE PARAMETER!!!
     {
@@ -31,13 +34,57 @@ namespace Lightning.Core
             }
             else
             {
-                // may need more code here
-                object NewT = Activator.CreateInstance(Typ);
 
-                return NewT;
+                if (!CreateInstance_CheckIfClassIsInstantiable(Typ))
+                {
+                    return null;
+                }
+                else
+                {
+                    // may need more code here
+                    object NewT = Activator.CreateInstance(Typ);
+
+                    return NewT;
+                }
+
             }
 
         } // END SHOULD BE GENERIC TYPE PARAMETER
 
+        /// <summary>
+        /// pre-result class; will write result classes in Lightning.Utilities tomorrow
+        /// </summary>
+        private static bool CreateInstance_CheckIfClassIsInstantiable(Type Typ)
+        {
+            PropertyInfo[] PropInfoList = Typ.GetProperties();
+
+            object TestObject = Activator.CreateInstance(Typ);
+            // Parse the instance class to check for validity.
+            // in the future we will check for parent locking etc
+            foreach (PropertyInfo PropInfo in PropInfoList)
+            {
+                switch (PropInfo.Name)
+                {
+                    case "ClassName":
+
+                        string ClassName = (string)PropInfo.GetValue(TestObject);
+
+                        if (ClassName == "Instance") // todo: result classing
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            // parsing successful, continue...
+                            continue; 
+                        }
+                         
+                }
+            }
+
+            return true; 
+        }
     }
+
+    
 }

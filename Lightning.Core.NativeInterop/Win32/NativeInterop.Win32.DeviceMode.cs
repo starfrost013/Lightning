@@ -1,11 +1,12 @@
-﻿using System;
+﻿#if WINDOWS
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Lightning.Core.NativeInterop.Win32
 {
     /// <summary>
-    /// 2020-02-25 (Emerald v4.0.1546.0)
+    /// Lightning Native Interop (Win32)
     /// 
     /// Unmanaged DEVMODE structure for managed code
     /// 
@@ -77,3 +78,4 @@ namespace Lightning.Core.NativeInterop.Win32
         /// </summary>
     }
 }
+#ENDIF

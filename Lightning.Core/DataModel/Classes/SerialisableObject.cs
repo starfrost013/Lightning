@@ -12,6 +12,7 @@ namespace Lightning.Core
     /// </summary>
     public class SerialisableObject : Instance
     {
+        public override string ClassName => "SerialisableObject";
         public static string SchemaName { get; set; }
     }
 }

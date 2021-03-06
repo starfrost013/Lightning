@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,8 +17,15 @@ namespace Lightning.Core.NativeInterop.Win32
     /// </summary>
     public enum Win32Errors
     {
+        /// <summary>
+        /// The operation was successful.
+        /// </summary>
         Successful = 0,
-
+        
+        /// <summary>
+        /// Access denied.
+        /// </summary>
         AccessDenied = 5
     }
 }
+#endif

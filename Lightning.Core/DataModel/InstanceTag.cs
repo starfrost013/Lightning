@@ -19,6 +19,11 @@ namespace Lightning.Core
         public bool Instantiable { get; set; }
 
         /// <summary>
+        /// Is this Instance private?
+        /// </summary>
+        public bool IsPrivate { get; set; }
+
+        /// <summary>
         /// IDE-visible
         /// </summary>
         public bool ShownInIDE { get; set; }
