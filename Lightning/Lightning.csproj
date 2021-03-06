@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="" />
-  </Target>
-
 </Project>
