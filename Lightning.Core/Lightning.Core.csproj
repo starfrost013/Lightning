@@ -12,10 +12,16 @@
 
   <ItemGroup>
     <None Remove="Resources\BuildDate.txt" />
+    <None Remove="Resources\BuildInformation.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\BuildDate.txt" />
+    <Resource Include="Resources\BuildInformation.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
