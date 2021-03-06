@@ -13,6 +13,6 @@ namespace Lightning.Core
     /// </summary>
     public class XMLSchemaInfo : Instance
     {
-        public override string ClassName { get => "XMLSchemaInfo" };
+        public override string ClassName { get => "XMLSchemaInfo"; }
     }
 }
