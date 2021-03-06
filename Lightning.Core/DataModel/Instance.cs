@@ -37,7 +37,7 @@ namespace Lightning.Core
 
         public Instance()
         {
-            Name = "Object";
+            Name = "Instance";
         }
 
         public void OnSpawn()
