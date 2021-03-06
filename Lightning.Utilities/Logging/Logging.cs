@@ -32,6 +32,7 @@ namespace Lightning.Utilities
             }
         }
 
+        public static void LogError(Error Err) => Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", "Error Logging Component", Err.Severity);
         private static void LogText(string Text, string Component = null, MessageSeverity Severity = MessageSeverity.Message)
         {
 

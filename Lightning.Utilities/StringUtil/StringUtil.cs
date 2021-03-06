@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities.StringUtil
+namespace Lightning.Utilities
 {
-    class StringUtil
+    public class StringUtil
     {
     }
 }
