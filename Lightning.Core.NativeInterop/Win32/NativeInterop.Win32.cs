@@ -15,7 +15,7 @@ using System.Text;
 /// </summary>
 namespace Lightning.Core.NativeInterop.Win32
 {
-    public static class Win32NativeMethods
+    public static class NativeMethodsWin32
     {
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool AllocConsole(); // allocconsole probably works better

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace Lightning.Core
 {
     /// <summary>
     /// Global error manager
@@ -69,25 +69,30 @@ namespace Lightning.Utilities
             {
                 if (Component != null)
                 {
-                    Logging.Log($"");
+                    Logging.LogError(Err);
                 }
                 else
                 {
-
+                    Logging.LogError(Err, Component);
                 }
 
                 switch (Err.Severity)
                 {
                     case MessageSeverity.Message:
-
+                        MessageBox.Show($"{Err.Description}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     case MessageSeverity.Warning:
+                        MessageBox.Show($"Warning ({Err.Id}; {Err.Name}): {Err.Description}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     case MessageSeverity.Error:
+                        MessageBox.Show($"Error ({Err.Id}; {Err.Name}): {Err.Description}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     case MessageSeverity.FatalError:
 
                         // Temporary - we don't have a clean shutdown method yet
+                        MessageBox.Show($"Guru Meditation {Err.Id}\n\n{Err.Name}: {Err.Description}\n\nLightning must exit. Sorry!\nYou may wish to file a bug report with the game's developers.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Error);
+                        // Temporary Code (yeah this is dumb)
+                        Environment.Exit(0xDEAD * (int)Err.Id);
 
                         return;
 

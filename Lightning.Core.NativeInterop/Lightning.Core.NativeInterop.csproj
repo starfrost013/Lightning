@@ -12,7 +12,6 @@
     <Folder Include="Linux\" />
     <Folder Include="Properties\" />
     <Folder Include="OSX\" />
-    <Folder Include="Win32\Win32.MessageBox\" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace Lightning.Core
 {
     public static class Logging
     {
@@ -32,7 +32,19 @@ namespace Lightning.Utilities
             }
         }
 
-        public static void LogError(Error Err) => Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", "Error Logging Component", Err.Severity);
+        public static void LogError(Error Err, string Component = null)
+        {
+            if (Component == null)
+            {
+                Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", "Error Logging Component", Err.Severity);
+            }
+            else
+            {
+                Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", "Error Logging Component", Err.Severity);
+            }
+            
+        }
+        
         private static void LogText(string Text, string Component = null, MessageSeverity Severity = MessageSeverity.Message)
         {
 
