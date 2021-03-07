@@ -78,4 +78,4 @@ namespace Lightning.Core.NativeInterop.Win32
         /// </summary>
     }
 }
-#ENDIF
+#endif
