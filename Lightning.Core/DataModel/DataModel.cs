@@ -33,9 +33,19 @@ namespace Lightning.Core
                 // Do some kinda weird kludge to get the generic type we want
                 Type WantedType = Type.GetType(ClassName);
 
-                object IX = Instancer.CreateInstance(WantedType);
+                InstantiationResult IX = Instancer.CreateInstance(WantedType);
 
-                return IX; //TEMP
+                // Throw an error if not successful 
+                // todo: add more functionality to the error system
+                if (IX.Successful)
+                {
+                    return IX; //TEMP
+                }
+                else
+                {
+                    return null; //TODO: throw error 
+                }
+                
             }
             catch (Exception) //TODO: HANDLE VARIOUS TYPES OF EXCEPTION
             {

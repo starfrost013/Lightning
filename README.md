@@ -1,5 +1,6 @@
 # Lightning Game Engine
-## Code of Conduct (March 6, 2021)
+
+## Code of Conduct (version 1.1) (March 7, 2021)
 
 Welcome to the Lightning game engine main tree. We are going to have to ask you abide by a few rules if you wish to contribute code.
 
@@ -9,4 +10,22 @@ Welcome to the Lightning game engine main tree. We are going to have to ask you 
 
 * All code you check into the main branch must compile. Do a private build to check that it compiles before committing it into the main tree!
 
-* Please submit design changes!
+* Please document all of the changes you make thoroughly.
+
+* Code reviews are a requirement for non-senior developers! Contact me or a senior developer for a code review.
+
+## Style Guide
+* Please add a class name for all Instance objects created.
+
+* UpperCase is recommended.
+
+* Please use the XML Serialiser for any and all code that deals with XML.
+
+* .NET Core 3.1 and .NET 5.0 are the only required 
+
+### Version History
+**V1.1 (March 7, 2021)**:
+* Added a style guide for committing code to the main branch.
+
+**V1.0 (March 6, 2021)**
+* Added 

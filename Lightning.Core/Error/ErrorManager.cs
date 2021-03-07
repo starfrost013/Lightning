@@ -17,15 +17,6 @@ namespace Lightning.Core
         }
 
         private static bool DoesErrorExist(Error Err) => Errors.Contains(Err);
-        private static bool DoesErrorExist(string ErrName)
-        {
-            foreach (Error Err in Errors)
-            {
-                if (Err.Name == ErrName) return true;
-            }
-
-            return false;
-        }
 
         /// <summary>
         /// temp: pre-result class
@@ -34,29 +25,77 @@ namespace Lightning.Core
         /// </summary>
         /// <param name="ErrName"></param>
         /// <returns></returns>
-        private static Error GetError(string ErrName)
+        private static GetErrorResult GetError(string ErrName)
         {
+            GetErrorResult ErrResult = new GetErrorResult();
+
             foreach (Error Err in Errors)
             {
-                if (Err.Name == ErrName) return Err;
+                if (Err.Name == ErrName)
+                {
+                    // by default a bool is false
+                    ErrResult.Successful = true;
+                    ErrResult.Error = Err;
+                    return ErrResult;
+                }
+
             }
 
-            return null;
+            return ErrResult;
         }
 
-
-        private static bool DoesErrorExist(int Id)
+        /// <summary>
+        /// Get an error with the name ErrorName.
+        /// </summary>
+        /// <param name="ErrName"></param>
+        /// <returns></returns>
+        private static GetErrorResult GetError(int ErrorId)
         {
+            GetErrorResult ErrResult = new GetErrorResult();
+
             foreach (Error Err in Errors)
             {
-                if (Err.Id == Id) return true;
+                if (Err.Id == ErrorId)
+                {
+                    ErrResult.Successful = true;
+                    ErrResult.Error = Err;
+                    return ErrResult;
+                }
             }
 
-            return false;
+            return ErrResult; 
         }
-
 
         public static void ThrowError(string Component, Error Err) => HandleError(Component, Err);
+
+        public static void ThrowError(string Component, string ErrorName)
+        {
+            GetErrorResult ErrToThrow = GetError(ErrorName);
+
+            if (ErrToThrow.Successful)
+            {
+                ThrowError(Component, ErrToThrow.Error);     
+            }
+            else
+            {
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEADBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
+            }
+        }
+
+        public static void ThrowError(string Component, int ErrorId)
+        {
+            GetErrorResult ErrToThrow = GetError(ErrorId);
+
+            if (ErrToThrow.Successful)
+            {
+                ThrowError(Component, ErrToThrow.Error);
+            }
+            else
+            {
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xD3ADBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error ID {ErrorId}" });
+            }
+
+        }
 
         private static void HandleError(string Component, Error Err)
         {

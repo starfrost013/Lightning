@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.9.21066</AssemblyVersion>
-    <FileVersion>1.0.9.21066</FileVersion>
+    <AssemblyVersion>1.0.10.21066</AssemblyVersion>
+    <FileVersion>1.0.10.21066</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,11 +25,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Serialisation\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core.NativeInterop\Lightning.Core.NativeInterop.csproj" />
+    <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
