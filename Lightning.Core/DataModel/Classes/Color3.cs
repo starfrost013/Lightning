@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Lightning.Core
 {
-    public class Color3 : Instance
+    public class Color3 : SerialisableObject
     {
+        public override string ClassName => "Color3"; 
         public byte R { get; set; }
         public byte G { get; set; }
         public byte B { get; set; }
@@ -45,6 +46,11 @@ namespace Lightning.Core
 
                 
             }
+        }
+
+        public static Color3 FromHex(string Colour)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,5 +12,8 @@ namespace Lightning.Core
         public override string ClassName => "XMLSchema";
         public XmlSchema _schema { get; set; }
         public string SchemaName { get; set; }
+        public string Path { get; set; }
+        public Type ClassToSerialise { get; set; }
+        public bool SerialiseAllInheritedClasses { get; set; }
     }
 }

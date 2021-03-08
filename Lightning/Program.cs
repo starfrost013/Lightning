@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Core;
+using System;
 
 /// <summary>
 /// Lightning SDK Platform
@@ -16,7 +17,13 @@ namespace Lightning
         static void Main(string[] args)
         {
             Console.WriteLine("Lightning");
-            Console.WriteLine("© 2021 starfrost. All rights reserved. Version 0.0.0");
+
+            // TEMP CODE
+            Lightning.Core.Version.LoadVersion();
+
+            string LVersionString = Lightning.Core.Version.GetVersionString();
+
+            Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
         }
     }
 }
