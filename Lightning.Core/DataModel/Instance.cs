@@ -42,10 +42,14 @@ namespace Lightning.Core
 
         public void OnSpawn()
         {
-
+            throw new NotImplementedException();
         }
 
-        public
+        public void GetMethods()
+        {
+            // implement: 2021-03-09
+            throw new NotImplementedException();
+        }
 
     }
 }
