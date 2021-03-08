@@ -3,11 +3,11 @@
 /// <summary>
 /// Lightning SDK Platform
 /// 
-/// © 2021 Connor Hyde
+/// © 2021 starfrost
 /// 
-/// Beginning of development    March 2, 2021
+/// CONFIDENTIAL.
 /// 
-/// ($15 minimum wage edition)
+/// This source code is not open-source software and should be treated as such!
 /// </summary>
 namespace Lightning
 {

@@ -11,7 +11,7 @@ namespace Lightning.Core
         public static int DATAMODEL_VERSION_MINOR = 1;
         public static int DATAMODEL_VERSION_REVISION = 0;
 
-        public List<Instance> Level { get; set; }
+        public List<Instance> State { get; set; }
 
         public DataModel()
         {
