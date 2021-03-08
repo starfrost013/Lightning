@@ -17,7 +17,7 @@ namespace Lightning.Core
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
             Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String}");
-            Level = new List<Instance>();
+            State = new List<Instance>();
         }
 
         /// <summary>
