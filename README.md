@@ -21,7 +21,11 @@ Welcome to the Lightning game engine main tree. We are going to have to ask you 
 
 * Please use the XML Serialiser for any and all code that deals with XML.
 
-* .NET Core 3.1 and .NET 5.0 are the only required 
+* .NET Core 3.1 and .NET 5.0 are the only required frameworks/ 
+
+* ALL platform specific code MUST be wrapped in platform specific IFDEFS!
+
+* All additions to the main engine feature set must concur with the DataModel model.
 
 ### Version History
 **V1.1 (March 7, 2021)**:

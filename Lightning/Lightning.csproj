@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.14.21066</AssemblyVersion>
-    <FileVersion>1.0.114.21066</FileVersion>
+    <AssemblyVersion>1.0.31.21068</AssemblyVersion>
+    <FileVersion>1.0.23.21068</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,6 +15,10 @@
     <ProjectReference Include="..\Lightning.Core.NativeInterop\Lightning.Core.NativeInterop.csproj" />
     <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />
     <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

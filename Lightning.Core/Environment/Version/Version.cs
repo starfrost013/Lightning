@@ -35,11 +35,11 @@ namespace Lightning.Core
 
             FileVersionInfo FVI = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 
-            string ProductVersion = FVI.ProductVersion;
+            string ProductVersion = FVI.FileVersion;
 
-            string[] Version = ProductVersion.Split(',');
+            string[] Version = ProductVersion.Split('.');
 
-            if (Version.Length != 3)
+            if (Version.Length != 4)
             {
                 // TODO - THROW ERROR - WHEN ERRORS.XML EXISTS
 
@@ -62,36 +62,20 @@ namespace Lightning.Core
                 }
             }
 
-            string BuildDatePath = "Lightning.Core.BuildDate.txt";
-            string OwnerPath = "Lightning.Core.BuildInformation.txt";
+            string BuildDatePath = Properties.Resources.BuildDate;
+            string OwnerPath = Properties.Resources.BuildInformation;
 
-            using (StreamReader SR = new StreamReader(CurAssembly.GetManifestResourceStream(BuildDatePath)))
-            {
-                if (SR.BaseStream.Position - SR.BaseStream.Length < 1)
-                {
-                    // TODO - ERRORS.XML - THROW ERROR
-                    return;
-                }
 
-                BuildDatePath = SR.ReadLine();
-            }
+            BuildDate = DateTime.Parse(BuildDatePath);
+            Owner = OwnerPath;
 
-            using (StreamReader SR = new StreamReader(CurAssembly.GetManifestResourceStream(OwnerPath)))
-            {
-                if (SR.BaseStream.Position - SR.BaseStream.Length < 1)
-                {
-                    // TODO - ERRORS.XML - THROW ERROR
-                    return;
-                }
-
-                Owner = SR.ReadLine();
-            }
+            return; 
 
         }
 
         public static string GetVersionString()
         {
-            if (Branch == null
+            if (BuildDate == null
                 || Owner == null
                 )
             {
