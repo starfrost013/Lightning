@@ -9,6 +9,12 @@ namespace Lightning.Core
     /// 
     /// Non-instantiable
     /// 
+    /// XMLSchemaInfo
+    /// 
+    /// Holds information about an XML schema.
+    /// 
+    /// 2021-03-06: Created.
+    /// 2021-03-09: Added properties.
     /// 
     /// </summary>
     public class XMLSchemaInfo : Instance

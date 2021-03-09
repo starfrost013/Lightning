@@ -5,18 +5,26 @@ using System.Text;
 
 namespace Lightning.Core
 {
+    /// <summary>
+    /// Lightning
+    /// 
+    /// DataModel
+    /// 
+    /// Provides a unified object system for Lightning.
+    /// All objects inherit from the Instance class, which this class manages. 
+    /// </summary>
     public class DataModel
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
         public static int DATAMODEL_VERSION_MINOR = 1;
-        public static int DATAMODEL_VERSION_REVISION = 0;
+        public static int DATAMODEL_VERSION_REVISION = 2;
 
         public List<Instance> State { get; set; }
 
         public DataModel()
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
-            Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String}");
+            Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
             State = new List<Instance>();
         }
 
@@ -51,6 +59,11 @@ namespace Lightning.Core
             {
                 return null; // TEMP
             }
+        }
+
+        public InstanceInfo GetInstanceInfo(string ClassName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

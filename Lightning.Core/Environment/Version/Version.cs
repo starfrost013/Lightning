@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities; 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -16,9 +17,24 @@ namespace Lightning.Core
     /// </summary>
     public static class Version
     {
+        /// <summary>
+        /// The branh of this build.
+        /// </summary>
         public static string Branch { get; set; }
+
+        /// <summary>
+        /// The account and machine name of the individual who built the current Lightning build.
+        /// </summary>
         public static string Owner { get; set; }
+
+        /// <summary>
+        /// The build date of this build.
+        /// </summary>
         public static DateTime BuildDate { get; set; }
+
+        /// <summary>
+        /// The Git commit hash of this build.
+        /// </summary>
         public static string GCHash { get; set; }
         public static int Major { get; set; }
         public static int Minor { get; set; }
@@ -65,10 +81,12 @@ namespace Lightning.Core
             string BuildDatePath = Properties.Resources.BuildDate;
             string OwnerPath = Properties.Resources.BuildInformation;
 
+            BuildDatePath = BuildDatePath.RemoveDaysOfWeek();
 
             BuildDate = DateTime.Parse(BuildDatePath);
             Owner = OwnerPath;
 
+            
             return; 
 
         }

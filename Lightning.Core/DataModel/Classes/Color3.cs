@@ -12,6 +12,12 @@ namespace Lightning.Core
         public byte B { get; set; }
 
         // result class?
+
+        /// <summary>
+        /// Convert a relative colour string to a Color3 value.
+        /// </summary>
+        /// <param name="Colour"></param>
+        /// <returns></returns>
         public static Color3 FromRelative(string Colour)
         {
             string[] Spx = Colour.Split(',');
@@ -50,7 +56,46 @@ namespace Lightning.Core
 
         public static Color3 FromHex(string Colour)
         {
-            throw new NotImplementedException();
+            if (Colour.Contains("#"))
+            {
+                Colour = Colour.Replace("#", "");
+            }
+
+            if (Colour.Length != 6)
+            {
+                // THROW ERROR IF FAIL
+                return null;
+                // THROW ERROR IF FAIL - ERRORS.XML
+            }
+            else
+            {
+                string R = Colour.Substring(0, 2);
+                string G = Colour.Substring(2, 2);
+                string B = Colour.Substring(4, 2);
+
+                try
+                {
+                    byte FR = byte.Parse(R, System.Globalization.NumberStyles.HexNumber);
+                    byte FG = byte.Parse(G, System.Globalization.NumberStyles.HexNumber);
+                    byte FB = byte.Parse(B, System.Globalization.NumberStyles.HexNumber);
+
+                    Color3 C3 = new Color3();
+
+                    C3.R = FR;
+                    C3.G = FG;
+                    C3.B = FB;
+
+                    return C3; 
+                }
+                catch (FormatException)
+                {
+                    // TEMP - ERRORS.XML
+                    return null;
+                }
+
+            }
+
+
         }
     }
 }

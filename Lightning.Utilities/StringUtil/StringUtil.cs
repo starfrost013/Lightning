@@ -410,5 +410,36 @@ namespace Lightning.Utilities
 
         }
 
+        /// <summary>
+        /// Removes the day of a week from a datetime represented as a string.
+        /// 
+        /// This is required for appveyor builds.
+        /// </summary>
+        /// <param name="DateTime"></param>
+        /// <returns></returns>
+        public static string RemoveDaysOfWeek(this string DateTime)
+        {
+            string Monday = "Mon";
+            string Tuesday = "Tue";
+            string Wednesday = "Wed";
+            string Thursday = "Thu";
+            string Friday = "Fri";
+            string Saturday = "Sat";
+            string Sunday = "Sun";
+
+            // If the string contains any of the strings we want to remove,
+            // remove them. Use the case insensitive method for this
+            if (DateTime.ContainsCaseInsensitive(Monday)) DateTime = DateTime.Replace(Monday, "");
+            if (DateTime.ContainsCaseInsensitive(Tuesday)) DateTime = DateTime.Replace(Tuesday, "");
+            if (DateTime.ContainsCaseInsensitive(Wednesday)) DateTime = DateTime.Replace(Wednesday, "");
+            if (DateTime.ContainsCaseInsensitive(Thursday)) DateTime = DateTime.Replace(Thursday, "");
+            if (DateTime.ContainsCaseInsensitive(Friday)) DateTime = DateTime.Replace(Friday, "");
+            if (DateTime.ContainsCaseInsensitive(Saturday)) DateTime = DateTime.Replace(Saturday, "");
+            if (DateTime.ContainsCaseInsensitive(Sunday)) DateTime = DateTime.Replace(Sunday, "");
+
+            return DateTime;
+
+             
+        }
     }
 }

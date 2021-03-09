@@ -9,7 +9,7 @@ namespace Lightning.Core
     /// 
     /// Instance Tagging Services
     /// 
-    /// 
+    /// Holds attributes that are instance-wide.
     /// </summary>
     public class InstanceTag
     {
@@ -20,6 +20,8 @@ namespace Lightning.Core
 
         /// <summary>
         /// Is this Instance private?
+        /// 
+        /// If so, it cannot be called in scripts.
         /// </summary>
         public bool IsPrivate { get; set; }
 
@@ -27,5 +29,7 @@ namespace Lightning.Core
         /// IDE-visible
         /// </summary>
         public bool ShownInIDE { get; set; }
+
+        public bool Serialisable { get; set; }
     }
 }
