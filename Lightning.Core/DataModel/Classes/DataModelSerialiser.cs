@@ -19,7 +19,7 @@ namespace Lightning.Core
         /// <returns></returns>
         public DataModel Serialise_DataModel(LightningXMLSchema Schema, string Path)
         {
-            string XScPath = Schema.Path;
+            string ScPath = Schema.Path;
 
             throw new NotImplementedException(); 
 
