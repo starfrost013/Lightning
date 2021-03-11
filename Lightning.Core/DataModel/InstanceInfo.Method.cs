@@ -4,9 +4,17 @@ using System.Text;
 
 namespace Lightning.Core
 {
-    public class InstanceInfoMethod
+    /// <summary>
+    /// Determines a method
+    /// </summary>
+    public class InstanceInfoMethod : Instance
     {
-        public string Name { get; set; }
+        public override string ClassName => "InstanceInfoMethod";
+        public override InstanceTags Attributes => InstanceTags.Instantiable;
+        public string MethodName { get; set; }
+        public InstanceInfoProperty Property { get; set; }
         public List<InstanceInfoMethodParameter> Parameters { get; set; }
+
+        public static InstanceInfoMethod FromMethodInfo { get; set; }
     }
 }

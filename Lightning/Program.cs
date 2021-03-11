@@ -12,16 +12,16 @@ using System;
 /// </summary>
 namespace Lightning
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Lightning");
 
             // TEMP CODE
-            Lightning.Core.Version.LoadVersion();
+            LVersion.LoadVersion();
 
-            string LVersionString = Lightning.Core.Version.GetVersionString();
+            string LVersionString = LVersion.GetVersionString();
 
             Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
         }

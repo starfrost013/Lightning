@@ -14,7 +14,7 @@ namespace Lightning.Core
     /// A service is an instance that is running at all times and can be called on
     /// by any component of the DataModel current state at any time.
     /// 
-    /// It can also be called froms cripts using ESX2 GetService() method.
+    /// It can also be called from scripts using ESX2 GetService() method.
     /// </summary>
     public abstract class Service : Instance
     {
@@ -23,6 +23,9 @@ namespace Lightning.Core
         /// </summary>
         public abstract string SName { get; set; }
         public bool RunningNow { get; set; }
+
+        public abstract ServiceStartResult OnStart();
+
         
     }
 }

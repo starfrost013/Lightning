@@ -13,8 +13,9 @@ namespace Lightning.Core
     /// 
     /// Translated to and from .NET System.Reflection types as required for the IDE and the datamodel serialiser. 
     /// </summary>
-    public class InstanceInfo
+    public class InstanceInfo : Instance
     {
+        public override InstanceTags Attributes => InstanceTags.Instantiable;
         public List<InstanceInfoMethod> Methods { get; set; }
         public List<InstanceInfoProperty> Properties { get; set; }
 

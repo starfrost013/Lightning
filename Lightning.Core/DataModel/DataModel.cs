@@ -33,7 +33,7 @@ namespace Lightning.Core
         /// </summary>
         /// <param name="ClassName"></param>
         /// <returns></returns>
-        public object CreateInstance(string ClassName)
+        public static object CreateInstance(string ClassName)
         {
             try
             {

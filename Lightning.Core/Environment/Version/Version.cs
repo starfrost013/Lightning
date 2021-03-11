@@ -15,7 +15,7 @@ namespace Lightning.Core
     /// 
     /// Version Information
     /// </summary>
-    public static class Version
+    public static class LVersion
     {
         /// <summary>
         /// The branh of this build.
@@ -40,6 +40,8 @@ namespace Lightning.Core
         public static int Minor { get; set; }
         public static int Build { get; set; }
         public static int Revision { get; set; }
+
+        public static bool IsLoaded { get; set; }
 
         /// <summary>
         /// 2020-03-08
@@ -95,6 +97,7 @@ namespace Lightning.Core
         {
             if (BuildDate == null
                 || Owner == null
+                || IsLoaded == false // todo: throw error on isloaded=false 
                 )
             {
                 return null; // TEMP: ERRORS.XML!!!

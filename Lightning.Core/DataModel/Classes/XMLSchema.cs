@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Lightning.Core
 {
-    public class XMLSchema : Instance
+    public class LightningXMLSchema : Instance
     {
         public override string ClassName => "XMLSchema";
         public XmlSchema _schema { get; set; }

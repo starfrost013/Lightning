@@ -14,17 +14,18 @@ namespace Lightning.Core
     /// 2020-03-04  Created
     /// 2020-03-06  Refactored: renamed InstanceTag to attributes, made ClassName virtual and read-only.
     /// 2020-03-09  Added InstanceInfo. Possibly merge InstanceTag and InstanceInfo?
+    /// 2020-03-11  Made InstanceTag an enum - InstanceTags
     /// </summary>
     public abstract class Instance
     {
         public static int INSTANCEAPI_VERSION_MAJOR = 0;
         public static int INSTANCEAPI_VERSION_MINOR = 1;
-        public static int INSTANCEAPI_VERSION_REVISION = 2;
+        public static int INSTANCEAPI_VERSION_REVISION = 3;
 
         /// <summary>
-        /// Attributes of this object.
+        /// Attributes of this object. OVERRIDE OPTIONAL!
         /// </summary>
-        public static InstanceTag Attributes { get; set; }
+        public virtual InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE); }
 
         /// <summary>
         /// The properties and methods of this object.
