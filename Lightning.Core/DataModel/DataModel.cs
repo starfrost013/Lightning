@@ -8,7 +8,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel
+    /// DataModel v0.1.4
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,15 +17,20 @@ namespace Lightning.Core
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
         public static int DATAMODEL_VERSION_MINOR = 1;
-        public static int DATAMODEL_VERSION_REVISION = 3;
+        public static int DATAMODEL_VERSION_REVISION = 4;
 
-        public List<Instance> State { get; set; }
+        // shouldn't be static? idk
+        private static List<Instance> State { get; set; }
 
         public DataModel()
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
             Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
             State = new List<Instance>();
+
+#if DEBUG
+            ATest();
+#endif
         }
 
         /// <summary>
@@ -47,6 +52,7 @@ namespace Lightning.Core
                 // todo: add more functionality to the error system
                 if (IX.Successful)
                 {
+                    State.Add((Instance)IX.Instance);
                     return IX; //TEMP
                 }
                 else
@@ -61,6 +67,18 @@ namespace Lightning.Core
             }
         }
 
+#if DEBUG
+        private void ATest()
+        {
+            Console.WriteLine("V0.1.27 2021-03-13 Testing DataModel...");
+
+            CreateInstance("Color3");
+            CreateInstance("Color4");
+            CreateInstance("Vector2");
+            InstanceDump();
+        }
+#endif
+
         /// <summary>
         /// Dump the current DataModel instance to console.
         /// </summary>
@@ -68,7 +86,7 @@ namespace Lightning.Core
         {
             // implement: 2021-03-09
 
-            Console.WriteLine("DataModel");
+            Console.WriteLine("DataModel dump...");
 
             foreach (Instance II in State)
             {
@@ -82,7 +100,31 @@ namespace Lightning.Core
 
                 foreach (InstanceInfoMethod IIM in IIF.Methods)
                 {
+                    Console.WriteLine("Method:");
+                    Console.WriteLine(IIM.MethodName);
 
+                    if (IIM.Parameters.Count == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        foreach (InstanceInfoMethodParameter IIMP in IIM.Parameters)
+                        {
+                            Console.Write("Parameter: ");
+                            Console.Write($"Name: {IIMP.ParamName} ");
+                            Console.Write($"Type: {IIMP.ParamType.Name}\n");
+                        }
+                    }
+
+                }
+
+                // don't bother going any further than one level deep
+                foreach (InstanceInfoProperty IIP in IIF.Properties)
+                {
+                    Console.WriteLine("Property:");
+                    Console.WriteLine($"Name: {IIP.Name}");
+                    Console.WriteLine($"Type: {IIP.Type}");
                 }
             }
 

@@ -100,7 +100,7 @@ namespace Lightning.Core
                     {
                         InstanceInfoMethodParameter IIMP = (InstanceInfoMethodParameter)DataModel.CreateInstance(typeof(InstanceInfoMethodParameter).Name);
                         IIMP.ParamName = PI.Name;
-                        IIMP.Type = PI.ParameterType;
+                        IIMP.ParamType = PI.ParameterType;
 
                         IIM.Parameters.Add(IIMP);
                     }

@@ -11,7 +11,7 @@ namespace Lightning.Core
     /// <summary>
     /// A Win32 messagebox API. Uses P/Invoke.
     /// 
-    /// 
+    /// Compatible with WPF API.
     /// </summary>
     public static class MessageBox
     {
@@ -68,11 +68,11 @@ namespace Lightning.Core
         /// Private: performs the action of showing the message box.
         /// </summary>
         /// <param name="Text">The text to be displayed in the message box.</param>
-        /// <param name="Caption"></param>
-        /// <param name="ButtonSet"></param>
-        /// <param name="Image"></param>
+        /// <param name="Caption">The caption to be displayed within the message box.</param>
+        /// <param name="ButtonSet">The buttons to use in the message box.</param>
+        /// <param name="Image">The icon to sue for the messagebox.</param>
         /// <param name="Options"></param>
-        /// <param name="HWND"></param>
+        /// <param name="HWND">The Win32 window HWND to display on top of. OPTIONAL.</param>
         /// <returns></returns>
         private static MessageBoxResult DoShow(string Text, string Caption, MessageBoxButton ButtonSet, MessageBoxImage Image, MessageBoxOptions Options, IntPtr? HWND = null)
         {
