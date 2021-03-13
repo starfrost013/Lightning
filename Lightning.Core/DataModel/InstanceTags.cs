@@ -31,7 +31,12 @@ namespace Lightning.Core
         /// <summary>
         /// This instance is saveable.
         /// </summary>
-        Archivable = 8
+        Archivable = 8,
+
+        /// <summary>
+        /// This instance is destroyable.
+        /// </summary>
+        Destroyable = 16,
 
     }
 }

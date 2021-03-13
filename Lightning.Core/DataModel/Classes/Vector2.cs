@@ -11,6 +11,7 @@ namespace Lightning.Core
     /// </summary>
     public class Vector2 : SerialisableObject
     {
+        public override string ClassName => "Vector2";
         public double X { get; set; }
         public double Y { get; set; }
 

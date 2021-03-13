@@ -30,7 +30,7 @@ namespace Lightning.Core
         /// <summary>
         /// The build date of this build.
         /// </summary>
-        public static DateTime BuildDate { get; set; }
+        public static string BuildDate { get; set; }
 
         /// <summary>
         /// The Git commit hash of this build.
@@ -88,7 +88,7 @@ namespace Lightning.Core
             BuildDatePath = BuildDatePath.RemoveDaysOfWeek();
             BuildDatePath = BuildDatePath.Trim();
 
-            BuildDate = DateTime.Parse(BuildDatePath);
+            BuildDate = BuildDatePath;
             Owner = OwnerPath;
 
             

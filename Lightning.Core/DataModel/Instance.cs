@@ -26,7 +26,7 @@ namespace Lightning.Core
         /// <summary>
         /// Attributes of this object. OVERRIDE OPTIONAL!
         /// </summary>
-        public virtual InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE); }
+        public virtual InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable); }
 
         /// <summary>
         /// The properties and methods of this object.
@@ -48,6 +48,7 @@ namespace Lightning.Core
             Name = "Instance";
             
             InstanceInfoResult IIR = InstanceInfo.FromType(typeof(Instance));
+
 
             if (IIR.Successful)
             {

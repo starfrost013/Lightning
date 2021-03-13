@@ -11,6 +11,7 @@ namespace Lightning.Core
     /// </summary>
     public class Color4 : SerialisableObject
     {
+        public override string ClassName => "Color4";
         public byte A { get; set; }
         public byte R { get; set; }
         public byte G { get; set; }

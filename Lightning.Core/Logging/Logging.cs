@@ -52,8 +52,9 @@ namespace Lightning.Core
 
             string DateString = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             // ISO date format
-            LogTextSB.Append(DateString);
-
+            // also a space
+            LogTextSB.Append($"{DateString} ");
+            
             if (Component == null)
             {
                 LogTextSB.Append($" [Lightning Game Engine: {Severity}");

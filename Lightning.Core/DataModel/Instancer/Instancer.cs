@@ -29,22 +29,29 @@ namespace Lightning.Core
             InstantiationResult IR = new InstantiationResult(); 
             Type InstanceType = typeof(Instance);
 
+
             if (!Typ.IsSubclassOf(InstanceType))
             {
                 //todo: throw errpr
-                
-                return null; 
+
+                IR.Error = "DataModel: Error instancing object: Class is not in the DataModel!";
+                return IR;
+ 
             }
             else
             {
 
                 if (!CreateInstance_CheckIfClassIsInstantiable(Typ))
                 {
-                    
-                    return null;
+
+                    IR.Error = "DataModel: Class is not instantiable!";
+                    return IR; 
                 }
                 else
                 {
+
+                    Logging.Log($"Instantiating Instance with type: {Typ}", "Instancer");
+
                     // may need more code here
                     object NewT = Activator.CreateInstance(Typ);
                     

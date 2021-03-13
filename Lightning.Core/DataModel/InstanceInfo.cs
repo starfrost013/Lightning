@@ -13,10 +13,11 @@ namespace Lightning.Core
     /// Converted from System.Reflection types at boot.
     /// 
     /// Translated to and from .NET System.Reflection types as required for the IDE and the datamodel serialiser. 
+    /// 
+    /// INTERNAL ONLY - USE ONLY FOR POPULATING IDE. NOT FOR SCRIPTS.
     /// </summary>
-    public class InstanceInfo : Instance
+    public class InstanceInfo
     {
-        public override InstanceTags Attributes => InstanceTags.Instantiable;
         public List<InstanceInfoMethod> Methods { get; set; }
         public List<InstanceInfoProperty> Properties { get; set; }
 
@@ -90,7 +91,7 @@ namespace Lightning.Core
                 // Process each method and add its parameters
                 foreach (MethodInfo CurMethod in MIList)
                 {
-                    InstanceInfoMethod IIM = (InstanceInfoMethod)DataModel.CreateInstance(typeof(InstanceInfoMethod).Name);
+                    InstanceInfoMethod IIM = new InstanceInfoMethod();
 
                     IIM.MethodName = CurMethod.Name;
 
@@ -98,7 +99,7 @@ namespace Lightning.Core
 
                     foreach (ParameterInfo PI in PIPList)
                     {
-                        InstanceInfoMethodParameter IIMP = (InstanceInfoMethodParameter)DataModel.CreateInstance(typeof(InstanceInfoMethodParameter).Name);
+                        InstanceInfoMethodParameter IIMP = new InstanceInfoMethodParameter(); 
                         IIMP.ParamName = PI.Name;
                         IIMP.ParamType = PI.ParameterType;
 
@@ -114,9 +115,11 @@ namespace Lightning.Core
 
                     IIP.Name = CurProperty.Name;
                     IIP.Type = CurProperty.PropertyType;
-                    //todo: set property type
+                    //todo: set property security
 
                     //IIP.Security = CurProperty.
+
+                    IIR.InstanceInformation.Properties.Add(IIP);
                 }
 
                 IIR.Successful = true;

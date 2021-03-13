@@ -44,7 +44,7 @@ namespace Lightning.Core
             {
 
                 // Do some kinda weird kludge to get the generic type we want
-                Type WantedType = Type.GetType(ClassName);
+                Type WantedType = Type.GetType($"Lightning.Core.{ClassName}");
 
                 InstantiationResult IX = Instancer.CreateInstance(WantedType);
 
@@ -57,7 +57,8 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    return null; //TODO: throw error 
+                    
+                    return IX; //TODO: throw error 
                 }
                 
             }
@@ -82,26 +83,36 @@ namespace Lightning.Core
         /// <summary>
         /// Dump the current DataModel instance to console.
         /// </summary>
-        public void InstanceDump()
+        public void InstanceDump(bool FilterAccessors = true)
         {
             // implement: 2021-03-09
 
-            Console.WriteLine("DataModel dump...");
+            Console.WriteLine("DataModel dump:\n");
 
             foreach (Instance II in State)
             {
                 Console.WriteLine($"Instance: {II.ClassName}:");
 
-                if (II.Name != null) Console.WriteLine($"Instance: {II.Name}");
+                if (II.Name != null) Console.WriteLine($"Instance: {II.ClassName} ({II.Name})");
 
-                Console.WriteLine($"Tags: {II.Attributes}");
+                Console.WriteLine($"Tags: {II.Attributes.ToString()}");
 
                 InstanceInfo IIF = II.Info;
 
                 foreach (InstanceInfoMethod IIM in IIF.Methods)
                 {
-                    Console.WriteLine("Method:");
-                    Console.WriteLine(IIM.MethodName);
+
+                    if (FilterAccessors)
+                    {
+                        if (IIM.MethodName.Contains("get_")
+                            || IIM.MethodName.Contains("set_"))
+                        {
+                            continue;
+                        }
+                    }
+
+                    Console.Write("Method: ");
+                    Console.Write($"{IIM.MethodName}\n");
 
                     if (IIM.Parameters.Count == 0)
                     {
@@ -111,6 +122,7 @@ namespace Lightning.Core
                     {
                         foreach (InstanceInfoMethodParameter IIMP in IIM.Parameters)
                         {
+
                             Console.Write("Parameter: ");
                             Console.Write($"Name: {IIMP.ParamName} ");
                             Console.Write($"Type: {IIMP.ParamType.Name}\n");
@@ -122,13 +134,13 @@ namespace Lightning.Core
                 // don't bother going any further than one level deep
                 foreach (InstanceInfoProperty IIP in IIF.Properties)
                 {
-                    Console.WriteLine("Property:");
-                    Console.WriteLine($"Name: {IIP.Name}");
-                    Console.WriteLine($"Type: {IIP.Type}");
+                    Console.Write("Property:");
+                    Console.Write($"Name: {IIP.Name} ");
+                    Console.Write($"Type: {IIP.Type}\n");
                 }
             }
 
-            throw new NotImplementedException();
+            return; 
         }
     }
 }
