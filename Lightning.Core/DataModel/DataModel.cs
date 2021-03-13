@@ -17,7 +17,7 @@ namespace Lightning.Core
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
         public static int DATAMODEL_VERSION_MINOR = 1;
-        public static int DATAMODEL_VERSION_REVISION = 2;
+        public static int DATAMODEL_VERSION_REVISION = 3;
 
         public List<Instance> State { get; set; }
 
@@ -61,8 +61,31 @@ namespace Lightning.Core
             }
         }
 
-        public InstanceInfo GetInstanceInfo(string ClassName)
+        /// <summary>
+        /// Dump the current DataModel instance to console.
+        /// </summary>
+        public void InstanceDump()
         {
+            // implement: 2021-03-09
+
+            Console.WriteLine("DataModel");
+
+            foreach (Instance II in State)
+            {
+                Console.WriteLine($"Instance: {II.ClassName}:");
+
+                if (II.Name != null) Console.WriteLine($"Instance: {II.Name}");
+
+                Console.WriteLine($"Tags: {II.Attributes}");
+
+                InstanceInfo IIF = II.Info;
+
+                foreach (InstanceInfoMethod IIM in IIF.Methods)
+                {
+
+                }
+            }
+
             throw new NotImplementedException();
         }
     }

@@ -79,7 +79,7 @@ namespace Lightning.Core
                     byte FG = byte.Parse(G, System.Globalization.NumberStyles.HexNumber);
                     byte FB = byte.Parse(B, System.Globalization.NumberStyles.HexNumber);
 
-                    Color3 C3 = new Color3();
+                    Color3 C3 = (Color3)DataModel.CreateInstance(typeof(Color3).Name);
 
                     C3.R = FR;
                     C3.G = FG;

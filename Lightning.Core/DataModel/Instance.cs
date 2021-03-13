@@ -15,12 +15,13 @@ namespace Lightning.Core
     /// 2020-03-06  Refactored: renamed InstanceTag to attributes, made ClassName virtual and read-only.
     /// 2020-03-09  Added InstanceInfo. Possibly merge InstanceTag and InstanceInfo?
     /// 2020-03-11  Made InstanceTag an enum - InstanceTags
+    /// 2020-03-12  Made InstanceInfo 
     /// </summary>
     public abstract class Instance
     {
         public static int INSTANCEAPI_VERSION_MAJOR = 0;
         public static int INSTANCEAPI_VERSION_MINOR = 1;
-        public static int INSTANCEAPI_VERSION_REVISION = 3;
+        public static int INSTANCEAPI_VERSION_REVISION = 4;
 
         /// <summary>
         /// Attributes of this object. OVERRIDE OPTIONAL!
@@ -30,7 +31,7 @@ namespace Lightning.Core
         /// <summary>
         /// The properties and methods of this object.
         /// </summary>
-        public static InstanceInfo Info { get; set; }
+        public InstanceInfo Info { get; set; }
 
         /// <summary>
         /// The class name of this object. MUST OVERRIDE!
@@ -45,6 +46,20 @@ namespace Lightning.Core
         public Instance()
         {
             Name = "Instance";
+            
+            InstanceInfoResult IIR = InstanceInfo.FromType(typeof(Instance));
+
+            if (IIR.Successful)
+            {
+                Info = IIR.InstanceInformation;
+            }
+            else
+            {
+                // TODO - SERIALISATION - THROW ERROR
+                return; 
+                // TODO - SERIALISATION - THROW ERROR
+            }
+
         }
 
         public void OnSpawn()
@@ -52,11 +67,6 @@ namespace Lightning.Core
             throw new NotImplementedException();
         }
 
-        public void GetMethods()
-        {
-            // implement: 2021-03-09
-            throw new NotImplementedException();
-        }
 
     }
 }

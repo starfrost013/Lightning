@@ -12,8 +12,14 @@ using System;
 /// </summary>
 namespace Lightning
 {
+    
     public class Program
     {
+        /// <summary>
+        /// TEMP
+        /// </summary>
+        public static DataModel DataModelX { get; set; }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Lightning");
@@ -22,6 +28,8 @@ namespace Lightning
             LVersion.LoadVersion();
 
             string LVersionString = LVersion.GetVersionString();
+
+            DataModelX = new DataModel();
 
             Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
         }
