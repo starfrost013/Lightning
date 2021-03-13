@@ -86,6 +86,7 @@ namespace Lightning.Core
             string OwnerPath = Properties.Resources.BuildInformation;
 
             BuildDatePath = BuildDatePath.RemoveDaysOfWeek();
+            BuildDatePath = BuildDatePath.Trim();
 
             BuildDate = DateTime.Parse(BuildDatePath);
             Owner = OwnerPath;
