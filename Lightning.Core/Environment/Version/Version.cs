@@ -55,6 +55,8 @@ namespace Lightning.Core
 
             string ProductVersion = FVI.FileVersion;
 
+            ProductVersion = ProductVersion.Trim(); 
+
             string[] Version = ProductVersion.Split('.');
 
             if (Version.Length != 4)
@@ -97,7 +99,7 @@ namespace Lightning.Core
         {
             if (BuildDate == null
                 || Owner == null
-                || IsLoaded == false // todo: throw error on isloaded=false 
+                || !IsLoaded // todo: throw error on isloaded=false 
                 )
             {
                 return null; // TEMP: ERRORS.XML!!!
