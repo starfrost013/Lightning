@@ -1,0 +1,45 @@
+<Lightning>
+	<Metadata>
+		<!-- The first Lightning XML file -->
+		<DMSchemaVersion>0.2.0.0001</DMSchemaVersion>
+		<Created>2021-03-14 22:10:09</Created>
+		<LastModified>2021-03-14 22:10:09</Created>
+		<RevisionID>0</RevisionID>
+		
+		<Settings>
+			<!-- nothing here yet -->
+		</Settings>
+		
+		<InstanceTree>
+			<Color3>
+				<Name>c03_01</Name>
+				<R>100</R>
+				<G>100</G>
+				<B>100</B>
+			</Color3>
+			
+			<Color3>
+				<Name>c03_02</Name>
+				<R>150</R>
+				<G>100</G>
+				<B>100</B>
+			</Color3>
+			
+			<Color3>
+				<Name>c03_03</Name>
+				<R>49</R>
+				<G>212</G>
+				<B>67</B>
+			</Color3>
+			
+			<Vector2>
+				<Name>c03_01</Name>
+				<X>50</X>
+				<Y>40</Y>
+			</Vector2>
+			
+			<!-- RenderService -->
+			
+		</InstanceTree>
+	</Metadata>
+</Lightning>

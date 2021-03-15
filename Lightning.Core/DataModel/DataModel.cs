@@ -28,6 +28,7 @@ namespace Lightning.Core
             Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
             State = new List<Instance>();
 
+            CreateInstance("ServiceControlManager");
 #if DEBUG
             ATest();
 #endif

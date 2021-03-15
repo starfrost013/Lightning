@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Lightning"
+    targetNamespace="http://tempuri.org/Lightning.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/Lightning.xsd"
+    xmlns:mstns="http://tempuri.org/Lightning.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <!-- 
+  Lightning
+  
+  2021-03-14
+  
+  XML Schema
+  
+  The XML schema for all Lightning files. 
+  
+  Serialised using a custom serialiser. InstanceTree is fully serialised using the DDMS to a DataModel object.s
+  
+  Mandatory File Component: Metadata [V0.2.0] -->
+  <xs:complexType name="Lightning" id="LightningRoot">
+    <xs:sequence>
+      <xs:element name="Metadata">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DMSchemaVersion" type="xs:string"></xs:element>
+            <xs:element name="Created" type="xs:dateTime"></xs:element>
+            <xs:element name="LastModified" type="xs:dateTime"></xs:element>
+            <xs:element name="RevisionID" type="xs:dateTime"></xs:element>
+            
+            <!-- Optional File Component: Settings -->
+            <xs:element name="Settings" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <!-- Game settings will go here -->
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+
+      </xs:element>
+
+      <!-- Mandatory File Component: InstanceTree -->
+      <xs:element name="InstanceTree">
+        <xs:complexType>
+          <xs:sequence>
+            <!-- This area will be handled by the DDMS (Dynamic DataModel Serialiser)-->
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      
+    </xs:sequence>
+
+   
+  </xs:complexType>
+</xs:schema>

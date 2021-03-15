@@ -21,7 +21,7 @@ namespace Lightning.Core
         /// <summary>
         /// The name of this service.
         /// </summary>
-        public abstract string SName { get; set; }
+        public abstract string SName { get; }
         public bool RunningNow { get; set; }
 
         public abstract ServiceStartResult OnStart();

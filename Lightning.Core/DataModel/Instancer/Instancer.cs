@@ -92,6 +92,18 @@ namespace Lightning.Core
                             // parsing successful, continue...
                             continue; 
                         }
+                    case "Attributes":
+
+                        InstanceTags IT = (InstanceTags)PropInfo.GetValue(TestObject);
+
+                        if (!IT.HasFlag(InstanceTags.Instantiable))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                          
                 }
             }
