@@ -11,6 +11,9 @@ namespace Lightning.Utilities
     /// </summary>
     public interface IResult
     {
+        /// <summary>
+        /// A boolean that indicates if the operation was successful.
+        /// </summary>
         bool Successful { get; set; }
     }
 }

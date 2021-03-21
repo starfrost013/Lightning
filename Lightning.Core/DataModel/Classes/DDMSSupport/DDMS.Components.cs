@@ -16,12 +16,22 @@ namespace Lightning.Core
         /// <summary>
         /// Component 0 - Metadata
         /// 
-        /// Holds 
+        /// Holds metadata about the DDMS file.
         /// </summary>
         Metadata = 0,
 
+        /// <summary>
+        /// Component 1 - Game Settings
+        /// 
+        /// Holds information about the game settings.
+        /// </summary>
         Settings = 1,
-
+        
+        /// <summary>
+        /// Component 2 - Instance Tree
+        /// 
+        /// Holds the instance tree of the game. 
+        /// </summary>
         InstanceTree = 2,
     }
 }

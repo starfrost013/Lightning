@@ -6,12 +6,15 @@ using System.Text;
 namespace Lightning.Core
 {
     /// <summary>
-    /// Result class for DataModel instantiation.
+    /// The result for getting an instance.
     /// </summary>
-    public class InstantiationResult : IResult
+    public class GetInstanceResult : IResult 
     {
-        public string FailureReason { get; set; }
+        /// <summary>
+        /// The instance; polymorphically will be the type we want
+        /// </summary>
         public object Instance { get; set; }
+        public string FailureReason { get; set; }
         public bool Successful { get; set; }
     }
 }

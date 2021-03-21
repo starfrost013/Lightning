@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lightning.Core
 {
-    public class EnumInstance : Instance
+    public class EnumInstance : SerialisableObject
     {
         public override InstanceTags Attributes => InstanceTags.Instantiable;
         public override string ClassName => "EnumInstance";
@@ -29,6 +29,7 @@ namespace Lightning.Core
             {
                 EnumValue EV = (EnumValue)DataModel.CreateInstance(typeof(EnumValue).Name);
 
+                EV.Name = Res;
                 Values.Add(EV);
             }
 
@@ -47,7 +48,9 @@ namespace Lightning.Core
             {
                 EnumValue EV = (EnumValue)DataModel.CreateInstance(typeof(EnumValue).Name);
 
-                EV.Id == Id;
+                EV.Id = Id;
+                EV.Name = Res;
+
 
                 Values.Add(EV);
             }

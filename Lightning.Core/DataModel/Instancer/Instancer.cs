@@ -30,11 +30,11 @@ namespace Lightning.Core
             Type InstanceType = typeof(Instance);
 
 
-            if (!Typ.IsSubclassOf(InstanceType))
+            if (!CreateInstance_CheckIfInstanceTypeIsInDataModel(Typ))
             {
                 //todo: throw errpr
 
-                IR.Error = "DataModel: Error instancing object: Class is not in the DataModel!";
+                IR.FailureReason = "DataModel: Error instancing Instance: Class is not in the DataModel!";
                 return IR;
  
             }
@@ -44,7 +44,7 @@ namespace Lightning.Core
                 if (!CreateInstance_CheckIfClassIsInstantiable(Typ))
                 {
 
-                    IR.Error = "DataModel: Class is not instantiable!";
+                    IR.FailureReason = "DataModel: Class is not instantiable!";
                     return IR; 
                 }
                 else
@@ -73,7 +73,7 @@ namespace Lightning.Core
             PropertyInfo[] PropInfoList = Typ.GetProperties();
 
             object TestObject = Activator.CreateInstance(Typ);
-            // Parse the instance class to check for validity.
+            // Parse the instance's class information to check for validity.
             // in the future we will check for parent locking etc
             foreach (PropertyInfo PropInfo in PropInfoList)
             {
@@ -110,6 +110,21 @@ namespace Lightning.Core
 
             return true; 
         }
+
+
+        /// <summary>
+        /// Check if a class is in the DataModel. 
+        /// </summary>
+        /// <param name="InstanceType"></param>
+        /// <returns></returns>
+        private static bool CreateInstance_CheckIfInstanceTypeIsInDataModel(Type InstanceType)
+        {
+            Type Root = typeof(Instance);
+
+            return InstanceType.IsSubclassOf(Root);
+
+        }
+
     }
 
     

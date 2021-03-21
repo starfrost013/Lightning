@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Lightning.Core
@@ -12,11 +13,38 @@ namespace Lightning.Core
         public string MethodName { get; set; }
         public InstanceInfoProperty Property { get; set; }
         public List<InstanceInfoMethodParameter> Parameters { get; set; }
-        public static InstanceInfoMethod FromMethodInfo { get; set; }
 
+        /// <summary>
+        /// Convert .NET MethodInfo to Lightning instance information for methods.
+        /// </summary>
+        /// <param name="CurMethod"></param>
+        /// <returns></returns>
+        public static InstanceInfoMethod FromMethodInfo(MethodInfo CurMethod)
+        {
+            InstanceInfoMethod IIMX = new InstanceInfoMethod();
+
+            IIMX.MethodName = CurMethod.Name;
+
+            ParameterInfo[] PIPList = CurMethod.GetParameters();
+
+            foreach (ParameterInfo PI in PIPList)
+            {
+                InstanceInfoMethodParameter IIMP = new InstanceInfoMethodParameter();
+                IIMP.ParamName = PI.Name;
+                IIMP.ParamType = PI.ParameterType;
+
+                IIMX.Parameters.Add(IIMP);
+            }
+
+            return IIMX; 
+
+        }
+
+       
         public InstanceInfoMethod()
         {
             Parameters = new List<InstanceInfoMethodParameter>();
         }
+        
     }
 }

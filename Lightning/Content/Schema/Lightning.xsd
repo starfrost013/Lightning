@@ -18,16 +18,22 @@
   
   Serialised using a custom serialiser. InstanceTree is fully serialised using the DDMS to a DataModel object.s
   
-  Mandatory File Component: Metadata [V0.2.0] -->
+  Mandatory File Component: Metadata [V0.2.0] 
+  
+  v0.2.0.0001: Initial version                                                      2021-03-14
+  v0.2.1.0002: Added Metadata.Author                                                2021-03-17
+  v0.2.1.0003: Renamed Created to CreationDate and LastModified to LastModifiedDate 2021-03-21
+  -->
   <xs:complexType name="Lightning" id="LightningRoot">
     <xs:sequence>
       <xs:element name="Metadata">
         <xs:complexType>
           <xs:sequence>
             <xs:element name="DMSchemaVersion" type="xs:string"></xs:element>
-            <xs:element name="Created" type="xs:dateTime"></xs:element>
-            <xs:element name="LastModified" type="xs:dateTime"></xs:element>
-            <xs:element name="RevisionID" type="xs:dateTime"></xs:element>
+            <xs:element name="Author" type="xs:string"></xs:element>
+            <xs:element name="CreationDate" type="xs:dateTime"></xs:element>
+            <xs:element name="LastModifiedDate" type="xs:dateTime"></xs:element>
+            <xs:element name="RevisionID" type="xs:int"></xs:element>
             
             <!-- Optional File Component: Settings -->
             <xs:element name="Settings" minOccurs="0">

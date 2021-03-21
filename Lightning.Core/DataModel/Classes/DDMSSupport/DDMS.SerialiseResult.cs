@@ -5,13 +5,10 @@ using System.Text;
 
 namespace Lightning.Core
 {
-    /// <summary>
-    /// Result class for DataModel instantiation.
-    /// </summary>
-    public class InstantiationResult : IResult
+    public class DDMSSerialisationResult : IResult
     {
+        public DataModel DataModel { get; set; }
         public string FailureReason { get; set; }
-        public object Instance { get; set; }
         public bool Successful { get; set; }
     }
 }

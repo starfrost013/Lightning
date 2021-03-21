@@ -38,5 +38,12 @@ namespace Lightning.Core
         /// </summary>
         Destroyable = 16,
 
+        /// <summary>
+        /// Not sure if we should use this?
+        /// 
+        /// Is shown in object properties
+        /// </summary>
+        ShownInProperties = 32
+
     }
 }

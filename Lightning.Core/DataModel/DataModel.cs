@@ -8,7 +8,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel v0.1.4
+    /// DataModel v0.2.0
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -16,10 +16,14 @@ namespace Lightning.Core
     public class DataModel
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
-        public static int DATAMODEL_VERSION_MINOR = 1;
-        public static int DATAMODEL_VERSION_REVISION = 4;
+        public static int DATAMODEL_VERSION_MINOR = 2;
+        public static int DATAMODEL_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
+
+        /// <summary>
+        /// Contains a list of the first-level instances
+        /// </summary>
         private static List<Instance> State { get; set; }
 
         public DataModel()
@@ -69,6 +73,12 @@ namespace Lightning.Core
             }
         }
 
+        public static void Clear()
+        {
+            // we will need to do a lot more than this
+            State.Clear();
+        }
+
 #if DEBUG
         private void ATest()
         {
@@ -80,6 +90,7 @@ namespace Lightning.Core
             InstanceDump();
         }
 #endif
+
 
         /// <summary>
         /// Dump the current DataModel instance to console.

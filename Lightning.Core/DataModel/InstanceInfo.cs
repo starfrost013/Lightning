@@ -91,24 +91,12 @@ namespace Lightning.Core
                 // Process each method and add its parameters
                 foreach (MethodInfo CurMethod in MIList)
                 {
-                    InstanceInfoMethod IIM = new InstanceInfoMethod();
-
-                    IIM.MethodName = CurMethod.Name;
-
-                    ParameterInfo[] PIPList = CurMethod.GetParameters();
-
-                    foreach (ParameterInfo PI in PIPList)
-                    {
-                        InstanceInfoMethodParameter IIMP = new InstanceInfoMethodParameter(); 
-                        IIMP.ParamName = PI.Name;
-                        IIMP.ParamType = PI.ParameterType;
-
-                        IIM.Parameters.Add(IIMP);
-                    }
+                    InstanceInfoMethod IIM = InstanceInfoMethod.FromMethodInfo(CurMethod);
 
                     IIR.InstanceInformation.Methods.Add(IIM);
                 }
 
+                //todo: instanceinfoproperty.frompropertyinfo
                 foreach (PropertyInfo CurProperty in PIList)
                 {
                     InstanceInfoProperty IIP = new InstanceInfoProperty();
