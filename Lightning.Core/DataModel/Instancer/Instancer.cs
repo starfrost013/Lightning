@@ -27,7 +27,6 @@ namespace Lightning.Core
         public static InstantiationResult CreateInstance(Type Typ) 
         {
             InstantiationResult IR = new InstantiationResult(); 
-            Type InstanceType = typeof(Instance);
 
 
             if (!CreateInstance_CheckIfInstanceTypeIsInDataModel(Typ))
@@ -73,8 +72,10 @@ namespace Lightning.Core
             PropertyInfo[] PropInfoList = Typ.GetProperties();
 
             object TestObject = Activator.CreateInstance(Typ);
+
             // Parse the instance's class information to check for validity.
             // in the future we will check for parent locking etc
+            // we don't use instanceinfo because it hasn't been initialised yet to prevent a stack overflow in old builds (2021-03-21)
             foreach (PropertyInfo PropInfo in PropInfoList)
             {
                 switch (PropInfo.Name)
@@ -108,6 +109,7 @@ namespace Lightning.Core
                 }
             }
 
+            
             return true; 
         }
 

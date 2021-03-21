@@ -9,6 +9,7 @@ namespace Lightning.Core
     /// </summary>
     public class ServiceControlManager : Instance
     {
+        public override string ClassName => "ServiceControlManager";
         public List<Service> Services { get; set; }
 
         public ServiceControlManager()

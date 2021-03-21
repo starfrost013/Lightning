@@ -57,7 +57,13 @@ namespace Lightning.Core
                 // todo: add more functionality to the error system
                 if (IX.Successful)
                 {
-                    State.Add((Instance)IX.Instance);
+                    //runtime type only
+                    Instance NewInstance = (Instance)IX.Instance;
+
+                    NewInstance.GenerateInstanceInfo();
+
+                    State.Add(NewInstance);
+
                     return IX; //TEMP
                 }
                 else
@@ -113,7 +119,6 @@ namespace Lightning.Core
 
                 foreach (InstanceInfoMethod IIM in IIF.Methods)
                 {
-
                     if (FilterAccessors)
                     {
                         if (IIM.MethodName.Contains("get_")

@@ -94,10 +94,14 @@ namespace Lightning.Core
         public Instance()
         {
             Name = "Instance";
-            
+            Children = new InstanceCollection();
+        }
+
+        public void GenerateInstanceInfo()
+        {
             InstanceInfoResult IIR = InstanceInfo.FromType(typeof(Instance));
 
-            Children = new InstanceCollection();
+
 
             if (IIR.Successful)
             {
@@ -106,10 +110,9 @@ namespace Lightning.Core
             else
             {
                 // TODO - SERIALISATION - THROW ERROR
-                return; 
+                return;
                 // TODO - SERIALISATION - THROW ERROR
             }
-
         }
 
         /// <summary>

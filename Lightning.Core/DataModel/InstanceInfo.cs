@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Reflection; 
 using System.Text;
@@ -66,7 +67,7 @@ namespace Lightning.Core
                                 //todo: cache type ifnormation
                                 if (PropertyType.IsAssignableFrom(typeof(Instance)))
                                 {
-                                    FromType(PropertyType);
+                                    if (!InstanceInfo_CheckIfFiltered(MemberInformation.Name)) FromType(PropertyType);
                                 }
                                 else 
                                 {
@@ -103,6 +104,7 @@ namespace Lightning.Core
 
                     IIP.Name = CurProperty.Name;
                     IIP.Type = CurProperty.PropertyType;
+                    
                     //todo: set property security
 
                     //IIP.Security = CurProperty.
@@ -115,6 +117,13 @@ namespace Lightning.Core
             }
             
         } 
+
+        private static bool InstanceInfo_CheckIfFiltered(string PropertyName)
+        {
+            return (PropertyName.ContainsCaseInsensitive("Parent")
+                || PropertyName.ContainsCaseInsensitive("Child")
+                );
+        }
 
         public InstanceInfo()
         {
