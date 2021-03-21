@@ -29,9 +29,8 @@ namespace Lightning.Core
 
             foreach (ParameterInfo PI in PIPList)
             {
-                InstanceInfoMethodParameter IIMP = new InstanceInfoMethodParameter();
-                IIMP.ParamName = PI.Name;
-                IIMP.ParamType = PI.ParameterType;
+                InstanceInfoMethodParameter IIMP = InstanceInfoMethodParameter.FromParameterInfo();
+
 
                 IIMX.Parameters.Add(IIMP);
             }

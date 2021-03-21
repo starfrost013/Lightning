@@ -118,6 +118,11 @@ namespace Lightning.Core
             
         } 
 
+        /// <summary>
+        /// Prevents a stack overflow by preventing recursive instances
+        /// </summary>
+        /// <param name="PropertyName">The property name to check</param>
+        /// <returns></returns>
         private static bool InstanceInfo_CheckIfFiltered(string PropertyName)
         {
             return (PropertyName.ContainsCaseInsensitive("Parent")

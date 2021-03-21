@@ -28,10 +28,11 @@ namespace Lightning
             LVersion.LoadVersion();
 
             string LVersionString = LVersion.GetVersionString();
+            Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
             DataModelX = new DataModel();
 
-            Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
+
         }
     }
 }

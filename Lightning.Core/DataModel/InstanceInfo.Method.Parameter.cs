@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Lightning.Core
@@ -9,9 +10,19 @@ namespace Lightning.Core
         public Type ParamType { get; set; }
         public string ParamName { get; set; }
 
-        public void FromMethodInfo()
+        /// <summary>
+        /// Convert .NET parameter information to lightning instanceinfomethodparameter
+        /// </summary>
+        /// <param name="PI"></param>
+        /// <returns></returns>
+        public static InstanceInfoMethodParameter FromParameterInfo(ParameterInfo PI)
         {
+            InstanceInfoMethodParameter IIMP = new InstanceInfoMethodParameter();
 
+            IIMP.ParamName = PI.Name;
+            IIMP.ParamType = PI.ParameterType;
+
+            return IIMP; 
         }
     }
 }
