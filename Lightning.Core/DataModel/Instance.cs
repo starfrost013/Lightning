@@ -136,6 +136,7 @@ namespace Lightning.Core
             }
 
             GIR.FailureReason = "Cannot find instance";
+
             return GIR;
             //todo throw error
         }

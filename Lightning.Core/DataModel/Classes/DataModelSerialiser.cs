@@ -322,7 +322,25 @@ namespace Lightning.Core
                                         // WIZARD TIME
                                         // Convert from string to arbitrary type! :D 
 
-                                        IIP.Value = Convert.ChangeType(XM.Value, IIP.Type); 
+                                        //set the value
+
+
+
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+                                        object? CConvertedObject = Convert.ChangeType(XM.Value, IIP.Type);
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+
+                                        if (CConvertedObject != null)
+                                        {
+                                            PropertyInfo PI = XDR.GetProperty(XM.Name);
+
+
+                                            PI.SetValue(XDRInstance, CConvertedObject);
+                                        }
+                                        else
+                                        {
+                                            DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
+                                        }
                                     }
                                 } 
                             }
