@@ -67,6 +67,7 @@ namespace Lightning.Core
                                 //todo: cache type ifnormation
                                 if (PropertyType.IsAssignableFrom(typeof(Instance)))
                                 {
+                                    // Prevents a stack overflow by preventing recursive instanceinfo parsing
                                     if (!InstanceInfo_CheckIfFiltered(MemberInformation.Name)) FromType(PropertyType);
                                 }
                                 else 

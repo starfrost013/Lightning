@@ -8,7 +8,9 @@ using System;
 /// 
 /// CONFIDENTIAL.
 /// 
-/// This source code is not open-source software and should be treated as such!
+/// This source code and software is not open-source software and should not be treated as such!
+/// 
+/// Beginning of development        March 2, 2021
 /// </summary>
 namespace Lightning
 {
@@ -20,7 +22,7 @@ namespace Lightning
         /// </summary>
         public static DataModel DataModelX { get; set; }
 
-        static void Main(string[] args)
+        static void Main(string[] Args)
         {
             Console.WriteLine("Lightning");
 
@@ -31,7 +33,7 @@ namespace Lightning
             Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
             DataModelX = new DataModel();
-
+            
 
         }
     }

@@ -144,6 +144,10 @@ namespace Lightning.Core
             //todo throw error
         }
 
+        public GetInstanceResult GetFirstChild(string Name)
+        {
+
+        }
         public void OnSpawn()
         {
             throw new NotImplementedException();

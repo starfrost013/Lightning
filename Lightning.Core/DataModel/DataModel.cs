@@ -93,6 +93,13 @@ namespace Lightning.Core
             CreateInstance("Color3");
             CreateInstance("Color4");
             CreateInstance("Vector2");
+
+            // need to fix this weird api 
+            LightningXMLSchema LXMLS = (LightningXMLSchema)CreateInstance("LightningXMLSchema");
+            LXMLS.Path = "Lightning.xsd";
+
+            DataModelSerialiser DDX = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
+            DDX.DDMS_Serialise
             InstanceDump();
         }
 #endif

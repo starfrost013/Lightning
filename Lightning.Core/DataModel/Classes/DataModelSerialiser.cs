@@ -22,7 +22,7 @@ namespace Lightning.Core
         /// 
         /// The XML schema version. 
         /// </summary>
-        public static string XMLSCHEMA_VERSION = "0.2.1.0003";
+        public static string XMLSCHEMA_VERSION = "0.2.2.0004";
 
         /// <summary>
         /// DDMS (Dynamic DataModel Serialiser)
@@ -231,6 +231,12 @@ namespace Lightning.Core
                                 case "CreationDate":
                                     GM.CreationDate = DateTime.Parse(XM.Value);
                                     continue;
+                                case "DMSchemaVersion":
+                                    if (XM.Value != XMLSCHEMA_VERSION)
+                                    {
+                                        DDSR.FailureReason = $"Invalid version! Using version {XM.Value}, expected {XMLSCHEMA_VERSION}!";
+                                    }
+                                    continue;
                                 case "LastModifiedDate":
                                     GM.LastModifiedDate = DateTime.Parse(XM.Value);
                                     continue;
@@ -322,10 +328,6 @@ namespace Lightning.Core
                                         // WIZARD TIME
                                         // Convert from string to arbitrary type! :D 
 
-                                        //set the value
-
-
-
 #pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
                                         object? CConvertedObject = Convert.ChangeType(XM.Value, IIP.Type);
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
@@ -335,6 +337,7 @@ namespace Lightning.Core
                                             PropertyInfo PI = XDR.GetProperty(XM.Name);
 
 
+                                            //todo: handle lists...they will have subnodes
                                             PI.SetValue(XDRInstance, CConvertedObject);
                                         }
                                         else

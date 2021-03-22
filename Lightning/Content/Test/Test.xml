@@ -1,43 +1,26 @@
 <Lightning>
 	<Metadata>
 		<!-- The first Lightning XML file -->
-		<DMSchemaVersion>0.2.0.0001</DMSchemaVersion>
-		<Created>2021-03-14 22:10:09</Created>
-		<LastModified>2021-03-14 22:10:09</Created>
-		<RevisionID>0</RevisionID>
+		<DMSchemaVersion>0.2.2.0004</DMSchemaVersion>
+		<Author>starfrost</Author>
+		<Description>A test file</Description>
+		<Created>2021-03-22 19:32:04</Created>
+		<LastModified>2021-03-22 19:32:04</Created>
+		<RevisionID>1</RevisionID>
 		
 		<Settings>
 			<!-- nothing here yet -->
 		</Settings>
 		
 		<InstanceTree>
-			<Color3>
-				<Name>c03_01</Name>
-				<R>100</R>
-				<G>100</G>
-				<B>100</B>
-			</Color3>
-			
-			<Color3>
-				<Name>c03_02</Name>
-				<R>150</R>
-				<G>100</G>
-				<B>100</B>
-			</Color3>
-			
-			<Color3>
-				<Name>c03_03</Name>
-				<R>49</R>
-				<G>212</G>
-				<B>67</B>
-			</Color3>
-			
-			<Vector2>
-				<Name>c03_01</Name>
-				<X>50</X>
-				<Y>40</Y>
-			</Vector2>
-			
+			<ServiceControlManager>
+				<RenderService/>
+			</ServiceControlManager>
+			<Color3 Name="c03_01" R="100" G="100" B="100"/>
+			<Color3 Name="c03_02" R="150" G="100" B="100"/>
+			<Color3 Name="c03_03" R="150" G="100" B="100"/>
+			<Vector2 Name="v1" X="50" Y="40"/>
+
 			<!-- RenderService -->
 			
 		</InstanceTree>
