@@ -33,7 +33,8 @@ namespace Lightning
             Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
             DataModelX = new DataModel();
-            
+            DataModelX.ATest_Serialise();
+
 
         }
     }

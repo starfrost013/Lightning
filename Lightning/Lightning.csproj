@@ -3,13 +3,27 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.67.21081</AssemblyVersion>
-    <FileVersion>1.0.59.21081</FileVersion>
+    <AssemblyVersion>1.0.75.21081</AssemblyVersion>
+    <FileVersion>1.0.67.21081</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Content\Schema\Lightning.xsd" />
+    <None Remove="Content\Test\Test.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\Schema\Lightning.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Test\Test.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core.NativeInterop\Lightning.Core.NativeInterop.csproj" />

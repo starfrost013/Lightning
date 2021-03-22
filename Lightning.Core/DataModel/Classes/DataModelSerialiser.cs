@@ -221,6 +221,8 @@ namespace Lightning.Core
                     // 2021-03-20
                     case XmlNodeType.Element:
 
+                        Logging.Log($"Parsing element: { XM.Name}");
+
                         try
                         {
                             switch (XM.Name)
@@ -332,17 +334,37 @@ namespace Lightning.Core
                                         object? CConvertedObject = Convert.ChangeType(XM.Value, IIP.Type);
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
+                                        / TODO::NESTING
                                         if (CConvertedObject != null)
                                         {
                                             PropertyInfo PI = XDR.GetProperty(XM.Name);
 
+                                            if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
+                                            {
+                                                Instance CInstanceObject = (Instance)CConvertedObject;
 
-                                            //todo: handle lists...they will have subnodes
-                                            PI.SetValue(XDRInstance, CConvertedObject);
+                                                if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
+                                                {
+                                                    //todo: handle lists...they will have subnodes
+                                                    PI.SetValue(XDRInstance, CConvertedObject);
+                                                }
+                                                else
+                                                {
+                                                    DDSR.FailureReason = "DDMS: Conversion error: Attempted to serialise non-serialisable object!";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // may need to serialsie non-datamodel objects
+                                                PI.SetValue(XDRInstance, CConvertedObject);
+ 
+                                            }
+
                                         }
                                         else
                                         {
                                             DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
+                                            return DDSR; 
                                         }
                                     }
                                 } 

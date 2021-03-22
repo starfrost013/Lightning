@@ -105,10 +105,10 @@ namespace Lightning.Core
 
                     IIP.Name = CurProperty.Name;
                     IIP.Type = CurProperty.PropertyType;
-                    
+
                     //todo: set property security
 
-                    //IIP.Security = CurProperty.
+                    //IIP.Security = CurProperty.bINDIN
 
                     IIR.InstanceInformation.Properties.Add(IIP);
                 }

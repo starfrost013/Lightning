@@ -122,7 +122,7 @@ namespace Lightning.Core
         /// 
         /// Gets a child of this Instance.
         /// </summary>
-        /// <param name="Name"></param>
+        /// <param name="Name">The name of this instance to acquire.</param>
         /// <returns></returns>
         public GetInstanceResult GetChild(string Name)
         {
@@ -142,6 +142,30 @@ namespace Lightning.Core
 
             return GIR;
             //todo throw error
+        }
+
+        /// <summary>
+        /// Get a the child ID of this Instance.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public GetInstanceResult GetChildAt(int Id)
+        {
+            GetInstanceResult GIR = new GetInstanceResult();
+
+            if (Id < 0 || Id > Children.Instances.Count)
+            {
+                // Successful is false by default
+                GIR.FailureReason = "Cannot find instance";
+                return GIR; 
+
+            }
+            else
+            {
+                GIR.Instance = Children.Instances[Id];
+                GIR.Successful = true;
+                return GIR;
+            }
         }
 
         public GetInstanceResult GetFirstChild(string Name)
