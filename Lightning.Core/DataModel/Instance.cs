@@ -146,8 +146,10 @@ namespace Lightning.Core
 
         public GetInstanceResult GetFirstChild(string Name)
         {
-
+            throw new NotImplementedException();
         }
+
+
         public void OnSpawn()
         {
             throw new NotImplementedException();
