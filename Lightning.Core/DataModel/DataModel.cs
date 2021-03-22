@@ -99,7 +99,7 @@ namespace Lightning.Core
             LXMLS.Path = "Lightning.xsd";
 
             DataModelSerialiser DDX = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
-            DDX.DDMS_Serialise
+            DDX.DDMS_Serialise(LXMLS, @"Content\Test.txt");
             InstanceDump();
         }
 #endif
