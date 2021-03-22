@@ -64,12 +64,12 @@ namespace Lightning.Core
 
                     State.Add(NewInstance);
 
-                    return IX; //TEMP
+                    return IX.Instance; //TEMP
                 }
                 else
                 {
                     
-                    return IX; //TODO: throw error 
+                    return IX.Instance; //TODO: throw error 
                 }
                 
             }
