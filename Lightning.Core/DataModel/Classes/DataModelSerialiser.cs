@@ -334,7 +334,7 @@ namespace Lightning.Core
                                         object? CConvertedObject = Convert.ChangeType(XM.Value, IIP.Type);
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
-                                        / TODO::NESTING
+                                        // TODO::NESTING
                                         if (CConvertedObject != null)
                                         {
                                             PropertyInfo PI = XDR.GetProperty(XM.Name);
