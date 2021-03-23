@@ -8,7 +8,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel v0.2.0
+    /// DataModel v0.2.1
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,7 +17,7 @@ namespace Lightning.Core
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
         public static int DATAMODEL_VERSION_MINOR = 2;
-        public static int DATAMODEL_VERSION_REVISION = 0;
+        public static int DATAMODEL_VERSION_REVISION = 1;
 
         // shouldn't be static? idk
 

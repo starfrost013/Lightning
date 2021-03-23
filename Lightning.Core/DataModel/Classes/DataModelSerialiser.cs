@@ -9,6 +9,16 @@ using System.Xml.Serialization;
 
 namespace Lightning.Core
 {
+    /// <summary>
+    /// Dynamic DataModel Serialiser
+    /// 
+    /// Version 0.2.3
+    /// 
+    /// Created 2021-03-176
+    /// Modified 2021-03-23
+    /// 
+    /// DYnamically serialises XML to Lightning DataModel objects.
+    /// </summary>
     public class DataModelSerialiser : Instance
     {
         public override string ClassName => "DataModelSerialiser";
@@ -180,7 +190,7 @@ namespace Lightning.Core
                     if (!DDSR.Successful)
                     {
                         // TODO - ERRORS.XML - THROW ERROR
-                        Logging.Log($"DDSR Failure {DDSR.FailureReason}", "Dynamic DataModel Serialiser", MessageSeverity.Error);
+                        Logging.Log($"DDSR Failure {DDSR.FailureReason}", ClassName, MessageSeverity.Error);
                         return DDSR; 
                     }
 
@@ -228,8 +238,8 @@ namespace Lightning.Core
                     // 2021-03-20
                     case XmlNodeType.Element:
 
-                        Logging.Log($"Parsing element: { XM.Name}");
-
+                        Logging.Log($"Parsing element: {XM.Name}",ClassName);
+                        
                         try
                         {
                             while (XM.NodeType != XmlNodeType.Text)
@@ -242,6 +252,15 @@ namespace Lightning.Core
                                 else
                                 {
                                     XM.Read();
+                                    if (XM.Value != null)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        Logging.Log($"Value: {XM.Value}", ClassName);
+                                    }
+                                
                                 }
                                 
                             }
@@ -274,7 +293,7 @@ namespace Lightning.Core
                         {
                             // TODO - SERIALISATION - ERRORS.XML
                             // TEMP
-                            Logging.Log(err.Message, "DDMS Serialiser - Metadata", MessageSeverity.Error);
+                            Logging.Log(err.Message, ClassName, MessageSeverity.Error);
                             // END TEMP
                             // TODO - SERIALISATION - ERRORS.XML
                             DDSR.FailureReason = $"Attempted to serialise invalid XML/n{err}";
@@ -291,7 +310,12 @@ namespace Lightning.Core
 
                             return DDSR; 
                         }
-                        continue;
+                        else
+                        {
+                            // we haven't reached the end of this component
+                            continue;
+                        }
+                        
                 }
             }
 
