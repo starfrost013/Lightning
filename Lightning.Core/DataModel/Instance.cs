@@ -35,7 +35,18 @@ namespace Lightning.Core
         /// </summary>
         public Instance Parent { get
             {
-                return _parent; 
+                if (Parent != null)
+                {
+                    return _parent;
+
+                }
+                else
+                {
+                    // todo: throw error
+                    Logging.Log("Error: Attempted to acquire nonexistent parent!", "Lightning DataModel", MessageSeverity.Error);
+                    return null; 
+                }
+                 
             }
 
             set
@@ -145,7 +156,9 @@ namespace Lightning.Core
         }
 
         /// <summary>
-        /// Get a the child ID of this Instance.
+        /// Lightning Instance Standard Library
+        /// 
+        /// Get a child with the ID <paramref name="Id"/>of this instance.
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -162,22 +175,72 @@ namespace Lightning.Core
             }
             else
             {
-                GIR.Instance = Children.Instances[Id];
+                if (Children.Instances.Count < Id)
+                {
+                    GIR.FailureReason = "Attempted to acquire invalid instance ID";
+                    return GIR; 
+                }
+                else
+                {
+                    GIR.Instance = Children.Instances[Id];
+                    GIR.Successful = true;
+                    return GIR;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Lightning Instance Standard Library
+        /// 
+        /// Get the first child of this instance.
+        /// </summary>
+        /// <returns></returns>
+        public GetInstanceResult GetFirstChild()
+        {
+
+            GetInstanceResult GIR = new GetInstanceResult();
+
+            if (Children.Instances.Count <= 0)
+            {
+                GIR.FailureReason = "There are no instances to get the first child of!";
+                return GIR; 
+            }
+            else
+            {
+                GIR.Instance = Children.Instances[0];
+                GIR.Successful = true;
+                return GIR;
+            }
+
+        }
+
+        /// <summary>
+        /// Lightning Instance Standard Library
+        /// 
+        /// Gets the last child of this Instance.
+        /// </summary>
+        /// <returns></returns>
+        public GetInstanceResult GetLastChild()
+        {
+            GetInstanceResult GIR = new GetInstanceResult();
+
+            if (Children.Instances.Count <= 0)
+            {
+                GIR.FailureReason = "There are no instances to get the first child of!";
+                return GIR; 
+            }
+            else
+            {
+                int ChildrenCount = Children.Instances.Count - 1;
+
+                GIR.Instance = Children.Instances[ChildrenCount];
                 GIR.Successful = true;
                 return GIR;
             }
         }
 
-        public GetInstanceResult GetFirstChild(string Name)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void OnSpawn()
-        {
-            throw new NotImplementedException();
-        }
+        public void RemoveAllChildren() => Children.Instances.Clear(); 
 
 
     }

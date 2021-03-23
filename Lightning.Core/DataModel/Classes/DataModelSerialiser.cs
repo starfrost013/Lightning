@@ -11,7 +11,7 @@ namespace Lightning.Core
 {
     public class DataModelSerialiser : Instance
     {
-
+        public override string ClassName => "DataModelSerialiser";
         /// <summary>
         /// An incredibly dumb hack to get around the compiler
         /// </summary>
@@ -177,6 +177,13 @@ namespace Lightning.Core
                 case DDMSComponents.Metadata:
                     DDSR = DDMS_ParseMetadataComponent(XM, DM);
 
+                    if (!DDSR.Successful)
+                    {
+                        // TODO - ERRORS.XML - THROW ERROR
+                        Logging.Log($"DDSR Failure {DDSR.FailureReason}", "Dynamic DataModel Serialiser", MessageSeverity.Error);
+                        return DDSR; 
+                    }
+
                     return DDSR; 
                 case DDMSComponents.Settings:
                     DDSR = DDMS_ParseSettingsComponent(XM, DM);
@@ -225,6 +232,20 @@ namespace Lightning.Core
 
                         try
                         {
+                            while (XM.NodeType != XmlNodeType.Text)
+                            {
+                                if (XM.NodeType == XmlNodeType.EndElement && XM.Name == "Lightning")
+                                {
+                                    DDSR.FailureReason = $"Cannot parse empty node!";
+                                    return DDSR;
+                                }
+                                else
+                                {
+                                    XM.Read();
+                                }
+                                
+                            }
+
                             switch (XM.Name)
                             {
                                 case "Author":
@@ -237,6 +258,7 @@ namespace Lightning.Core
                                     if (XM.Value != XMLSCHEMA_VERSION)
                                     {
                                         DDSR.FailureReason = $"Invalid version! Using version {XM.Value}, expected {XMLSCHEMA_VERSION}!";
+                                        return DDSR; 
                                     }
                                     continue;
                                 case "LastModifiedDate":
@@ -351,6 +373,7 @@ namespace Lightning.Core
                                                 else
                                                 {
                                                     DDSR.FailureReason = "DDMS: Conversion error: Attempted to serialise non-serialisable object!";
+                                                    return DDSR; 
                                                 }
                                             }
                                             else
