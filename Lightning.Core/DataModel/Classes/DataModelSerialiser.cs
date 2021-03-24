@@ -359,6 +359,7 @@ namespace Lightning.Core
 
             DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
 
+            // TEMP until findcomponent
             while (XM.NodeType != XmlNodeType.Element && XM.Name != "InstanceTree")
             {
                 if (XM.NodeType == XmlNodeType.EndElement && XM.Name == "Lightning")
@@ -387,75 +388,79 @@ namespace Lightning.Core
                             // Todo: EngineGlobal?
                             Type XDR = Type.GetType($"{DATAMODELPATH}{XDataModelName}");
 
-                            //bug: no checks
-                            //see: polymorphism
-                            //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE
-                            Instance XDRInstance = (Instance)DataModel.CreateInstance(XDataModelName);
-
-                            // TODO: instantiationresult from datamodel.createinstance
-                            if (XDRInstance == null)
+                            if (XDR != null)
                             {
-                                // successful false by default
-                                DDSR.FailureReason = "Object is not in the datamodel or the object is non-instantiable.";
-                                return DDSR; 
-                            }
-                            for (int i = 0; i < XM.AttributeCount; i++)
-                            {
-                                // meh
-                                // better ways to do this - fix this
-                                XM.MoveToAttribute(i);
+                                //bug: no checks
+                                //see: polymorphism
+                                //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE
+                                Instance XDRInstance = (Instance)DataModel.CreateInstance(XDataModelName);
 
-                                Logging.Log($"Parsing Attribute to DataModel:", ClassName);
-                                // perform a kind of wizardry with InstanceInfo and classes
-                                
-                                foreach (InstanceInfoProperty IIP in XDRInstance.Info.Properties)
+                                // TODO: instantiationresult from datamodel.createinstance
+                                if (XDRInstance == null)
                                 {
-                                    // We have found the instance property that we want
-                                    if (XM.Name == IIP.Name)
+                                    // successful false by default
+                                    DDSR.FailureReason = "Object is not in the datamodel or the object is non-instantiable.";
+                                    return DDSR;
+                                }
+                                for (int i = 0; i < XM.AttributeCount; i++)
+                                {
+                                    // meh
+                                    // better ways to do this - fix this
+                                    XM.MoveToAttribute(i);
+
+                                    Logging.Log($"Parsing Attribute to DataModel:", ClassName);
+                                    // perform a kind of wizardry with InstanceInfo and classes
+
+                                    foreach (InstanceInfoProperty IIP in XDRInstance.Info.Properties)
                                     {
-                                        // WIZARD TIME
-                                        // Convert from string to arbitrary type! :D 
+                                        // We have found the instance property that we want
+                                        if (XM.Name == IIP.Name)
+                                        {
+                                            // WIZARD TIME
+                                            // Convert from string to arbitrary type! :D 
 
 #pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-                                        object? CConvertedObject = Convert.ChangeType(XM.Value, IIP.Type);
+                                            object? CConvertedObject = Convert.ChangeType(XM.Value, IIP.Type);
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
-                                        // TODO::NESTING
-                                        if (CConvertedObject != null)
-                                        {
-                                            PropertyInfo PI = XDR.GetProperty(XM.Name);
-
-                                            if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
+                                            // TODO::NESTING
+                                            if (CConvertedObject != null)
                                             {
-                                                Instance CInstanceObject = (Instance)CConvertedObject;
+                                                PropertyInfo PI = XDR.GetProperty(XM.Name);
 
-                                                if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
+                                                if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
                                                 {
-                                                    //todo: handle lists...they will have subnodes
-                                                    PI.SetValue(XDRInstance, CConvertedObject);
+                                                    Instance CInstanceObject = (Instance)CConvertedObject;
+
+                                                    if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
+                                                    {
+                                                        //todo: handle lists...they will have subnodes
+                                                        PI.SetValue(XDRInstance, CConvertedObject);
+                                                    }
+                                                    else
+                                                    {
+                                                        DDSR.FailureReason = "DDMS: Conversion error: Attempted to serialise non-serialisable object!";
+                                                        return DDSR;
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    DDSR.FailureReason = "DDMS: Conversion error: Attempted to serialise non-serialisable object!";
-                                                    return DDSR; 
+                                                    // may need to serialsie non-datamodel objects
+                                                    PI.SetValue(XDRInstance, CConvertedObject);
+
                                                 }
+
                                             }
                                             else
                                             {
-                                                // may need to serialsie non-datamodel objects
-                                                PI.SetValue(XDRInstance, CConvertedObject);
- 
+                                                DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
+                                                return DDSR;
                                             }
-
-                                        }
-                                        else
-                                        {
-                                            DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
-                                            return DDSR; 
                                         }
                                     }
-                                } 
+                                }
                             }
+                            
 
                         }
                         catch (ArgumentNullException err)
