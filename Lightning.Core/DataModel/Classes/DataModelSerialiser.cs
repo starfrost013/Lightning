@@ -188,7 +188,6 @@ namespace Lightning.Core
         private DDMSSerialisationResult DDMS_SerialiseFileComponent(XmlReader XM, DataModel DM, DDMSComponents Component)
         {
             DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
-
             
             switch (Component)
             {
@@ -345,9 +344,11 @@ namespace Lightning.Core
         private DDMSSerialisationResult DDMS_ParseSettingsComponent(XmlReader XM, DataModel DM)
         {
             // TEMP
+            // This is just so it doesn't die
             DDMSSerialisationResult DDSR_Temp = new DDMSSerialisationResult();
 
             DDSR_Temp.Successful = true;
+            DDSR_Temp.XmlReader = XM; 
             return DDSR_Temp; 
 
             //throw new NotImplementedException();
