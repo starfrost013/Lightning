@@ -24,7 +24,7 @@ namespace Lightning.Core
         /// <summary>
         /// Contains a list of the first-level instances
         /// </summary>
-        private static List<Instance> State { get; set; }
+        private static List<Instance> State;
 
         public DataModel()
         {
@@ -32,6 +32,7 @@ namespace Lightning.Core
             Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
             State = new List<Instance>();
 
+            // init the SCM
             CreateInstance("ServiceControlManager");
 #if DEBUG
             ATest();
@@ -64,12 +65,16 @@ namespace Lightning.Core
 
                     State.Add(NewInstance);
 
-                    return IX.Instance; //TEMP
+                    
+                    // Hack to get around ref limitations ig?
+                    // fix this if it doesn't work
+
+                    return State[State.Count - 1]; //TEMP
                 }
                 else
                 {
                     
-                    return IX.Instance; //TODO: throw error 
+                    return null; //TODO: throw error 
                 }
                 
             }

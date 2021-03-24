@@ -12,12 +12,16 @@ namespace Lightning.Core
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.2.3
+    /// Version 0.2.6
     /// 
-    /// Created 2021-03-176
-    /// Modified 2021-03-23
+    /// Created 2021-03-16
+    /// Modified 2021-03-24
     /// 
     /// DYnamically serialises XML to Lightning DataModel objects.
+    /// 
+    /// Todo V0.3:
+    /// Rewrite to use XDocument
+    /// Add DDMS_FindComponent();
     /// </summary>
     public class DataModelSerialiser : Instance
     {
@@ -97,21 +101,25 @@ namespace Lightning.Core
                         // so no error checking
                         foreach (string ValidComponent in ValidComponents)
                         {
-                            if (XR.Name == ValidComponent)
-                            {
-                                DDMSComponents DDMSComp = (DDMSComponents)Enum.Parse(typeof(DDMSComponents), ValidComponent);
-                                DDMSSerialisationResult DDSRMS = DDMS_SerialiseFileComponent(XR, DM, DDMSComp);
+                            // Every file must have all compoennts
+                            DDMSComponents DDMSComp = (DDMSComponents)Enum.Parse(typeof(DDMSComponents), ValidComponent);
+                            Logging.Log($"Serialising file component: {DDMSComp}");
+                            DDMSSerialisationResult DDSRMS = DDMS_SerialiseFileComponent(XR, DM, DDMSComp);
 
-                                if (DDSRMS.Successful)
-                                {
-                                    DM = DDSRMS.DataModel;
-                                }
-                                else
-                                {
-                                    // TEMP UNTIL SERIALISATION ERRORS.XML
-                                    Logging.Log($"Failed to serialise DDMS metadata component - {DDSRMS.FailureReason}", "DDMS Serialiser - metadata", MessageSeverity.Error);
-                                }
+                            if (DDSRMS.Successful)
+                            {
+                                DM = DDSRMS.DataModel;
+                                XR = DDSRMS.XmlReader;
+                                continue;
                             }
+                            else
+                            {
+                                // TEMP UNTIL SERIALISATION ERRORS.XML
+                                Logging.Log($"Failed to serialise DDMS component - {DDSRMS.FailureReason}", "DDMS Serialiser - metadata", MessageSeverity.Error);
+                                return null; 
+                                // END TEMP UNTIL SERIALISATION ERRORS.XML
+                            }
+
                         }
 
                         continue; 
@@ -160,11 +168,11 @@ namespace Lightning.Core
             switch (e.Severity)
             {
                 case XmlSeverityType.Warning:
-                    Logging.Log($"DDMS Serialisation Warning!{e.Message}\n\n{e.Exception}");
+                    Logging.Log($"DDMS Serialisation Schema Validation Warning!{e.Message}\n\n{e.Exception}");
                     return;
                 case XmlSeverityType.Error:
                     // TODO - SERIALISATION -ERRORS.XML
-                    Logging.Log($"DDMS Serialisation Error!{e.Message}\n\n{e.Exception}");
+                    Logging.Log($"DDMS Serialisation Schema Validation Error!{e.Message}\n\n{e.Exception}");
                     return;
                     // TODO - SERIALISATION - ERRORS.XML
             }
@@ -173,9 +181,9 @@ namespace Lightning.Core
         /// <summary>
         /// Parses DDMS file components.
         /// </summary>
-        /// <param name="XM">The XmlReader to pass</param>
-        /// <param name="DM"></param>
-        /// <param name="Component"></param>
+        /// <param name="XM">The XmlReader to use for reading</param>
+        /// <param name="DM">The DataModel to serialise to</param>
+        /// <param name="Component">The DDMS Component to serialise</param>
         /// <returns></returns>
         private DDMSSerialisationResult DDMS_SerialiseFileComponent(XmlReader XM, DataModel DM, DDMSComponents Component)
         {
@@ -238,34 +246,41 @@ namespace Lightning.Core
                     // 2021-03-20
                     case XmlNodeType.Element:
 
+                        string ElementName = XM.Name;
+
                         Logging.Log($"Parsing element: {XM.Name}",ClassName);
                         
                         try
                         {
-                            while (XM.NodeType != XmlNodeType.Text)
+                            while ((XM.NodeType != XmlNodeType.Text
+                                && XM.NodeType != XmlNodeType.EndElement))
                             {
-                                if (XM.NodeType == XmlNodeType.EndElement && XM.Name == "Lightning")
+                                if (XM.NodeType == XmlNodeType.None)
                                 {
                                     DDSR.FailureReason = $"Cannot parse empty node!";
                                     return DDSR;
                                 }
                                 else
                                 {
-                                    XM.Read();
-                                    if (XM.Value != null)
-                                    {
 
-                                    }
-                                    else
-                                    {
-                                        Logging.Log($"Value: {XM.Value}", ClassName);
-                                    }
+                                    XM.Read();
+                                    
                                 
                                 }
                                 
                             }
 
-                            switch (XM.Name)
+                            if (XM.Value != null)
+                            {
+                                Logging.Log($"Value: {XM.Value}", ClassName);
+                            }
+                            else
+                            {
+                                DDSR.FailureReason = "Error: Invalid empty value for Metadata node!";
+                                return DDSR;
+                            }
+
+                            switch (ElementName)
                             {
                                 case "Author":
                                     GM.Author = XM.Value;
@@ -279,7 +294,11 @@ namespace Lightning.Core
                                         DDSR.FailureReason = $"Invalid version! Using version {XM.Value}, expected {XMLSCHEMA_VERSION}!";
                                         return DDSR; 
                                     }
-                                    continue;
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                    
                                 case "LastModifiedDate":
                                     GM.LastModifiedDate = DateTime.Parse(XM.Value);
                                     continue;
@@ -307,7 +326,7 @@ namespace Lightning.Core
 
                             DDSR.Successful = true;
                             DDSR.DataModel = DM;
-
+                            DDSR.XmlReader = XM;
                             return DDSR; 
                         }
                         else
@@ -325,7 +344,13 @@ namespace Lightning.Core
 
         private DDMSSerialisationResult DDMS_ParseSettingsComponent(XmlReader XM, DataModel DM)
         {
-            throw new NotImplementedException();
+            // TEMP
+            DDMSSerialisationResult DDSR_Temp = new DDMSSerialisationResult();
+
+            DDSR_Temp.Successful = true;
+            return DDSR_Temp; 
+
+            //throw new NotImplementedException();
         }
 
         private DDMSSerialisationResult DDMS_ParseInstanceTreeComponent(XmlReader XM, DataModel DM)
@@ -333,11 +358,24 @@ namespace Lightning.Core
 
             DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
 
+            while (XM.NodeType != XmlNodeType.Element && XM.Name != "InstanceTree")
+            {
+                if (XM.NodeType == XmlNodeType.EndElement && XM.Name == "Lightning")
+                {
+                    // todo throw errors
+                    DDSR.FailureReason = "Cannot find InstanceTree!";
+                    return DDSR; 
+                }
+
+                XM.Read();
+            } 
+
             while (XM.Read())
             {
                 switch (XM.NodeType)
                 {
                     case XmlNodeType.Element:
+
                         string XDataModelName = XM.Name;
 
                         try
@@ -366,6 +404,7 @@ namespace Lightning.Core
                                 // better ways to do this - fix this
                                 XM.MoveToAttribute(i);
 
+                                Logging.Log($"Parsing Attribute to DataModel:", ClassName);
                                 // perform a kind of wizardry with InstanceInfo and classes
                                 
                                 foreach (InstanceInfoProperty IIP in XDRInstance.Info.Properties)
@@ -489,6 +528,7 @@ namespace Lightning.Core
                         if (XM.Name.ContainsCaseInsensitive("InstanceTree"))
                         {
                             DDSR.Successful = true;
+                            DDSR.XmlReader = XM;
                             return DDSR;
                         }
                         else
@@ -504,6 +544,10 @@ namespace Lightning.Core
             return DDSR; 
         }
 
+        private bool DDMS_FindComponent(XmlReader XR, DDMSComponents Component)
+        {
+            throw new NotImplementedException(); 
+        }
          
     }
 }

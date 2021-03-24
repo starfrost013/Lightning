@@ -35,7 +35,7 @@ namespace Lightning.Core
         /// </summary>
         public Instance Parent { get
             {
-                if (Parent != null)
+                if (_parent != null)
                 {
                     return _parent;
 
@@ -93,7 +93,7 @@ namespace Lightning.Core
         public InstanceInfo Info { get; set; }
 
         /// <summary>
-        /// The class name of this object. MUST OVERRIDE!
+        /// The class name of this object. MUST OVERRIDE! -- READONLY
         /// </summary>
         public virtual string ClassName { get; }
 

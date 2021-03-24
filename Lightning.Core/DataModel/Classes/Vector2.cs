@@ -31,7 +31,5 @@ namespace Lightning.Core
         public static Vector2 operator *(Vector2 A, Vector2 B) => new Vector2(A.X * B.X, B.Y * B.Y);
         public static Vector2 operator /(Vector2 A, Vector2 B) => new Vector2(A.X / B.X, B.Y / B.Y);
 
-        public Vector2 Scale(Vector2 A, Vector2 Amount) => A * Amount; 
-
     }
 }
