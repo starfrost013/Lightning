@@ -34,7 +34,7 @@ namespace Lightning.Core
 
             // init the SCM
             CreateInstance("ServiceControlManager");
-#if DEBUG
+#if DEBUG_ATEST_DATAMODEL //todo: unit testing
             ATest();
 #endif
         }
@@ -100,7 +100,7 @@ namespace Lightning.Core
             CreateInstance("Vector2");
 
 
-            InstanceDump();
+            
         }
 
         public void ATest_Serialise()

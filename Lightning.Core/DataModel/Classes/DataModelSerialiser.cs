@@ -1,9 +1,11 @@
 ﻿using Lightning.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq; 
 using System.Reflection; 
 using System.Text;
 using System.Xml;
+using System.Xml.Linq; 
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
@@ -12,16 +14,12 @@ namespace Lightning.Core
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.2.6
+    /// Version 0.3.0
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-03-24
+    /// Modified 2021-03-26 (v0.3.0: Use Linq and XDocument) 
     /// 
     /// DYnamically serialises XML to Lightning DataModel objects.
-    /// 
-    /// Todo V0.3:
-    /// Rewrite to use XDocument
-    /// Add DDMS_FindComponent();
     /// </summary>
     public class DataModelSerialiser : Instance
     {
@@ -60,70 +58,53 @@ namespace Lightning.Core
 
             XmlReaderSettings XRS = new XmlReaderSettings(); 
 
-            XmlReader XR = XmlReader.Create(Path, XRS);
+            XDocument XD = XDocument.Load(Path);
+
 
             // Create the datamodel that we will be returning.
             DataModel DM = new DataModel();
             DDMS_Validate(Schema, Path);
-            
-            while (XR.Read())
+
+            List<string> ValidComponents = new List<string>();
+
+            foreach (int EVal in Enum.GetValues(typeof(DDMSComponents)))
             {
-                switch (XR.NodeType)
+                // Death to Dumb Hacks (especially political ones)!
+                string EvalString = Enum.GetName(typeof(DDMSComponents), EVal);
+
+                if (EvalString == null)
                 {
-                    case XmlNodeType.Whitespace:
-                    case XmlNodeType.SignificantWhitespace:
-                    case XmlNodeType.Comment:
-                        // continue and skip useless nodes
-                        continue;
-                    case XmlNodeType.Element:
+                    // TEMP - SERIALISATION - ERRORS.XML
+                    return null;
+                    // VTEMP - SERIALISATION - ERRORS.XML
+                }
+                else
+                {
+                    ValidComponents.Add(EvalString);
+                }
 
-                        List<string> ValidComponents = new List<string>();
+            }
 
-                        foreach (int EVal in Enum.GetValues(typeof(DDMSComponents)))
-                        {
-                            // Death to Dumb Hacks (especially political ones)!
-                            string EvalString = Enum.GetName(typeof(DDMSComponents), EVal);
+            // We have already determined the valid components,
+            // so no error checking
+            foreach (string ValidComponent in ValidComponents)
+            {
+                // Every file must have all compoennts
+                DDMSComponents DDMSComp = (DDMSComponents)Enum.Parse(typeof(DDMSComponents), ValidComponent);
+                Logging.Log($"Serialising file component: {DDMSComp}");
+                DDMSSerialisationResult DDSRMS = DDMS_SerialiseFileComponent(XD, DM, DDMSComp);
 
-                            if (EvalString == null)
-                            {
-                                // TEMP - SERIALISATION - ERRORS.XML
-                                return null;
-                                // VTEMP - SERIALISATION - ERRORS.XML
-                            }
-                            else
-                            {
-                                ValidComponents.Add(EvalString);
-                            }
-
-                        }
-
-                        // We have already determined the valid components,
-                        // so no error checking
-                        foreach (string ValidComponent in ValidComponents)
-                        {
-                            // Every file must have all compoennts
-                            DDMSComponents DDMSComp = (DDMSComponents)Enum.Parse(typeof(DDMSComponents), ValidComponent);
-                            Logging.Log($"Serialising file component: {DDMSComp}");
-                            DDMSSerialisationResult DDSRMS = DDMS_SerialiseFileComponent(XR, DM, DDMSComp);
-
-                            if (DDSRMS.Successful)
-                            {
-                                DM = DDSRMS.DataModel;
-                                XR = DDSRMS.XmlReader;
-                                continue;
-                            }
-                            else
-                            {
-                                // TEMP UNTIL SERIALISATION ERRORS.XML
-                                Logging.Log($"Failed to serialise DDMS component - {DDSRMS.FailureReason}", "DDMS Serialiser - metadata", MessageSeverity.Error);
-                                return null; 
-                                // END TEMP UNTIL SERIALISATION ERRORS.XML
-                            }
-
-                        }
-
-                        continue; 
-                        
+                if (DDSRMS.Successful)
+                {
+                    DM = DDSRMS.DataModel;
+                    continue;
+                }
+                else
+                {
+                    // TEMP UNTIL SERIALISATION ERRORS.XML
+                    Logging.Log($"Failed to serialise DDMS component - {DDSRMS.FailureReason}", "DDMS Serialiser - metadata", MessageSeverity.Error);
+                    return null;
+                    // END TEMP UNTIL SERIALISATION ERRORS.XML
                 }
 
             }
@@ -185,14 +166,14 @@ namespace Lightning.Core
         /// <param name="DM">The DataModel to serialise to</param>
         /// <param name="Component">The DDMS Component to serialise</param>
         /// <returns></returns>
-        private DDMSSerialisationResult DDMS_SerialiseFileComponent(XmlReader XM, DataModel DM, DDMSComponents Component)
+        private DDMSSerialisationResult DDMS_SerialiseFileComponent(XDocument XD, DataModel DM, DDMSComponents Component)
         {
             DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
             
             switch (Component)
             {
                 case DDMSComponents.Metadata:
-                    DDSR = DDMS_ParseMetadataComponent(XM, DM);
+                    DDSR = DDMS_ParseMetadataComponent(XD, DM);
 
                     if (!DDSR.Successful)
                     {
@@ -203,12 +184,12 @@ namespace Lightning.Core
 
                     return DDSR; 
                 case DDMSComponents.Settings:
-                    DDSR = DDMS_ParseSettingsComponent(XM, DM);
+                    DDSR = DDMS_ParseSettingsComponent(XD, DM);
                     DDSR.DataModel = DM;
 
                     return DDSR;
                 case DDMSComponents.InstanceTree:
-                    DDSR = DDMS_ParseInstanceTreeComponent(XM, DM);
+                    DDSR = DDMS_ParseInstanceTreeComponent(XD, DM);
                     return DDSR;
             }
 
@@ -225,7 +206,7 @@ namespace Lightning.Core
         /// <param name="XM"></param>
         /// <param name="DM"></param>
         /// <returns></returns>
-        private DDMSSerialisationResult DDMS_ParseMetadataComponent(XmlReader XM, DataModel DM)
+        private DDMSSerialisationResult DDMS_ParseMetadataComponent(XDocument XD, DataModel DM)
         {
 
             // Clear global datamodel state
@@ -236,76 +217,71 @@ namespace Lightning.Core
 
             GameMetadata GM = (GameMetadata)DataModel.CreateInstance("GameMetadata");
 
-            while (XM.Read())
+            XElement XMetadataNode = XD.Root.Element("Metadata");
+
+            if (XMetadataNode != null)
             {
-                switch (XM.NodeType)
+                switch (XMetadataNode.NodeType)
                 {
                     // blame the hp stream for my unproductive day 
                     // also i had to go to my dads
                     // 2021-03-20
                     case XmlNodeType.Element:
 
-                        string ElementName = XM.Name;
+                        string ElementName = XMetadataNode.Name.LocalName;
 
-                        Logging.Log($"Parsing element: {XM.Name}",ClassName);
-                        
+                        Logging.Log($"Parsing element: {ElementName}", ClassName);
+
                         try
                         {
-                            while ((XM.NodeType != XmlNodeType.Text
-                                && XM.NodeType != XmlNodeType.EndElement))
+
+                            List<XElement> XMetadataContentNodes = XMetadataNode.Elements().ToList();
+
+                            if (XMetadataContentNodes.Count != 0)
                             {
-                                if (XM.NodeType == XmlNodeType.None)
+                                foreach (XElement XMetadataContentNode in XMetadataContentNodes)
                                 {
-                                    DDSR.FailureReason = $"Cannot parse empty node!";
-                                    return DDSR;
-                                }
-                                else
-                                {
+                                    // Store the element name
+                                    ElementName = XMetadataContentNode.Name.LocalName;
+                                    string ElementValue = XMetadataContentNode.Value; 
 
-                                    XM.Read();
-                                    
-                                
-                                }
-                                
-                            }
+                                    // Log it
+                                    Logging.Log($"{ElementName}: {ElementValue}", ClassName);
 
-                            if (XM.Value != null)
-                            {
-                                Logging.Log($"Value: {XM.Value}", ClassName);
-                            }
-                            else
-                            {
-                                DDSR.FailureReason = "Error: Invalid empty value for Metadata node!";
-                                return DDSR;
-                            }
-
-                            switch (ElementName)
-                            {
-                                case "Author":
-                                    GM.Author = XM.Value;
-                                    continue;
-                                case "CreationDate":
-                                    GM.CreationDate = DateTime.Parse(XM.Value);
-                                    continue;
-                                case "DMSchemaVersion":
-                                    if (XM.Value != XMLSCHEMA_VERSION)
+                                    switch (ElementName)
                                     {
-                                        DDSR.FailureReason = $"Invalid version! Using version {XM.Value}, expected {XMLSCHEMA_VERSION}!";
-                                        return DDSR; 
-                                    }
-                                    else
-                                    {
-                                        continue;
-                                    }
-                                    
-                                case "LastModifiedDate":
-                                    GM.LastModifiedDate = DateTime.Parse(XM.Value);
-                                    continue;
-                                case "RevisionID":
-                                    GM.RevisionNumber = Convert.ToInt32(XM.Value);
-                                    continue; 
+                                        // Author of this game
+                                        case "Author":
+                                            GM.Author = ElementValue;
+                                            continue;
+                                        // Game creation date
+                                        case "CreationDate":
+                                            GM.CreationDate = DateTime.Parse(ElementValue);
+                                            continue;
+                                        // DataModel schema version
+                                        case "DMSchemaVersion":
+                                            if (XMetadataContentNode.Value != XMLSCHEMA_VERSION)
+                                            {
+                                                DDSR.FailureReason = $"Invalid schema version! Using version {ElementValue}, expected {XMLSCHEMA_VERSION}!";
+                                                return DDSR;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        // Game last modified date
+                                        case "LastModifiedDate":
+                                            GM.LastModifiedDate = DateTime.Parse(ElementValue);
+                                            continue;
+                                        // Game revision ID
+                                        case "RevisionID":
+                                            GM.RevisionNumber = Convert.ToInt32(ElementValue);
+                                            continue;
 
+                                    }
+                                }
                             }
+                            
                         }
                         catch (FormatException err)
                         {
@@ -314,153 +290,72 @@ namespace Lightning.Core
                             Logging.Log(err.Message, ClassName, MessageSeverity.Error);
                             // END TEMP
                             // TODO - SERIALISATION - ERRORS.XML
-                            DDSR.FailureReason = $"Attempted to serialise invalid XML/n{err}";
+                            DDSR.FailureReason = $"Attempted to serialise invalid XML\n{err}";
                         }
 
-                        continue; 
-                    case XmlNodeType.EndElement:
-                        if (XM.Name.ContainsCaseInsensitive("Metadata"))
-                        {
-                            // we would have returned earlier in the case of an error
+                        DDSR.Successful = true;
+                        DDSR.DataModel = DM;
+                        return DDSR; 
+                    
 
-                            DDSR.Successful = true;
-                            DDSR.DataModel = DM;
-                            DDSR.XmlReader = XM;
-                            return DDSR; 
-                        }
-                        else
-                        {
-                            // we haven't reached the end of this component
-                            continue;
-                        }
-                        
                 }
             }
-
 
             return DDSR;
         }
 
-        private DDMSSerialisationResult DDMS_ParseSettingsComponent(XmlReader XM, DataModel DM)
+        private DDMSSerialisationResult DDMS_ParseSettingsComponent(XDocument XD, DataModel DM)
         {
             // TEMP
             // This is just so it doesn't die
             DDMSSerialisationResult DDSR_Temp = new DDMSSerialisationResult();
 
             DDSR_Temp.Successful = true;
-            DDSR_Temp.XmlReader = XM; 
             return DDSR_Temp; 
 
             //throw new NotImplementedException();
         }
 
-        private DDMSSerialisationResult DDMS_ParseInstanceTreeComponent(XmlReader XM, DataModel DM)
+        private DDMSSerialisationResult DDMS_ParseInstanceTreeComponent(XDocument XD, DataModel DM)
         {
 
             DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
 
-            // TEMP until findcomponent
-            while (XM.NodeType != XmlNodeType.Element && XM.Name != "InstanceTree")
-            {
-                if (XM.NodeType == XmlNodeType.EndElement && XM.Name == "Lightning")
-                {
-                    // todo throw errors
-                    DDSR.FailureReason = "Cannot find InstanceTree!";
-                    return DDSR; 
-                }
+            XElement XInstanceTreeNode;
 
-                XM.Read();
-            } 
+            List<XElement> XInstanceTreeNodeList = XD.Root.Elements("InstanceTree").ToList();
 
-            while (XM.Read())
+            if (XInstanceTreeNodeList.Count == 0)
             {
-                switch (XM.NodeType)
+                DDSR.FailureReason = "Cannot find InstanceTree!";
+                return DDSR; 
+            }
+            else
+            {
+                XInstanceTreeNode = XInstanceTreeNodeList[0];
+            }
+
+            List<XElement> XInstanceChildNodes = XInstanceTreeNode.Elements().ToList();
+
+            // Loop through all child nodes.
+            foreach (XElement XInstanceChildNode in XInstanceChildNodes)
+            {
+                switch (XInstanceChildNode.NodeType)
                 {
                     case XmlNodeType.Element:
-
-                        string XDataModelName = XM.Name;
-
                         try
                         {
-
-                            // Namespace path to DataModel
-                            string DATAMODELPATH = "Lightning.Core.";
-                            // Todo: EngineGlobal?
-                            Type XDR = Type.GetType($"{DATAMODELPATH}{XDataModelName}");
-
-                            if (XDR != null)
-                            {
-                                //bug: no checks
-                                //see: polymorphism
-                                //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE
-                                Instance XDRInstance = (Instance)DataModel.CreateInstance(XDataModelName);
-
-                                // TODO: instantiationresult from datamodel.createinstance
-                                if (XDRInstance == null)
-                                {
-                                    // successful false by default
-                                    DDSR.FailureReason = "Object is not in the datamodel or the object is non-instantiable.";
-                                    return DDSR;
-                                }
-                                for (int i = 0; i < XM.AttributeCount; i++)
-                                {
-                                    // meh
-                                    // better ways to do this - fix this
-                                    XM.MoveToAttribute(i);
-
-                                    Logging.Log($"Parsing Attribute to DataModel:", ClassName);
-                                    // perform a kind of wizardry with InstanceInfo and classes
-
-                                    foreach (InstanceInfoProperty IIP in XDRInstance.Info.Properties)
-                                    {
-                                        // We have found the instance property that we want
-                                        if (XM.Name == IIP.Name)
-                                        {
-                                            // WIZARD TIME
-                                            // Convert from string to arbitrary type! :D 
-
-#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-                                            object? CConvertedObject = Convert.ChangeType(XM.Value, IIP.Type);
-#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-
-                                            // TODO::NESTING
-                                            if (CConvertedObject != null)
-                                            {
-                                                PropertyInfo PI = XDR.GetProperty(XM.Name);
-
-                                                if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
-                                                {
-                                                    Instance CInstanceObject = (Instance)CConvertedObject;
-
-                                                    if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
-                                                    {
-                                                        //todo: handle lists...they will have subnodes
-                                                        PI.SetValue(XDRInstance, CConvertedObject);
-                                                    }
-                                                    else
-                                                    {
-                                                        DDSR.FailureReason = "DDMS: Conversion error: Attempted to serialise non-serialisable object!";
-                                                        return DDSR;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    // may need to serialsie non-datamodel objects
-                                                    PI.SetValue(XDRInstance, CConvertedObject);
-
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
-                                                return DDSR;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            DDMSSerialisationResult DDSR_Element = DDMS_SerialiseElementToDMObject(DM, XInstanceChildNode);
                             
+                            if (DDSR_Element.Successful)
+                            {
+                                DDSR.DataModel = DDSR_Element.DataModel;
+                            }
+                            else
+                            {
+                                DDSR.FailureReason = $"Attempted to parse invalid node: {DDSR_Element.FailureReason}";
+                                return DDSR; 
+                            }
 
                         }
                         catch (ArgumentNullException err)
@@ -470,7 +365,7 @@ namespace Lightning.Core
 #else
                             DDSR.FailureReason = $"DDMS: Conversion error: Data not found!";                 
 #endif
-                            return DDSR; 
+                            return DDSR;
                         }
                         catch (FormatException err)
                         {
@@ -529,25 +424,114 @@ namespace Lightning.Core
 
                         continue;
 
-                    case XmlNodeType.EndElement:
-
-                        if (XM.Name.ContainsCaseInsensitive("InstanceTree"))
-                        {
-                            DDSR.Successful = true;
-                            DDSR.XmlReader = XM;
-                            return DDSR;
-                        }
-                        else
-                        {
-                            continue; 
-                        }
-
-                        
-                
                 }
             }
 
+            DDSR.Successful = true; 
             return DDSR; 
+        }
+
+        /// <summary>
+        /// perhaps not make return DataModel?
+        /// </summary>
+        /// <param name="DM"></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        private DDMSSerialisationResult DDMS_SerialiseElementToDMObject(DataModel DM, XElement XInstanceChildNode)
+        {
+
+            string XDataModelName = XInstanceChildNode.Name.LocalName;
+
+            DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
+            
+            // Namespace path to DataModel
+            string DATAMODELPATH = "Lightning.Core.";
+            // Todo: EngineGlobal?
+            Type XDR = Type.GetType($"{DATAMODELPATH}{XDataModelName}");
+
+            if (XDR != null)
+            {
+                //bug: no checks
+                //see: polymorphism
+                //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE
+                Instance XDRInstance = (Instance)DataModel.CreateInstance(XDataModelName);
+
+                // TODO: instantiationresult from datamodel.createinstance
+                if (XDRInstance == null)
+                {
+                    // successful false by default
+                    DDSR.FailureReason = "Object is not in the datamodel or the object is non-instantiable.";
+                    return DDSR;
+                }
+
+                List<XAttribute> XDMObjectAttributes = XInstanceChildNode.Attributes().ToList();
+
+                foreach (XAttribute XDMObjectAttribute in XDMObjectAttributes)
+                {
+                    string XPropertyName = XDMObjectAttribute.Name.LocalName;
+
+                    Logging.Log($"Parsing Attribute to DataModel: {XPropertyName}", ClassName);
+                    // perform a kind of wizardry with InstanceInfo and classes
+
+                    foreach (InstanceInfoProperty IIP in XDRInstance.Info.Properties)
+                    {
+                        // We have found the instance property that we want
+                        if (XPropertyName == IIP.Name)
+                        {
+                            // WIZARD TIME
+                            // Convert from string to arbitrary type! :D 
+
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+                            object? CConvertedObject = Convert.ChangeType(XDMObjectAttribute.Value, IIP.Type);
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+
+                            // TODO::NESTING
+                            if (CConvertedObject != null)
+                            {
+                                PropertyInfo PI = XDR.GetProperty(XPropertyName);
+
+                                if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
+                                {
+                                    Instance CInstanceObject = (Instance)CConvertedObject;
+
+                                    if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
+                                    {
+                                        //todo: handle lists...they will have subnodes
+                                        PI.SetValue(XDRInstance, CConvertedObject);
+                                    }
+                                    else
+                                    {
+                                        DDSR.FailureReason = "DDMS: Conversion error: Attempted to serialise non-serialisable object!";
+                                        return DDSR;
+                                    }
+                                }
+                                else
+                                {
+                                    // may need to serialsie non-datamodel objects
+                                    PI.SetValue(XDRInstance, CConvertedObject);
+
+                                }
+
+                            }
+                            else
+                            {
+                                DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
+                                return DDSR;
+                            }
+                        }
+                    }
+                }
+
+                DDSR.Successful = true; 
+                DDSR.DataModel = DM;
+                return DDSR;
+            }
+            else
+            {
+                DDSR.FailureReason = "Error: attempted to instantiate invalid DataModel!";
+                return DDSR; 
+            }
+
         }
 
         private bool DDMS_FindComponent(XmlReader XR, DDMSComponents Component)

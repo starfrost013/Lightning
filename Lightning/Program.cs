@@ -34,6 +34,8 @@ namespace Lightning
 
             DataModelX = new DataModel();
             DataModelX.ATest_Serialise();
+            Logging.Log("------ Serialised using DDMS  [Test - 2021/03/26] ------\n");
+            DataModelX.InstanceDump(); 
 
 
         }
