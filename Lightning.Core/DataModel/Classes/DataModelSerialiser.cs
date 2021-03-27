@@ -460,7 +460,7 @@ namespace Lightning.Core
                 if (XDRInstance == null)
                 {
                     // successful false by default
-                    DDSR.FailureReason = "Object is not in the datamodel or the object is non-instantiable.";
+                    DDSR.FailureReason = "Object is not in the datamodel or the object is non-instantiable!";
                     return DDSR;
                 }
 
@@ -521,6 +521,9 @@ namespace Lightning.Core
                         }
                     }
                 }
+
+                // Parse any other objects that may be a child of this object...
+
 
                 DDSR.Successful = true; 
                 DDSR.DataModel = DM;

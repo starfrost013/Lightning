@@ -25,6 +25,7 @@ namespace Lightning.Core
         public bool RunningNow { get; set; }
 
         public abstract ServiceStartResult OnStart();
+        public abstract ServiceShutdownResult OnShutdown();
 
         
     }

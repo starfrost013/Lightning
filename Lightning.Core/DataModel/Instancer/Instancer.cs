@@ -18,7 +18,7 @@ namespace Lightning.Core
     public static class Instancer //SHOULD BE GENERIC TYPE PARAMETER!!!
     {
         /// <summary>
-        /// Creates an instance of a DataModel instance
+        /// Creates an instance of a DataModel instance and sets its parent to Parent if it is null. 
         /// 
         /// I wanted to use generic type parameters,
         /// but the fucking compiler is SHIT

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq; 
 using System.Reflection;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel v0.2.1
+    /// DataModel v0.2.2
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,7 +18,7 @@ namespace Lightning.Core
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
         public static int DATAMODEL_VERSION_MINOR = 2;
-        public static int DATAMODEL_VERSION_REVISION = 1;
+        public static int DATAMODEL_VERSION_REVISION = 2;
 
         // shouldn't be static? idk
 
@@ -40,11 +41,11 @@ namespace Lightning.Core
         }
 
         /// <summary>
-        /// Create a new Instance.
+        /// Create a new Instance. Optionally set the parent of this object.
         /// </summary>
         /// <param name="ClassName"></param>
         /// <returns></returns>
-        public static object CreateInstance(string ClassName)
+        public static object CreateInstance(string ClassName, Instance Parent = null)
         {
             try
             {
@@ -63,9 +64,15 @@ namespace Lightning.Core
 
                     NewInstance.GenerateInstanceInfo();
 
-                    State.Add(NewInstance);
+                    if (Parent == null)
+                    {
+                        State.Add(NewInstance);
+                    }
+                    else
+                    {
+                        Parent.Children.Instances.Add(NewInstance); 
+                    }
 
-                    
                     // Hack to get around ref limitations ig?
                     // fix this if it doesn't work
 

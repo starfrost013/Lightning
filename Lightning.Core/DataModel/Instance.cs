@@ -7,7 +7,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning DataModel
     /// 
-    /// Instance Ver0.2.1
+    /// Instance Ver0.2.2
     /// 
     /// Provides the root for all objects provided in Lightning.
     /// 
@@ -18,12 +18,13 @@ namespace Lightning.Core
     /// 2020-03-12  Made InstanceInfo 
     /// 2020-03-18  DataModel.State only contains first-level instances; Instances store parent and child
     /// 2020-03-23  (need to move this comment block to DataModel.cs): worked on Standard Instance Library
+    /// 2020-03-26  Added the ability to set an instance's parent at instantiation time. 
     /// </summary>
     public abstract class Instance
     {
         public static int INSTANCEAPI_VERSION_MAJOR = 0;
         public static int INSTANCEAPI_VERSION_MINOR = 2;
-        public static int INSTANCEAPI_VERSION_REVISION = 1;
+        public static int INSTANCEAPI_VERSION_REVISION = 2;
 
         /// <summary>
         /// Backing field for <see cref="Parent"/>
@@ -80,7 +81,7 @@ namespace Lightning.Core
         /// 
         /// Children must be classes that derive from this class.  (2021-03-21)
         /// </summary>
-        public virtual InstanceCollection Children { get; set; }
+        public InstanceCollection Children { get; set; }
 
         /// <summary>
         /// Attributes of this object. OVERRIDE OPTIONAL!
@@ -239,6 +240,8 @@ namespace Lightning.Core
                 return GIR;
             }
         }
+
+        public Instance GetParent() => Parent;
 
         public void RemoveAllChildren() => Children.Instances.Clear(); 
 

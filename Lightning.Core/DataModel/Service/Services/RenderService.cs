@@ -7,7 +7,7 @@ namespace Lightning.Core
     /// <summary>
     /// RenderService
     /// 
-    /// Handles rendering of all PhysicalInstances for Lightning.
+    /// Handles rendering of all PhysicalInstances for Lightning using SDL2. 
     ///
     /// 2021-03-14: Created
     /// </summary>
@@ -18,6 +18,11 @@ namespace Lightning.Core
         public override ServiceStartResult OnStart()
         {
             throw new NotImplementedException(); 
+        }
+
+        public override ServiceShutdownResult OnShutdown()
+        {
+            throw new NotImplementedException();
         }
     }
 }

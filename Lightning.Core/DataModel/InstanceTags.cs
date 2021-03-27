@@ -43,7 +43,12 @@ namespace Lightning.Core
         /// 
         /// Is shown in object properties
         /// </summary>
-        ShownInProperties = 32
+        ShownInProperties = 32,
+
+        /// <summary>
+        /// The Parent of this Instance is locked
+        /// </summary>
+        ParentLocked = 64
 
     }
 }
