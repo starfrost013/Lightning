@@ -243,8 +243,10 @@ namespace Lightning.Core
 
         public Instance GetParent() => Parent;
 
-        public void RemoveAllChildren() => Children.Instances.Clear(); 
-
+        public void RemoveAllChildren() => Children.Instances.Clear();
+        public void AddChild(Instance Chl) => Children.Instances.Add(Chl);
+        public void RemoveChild(Instance Chl) => Children.Instances.Remove(Chl);
+        public void RemoveChildAt(int Id) => Children.Instances.RemoveAt(Id);
 
     }
 }
