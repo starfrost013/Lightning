@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -245,8 +246,40 @@ namespace Lightning.Core
 
         public void RemoveAllChildren() => Children.Instances.Clear();
         public void AddChild(Instance Chl) => Children.Instances.Add(Chl);
-        public void RemoveChild(Instance Chl) => Children.Instances.Remove(Chl);
-        public void RemoveChildAt(int Id) => Children.Instances.RemoveAt(Id);
+        public GenericResult RemoveChild(Instance Chl)
+        {
+            GenericResult GR = new GenericResult();
+            
+            if (Children.Instances.Contains(Chl))
+            {
+                Children.Instances.Remove(Chl);
+                GR.Successful = true;
+                return GR; 
+            }
+            else
+            {
+                // Successful is false by default
+                GR.FailureReason = "Attempted to remove an Instance that is either not in the DataModel or not a child of this Instance.";
+                return GR; 
+            }
+        }
+
+        public GenericResult RemoveChildAt(int Id)
+        {
+            GenericResult GR = new GenericResult();
+
+            if (Id < 0 || Id > Children.Instances.Count - 1)
+            {
+                GR.FailureReason = $"Attempted to remove invalid child with ID {Id}, when there are only {Children.Instances.Count - 1} children!";
+                return GR; 
+            }
+            else
+            {
+                Instance ChildToRemove = Children.Instances[Id];
+                return RemoveChild(ChildToRemove);
+            }
+        }
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Lightning.Core
 {
@@ -26,10 +27,17 @@ namespace Lightning.Core
     {
         public Exception BaseException { get; set; }
         public CustomErrorHandler CustomErrHandler { get; set; }
+
+        [XmlElement("Description")]
         public string Description { get; set; }
 
+        [XmlElement("Id")]
         public uint Id { get; set; }
+
+        [XmlElement("Name")]
         public string Name { get; set; }
+
+        [XmlElement("Severity")]
         public MessageSeverity Severity { get; set; }
 
 

@@ -62,7 +62,7 @@ namespace Lightning.Core
         {
             foreach (Service Svc in RunningServices)
             {
-                if (Svc.Name == ServiceName)
+                if (Svc.ClassName == ServiceName)
                 {
                     return Svc;
                 }
@@ -71,13 +71,20 @@ namespace Lightning.Core
             return null; // TEMP 
         }
 
+        /// <summary>
+        /// Kills the service with class name <paramref name="ServiceName"/>.
+        /// </summary>
+        /// <param name="ServiceName">The class name of the service to kill. Must inherit from <see cref="Service"/>.</param>
+        /// <returns>A <see cref="ServiceShutdownResult"/> object. Success is determined by the <see cref="ServiceShutdownResult.Successful"/> property. For further information, see the documentation for <see cref="ServiceShutdownResult"/>.</returns>
         public ServiceShutdownResult KillService(string ServiceName)
         {
+            Logging.Log($"Attempting to kill service with classname {ServiceName}");
+
             ServiceShutdownResult SSR = new ServiceShutdownResult(); 
 
             foreach (Service Svc in RunningServices)
             {
-                if (Svc.Name == ServiceName)
+                if (Svc.ClassName == ServiceName)
                 {
                     ServiceShutdownResult SSR_Svc = Svc.OnShutdown();
 
@@ -101,6 +108,40 @@ namespace Lightning.Core
             return SSR; 
         }
 
+        /// <summary>
+        /// Shutdown all services. Used at the killing of the SCM itself during engine shutdown.
+        /// </summary>
+        /// <returns></returns>
+        public ServiceShutdownResult ShutdownAllServices()
+        {
+            Logging.Log("Shutting down all services...", ClassName);
 
+            ServiceShutdownResult SSR = new ServiceShutdownResult();
+
+            foreach (Service Svc in RunningServices)
+            {
+                string XClassName = Svc.ClassName;
+
+                ServiceShutdownResult SSR_KillSvc = KillService(XClassName);
+
+                if (!SSR_KillSvc.Successful)
+                {
+                    SSR.FailureReason = $"SCM: Service shutdown failure: The service {XClassName} failed to shut down: {SSR.FailureReason}";
+
+                }
+                else
+                {
+                    
+                    // no error occurred, continue.
+                    continue; 
+                }
+            }
+
+            // No errors have occurred
+
+            SSR.Successful = true;
+            return SSR; 
+
+        }
     }
 }

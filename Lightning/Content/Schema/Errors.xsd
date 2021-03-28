@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Errors"
+    targetNamespace="http://tempuri.org/Errors.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/Errors.xsd"
+    xmlns:mstns="http://tempuri.org/Errors.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <!--
+    XML Schema for Errors
+    
+    March 27, 2021 
+  -->
+  <xs:complexType name="Errors">
+    <xs:sequence>
+      <xs:element name="Error">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Description" type="xs:string"></xs:element>
+            <xs:element name="Name" type="xs:string"></xs:element>
+
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
