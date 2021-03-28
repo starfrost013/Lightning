@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Lightning.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Lightning.Core
 {
@@ -9,14 +12,14 @@ namespace Lightning.Core
     /// </summary>
     public static class ErrorManager
     {
-        public static List<Error> Errors { get; set; }
+        public static ErrorCollection Errors { get; set; }
 
         public static void Init()
         {
-            Errors = new List<Error>();
+            Errors = new ErrorCollection();
         }
 
-        private static bool DoesErrorExist(Error Err) => Errors.Contains(Err);
+        private static bool DoesErrorExist(Error Err) => Errors.ErrorList.Contains(Err);
 
         /// <summary>
         /// temp: pre-result class
@@ -66,6 +69,11 @@ namespace Lightning.Core
             return ErrResult; 
         }
 
+        /// <summary>
+        /// Throw an error from Component <paramref name="Component"/> with the <see cref="Error"/> object <paramref name="Err"/>.
+        /// </summary>
+        /// <param name="Component">The component you wish to throw the error from. Optional </param>
+        /// <param name="Err"></param>
         public static void ThrowError(string Component, Error Err) => HandleError(Component, Err);
 
         public static void ThrowError(string Component, string ErrorName)
@@ -137,6 +145,27 @@ namespace Lightning.Core
 
                 }
             }
+        }
+
+        public static void SerialiseErrors(string Path)
+        {
+            try
+            {
+                XmlReader XR = XmlReader.Create(Path);
+
+                XmlSerializer XS = new XmlSerializer(typeof(ErrorCollection));
+                Errors = (ErrorCollection)XS.Deserialize(XR);
+            }
+            catch (InvalidOperationException err)
+            {
+                ThrowError($"Error serialising error: {err}", new Error { Name = "ErrorSerialisingErrorXmlException", Description = "", Id = 0x4444DEAD, Severity = MessageSeverity.FatalError });
+            }
+
+        }
+
+        public static void SerialiseErrors_Validate()
+        {
+
         }
     }
 }

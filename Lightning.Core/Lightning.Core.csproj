@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.101.21086</AssemblyVersion>
-    <FileVersion>1.0.101.21086</FileVersion>
+    <AssemblyVersion>1.0.102.21087</AssemblyVersion>
+    <FileVersion>1.0.102.21087</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -36,10 +36,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Reflection\" />
   </ItemGroup>
 
 </Project>

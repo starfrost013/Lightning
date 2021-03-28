@@ -10,15 +10,25 @@
     XML Schema for Errors
     
     March 27, 2021 
+    
+    Version 2.0.1.0002
+    
+    1.0.0.0001  March 27, 2021  Initial version
+    2.0.1.0002  March 28, 2021  Added ErrorSchemaVersion, Severity, Id, UseCustomErrorHandler, CustomErrorHandler
   -->
   <xs:complexType name="Errors">
+
     <xs:sequence>
+      <xs:element name="ErrorSchemaVersion" type="xs:string"></xs:element>
       <xs:element name="Error">
         <xs:complexType>
           <xs:sequence>
             <xs:element name="Description" type="xs:string"></xs:element>
+            <xs:element name="Id" type="xs:int"></xs:element>
             <xs:element name="Name" type="xs:string"></xs:element>
-
+            <xs:element name="UseCustomErrorHandler" type="xs:boolean" minOccurs="0"></xs:element>
+            <xs:element name="CustomErrorHandler" type="xs:string" minOccurs="0"></xs:element>
+            <xs:element name="Severity" type="xs:string"></xs:element> <!-- Converted to MessageSeverity -->
           </xs:sequence>
         </xs:complexType>
       </xs:element>
