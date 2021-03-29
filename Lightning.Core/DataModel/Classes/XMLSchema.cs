@@ -10,7 +10,7 @@ namespace Lightning.Core
     public class LightningXMLSchema : Instance
     {
         public override string ClassName => "XMLSchema";
-        public XmlSchema _schema { get; set; }
+        public XmlSchema Schema { get; set; }
         public XmlSchemaInfo XSI { get; set; }
 
         public LightningXMLSchema()
@@ -20,6 +20,7 @@ namespace Lightning.Core
 
         public XmlSchemaResult Validate()
         {
+            XmlReaderSettings XRS = new XmlReaderSettings();
             throw new NotImplementedException();
         }
 
