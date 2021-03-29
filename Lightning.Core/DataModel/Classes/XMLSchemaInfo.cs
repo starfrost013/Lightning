@@ -21,5 +21,7 @@ namespace Lightning.Core
     {
         public override InstanceTags Attributes { get => InstanceTags.Instantiable; }
         public override string ClassName { get => "XMLSchemaInfo"; }
+        public string SchemaPath { get; set; }
+        public string XmlPath { get; set; }
     }
 }

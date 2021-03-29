@@ -147,10 +147,12 @@ namespace Lightning.Core
             }
         }
 
-        public static void SerialiseErrors(string Path)
+        public static GenericResult SerialiseErrors(string Path)
         {
             try
             {
+                GenericResult GR = new GenericResult();
+
                 XmlReader XR = XmlReader.Create(Path);
 
                 XmlSerializer XS = new XmlSerializer(typeof(ErrorCollection));

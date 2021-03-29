@@ -11,9 +11,22 @@ namespace Lightning.Core
     {
         public override string ClassName => "XMLSchema";
         public XmlSchema _schema { get; set; }
-        public string SchemaName { get; set; }
-        public string Path { get; set; }
-        public Type ClassToSerialise { get; set; }
-        public bool SerialiseAllInheritedClasses { get; set; }
+        public XmlSchemaInfo XSI { get; set; }
+
+        public LightningXMLSchema()
+        {
+
+        }
+
+        public XmlSchemaResult Validate()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Validate_OnFail(object ValidationObject)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
