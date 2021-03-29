@@ -149,9 +149,10 @@ namespace Lightning.Core
 
         public static GenericResult SerialiseErrors(string Path)
         {
+            GenericResult GR = new GenericResult();
             try
             {
-                GenericResult GR = new GenericResult();
+
 
                 XmlReader XR = XmlReader.Create(Path);
 
@@ -160,7 +161,12 @@ namespace Lightning.Core
             }
             catch (InvalidOperationException err)
             {
-                ThrowError($"Error serialising error: {err}", new Error { Name = "ErrorSerialisingErrorXmlException", Description = "", Id = 0x4444DEAD, Severity = MessageSeverity.FatalError });
+                string ErrorString = $"Error serialising error: {err}";
+                ThrowError(ErrorString, new Error { Name = "ErrorSerialisingErrorXmlException", Description = "", Id = 0x4444DEAD, Severity = MessageSeverity.FatalError });
+                // prevent compile error
+
+                GR.FailureReason = ErrorString;
+                return GR;
             }
 
         }
