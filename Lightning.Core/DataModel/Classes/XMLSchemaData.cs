@@ -9,18 +9,16 @@ namespace Lightning.Core
     /// 
     /// Non-instantiable
     /// 
-    /// XMLSchemaInfo
+    /// XMLSchemaData
     /// 
     /// Holds information about an XML schema.
     /// 
     /// 2021-03-06: Created.
     /// 2021-03-09: Added properties.
-    /// 
+    /// 2021-03-30: Renamed to XMLSchemaData. Removed from DataModel.
     /// </summary>
-    public class XMLSchemaInfo : Instance
+    public class XmlSchemaData
     {
-        public override InstanceTags Attributes { get => InstanceTags.Instantiable; }
-        public override string ClassName { get => "XMLSchemaInfo"; }
         public string SchemaPath { get; set; }
         public string XmlPath { get; set; }
     }

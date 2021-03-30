@@ -100,7 +100,7 @@ namespace Lightning.Core
         public virtual string ClassName { get; }
 
         /// <summary>
-        /// The user-name of this object. MUST OVERRIDE!
+        /// The user-friendly name of this object. OPTIONAL OVERRIDE
         /// </summary>
         public string Name { get; set; }
 

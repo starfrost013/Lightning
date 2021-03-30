@@ -11,22 +11,58 @@ namespace Lightning.Core
     {
         public override string ClassName => "XMLSchema";
         public XmlSchema Schema { get; set; }
-        public XmlSchemaInfo XSI { get; set; }
+        public XmlSchemaData XSI { get; set; }
 
         public LightningXMLSchema()
         {
+            XSI = new X();
 
         }
 
         public XmlSchemaResult Validate()
         {
-            XmlReaderSettings XRS = new XmlReaderSettings();
-            throw new NotImplementedException();
+            XmlSchemaResult XSR = new XmlSchemaResult();
+            
+            if (XSI.SchemaPath == null
+                || XSI.XmlPath == null)
+            {
+                XSR.FailureReason = "Invalid XmlReaderSettings!";
+                XSR.Severity = XmlSeverityType.Error;
+                return XSR;
+            }
+            else
+            {
+                XmlReaderSettings XRS = new XmlReaderSettings();
+                XRS.ValidationType = ValidationType.Schema;
+
+                XRS.IgnoreComments = true;
+                XRS.IgnoreWhitespace = true;
+                XRS.ValidationEventHandler += Validate_OnFail;
+
+                XmlReader XR = XmlReader.Create(XSI.XmlPath);
+
+                // yes we have to do this.
+                while (XR.Read())
+                {
+
+                }
+            }
+
+            XSR.Successful = true;
+            return XSR; 
         }
 
-        private void Validate_OnFail(object ValidationObject)
+        private void Validate_OnFail(object sender, ValidationEventArgs EventArgs)
         {
-            throw new NotImplementedException();
+            switch (EventArgs.Severity)
+            {
+                case XmlSeverityType.Warning:
+                    Logging.Log($"XML Validation Warning: {EventArgs.Exception}", ClassName, MessageSeverity.Warning);
+                    return;
+                case XmlSeverityType.Error:
+                    Logging.Log($"XML Validation Errir: {EventArgs.Exception}", ClassName, MessageSeverity.Error);
+                    return;
+            }
         }
 
     }
