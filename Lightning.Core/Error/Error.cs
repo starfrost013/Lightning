@@ -23,9 +23,11 @@ namespace Lightning.Core
     /// 
     /// Non-instanceable object (not part of the DataModel)
     /// </summary>
+    [XmlRoot("Error")]
     public class Error
     {
-        public Exception BaseException { get; set; }
+
+        [XmlIgnore]
         public CustomErrorHandler CustomErrHandler { get; set; }
 
         [XmlElement("Description")]

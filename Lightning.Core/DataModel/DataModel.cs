@@ -110,14 +110,20 @@ namespace Lightning.Core
             
         }
 
+        /// <summary>
+        /// ATest #2 for DataModel - DDMS Serialisation
+        /// </summary>
         public void ATest_Serialise()
         {
             // need to fix this weird api 
             LightningXMLSchema LXMLS = (LightningXMLSchema)CreateInstance("LightningXMLSchema");
-            LXMLS.Path = @"Content\Schema\Lightning.xsd";
+            LXMLS.XSI.XmlPath = @"Content\Schema\Lightning.xsd";
 
             DataModelSerialiser DDX = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
             DDX.DDMS_Serialise(LXMLS, @"Content\Test\Test.xml");
+            //TEMP 
+            ErrorManager.Init(); 
+            // END TEMP
         }
 #endif
         

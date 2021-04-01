@@ -17,10 +17,26 @@ namespace Lightning.Core
         public static void Init()
         {
             Errors = new ErrorCollection();
+            //pre-globalsettings
+            SerialiseErrors(@"Content\EngineContent\Errors.xml");
+#if DEBUG
+            ATest_CheckErrorSerialisedCorrectly(); 
+#endif
         }
 
         private static bool DoesErrorExist(Error Err) => Errors.ErrorList.Contains(Err);
-
+#if DEBUG
+        private static void ATest_CheckErrorSerialisedCorrectly()
+        {
+            foreach (Error Err in Errors.ErrorList)
+            {
+                Logging.Log("Error: ", "Error Manager");
+                Logging.Log($"Name: {Err.Name}", "Error Manager");
+                Logging.Log($"Description: {Err.Description}", "Error Manager");
+                Logging.Log($"Id: {Err.Id}", "Error Manager");
+            }
+        }
+#endif
         /// <summary>
         /// temp: pre-result class
         /// 
@@ -147,9 +163,55 @@ namespace Lightning.Core
             }
         }
 
-        public static GenericResult SerialiseErrors(string Path)
+        private static GenericResult SerialiseErrors(string Path)
         {
             GenericResult GR = new GenericResult();
+
+            XmlSchemaResult XSR = SerialiseErrors_Validate(Path);
+            
+            if (!XSR.Successful)
+            {
+                GR.FailureReason = $"Failed to validate Error XML (Schema-based validation failure): {XSR.FailureReason}";
+                return GR;
+            }
+            else
+            {
+                ErrorSerialisationResult GR2 = SerialiseErrors_Serialise(Path);
+
+                if (!GR2.Successful)
+                {
+                    GR.FailureReason = $"Error serialising error XML!: {GR.FailureReason}";
+                    return GR;
+                }
+                else
+                {
+                    // successful
+                    Errors = GR2.ErrorCollection;
+                    GR.Successful = true;
+                    return GR;
+                }
+            }
+
+
+
+        }
+
+        private static XmlSchemaResult SerialiseErrors_Validate(string Path)
+        {
+            LightningXMLSchema LXMLS = (LightningXMLSchema)DataModel.CreateInstance("LightningXMLSchema");
+
+            // todo: engineglobalsettings
+            LXMLS.XSI.SchemaPath = @"Content\Schema\Errors.xsd";
+            LXMLS.XSI.XmlPath = Path;
+
+            return LXMLS.Validate();
+        }
+
+        
+        private static ErrorSerialisationResult SerialiseErrors_Serialise(string Path)
+        {
+            ErrorSerialisationResult GR = new ErrorSerialisationResult();
+
             try
             {
 
@@ -157,23 +219,24 @@ namespace Lightning.Core
                 XmlReader XR = XmlReader.Create(Path);
 
                 XmlSerializer XS = new XmlSerializer(typeof(ErrorCollection));
-                Errors = (ErrorCollection)XS.Deserialize(XR);
+                GR.ErrorCollection = (ErrorCollection)XS.Deserialize(XR);
+
+                GR.Successful = true;
+                return GR; 
             }
             catch (InvalidOperationException err)
             {
+                // Throw an error
                 string ErrorString = $"Error serialising error: {err}";
                 ThrowError(ErrorString, new Error { Name = "ErrorSerialisingErrorXmlException", Description = "", Id = 0x4444DEAD, Severity = MessageSeverity.FatalError });
                 // prevent compile error
 
+                // Successful is false by default
                 GR.FailureReason = ErrorString;
                 return GR;
             }
-
         }
 
-        public static void SerialiseErrors_Validate()
-        {
-
-        }
+        
     }
 }

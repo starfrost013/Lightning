@@ -54,7 +54,7 @@ namespace Lightning.Core
         {
             Logging.Log($"DDMS: Reading {Path} and transforming to DataModel...");
 
-            string ScPath = Schema.Path;
+            string ScPath = Schema.XSI.XmlPath;
 
             XmlReaderSettings XRS = new XmlReaderSettings(); 
 
@@ -120,7 +120,7 @@ namespace Lightning.Core
 
             XmlReaderSettings XRS = new XmlReaderSettings();
             XRS.ValidationType = ValidationType.Schema;
-            XRS.Schemas.Add(null, Schema.Path);
+            XRS.Schemas.Add(null, Schema.XSI.XmlPath);
             XRS.ValidationEventHandler += DDMS_Validate_OnFail;
             XmlReader XR = XmlReader.Create(Path, XRS);
             

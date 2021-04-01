@@ -13,6 +13,8 @@ namespace Lightning.Core
     /// 
     /// A collection of errors,
     /// </summary>
+    /// 
+    [XmlRoot("Errors")]
     public class ErrorCollection : IEnumerable
     {
         // each error
@@ -59,6 +61,43 @@ namespace Lightning.Core
         public ErrorCollectionEnumerator GetEnumerator()
         {
             return new ErrorCollectionEnumerator(ErrorList);
+        }
+
+        /// <summary>
+        /// Required for XML serialisation (2021/04/01)
+        /// </summary>
+        /// <param name="Obj"></param>
+        public void Add(object Obj)
+        {
+
+            // This adds an object to this errorcollection if it is an error.
+            // we also do this for instances
+            Type ObjectType = Obj.GetType();
+
+            Type AType = typeof(Error);
+
+            if (ObjectType != AType)
+            {
+                if (ObjectType.IsSubclassOf(AType))
+                {
+                    Add_OnSuccess(Obj);
+                }
+                else
+                {
+                    // TODO - working error serialisation. lol. 
+                    return; 
+                }
+            }
+            else
+            {
+                Add_OnSuccess(Obj);
+                return;
+            }
+        }
+
+        private void Add_OnSuccess(object Obj)
+        {
+            ErrorList.Add((Error)Obj);
         }
 
     }

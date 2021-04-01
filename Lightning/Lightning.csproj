@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.105.21086</AssemblyVersion>
-    <FileVersion>1.0.97.21086</FileVersion>
+    <AssemblyVersion>1.0.122.21091</AssemblyVersion>
+    <FileVersion>1.0.114.21091</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,15 +12,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Content\EngineContent\Errors.xml" />
+    <None Remove="Content\Schema\Errors.xsd" />
     <None Remove="Content\Schema\Lightning.xsd" />
     <None Remove="Content\Test\Test.xml" />
+    <None Remove="Content\test_texture.png" />
+    <None Remove="Content\test_texture_2.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Content\EngineContent\Errors.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Schema\Lightning.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Test\Test.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\test_texture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\test_texture_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\Schema\Errors.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

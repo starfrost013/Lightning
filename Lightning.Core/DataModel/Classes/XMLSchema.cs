@@ -13,9 +13,13 @@ namespace Lightning.Core
         public XmlSchema Schema { get; set; }
         public XmlSchemaData XSI { get; set; }
 
+        /// <summary>
+        /// Get around the requirement for validationeventhandler to return void (The API had a spaz. Hold out! API!)
+        /// </summary>
+        private XmlSchemaResult __dumbhack { get; set; }
         public LightningXMLSchema()
         {
-            XSI = new X();
+            XSI = new XmlSchemaData();
 
         }
 
@@ -39,7 +43,7 @@ namespace Lightning.Core
                 XRS.IgnoreWhitespace = true;
                 XRS.ValidationEventHandler += Validate_OnFail;
 
-                XmlReader XR = XmlReader.Create(XSI.XmlPath);
+                XmlReader XR = XmlReader.Create(XSI.XmlPath, XRS);
 
                 // yes we have to do this.
                 while (XR.Read())
@@ -60,7 +64,7 @@ namespace Lightning.Core
                     Logging.Log($"XML Validation Warning: {EventArgs.Exception}", ClassName, MessageSeverity.Warning);
                     return;
                 case XmlSeverityType.Error:
-                    Logging.Log($"XML Validation Errir: {EventArgs.Exception}", ClassName, MessageSeverity.Error);
+                    Logging.Log($"XML Validation Error: {EventArgs.Exception}", ClassName, MessageSeverity.Error);
                     return;
             }
         }

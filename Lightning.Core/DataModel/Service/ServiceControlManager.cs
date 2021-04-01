@@ -28,6 +28,7 @@ namespace Lightning.Core
         /// <returns>A <see cref="ServiceStartResult"/>containing the success code and - if it has failed - the failure reason; if it succeeds it will include the service.</returns>
         public ServiceStartResult StartService(Type TypeOfService)
         {
+            //todo: check for duplicate 
             try
             {
                 Logging.Log($"Starting Service {TypeOfService.Name}", ClassName);

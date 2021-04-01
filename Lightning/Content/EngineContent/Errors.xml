@@ -1,0 +1,8 @@
+﻿<Errors>
+  <Error>
+    <Description>Test Error from XML</Description>
+    <Name>TestErrorException</Name>
+    <Id>0</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+</Errors>
