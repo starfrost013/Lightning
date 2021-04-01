@@ -28,6 +28,8 @@ namespace Lightning.Core
         /// <returns>A <see cref="ServiceStartResult"/>containing the success code and - if it has failed - the failure reason; if it succeeds it will include the service.</returns>
         public ServiceStartResult StartService(Type TypeOfService)
         {
+            ServiceStartResult SSR = new ServiceStartResult();
+
             //todo: check for duplicate 
             try
             {
@@ -36,9 +38,18 @@ namespace Lightning.Core
 
                 Service Svc = (Service)ObjX;
 
-                RunningServices.Add(Svc);
+                if (!StartService_CheckForDuplicateServiceRunning(TypeOfService))
+                {
+                    RunningServices.Add(Svc);
+                    return Svc.OnStart();
+                }
+                else
+                {
+                    SSR.Information = $"Attempted to initiate {TypeOfService.Name} when it is already running!";
+                    return SSR;
+                }
 
-                return Svc.OnStart();
+                
             }
             catch (ArgumentException err)
             {
@@ -52,6 +63,23 @@ namespace Lightning.Core
                 return SvcSR; 
             }
 
+        }
+
+        // not bool?
+        private bool StartService_CheckForDuplicateServiceRunning(Type TypeOfService)
+        {
+            foreach (Service Svc in RunningServices)
+            {
+                Type TypeOfCService = Svc.GetType();
+
+                if (TypeOfService == TypeOfCService)
+                {
+                    return true;
+                }
+                
+            }
+
+            return false;
         }
 
         /// <summary>
