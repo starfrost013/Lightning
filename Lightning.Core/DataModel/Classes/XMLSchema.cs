@@ -52,19 +52,36 @@ namespace Lightning.Core
                 }
             }
 
-            XSR.Successful = true;
-            return XSR; 
+            // check if we didn't fail (dumb hack)
+            if (__dumbhack != null)
+            {
+                XSR.Successful = true;
+                return XSR;
+            }
+            else
+            {
+                XSR.FailureReason = __dumbhack.FailureReason;
+                return XSR;
+            }
         }
 
         private void Validate_OnFail(object sender, ValidationEventArgs EventArgs)
         {
+            __dumbhack = new XmlSchemaResult();
+
             switch (EventArgs.Severity)
             {
                 case XmlSeverityType.Warning:
-                    Logging.Log($"XML Validation Warning: {EventArgs.Exception}", ClassName, MessageSeverity.Warning);
+                    string ValidationWarningReason = $"XML Validation Warning: {EventArgs.Exception}";
+                    Logging.Log(ValidationWarningReason, ClassName, MessageSeverity.Warning);
+                    __dumbhack.FailureReason = ValidationWarningReason;
+                        
                     return;
                 case XmlSeverityType.Error:
-                    Logging.Log($"XML Validation Error: {EventArgs.Exception}", ClassName, MessageSeverity.Error);
+                    string ValidationErrorReason = $"XML Validation Error: {EventArgs.Exception}";
+                    Logging.Log(ValidationErrorReason, ClassName, MessageSeverity.Error);
+                    __dumbhack.FailureReason = ValidationErrorReason;
+
                     return;
             }
         }

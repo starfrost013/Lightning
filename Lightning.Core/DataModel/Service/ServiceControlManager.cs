@@ -38,6 +38,7 @@ namespace Lightning.Core
 
                 Service Svc = (Service)ObjX;
 
+                // Check if another instance of this service is already running.
                 if (!StartService_CheckForDuplicateServiceRunning(TypeOfService))
                 {
                     RunningServices.Add(Svc);
@@ -133,7 +134,7 @@ namespace Lightning.Core
                 }
             }
 
-            SSR.FailureReason = "Unknown error";
+            SSR.FailureReason = "Attempted to kill a service that does not exist or is not running!";
             return SSR; 
         }
 
