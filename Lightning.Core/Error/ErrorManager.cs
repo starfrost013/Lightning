@@ -92,6 +92,11 @@ namespace Lightning.Core
         /// <param name="Err"></param>
         public static void ThrowError(string Component, Error Err) => HandleError(Component, Err);
 
+        /// <summary>
+        /// Throws the error <paramref name="ErrorName"/>, logging component <paramref name="Component"/>
+        /// </summary>
+        /// <param name="Component">The component</param>
+        /// <param name="ErrorName"></param>
         public static void ThrowError(string Component, string ErrorName)
         {
             GetErrorResult ErrToThrow = GetError(ErrorName);
@@ -99,6 +104,31 @@ namespace Lightning.Core
             if (ErrToThrow.Successful)
             {
                 ThrowError(Component, ErrToThrow.Error);     
+            }
+            else
+            {
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEADBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
+            }
+        }
+
+        public static void ThrowError(string Component, string ErrorName, string ErrorDescription)
+        {
+            GetErrorResult ErrToThrow = GetError(ErrorName);
+            
+
+            if (ErrToThrow.Successful)
+            {
+                if (ErrorDescription == null)
+                {
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorException", Description = "Cannot override an error's description with null!" });
+                }
+                else
+                {
+                    ErrToThrow.Error.Description = ErrorDescription;
+                    ThrowError(Component, ErrToThrow.Error);
+                }
+
+               
             }
             else
             {

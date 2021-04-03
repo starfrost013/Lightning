@@ -14,15 +14,19 @@ namespace Lightning.Core
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.3.0
+    /// Version 0.3.1
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-03-26 (v0.3.0: Use Linq and XDocument) 
+    /// Modified 2021-04-02 (v0.3.1: add error checking, static versioning propertie) 
     /// 
     /// DYnamically serialises XML to Lightning DataModel objects.
     /// </summary>
     public class DataModelSerialiser : Instance
     {
+        public static int DDMSAPI_VERSION_MAJOR = 0;
+        public static int DDMSAPI_VERSION_MINOR = 3;
+        public static int DDMSAPI_VERSION_REVISION = 1;
+
         public override string ClassName => "DataModelSerialiser";
         /// <summary>
         /// An incredibly dumb hack to get around the compiler
@@ -45,7 +49,6 @@ namespace Lightning.Core
         /// 
         /// make ddmsserialisationresult?
         /// 
-        /// TODO: THROW ERROR
         /// </summary>
         /// <param name="Schema">The schema to utilise for serialisation.</param>
         /// <param name="Path">The path to the XML document to serialise. </param>
@@ -54,12 +57,7 @@ namespace Lightning.Core
         {
             Logging.Log($"DDMS: Reading {Path} and transforming to DataModel...");
 
-            string ScPath = Schema.XSI.XmlPath;
-
-            XmlReaderSettings XRS = new XmlReaderSettings(); 
-
             XDocument XD = XDocument.Load(Path);
-
 
             // Create the datamodel that we will be returning.
             DataModel DM = new DataModel();
@@ -149,13 +147,18 @@ namespace Lightning.Core
             switch (e.Severity)
             {
                 case XmlSeverityType.Warning:
-                    Logging.Log($"DDMS Serialisation Schema Validation Warning!{e.Message}\n\n{e.Exception}");
+#if DEBUG
+                    ErrorManager.ThrowError(ClassName, "DDMSSchemaValidationWarningException", $"Warning opening game: XML serialisation warning! {e.Message}\n\n{e.Exception}");
+#endif
                     return;
                 case XmlSeverityType.Error:
-                    // TODO - SERIALISATION -ERRORS.XML
-                    Logging.Log($"DDMS Serialisation Schema Validation Error!{e.Message}\n\n{e.Exception}");
+#if DEBUG
+                    ErrorManager.ThrowError(ClassName, "DDMSSchemaValidationWarningException", $"Error opening game: XML serialisation failure. {e.Message}\n\n{e.Exception}");
+#else
+                    ErrorManager.ThrowError(ClassName, "DDMSSchemaValidationWarningException", $"The Game XML is invalid.");
+#endif
                     return;
-                    // TODO - SERIALISATION - ERRORS.XML
+
             }
         }
 
@@ -177,8 +180,7 @@ namespace Lightning.Core
 
                     if (!DDSR.Successful)
                     {
-                        // TODO - ERRORS.XML - THROW ERROR
-                        Logging.Log($"DDSR Failure {DDSR.FailureReason}", ClassName, MessageSeverity.Error);
+                        ErrorManager.ThrowError(ClassName, "DDMSMetadataValidationError", DDSR.FailureReason);
                         return DDSR; 
                     }
 
@@ -285,12 +287,10 @@ namespace Lightning.Core
                         }
                         catch (FormatException err)
                         {
-                            // TODO - SERIALISATION - ERRORS.XML
-                            // TEMP
-                            Logging.Log(err.Message, ClassName, MessageSeverity.Error);
-                            // END TEMP
-                            // TODO - SERIALISATION - ERRORS.XML
-                            DDSR.FailureReason = $"Attempted to serialise invalid XML\n{err}";
+                            string ErrDesc = $"Attempted to serialise invalid XML\n{err}";
+
+                            DDSR.FailureReason = ErrDesc;
+                            return DDSR;
                         }
 
                         DDSR.Successful = true;

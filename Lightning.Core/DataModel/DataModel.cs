@@ -9,7 +9,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel v0.2.2
+    /// DataModel v0.2.3
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -18,7 +18,7 @@ namespace Lightning.Core
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
         public static int DATAMODEL_VERSION_MINOR = 2;
-        public static int DATAMODEL_VERSION_REVISION = 2;
+        public static int DATAMODEL_VERSION_REVISION = 3;
 
         // shouldn't be static? idk
 
@@ -31,6 +31,8 @@ namespace Lightning.Core
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
             Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
+            ErrorManager.Init();
+
             State = new List<Instance>();
 
             // init the SCM
@@ -80,14 +82,15 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    
-                    return null; //TODO: throw error 
+                    ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationFailedException", IX.FailureReason);
+                    return null;
                 }
                 
             }
             catch (Exception) //TODO: HANDLE VARIOUS TYPES OF EXCEPTION
             {
-                return null; // TEMP
+                ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationUnknownErrorException"); 
+                return null; 
             }
         }
 
@@ -121,9 +124,7 @@ namespace Lightning.Core
 
             DataModelSerialiser DDX = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
             DDX.DDMS_Serialise(LXMLS, @"Content\Test\Test.xml");
-            //TEMP 
-            ErrorManager.Init(); 
-            // END TEMP
+
         }
 #endif
         

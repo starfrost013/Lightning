@@ -24,11 +24,13 @@ namespace Lightning
 
         static void Main(string[] Args)
         {
+            // almost all of this is temporary
             Console.WriteLine("Lightning");
 
-            // TEMP CODE
+            
             LVersion.LoadVersion();
-
+            
+            
             string LVersionString = LVersion.GetVersionString();
             Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 

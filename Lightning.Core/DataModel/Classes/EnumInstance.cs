@@ -21,9 +21,8 @@ namespace Lightning.Core
         {
             if (Res == null || Res.Length == 0)
             {
-                // TODO
+                ErrorManager.ThrowError(ClassName, "AttemptedToAddInvalidEnumNameException");
                 return;
-                // TODO: ERROR
             }
             else
             {
@@ -40,9 +39,10 @@ namespace Lightning.Core
             if (Res == null || Res.Length == 0
                 || Id <= 0)
             {
-                // TODO
+
+                ErrorManager.ThrowError(ClassName, "AttemptedToAddInvalidEnumNameException");
                 return;
-                // TODO: ERROR
+
             }
             else
             {

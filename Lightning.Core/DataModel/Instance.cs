@@ -20,12 +20,15 @@ namespace Lightning.Core
     /// 2020-03-18  DataModel.State only contains first-level instances; Instances store parent and child
     /// 2020-03-23  (need to move this comment block to DataModel.cs): worked on Standard Instance Library
     /// 2020-03-26  Added the ability to set an instance's parent at instantiation time. 
+    /// 2020-04-02  Error handling, implemented InstanceCollection.Add(); 
     /// </summary>
     public abstract class Instance
     {
-        public static int INSTANCEAPI_VERSION_MAJOR = 0;
-        public static int INSTANCEAPI_VERSION_MINOR = 2;
-        public static int INSTANCEAPI_VERSION_REVISION = 2;
+        // These all should always be the same, so I made it so.
+        // 2021-04-02
+        public static int INSTANCEAPI_VERSION_MAJOR = DataModel.DATAMODEL_VERSION_MAJOR;
+        public static int INSTANCEAPI_VERSION_MINOR = DataModel.DATAMODEL_VERSION_MINOR;
+        public static int INSTANCEAPI_VERSION_REVISION = DataModel.DATAMODEL_VERSION_REVISION;
 
         /// <summary>
         /// Backing field for <see cref="Parent"/>
@@ -44,8 +47,7 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    // todo: throw error
-                    Logging.Log("Error: Attempted to acquire nonexistent parent!", "Lightning DataModel", MessageSeverity.Error);
+                    ErrorManager.ThrowError(ClassName, "CannotAcquireNullParentException");
                     return null; 
                 }
                  
@@ -53,7 +55,7 @@ namespace Lightning.Core
 
             set
             {
-                // Check that a candidate parent is a superclass of this instance
+                // Check that a candidate parent is a superclass of this instance or is of the same class of this instance.
                 Type TypeOfCParent = this.GetType();
                 Type TypeOfVParent = value.GetType();
 
@@ -61,15 +63,17 @@ namespace Lightning.Core
                 {
                     _parent = value; 
                 }
-                else
+                else // If it isn't the same...
                 {
+                    // is it a subclass?
                     if (TypeOfCParent.IsSubclassOf(TypeOfVParent))
                     {
                         _parent = value;
                     }
-                    else
+                    else // Throw an error and return if it isn't.
                     {
-                        // TODO - THROW ERROR [SERIALISATION/ERRORS.XML]
+
+                        ErrorManager.ThrowError(ClassName, "InstanceCannotBeParentException", $"{TypeOfCParent} is not {TypeOfVParent} and does not inherit from it. As a result of this, {ClassName} cannot be a parent of {value.ClassName}.");
                         return; 
                     }
                 }
@@ -122,9 +126,9 @@ namespace Lightning.Core
             }
             else
             {
-                // TODO - SERIALISATION - THROW ERROR
+                ErrorManager.ThrowError(ClassName, "InstanceInfoGenerationFailedException", $"Failed to generate InstanceInfo: {IIR.FailureReason}. This instance will not appear in the Explorer.");
                 return;
-                // TODO - SERIALISATION - THROW ERROR
+                
             }
         }
 

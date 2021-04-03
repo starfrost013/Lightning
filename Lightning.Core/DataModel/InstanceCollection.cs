@@ -46,9 +46,8 @@ namespace Lightning.Core
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    // TODO - THROW ERROR - SERIALISATION
+                    ErrorManager.ThrowError("DataModel", "AttemptedToAcquireInvalidInstanceException");
                     return null;
-                    // TODO - THROW ERROR - SERIALISATION
                 }
             } 
 

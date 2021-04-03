@@ -61,10 +61,9 @@ namespace Lightning.Core
 
             if (Version.Length != 4)
             {
-                // TODO - THROW ERROR - WHEN ERRORS.XML EXISTS
 
+                ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionException");
                 return; 
-                // TODO - THROW ERROR
             }
             else
             {
@@ -77,7 +76,7 @@ namespace Lightning.Core
                 }
                 catch (FormatException)
                 {
-                    // TODO - THROW ERROR
+                    ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionInformationException");
                     return; 
                 }
             }
@@ -100,10 +99,11 @@ namespace Lightning.Core
         {
             if (BuildDate == null
                 || Owner == null
-                || !IsLoaded // todo: throw error on isloaded=false 
+                || !IsLoaded 
                 )
             {
-                return null; // TEMP: ERRORS.XML!!!
+                ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionAuxillaryInformationException");
+                return null;
             }
             else
             {

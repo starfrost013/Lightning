@@ -1,8 +1,114 @@
-﻿<Errors>
+﻿<!-- Lightning Error XML
+Do not change if you are not a dev 
+© 2021 starfrost/Lightning Dev Team (just me atm lol)
+-->
+
+<Errors>
   <Error>
     <Description>Test Error from XML</Description>
     <Name>TestErrorException</Name>
     <Id>0</Id>
     <Severity>FatalError</Severity>
   </Error>
+  <!-- Implemented 2021-04-02 -->
+  <Error>
+    <Description>InstanceCollection: Attempted to acquire invalid Instance!</Description>
+    <Name>AttemptedToAcquireInvalidInstanceException</Name>
+    <Id>1</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+  <Error>
+    <Description>Versioning: Acquired invalid version - must have 4 components (delimiter is .)</Description>
+    <Name>InvalidVersionException</Name>
+    <Id>2</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <Description>Versioning: Acquired invalid version - invalid owner or build date!</Description>
+    <Name>InvalidVersionAuxillaryInformationException</Name>
+    <Id>3</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <Description>Versioning: Acquired invalid version - major, minor, revision, or private/compressed build date</Description>
+    <Name>InvalidVersionInformationException</Name>
+    <Id>4</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToAddNonErrorToErrorsException</Name>
+    <Id>5</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <!-- Probably obsolete -->
+    <Description>EnumValue: Attempted to add EnumValue with zero-length or null to EnumInstance!</Description>
+    <Name>AttemptedToAddInvalidEnumNameException</Name>
+    <Id>6</Id>
+    <Severity>FatalError</Severity>
+    <!-- End probably obsolete -->
+  </Error>
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DataModelInstanceCreationFailedException</Name>
+    <Id>7</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <Description>An unknown exception occurred during the creation of an Instance and its addition to the DataModel.</Description>
+    <Name>DataModelInstanceCreationUnknownErrorException</Name>
+    <Id>8</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InstanceInfoGenerationFailedException</Name>
+    <Id>9</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InstanceCannotBeParentException</Name>
+    <Id>10</Id>
+    <Severity>Error</Severity>
+  </Error>
+  <Error>
+    <Description>Attempted to acquire a null parent!</Description>
+    <Name>CannotAcquireNullParentException</Name>
+    <Id>11</Id>
+    <Severity>Error</Severity> <!-- change to fatal? -->
+
+  </Error>
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSSchemaValidationWarningException</Name>
+    <Id>12</Id>
+    <Severity>Warning</Severity>
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSSchemaValidationErrorException</Name>
+    <Id>13</Id>
+    <Severity>Error</Severity> <!-- change to fatal? -->
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSMetadataValidationError</Name>
+    <Id>14</Id>
+    <Severity>Error</Severity>
+    <!-- change to fatal? -->
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSDataModelSerialisationErrorException</Name>
+    <Id>15</Id>
+    <Severity>Error</Severity>
+    <!-- change to fatal? -->
+  </Error>
+  <!-- End 2021-04-02 -->
+  
 </Errors>

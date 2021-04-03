@@ -84,7 +84,8 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    // TODO - working error serialisation. lol. 
+                    string OTypeName = ObjectType.Name;
+                    ErrorManager.ThrowError("Error Manager", "AttemptedToAddNonErrorToErrorsException", $"{OTypeName} does not inherit from Error, cannot add it to an ErrorCollection!");
                     return; 
                 }
             }

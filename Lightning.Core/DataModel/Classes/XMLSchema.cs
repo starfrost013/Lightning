@@ -53,7 +53,7 @@ namespace Lightning.Core
             }
 
             // check if we didn't fail (dumb hack)
-            if (__dumbhack != null)
+            if (__dumbhack == null)
             {
                 XSR.Successful = true;
                 return XSR;
