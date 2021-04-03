@@ -1,6 +1,6 @@
 # Lightning Game Engine
 
-## Code of Conduct (version 1.1) (March 7, 2021)
+## Code of Conduct (version 1.2) (April 3, 2021)
 
 Welcome to the Lightning game engine main tree. We are going to have to ask you abide by a few rules if you wish to contribute code.
 
@@ -10,7 +10,7 @@ Welcome to the Lightning game engine main tree. We are going to have to ask you 
 
 * All code you check into the main branch must compile. Do a private build to check that it compiles before committing it into the main tree!
 
-* Please document all of the changes you make thoroughly.
+* Please document all of the changes you make thoroughly using XMLDOC.
 
 * Code reviews are a requirement for non-senior developers! Contact me or a senior developer for a code review.
 
@@ -25,9 +25,16 @@ Welcome to the Lightning game engine main tree. We are going to have to ask you 
 
 * ALL platform specific code MUST be wrapped in platform specific IFDEFS!
 
-* All additions to the main engine feature set must concur with the DataModel model.
+* All additions to the main engine feature set must concur with the DataModel model:
+If it is not a user API and does not support a user API in a direct way, it may not be in the DataModel.
+If it is a user-facing API, deals with scripting or does support a user API, it must be in the DataModel.
+
+* Method names must be <componentname>_<purpose> for private internal methods.
 
 ### Version History
+**V1.2 (April 3, 2021)**:
+
+
 **V1.1 (March 7, 2021)**:
 * Added a style guide for committing code to the main branch.
 
