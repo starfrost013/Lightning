@@ -31,9 +31,10 @@ If it is not a user API and does not support a user API in a direct way, it may 
 
 If it is a user-facing API, deals with scripting or does support a user API, it must be in the DataModel.
 
-* Method names must be <componentname>_<purpose> for private internal methods.
+* Method names must be *componentname*_*purpose* for private internal methods.
 
 ### Version History
+
 **V1.2 (April 3, 2021)**:
 * Added clarification surrounding when code should and should not be in the DataModel and informatino surrounding method names.
 
