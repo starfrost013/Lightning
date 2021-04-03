@@ -26,14 +26,16 @@ Welcome to the Lightning game engine main tree. We are going to have to ask you 
 * ALL platform specific code MUST be wrapped in platform specific IFDEFS!
 
 * All additions to the main engine feature set must concur with the DataModel model:
+
 If it is not a user API and does not support a user API in a direct way, it may not be in the DataModel.
+
 If it is a user-facing API, deals with scripting or does support a user API, it must be in the DataModel.
 
 * Method names must be <componentname>_<purpose> for private internal methods.
 
 ### Version History
 **V1.2 (April 3, 2021)**:
-
+* Added clarification surrounding when code should and should not be in the DataModel and informatino surrounding method names.
 
 **V1.1 (March 7, 2021)**:
 * Added a style guide for committing code to the main branch.
