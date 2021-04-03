@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>SDL2</RootNamespace>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.120.21093</AssemblyVersion>
-    <FileVersion>1.0.201.21093</FileVersion>
+    <AssemblyVersion>1.0.121.21093</AssemblyVersion>
+    <FileVersion>1.0.202.21093</FileVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     
   </PropertyGroup>
