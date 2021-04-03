@@ -1,5 +1,5 @@
 #region License
-/* Lightning SDL2 Wrapper for RenderService
+/* Lightning SDL2 Wrapper
  * 
  * 2021-04-03
  * 
