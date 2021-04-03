@@ -24,5 +24,10 @@ namespace Lightning.Core
         {
             throw new NotImplementedException();
         }
+
+        public override ServiceShutdownResult OnUnexpectedShutdown()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

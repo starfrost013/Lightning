@@ -24,6 +24,7 @@ namespace Lightning.Core
 
         /// <summary>
         /// Contains a list of the first-level instances
+        /// todo: make list
         /// </summary>
         private static List<Instance> State;
 
@@ -31,9 +32,10 @@ namespace Lightning.Core
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
             Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
-            ErrorManager.Init();
+            
 
             State = new List<Instance>();
+            ErrorManager.Init();
 
             // init the SCM
             CreateInstance("ServiceControlManager");

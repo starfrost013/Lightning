@@ -23,9 +23,15 @@ namespace Lightning.Core
         /// </summary>
         public abstract string SName { get; }
         public bool RunningNow { get; set; }
-
+        public ServiceImportance Importance => ServiceImportance.Low;
         public abstract ServiceStartResult OnStart();
         public abstract ServiceShutdownResult OnShutdown();
+
+        /// <summary>
+        /// The service encountered a fatal error that required it to shutdown.
+        /// </summary>
+        /// <returns></returns>
+        public abstract ServiceShutdownResult OnUnexpectedShutdown();
 
         
     }

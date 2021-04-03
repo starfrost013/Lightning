@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.128.21092</AssemblyVersion>
-    <FileVersion>1.0.120.21092</FileVersion>
+    <AssemblyVersion>1.0.120.21093</AssemblyVersion>
+    <FileVersion>1.0.120.21093</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 
@@ -59,6 +59,26 @@
     <Content Include="Content\Schema\Errors.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+
+    <!-- SDL2 x86 Debug-->
+    <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2 x86 Release-->
+    <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Releae|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+
+    </Content>
+    <!-- SDL2 x64 Debug-->
+    <Content Include="SDL2-v2.0.14-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2 x64 Release-->
+    <Content Include="SDL2-v2.0.14-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -70,5 +90,6 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+
 
 </Project>

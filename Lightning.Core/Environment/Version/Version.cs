@@ -61,8 +61,8 @@ namespace Lightning.Core
 
             if (Version.Length != 4)
             {
-
-                ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionException");
+                //ERRORMANAGER needs to be no longer dependent on datamodel before this error can exist
+                //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionException");
                 return; 
             }
             else
@@ -76,7 +76,7 @@ namespace Lightning.Core
                 }
                 catch (FormatException)
                 {
-                    ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionInformationException");
+                    //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionInformationException");
                     return; 
                 }
             }
@@ -102,7 +102,7 @@ namespace Lightning.Core
                 || !IsLoaded 
                 )
             {
-                ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionAuxillaryInformationException");
+                //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionAuxillaryInformationException");
                 return null;
             }
             else
