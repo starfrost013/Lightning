@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>SDL2</RootNamespace>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.121.21093</AssemblyVersion>
-    <FileVersion>1.0.202.21093</FileVersion>
+    <AssemblyVersion>1.0.122.21094</AssemblyVersion>
+    <FileVersion>1.0.203.21094</FileVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>SDL2-CS for Lightning</PackageId>
     <Authors>Ethan</Authors>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="GlobalSettings"
+    targetNamespace="http://tempuri.org/GlobalSettings.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/GlobalSettings.xsd"
+    xmlns:mstns="http://tempuri.org/GlobalSettings.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  
+  <!-- Lightning Game Engine 
+  
+  Global Settings Schema
+  
+  April 4, 2021
+  
+  -->
+
+  <xs:complexType name="GlobalSettings">
+    <xs:sequence>
+      <xs:element name="SchemaVersion"></xs:element>
+      <xs:element name="StartupServices">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="StartupService" type="xs:string"></xs:element> <!-- Must be a valid Service name -->
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

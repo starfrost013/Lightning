@@ -7,9 +7,8 @@ using System.Xml.Serialization;
 
 namespace Lightning.Core
 {
-    public class LightningXMLSchema : Instance
+    public class LightningXMLSchema
     {
-        public override string ClassName => "XMLSchema";
         public XmlSchema Schema { get; set; }
         public XmlSchemaData XSI { get; set; }
 
@@ -73,13 +72,13 @@ namespace Lightning.Core
             {
                 case XmlSeverityType.Warning:
                     string ValidationWarningReason = $"XML Validation Warning: {EventArgs.Exception}";
-                    Logging.Log(ValidationWarningReason, ClassName, MessageSeverity.Warning);
+                    Logging.Log(ValidationWarningReason, "XMLSchema", MessageSeverity.Warning);
                     __dumbhack.FailureReason = ValidationWarningReason;
                         
                     return;
                 case XmlSeverityType.Error:
                     string ValidationErrorReason = $"XML Validation Error: {EventArgs.Exception}";
-                    Logging.Log(ValidationErrorReason, ClassName, MessageSeverity.Error);
+                    Logging.Log(ValidationErrorReason, "XMLSchema", MessageSeverity.Error);
                     __dumbhack.FailureReason = ValidationErrorReason;
 
                     return;

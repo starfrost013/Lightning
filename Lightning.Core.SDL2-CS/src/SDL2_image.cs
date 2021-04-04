@@ -31,7 +31,7 @@ using System;
 using System.Runtime.InteropServices;
 #endregion
 
-namespace SDL2
+namespace Lightning.Core.SDL2
 {
 	public static class SDL_image
 	{

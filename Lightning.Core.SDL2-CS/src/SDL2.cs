@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 #endregion
 
-namespace SDL2
+namespace Lightning.Core.SDL2
 {
 	public static class SDL
 	{
