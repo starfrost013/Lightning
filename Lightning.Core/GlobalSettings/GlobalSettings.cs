@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Core.StaticSerialiser; 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,5 +19,10 @@ namespace Lightning.Core
     public static class GlobalSettings
     {
         public static List<ServiceStartupCommand> ServiceStartupCommands { get; set; }
+
+        public static void Serialise()
+        {
+            // write this 2021-04-04 lol
+        }
     }
 }

@@ -43,6 +43,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core.NativeInterop\Lightning.Core.NativeInterop.csproj" />
     <ProjectReference Include="..\Lightning.Core.SDL2-CS\Lightning.Core.SDL2-CS.csproj" />
+    <ProjectReference Include="..\Lightning.Core.StaticSerialiser\Lightning.Core.StaticSerialiser.csproj" />
     <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
   </ItemGroup>
 
