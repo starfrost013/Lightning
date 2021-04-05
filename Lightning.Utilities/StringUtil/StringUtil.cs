@@ -69,78 +69,8 @@ namespace Lightning.Utilities
          * Lightning will use DataModel objects with this functionality
         
 
-        /// <summary>
-        /// Splits a string into an Emerald GameDLL version. Modified 2020-04-30 for scriptdomains.
-        /// </summary>
-        /// <param name="SplitString">The string to split.</param>
-        /// <returns></returns>
-        public static List<int> SplitVersion(this String SplitString)
-        {
-            try
-            {
-                string[] _1 = SplitString.Split('.');
-
-                // If we don't have 3 versions then error out
-                if (_1.Length != 4)
-                {
-                    MessageBox.Show($"Error converting string to version - must be 4 version components supplied", "Emerald Game Engine Error 42", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return null;
-                }
-
-                List<int> Version = new List<int>();
-
-                // Build the version
-
-                foreach (string _2 in _1)
-                {
-                    Version.Add(Convert.ToInt32(_2));
-                }
-
-                return Version;
-            }
-            // Error Condition: Attempted to convert an invalid portion of a string. 
-            catch (FormatException err)
-            {
-                MessageBox.Show($"Error converting string to version - invalid version information\n\n{err}", "Emerald Game Engine Error 56", MessageBoxButton.OK, MessageBoxImage.Error);
-                return null;
-            }
-        }
-
         
-        /// <summary>
-        /// Convert from string to version. 
-        /// </summary>
-        /// <param name="SplitString"></param>
-        /// <returns></returns>
-        public static EVersion ToVersion(this String SplitString)
-        {
-            try
-            {
-                string[] _1 = SplitString.Split('.');
-
-                // If we don't have 3 versions then error out
-                if (_1.Length != 4)
-                {
-                    MessageBox.Show($"Error converting string to version - must be 4 version components supplied", "Emerald Game Engine Error 60", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return null;
-                }
-
-                EVersion Version = new EVersion();
-
-                // set the version information
-                Version.Major = Convert.ToInt32(_1[0]);
-                Version.Minor = Convert.ToInt32(_1[1]);
-                Version.Build = Convert.ToInt32(_1[2]);
-                Version.Revision = Convert.ToInt32(_1[3]);
-
-                return Version;
-
-            }
-            catch (FormatException err)
-            {
-                MessageBox.Show($"Error converting string to version - invalid version component supplied!\n\n{err}", "Emerald Game Engine Error 61", MessageBoxButton.OK, MessageBoxImage.Error);
-                return null;
-            }
+   }
         }
         */
 
@@ -441,5 +371,7 @@ namespace Lightning.Utilities
 
              
         }
+
+        
     }
 }

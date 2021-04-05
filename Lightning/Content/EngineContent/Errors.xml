@@ -110,5 +110,32 @@ Do not change if you are not a dev
     <!-- change to fatal? -->
   </Error>
   <!-- End 2021-04-02 -->
-  
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>GlobalSettingsValidationFailureException</Name>
+    <Id>16</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>GlobalSettingsValidationWarningException</Name>
+    <Id>17</Id>
+    <Severity>Warnings</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotAddThatInstanceAsChildException</Name>
+    <Id>18</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToSerialiseGlobalSettingsException</Name>
+    <Id>19</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

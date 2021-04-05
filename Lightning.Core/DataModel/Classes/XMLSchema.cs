@@ -22,6 +22,10 @@ namespace Lightning.Core
 
         }
 
+        /// <summary>
+        /// Validates XML located at <see cref="XmlSchemaData.SchemaPath"/> against the schema <see cref="XmlSchemaData.SchemaPath"/>. These must both be set or an error will be thrown.
+        /// </summary>
+        /// <returns></returns>
         public XmlSchemaResult Validate()
         {
             XmlSchemaResult XSR = new XmlSchemaResult();
@@ -30,7 +34,7 @@ namespace Lightning.Core
                 || XSI.XmlPath == null)
             {
                 XSR.FailureReason = "Invalid XmlReaderSettings!";
-                XSR.Severity = XmlSeverityType.Error;
+                XSR.RSeverity = XmlSeverityType.Error;
                 return XSR;
             }
             else
@@ -60,6 +64,9 @@ namespace Lightning.Core
             else
             {
                 XSR.FailureReason = __dumbhack.FailureReason;
+
+                // warning or error
+                XSR.RSeverity = __dumbhack.RSeverity;
                 return XSR;
             }
         }
@@ -67,17 +74,17 @@ namespace Lightning.Core
         private void Validate_OnFail(object sender, ValidationEventArgs EventArgs)
         {
             __dumbhack = new XmlSchemaResult();
-
+            __dumbhack.RSeverity = EventArgs.Severity;
             switch (EventArgs.Severity)
             {
                 case XmlSeverityType.Warning:
-                    string ValidationWarningReason = $"XML Validation Warning: {EventArgs.Exception}";
+                    string ValidationWarningReason = $"XML Validation warning: {EventArgs.Exception}";
                     Logging.Log(ValidationWarningReason, "XMLSchema", MessageSeverity.Warning);
                     __dumbhack.FailureReason = ValidationWarningReason;
                         
                     return;
                 case XmlSeverityType.Error:
-                    string ValidationErrorReason = $"XML Validation Error: {EventArgs.Exception}";
+                    string ValidationErrorReason = $"XML Validation error! {EventArgs.Exception}";
                     Logging.Log(ValidationErrorReason, "XMLSchema", MessageSeverity.Error);
                     __dumbhack.FailureReason = ValidationErrorReason;
 

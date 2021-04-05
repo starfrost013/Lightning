@@ -1,15 +1,14 @@
-﻿using Lightning.Utilities;
+﻿using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml.Schema;
 
 namespace Lightning.Core
 {
-    public class XmlSchemaResult : IResult
+    public class GlobalSettingsResult : IResult
     {
         public string FailureReason { get; set; }
-        public XmlSeverityType RSeverity { get; set; }
+        public GlobalSettings Settings { get; set; }
         public bool Successful { get; set; }
     }
 }

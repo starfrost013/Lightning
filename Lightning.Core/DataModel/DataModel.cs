@@ -121,7 +121,7 @@ namespace Lightning.Core
         public void ATest_Serialise()
         {
             // need to fix this weird api 
-            LightningXMLSchema LXMLS = (LightningXMLSchema)CreateInstance("LightningXMLSchema");
+            LightningXMLSchema LXMLS = new LightningXMLSchema(); // has been removed from the datamodel
             LXMLS.XSI.XmlPath = @"Content\Schema\Lightning.xsd";
 
             DataModelSerialiser DDX = (DataModelSerialiser)CreateInstance("DataModelSerialiser");

@@ -248,8 +248,8 @@ namespace Lightning.Core
 
         public Instance GetParent() => Parent;
 
-        public void RemoveAllChildren() => Children.Instances.Clear();
-        public void AddChild(Instance Chl) => Children.Instances.Add(Chl);
+        public void RemoveAllChildren() => Children.Clear();
+        public void AddChild(Instance Chl) => Children.Add(Chl);
         public GenericResult RemoveChild(Instance Chl)
         {
             GenericResult GR = new GenericResult();
