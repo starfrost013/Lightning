@@ -30,10 +30,13 @@ namespace Lightning.Core
         {
             foreach (Error Err in Errors.ErrorList)
             {
-                Logging.Log("Error: ", "Error Manager");
-                Logging.Log($"Name: {Err.Name}", "Error Manager");
-                Logging.Log($"Description: {Err.Description}", "Error Manager");
-                Logging.Log($"Id: {Err.Id}", "Error Manager");
+                string CompName = "Error Manager";
+
+                Logging.Log("Error: ", CompName);
+                Logging.Log($"Name: {Err.Name}", CompName);
+                Logging.Log($"Description: {Err.Description}", CompName);
+                Logging.Log($"Id: {Err.Id}", CompName);
+                Logging.Log($"Severity: {Err.Severity}", CompName);
             }
         }
 #endif
@@ -146,7 +149,7 @@ namespace Lightning.Core
             }
             else
             {
-                ThrowError("Error Handler - InnerException", new Error { Id = 0xD3ADBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error ID {ErrorId}" });
+                ThrowError("Error Handler - InnerException", new Error { Id = 0x9999BABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error ID {ErrorId}" });
             }
 
         }
@@ -228,7 +231,7 @@ namespace Lightning.Core
 
         private static XmlSchemaResult SerialiseErrors_Validate(string Path)
         {
-            LightningXMLSchema LXMLS = (LightningXMLSchema)DataModel.CreateInstance("LightningXMLSchema");
+            LightningXMLSchema LXMLS = new LightningXMLSchema();
 
             // todo: engineglobalsettings
             LXMLS.XSI.SchemaPath = @"Content\Schema\Errors.xsd";
@@ -258,7 +261,7 @@ namespace Lightning.Core
             {
                 // Throw an error
                 string ErrorString = $"Error serialising error: {err}";
-                ThrowError(ErrorString, new Error { Name = "ErrorSerialisingErrorXmlException", Description = "", Id = 0x4444DEAD, Severity = MessageSeverity.FatalError });
+                ThrowError(ErrorString, new Error { Name = "ErrorSerialisingErrorXmlException", Description = ErrorString, Id = 0x4444DEAD, Severity = MessageSeverity.FatalError, BaseException = err });
                 // prevent compile error
 
                 // Successful is false by default

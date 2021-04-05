@@ -122,7 +122,7 @@ Do not change if you are not a dev
     <Description>!!this should be overridden in code!!</Description>
     <Name>GlobalSettingsValidationWarningException</Name>
     <Id>17</Id>
-    <Severity>Warnings</Severity>
+    <Severity>Warning</Severity>
   </Error>
 
   <Error>

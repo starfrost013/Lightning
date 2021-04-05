@@ -39,8 +39,12 @@ namespace Lightning.Core
         /// <summary>
         /// A list of services to be started by the Service Control Manager at init time. Contains an optional startup order and list of strings. 
         /// </summary>
-        public List<ServiceStartupCommand> ServiceStartupCommands { get; set; }
+        public ServiceStartupCommandCollection ServiceStartupCommands { get; set; }
 
+        /// <summary>
+        /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 
+        /// </summary>
+        /// <returns></returns>
         public GlobalSettingsResult SerialiseGlobalSettings()
         {
             GlobalSettingsResult GSR = new GlobalSettingsResult();

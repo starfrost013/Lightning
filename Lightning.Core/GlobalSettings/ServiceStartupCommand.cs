@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Lightning.Core
 {
@@ -15,10 +16,13 @@ namespace Lightning.Core
     /// </summary>
     public class ServiceStartupCommand
     {
+        [XmlElement("StartOrder")]
         /// <summary>
         /// The start order of this service.
         /// </summary>
         public int StartOrder { get; set; }
-        public string SvcName { get; set; }
+
+        [XmlElement("ServiceName")]
+        public string ServiceName { get; set; }
     }
 }

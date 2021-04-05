@@ -13,15 +13,25 @@
   
   April 4, 2021
   
+  Schema version 0.2.0.0002
+  
+  v0.1.0.0001   April 4, 2021   Initial version
+  v0.2.0.0002   April 5, 2021   Removed SchemaVersion, as it was ultimately redundant; added startorder and servicename instead of just being a list of servicenames. 
   -->
 
   <xs:complexType name="GlobalSettings">
     <xs:sequence>
-      <xs:element name="SchemaVersion"></xs:element>
       <xs:element name="StartupServices">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="StartupService" type="xs:string"></xs:element> <!-- Must be a valid Service name -->
+            <xs:element name="StartupService">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="StartOrder" type="xs:int" minOccurs="0"></xs:element>
+                  <xs:element name="ServiceName" type="xs:string"></xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element> <!-- Must be a valid Service name -->
           </xs:sequence>
         </xs:complexType>
       </xs:element>

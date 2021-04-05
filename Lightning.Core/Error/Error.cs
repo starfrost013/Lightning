@@ -26,6 +26,8 @@ namespace Lightning.Core
     [XmlRoot("Error")]
     public class Error
     {
+        [XmlIgnore]
+        public Exception BaseException { get; set; } // putting this back in. 
 
         [XmlIgnore]
         public CustomErrorHandler CustomErrHandler { get; set; }
