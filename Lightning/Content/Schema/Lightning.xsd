@@ -24,6 +24,8 @@
   v0.2.1.0002: Added Metadata.Author                                                2021-03-17
   v0.2.1.0003: Renamed Created to CreationDate and LastModified to LastModifiedDate 2021-03-21
   v0.2.2.0004: Added Description                                                    2021-03-22
+  v0.2.3.0005: Renamed InstanceTree to Workspace                                    2021-04-06
+  
   -->
   <xs:complexType name="Lightning" id="LightningRoot">
     <xs:sequence>
@@ -51,7 +53,7 @@
       </xs:element>
 
       <!-- Mandatory File Component: InstanceTree -->
-      <xs:element name="InstanceTree">
+      <xs:element name="Workspace">
         <xs:complexType>
           <xs:sequence>
             <!-- This area will be handled by the DDMS (Dynamic DataModel Serialiser)-->

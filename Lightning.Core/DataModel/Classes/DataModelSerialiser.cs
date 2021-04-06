@@ -17,7 +17,7 @@ namespace Lightning.Core
     /// Version 0.3.2
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-04-06 (v0.3.2: updated for DataModel 0.4.0)
+    /// Modified 2021-04-06 (v0.3.2: updated for DataModel 0.4.0) - TEMP WORKAROUND WILL REQUIRE MAJOR REFACTORING
     /// 
     /// DYnamically serialises XML to Lightning DataModel objects.
     /// </summary>
@@ -38,7 +38,7 @@ namespace Lightning.Core
         /// 
         /// The XML schema version. 
         /// </summary>
-        public static string XMLSCHEMA_VERSION = "0.2.2.0004";
+        public static string XMLSCHEMA_VERSION = "0.2.3.0005";
 
         /// <summary>
         /// DDMS (Dynamic DataModel Serialiser)
@@ -323,11 +323,11 @@ namespace Lightning.Core
 
             XElement XInstanceTreeNode;
 
-            List<XElement> XInstanceTreeNodeList = XD.Root.Elements("InstanceTree").ToList();
+            List<XElement> XInstanceTreeNodeList = XD.Root.Elements("Workspace").ToList();
 
             if (XInstanceTreeNodeList.Count == 0)
             {
-                DDSR.FailureReason = "Cannot find InstanceTree!";
+                DDSR.FailureReason = "Cannot find Workspace!";
                 return DDSR; 
             }
             else
