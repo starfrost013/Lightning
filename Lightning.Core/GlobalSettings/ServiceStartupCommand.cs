@@ -12,7 +12,7 @@ namespace Lightning.Core
     /// 
     /// 2021-04-03
     /// 
-    /// Holds information for instructing the SCM to strt a service at system boot time. 
+    /// Holds information for instructing the SCM to start a service at system boot time. 
     /// </summary>
     public class ServiceStartupCommand
     {

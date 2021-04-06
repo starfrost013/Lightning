@@ -9,7 +9,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel v0.2.3
+    /// DataModel v0.4.0 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,16 +17,26 @@ namespace Lightning.Core
     public class DataModel
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
-        public static int DATAMODEL_VERSION_MINOR = 2;
-        public static int DATAMODEL_VERSION_REVISION = 3;
+        public static int DATAMODEL_VERSION_MINOR = 4;
+        public static int DATAMODEL_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
+
+        /// <summary>
+        /// The global engine settings for this DataModel. 
+        /// </summary>
+        public static GlobalSettings GlobalSettings { get; set; }
 
         /// <summary>
         /// Contains a list of the first-level instances
         /// todo: make list
         /// </summary>
-        private static List<Instance> State;
+        private static InstanceCollection State;
+
+        /// <summary>
+        /// Path to the namespace that contains DataModel objects
+        /// </summary>
+        public static string DATAMODEL_NAMESPACE_PATH = "Lightning.Core";
 
         public DataModel()
         {
@@ -34,11 +44,13 @@ namespace Lightning.Core
             Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
             
 
-            State = new List<Instance>();
+            State = new InstanceCollection();
             ErrorManager.Init();
 
             // init the SCM
-            CreateInstance("ServiceControlManager");
+            Workspace WorkSvc = (Workspace)CreateInstance("Workspace");
+
+            CreateInstance("ServiceControlManager", WorkSvc);
 #if DEBUG_ATEST_DATAMODEL //todo: unit testing
             ATest();
 #endif
@@ -55,7 +67,7 @@ namespace Lightning.Core
             {
 
                 // Do some kinda weird kludge to get the generic type we want
-                Type WantedType = Type.GetType($"Lightning.Core.{ClassName}");
+                Type WantedType = Type.GetType($"{DATAMODEL_NAMESPACE_PATH}.{ClassName}");
 
                 InstantiationResult IX = Instancer.CreateInstance(WantedType);
 
@@ -68,19 +80,21 @@ namespace Lightning.Core
 
                     NewInstance.GenerateInstanceInfo();
 
+                    // Return the object in the parent tree if not null 
                     if (Parent == null)
                     {
                         State.Add(NewInstance);
+                        return State.Instances[State.Instances.Count - 1];
                     }
                     else
                     {
-                        Parent.Children.Instances.Add(NewInstance); 
+                        // DO!!!! NOT!!!! CALL!!!! PARENT.CHILDREN.INSTANCES.ADD!!!
+                        // I REPEAT, DO!!!! NOT!!!! CALL!!!! THAT
+                        Parent.Children.Add(NewInstance);
+                        return Parent.Children.Instances[Parent.Children.Instances.Count - 1];
                     }
 
-                    // Hack to get around ref limitations ig?
-                    // fix this if it doesn't work
 
-                    return State[State.Count - 1]; //TEMP
                 }
                 else
                 {
@@ -96,6 +110,7 @@ namespace Lightning.Core
             }
         }
 
+       
         public static void Clear()
         {
             // we will need to do a lot more than this
@@ -128,7 +143,7 @@ namespace Lightning.Core
             DDX.DDMS_Serialise(LXMLS, @"Content\Test\Test.xml");
 
         }
-#endif
+
         
 
         /// <summary>
@@ -142,55 +157,88 @@ namespace Lightning.Core
 
             foreach (Instance II in State)
             {
-                Console.WriteLine($"Instance: {II.ClassName}:");
-
-                if (II.Name != null) Console.WriteLine($"Instance: {II.ClassName} ({II.Name})");
-
-                Console.WriteLine($"Tags: {II.Attributes.ToString()}");
-
-                InstanceInfo IIF = II.Info;
-
-                foreach (InstanceInfoMethod IIM in IIF.Methods)
-                {
-                    if (FilterAccessors)
-                    {
-                        if (IIM.MethodName.Contains("get_")
-                            || IIM.MethodName.Contains("set_"))
-                        {
-                            continue;
-                        }
-                    }
-
-                    Console.Write("Method: ");
-                    Console.Write($"{IIM.MethodName}\n");
-
-                    if (IIM.Parameters.Count == 0)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        foreach (InstanceInfoMethodParameter IIMP in IIM.Parameters)
-                        {
-
-                            Console.Write("Parameter: ");
-                            Console.Write($"Name: {IIMP.ParamName} ");
-                            Console.Write($"Type: {IIMP.ParamType.Name}\n");
-                        }
-                    }
-
-                }
-
-                // don't bother going any further than one level deep
-                foreach (InstanceInfoProperty IIP in IIF.Properties)
-                {
-                    Console.Write("Property:");
-                    Console.Write($"Name: {IIP.Name} ");
-                    Console.Write($"Type: {IIP.Type}\n");
-                }
+                InstanceDump_DumpInstance(II, FilterAccessors);
             }
 
             return; 
         }
+
+        private void InstanceDump_DumpInstance(Instance II, bool FilterAccessors = true)
+        {
+            Console.WriteLine($"Instance: {II.ClassName}:");
+
+            if (II.Name != null) Console.WriteLine($"Instance: {II.ClassName} ({II.Name})");
+
+            Console.WriteLine($"Tags: {II.Attributes}");
+
+            InstanceInfo IIF = II.Info;
+
+            foreach (InstanceInfoMethod IIM in IIF.Methods)
+            {
+                if (FilterAccessors)
+                {
+                    if (IIM.MethodName.Contains("get_")
+                        || IIM.MethodName.Contains("set_"))
+                    {
+                        continue;
+                    }
+                }
+
+                Console.Write("Method: ");
+                Console.Write($"{IIM.MethodName}\n");
+
+                if (IIM.Parameters.Count == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    foreach (InstanceInfoMethodParameter IIMP in IIM.Parameters)
+                    {
+
+                        Console.Write("Parameter: ");
+                        Console.Write($"Name: {IIMP.ParamName} ");
+                        Console.Write($"Type: {IIMP.ParamType.Name}\n");
+                    }
+                }
+
+                
+
+            }
+
+            // don't bother going any further than one level deep
+            foreach (InstanceInfoProperty IIP in IIF.Properties)
+            {
+                Console.Write("Property:");
+                Console.Write($"Name: {IIP.Name} ");
+                Console.Write($"Type: {IIP.Type}\n");
+            }
+
+            if (II.Children.Count > 0)
+            {
+                foreach (Instance IChild in II.Children)
+                {
+                    // check that this does not cause problems.s
+                    InstanceDump_DumpInstance(IChild, true);
+                }
+            }
+        }
+
+#endif
+
+
+        /// <summary>
+        /// Gets the first child of this Instance with ClassName <see cref="ClassName"/>
+        /// </summary>
+        /// <returns>A <see cref="GetInstanceResult"/> object. The Instance is <see cref="GetInstanceResult.Instance"/>.</returns>
+        public static GetInstanceResult GetFirstChildOfType(string ClassName) => State.GetFirstChildOfType(ClassName);
+
+        /// <summary>
+        /// Gets the last child of this Instance with Class Name <see cref="ClassName"/>
+        /// </summary>
+        /// <param name="ClassName"></param>
+        /// <returns></returns>
+        public static GetInstanceResult GetLastChildOfType(string ClassName) => State.GetLastChildOfType(ClassName);
+
     }
 }

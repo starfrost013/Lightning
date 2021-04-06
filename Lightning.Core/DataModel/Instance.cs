@@ -8,7 +8,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning DataModel
     /// 
-    /// Instance Ver0.2.2
+    /// DataModel/Instance Ver0.4.0
     /// 
     /// Provides the root for all objects provided in Lightning.
     /// 
@@ -21,6 +21,9 @@ namespace Lightning.Core
     /// 2020-03-23  (need to move this comment block to DataModel.cs): worked on Standard Instance Library
     /// 2020-03-26  Added the ability to set an instance's parent at instantiation time. 
     /// 2020-04-02  Error handling, implemented InstanceCollection.Add(); 
+    /// 2020-04-05  Actually implemented InstanceCollection.Add(); and InstanceCollection.Clear(); - DataModel class itself now stores GlobalSettings.
+    /// 2020-04-06  Added Workspace; made parent/child addition actually work...
+    /// 
     /// </summary>
     public abstract class Instance
     {
@@ -245,6 +248,20 @@ namespace Lightning.Core
                 return GIR;
             }
         }
+
+        /// <summary>
+        /// Gets the first child of this Instance with ClassName <see cref="ClassName"/>
+        /// </summary>
+        /// <returns>A <see cref="GetInstanceResult"/> object. The Instance is <see cref="GetInstanceResult.Instance"/>.</returns>
+        public GetInstanceResult GetFirstChildOfType(string ClassName) => Children.GetFirstChildOfType(ClassName);
+
+        /// <summary>
+        /// Gets the last child of this Instance with Class Name <see cref="ClassName"/>
+        /// </summary>
+        /// <param name="ClassName"></param>
+        /// <returns></returns>
+        public GetInstanceResult GetLastChildOfType(string ClassName) => Children.GetLastChildOfType(ClassName);
+        
 
         public Instance GetParent() => Parent;
 

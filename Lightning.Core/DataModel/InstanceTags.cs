@@ -41,14 +41,19 @@ namespace Lightning.Core
         /// <summary>
         /// Not sure if we should use this?
         /// 
-        /// Is shown in object properties
+        /// Is shown in explorer
         /// </summary>
         ShownInProperties = 32,
 
         /// <summary>
         /// The Parent of this Instance is locked
         /// </summary>
-        ParentLocked = 64
+        ParentLocked = 64,
+
+        /// <summary>
+        /// The Parent of this Instance can be null (can be on the bare DataModel). 
+        /// </summary>
+        ParentCanBeNull = 128
 
     }
 }
