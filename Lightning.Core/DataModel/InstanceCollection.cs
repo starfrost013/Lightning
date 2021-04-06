@@ -63,6 +63,7 @@ namespace Lightning.Core
                     if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
                     {
                         Add_PerformAdd(Obj);
+                        return; 
                     }
                     else
                     {
@@ -72,7 +73,7 @@ namespace Lightning.Core
                         if (!WorkSvc.Successful)
                         {
                             Debug.Assert(WorkSvc.FailureReason != null);
-
+                            ErrorManager.ThrowError("DataModel", "WorkspaceHasBeenDestroyedException");
                         }
                         else
                         {
@@ -81,10 +82,8 @@ namespace Lightning.Core
                             Workspace TheWorkspace = (Workspace)WorkSvc.Instance;
 
                             Add_PerformAdd(Obj, TheWorkspace);
-
+                            return; 
                         }
-                        // throw error
-                        ErrorManager.ThrowError("DataModel", "AttemptedToAddInstanceToDataModelRootWithoutParentCanBeNullAttributeSetException", $"The Instance of type {ObjType.Name}");
                     }
                     
                 }
@@ -96,18 +95,20 @@ namespace Lightning.Core
                     if (ObjType == ParentType)
                     {
                         Add_PerformAdd(Obj, TestInstanceParent);
+                        return; 
                     }
                     else
                     {
                         if (ObjType.IsSubclassOf(ParentType))
                         {
                             Add_PerformAdd(Obj, TestInstanceParent);
+                            return; 
                         }
                         else
                         {
 
                             ErrorManager.ThrowError("DataModel", "CannotAddThatInstanceAsChildException", $"{ObjType.Name} cannot be a child of {ParentType.Name}!");
-
+                            return; 
                         }
 
 
@@ -118,6 +119,7 @@ namespace Lightning.Core
             {
                 // throw an error
                 ErrorManager.ThrowError("DataModel", "ThatIsNotAnInstancePleaseDoNotTryToAddItToTheDataModelException", $"Attempted to add an object of class {ObjType.Name} to the DataModel when it does not inherit from Instance!");
+                return; 
             }
 
         }

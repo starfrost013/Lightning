@@ -147,9 +147,9 @@ Do not change if you are not a dev
   </Error>
 
   <Error>
-    <Description>!!this should be overridden in code!!</Description>
-    <Name>AttemptedToAddInstanceToDataModelRootWithoutParentCanBeNullAttributeSetException</Name>
+    <Description>The Workspace has been destroyed and is no longer in the DataModel.</Description>
+    <Name>TheWorkspaceHasBeenDestroyedException</Name>
     <Id>21</Id>
-    <Severity>Error</Severity>
+    <Severity>FatalError</Severity>
   </Error>
 </Errors>
