@@ -74,7 +74,7 @@ Do not change if you are not a dev
     <Severity>Error</Severity>
   </Error>
   <Error>
-    <Description>Attempted to acquire a null parent!</Description>
+    <Description>Attempted to acquire a null parent for an Instance that does not have InstanceTags.CanHaveParentNull!</Description>
     <Name>CannotAcquireNullParentException</Name>
     <Id>11</Id>
     <Severity>Error</Severity> <!-- change to fatal? -->

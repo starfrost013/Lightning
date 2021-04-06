@@ -50,8 +50,17 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    ErrorManager.ThrowError(ClassName, "CannotAcquireNullParentException");
-                    return null; 
+                    // for workspace etc - if instancetags.parentcanbennull allow a null parent 
+                    if (!Attributes.HasFlag(InstanceTags.ParentCanBeNull))
+                    {
+                        ErrorManager.ThrowError(ClassName, "CannotAcquireNullParentException");
+                        return null;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                   
                 }
                  
             }
