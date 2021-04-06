@@ -29,7 +29,7 @@ namespace Lightning.Core
 
         /// <summary>
         /// Contains a list of the first-level instances
-        /// todo: make list
+        /// todo: make non-static
         /// </summary>
         private static InstanceCollection State;
 
@@ -45,6 +45,11 @@ namespace Lightning.Core
             
 
             State = new InstanceCollection();
+
+        }
+
+        public static void Init()
+        {
             ErrorManager.Init();
 
             // init the SCM
@@ -84,7 +89,30 @@ namespace Lightning.Core
                     if (Parent == null)
                     {
                         State.Add(NewInstance);
-                        return State.Instances[State.Instances.Count - 1];
+
+                        // default to the workspace if it is not null; otherwise get datamodel root
+
+                        if (NewInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
+                        {
+                            return State.Instances[State.Count - 1];
+                        }
+                        else
+                        {
+                            GetInstanceResult GIR = GetFirstChildOfType("Workspace");
+                            
+                            if (GIR.Successful)
+                            {
+                                Workspace TheWorkspace = (Workspace)GIR.Instance;
+                                return TheWorkspace.Children.Instances[TheWorkspace.Children.Instances.Count - 1];
+                            }
+                            else
+                            {
+                                // The workspace is trashed, die
+                                ErrorManager.ThrowError("DataModel", "TheWorkspaceHasBeenDestroyedException");
+                            }
+
+                            return null;
+                        }
                     }
                     else
                     {
@@ -115,6 +143,8 @@ namespace Lightning.Core
         {
             // we will need to do a lot more than this
             State.Clear();
+            // Reinitialise
+            Init();
         }
 
 #if DEBUG

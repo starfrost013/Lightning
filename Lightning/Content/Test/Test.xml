@@ -5,7 +5,7 @@
     <Author>starfrost</Author>
     <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-03-22 19:32:04</LastModifiedDate>
+    <LastModifiedDate>2021-04-06 16:03:23</LastModifiedDate>
     <RevisionID>1</RevisionID>
   </Metadata>
   <Settings>
@@ -13,15 +13,18 @@
   </Settings>
 
   <InstanceTree>
-    <ServiceControlManager>
-      <RenderService/>
-    </ServiceControlManager>
-    <Color3 Name="c03_01" R="100" G="100" B="100"/>
-    <Color3 Name="c03_02" R="150" G="100" B="100"/>
-    <Color3 Name="c03_03" R="150" G="100" B="100"/>
-    <Vector2 Name="v1" X="50" Y="40"/>
+    <Workspace>
+      <ServiceControlManager>
+        <RenderService/>
+      </ServiceControlManager>
+      <Color3 Name="c03_01" R="100" G="100" B="100"/>
+      <Color3 Name="c03_02" R="150" G="100" B="100"/>
+      <Color3 Name="c03_03" R="150" G="100" B="100"/>
+      <Vector2 Name="v1" X="50" Y="40"/>
 
-    <!-- RenderService -->
+      <!-- RenderService -->
+
+    </Workspace>
 
   </InstanceTree>
 

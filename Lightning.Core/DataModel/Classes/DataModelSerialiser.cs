@@ -14,10 +14,10 @@ namespace Lightning.Core
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.3.1
+    /// Version 0.3.2
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-04-02 (v0.3.1: add error checking, static versioning propertie) 
+    /// Modified 2021-04-06 (v0.3.2: updated for DataModel 0.4.0)
     /// 
     /// DYnamically serialises XML to Lightning DataModel objects.
     /// </summary>
@@ -25,7 +25,7 @@ namespace Lightning.Core
     {
         public static int DDMSAPI_VERSION_MAJOR = 0;
         public static int DDMSAPI_VERSION_MINOR = 3;
-        public static int DDMSAPI_VERSION_REVISION = 1;
+        public static int DDMSAPI_VERSION_REVISION = 2;
 
         public override string ClassName => "DataModelSerialiser";
         /// <summary>
@@ -432,10 +432,10 @@ namespace Lightning.Core
         }
 
         /// <summary>
-        /// perhaps not make return DataModel?
+        /// Private: Serialise an element to a DataModel object.
         /// </summary>
         /// <param name="DM"></param>
-        /// <param name=""></param>
+        /// <param name="XInstanceChildNode"></param>
         /// <returns></returns>
         private DDMSSerialisationResult DDMS_SerialiseElementToDMObject(DataModel DM, XElement XInstanceChildNode)
         {

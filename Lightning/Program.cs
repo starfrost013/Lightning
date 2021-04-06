@@ -35,6 +35,8 @@ namespace Lightning
             Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
             DataModelX = new DataModel();
+            DataModelX.Init(); 
+
             DataModelX.ATest_Serialise();
             Logging.Log("------ Serialised using DDMS  [Test - 2021/03/26] ------\n");
             DataModelX.InstanceDump(); 
