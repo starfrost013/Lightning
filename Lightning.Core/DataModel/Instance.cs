@@ -43,25 +43,10 @@ namespace Lightning.Core
         /// </summary>
         public Instance Parent { get
             {
-                if (_parent != null)
-                {
-                    return _parent;
 
-                }
-                else
-                {
-                    // for workspace etc - if instancetags.parentcanbennull allow a null parent 
-                    if (!Attributes.HasFlag(InstanceTags.ParentCanBeNull))
-                    {
-                        ErrorManager.ThrowError(ClassName, "CannotAcquireNullParentException");
-                        return null;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                   
-                }
+                // we used to do a lot more in this code block,
+                // but code overhauls have occurred that means they're now done somehwere else.
+                return _parent; 
                  
             }
 
