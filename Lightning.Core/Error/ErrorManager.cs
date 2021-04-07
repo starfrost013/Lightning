@@ -110,7 +110,7 @@ namespace Lightning.Core
             }
             else
             {
-                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEADBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEAEBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
             }
         }
 
@@ -121,14 +121,19 @@ namespace Lightning.Core
 
             if (ErrToThrow.Successful)
             {
-                if (ErrorDescription == null)
+                if (ErrorDescription != null
+                    || ErrorDescription.Length > 0)
                 {
-                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorException", Description = "Cannot override an error's description with null!" });
+                    Error Err = ErrToThrow.Error;
+                    Err.Description = ErrorDescription;
+                    ThrowError(Component, ErrToThrow.Error);
+                    return; 
+
+                    
                 }
                 else
                 {
-                    ErrToThrow.Error.Description = ErrorDescription;
-                    ThrowError(Component, ErrToThrow.Error);
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
                 }
 
                
@@ -136,6 +141,43 @@ namespace Lightning.Core
             else
             {
                 ThrowError("Error Handler - InnerException", new Error { Id = 0xDEADBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
+            }
+        }
+
+        public static void ThrowError(string Component, string ErrorName, string ErrorDescription, Exception BaseException)
+        {
+            GetErrorResult ErrToThrow = GetError(ErrorName);
+
+            if (ErrToThrow.Successful)
+            {
+                if (ErrorDescription != null
+                    && ErrorDescription.Length > 0)
+                {
+                    if (BaseException == null)
+                    {
+                        ThrowError("Error Handler - InnerException", new Error { Id = 0x4747BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonExistentBaseExceptionException", Description = "Attempted to override the BaseException of an error with the BaseException overrides of ErrorManager.ThrowError(), but the Exception is null." });
+                        return;
+                    }
+                    else
+                    {
+                        Error Err = ErrToThrow.Error;
+                        Err.Description = ErrorDescription;
+                        Err.BaseException = BaseException;
+                        ThrowError(Component, ErrToThrow.Error);
+                    }
+
+                }
+                else
+                {
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorException", Description = "Cannot override an error's description with null!" });
+                    return;
+                }
+
+
+            }
+            else
+            {
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEACBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
             }
         }
 
@@ -149,7 +191,74 @@ namespace Lightning.Core
             }
             else
             {
-                ThrowError("Error Handler - InnerException", new Error { Id = 0x9999BABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error ID {ErrorId}" });
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEABBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error ID {ErrorId}" });
+            }
+
+        }
+
+        public static void ThrowError(string Component, int ErrorId, string ErrorDescription)
+        {
+            GetErrorResult ErrToThrow = GetError(ErrorId);
+
+            if (ErrToThrow.Successful)
+            {
+                Error Err = ErrToThrow.Error;
+
+                if (ErrorDescription != null
+                    && ErrorDescription.Length > 0)
+                {
+                    Err.Description = ErrorDescription;
+                    ThrowError(Component, Err);
+
+                }
+                else
+                {
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
+                    return;
+                }
+                
+            }
+            else
+            {
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEAFBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error ID {ErrorId}" });
+            }
+
+        }
+
+        public static void ThrowError(string Component, int ErrorId, string ErrorDescription, Exception BaseException)
+        {
+            GetErrorResult ErrToThrow = GetError(ErrorId);
+
+            if (ErrToThrow.Successful)
+            {
+                Error Err = ErrToThrow.Error;
+
+                if (ErrorDescription != null
+                    && ErrorDescription.Length > 0)
+                {
+
+                    if (BaseException == null)
+                    {
+                        ThrowError("Error Handler - InnerException", new Error { Id = 0x4848BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonExistentBaseExceptionException", Description = "Attempted to override the BaseException of an error with the BaseException overrides of ErrorManager.ThrowError(), but the Exception is null." });
+                    }
+                    else
+                    {
+                        Err.Description = ErrorDescription;
+                        ThrowError(Component, Err);
+                    }
+
+
+                }
+                else
+                {
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
+                    return;
+                }
+
+            }
+            else
+            {
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA9BABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error ID {ErrorId}" });
             }
 
         }

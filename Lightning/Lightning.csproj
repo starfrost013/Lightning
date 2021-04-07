@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.139.21096</AssemblyVersion>
-    <FileVersion>1.0.139.21096</FileVersion>
+    <AssemblyVersion>1.0.140.21096</AssemblyVersion>
+    <FileVersion>1.0.140.21096</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 
@@ -35,6 +35,20 @@
     <None Remove="Content\Test\Test.xml" />
     <None Remove="Content\test_texture.png" />
     <None Remove="Content\test_texture_2.png" />
+    <None Remove="libFLAC-8.dll" />
+    <None Remove="libfreetype-6.dll" />
+    <None Remove="libjpeg-9.dll" />
+    <None Remove="libmodplug-1.dll" />
+    <None Remove="libmpg123-0.dll" />
+    <None Remove="libogg-0.dll" />
+    <None Remove="libopus-0.dll" />
+    <None Remove="libopusfile-0.dll" />
+    <None Remove="libpng16-16.dll" />
+    <None Remove="libtiff-5.dll" />
+    <None Remove="libvorbis-0.dll" />
+    <None Remove="libvorbisfile-3.dll" />
+    <None Remove="libwebp-7.dll" />
+    <None Remove="zlib1.dll" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +73,45 @@
     <Content Include="Content\Schema\Errors.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="libFLAC-8.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libfreetype-6.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libjpeg-9.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libmodplug-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libmpg123-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libogg-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libopus-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libopusfile-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libpng16-16.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libtiff-5.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libvorbis-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libvorbisfile-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libwebp-7.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
 
     <!-- SDL2 x86 Debug-->
     <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -66,10 +119,10 @@
     </Content>
 
     <!-- SDL2 x86 Release-->
-    <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Releae|AnyCPU'">
+    <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-
     </Content>
+
     <!-- SDL2 x64 Debug-->
     <Content Include="SDL2-v2.0.14-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -77,6 +130,71 @@
 
     <!-- SDL2 x64 Release-->
     <Content Include="SDL2-v2.0.14-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    
+    <!-- SDL2_image x86 Debug-->
+    <Content Include="SDL2_image-v2.0.5-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Release-->
+    <Content Include="SDL2_image-v2.0.5-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Debug-->
+    <Content Include="SDL2_image-v2.0.5-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Release-->
+    <Content Include="SDL2_image-v2.0.5-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Debug-->
+    <Content Include="SDL2_mixer-v2.0.4-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Release-->
+    <Content Include="SDL2_mixer-v2.0.4-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Debug-->
+    <Content Include="SDL2_mixer-v2.0.4-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Release-->
+    <Content Include="SDL2_mixer-v2.0.4-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+
+    <!-- SDL2_image x86 Debug-->
+    <Content Include="SDL2_ttf-v2.0.15-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Release-->
+    <Content Include="SDL2_ttf-v2.0.15-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Debug-->
+    <Content Include="SDL2_ttf-v2.0.15-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- SDL2_image x86 Release-->
+    <Content Include="SDL2_ttf-v2.0.15-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    
+    <Content Include="zlib1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
