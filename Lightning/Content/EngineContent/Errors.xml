@@ -136,7 +136,7 @@ Do not change if you are not a dev
     <Description>!!this should be overridden in code!!</Description>
     <Name>FailedToSerialiseGlobalSettingsException</Name>
     <Id>19</Id>
-    <Severity>Error</Severity>
+    <Severity>FatalError</Severity>
   </Error>
 
   <Error>
@@ -152,4 +152,12 @@ Do not change if you are not a dev
     <Id>21</Id>
     <Severity>FatalError</Severity>
   </Error>
+
+  <Error>
+    <Description>Attempted to add an object that is not a ServiceStartupCommand to a ServiceStartupCommandCollection</Description>
+    <Name>AttemptedToAddNonServiceStartupCommandToServiceStartupCommandCollectionException</Name>
+    <Id>22</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
 </Errors>

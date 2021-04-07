@@ -26,6 +26,31 @@ namespace Lightning.Core
         {
             return new ServiceStartupCommandCollectionEnumerator(Commands);
         }
+
+        /// <summary>
+        /// Adds a <see cref="ServiceStartupCommand"/> to a <see cref="ServiceStartupCommandCollection"/>.
+        /// </summary>
+        /// <param name="Obj"></param>
+        public void Add(object Obj)
+        {
+            Type ObjType = Obj.GetType();
+            Type SSCType = typeof(ServiceStartupCommandCollection);
+
+            if (ObjType == SSCType) 
+            {
+                Add_PerformAdd(Obj);
+            }
+            else
+            {
+                ErrorManager.ThrowError("GlobalSettings Loader", "AttemptedToAddNonServiceStartupCommandToServiceStartupCommandCollectionException");
+                return; 
+            }
+        }
+
+        private void Add_PerformAdd(object Obj)
+        {
+            Commands.Add((ServiceStartupCommand)Obj); 
+        }
     }
 
     public class ServiceStartupCommandCollectionEnumerator : IEnumerator

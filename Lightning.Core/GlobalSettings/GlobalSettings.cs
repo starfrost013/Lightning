@@ -63,7 +63,7 @@ namespace Lightning.Core
 
                         return GSR; 
                     case XmlSeverityType.Error:
-                        string FailureReason2 = $"Failed to serialise GlobalSettings: {XSR1.FailureReason}";
+                        string FailureReason2 = $"Failed to serialise GlobalSettings: {XSR1.FailureReason}!";
                         ErrorManager.ThrowError("GlobalSettings Serialiser", "GlobalSettingsValidationFailureException", FailureReason2);
 
                         GSR.FailureReason = FailureReason2;
@@ -81,17 +81,16 @@ namespace Lightning.Core
                 if (!SSR.Successful)
                 {
                     ErrorManager.ThrowError("GlobalSettings Serialiser", "FailedToSerialiseGlobalSettingsException", $"Failed to serialise GlobalSettings: {SSR.FailureReason}");
+                    return SSR;
                 }
                 else
                 {
                     return SSR; 
                 }
             }
-
-            return GSR; 
         }
 
-        public static XmlSchemaResult SerialiseGlobalSettings_Validate()
+        private static XmlSchemaResult SerialiseGlobalSettings_Validate()
         {
             LightningXMLSchema LXMLS = new LightningXMLSchema();
             LXMLS.XSI.XmlPath = GLOBALSETTINGS_XML_PATH;
@@ -106,7 +105,7 @@ namespace Lightning.Core
         /// Serialises GlobalSettings. 
         /// </summary>
         /// <returns>A <see cref="GlobalSettingsResult"/> object. The serialised GlobalSettings object is located within </returns>
-        public static GlobalSettingsResult SerialiseGlobalSettings_Serialise() // genericresult for now?
+        private static GlobalSettingsResult SerialiseGlobalSettings_Serialise() // genericresult for now?
         {
             GlobalSettingsResult GSR = new GlobalSettingsResult(); 
 

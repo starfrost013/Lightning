@@ -45,7 +45,7 @@ namespace Lightning.Core
             
 
             State = new InstanceCollection();
-
+            GlobalSettings = new GlobalSettings();
         }
 
         public static void Init()
@@ -56,6 +56,19 @@ namespace Lightning.Core
             Workspace WorkSvc = (Workspace)CreateInstance("Workspace");
 
             CreateInstance("ServiceControlManager", WorkSvc);
+            
+            GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
+
+            if (GSR.Successful)
+            {
+                // set the globalsettings if successful 
+                GlobalSettings = GSR.Settings;
+            }
+            else
+            {
+                return; // this should not really be running rn 
+            }
+
 #if DEBUG_ATEST_DATAMODEL //todo: unit testing
             ATest();
 #endif
@@ -117,7 +130,7 @@ namespace Lightning.Core
                     else
                     {
                         // DO!!!! NOT!!!! CALL!!!! PARENT.CHILDREN.INSTANCES.ADD!!!
-                        // I REPEAT, DO!!!! NOT!!!! CALL!!!! THAT
+                        // I REPEAT, DO!!!! NOT!!!! CALL!!!! THAT until we can get this bullshit in order 
                         Parent.Children.Add(NewInstance);
                         return Parent.Children.Instances[Parent.Children.Instances.Count - 1];
                     }
