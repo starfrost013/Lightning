@@ -36,11 +36,22 @@ namespace Lightning.Core
         {
             if (Component == null)
             {
-                Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", "Error Logging Component", Err.Severity);
+                Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", "Lightning Game Engine", Err.Severity);
+
+                if (Err.BaseException != null)
+                {
+                    Log($"Base Exception: {Err}", "Lightning Game Engine");
+                }
+
             }
             else
             {
-                Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", "Error Logging Component", Err.Severity);
+                Log($"Error {Err.Id}: Severity {Err.Severity}: {Err.Name} ({Err.Description})", Component, Err.Severity);
+
+                if (Err.BaseException != null)
+                {
+                    Log($"Base Exception: {Err}", "Lightning Game Engine");
+                }
             }
             
         }

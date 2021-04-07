@@ -80,7 +80,7 @@ namespace Lightning.Core
 
                 if (!SSR.Successful)
                 {
-                    ErrorManager.ThrowError("GlobalSettings Serialiser", "FailedToSerialiseGlobalSettingsException", $"Failed to serialise GlobalSettings: {SSR.FailureReason}");
+                    ErrorManager.ThrowError("GlobalSettings Serialiser", "FailedToSerialiseGlobalSettingsException", $"Failed to serialise GlobalSettings: {SSR.FailureReason}", SSR.BaseException);
                     return SSR;
                 }
                 else
@@ -123,6 +123,7 @@ namespace Lightning.Core
             catch (InvalidOperationException err)
             {
                 GSR.FailureReason = $"Failed to serialise: {err}.\n\nInner exception (this may provide more information surrounding the issue): {err.InnerException}";
+                GSR.BaseException = err; 
                 return GSR; 
             }
 
