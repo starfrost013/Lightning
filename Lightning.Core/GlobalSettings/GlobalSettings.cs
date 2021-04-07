@@ -33,9 +33,13 @@ namespace Lightning.Core
         /// <summary>
         /// The schema version
         /// </summary>
-        public static string GLOBALSETTINGS_XSD_SCHEMAVERSION = "0.1.0.0001";
+        public static string GLOBALSETTINGS_XSD_SCHEMAVERSION = "0.2.0.0002";
 
-        [XmlElement("StartupServices")]
+        /// <summary>
+        /// Has the GlobalSettings been loaded?
+        /// </summary>
+        public static bool GLOBALSETTINGS_LOADED { get; set; }
+
         /// <summary>
         /// A list of services to be started by the Service Control Manager at init time. Contains an optional startup order and list of strings. 
         /// </summary>
@@ -45,7 +49,7 @@ namespace Lightning.Core
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 
         /// </summary>
         /// <returns></returns>
-        public GlobalSettingsResult SerialiseGlobalSettings()
+        public static GlobalSettingsResult SerialiseGlobalSettings()
         {
             GlobalSettingsResult GSR = new GlobalSettingsResult();
 
@@ -76,16 +80,22 @@ namespace Lightning.Core
             }
             else
             {
-                GlobalSettingsResult SSR = SerialiseGlobalSettings_Serialise(); 
+                GlobalSettingsResult SSR = SerialiseGlobalSettings_Serialise();
 
+
+                GSR.Successful = SSR.Successful;
+                GSR.Settings = SSR.Settings;
+
+                GLOBALSETTINGS_LOADED = true; 
                 if (!SSR.Successful)
                 {
                     ErrorManager.ThrowError("GlobalSettings Serialiser", "FailedToSerialiseGlobalSettingsException", $"Failed to serialise GlobalSettings: {SSR.FailureReason}", SSR.BaseException);
-                    return SSR;
+                    return GSR;
                 }
                 else
                 {
-                    return SSR; 
+                    
+                    return GSR; 
                 }
             }
         }
@@ -128,6 +138,36 @@ namespace Lightning.Core
             }
 
         }
+
+#if DEBUG
+        public void ATest()
+        {
+            foreach (ServiceStartupCommand SSC in ServiceStartupCommands)
+            {
+                Logging.Log("ServiceStartupCommand:\n");
+                Logging.Log($"Service Name: {SSC.ServiceName}");
+                Logging.Log($"Start Order: {SSC.StartOrder}");
+            }
+
+            GlobalSettings GS = new GlobalSettings();
+
+            ServiceStartupCommandCollection SSCC = new ServiceStartupCommandCollection();
+            GS.ServiceStartupCommands = SSCC;
+
+            ServiceStartupCommand SSC2 = new ServiceStartupCommand();
+
+            SSC2.ServiceName = "test1";
+            SSC2.StartOrder = 2;
+            SSCC.Add(SSC2);
+
+            XmlSerializer XS = new XmlSerializer(typeof(GlobalSettings));
+
+            XmlWriter XR = XmlWriter.Create("0000.xml");
+
+            XS.Serialize(XR, GS);
+        }
+
+#endif
 
     }
 }

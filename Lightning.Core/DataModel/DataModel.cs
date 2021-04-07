@@ -25,7 +25,7 @@ namespace Lightning.Core
         /// <summary>
         /// The global engine settings for this DataModel. 
         /// </summary>
-        public static GlobalSettings GlobalSettings { get; set; }
+        public static GlobalSettings Settings { get; set; }
 
         /// <summary>
         /// Contains a list of the first-level instances
@@ -38,6 +38,7 @@ namespace Lightning.Core
         /// </summary>
         public static string DATAMODEL_NAMESPACE_PATH = "Lightning.Core";
 
+        
         public DataModel()
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
@@ -45,7 +46,7 @@ namespace Lightning.Core
             
 
             State = new InstanceCollection();
-            GlobalSettings = new GlobalSettings();
+
         }
 
         public static void Init()
@@ -57,17 +58,24 @@ namespace Lightning.Core
 
             CreateInstance("ServiceControlManager", WorkSvc);
             
-            GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
+            if (!GlobalSettings.GLOBALSETTINGS_LOADED)
+            {
+                GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
 
-            if (GSR.Successful)
-            {
-                // set the globalsettings if successful 
-                GlobalSettings = GSR.Settings;
+                if (GSR.Successful)
+                {
+                    // set the globalsettings if successful 
+                    Settings = GSR.Settings;
+#if DEBUG
+                    Settings.ATest();
+#endif
+                }
+                else
+                {
+                    return; // this should not really be running rn 
+                }
             }
-            else
-            {
-                return; // this should not really be running rn 
-            }
+
 
 #if DEBUG_ATEST_DATAMODEL //todo: unit testing
             ATest();

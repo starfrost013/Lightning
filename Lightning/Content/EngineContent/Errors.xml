@@ -159,5 +159,11 @@ Do not change if you are not a dev
     <Id>22</Id>
     <Severity>Error</Severity>
   </Error>
-  
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InternalSerialisationErrorException</Name>
+    <Id>23</Id>
+    <Severity>FatalError</Severity>
+  </Error>
 </Errors>

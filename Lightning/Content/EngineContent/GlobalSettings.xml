@@ -1,12 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
-<!-- Holds global settings for the Lightning game engine. -->
-
-<GlobalSettings>
-  <StartupServices>
-    <StartupService>
-      <StartOrder>0</StartOrder>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GlobalSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ServiceStartupCommands>
+    <ServiceStartupCommand>
       <ServiceName>RenderService</ServiceName>
-    </StartupService>
-  </StartupServices>
+      <StartOrder>0</StartOrder>
+    </ServiceStartupCommand>
+  </ServiceStartupCommands>
 </GlobalSettings>

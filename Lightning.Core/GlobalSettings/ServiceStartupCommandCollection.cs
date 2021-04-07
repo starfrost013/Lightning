@@ -6,11 +6,15 @@ using System.Xml.Serialization;
 
 namespace Lightning.Core
 {
-    
+
     public class ServiceStartupCommandCollection : IEnumerable
     {
-        [XmlElement("StartupService")]
         public List<ServiceStartupCommand> Commands { get; set; }
+
+        public ServiceStartupCommandCollection()
+        {
+            Commands = new List<ServiceStartupCommand>();
+        }
 
         public ServiceStartupCommandCollection(List<ServiceStartupCommand> NewCommands) // if we end up passing references to this a lot we are going to have to make this code worse :(
         {
@@ -33,8 +37,13 @@ namespace Lightning.Core
         /// <param name="Obj"></param>
         public void Add(object Obj)
         {
+            if (Obj == null)
+            {
+                ErrorManager.ThrowError("GlobalSettings Loader", "InternalSerialisationErrorException", "Attempted to serialise a null object.");
+            }
+
             Type ObjType = Obj.GetType();
-            Type SSCType = typeof(ServiceStartupCommandCollection);
+            Type SSCType = typeof(ServiceStartupCommand);
 
             if (ObjType == SSCType) 
             {

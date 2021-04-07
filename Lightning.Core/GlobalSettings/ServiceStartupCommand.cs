@@ -16,13 +16,13 @@ namespace Lightning.Core
     /// </summary>
     public class ServiceStartupCommand
     {
-        [XmlElement("StartOrder")]
+
         /// <summary>
         /// The start order of this service.
         /// </summary>
         public int StartOrder { get; set; }
 
-        [XmlElement("ServiceName")]
+
         public string ServiceName { get; set; }
     }
 }
