@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq; 
 using System.Text;
 
 namespace Lightning.Core
@@ -10,9 +11,10 @@ namespace Lightning.Core
     public class ServiceControlManager : Instance
     {
         public override string ClassName => "ServiceControlManager";
+        public override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Instantiable | InstanceTags.ParentLocked | InstanceTags.Serialisable;
 
         /// <summary>
-        /// A list of the currently running services. Each object is a reference to the first-level DataModel object.
+        /// A list of the currently running services. Each object is a reference to an object directly under the Workspace. 
         /// </summary>
         public List<Service> RunningServices { get; set; }
 
@@ -21,32 +23,48 @@ namespace Lightning.Core
             RunningServices = new List<Service>();
         }
 
+        public void InitStartupServices(ServiceStartupCommandCollection StartupServices)
+        {
+            Logging.Log("Initialising startup services...", ClassName);
+
+            List<ServiceStartupCommand> SSCList = StartupServices.Commands;
+            
+            // Sort by the StartOrder. 
+            SSCList = SSCList.OrderBy(SSCList => SSCList.StartOrder).ToList(); 
+
+            foreach (ServiceStartupCommand SSC in StartupServices)
+            {
+                Logging.Log($"Initialising startup service with name {SSC.ServiceName}, startup priority {SSC.StartOrder}", ClassName);
+                StartService(SSC.ServiceName);
+            } 
+        }
+
         /// <summary>
-        /// Starts the service of type Type. The type must inherit from <see cref="Service"/> in the DataModel.
+        /// Starts the service of type Type. The type must inherit from <see cref="Service"/> in the DataModel. change to classname?
         /// </summary>
         /// <param name="TypeOfService"></param>
         /// <returns>A <see cref="ServiceStartResult"/>containing the success code and - if it has failed - the failure reason; if it succeeds it will include the service.</returns>
-        public ServiceStartResult StartService(Type TypeOfService)
+        public ServiceStartResult StartService(string ClassName)
         {
             ServiceStartResult SSR = new ServiceStartResult();
 
             //todo: check for duplicate 
             try
             {
-                Logging.Log($"Starting Service {TypeOfService.Name}", ClassName);
-                object ObjX = DataModel.CreateInstance(TypeOfService.Name);
+                Logging.Log($"Starting Service {ClassName}", ClassName);
+                object ObjX = DataModel.CreateInstance(ClassName);
 
                 Service Svc = (Service)ObjX;
 
                 // Check if another instance of this service is already running.
-                if (!StartService_CheckForDuplicateServiceRunning(TypeOfService))
+                if (!StartService_CheckForDuplicateServiceRunning(ClassName))
                 {
                     RunningServices.Add(Svc);
                     return Svc.OnStart();
                 }
                 else
                 {
-                    SSR.Information = $"Attempted to initiate {TypeOfService.Name} when it is already running!";
+                    SSR.Information = $"Attempted to initiate {ClassName} when it is already running!";
                     return SSR;
                 }
 
@@ -67,13 +85,11 @@ namespace Lightning.Core
         }
 
         // not bool?
-        private bool StartService_CheckForDuplicateServiceRunning(Type TypeOfService)
+        private bool StartService_CheckForDuplicateServiceRunning(string ClassName)
         {
             foreach (Service Svc in RunningServices)
             {
-                Type TypeOfCService = Svc.GetType();
-
-                if (TypeOfService == TypeOfCService)
+                if (ClassName == Svc.ClassName)
                 {
                     return true;
                 }

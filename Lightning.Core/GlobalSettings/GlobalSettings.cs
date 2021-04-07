@@ -148,23 +148,6 @@ namespace Lightning.Core
                 Logging.Log($"Service Name: {SSC.ServiceName}");
                 Logging.Log($"Start Order: {SSC.StartOrder}");
             }
-
-            GlobalSettings GS = new GlobalSettings();
-
-            ServiceStartupCommandCollection SSCC = new ServiceStartupCommandCollection();
-            GS.ServiceStartupCommands = SSCC;
-
-            ServiceStartupCommand SSC2 = new ServiceStartupCommand();
-
-            SSC2.ServiceName = "test1";
-            SSC2.StartOrder = 2;
-            SSCC.Add(SSC2);
-
-            XmlSerializer XS = new XmlSerializer(typeof(GlobalSettings));
-
-            XmlWriter XR = XmlWriter.Create("0000.xml");
-
-            XS.Serialize(XR, GS);
         }
 
 #endif

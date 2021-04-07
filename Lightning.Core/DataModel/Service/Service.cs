@@ -18,10 +18,7 @@ namespace Lightning.Core
     /// </summary>
     public abstract class Service : Instance
     {
-        /// <summary>
-        /// The name of this service.
-        /// </summary>
-        public abstract string SName { get; }
+
         public bool RunningNow { get; set; }
         public ServiceImportance Importance => ServiceImportance.Low;
         public abstract ServiceStartResult OnStart();

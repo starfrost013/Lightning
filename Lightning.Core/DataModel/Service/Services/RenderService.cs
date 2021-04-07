@@ -13,11 +13,18 @@ namespace Lightning.Core
     /// </summary>
     public class RenderService : Service
     {
-        public override string SName { get => "RenderService"; }
+        public override string ClassName => "RenderService";
 
         public override ServiceStartResult OnStart()
         {
-            throw new NotImplementedException(); 
+            // TEST code
+            ServiceStartResult SSR = new ServiceStartResult();
+            
+
+            Logging.Log("yes I am renderservice", ClassName);
+            SSR.Successful = true;
+            return SSR; 
+            
         }
 
         public override ServiceShutdownResult OnShutdown()
