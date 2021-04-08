@@ -9,18 +9,12 @@ namespace Lightning.Core
     /// </summary>
     public class GameSettings : SerialisableObject
     {
-        public List<GameSetting> Settings { get; set; }
-
-        public GameSettings()
-        {
-            Settings = new List<GameSetting>();
-        }
 
         public GetGameSettingResult GetSetting(string Name)
         {
             GetGameSettingResult GGSR = new GetGameSettingResult();
 
-            foreach (GameSetting Setting in Settings)
+            foreach (GameSetting Setting in Children)
             {
                 if (Setting.Name == Name)
                 {

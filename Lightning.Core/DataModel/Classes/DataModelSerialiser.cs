@@ -511,7 +511,7 @@ namespace Lightning.Core
             string[] TypeNameNamespaceDots = TypeName.Split('.');
 
             // If it is in the Syst
-            if (TypeName.Contains("System") && TypeNameNamespaceDots.Length == 1)
+            if (TypeName.Contains("System") && TypeNameNamespaceDots.Length == 2)
             {
                 return true;
             }

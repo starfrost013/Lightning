@@ -5,15 +5,15 @@
     <Author>starfrost</Author>
     <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-04-08 16:43:03</LastModifiedDate>
-    <RevisionID>4</RevisionID> <!-- Rev5: Fixed bug -->
+    <LastModifiedDate>2021-04-08 17:42:31</LastModifiedDate>
+    <RevisionID>6</RevisionID> <!-- Rev6: Fixed bug -->
   </Metadata>
   <Settings>
     <!-- nothing here yet -->
     <Setting>
       <Name>MaxFPS</Name>
-      <Value>60</Value>
       <Type>System.Int32</Type>
+      <Value>60</Value>
     </Setting>
   </Settings>
 

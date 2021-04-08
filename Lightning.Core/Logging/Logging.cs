@@ -68,7 +68,7 @@ namespace Lightning.Core
             
             if (Component == null)
             {
-                LogTextSB.Append($" [Lightning Game Engine]: {Severity}");
+                LogTextSB.Append($"[Lightning Game Engine]: ");
             }
             else
             {
