@@ -145,7 +145,18 @@ namespace Lightning.Core
                         // DO!!!! NOT!!!! CALL!!!! PARENT.CHILDREN.INSTANCES.ADD!!!
                         // I REPEAT, DO!!!! NOT!!!! CALL!!!! THAT until we can get this bullshit in order 
                         Parent.Children.Add(NewInstance);
-                        return Parent.Children.Instances[Parent.Children.Instances.Count - 1];
+
+                        int ParentChildrenInstanceCount = 0;
+
+                        if (ParentChildrenInstanceCount == 0)
+                        {
+                            return Parent.Children.Instances[Parent.Children.Instances.Count];
+                        }
+                        else
+                        {
+                            return Parent.Children.Instances[Parent.Children.Instances.Count - 1];
+                        }
+                        
                     }
 
 
