@@ -16,6 +16,9 @@ using System;
 namespace Lightning
 {
     
+    /// <summary>
+    /// Program class for the Lightning Launcher.
+    /// </summary>
     public class Program
     {
         /// <summary>
@@ -24,60 +27,94 @@ namespace Lightning
         public static DataModel DataModelX { get; set; }
 
         /// <summary>
-        /// Launch arguments to be passed to the engine. 
+        /// Launches Lightning. This is very much not like the Emerald launcher. lol.
         /// </summary>
-        public static LaunchArgs LaunchArgs { get; set; }
+        /// <param name="Args"></param>
 
         static void Main(string[] Args)
         {
             // Handle command-line arguments.
-            HandleArgs(Args);
+            LaunchArgsResult LAR = HandleArgs(Args);
 
-            // Write some basic information to the screen
-            Console.WriteLine("Lightning");
+            // Based on the action LaunchArgs(
+            switch (LAR.Action)
+            {
+                case LaunchArgsAction.DoNothing:
+                    return; // Returns
+                case LaunchArgsAction.LaunchGameXML:
+                    // Write some basic information to the screen
+                    Console.WriteLine("Lightning");
 
-            LVersion.LoadVersion();
-        
-            string LVersionString = LVersion.GetVersionString();
-            Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
+                    // Load version information
+                    LVersion.LoadVersion();
 
-            DataModelX = new DataModel();
-            DataModel.Init(); 
+                    // Display version information
+                    string LVersionString = LVersion.GetVersionString();
+                    Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
-            DataModelX.ATest_Serialise();
-            Logging.Log("------ Serialised using DDMS  [Test - 2021/03/26] ------\n");
-            DataModelX.InstanceDump();
+                    // Test code
+                    DataModelX = new DataModel();
+                    DataModel.Init();
 
-            // yes this breaks all the rules 
-            // this code won't be here for long
-            RenderService.ATest_RenderServiceQuerySettings(); 
+                    DataModelX.ATest_Serialise();
+                    Logging.Log("------ Serialised using DDMS  [Test - 2021/03/26] ------\n");
+                    DataModelX.InstanceDump();
+
+                    // yes this breaks all the rules 
+                    // this code won't be here for long
+                    RenderService.ATest_RenderServiceQuerySettings();
+
+                    // -- EXITS AFTER END OF SESSION -- 
+                    Exit();
+
+                    return; 
+            }
+
+            
 
         }
 
-        public static void HandleArgs(string[] Args)
+
+
+        public static LaunchArgsResult HandleArgs(string[] Args)
         {
-            LaunchArgs = new LaunchArgs();
+            LaunchArgsResult LAR = new LaunchArgsResult();
 
             switch (Args.Length)
             {
                 case 0:
                     MessageBox.Show("Lightning [GameXML]\nGameXML: path to the LGX (Lightning Game XML) file you wish to load.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
+
+                    LAR.Action = LaunchArgsAction.DoNothing;
+                    
+                    return LAR;
                 default:
+                    LAR.Action = LaunchArgsAction.LaunchGameXML;
                     // only one arg so we can be dumb but we're not going to for extensibility
                     foreach (string Argument in Args)
                     {
                         switch (Argument)
                         {
                             default:
-                                LaunchArgs.GameXMLPath = Argument;
+                                LAR.Arguments.GameXMLPath = Argument;
                                 continue; 
                         }
                     }
-                    return; 
+
+                    return LAR; 
 
 
             }
+        }
+
+        /// <summary>
+        /// Exits the Engine. 
+        /// </summary>
+        public static void Exit()
+        {
+            // This is the last line of code that runs. 
+            Environment.Exit(0);
+
         }
     }
 }
