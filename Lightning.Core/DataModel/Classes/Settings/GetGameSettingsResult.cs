@@ -1,13 +1,16 @@
-﻿using Lightning.Utilities;
+﻿using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Lightning.Core
 {
-    public class GetGameSettingResult : IResult
+    /// <summary>
+    /// Result class used for GameSettings.
+    /// </summary>
+    public class GetGameSettingsResult : IResult 
     {
-        public GameSetting Setting { get; set; }
+        public GameSettings GameSettings { get; set; }
         public string FailureReason { get; set; }
 
         /// <summary>

@@ -40,12 +40,12 @@ namespace Lightning.Core
         /// <summary>
         /// Adds the object <paramref name="Obj"/> to the children of this Object. 
         ///
-        /// This transparently works with any level in the hierarchy, hopefully.
+        /// This transparently works with any level in the hierarchy!
         /// 
         /// April 6, 2021
         /// </summary>
         /// <param name="Obj"></param>
-        public void Add(object Obj)
+        public void Add(object Obj, Instance Parent = null)
         {
             // Get the types of the object and its parent.
             Type ObjType = Obj.GetType();
@@ -54,7 +54,9 @@ namespace Lightning.Core
             {
                 Instance TestInstance = (Instance)Obj;
 
-                Instance TestInstanceParent = TestInstance.GetParent();
+                Instance TestInstanceParent;
+
+                TestInstanceParent = TestInstance.GetParent();
 
                 // Check if tbis Instance has a parent. 
                 if (TestInstanceParent == null)

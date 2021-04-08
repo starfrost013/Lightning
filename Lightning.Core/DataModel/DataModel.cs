@@ -253,9 +253,6 @@ namespace Lightning.Core
                         Console.Write($"Type: {IIMP.ParamType.Name}\n");
                     }
                 }
-
-                
-
             }
 
             // don't bother going any further than one level deep

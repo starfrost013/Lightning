@@ -5,11 +5,16 @@
     <Author>starfrost</Author>
     <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-04-06 16:15:41</LastModifiedDate>
-    <RevisionID>1</RevisionID>
+    <LastModifiedDate>2021-04-08 16:43:03</LastModifiedDate>
+    <RevisionID>4</RevisionID> <!-- Rev5: Fixed bug -->
   </Metadata>
   <Settings>
     <!-- nothing here yet -->
+    <Setting>
+      <Name>MaxFPS</Name>
+      <Value>60</Value>
+      <Type>System.Int32</Type>
+    </Setting>
   </Settings>
 
   <Workspace>
@@ -17,6 +22,8 @@
     <ServiceControlManager>
       <RenderService/>
     </ServiceControlManager>
+    
+    
     <Color3 Name="c03_01" R="100" G="100" B="100"/>
     <Color3 Name="c03_02" R="150" G="100" B="100"/>
     <Color3 Name="c03_03" R="150" G="100" B="100"/>

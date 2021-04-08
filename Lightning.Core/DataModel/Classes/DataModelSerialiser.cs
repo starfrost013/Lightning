@@ -1,6 +1,7 @@
 ﻿using Lightning.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq; 
 using System.Reflection; 
 using System.Text;
@@ -14,18 +15,18 @@ namespace Lightning.Core
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.3.2
+    /// Version 0.4.0
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-04-06 (v0.3.2: updated for DataModel 0.4.0) - TEMP WORKAROUND WILL REQUIRE MAJOR REFACTORING
+    /// Modified 2021-04-08 (v0.4.0: Implement GameSettings parsing)
     /// 
-    /// DYnamically serialises XML to Lightning DataModel objects.
+    /// DYnamically serialises XML (.lgx files) to Lightning DataModel objects.
     /// </summary>
     public class DataModelSerialiser : Instance
     {
         public static int DDMSAPI_VERSION_MAJOR = 0;
-        public static int DDMSAPI_VERSION_MINOR = 3;
-        public static int DDMSAPI_VERSION_REVISION = 2;
+        public static int DDMSAPI_VERSION_MINOR = 4;
+        public static int DDMSAPI_VERSION_REVISION = 0;
 
         public override string ClassName => "DataModelSerialiser";
         /// <summary>
@@ -100,7 +101,7 @@ namespace Lightning.Core
                 else
                 {
                     // TEMP UNTIL SERIALISATION ERRORS.XML
-                    Logging.Log($"Failed to serialise DDMS component - {DDSRMS.FailureReason}", "DDMS Serialiser - metadata", MessageSeverity.Error);
+                    Logging.Log($"Failed to serialise DDMS component - {DDSRMS.FailureReason}", $"DDMS Serialiser - {DDMSComp}", MessageSeverity.Error);
                     return null;
                     // END TEMP UNTIL SERIALISATION ERRORS.XML
                 }
@@ -247,39 +248,47 @@ namespace Lightning.Core
                                     ElementName = XMetadataContentNode.Name.LocalName;
                                     string ElementValue = XMetadataContentNode.Value; 
 
-                                    // Log it
-                                    Logging.Log($"{ElementName}: {ElementValue}", ClassName);
-
-                                    switch (ElementName)
+                                    if (XmlUtil.CheckForValidXmlElementContent(XMetadataContentNode))
                                     {
-                                        // Author of this game
-                                        case "Author":
-                                            GM.Author = ElementValue;
-                                            continue;
-                                        // Game creation date
-                                        case "CreationDate":
-                                            GM.CreationDate = DateTime.Parse(ElementValue);
-                                            continue;
-                                        // DataModel schema version
-                                        case "DMSchemaVersion":
-                                            if (XMetadataContentNode.Value != XMLSCHEMA_VERSION)
-                                            {
-                                                DDSR.FailureReason = $"Invalid schema version! Using version {ElementValue}, expected {XMLSCHEMA_VERSION}!";
-                                                return DDSR;
-                                            }
-                                            else
-                                            {
-                                                continue;
-                                            }
-                                        // Game last modified date
-                                        case "LastModifiedDate":
-                                            GM.LastModifiedDate = DateTime.Parse(ElementValue);
-                                            continue;
-                                        // Game revision ID
-                                        case "RevisionID":
-                                            GM.RevisionNumber = Convert.ToInt32(ElementValue);
-                                            continue;
+                                        // Log it
+                                        Logging.Log($"{ElementName}: {ElementValue}", ClassName);
 
+                                        switch (ElementName)
+                                        {
+                                            // Author of this game
+                                            case "Author":
+                                                GM.Author = ElementValue;
+                                                continue;
+                                            // Game creation date
+                                            case "CreationDate":
+                                                GM.CreationDate = DateTime.Parse(ElementValue);
+                                                continue;
+                                            // DataModel schema version
+                                            case "DMSchemaVersion":
+                                                if (XMetadataContentNode.Value != XMLSCHEMA_VERSION)
+                                                {
+                                                    DDSR.FailureReason = $"Invalid schema version! Using version {ElementValue}, expected {XMLSCHEMA_VERSION}!";
+                                                    return DDSR;
+                                                }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            // Game last modified date
+                                            case "LastModifiedDate":
+                                                GM.LastModifiedDate = DateTime.Parse(ElementValue);
+                                                continue;
+                                            // Game revision ID
+                                            case "RevisionID":
+                                                GM.RevisionNumber = Convert.ToInt32(ElementValue);
+                                                continue;
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        DDSR.FailureReason = "Attempted to parse a null or zero-length metadata value!";
+                                        return DDSR;
                                     }
                                 }
                             }
@@ -306,14 +315,177 @@ namespace Lightning.Core
 
         private DDMSSerialisationResult DDMS_ParseSettingsComponent(XDocument XD, DataModel DM)
         {
-            // TEMP
-            // This is just so it doesn't die
-            DDMSSerialisationResult DDSR_Temp = new DDMSSerialisationResult();
 
-            DDSR_Temp.Successful = true;
-            return DDSR_Temp; 
+            // Serialises the game settings for this LGX file (Lightning Game XML)
+            DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
 
-            //throw new NotImplementedException();
+            List<XElement> XSettingsTreeNodeList = XD.Root.Elements("Settings").ToList();
+
+            GameSettings GS = (GameSettings)DataModel.CreateInstance("GameSettings");
+
+            foreach (XElement XmlElement in XSettingsTreeNodeList)
+            {
+                GetGameSettingsResult GGSR = DDMS_ParseSettingsComponent_ParseSetting(XmlElement, GS);
+
+                // Check that the result was successful
+                if (GGSR.Successful)
+                {
+                    GS = GGSR.GameSettings;
+                }
+                else
+                {
+                    DDSR.FailureReason = $"Failed to load game settings: {GGSR.FailureReason}";
+                    return DDSR; 
+                }
+            }
+
+            DDSR.Successful = true;
+            return DDSR; 
+
+        }
+
+        private GetGameSettingsResult DDMS_ParseSettingsComponent_ParseSetting(XElement SettingsElement, GameSettings GS)
+        {
+            GetGameSettingsResult GGSR = new GetGameSettingsResult();
+
+            // Parse an individual setting component.
+            GameSetting NewSetting = (GameSetting)GS.AddChild("GameSetting");
+
+            List<XElement> XSettingsElement = SettingsElement.Elements().ToList();
+
+            foreach (XElement XSettingElement in XSettingsElement)
+            {
+                string ElementName = XSettingElement.Name.LocalName;
+
+                string ElementValue = XSettingElement.Value; 
+
+                if (XmlUtil.CheckForValidXmlElementContent(XSettingElement))
+                {
+                    // could we store everything tempoarily and then convert? hmm? or is it redundant
+                    switch (ElementName)
+                    {
+                        case "Name":
+
+                            NewSetting.Name = ElementValue;
+
+                            continue; 
+                        case "Type": // The type of the 
+                            try
+                            {
+                                // By default, load Lightning DataModel stuff
+                                // If it contains a namespace name, load types from that namespace instead. Limit the namespaces we can load.
+
+                                Type Typ; 
+
+                                // If there's no namespace provided...
+                                if (!ElementValue.Contains('.'))
+                                {
+                                    Typ = Type.GetType($"{DataModel.DATAMODEL_NAMESPACE_PATH}.{ElementValue}");
+                                }
+                                else
+                                {
+                                    if (DDMS_ParseSettings_CheckIfValidTypeForInstantiation(ElementValue))
+                                    {
+                                        Typ = Type.GetType($"{ElementValue}");
+                                    }
+                                    else
+                                    {
+                                        GGSR.FailureReason = "Attempted to load a setting with a forbidden type (not in the System or Lightning.* namespaces)";
+                                        return GGSR; 
+                                    }
+                                }
+
+
+                                NewSetting.SettingType = Typ; 
+                                continue;
+                            }
+                            catch (ArgumentNullException err)
+                            {
+#if DEBUG
+                                GGSR.FailureReason = $"Attempted to load a setting with a non-existent type!\n\n{err}";
+#else
+                                GGSR.FailureReason = $"Attempted to load a setting with a non-existent type!";
+#endif
+                                return GGSR;
+                            }
+                            catch (TypeLoadException err)
+                            {
+#if DEBUG
+                                GGSR.FailureReason = $"Attempted to load a setting with a type that does not exist!\n\n{err}";
+#else
+                                GGSR.FailureReason = $"Attempted to load a setting with a type that does not exist!";
+#endif
+                                return GGSR;
+                            }
+                        case "Value": // must be before Type!
+                            try
+                            {
+                                Type ATyp = NewSetting.SettingType;
+
+                                // If it's in the DataModel...
+                                // this code is very redundant but whatever?
+                                if (ATyp.IsSubclassOf(typeof(Instance)))
+                                {
+                                    // then add it to the datamodel
+                                    // this isn't too good as it will result in crappy objects that I don't like polluting the workspace.
+                                    NewSetting.SettingValue = DataModel.CreateInstance(NewSetting.SettingType.Name);
+                                    continue; 
+
+                                }
+                                else
+                                {
+                                    TypeConverter TC = TypeDescriptor.GetConverter(ATyp);
+                                    NewSetting.SettingValue = TC.ConvertFromString(ElementValue);
+                                    continue; 
+                                }
+                            }
+                            catch (NotSupportedException err)
+                            {
+#if DEBUG
+                                GGSR.FailureReason = $"Attempted to load a setting with an invalid value!\n\n{err}";
+#else
+                                GGSR.FailureReason = $"Attempted to load a setting with an invalid value!";
+#endif
+                                return GGSR;
+                            }
+
+                    }
+                }
+                else
+                {
+                    GGSR.FailureReason = "Attempted to load Setting with invalid or zero-length content!";
+                    return GGSR;
+                }
+            }
+
+            // If it's successful...
+            GGSR.Successful = true;
+            GGSR.GameSettings = GS;
+            return GGSR; 
+        }
+        
+        /// <summary>
+        /// Checks if a type is valid for instantiation. Type must be in the System (base only) namespace or the Lightning.* namespace.
+        /// </summary>
+        /// <param name="TypeName"></param>
+        /// <returns></returns>
+        private bool DDMS_ParseSettings_CheckIfValidTypeForInstantiation(string TypeName)
+        {
+            string[] TypeNameNamespaceDots = TypeName.Split('.');
+
+            // If it is in the Syst
+            if (TypeName.Contains("System") && TypeNameNamespaceDots.Length == 1)
+            {
+                return true;
+            }
+            else if (TypeName.Contains("Lightning")) // If it's Lightin
+            {
+                return true; 
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private DDMSSerialisationResult DDMS_ParseInstanceTreeComponent(XDocument XD, DataModel DM)

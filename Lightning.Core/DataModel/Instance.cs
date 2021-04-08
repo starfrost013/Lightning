@@ -261,6 +261,7 @@ namespace Lightning.Core
 
         public void RemoveAllChildren() => Children.Clear();
         public void AddChild(Instance Chl) => Children.Add(Chl);
+        public object AddChild(string Name) => DataModel.CreateInstance(Name, this); 
         public GenericResult RemoveChild(Instance Chl)
         {
             GenericResult GR = new GenericResult();

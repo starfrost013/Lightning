@@ -8,6 +8,6 @@ namespace Lightning.Core
     {
         public string SettingName { get; set; }
         public Type SettingType { get; set; }
-
+        public object SettingValue { get; set; }
     }
 }
