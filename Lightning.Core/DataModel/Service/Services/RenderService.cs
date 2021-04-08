@@ -22,22 +22,17 @@ namespace Lightning.Core
         {
             // TEST code
             ServiceStartResult SSR = new ServiceStartResult();
-            
 
             Logging.Log("RenderService Init", ClassName);
-
-#if DEBUG
-            ATest_RenderServiceQuerySettings();
-#endif
             SSR.Successful = true;
             return SSR; 
             
         }
 
 #if DEBUG
-        private void ATest_RenderServiceQuerySettings()
+        public static void ATest_RenderServiceQuerySettings()
         {
-            Logging.Log("Query GameSettings Test:", ClassName);
+            Logging.Log("Query GameSettings Test:", "Automated Testing");
 
             GetInstanceResult GS = DataModel.GetFirstChildOfType("GameSettings");
 

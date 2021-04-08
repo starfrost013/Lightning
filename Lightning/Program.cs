@@ -39,7 +39,11 @@ namespace Lightning
 
             DataModelX.ATest_Serialise();
             Logging.Log("------ Serialised using DDMS  [Test - 2021/03/26] ------\n");
-            DataModelX.InstanceDump(); 
+            DataModelX.InstanceDump();
+
+            // yes this breaks all the rules 
+            // this code won't be here for long
+            RenderService.ATest_RenderServiceQuerySettings(); 
 
 
         }

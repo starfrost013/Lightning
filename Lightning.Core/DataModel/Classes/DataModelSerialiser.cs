@@ -325,18 +325,42 @@ namespace Lightning.Core
 
             foreach (XElement XmlElement in XSettingsTreeNodeList)
             {
-                GetGameSettingsResult GGSR = DDMS_ParseSettingsComponent_ParseSetting(XmlElement, GS);
+                // Skip all comments etc.
+                switch (XmlElement.NodeType)
+                {
+                    case XmlNodeType.Element: // "Settings" element
+                        List<XElement> SettingsElements = XmlElement.Elements().ToList();
 
-                // Check that the result was successful
-                if (GGSR.Successful)
-                {
-                    GS = GGSR.GameSettings;
+                        foreach (XElement SettingElement in SettingsElements)
+                        {
+                            switch (SettingsElement.NodeType)
+                            {
+                                case XmlNodeType.Element:
+                                    GetGameSettingsResult GGSR = DDMS_ParseSettingsComponent_ParseSetting(SettingElement, GS);
+
+                                    // Check that the result was successful
+                                    if (GGSR.Successful)
+                                    {
+                                        GS = GGSR.GameSettings;
+                                        continue; 
+                                    }
+                                    else
+                                    {
+                                        DDSR.FailureReason = $"Failed to load game settings: {GGSR.FailureReason}";
+                                        return DDSR;
+                                    }
+
+                                default:
+                                    continue; 
+                            }
+                        }
+
+                        continue;
+                    default:
+                        // Ignore whitespaces
+                        continue; 
                 }
-                else
-                {
-                    DDSR.FailureReason = $"Failed to load game settings: {GGSR.FailureReason}";
-                    return DDSR; 
-                }
+                
             }
 
             DDSR.Successful = true;

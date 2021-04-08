@@ -26,14 +26,9 @@ namespace Lightning.Core
     /// 2020-04-08  Modified Instance.AddChild(); to make it non-redundant
     /// 
     /// </summary>
+    /// 
     public abstract class Instance
     {
-        // These all should always be the same, so I made it so.
-        // 2021-04-02
-        public static int INSTANCEAPI_VERSION_MAJOR = DataModel.DATAMODEL_VERSION_MAJOR;
-        public static int INSTANCEAPI_VERSION_MINOR = DataModel.DATAMODEL_VERSION_MINOR;
-        public static int INSTANCEAPI_VERSION_REVISION = DataModel.DATAMODEL_VERSION_REVISION;
-
         /// <summary>
         /// Backing field for <see cref="Parent"/>
         /// </summary>
@@ -257,11 +252,24 @@ namespace Lightning.Core
         /// <returns></returns>
         public GetInstanceResult GetLastChildOfType(string ClassName) => Children.GetLastChildOfType(ClassName);
         
-
+        /// <summary>
+        /// Gets the Parent of this Instance.
+        /// </summary>
+        /// <returns></returns>
         public Instance GetParent() => Parent;
-
+        
+        /// <summary>
+        /// Removes all children of this Instance.
+        /// </summary>
         public void RemoveAllChildren() => Children.Clear();
-        public object AddChild(string Name) => DataModel.CreateInstance(Name, this); 
+
+        /// <summary>
+        /// Adds a child of type <paramref name="ClassName">to this Instance.</paramref>
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public object AddChild(string ClassName) => DataModel.CreateInstance(ClassName, this); 
+
         public GenericResult RemoveChild(Instance Chl)
         {
             GenericResult GR = new GenericResult();
