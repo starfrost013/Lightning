@@ -48,28 +48,9 @@ namespace Lightning.Core
 
             set
             {
-                // Check that a candidate parent is a superclass of this instance or is of the same class of this instance.
-                Type TypeOfCParent = this.GetType();
-                Type TypeOfVParent = value.GetType();
 
-                if (TypeOfCParent == TypeOfVParent)
-                {
-                    _parent = value; 
-                }
-                else // If it isn't the same...
-                {
-                    // is it a subclass?
-                    if (TypeOfCParent.IsSubclassOf(TypeOfVParent))
-                    {
-                        _parent = value;
-                    }
-                    else // Throw an error and return if it isn't.
-                    {
+                _parent = value; 
 
-                        ErrorManager.ThrowError(ClassName, "InstanceCannotBeParentException", $"{TypeOfCParent} is not {TypeOfVParent} and does not inherit from it. As a result of this, {ClassName} cannot be a parent of {value.ClassName}.");
-                        return; 
-                    }
-                }
             }
 
         }

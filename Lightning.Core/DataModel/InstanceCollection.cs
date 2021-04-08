@@ -56,7 +56,14 @@ namespace Lightning.Core
 
                 Instance TestInstanceParent;
 
-                TestInstanceParent = TestInstance.GetParent();
+                if (Parent == null)
+                {
+                    TestInstanceParent = TestInstance.GetParent();
+                }
+                else
+                {
+                    TestInstanceParent = Parent;
+                }
 
                 // Check if tbis Instance has a parent. 
                 if (TestInstanceParent == null)
@@ -91,7 +98,7 @@ namespace Lightning.Core
                 }
                 else // If it has a parent, add it to the parent. 
                 {
-                    Type ParentType = this.GetType();
+                    Type ParentType = Parent.GetType();
 
                     // Instance children must be the same or child classes
                     if (ObjType == ParentType)
@@ -105,6 +112,11 @@ namespace Lightning.Core
                         {
                             Add_PerformAdd(Obj, TestInstanceParent);
                             return; 
+                        }
+                        else if (TestInstanceParent.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
+                        {
+                            Add_PerformAdd(Obj, TestInstanceParent);
+                            return;
                         }
                         else
                         {
@@ -136,6 +148,8 @@ namespace Lightning.Core
             }
             else
             {
+                Instance InstanceObj = (Instance)Obj;
+                InstanceObj.Parent = Parent; 
                 Parent.Children.Instances.Add((Instance)Obj);
             }
         }

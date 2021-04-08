@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lightning.Core
 {
-    public class GameSetting : SerialisableObject
+    public class GameSetting : GameSettings // hack 
     {
         public string SettingName { get; set; }
         public Type SettingType { get; set; }

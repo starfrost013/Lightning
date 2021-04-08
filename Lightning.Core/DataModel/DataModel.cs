@@ -56,7 +56,6 @@ namespace Lightning.Core
                 ErrorManager.Init();
             }
 
-
             // init the SCM
             Workspace WorkSvc = (Workspace)CreateInstance("Workspace");
 
@@ -114,7 +113,7 @@ namespace Lightning.Core
                     // Return the object in the parent tree if not null 
                     if (Parent == null)
                     {
-                        State.Add(NewInstance);
+                        State.Add(NewInstance, Parent);
 
                         // default to the workspace if it is not null; otherwise get datamodel root
 
@@ -144,9 +143,9 @@ namespace Lightning.Core
                     {
                         // DO!!!! NOT!!!! CALL!!!! PARENT.CHILDREN.INSTANCES.ADD!!!
                         // I REPEAT, DO!!!! NOT!!!! CALL!!!! THAT until we can get this bullshit in order 
-                        Parent.Children.Add(NewInstance);
+                        Parent.Children.Add(NewInstance, Parent);
 
-                        int ParentChildrenInstanceCount = 0;
+                        int ParentChildrenInstanceCount = Parent.Children.Instances.Count;
 
                         if (ParentChildrenInstanceCount == 0)
                         {

@@ -421,7 +421,6 @@ namespace Lightning.Core
 
                                         Logging.Log($"Type: {TypeString}");
 
-
                                         Typ = Type.GetType($"{ElementValue}");
                                     }
                                     else
