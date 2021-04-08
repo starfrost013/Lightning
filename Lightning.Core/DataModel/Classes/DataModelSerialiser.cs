@@ -333,7 +333,7 @@ namespace Lightning.Core
 
                         foreach (XElement SettingElement in SettingsElements)
                         {
-                            switch (SettingsElement.NodeType)
+                            switch (SettingElement.NodeType)
                             {
                                 case XmlNodeType.Element:
                                     GetGameSettingsResult GGSR = DDMS_ParseSettingsComponent_ParseSetting(SettingElement, GS);
@@ -381,7 +381,9 @@ namespace Lightning.Core
             {
                 string ElementName = XSettingElement.Name.LocalName;
 
-                string ElementValue = XSettingElement.Value; 
+                string ElementValue = XSettingElement.Value;
+
+
 
                 if (XmlUtil.CheckForValidXmlElementContent(XSettingElement))
                 {
@@ -390,6 +392,7 @@ namespace Lightning.Core
                     {
                         case "Name":
 
+                            Logging.Log($"Loading Setting with Name: {ElementValue}...", ClassName);
                             NewSetting.Name = ElementValue;
 
                             continue; 
@@ -404,12 +407,21 @@ namespace Lightning.Core
                                 // If there's no namespace provided...
                                 if (!ElementValue.Contains('.'))
                                 {
-                                    Typ = Type.GetType($"{DataModel.DATAMODEL_NAMESPACE_PATH}.{ElementValue}");
+                                    string TypeString = $"{DataModel.DATAMODEL_NAMESPACE_PATH}.{ElementValue}";
+
+                                    Logging.Log($"Type: {TypeString}");
+
+                                    Typ = Type.GetType(TypeString);
                                 }
                                 else
                                 {
                                     if (DDMS_ParseSettings_CheckIfValidTypeForInstantiation(ElementValue))
                                     {
+                                        string TypeString = $"{ElementValue}";
+
+                                        Logging.Log($"Type: {TypeString}");
+
+
                                         Typ = Type.GetType($"{ElementValue}");
                                     }
                                     else
@@ -444,6 +456,8 @@ namespace Lightning.Core
                         case "Value": // must be before Type!
                             try
                             {
+                                Logging.Log($"Value: {ElementValue}");
+
                                 Type ATyp = NewSetting.SettingType;
 
                                 // If it's in the DataModel...

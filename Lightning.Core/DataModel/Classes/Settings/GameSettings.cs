@@ -30,7 +30,7 @@ namespace Lightning.Core
                 }    
             }
 
-            GGSR.FailureReason = $"Cannot find the GameSetting with the name {Name}!";
+            GGSR.FailureReason = $"Cannot find the GameSetting with the name {Name}! in this game's GameSettings!";
             return GGSR; 
         }
 

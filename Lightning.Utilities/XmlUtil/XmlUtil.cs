@@ -9,7 +9,8 @@ namespace Lightning.Utilities
     {
         public static bool CheckForValidXmlElementContent(XElement XmlElement)
         {
-            // Set the xml content to the value. 
+            // Set a string variable to the XML value.
+
             string XVal = XmlElement.Value;
 
             // If it's null, return false...
