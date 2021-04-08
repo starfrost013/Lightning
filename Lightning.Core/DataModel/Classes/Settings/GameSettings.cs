@@ -9,6 +9,7 @@ namespace Lightning.Core
     /// </summary>
     public class GameSettings : SerialisableObject
     {
+        public override string ClassName => "GameSettings";
 
         public GetGameSettingResult GetSetting(string Name)
         {

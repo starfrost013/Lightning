@@ -42,14 +42,18 @@ namespace Lightning.Core
         public DataModel()
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
-            Console.WriteLine($"DataModel Init\nDataModel Version {DataModel_String} now initialising...");
+            Logging.Log($"DataModel\nVersion {DataModel_String}\nNow Initialising...", "DataModel", MessageSeverity.Error);
             
 
             State = new InstanceCollection();
 
         }
 
-        public static void Init()
+        /// <summary>
+        /// Initialises the DataModel 
+        /// </summary>
+        /// <param name="Args"></param>
+        public static void Init(LaunchArgs Args = null)
         {
             if (!ErrorManager.ERRORMANAGER_LOADED)
             {
@@ -84,6 +88,16 @@ namespace Lightning.Core
 #if DEBUG_ATEST_DATAMODEL //todo: unit testing
             ATest();
 #endif
+
+            if (Args != null)
+            {
+                if (Args.GameXMLPath != null)
+                {
+                    DataModelSerialiser DMS = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
+
+                    DMS.DDMS_Serialise(Args.GameXMLPath);
+                }
+            }
         }
 
         /// <summary>

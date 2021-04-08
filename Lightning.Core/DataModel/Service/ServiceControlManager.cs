@@ -189,5 +189,13 @@ namespace Lightning.Core
             return SSR; 
 
         }
+
+        public void PollServices()
+        {
+            foreach (Service Svc in RunningServices)
+            {
+                Svc.Poll();
+            }
+        }
     }
 }

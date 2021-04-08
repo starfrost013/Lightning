@@ -1,10 +1,10 @@
 # Lightning Game Engine
 
-## Code of Conduct (version 1.2) (April 3, 2021)
+## Code of Conduct (version 1.5) (April 8, 2021)
 
 Welcome to the Lightning game engine main tree. We are going to have to ask you abide by a few rules if you wish to contribute code.
 
-* Be respectful. This is the Prime Directive of development here and you have to follow it. Bigotry, unpleasantness, jackassery, and various other forms of unfortunately negative behaviours will not be tolerated and will result in you being removed. 
+* Be respectful. This is the Prime Directive of development here and you have to follow it. Bigotry, unpleasantness, jackassery, and various other forms of toxic behaviour will not be tolerated and will result in you being removed. 
 
 * This is a private repository and please treat it as such!
 
@@ -15,11 +15,11 @@ Welcome to the Lightning game engine main tree. We are going to have to ask you 
 * Code reviews are a requirement for non-senior developers! Contact me or a senior developer for a code review.
 
 ## Style Guide
-* Please add a class name for all Instance objects created.
+* You must add a ClassName or all Instance objects created.
 
-* UpperCase is recommended.
+* PascalCase is recommended.
 
-* Please use the XML Serialiser for any and all code that deals with XML.
+* Please use either DDMS (for DataModel-related content ONLY) or XML serialisation for any and all code that deals with XML.
 
 * .NET Core 3.1 and .NET 5.0 are the only required frameworks/ 
 
@@ -33,7 +33,12 @@ If it is a user-facing API, deals with scripting or does support a user API, it 
 
 * Method names must be *componentname*_*purpose* for private internal methods.
 
+* All code you write must not break the strict hierarchy principle of the DataModel!
+
 ### Version History
+
+**V1.5 (April 8, 2021)**
+* Added a rule about DataModel hierarchy. A lot of rewording.
 
 **V1.2 (April 3, 2021)**:
 * Added clarification surrounding when code should and should not be in the DataModel and informatino surrounding method names.
@@ -42,4 +47,4 @@ If it is a user-facing API, deals with scripting or does support a user API, it 
 * Added a style guide for committing code to the main branch.
 
 **V1.0 (March 6, 2021)**
-* Added 
+* Initial version

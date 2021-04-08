@@ -34,7 +34,13 @@ namespace Lightning.Core
         {
             Logging.Log("Query GameSettings Test:", "Automated Testing");
 
-            GetInstanceResult GS = DataModel.GetFirstChildOfType("GameSettings");
+            GetInstanceResult WksResult = DataModel.GetFirstChildOfType("Workspace");
+
+            Debug.Assert(WksResult.Successful && WksResult.Instance != null);
+
+            Workspace Wks = (Workspace)WksResult.Instance;
+
+            GetInstanceResult GS = Wks.GetFirstChildOfType("GameSettings");
 
             // It should always be loaded at this point.
             Debug.Assert(GS.Successful && GS.Instance != null);

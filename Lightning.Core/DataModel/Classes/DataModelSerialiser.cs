@@ -18,17 +18,18 @@ namespace Lightning.Core
     /// Version 0.4.0
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-04-08 (v0.4.0: Implement GameSettings parsing)
+    /// Modified 2021-04-08 (v0.4.1: Implement no-XmlSchema DDMS_Serialise)
     /// 
-    /// DYnamically serialises XML (.lgx files) to Lightning DataModel objects.
+    /// Dynamically serialises XML (.lgx files) to Lightning DataModel objects.
     /// </summary>
     public class DataModelSerialiser : Instance
     {
         public static int DDMSAPI_VERSION_MAJOR = 0;
         public static int DDMSAPI_VERSION_MINOR = 4;
-        public static int DDMSAPI_VERSION_REVISION = 0;
+        public static int DDMSAPI_VERSION_REVISION = 1;
 
         public override string ClassName => "DataModelSerialiser";
+
         /// <summary>
         /// An incredibly dumb hack to get around the compiler
         /// </summary>
@@ -40,6 +41,15 @@ namespace Lightning.Core
         /// The XML schema version. 
         /// </summary>
         public static string XMLSCHEMA_VERSION = "0.2.3.0005";
+
+        
+        public DataModel DDMS_Serialise(string Path)
+        {
+            LightningXMLSchema LXMLS = new LightningXMLSchema();
+            LXMLS.XSI.SchemaPath = GlobalSettings.GLOBALSETTINGS_XSD_PATH;
+           
+            return DDMS_Serialise(LXMLS, Path);
+        }
 
         /// <summary>
         /// DDMS (Dynamic DataModel Serialiser)

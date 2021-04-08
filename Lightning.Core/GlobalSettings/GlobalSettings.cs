@@ -45,6 +45,8 @@ namespace Lightning.Core
         /// </summary>
         public ServiceStartupCommandCollection ServiceStartupCommands { get; set; }
 
+        public string LightningXsdPath { get; set; }
+
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 
         /// </summary>

@@ -5,7 +5,7 @@ using System.Text;
 namespace Lightning.Core
 {
     /// <summary>
-    /// 2020-03-07  Lightning
+    /// 2021-03-07  Lightning
     /// 
     /// Main game class.
     /// </summary>
