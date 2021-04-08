@@ -22,6 +22,11 @@ namespace Lightning.Core
         public bool RunningNow { get; set; }
         public ServiceImportance Importance => ServiceImportance.Low;
         public abstract ServiceStartResult OnStart();
+
+        /// <summary>
+        /// Runs on every single frame. 
+        /// </summary>
+        public abstract void Poll();
         public abstract ServiceShutdownResult OnShutdown();
 
         /// <summary>

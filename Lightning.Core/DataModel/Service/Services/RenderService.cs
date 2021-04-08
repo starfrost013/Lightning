@@ -21,13 +21,18 @@ namespace Lightning.Core
             ServiceStartResult SSR = new ServiceStartResult();
             
 
-            Logging.Log("yes I am renderservice", ClassName);
+            Logging.Log("RenderService Init", ClassName);
             SSR.Successful = true;
             return SSR; 
             
         }
 
         public override ServiceShutdownResult OnShutdown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Poll()
         {
             throw new NotImplementedException();
         }

@@ -56,7 +56,7 @@ namespace Lightning.Core
             // init the SCM
             Workspace WorkSvc = (Workspace)CreateInstance("Workspace");
 
-            CreateInstance("ServiceControlManager", WorkSvc);
+            ServiceControlManager SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
             
             if (!GlobalSettings.GLOBALSETTINGS_LOADED)
             {
@@ -69,6 +69,7 @@ namespace Lightning.Core
 #if DEBUG
                     Settings.ATest();
 #endif
+                    SCM.InitStartupServices(GSR.Settings.ServiceStartupCommands); 
                 }
                 else
                 {
