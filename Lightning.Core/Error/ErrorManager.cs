@@ -8,10 +8,18 @@ using System.Xml.Serialization;
 namespace Lightning.Core
 {
     /// <summary>
-    /// Global error manager
+    /// Global error manager for Lightning.
     /// </summary>
     public static class ErrorManager
     {
+        /// <summary>
+        /// Prevents the Error Manager from being re-initialised every single time the DataModel is re-initialised (eg: loading game using DDMS).
+        /// </summary>
+        public static bool ERRORMANAGER_LOADED { get; set; }
+
+        /// <summary>
+        /// The actual errors themselves.
+        /// </summary>
         public static ErrorCollection Errors { get; set; }
 
         public static void Init()
@@ -20,8 +28,9 @@ namespace Lightning.Core
             //pre-globalsettings
             SerialiseErrors(@"Content\EngineContent\Errors.xml");
 #if DEBUG
-            ATest_CheckErrorSerialisedCorrectly(); 
+            ATest_CheckErrorSerialisedCorrectly();
 #endif
+            ERRORMANAGER_LOADED = true; 
         }
 
         private static bool DoesErrorExist(Error Err) => Errors.ErrorList.Contains(Err);
@@ -356,8 +365,6 @@ namespace Lightning.Core
 
             try
             {
-
-
                 XmlReader XR = XmlReader.Create(Path);
 
                 XmlSerializer XS = new XmlSerializer(typeof(ErrorCollection));

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Lightning.Core
 {
+    /// <summary>
+    /// Results class used for acquiring GameSettings.
+    /// </summary>
     public class GetGameSettingResult : IResult
     {
         public GameSetting Setting { get; set; }

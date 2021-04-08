@@ -18,7 +18,7 @@ namespace Lightning.Core
     {
         public static int DATAMODEL_VERSION_MAJOR = 0;
         public static int DATAMODEL_VERSION_MINOR = 4;
-        public static int DATAMODEL_VERSION_REVISION = 0;
+        public static int DATAMODEL_VERSION_REVISION = 1;
 
         // shouldn't be static? idk
 
@@ -51,7 +51,11 @@ namespace Lightning.Core
 
         public static void Init()
         {
-            ErrorManager.Init();
+            if (!ErrorManager.ERRORMANAGER_LOADED)
+            {
+                ErrorManager.Init();
+            }
+
 
             // init the SCM
             Workspace WorkSvc = (Workspace)CreateInstance("Workspace");

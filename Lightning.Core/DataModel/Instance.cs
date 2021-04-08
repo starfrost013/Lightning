@@ -8,7 +8,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning DataModel
     /// 
-    /// DataModel/Instance Ver0.4.0
+    /// DataModel/Instance Ver0.4.1
     /// 
     /// Provides the root for all objects provided in Lightning.
     /// 
@@ -23,6 +23,7 @@ namespace Lightning.Core
     /// 2020-04-02  Error handling, implemented InstanceCollection.Add(); 
     /// 2020-04-05  Actually implemented InstanceCollection.Add(); and InstanceCollection.Clear(); - DataModel class itself now stores GlobalSettings.
     /// 2020-04-06  Added Workspace; made parent/child addition actually work...
+    /// 2020-04-08  Modified Instance.AddChild(); to make it non-redundant
     /// 
     /// </summary>
     public abstract class Instance
@@ -260,7 +261,6 @@ namespace Lightning.Core
         public Instance GetParent() => Parent;
 
         public void RemoveAllChildren() => Children.Clear();
-        public void AddChild(Instance Chl) => Children.Add(Chl);
         public object AddChild(string Name) => DataModel.CreateInstance(Name, this); 
         public GenericResult RemoveChild(Instance Chl)
         {
