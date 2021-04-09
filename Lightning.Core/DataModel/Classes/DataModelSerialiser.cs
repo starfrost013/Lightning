@@ -16,7 +16,7 @@ namespace Lightning.Core
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.4.0
+    /// Version 0.5.0
     /// 
     /// Created 2021-03-16
     /// Modified 2021-04-09 (API Version 0.5.0: Merged all API Version constants)
@@ -592,7 +592,7 @@ namespace Lightning.Core
                             }
                             else
                             {
-                                DDSR.FailureReason = $"Attempted to parse invalid node: {DDSR_Element.FailureReason}";
+                                DDSR.FailureReason = $"An error occurred parsing a node: {DDSR_Element.FailureReason}";
                                 return DDSR; 
                             }
 
@@ -693,6 +693,47 @@ namespace Lightning.Core
                 //bug: no checks
                 //see: polymorphism
                 //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE
+
+                // Start any services that are not running,
+                // and if they are running, do nothing
+                if (XDR.IsSubclassOf(typeof(Service)))
+                {
+                    Workspace Ws = DataModel.GetWorkspace();
+
+                    GetInstanceResult GIR = Ws.GetFirstChildOfType("ServiceControlManager");
+
+                    if (GIR.Successful)
+                    {
+                        ServiceControlManager SCM = (ServiceControlManager)GIR.Instance;
+
+                        if (SCM.IsServiceRunning(XDataModelName))
+                        {
+                            DDSR.Successful = true;
+                            return DDSR;
+                        }
+                        else
+                        {
+                            ServiceStartResult SSR = SCM.StartService(XDataModelName);
+
+                            if (!SSR.Successful)
+                            {
+                                DDSR.FailureReason = $"Failed to start a service specified in the XML: {SSR.Information}";
+                                return DDSR;
+                            }
+                            else
+                            {
+                                DDSR.Successful = true;
+                                return DDSR;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ErrorManager.ThrowError("DataModel", "ServiceControlManagerFailureException");
+                        return DDSR; // this will not run as this is aftal aerror
+                    }
+
+                }
 
                 Instance XDRInstance; 
 

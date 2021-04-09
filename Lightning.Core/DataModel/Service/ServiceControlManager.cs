@@ -265,7 +265,10 @@ namespace Lightning.Core
 
         }
 
-        public void PollServices()
+        /// <summary>
+        /// Main loop: Polls all services
+        /// </summary>
+        private void UpdateServices()
         {
             foreach (Service Svc in RunningServices)
             {
@@ -274,10 +277,22 @@ namespace Lightning.Core
 
         }
 
-        public void UpdateServices()
+        /// <summary>
+        /// Checks if the srevce
+        /// </summary>
+        /// <param name="ClassName"></param>
+        /// <returns></returns>
+        public bool IsServiceRunning(string ClassName)
         {
+            foreach (Service Svc in RunningServices)
+            {
+                if (Svc.ClassName == ClassName)
+                {
+                    return false;
+                }
+            }
 
-            PollServices();
+            return true; 
         }
     }
 }

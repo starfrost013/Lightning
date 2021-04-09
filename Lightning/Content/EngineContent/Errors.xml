@@ -241,4 +241,11 @@ Do not change if you are not a dev
     <Id>32</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>The Service Control Manager has failed.</Description>
+    <Name>ServiceControlManagerFailureException</Name>
+    <Id>33</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>
