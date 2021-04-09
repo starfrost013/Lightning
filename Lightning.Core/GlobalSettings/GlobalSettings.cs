@@ -45,6 +45,7 @@ namespace Lightning.Core
         /// </summary>
         public ServiceStartupCommandCollection ServiceStartupCommands { get; set; }
 
+        [XmlElement("LightningXsdPath")]
         public string LightningXsdPath { get; set; }
 
         /// <summary>

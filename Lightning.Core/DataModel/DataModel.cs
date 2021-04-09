@@ -42,7 +42,7 @@ namespace Lightning.Core
         public DataModel()
         {
             string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
-            Logging.Log($"DataModel\nVersion {DataModel_String}\nNow Initialising...", "DataModel", MessageSeverity.Error);
+            Logging.Log($"DataModel\nVersion {DataModel_String}\nNow Initialising...", "DataModel");
             
 
             State = new InstanceCollection();
@@ -215,12 +215,9 @@ namespace Lightning.Core
         /// </summary>
         public void ATest_Serialise()
         {
-            // need to fix this weird api 
-            LightningXMLSchema LXMLS = new LightningXMLSchema(); // has been removed from the datamodel
-            LXMLS.XSI.XmlPath = @"Content\Schema\Lightning.xsd";
 
             DataModelSerialiser DDX = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
-            DDX.DDMS_Serialise(LXMLS, @"Content\Test\Test.xml");
+            DDX.DDMS_Serialise(@"Content\Test\Test.xml");
 
         }
 
@@ -317,5 +314,21 @@ namespace Lightning.Core
         /// <returns></returns>
         public static GetInstanceResult GetLastChildOfType(string ClassName) => State.GetLastChildOfType(ClassName);
 
+        /// <summary>
+        /// Acquires the <see cref="GlobalSettings"/> for the current DataModel. 
+        /// </summary>
+        /// <returns>The current <see cref="GlobalSettings"/> object if it is loaded (<see cref="GlobalSettings.GLOBALSETTINGS_LOADED"/> is true. Otherwise, it will return <code>null</code>.</returns>
+        public static GlobalSettings GetGlobalSettings()
+        {
+            if (!GlobalSettings.GLOBALSETTINGS_LOADED)
+            {
+                ErrorManager.ThrowError("GlobalSettings", "CannotAcquireUnloadedGlobalSettingsException");
+                return null;
+            }
+            else
+            {
+                return Settings;
+            }
+        }
     }
 }

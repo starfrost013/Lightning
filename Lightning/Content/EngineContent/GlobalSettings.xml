@@ -6,5 +6,5 @@
       <StartOrder>0</StartOrder>
     </ServiceStartupCommand>
   </ServiceStartupCommands>
-  <LightningXsdPath>\Content\EngineContent\Lightning.xsd</LightningXsdPath>
+  <LightningXsdPath>Content\Schema\Lightning.xsd</LightningXsdPath>
 </GlobalSettings>

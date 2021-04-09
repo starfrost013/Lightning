@@ -9,6 +9,11 @@ namespace Lightning
     {
         public LaunchArgsAction Action { get; set; }
         public LaunchArgs Arguments { get; set; }
+
+        public LaunchArgsResult()
+        {
+            Arguments = new LaunchArgs();
+        }
         
     }
 }

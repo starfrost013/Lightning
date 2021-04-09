@@ -54,10 +54,10 @@ namespace Lightning
 
                     // Test code
                     DataModelX = new DataModel();
-                    DataModel.Init();
+                    DataModel.Init(LAR.Arguments);
 
-                    DataModelX.ATest_Serialise();
-                    Logging.Log("------ Serialised using DDMS  [Test - 2021/03/26] ------\n");
+
+                    Logging.Log("------ Serialised using DDMS  [Test 2 - 2021/04/08] ------\n");
                     DataModelX.InstanceDump();
 
                     // yes this breaks all the rules 

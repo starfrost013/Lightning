@@ -51,7 +51,7 @@ namespace Lightning.Core
             Assembly CurAssembly = Assembly.GetExecutingAssembly();
             string CurAsmLocation = CurAssembly.Location;
 
-            FileVersionInfo FVI = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+            FileVersionInfo FVI = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location);
 
             string ProductVersion = FVI.FileVersion;
 
@@ -90,6 +90,7 @@ namespace Lightning.Core
             BuildDate = BuildDatePath;
             Owner = OwnerPath;
 
+            IsLoaded = true; 
             
             return; 
 

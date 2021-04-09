@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq; 
 using System.Reflection; 
 using System.Text;
@@ -24,6 +25,9 @@ namespace Lightning.Core
     /// </summary>
     public class DataModelSerialiser : Instance
     {
+        /// <summary>
+        /// The version of the DDMS API (currently 0.4.1).
+        /// </summary>
         public static int DDMSAPI_VERSION_MAJOR = 0;
         public static int DDMSAPI_VERSION_MINOR = 4;
         public static int DDMSAPI_VERSION_REVISION = 1;
@@ -45,10 +49,34 @@ namespace Lightning.Core
         
         public DataModel DDMS_Serialise(string Path)
         {
-            LightningXMLSchema LXMLS = new LightningXMLSchema();
-            LXMLS.XSI.SchemaPath = GlobalSettings.GLOBALSETTINGS_XSD_PATH;
-           
-            return DDMS_Serialise(LXMLS, Path);
+            try
+            {
+                LightningXMLSchema LXMLS = new LightningXMLSchema();
+
+                GlobalSettings GS = DataModel.GetGlobalSettings();
+
+                LXMLS.XSI.SchemaPath = GS.LightningXsdPath;
+
+                return DDMS_Serialise(LXMLS, Path);
+            }
+            catch (DirectoryNotFoundException err)
+            {
+#if DEBUG
+                ErrorManager.ThrowError(ClassName, "CannotFindLgxFileException", $"Cannot find the file {Path}\n\n{err}");
+#else
+                ErrorManager.ThrowError(ClassName, "CannotFindLgxFileException", $"Cannot find the file {Path}");
+#endif
+                return null; // temp? until we have nonstatic datamodel
+            }
+            catch (FileNotFoundException err)
+            {
+#if DEBUG
+                ErrorManager.ThrowError(ClassName, "CannotFindLgxFileException", $"Cannot find the file {Path}\n\n{err}");
+#else
+                ErrorManager.ThrowError(ClassName, "CannotFindLgxFileException", $"Cannot find the file {Path}");
+#endif
+                return null; // temp? until we have nonstatic datamodel
+            }
         }
 
         /// <summary>
@@ -64,7 +92,7 @@ namespace Lightning.Core
         /// <param name="Schema">The schema to utilise for serialisation.</param>
         /// <param name="Path">The path to the XML document to serialise. </param>
         /// <returns></returns>
-        public DataModel DDMS_Serialise(LightningXMLSchema Schema, string Path)
+        private DataModel DDMS_Serialise(LightningXMLSchema Schema, string Path)
         {
             Logging.Log($"DDMS: Reading {Path} and transforming to DataModel...");
 
@@ -129,7 +157,7 @@ namespace Lightning.Core
 
             XmlReaderSettings XRS = new XmlReaderSettings();
             XRS.ValidationType = ValidationType.Schema;
-            XRS.Schemas.Add(null, Schema.XSI.XmlPath);
+            XRS.Schemas.Add(null, Schema.XSI.SchemaPath);
             XRS.ValidationEventHandler += DDMS_Validate_OnFail;
             XmlReader XR = XmlReader.Create(Path, XRS);
             

@@ -167,4 +167,17 @@ Do not change if you are not a dev
     <Severity>FatalError</Severity>
   </Error>
 
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotFindLgxFileException</Name>
+    <Id>24</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot acquire GlobalSettings when it is not yet loaded!</Description>
+    <Name>CannotAcquireUnloadedGlobalSettingsException</Name>
+    <Id>25</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

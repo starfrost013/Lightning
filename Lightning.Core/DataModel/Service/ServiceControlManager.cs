@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq; 
 using System.Text;
-
+using System.Timers; 
 namespace Lightning.Core
 {
     /// <summary>
@@ -196,6 +196,11 @@ namespace Lightning.Core
             {
                 Svc.Poll();
             }
+        }
+
+        public void UpdateServices()
+        {
+            
         }
     }
 }
