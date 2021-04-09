@@ -53,16 +53,10 @@ namespace Lightning
                     Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
                     // Test code
+
+                    
                     DataModelX = new DataModel();
                     DataModel.Init(LAR.Arguments);
-
-
-                    Logging.Log("------ Serialised using DDMS  [Test 2 - 2021/04/08] ------\n");
-                    DataModelX.InstanceDump();
-
-                    // yes this breaks all the rules 
-                    // this code won't be here for long
-                    RenderService.ATest_RenderServiceQuerySettings();
 
                     // -- EXITS AFTER END OF SESSION -- 
                     Exit();

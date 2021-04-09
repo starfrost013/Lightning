@@ -9,16 +9,16 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel v0.4.0 
+    /// DataModel v0.4.2 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
     /// </summary>
     public class DataModel
     {
-        public static int DATAMODEL_VERSION_MAJOR = 0;
-        public static int DATAMODEL_VERSION_MINOR = 4;
-        public static int DATAMODEL_VERSION_REVISION = 1;
+        public static int DATAMODEL_API_VERSION_MAJOR = 0;
+        public static int DATAMODEL_API_VERSION_MINOR = 5;
+        public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
 
@@ -41,8 +41,8 @@ namespace Lightning.Core
         
         public DataModel()
         {
-            string DataModel_String = $"{DATAMODEL_VERSION_MAJOR}.{DATAMODEL_VERSION_MINOR}.{DATAMODEL_VERSION_REVISION}";
-            Logging.Log($"DataModel\nVersion {DataModel_String}\nNow Initialising...", "DataModel");
+            string DataModel_String = $"{DATAMODEL_API_VERSION_MAJOR}.{DATAMODEL_API_VERSION_MINOR}.{DATAMODEL_API_VERSION_REVISION}";
+            Logging.Log($"DataModel\nAPI Version {DataModel_String}\nNow Initialising...", "DataModel");
             
 
             State = new InstanceCollection();
@@ -76,7 +76,7 @@ namespace Lightning.Core
 #if DEBUG
                     Settings.ATest();
 #endif
-                    SCM.InitStartupServices(GSR.Settings.ServiceStartupCommands); 
+
                 }
                 else
                 {
@@ -88,7 +88,10 @@ namespace Lightning.Core
 #if DEBUG_ATEST_DATAMODEL //todo: unit testing
             ATest();
 #endif
+            
+            SCM.InitStartupServices(Settings.ServiceStartupCommands);
 
+            // Handle arguments passed to the DataModel. 
             if (Args != null)
             {
                 if (Args.GameXMLPath != null)
@@ -96,8 +99,15 @@ namespace Lightning.Core
                     DataModelSerialiser DMS = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
 
                     DMS.DDMS_Serialise(Args.GameXMLPath);
+
+                    // Enter the main loop.
+
+                    SCM.InitServiceUpdates();
+                    
                 }
+
             }
+
         }
 
         /// <summary>
@@ -330,5 +340,37 @@ namespace Lightning.Core
                 return Settings;
             }
         }
+
+        /// <summary>
+        /// Helper method to retrieve the Workspace from the DataModel. 
+        /// </summary>
+        /// <returns></returns>
+        public static Workspace GetWorkspace()
+        {
+            GetInstanceResult GIR = DataModel.GetFirstChildOfType("Workspace");
+
+            if (!GIR.Successful || GIR.Instance == null)
+            {
+                ErrorManager.ThrowError("DataModel", "WorkspaceHasBeenDestroyedException");
+                return null;
+            }
+
+            return (Workspace)GIR.Instance;
+
+        }
+
+        /// <summary>
+        /// Check if the root of the DataModel contains <paramref name="Obj"/>Obj.
+        /// </summary>
+        /// <param name="Obj"></param>
+        public static bool Contains(Instance Obj) => State.Contains(Obj);
+
+        /// <summary>
+        /// I don't really like this.
+        /// 
+        /// This gets the DataModel root.. It's the best option available.
+        /// </summary>
+        /// <returns></returns>
+        internal static InstanceCollection GetState() => State; 
     }
 }

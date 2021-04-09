@@ -30,16 +30,12 @@ namespace Lightning.Core
         }
 
 #if DEBUG
-        public static void ATest_RenderServiceQuerySettings()
+        public void ATest_RenderServiceQuerySettings()
         {
             Logging.Log("Query GameSettings Test:", "Automated Testing");
 
-            GetInstanceResult WksResult = DataModel.GetFirstChildOfType("Workspace");
-
-            Debug.Assert(WksResult.Successful && WksResult.Instance != null);
-
-            Workspace Wks = (Workspace)WksResult.Instance;
-
+            Workspace Wks = DataModel.GetWorkspace();
+           
             GetInstanceResult GS = Wks.GetFirstChildOfType("GameSettings");
 
             // It should always be loaded at this point.
@@ -66,7 +62,7 @@ namespace Lightning.Core
 
         public override void Poll()
         {
-            throw new NotImplementedException();
+            return; // do nothing for now
         }
 
         public override ServiceShutdownResult OnUnexpectedShutdown()

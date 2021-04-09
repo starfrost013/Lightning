@@ -155,9 +155,129 @@ namespace Lightning.Core
         }
 
         /// <summary>
+        /// Removes an Object from the InstanceCollection. 
+        /// 
+        /// Checks for InstanceTags and that an object is in the DataModel. 
+        /// 
+        /// April 9, 2021
+        /// </summary>
+        /// <param name="Obj"></param>
+        public void Remove(object Obj, Instance Parent = null)
+        {
+            Type ObjType = Obj.GetType();
+
+            // Check for people passing idiotic things to this method.
+            if (!ObjType.IsSubclassOf(typeof(Instance)))
+            {
+                ErrorManager.ThrowError("DataModel", "ThatIsNotAnInstancePleaseDoNotAttemptToRemoveItFromTheDataModelException");
+                return; 
+            }
+            else
+            {
+                Instance TestInstance = (Instance)Obj;
+
+                // Save the parent of this instance.
+                Instance InstanceParent;
+
+                // If parent isn't specified, try to find a parent. If
+                if (Parent == null)
+                {
+                    InstanceParent = TestInstance.Parent;
+                }
+                else
+                {
+                    InstanceParent = Parent; 
+                }
+
+                // Check that the instance is destroyable. 
+                if (!TestInstance.Attributes.HasFlag(InstanceTags.Destroyable))
+                {
+                    ErrorManager.ThrowError("DataModel", "CannotDestroyNonDestroyableInstanceException", $"{ObjType.Name} cannot be destroyed, as its InstanceTags do not include Destroyable.");
+                    return; 
+                }
+                else
+                {
+                    if (Parent == null) // If there is no parent, check ParentCanBeNull to see if it is inserted at the DataModel root or the Workspace.
+                    {
+                        if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
+                        {
+                            if (DataModel.Contains(TestInstance))
+                            {
+                                Remove_PerformRemove(TestInstance);
+                            }
+                            else
+                            {
+                                ErrorManager.ThrowError("DataModel", "AttemptedToRemoveInstanceThatIsNotPartOfDataModelException");
+                                return; 
+                            }
+
+                                
+                        }
+                        else // Id 
+                        {
+                            Workspace WS = DataModel.GetWorkspace();
+                            
+                            if (WS.Children.Contains(TestInstance))
+                            {
+                                Remove_PerformRemove(TestInstance, WS);
+                            }
+                            else
+                            {
+                                ErrorManager.ThrowError("DataModel", "AttemptedToRemoveInstanceThatIsNotPartOfDataModelException");
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Parent.Children.Contains(TestInstance))
+                        {
+                            Remove_PerformRemove(TestInstance, Parent);
+                        }
+                        else
+                        {
+                            ErrorManager.ThrowError("DataModel", "AttemptedToRemoveInstanceThatIsNotAChildOfItsParentException");
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private void Remove_PerformRemove(Instance ObjToRemove, Instance Parent = null)
+        {
+            // Remove all children of this Instance.
+            ObjToRemove.RemoveAllChildren();
+
+            if (Parent == null) // Parent will be passed as Workspace for those in the Workspace
+            {
+                InstanceCollection DMState = DataModel.GetState();
+                DMState.Instances.Remove(ObjToRemove);
+            }
+            else
+            {
+
+                Parent.Children.Instances.Remove(ObjToRemove);
+            }
+        }
+
+        /// <summary>
         /// Clear the InstanceCollection.
         /// </summary>
-        public void Clear() => Instances.Clear();
+        public void Clear()
+        {
+            // Rewritten April 9, 2021 to ensure usage of our custom remove method
+            foreach (Instance Ins in Instances)
+            {
+                Instances.Remove(Ins);
+            }
+        }
+
+        /// <summary>
+        /// Direct check for finding a specific Instance in an InstanceCollection. 
+        /// </summary>
+        /// <param name="Obj">Does it contain Obj?</param>
+        public bool Contains(Instance Obj) => Instances.Contains(Obj);
 
         /// <summary>
         /// Gets the first child of this Instance with ClassName <see cref="ClassName"/>

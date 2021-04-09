@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics; 
 using System.Linq; 
 using System.Text;
 using System.Timers; 
+
 namespace Lightning.Core
 {
     /// <summary>
@@ -18,9 +20,15 @@ namespace Lightning.Core
         /// </summary>
         public List<Service> RunningServices { get; set; }
 
+        /// <summary>
+        /// A timer used to update each service. 
+        /// </summary>
+        private ServiceGlobalData SvcGlobalData { get; set; }
+
         public ServiceControlManager()
         {
             RunningServices = new List<Service>();
+            SvcGlobalData = new ServiceGlobalData(); 
         }
 
         public void InitStartupServices(ServiceStartupCommandCollection StartupServices)
@@ -40,10 +48,77 @@ namespace Lightning.Core
         }
 
         /// <summary>
+        /// Initialises the main timer used for updating services.
+        /// 
+        /// April 9, 2021
+        /// </summary>
+        public void InitServiceUpdates()
+        {
+
+            
+            Logging.Log("Entering main loop...", ClassName);
+
+            Workspace WS = DataModel.GetWorkspace();
+
+            GetInstanceResult GIR = WS.GetFirstChildOfType("GameSettings");
+
+            if (!GIR.Successful || GIR.Instance == null)
+            {
+                ErrorManager.ThrowError(ClassName, "GameSettingsFailedToLoadException", $"Failed to load GameSettings or it was somehow unloaded: {GIR.FailureReason}");
+                return; 
+            }
+            else
+            {
+                GameSettings GS = (GameSettings)GIR.Instance;
+
+                string SettingName = "MaxFPS";
+
+                GetGameSettingResult MaxFPS_Result = GS.GetSetting(SettingName);
+                
+                if (!MaxFPS_Result.Successful)
+                {
+                    ErrorManager.ThrowError(ClassName, "FailedToObtainCriticalGameSettingException", $"Failed to load a setting that is required for the game to start: {SettingName}.");
+                    return; 
+                }
+                else
+                {
+                    GameSetting MaxFPS_Setting = MaxFPS_Result.Setting;
+
+                    SvcGlobalData.ServiceUpdateTimer = new Stopwatch();
+
+                    int MaxFPS = (int)MaxFPS_Setting.SettingValue;
+                    
+                    SvcGlobalData.ServiceUpdateTimer.Start();
+                    UpdateGame(MaxFPS); 
+
+                }
+
+            }
+
+        }
+
+        public void UpdateGame(int MaxFPS)
+        {
+            // slightly less temporary code
+            while (true)
+            {
+                // The 
+                long ElapsedMillisecondsSinceStart = SvcGlobalData.ServiceUpdateTimer.ElapsedMilliseconds;
+
+                int TargetFrameTimeMS = 1000 / MaxFPS;
+
+                if (ElapsedMillisecondsSinceStart % TargetFrameTimeMS == 0)
+                {
+                    UpdateServices();
+                }
+            }
+        }
+
+        /// <summary>
         /// Starts the service of type Type. The type must inherit from <see cref="Service"/> in the DataModel. change to classname?
         /// </summary>
         /// <param name="TypeOfService"></param>
-        /// <returns>A <see cref="ServiceStartResult"/>containing the success code and - if it has failed - the failure reason; if it succeeds it will include the service.</returns>
+        /// <returns>A <see cref="ServiceStartResult"/> containing the success code and - if it has failed - the failure reason; if it succeeds the Service object will be added to <see cref="RunningServices"/>.</returns>
         public ServiceStartResult StartService(string ClassName)
         {
             ServiceStartResult SSR = new ServiceStartResult();
@@ -196,11 +271,13 @@ namespace Lightning.Core
             {
                 Svc.Poll();
             }
+
         }
 
         public void UpdateServices()
         {
-            
+
+            PollServices();
         }
     }
 }

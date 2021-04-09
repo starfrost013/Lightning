@@ -1,6 +1,6 @@
 # Lightning Game Engine
 
-## Code of Conduct (version 1.5) (April 8, 2021)
+## Code of Conduct & Style Guide (version 1.6) (April 9, 2021)
 
 Welcome to the Lightning game engine main tree. We are going to have to ask you abide by a few rules if you wish to contribute code.
 
@@ -35,7 +35,12 @@ If it is a user-facing API, deals with scripting or does support a user API, it 
 
 * All code you write must not break the strict hierarchy principle of the DataModel!
 
+* When adding an object to the DataModel, * **DO NOT** * use any IEnumerable objects, such as List<T>. Use the object's Children property.
+
 ### Version History
+
+**V1.6 (April 9, 2021)**
+* Added a rule about IEnumerables in the DataModel.
 
 **V1.5 (April 8, 2021)**
 * Added a rule about DataModel hierarchy. A lot of rewording.

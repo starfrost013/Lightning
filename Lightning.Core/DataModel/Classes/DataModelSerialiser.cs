@@ -19,18 +19,12 @@ namespace Lightning.Core
     /// Version 0.4.0
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-04-08 (v0.4.1: Implement no-XmlSchema DDMS_Serialise)
+    /// Modified 2021-04-09 (API Version 0.5.0: Merged all API Version constants)
     /// 
     /// Dynamically serialises XML (.lgx files) to Lightning DataModel objects.
     /// </summary>
     public class DataModelSerialiser : Instance
     {
-        /// <summary>
-        /// The version of the DDMS API (currently 0.4.1).
-        /// </summary>
-        public static int DDMSAPI_VERSION_MAJOR = 0;
-        public static int DDMSAPI_VERSION_MINOR = 4;
-        public static int DDMSAPI_VERSION_REVISION = 1;
 
         public override string ClassName => "DataModelSerialiser";
 
@@ -421,8 +415,6 @@ namespace Lightning.Core
 
                 string ElementValue = XSettingElement.Value;
 
-
-
                 if (XmlUtil.CheckForValidXmlElementContent(XSettingElement))
                 {
                     // could we store everything tempoarily and then convert? hmm? or is it redundant
@@ -684,7 +676,7 @@ namespace Lightning.Core
         /// <param name="DM"></param>
         /// <param name="XInstanceChildNode"></param>
         /// <returns></returns>
-        private DDMSSerialisationResult DDMS_SerialiseElementToDMObject(DataModel DM, XElement XInstanceChildNode)
+        private DDMSSerialisationResult DDMS_SerialiseElementToDMObject(DataModel DM, XElement XInstanceChildNode, Instance Parent = null)
         {
 
             string XDataModelName = XInstanceChildNode.Name.LocalName;
@@ -701,7 +693,20 @@ namespace Lightning.Core
                 //bug: no checks
                 //see: polymorphism
                 //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE
-                Instance XDRInstance = (Instance)DataModel.CreateInstance(XDataModelName);
+
+                Instance XDRInstance; 
+
+                // April 9, 2021:
+                // Implement nested serialisation for Children
+                if (Parent == null)
+                {
+                    XDRInstance = (Instance)DataModel.CreateInstance(XDataModelName);
+                }
+                else
+                {
+                    XDRInstance = (Instance)Parent.AddChild(XDataModelName); 
+                }
+                
 
                 // TODO: instantiationresult from datamodel.createinstance
                 if (XDRInstance == null)
@@ -732,7 +737,7 @@ namespace Lightning.Core
                             object? CConvertedObject = Convert.ChangeType(XDMObjectAttribute.Value, IIP.Type);
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
-                            // TODO::NESTING
+                            // TODO: NESTING
                             if (CConvertedObject != null)
                             {
                                 PropertyInfo PI = XDR.GetProperty(XPropertyName);
@@ -769,12 +774,22 @@ namespace Lightning.Core
                     }
                 }
 
-                // Parse any other objects that may be a child of this object...
+                List<XElement> XMetadataChildren = XInstanceChildNode.Elements().ToList();
 
+                if (XMetadataChildren.Count == 0)
+                {
+                    DDSR.Successful = true;
+                    DDSR.DataModel = DM;
+                    return DDSR;
+                }
+                else
+                {
+                    foreach (XElement MetadataChild in XMetadataChildren)
+                    {
+                        DDMS_SerialiseElementToDMObject(DM, MetadataChild, XDRInstance);
+                    }
+                }
 
-                DDSR.Successful = true; 
-                DDSR.DataModel = DM;
-                return DDSR;
             }
             else
             {
@@ -782,12 +797,8 @@ namespace Lightning.Core
                 return DDSR; 
             }
 
+            // this should not run
+            return DDSR; 
         }
-
-        private bool DDMS_FindComponent(XmlReader XR, DDMSComponents Component)
-        {
-            throw new NotImplementedException(); 
-        }
-         
     }
 }

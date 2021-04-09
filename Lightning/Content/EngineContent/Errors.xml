@@ -10,6 +10,7 @@ Do not change if you are not a dev
     <Id>0</Id>
     <Severity>FatalError</Severity>
   </Error>
+  
   <!-- Implemented 2021-04-02 -->
   <Error>
     <Description>InstanceCollection: Attempted to acquire invalid Instance!</Description>
@@ -17,30 +18,35 @@ Do not change if you are not a dev
     <Id>1</Id>
     <Severity>FatalError</Severity>
   </Error>
+  
   <Error>
     <Description>Versioning: Acquired invalid version - must have 4 components (delimiter is .)</Description>
     <Name>InvalidVersionException</Name>
     <Id>2</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <Description>Versioning: Acquired invalid version - invalid owner or build date!</Description>
     <Name>InvalidVersionAuxillaryInformationException</Name>
     <Id>3</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <Description>Versioning: Acquired invalid version - major, minor, revision, or private/compressed build date</Description>
     <Name>InvalidVersionInformationException</Name>
     <Id>4</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>AttemptedToAddNonErrorToErrorsException</Name>
     <Id>5</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <!-- Probably obsolete -->
     <Description>EnumValue: Attempted to add EnumValue with zero-length or null to EnumInstance!</Description>
@@ -49,37 +55,42 @@ Do not change if you are not a dev
     <Severity>FatalError</Severity>
     <!-- End probably obsolete -->
   </Error>
+  
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>DataModelInstanceCreationFailedException</Name>
     <Id>7</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <Description>An unknown exception occurred during the creation of an Instance and its addition to the DataModel.</Description>
     <Name>DataModelInstanceCreationUnknownErrorException</Name>
     <Id>8</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>InstanceInfoGenerationFailedException</Name>
     <Id>9</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>InstanceCannotBeParentException</Name>
     <Id>10</Id>
     <Severity>Error</Severity>
   </Error>
+  
   <Error>
     <Description>Attempted to acquire a null parent for an Instance that does not have InstanceTags.CanHaveParentNull!</Description>
     <Name>CannotAcquireNullParentException</Name>
     <Id>11</Id>
     <Severity>Error</Severity> <!-- change to fatal? -->
-
   </Error>
+  
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>DDMSSchemaValidationWarningException</Name>
@@ -178,6 +189,56 @@ Do not change if you are not a dev
     <Description>Cannot acquire GlobalSettings when it is not yet loaded!</Description>
     <Name>CannotAcquireUnloadedGlobalSettingsException</Name>
     <Id>25</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>GameSettingsFailedToLoadException</Name>
+    <Id>26</Id>
+    <Severity>Error</Severity> <!-- should be fatal? -->
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToObtainGameSettingException</Name>
+    <Id>27</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <!-- Used for game settings that are required for the game to start -->
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToObtainCriticalGameSettingException</Name>
+    <Id>28</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overidden in code!!</Description>
+    <Name>CannotDestroyNonDestroyableInstanceException</Name>
+    <Id>29</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ThatIsNotAnInstancePleaseDoNotTryToRemoveItFromTheDataModelException</Name>
+    <Id>30</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to remove an Instance that is not in the DataModel or Workspace.</Description>
+    <Name>AttemptedToRemoveInstanceThatIsNotPartOfDataModelException</Name>
+    <Id>31</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to remove an Instance from a Parent that it is not a child of.</Description>
+    <Name>AttemptedToRemoveInstanceThatIsNotAChildOfItsParentException</Name>
+    <Id>32</Id>
     <Severity>Error</Severity>
   </Error>
 </Errors>
