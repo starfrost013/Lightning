@@ -22,11 +22,22 @@ namespace Lightning.Core
         /// </summary>
         public static ErrorCollection Errors { get; set; }
 
+        /// <summary>
+        /// Path to the XML schema for Errors.
+        /// </summary>
+
+        public static string ERRORMANAGER_XSD_PATH = @"Content\Schema\Errors.xsd";
+
+        /// <summary>
+        /// Path to the Error XML used for loading errors.
+        /// </summary>
+        public static string ERRORMANAGER_XML_PATH = @"Content\EngineContent\Errors.xml";
+
         public static void Init()
         {
             Errors = new ErrorCollection();
             //pre-globalsettings
-            SerialiseErrors(@"Content\EngineContent\Errors.xml");
+            SerialiseErrors(ERRORMANAGER_XML_PATH);
 #if DEBUG
             ATest_CheckErrorSerialisedCorrectly();
 #endif
@@ -351,8 +362,7 @@ namespace Lightning.Core
         {
             LightningXMLSchema LXMLS = new LightningXMLSchema();
 
-            // todo: engineglobalsettings
-            LXMLS.XSI.SchemaPath = @"Content\Schema\Errors.xsd";
+            LXMLS.XSI.SchemaPath = ERRORMANAGER_XSD_PATH;
             LXMLS.XSI.XmlPath = Path;
 
             return LXMLS.Validate();

@@ -45,9 +45,12 @@ namespace Lightning.Core
         /// </summary>
         public ServiceStartupCommandCollection ServiceStartupCommands { get; set; }
 
-        [XmlElement("LightningXsdPath")]
+        /// <summary>
+        /// The path to Lightning.xsd, the XML schema for LGX files.
+        /// </summary>
         public string LightningXsdPath { get; set; }
 
+       
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 
         /// </summary>
