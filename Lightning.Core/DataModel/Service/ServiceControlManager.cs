@@ -288,11 +288,11 @@ namespace Lightning.Core
             {
                 if (Svc.ClassName == ClassName)
                 {
-                    return false;
+                    return true;
                 }
             }
 
-            return true; 
+            return false; 
         }
     }
 }

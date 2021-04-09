@@ -196,7 +196,7 @@ Do not change if you are not a dev
     <Description>!!this should be overridden in code!!</Description>
     <Name>GameSettingsFailedToLoadException</Name>
     <Id>26</Id>
-    <Severity>Error</Severity> <!-- should be fatal? -->
+    <Severity>FatalError</Severity>
   </Error>
 
   <Error>
@@ -246,6 +246,13 @@ Do not change if you are not a dev
     <Description>The Service Control Manager has failed.</Description>
     <Name>ServiceControlManagerFailureException</Name>
     <Id>33</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>RenderServiceInitialisationFailedException</Name>
+    <Id>34</Id>
     <Severity>Error</Severity>
   </Error>
 </Errors>

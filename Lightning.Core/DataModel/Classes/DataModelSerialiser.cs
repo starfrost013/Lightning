@@ -709,6 +709,7 @@ namespace Lightning.Core
                         if (SCM.IsServiceRunning(XDataModelName))
                         {
                             DDSR.Successful = true;
+                            DDSR.DataModel = DM;
                             return DDSR;
                         }
                         else
@@ -756,81 +757,83 @@ namespace Lightning.Core
                     DDSR.FailureReason = "Object is not in the datamodel or the object is non-instantiable!";
                     return DDSR;
                 }
-
-                List<XAttribute> XDMObjectAttributes = XInstanceChildNode.Attributes().ToList();
-
-                foreach (XAttribute XDMObjectAttribute in XDMObjectAttributes)
+                else
                 {
-                    string XPropertyName = XDMObjectAttribute.Name.LocalName;
+                    List<XAttribute> XDMObjectAttributes = XInstanceChildNode.Attributes().ToList();
 
-                    Logging.Log($"Parsing Attribute to DataModel: {XPropertyName}", ClassName);
-                    // perform a kind of wizardry with InstanceInfo and classes
-
-                    foreach (InstanceInfoProperty IIP in XDRInstance.Info.Properties)
+                    foreach (XAttribute XDMObjectAttribute in XDMObjectAttributes)
                     {
-                        // We have found the instance property that we want
-                        if (XPropertyName == IIP.Name)
+                        string XPropertyName = XDMObjectAttribute.Name.LocalName;
+
+                        Logging.Log($"Parsing Attribute to DataModel: {XPropertyName}", ClassName);
+
+                        // perform a kind of wizardry with InstanceInfo and classes
+
+                        foreach (InstanceInfoProperty IIP in XDRInstance.Info.Properties)
                         {
-                            // WIZARD TIME
-                            // Convert from string to arbitrary type! :D 
+                            // We have found the instance property that we want
+                            if (XPropertyName == IIP.Name)
+                            {
+                                // WIZARD TIME
+                                // Convert from string to arbitrary type! :D 
 
 #pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-                            object? CConvertedObject = Convert.ChangeType(XDMObjectAttribute.Value, IIP.Type);
+                                object? CConvertedObject = Convert.ChangeType(XDMObjectAttribute.Value, IIP.Type);
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
-                            // TODO: NESTING
-                            if (CConvertedObject != null)
-                            {
-                                PropertyInfo PI = XDR.GetProperty(XPropertyName);
-
-                                if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
+                                // TODO: NESTING
+                                if (CConvertedObject != null)
                                 {
-                                    Instance CInstanceObject = (Instance)CConvertedObject;
+                                    PropertyInfo PI = XDR.GetProperty(XPropertyName);
 
-                                    if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
+                                    if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
                                     {
-                                        //todo: handle lists...they will have subnodes
-                                        PI.SetValue(XDRInstance, CConvertedObject);
+                                        Instance CInstanceObject = (Instance)CConvertedObject;
+
+                                        if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
+                                        {
+                                            //todo: handle lists...they will have subnodes
+                                            PI.SetValue(XDRInstance, CConvertedObject);
+                                        }
+                                        else
+                                        {
+                                            // April 9, 2021: Don't fail on a non-serialisable object.
+                                            DDSR.Successful = true;
+                                            return DDSR;
+                                        }
                                     }
                                     else
                                     {
-                                        DDSR.FailureReason = "DDMS: Conversion error: Attempted to serialise non-serialisable object!";
-                                        return DDSR;
+                                        // may need to serialsie non-datamodel objects
+                                        PI.SetValue(XDRInstance, CConvertedObject);
+
                                     }
+
                                 }
                                 else
                                 {
-                                    // may need to serialsie non-datamodel objects
-                                    PI.SetValue(XDRInstance, CConvertedObject);
-
+                                    DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
+                                    return DDSR;
                                 }
-
-                            }
-                            else
-                            {
-                                DDSR.FailureReason = "DDMS: Conversion error: Unknown error";
-                                return DDSR;
                             }
                         }
                     }
-                }
+                    List<XElement> XMetadataChildren = XInstanceChildNode.Elements().ToList();
 
-                List<XElement> XMetadataChildren = XInstanceChildNode.Elements().ToList();
-
-                if (XMetadataChildren.Count == 0)
-                {
-                    DDSR.Successful = true;
-                    DDSR.DataModel = DM;
-                    return DDSR;
-                }
-                else
-                {
-                    foreach (XElement MetadataChild in XMetadataChildren)
+                    if (XMetadataChildren.Count == 0)
                     {
-                        DDMS_SerialiseElementToDMObject(DM, MetadataChild, XDRInstance);
+                        DDSR.Successful = true;
+                        DDSR.DataModel = DM;
+                        return DDSR;
+                    }
+                    else
+                    {
+                        foreach (XElement MetadataChild in XMetadataChildren)
+                        {
+                            DDMS_SerialiseElementToDMObject(DM, MetadataChild, XDRInstance);
+                        }
                     }
                 }
-
             }
             else
             {
@@ -838,6 +841,7 @@ namespace Lightning.Core
                 return DDSR; 
             }
 
+            DDSR.Successful = true;
             // this should not run
             return DDSR; 
         }
