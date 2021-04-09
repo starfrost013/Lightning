@@ -23,34 +23,16 @@ namespace Lightning.Core
         public override ServiceImportance Importance => ServiceImportance.High;
         public Renderer Renderer { get; set; }
 
+        public static bool RENDERER_INITIALISED { get; set; }
         public override ServiceStartResult OnStart()
         {
             // TEST code
             ServiceStartResult SSR = new ServiceStartResult();
 
             Logging.Log("RenderService Init", ClassName);
-            
-            Logging.Log("Initialising SDL renderer...", ClassName);
 
-            SDLInitialisationResult SDIR = OnStart_InitSDL();
-
-            if (!SDIR.Successful)
-            {
-                string ErrorString = $"Failed to initialise RenderService: {SDIR.FailureReason}";
-
-                // Return a failureon error. 
-                ErrorManager.ThrowError(ClassName, "RenderServiceInitialisationFailedException", ErrorString);
-                SSR.Information = ErrorString;
-                return SSR; 
-            }
-            else
-            {
-                Renderer = SDIR.Renderer;
-
-                SSR.Successful = true;
-                return SSR;
-            }
-
+            SSR.Successful = true;
+            return SSR; 
         
         }
 
@@ -182,7 +164,39 @@ namespace Lightning.Core
 
         public override void Poll()
         {
+            // This initialises the SDL code.
+            if (!RENDERER_INITIALISED)
+            {
+                InitRendering();
+            }
+
             return; // do nothing for now
+        }
+
+        private void InitRendering()
+        {
+            Logging.Log("Initialising SDL renderer...", ClassName);
+
+            SDLInitialisationResult SDIR = OnStart_InitSDL();
+
+            if (!SDIR.Successful)
+            {
+                string ErrorString = $"Failed to initialise RenderService: {SDIR.FailureReason}";
+
+                // Return a failureon error. 
+                ErrorManager.ThrowError(ClassName, "RenderServiceInitialisationFailedException", ErrorString);
+
+                //todo: crash the service here
+                return;
+            }
+            else
+            {
+                Renderer = SDIR.Renderer;
+
+                RENDERER_INITIALISED = true;
+
+                return;
+            }
         }
 
         public override ServiceShutdownResult OnUnexpectedShutdown()

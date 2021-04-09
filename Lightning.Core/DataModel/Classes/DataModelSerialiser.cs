@@ -163,7 +163,7 @@ namespace Lightning.Core
             
             if (!IsSuccessful)
             {
-                DDMSVR.FailureMessage = "XML schema validation failure";
+                DDMSVR.FailureReason = "XML schema validation failure";
                 return DDMSVR;
             }
             else
@@ -718,7 +718,7 @@ namespace Lightning.Core
 
                             if (!SSR.Successful)
                             {
-                                DDSR.FailureReason = $"Failed to start a service specified in the XML: {SSR.Information}";
+                                DDSR.FailureReason = $"Failed to start a service specified in the XML: {SSR.FailureReason}";
                                 return DDSR;
                             }
                             else

@@ -10,7 +10,7 @@ namespace Lightning.Core
     /// </summary>
     public class DDMSValidateResult : IResult
     {
-        public string FailureMessage { get; set; }
+        public string FailureReason { get; set; }
         public bool Successful { get; set; }
     }
 }

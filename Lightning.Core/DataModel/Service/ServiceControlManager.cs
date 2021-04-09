@@ -139,7 +139,7 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    SSR.Information = $"Attempted to initiate {ClassName} when it is already running!";
+                    SSR.FailureReason = $"Attempted to initiate {ClassName} when it is already running!";
                     return SSR;
                 }
 
@@ -149,9 +149,9 @@ namespace Lightning.Core
             {
                 ServiceStartResult SvcSR = new ServiceStartResult();
 #if DEBUG
-                SvcSR.Information = $"Attempted to instantiate an invalid service\n\n{err}";
+                SvcSR.FailureReason = $"Attempted to instantiate an invalid service\n\n{err}";
 #else
-                SvcSR.Information = "Attempted to instantiate an invalid service";
+                SvcSR.FailureReason  = "Attempted to instantiate an invalid service";
 #endif
 
                 return SvcSR; 

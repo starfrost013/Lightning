@@ -7,7 +7,7 @@ namespace Lightning.Core
 {
     public class ServiceStartResult : IResult
     {
-        public string Information { get; set; }
+        public string FailureReason { get; set; }
         public bool Successful { get; set; }
     }
 }
