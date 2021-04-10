@@ -267,8 +267,10 @@ namespace Lightning.Core
         public void Clear()
         {
             // Rewritten April 9, 2021 to ensure usage of our custom remove method
-            foreach (Instance Ins in Instances)
+            for (int i = 0; i < Instances.Count; i++)
             {
+                Instance Ins = Instances[i];
+
                 Instances.Remove(Ins);
             }
         }

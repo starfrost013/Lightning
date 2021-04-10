@@ -15,6 +15,7 @@ namespace Lightning.Core
     /// 2021-04-07: Added first functionality
     /// 2021-04-08: Added test code.
     /// 2021-04-09: Added Renderer class and SDL renderer.
+    /// 2021-04-10; Added event loop
     /// 
     /// </summary>
     public class RenderService : Service
@@ -182,7 +183,16 @@ namespace Lightning.Core
 #endif
         public override ServiceShutdownResult OnShutdown()
         {
-            throw new NotImplementedException();
+            Logging.Log(ClassName, "Temp?: Shutting down SDL...");
+
+            SDL.SDL_Quit();
+
+            ServiceShutdownResult SSR = new ServiceShutdownResult();
+
+            SSR.Successful = true; 
+
+
+            return SSR; // do nothing for now
         }
 
         public override void Poll()
@@ -216,6 +226,8 @@ namespace Lightning.Core
                 ErrorManager.ThrowError(ClassName, "RenderServiceInitialisationFailedException", ErrorString);
 
                 //todo: crash the service here
+                ServiceNotification SN = new ServiceNotification { ServiceClassName = ClassName, NotificationType = ServiceNotificationType.Crash };
+
                 return;
             }
             else
@@ -238,8 +250,10 @@ namespace Lightning.Core
                 switch (CurEvent.type)
                 {
                     case SDL.SDL_EventType.SDL_QUIT:
-                        // TEMP
-                        MessageBox.Show("haha event testing!!!");
+                        // Less temp
+                        ServiceNotification SN = new ServiceNotification { ServiceClassName = ClassName, NotificationType = ServiceNotificationType.Shutdown_ShutDownEngine };
+                        ServiceNotifier.NotifySCM(SN); 
+                        
                         return;
                 }
             }

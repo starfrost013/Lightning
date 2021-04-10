@@ -245,8 +245,11 @@ namespace Lightning.Core
 
             ServiceShutdownResult SSR = new ServiceShutdownResult();
 
-            foreach (Service Svc in RunningServices)
+            // April 10, 2021: Change to a for loop to prevent pesky "collection was modified" errors.
+            for (int i = 0; i < RunningServices.Count; i++)
             {
+                Service Svc = RunningServices[i];
+
                 string XClassName = Svc.ClassName;
 
                 ServiceShutdownResult SSR_KillSvc = KillService(XClassName);
@@ -311,7 +314,7 @@ namespace Lightning.Core
         /// Handles a service notification. 
         /// </summary>
         /// <param name="SvcNotification"></param>
-        public void NotifyServiceEvent(ServiceNotification SvcNotification)
+        public void OnNotifyServiceEvent(ServiceNotification SvcNotification)
         {
             if (SvcNotification == null)
             {
@@ -338,9 +341,9 @@ namespace Lightning.Core
 
                 try
                 {
-                    Type ServiceType = Type.GetType(SvcNotification.ServiceClassName);
+                    Service Service = GetService(SvcNotification.ServiceClassName);
 
-                    if (!ServiceType.IsSubclassOf(typeof(Service)))
+                    if (Service == null)
                     {
                         ErrorManager.ThrowError(ClassName, "AttemptedToHandleServiceNotificationAboutANonServiceException", $"Attempted to handle a ServiceNotification about {ClassName}, which is not a Service!");
                         return; 
