@@ -288,6 +288,6 @@ Do not change if you are not a dev
     <Description>!!this should be overridden in code!!</Description>
     <Name>ErrorValidatingLGXFileException</Name>
     <Id>39</Id>
-    <Severity>Error </Severity>
+    <Severity>Error</Severity>
   </Error>
 </Errors>

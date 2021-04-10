@@ -110,7 +110,7 @@ namespace Lightning.Core
         {
             LightningXMLSchema LXMLS = new LightningXMLSchema();
             LXMLS.XSI.XmlPath = GLOBALSETTINGS_XML_PATH;
-            LXMLS.XSI.SchemaPath = PathUtil.GetLightningPath(GLOBALSETTINGS_XSD_PATH);
+            LXMLS.XSI.SchemaPath = GLOBALSETTINGS_XSD_PATH;
 
             XmlSchemaResult XSR = LXMLS.Validate();
 

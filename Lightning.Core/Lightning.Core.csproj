@@ -4,8 +4,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.238.21100</AssemblyVersion>
-    <FileVersion>1.0.238.21100</FileVersion>
+    <AssemblyVersion>1.0.249.21100</AssemblyVersion>
+    <FileVersion>1.0.249.21100</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 

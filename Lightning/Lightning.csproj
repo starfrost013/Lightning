@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.233.21100</AssemblyVersion>
-    <FileVersion>1.0.233.21100</FileVersion>
+    <AssemblyVersion>1.0.244.21100</AssemblyVersion>
+    <FileVersion>1.0.244.21100</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>Lightning Launcher</PackageId>
     <Description>Lightning Launcher</Description>
@@ -38,6 +38,7 @@
     <None Remove="Content\EngineContent\Errors.xml" />
     <None Remove="Content\EngineContent\GlobalSettings.xml" />
     <None Remove="Content\Schema\Errors.xsd" />
+    <None Remove="Content\Schema\GlobalSettings.xsd" />
     <None Remove="Content\Schema\Lightning.xsd" />
     <None Remove="Content\Test\Test.xml" />
     <None Remove="Content\test_texture.png" />
@@ -64,6 +65,9 @@
     </Content>
     <Content Include="Content\EngineContent\GlobalSettings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Schema\GlobalSettings.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Schema\Lightning.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

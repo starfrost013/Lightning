@@ -44,9 +44,12 @@ namespace Lightning.Core
 
                 string LWSchemaPath = PathUtil.GetLightningPath(XSI.SchemaPath);
 
+                // hack to get around some stuff just as a test
+                LWSchemaPath = LWSchemaPath.Replace("\\\\", "\\");
+
                 if (!File.Exists(LWSchemaPath))
                 {
-                    string ErrorString = $"Cannot find the XML file at {XSI.XmlPath}!";
+                    string ErrorString = $"Cannot find the XML file at {LWSchemaPath}!";
 
                     ErrorManager.ThrowError("XML Schema Validator", "CannotFindXmlFileOrSchemaException", ErrorString);
                     XSR.FailureReason = ErrorString;

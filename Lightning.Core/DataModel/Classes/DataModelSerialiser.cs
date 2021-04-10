@@ -50,6 +50,7 @@ namespace Lightning.Core
                 GlobalSettings GS = DataModel.GetGlobalSettings();
 
                 LXMLS.XSI.SchemaPath = GS.LightningXsdPath;
+                LXMLS.XSI.XmlPath = Path; 
 
                 return DDMS_Serialise(LXMLS, Path);
             }
@@ -95,7 +96,7 @@ namespace Lightning.Core
             // Create the datamodel that we will be returning.
             DataModel DM = new DataModel();
             
-            XmlSchemaResult XSR = DDMS_Validate(Schema, Path);
+            XmlSchemaResult XSR = DDMS_Validate(Schema);
 
             if (!XSR.Successful)
             {
@@ -151,14 +152,13 @@ namespace Lightning.Core
             
         }
 
-        private XmlSchemaResult DDMS_Validate(LightningXMLSchema Schema, string Path)
+        private XmlSchemaResult DDMS_Validate(LightningXMLSchema Schema)
         {
-            
             XmlSchemaResult DDSR = Schema.Validate();
 
             if (!DDSR.Successful)
             {
-                DDSR.FailureReason = "XML schema validation failure";
+                DDSR.FailureReason = $"XML schema validation failure: {DDSR.FailureReason}";
                 return DDSR;
             }
             else
