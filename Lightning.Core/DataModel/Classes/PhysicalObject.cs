@@ -11,6 +11,6 @@ namespace Lightning.Core
         public Vector2 Position { get; set; }
         public Vector2 Size { get; set; }
         public string SpritePath { get; set; }
-        public Texture Tex { get; set; }
+        public Texture Texture { get; set; }
     }
 }

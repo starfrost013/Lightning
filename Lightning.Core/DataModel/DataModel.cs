@@ -216,8 +216,6 @@ namespace Lightning.Core
             CreateInstance("Color4");
             CreateInstance("Vector2");
 
-
-            
         }
 
         /// <summary>

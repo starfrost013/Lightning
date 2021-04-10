@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Lightning.Utilities; 
+using System;
 using System.Collections.Generic;
+using System.IO; 
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -23,13 +25,13 @@ namespace Lightning.Core
         }
 
         /// <summary>
-        /// Validates XML located at <see cref="XmlSchemaData.SchemaPath"/> against the schema <see cref="XmlSchemaData.SchemaPath"/>. These must both be set or an error will be thrown.
+        /// Validates XML located at <see cref="XmlSchemaData.XmlPath"/> against the schema <see cref="XmlSchemaData.SchemaPath"/>. These must both be set or an error will be thrown.
         /// </summary>
         /// <returns></returns>
         public XmlSchemaResult Validate()
         {
             XmlSchemaResult XSR = new XmlSchemaResult();
-            
+
             if (XSI.SchemaPath == null
                 || XSI.XmlPath == null)
             {
@@ -39,20 +41,57 @@ namespace Lightning.Core
             }
             else
             {
-                XmlReaderSettings XRS = new XmlReaderSettings();
-                XRS.ValidationType = ValidationType.Schema;
 
-                XRS.IgnoreComments = true;
-                XRS.IgnoreWhitespace = true;
-                XRS.ValidationEventHandler += Validate_OnFail;
+                string LWSchemaPath = PathUtil.GetLightningPath(XSI.SchemaPath);
 
-                XmlReader XR = XmlReader.Create(XSI.XmlPath, XRS);
-
-                // yes we have to do this.
-                while (XR.Read())
+                if (!File.Exists(LWSchemaPath))
                 {
+                    string ErrorString = $"Cannot find the XML file at {XSI.XmlPath}!";
 
+                    ErrorManager.ThrowError("XML Schema Validator", "CannotFindXmlFileOrSchemaException", ErrorString);
+                    XSR.FailureReason = ErrorString;
+                    return XSR;
                 }
+                else
+                {
+                    if (!File.Exists(XSI.XmlPath))
+                    {
+                        string ErrorString = $"Cannot find the XML schema at {XSI.XmlPath}!";
+
+                        ErrorManager.ThrowError("XML Schema Validator", "CannotFindXmlFileOrSchemaException", ErrorString);
+                        XSR.FailureReason = ErrorString;
+                        return XSR;
+                    }
+                    else
+                    {
+                        return Validate_DoValidate(); 
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Actually performs the XML schema validation
+        /// </summary>
+        /// <returns></returns>
+        private XmlSchemaResult Validate_DoValidate()
+        {
+            XmlSchemaResult XSR = new XmlSchemaResult(); 
+
+            XmlReaderSettings XRS = new XmlReaderSettings();
+            XRS.ValidationType = ValidationType.Schema;
+
+            XRS.IgnoreComments = true;
+            XRS.IgnoreWhitespace = true;
+            XRS.ValidationEventHandler += Validate_OnFail;
+
+            XmlReader XR = XmlReader.Create(XSI.XmlPath, XRS);
+
+            // yes we have to do this.
+            while (XR.Read())
+            {
+
             }
 
             // check if we didn't fail (dumb hack)

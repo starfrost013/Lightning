@@ -16,19 +16,14 @@ namespace Lightning.Core
     public enum ServiceImportance
     {
         /// <summary>
-        /// This service can crash without bing immediately reinitialised. An example of this is the SettingsService, as it only requires to be called when settings are changed.
+        /// This service can crash without being immediately reinitialised. An example of this is the SettingsService, as it only requires to be called when settings are changed.
         /// </summary>
         Low = 0,
 
         /// <summary>
-        /// This service does not require the engine to quit, but it must be immediately reinitialised and all other work stopped during this process. An example of this is the PhysicsService or LightingService.
-        /// </summary>
-        High = 1,
-
-        /// <summary>
         /// This service requires the engine to quit, restart, or exit the current game. An example of this is the NetworkReplicator for network-based Lightning games; if it fails, the current game must be exited. 
         /// </summary>
-        Critical = 2
+        High = 1
 
     }
 }

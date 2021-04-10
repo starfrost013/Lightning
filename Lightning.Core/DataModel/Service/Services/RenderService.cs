@@ -73,6 +73,7 @@ namespace Lightning.Core
                     GetGameSettingResult GGSR_WindowWidth = Settings.GetSetting("WindowWidth");
                     GetGameSettingResult GGSR_DefaultWindowX = Settings.GetSetting("DefaultWindowPositionX");
                     GetGameSettingResult GGSR_DefaultWindowY = Settings.GetSetting("DefaultWindowPositionY");
+                    GetGameSettingResult GGSR_FullScreen = Settings.GetSetting("Fullscreen");
 
                     // Check that the settings were acquired.
                     if (!GGSR_WindowTitle.Successful
@@ -91,6 +92,14 @@ namespace Lightning.Core
                         GameSetting WindowHeight_Setting = GGSR_WindowHeight.Setting;
                         GameSetting DefaultWindowX_Setting = GGSR_DefaultWindowX.Setting;
                         GameSetting DefaultWindowY_Setting = GGSR_DefaultWindowY.Setting;
+                        
+                        // because we have to do this apparently
+                        GameSetting Fullscreen_Setting = null;
+
+                        if (GGSR_FullScreen.Successful)
+                        {
+                            Fullscreen_Setting = GGSR_FullScreen.Setting;
+                        }
 
                         // Set up the window using the stuff we acquired from GameSettings. 
                         string WindowTitle = (string)WindowTitle_Setting.SettingValue;
@@ -98,11 +107,25 @@ namespace Lightning.Core
                         int WindowHeight = (int)WindowHeight_Setting.SettingValue;
                         int DefaultWindowX = (int)DefaultWindowX_Setting.SettingValue;
                         int DefaultWindowY = (int)DefaultWindowY_Setting.SettingValue;
+                        bool Fullscreen = false;
+
+                        if (Fullscreen_Setting != null)
+                        {
+                            Fullscreen = (bool)GGSR_FullScreen.Setting.SettingValue;
+                        }
 
                         Logging.Log("Initialising SDL Window...");
                         SDIR.Renderer = new Renderer();
 
-                        SDIR.Renderer.Window = SDL.SDL_CreateWindow(WindowTitle, DefaultWindowX, DefaultWindowY, WindowWidth, WindowHeight, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+                        // Create a fullscreen window if fullscreen is false.
+                        if (Fullscreen)
+                        {
+                            SDIR.Renderer.Window = SDL.SDL_CreateWindow(WindowTitle, DefaultWindowX, DefaultWindowY, WindowWidth, WindowHeight, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN | SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                        }
+                        else
+                        {
+                            SDIR.Renderer.Window = SDL.SDL_CreateWindow(WindowTitle, DefaultWindowX, DefaultWindowY, WindowWidth, WindowHeight, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+                        }
 
                         if (SDIR.Renderer.Window == IntPtr.Zero)
                         {
@@ -168,9 +191,15 @@ namespace Lightning.Core
             if (!RENDERER_INITIALISED)
             {
                 InitRendering();
+                return; 
+            }
+            else
+            {
+                UpdateRendering();
+                return; 
             }
 
-            return; // do nothing for now
+            
         }
 
         private void InitRendering()
@@ -196,6 +225,23 @@ namespace Lightning.Core
                 RENDERER_INITIALISED = true;
 
                 return;
+            }
+        }
+
+        private void UpdateRendering()
+        {
+            // Get the current SDL event.
+            SDL.SDL_Event CurEvent;
+            
+            if (SDL.SDL_PollEvent(out CurEvent) > 0)
+            {
+                switch (CurEvent.type)
+                {
+                    case SDL.SDL_EventType.SDL_QUIT:
+                        // TEMP
+                        MessageBox.Show("haha event testing!!!");
+                        return;
+                }
             }
         }
 

@@ -255,4 +255,39 @@ Do not change if you are not a dev
     <Id>34</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CriticalServiceFailureException</Name>
+    <Id>35</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to pass an invalid ServiceNotification to the Service Control Manager.</Description>
+    <Name>AttemptedToPassInvalidServiceNotificationException</Name>
+    <Id>36</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToHandleServiceNotificationAboutANonServiceException</Name>
+    <Id>37</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotFindXmlFileOrSchemaException</Name>
+    <Id>38</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorValidatingLGXFileException</Name>
+    <Id>39</Id>
+    <Severity>Error </Severity>
+  </Error>
 </Errors>

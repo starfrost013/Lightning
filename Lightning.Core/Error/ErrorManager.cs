@@ -353,16 +353,13 @@ namespace Lightning.Core
                     return GR;
                 }
             }
-
-
-
         }
 
         private static XmlSchemaResult SerialiseErrors_Validate(string Path)
         {
             LightningXMLSchema LXMLS = new LightningXMLSchema();
 
-            LXMLS.XSI.SchemaPath = ERRORMANAGER_XSD_PATH;
+            LXMLS.XSI.SchemaPath = PathUtil.GetLightningPath(ERRORMANAGER_XSD_PATH);
             LXMLS.XSI.XmlPath = Path;
 
             return LXMLS.Validate();

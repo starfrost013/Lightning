@@ -151,7 +151,7 @@ namespace Lightning.Core
 #if DEBUG
                 SvcSR.FailureReason = $"Attempted to instantiate an invalid service\n\n{err}";
 #else
-                SvcSR.FailureReason  = "Attempted to instantiate an invalid service";
+                SvcSR.FailureReason = "Attempted to instantiate an invalid service";
 #endif
 
                 return SvcSR; 
@@ -197,9 +197,9 @@ namespace Lightning.Core
         /// </summary>
         /// <param name="ServiceName">The class name of the service to kill. Must inherit from <see cref="Service"/>.</param>
         /// <returns>A <see cref="ServiceShutdownResult"/> object. Success is determined by the <see cref="ServiceShutdownResult.Successful"/> property. For further information, see the documentation for <see cref="ServiceShutdownResult"/>.</returns>
-        public ServiceShutdownResult KillService(string ServiceName)
+        private ServiceShutdownResult KillService(string ServiceName, bool ForceShutdown = false)
         {
-            Logging.Log($"Attempting to kill service with classname {ServiceName}");
+            Logging.Log($"Attempting to kill the service with type {ServiceName}");
 
             ServiceShutdownResult SSR = new ServiceShutdownResult(); 
 
@@ -207,21 +207,27 @@ namespace Lightning.Core
             {
                 if (Svc.ClassName == ServiceName)
                 {
-                    ServiceShutdownResult SSR_Svc = Svc.OnShutdown();
+                    switch (ForceShutdown)
+                    {
+                        case false:
+                            ServiceShutdownResult SSR_Svc = Svc.OnShutdown();
 
-                    if (!SSR_Svc.Successful)
-                    {
-                        SSR.FailureReason = "Service shutdown failure.";
-                        return SSR; 
-                    }
-                    else
-                    {
-                        RunningServices.Remove(Svc);
-                        SSR.Successful = true;
-                        return SSR; 
-                    }
-                    
-                    
+                            if (!SSR_Svc.Successful)
+                            {
+                                SSR.FailureReason = $"Service shutdown failure: {SSR_Svc.FailureReason}";
+                                return SSR;
+                            }
+                            else
+                            {
+                                RunningServices.Remove(Svc);
+                                SSR.Successful = true;
+                                return SSR;
+                            }
+                        case true:
+                            RunningServices.Remove(Svc);
+                            SSR.Successful = true;
+                            return SSR;
+                    }   
                 }
             }
 
@@ -233,7 +239,7 @@ namespace Lightning.Core
         /// Shutdown all services. Used at the killing of the SCM itself during engine shutdown.
         /// </summary>
         /// <returns></returns>
-        public ServiceShutdownResult ShutdownAllServices()
+        private ServiceShutdownResult KillAllServices(bool ForceKillAll = false)
         {
             Logging.Log("Shutting down all services...", ClassName);
 
@@ -245,15 +251,21 @@ namespace Lightning.Core
 
                 ServiceShutdownResult SSR_KillSvc = KillService(XClassName);
 
-                if (!SSR_KillSvc.Successful)
+                if (!ForceKillAll)
                 {
-                    SSR.FailureReason = $"SCM: Service shutdown failure: The service {XClassName} failed to shut down: {SSR.FailureReason}";
+                    if (!SSR_KillSvc.Successful)
+                    {
+                        SSR.FailureReason = $"SCM: Service shutdown failure: The service {XClassName} failed to shut down: {SSR.FailureReason}";
+                    }
+                    else
+                    {
 
+                        // no error occurred, continue.
+                        continue;
+                    }
                 }
                 else
                 {
-                    
-                    // no error occurred, continue.
                     continue; 
                 }
             }
@@ -293,6 +305,110 @@ namespace Lightning.Core
             }
 
             return false; 
+        }
+
+        /// <summary>
+        /// Handles a service notification. 
+        /// </summary>
+        /// <param name="SvcNotification"></param>
+        public void NotifyServiceEvent(ServiceNotification SvcNotification)
+        {
+            if (SvcNotification == null)
+            {
+                ErrorManager.ThrowError(ClassName, "AttemptedToPassInvalidServiceNotificationException");
+                return;
+            }
+            else
+            {
+
+                // If the ServiceNotification exists, check it
+                if (SvcNotification.ServiceClassName == null)
+                {
+                    ErrorManager.ThrowError(ClassName, "AttemptedToPassInvalidServiceNotificationException");
+                    return; 
+                }
+                else
+                {
+                    if (SvcNotification.ServiceClassName.Length == 0)
+                    {
+                        ErrorManager.ThrowError(ClassName, "AttemptedToPassInvalidServiceNotificationException");
+                        return; 
+                    }
+                }
+
+                try
+                {
+                    Type ServiceType = Type.GetType(SvcNotification.ServiceClassName);
+
+                    if (!ServiceType.IsSubclassOf(typeof(Service)))
+                    {
+                        ErrorManager.ThrowError(ClassName, "AttemptedToHandleServiceNotificationAboutANonServiceException", $"Attempted to handle a ServiceNotification about {ClassName}, which is not a Service!");
+                        return; 
+                    }
+                    else // If we have a valid notification, handle it 
+                    {
+                        switch (SvcNotification.NotificationType)
+                        {
+                            case ServiceNotificationType.Shutdown:
+                                Logging.Log(ClassName, $"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it wishes to shut down. Killing it...");
+                                KillService(ClassName);
+                                return;
+                            case ServiceNotificationType.Shutdown_ShutDownEngine:
+                                Logging.Log(ClassName, $"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it is shutting down as the user has requested an engine shutdown. Shutting down...");
+                                ShutdownEngine();
+                                return;
+                            case ServiceNotificationType.Crash:
+                                Logging.Log(ClassName, $"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it has crashed. Attempting to recover the service...");
+                                HandleCrashedService(SvcNotification.ServiceClassName);
+                                return;
+                        }
+                    }
+                }
+                catch (ArgumentException err)
+                {
+#if DEBUG
+                    ErrorManager.ThrowError(ClassName, "AttemptedToHandleServiceNotificationAboutANonServiceException", $"Attempted to handle a ServiceNotification about {ClassName}, which is not a Service!\n\n{err}");
+#else
+                    ErrorManager.ThrowError(ClassName, "AttemptedToHandleServiceNotificationAboutANonServiceException", $"Attempted to handle a ServiceNotification about {ClassName}, which is not a Service!");
+#endif
+                }
+            }
+
+            
+        }
+
+        /// <summary>
+        /// Shuts down the engine. 
+        /// </summary>
+        private void ShutdownEngine()
+        {
+            Logging.Log(ClassName, $"The engine is shutting down...");
+            // Shuts down the engine by first killing all services, then clearing the DataModel
+            // and finally exiting the process.
+            KillAllServices();
+            DataModel.Clear();
+
+            Logging.Log("The engine has shut down. Exiting.");
+            Environment.Exit(0);
+        }
+
+        private void HandleCrashedService(string ClassName)
+        {
+            // Get the service before we kill it
+            Service Svc = GetService(ClassName);
+
+            // Check the importance of the service.
+            switch (Svc.Importance)
+            {
+                case ServiceImportance.Low:
+                    // Forcibly kill the service and reboot it
+                    KillService(ClassName, true);
+                    StartService(ClassName);
+                    return; 
+                case ServiceImportance.High:
+                    ErrorManager.ThrowError(ClassName, "CriticalServiceFailureException", $"The critical service {ClassName} has failed - the engine cannot continue to run.");
+                    return; 
+            }
         }
     }
 }

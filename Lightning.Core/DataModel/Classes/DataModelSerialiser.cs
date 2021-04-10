@@ -94,7 +94,14 @@ namespace Lightning.Core
 
             // Create the datamodel that we will be returning.
             DataModel DM = new DataModel();
-            DDMS_Validate(Schema, Path);
+            
+            XmlSchemaResult XSR = DDMS_Validate(Schema, Path);
+
+            if (!XSR.Successful)
+            {
+                ErrorManager.ThrowError(ClassName, "ErrorValidatingLGXFileException", $"An error occurred validating the XML against the schema: {XSR.FailureReason}");
+                return null;
+            }
 
             List<string> ValidComponents = new List<string>();
 
@@ -144,33 +151,23 @@ namespace Lightning.Core
             
         }
 
-        private DDMSValidateResult DDMS_Validate(LightningXMLSchema Schema, string Path)
+        private XmlSchemaResult DDMS_Validate(LightningXMLSchema Schema, string Path)
         {
-
-            DDMSValidateResult DDMSVR = new DDMSValidateResult();
-
-            XmlReaderSettings XRS = new XmlReaderSettings();
-            XRS.ValidationType = ValidationType.Schema;
-            XRS.Schemas.Add(null, Schema.XSI.SchemaPath);
-            XRS.ValidationEventHandler += DDMS_Validate_OnFail;
-            XmlReader XR = XmlReader.Create(Path, XRS);
             
-            // Yep, we have to do this crap.
-            while (XR.Read())
+            XmlSchemaResult DDSR = Schema.Validate();
+
+            if (!DDSR.Successful)
             {
-                
-            }
-            
-            if (!IsSuccessful)
-            {
-                DDMSVR.FailureReason = "XML schema validation failure";
-                return DDMSVR;
+                DDSR.FailureReason = "XML schema validation failure";
+                return DDSR;
             }
             else
             {
-                DDMSVR.Successful = true;
-                return DDMSVR; 
+                DDSR.Successful = true;
+                return DDSR;
             }
+
+          
             
         }
 
