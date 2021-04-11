@@ -775,10 +775,11 @@ namespace Lightning.Core
                                 // WIZARD TIME
                                 // Convert from string to arbitrary type! :D 
 
-#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-                                object? CConvertedObject = Convert.ChangeType(XDMObjectAttribute.Value, IIP.Type);
-#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-
+#pragma warning disable CS8632
+                                // Updated to use TypeDescriptor for Vector2 (April 11, 2021)
+                                TypeConverter CConvertedObjectTC = TypeDescriptor.GetConverter(IIP.Type);
+                                object? CConvertedObject = CConvertedObjectTC.ConvertFromString(XDMObjectAttribute.Value);
+#pragma warning restore CS8632
                                 // TODO: NESTING
                                 if (CConvertedObject != null)
                                 {

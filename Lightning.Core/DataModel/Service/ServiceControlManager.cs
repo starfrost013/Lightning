@@ -97,7 +97,7 @@ namespace Lightning.Core
 
         }
 
-        public void UpdateGame(int MaxFPS)
+        private void UpdateGame(int MaxFPS)
         {
             // slightly less temporary code
             while (true)
@@ -353,15 +353,15 @@ namespace Lightning.Core
                         switch (SvcNotification.NotificationType)
                         {
                             case ServiceNotificationType.Shutdown:
-                                Logging.Log(ClassName, $"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it wishes to shut down. Killing it...");
+                                Logging.Log($"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it wishes to shut down. Killing it...", ClassName);
                                 KillService(ClassName);
                                 return;
                             case ServiceNotificationType.Shutdown_ShutDownEngine:
-                                Logging.Log(ClassName, $"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it is shutting down as the user has requested an engine shutdown. Shutting down...");
+                                Logging.Log($"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it is shutting down as the user has requested an engine shutdown. Shutting down...", ClassName);
                                 ShutdownEngine();
                                 return;
                             case ServiceNotificationType.Crash:
-                                Logging.Log(ClassName, $"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it has crashed. Attempting to recover the service...");
+                                Logging.Log($"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it has crashed. Attempting to recover the service...", ClassName);
                                 HandleCrashedService(SvcNotification.ServiceClassName);
                                 return;
                         }
@@ -383,9 +383,9 @@ namespace Lightning.Core
         /// <summary>
         /// Shuts down the engine. 
         /// </summary>
-        private void ShutdownEngine()
+        internal void ShutdownEngine()
         {
-            Logging.Log(ClassName, $"The engine is shutting down...");
+            Logging.Log("The engine is shutting down...", ClassName);
             // Shuts down the engine by first killing all services, then clearing the DataModel
             // and finally exiting the process.
             KillAllServices();

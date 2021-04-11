@@ -9,7 +9,7 @@ namespace Lightning.Core
     /// 
     /// April 9, 2021
     /// 
-    /// Holds information about the Renderer
+    /// Holds information about the Renderer and the latest inforamtion that we are r
     /// </summary>
     public class Renderer
     {
@@ -22,5 +22,15 @@ namespace Lightning.Core
         /// The SDL renderer.
         /// </summary>
         public IntPtr SDLRenderer { get; set; }
+
+        /// <summary>
+        /// A cache of textures.
+        /// </summary>
+        public List<Texture> TextureCache { get; set; }
+
+        public Renderer()
+        {
+            TextureCache = new List<Texture>(); 
+        }
     }
 }

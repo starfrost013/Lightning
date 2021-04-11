@@ -90,9 +90,8 @@ namespace Lightning.Core
 
         public void GenerateInstanceInfo()
         {
-            InstanceInfoResult IIR = InstanceInfo.FromType(typeof(Instance));
-
-
+            // April 11, 2021
+            InstanceInfoResult IIR = InstanceInfo.FromType(this.GetType());
 
             if (IIR.Successful)
             {

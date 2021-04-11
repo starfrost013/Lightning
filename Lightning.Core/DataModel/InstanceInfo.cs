@@ -33,7 +33,7 @@ namespace Lightning.Core
         {
             InstanceInfoResult IIR = new InstanceInfoResult();
 
-            if (!TType.IsAssignableFrom(typeof(Instance)))
+            if (!TType.IsSubclassOf(typeof(Instance)))
             {
                 // Successful is true by default
                 IIR.FailureReason = "Type is not DataModel compliant!";

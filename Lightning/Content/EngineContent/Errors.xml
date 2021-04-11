@@ -290,4 +290,46 @@ Do not change if you are not a dev
     <Id>39</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Cannot convert a string without a comma or with more than one comma to a Vector2!</Description>
+    <Name>Vector2ConversionInvalidNumberOfComponentsException</Name>
+    <Id>40</Id>
+    <Severity>Error</Severity> 
+  </Error>
+
+  <Error>
+    <Description>Attempted to convert an invalid string to a Vector2!</Description>
+    <Name>Vector2InvalidConversionException</Name>
+    <Id>41</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to render an invalid texture!</Description>
+    <Name>AttemptedToRenderInvalidTextureException</Name>
+    <Id>42</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotLoadNonexistentTextureException</Name>
+    <Id>43</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorLoadingTextureException</Name>
+    <Id>44</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorLoadingSDL2DllException</Name>
+    <Id>45</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

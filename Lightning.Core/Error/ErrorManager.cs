@@ -138,7 +138,6 @@ namespace Lightning.Core
         {
             GetErrorResult ErrToThrow = GetError(ErrorName);
             
-
             if (ErrToThrow.Successful)
             {
                 if (ErrorDescription != null
@@ -161,6 +160,34 @@ namespace Lightning.Core
             else
             {
                 ThrowError("Error Handler - InnerException", new Error { Id = 0xDEADBABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
+            }
+        }
+
+        public static void ThrowError(string Component, string ErrorName, Exception BaseException)
+        {
+            GetErrorResult ErrToThrow = GetError(ErrorName);
+
+            if (ErrToThrow.Successful)
+            {
+                if (BaseException != null)
+                {
+                    Error Err = ErrToThrow.Error;
+                    Err.BaseException = BaseException;
+                    ThrowError(Component, ErrToThrow.Error);
+                    
+                    return;
+
+                }
+                else
+                {
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
+                }
+
+
+            }
+            else
+            {
+                ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA8BABE, Severity = MessageSeverity.FatalError, Name = "AttemptedToThrowInvalidErrorException", Description = $"Internal error: Attempted to throw nonexistent error name {ErrorName}" });
             }
         }
 
@@ -316,13 +343,43 @@ namespace Lightning.Core
 
                         // Temporary - we don't have a clean shutdown method yet
                         MessageBox.Show($"Guru Meditation {Err.Id}\n\n{Err.Name}: {Err.Description}\n\nLightning must exit. Sorry!\nYou may wish to file a bug report with the game's developers.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Error);
-                        // Temporary Code (yeah this is dumb)
-                        Environment.Exit(0xDEAD * (int)Err.Id);
+
+                        string VeryBadString = "Something very bad has happened(or we are early in init) and the SCM cannot be called to shutdown cleanly. Exiting...";
+
+                        if (DataModel.GetState() == null || DataModel.GetState().Count == 0)
+                        {
+                            EmergencyQuit(Err, VeryBadString);
+                            return; 
+                        }
+
+                        // April 11, 2021: Shut down cleanly
+                        Workspace Ws = DataModel.GetWorkspace();
+
+                        GetInstanceResult GIR = Ws.GetFirstChildOfType("ServiceControlManager");
+
+                        if (!GIR.Successful)
+                        {
+                            EmergencyQuit(Err, VeryBadString);
+                            return;
+
+                        }
+                        else
+                        {
+                            ServiceControlManager SCM = (ServiceControlManager)GIR.Instance;
+                            SCM.ShutdownEngine();
+                        }
 
                         return;
 
                 }
             }
+        }
+
+        private static void EmergencyQuit(Error Err, string EmergencyString)
+        {
+            Logging.Log(EmergencyString);
+            // Temporary Code (yeah this is dumb)
+            Environment.Exit(0xDEAD * (int)Err.Id);
         }
 
         private static GenericResult SerialiseErrors(string Path)

@@ -5,8 +5,9 @@
     <Author>starfrost</Author>
     <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-04-10 14:41:37</LastModifiedDate>
-    <RevisionID>9</RevisionID> <!-- Rev9: Set Fullscreen back to false. -->
+    <LastModifiedDate>2021-04-11 17:27:41</LastModifiedDate>
+    <RevisionID>14</RevisionID>
+    <!-- Rev14: test caching -->
   </Metadata>
   <Settings>
     <!-- nothing here yet -->
@@ -51,7 +52,7 @@
       <Type>System.Boolean</Type>
       <Value>False</Value>
     </Setting>
-    
+
   </Settings>
 
   <Workspace>
@@ -59,13 +60,20 @@
     <ServiceControlManager>
       <RenderService/>
     </ServiceControlManager>
-    
-    
+
+
     <Color3 Name="c03_01" R="100" G="100" B="100"/>
     <Color3 Name="c03_02" R="150" G="100" B="100"/>
     <Color3 Name="c03_03" R="150" G="100" B="100"/>
     <Vector2 Name="v1" X="50" Y="40"/>
 
+    <PhysicalObject Name="Block1" Position="10,10" Size="200,200">
+      <Texture Name="Block1_Texture" Path="Content\Images\test_texture_small.png"/>
+    </PhysicalObject>
+
+    <PhysicalObject Name="Block2" Position="400,400" Size="200,200">
+      <Texture Name="Block2_Texture" Path="Content\Images\test_texture_small2.png"/>
+    </PhysicalObject>
     <!-- RenderService -->
 
   </Workspace>

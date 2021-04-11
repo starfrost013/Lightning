@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.249.21100</AssemblyVersion>
-    <FileVersion>1.0.249.21100</FileVersion>
+    <AssemblyVersion>1.0.281.21101</AssemblyVersion>
+    <FileVersion>1.0.281.21101</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>Lightning Launcher</PackageId>
     <Description>Lightning Launcher</Description>
@@ -37,6 +37,8 @@
   <ItemGroup>
     <None Remove="Content\EngineContent\Errors.xml" />
     <None Remove="Content\EngineContent\GlobalSettings.xml" />
+    <None Remove="Content\Images\test_texture_small.png" />
+    <None Remove="Content\Images\test_texture_small2.png" />
     <None Remove="Content\Schema\Errors.xsd" />
     <None Remove="Content\Schema\GlobalSettings.xsd" />
     <None Remove="Content\Schema\Lightning.xsd" />
@@ -64,6 +66,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\EngineContent\GlobalSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\test_texture_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\test_texture_small2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Schema\GlobalSettings.xsd">
@@ -135,11 +143,13 @@
     <!-- SDL2 x86 Release-->
     <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>SDL2.dll</Link>
     </Content>
 
     <!-- SDL2 x64 Debug-->
     <Content Include="SDL2-v2.0.14-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>SDL2.dll</Link>
     </Content>
 
     <!-- SDL2 x64 Release-->

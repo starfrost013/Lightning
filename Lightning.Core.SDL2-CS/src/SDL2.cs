@@ -44,20 +44,15 @@ namespace Lightning.Core.SDL2
 	{
 		#region SDL2# Variables
 
-#if X64 // Lightning Win64 / Mac64 / Linux64
-		private const string nativeLibName = "SDL2-v2.0.14-x64";
+		// This has been reverted,
+		// as it turns out that SDL2_image etc 
+		// HARD look for the DLL labelled SDL2.dll
+		// therefore we can't rename it. Using .csproj trickery to get around this
+		private const string nativeLibName = "SDL2";
 
-#else // Lightning Win32 / Linux32 
-#if ARM32 // Lightning LinuxARM32
-		private const string nativeLibName = "SDL2-v2.0.14-ARM32";
-#elif ARM64 // Lightning LinuxARM64 / MacARM64e (11.0+) (open question: what do we do about Xtajit64 (ARM64X - Windows 10 Cobalt 21277+) - does Lightning compiled for x64 run well using ARM64X on Cobalt? Need to acquire ARM device for testing.)
-		private const string nativeLibName = "SDL2-v2.0.14-ARM64";
-#endif
-		private const string nativeLibName = "SDL2-v2.0.14-x86"; 
-#endif
-#endregion
+		#endregion
 
-#region UTF8 Marshaling
+		#region UTF8 Marshaling
 
 		/* Used for stack allocated string marshaling. */
 		internal static int Utf8Size(string str)
