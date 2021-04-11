@@ -89,13 +89,6 @@ namespace Lightning.Core
         /// <returns></returns>
         private DataModel DDMS_Serialise(LightningXMLSchema Schema, string Path)
         {
-            Logging.Log($"DDMS: Reading {Path} and transforming to DataModel...");
-
-            XDocument XD = XDocument.Load(Path);
-
-            // Create the datamodel that we will be returning.
-            DataModel DM = new DataModel();
-            
             XmlSchemaResult XSR = DDMS_Validate(Schema);
 
             if (!XSR.Successful)
@@ -103,6 +96,14 @@ namespace Lightning.Core
                 ErrorManager.ThrowError(ClassName, "ErrorValidatingLGXFileException", $"An error occurred validating the XML against the schema: {XSR.FailureReason}");
                 return null;
             }
+
+            Logging.Log($"DDMS: Reading {Path} and transforming to DataModel...");
+
+            XDocument XD = XDocument.Load(Path);
+
+            // Create the datamodel that we will be returning.
+            DataModel DM = new DataModel();
+            
 
             List<string> ValidComponents = new List<string>();
 

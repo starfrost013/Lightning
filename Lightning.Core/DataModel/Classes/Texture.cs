@@ -10,6 +10,7 @@ namespace Lightning.Core
     /// </summary>
     public class Texture : SerialisableObject
     {
+        public TextureDisplayMode TextureDisplayMode { get; set; }
         private IntPtr SDLTexturePtr { get; set; }
     }
 }
