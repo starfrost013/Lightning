@@ -33,7 +33,7 @@ namespace Lightning.Core
         {
             string[] Spx = Colour.Split(',');
 
-            if (Spx.Length != 2)
+            if (Spx.Length != 3)
             {
                 ErrorManager.ThrowError("Color3 Converter", "ErrorConvertingRelativeColourException");
                 return null; // do we use a result class for this?
