@@ -199,10 +199,10 @@ namespace Lightning.Core
                     string G = Str_Components[2];
                     string B = Str_Components[3];
 
-                    byte CA = byte.Parse(A, NumberStyles.HexNumber);
-                    byte CR = byte.Parse(R, NumberStyles.HexNumber);
-                    byte CG = byte.Parse(G, NumberStyles.HexNumber);
-                    byte CB = byte.Parse(B, NumberStyles.HexNumber);
+                    byte CA = byte.Parse(A);
+                    byte CR = byte.Parse(R);
+                    byte CG = byte.Parse(G);
+                    byte CB = byte.Parse(B);
 
                     C4.A = CA;
                     C4.R = CR;

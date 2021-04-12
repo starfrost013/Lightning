@@ -43,6 +43,6 @@ namespace Lightning.Core
             
         }
 
-        public new Vector2 ConvertFromString(string Str) => Vector2.FromString(Str);
+        public new Vector2 ConvertFromString(string Str) => Vector2.FromString(Str, false);
     }
 }

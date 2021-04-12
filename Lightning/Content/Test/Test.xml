@@ -5,9 +5,9 @@
     <Author>starfrost</Author>
     <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-04-11 17:27:41</LastModifiedDate>
-    <RevisionID>14</RevisionID>
-    <!-- Rev14: test caching -->
+    <LastModifiedDate>2021-04-12 17:54:45</LastModifiedDate>
+    <RevisionID>21</RevisionID> <!-- Rev21: fix colour -->
+
   </Metadata>
   <Settings>
     <!-- nothing here yet -->
@@ -75,8 +75,10 @@
       <Texture Name="Block2_Texture" Path="Content\Images\test_texture_small2.png"/>
     </PhysicalObject>
 
-
-
+    <Line Name="Line1" Begin="100,100" End="400,400" Color="100,100,100,255"/>
+    <Circle Name="Circle1" Radius="48" Position="40,40" Color="30,210,60,255"/>
+    <Rectangle Name="NonFilledRectangle" Position="66,66" Size="40,40" Colour="140,70,20,140"/>
+    <Rectangle Name="FilledRectangle" Position="110,66" Size="40,40" Colour="140,70,20,140" Fill="True"/>
     <!-- RenderService -->
 
   </Workspace>

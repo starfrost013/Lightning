@@ -14,16 +14,25 @@ namespace Lightning.Core
     /// </summary>
     public class Rectangle : Line
     {
+        public override string ClassName => "Rectangle";
         /// <summary>
         /// Is this rectangle filled?
         /// </summary>
         public bool Fill { get; set; }
-        public new void Render(IntPtr SDL_Renderer, Texture Tx)
+        public override void Render(IntPtr SDL_Renderer, Texture Tx)
         {
             // todo: FX api 
             SDL.SDL_SetRenderDrawBlendMode(SDL_Renderer, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);
 
-            if (Colour != null) SDL.SDL_SetRenderDrawColor(SDL_Renderer, Colour.R, Colour.G, Colour.B, Colour.A);
+            if (Colour != null)
+            {
+                SDL.SDL_SetRenderDrawColor(SDL_Renderer, Colour.R, Colour.G, Colour.B, Colour.A);
+            }
+            else
+            {
+                SDL.SDL_SetRenderDrawColor(SDL_Renderer, 255, 255, 255, 255);
+            }
+
 
             SDL.SDL_Rect SR1 = new SDL.SDL_Rect();
 
@@ -32,7 +41,14 @@ namespace Lightning.Core
             SR1.w = (int)Size.X;
             SR1.h = (int)Size.Y;
 
-            SDL.SDL_RenderDrawRect(SDL_Renderer, ref SR1);
+            if (!Fill)
+            {
+                SDL.SDL_RenderDrawRect(SDL_Renderer, ref SR1);
+            }
+            else
+            {
+                SDL.SDL_RenderFillRect(SDL_Renderer, ref SR1);
+            }
 
             SDL.SDL_SetRenderDrawColor(SDL_Renderer, 0, 0, 0, 0);
         }

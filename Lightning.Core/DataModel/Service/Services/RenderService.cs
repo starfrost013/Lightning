@@ -366,7 +366,6 @@ namespace Lightning.Core
                                     }
                                 }
 
-
                             }
                         }
 
@@ -458,7 +457,8 @@ namespace Lightning.Core
 
                 if (!GIR.Successful)
                 {
-                    return; // we will render non-textured PhysicalObjects in the future, but it will take some time. 
+                    PO.Render(Renderer.SDLRenderer, null);
+                    continue; 
                 }
                 else
                 {

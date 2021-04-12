@@ -1,4 +1,4 @@
-﻿using SDL2;
+﻿using Lightning.Core.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +14,7 @@ namespace Lightning.Core
     /// </summary>
     public class Primitive : PhysicalObject
     {
+        public override string ClassName => "Primitive";
         /// <summary>
         /// The colour of this Primitive.
         /// </summary>
@@ -24,7 +25,7 @@ namespace Lightning.Core
         /// </summary>
         /// <param name="SDL_Renderer"></param>
         /// <param name="Tx"></param>
-        public new void Render(IntPtr SDL_Renderer, Texture Tx) => base.Render(SDL_Renderer, Tx);
+        public override void Render(IntPtr SDL_Renderer, Texture Tx) => base.Render(SDL_Renderer, Tx);
 
     }
 }

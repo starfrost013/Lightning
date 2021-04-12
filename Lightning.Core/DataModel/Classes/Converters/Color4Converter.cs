@@ -41,17 +41,17 @@ namespace Lightning.Core
             // This could be made easier by the length or something
             if (Text.Contains('#'))
             {
-                return Color4.FromHex(Text); 
+                return Color4.FromHex(Text, false); 
             }
             else
             {
-                if (Text.Contains('.'))
+                if (Text.Contains('.') || Text.Contains("1,1,1")) // dumb hack
                 {
-                    return Color4.FromRelative(Text);
+                    return Color4.FromRelative(Text, false);
                 }
                 else
                 {
-                    return Color4.FromString(Text); 
+                    return Color4.FromString(Text, false); 
                 }
             }
         }

@@ -43,7 +43,7 @@ namespace Lightning.Core
         /// 
         /// It has already been loaded, so the object is not required to load textures or anything similar.
         /// </summary>
-        public void Render(IntPtr SDL_Renderer, Texture Tx)
+        public virtual void Render(IntPtr SDL_Renderer, Texture Tx)
         {
             // requisite error checking already done
 
