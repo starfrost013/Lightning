@@ -98,16 +98,27 @@ namespace Lightning.Core
                 {
                     DataModelSerialiser DMS = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
 
-                    DMS.DDMS_Serialise(Args.GameXMLPath);
+                    DataModel DM = DMS.DDMS_Serialise(Args.GameXMLPath);
 
-                    // Enter the main loop.
+                    // Check for a failure
+                    if (DM == null)
+                    {
+                        HandleFailureToOpenDocument();
+                    }
+                    else
+                    {
+                        // Enter the main loop.
 
-                    SCM.InitServiceUpdates();
-                    
+                        SCM.InitServiceUpdates();
+                    }
                 }
-
             }
+        }
 
+        private static void HandleFailureToOpenDocument()
+        {
+            ErrorManager.ThrowError("DataModel", "FailedToOpenLgxException");
+            return; 
         }
 
         /// <summary>

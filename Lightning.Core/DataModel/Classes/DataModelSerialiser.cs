@@ -747,7 +747,6 @@ namespace Lightning.Core
                     XDRInstance = (Instance)Parent.AddChild(XDataModelName); 
                 }
                 
-
                 // TODO: instantiationresult from datamodel.createinstance
                 if (XDRInstance == null)
                 {
@@ -841,6 +840,7 @@ namespace Lightning.Core
             }
 
             DDSR.Successful = true;
+            DDSR.DataModel = DM;
             // this should not run
             return DDSR; 
         }

@@ -382,5 +382,11 @@ Do not change if you are not a dev
     <Id>49</Id>
     <Severity>Error</Severity>
   </Error>
-  
+
+  <Error>
+    <Description>Failed to open the specified game. Currently this is just an error message - in the future we will have some nice UI.</Description>
+    <Name>FailedToOpenLgxException</Name>
+    <Id>50</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

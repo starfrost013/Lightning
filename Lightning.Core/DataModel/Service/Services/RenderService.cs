@@ -271,6 +271,8 @@ namespace Lightning.Core
         /// </summary>
         private void LoadAndCacheTextures()
         {
+            Logging.Log("Building list of object textures to load...", ClassName);
+
             Workspace Ws = DataModel.GetWorkspace();
 
             List<PhysicalObject> ObjectsToLoad = new List<PhysicalObject>();
@@ -293,6 +295,7 @@ namespace Lightning.Core
                 }
             }
 
+            Logging.Log("Built list of object textures to load. Loading object textures...", ClassName);
             // Load the object textures from the physicalobjects we have acquired. 
             LoadObjectTextures(ObjectsToLoad);
         }
@@ -323,6 +326,7 @@ namespace Lightning.Core
                     }
                     else
                     {
+                        Logging.Log($"Loading texture at {Tx.Path}...", ClassName);
                         // Load an image to a surface and create a texture from it
                         IntPtr Surface = SDL_image.IMG_Load(Tx.Path);
 
@@ -368,6 +372,7 @@ namespace Lightning.Core
 
                         if (AddToCache)
                         {
+                            Logging.Log($"Caching texture at {Tx.Path}...", ClassName);
                             Tx.SDLTexturePtr = Texture; 
                             Renderer.TextureCache.Add(Tx);
                         }
@@ -375,6 +380,7 @@ namespace Lightning.Core
                         {
                             // destroy textures we don't want
                             // saves memory 
+                            SDL.SDL_FreeSurface(Surface); 
                             SDL.SDL_DestroyTexture(Texture);
                         }
                     }
@@ -457,16 +463,14 @@ namespace Lightning.Core
                 else
                 {
                     Texture Tx = (Texture)GIR.Instance;
-
-                    Rendering_RenderNonAnimatedTextures(PhysicalObjects);
-
+                    
                     // Set the tiling mode and then render the texture.
                     foreach (Texture CachedTx in Renderer.TextureCache)
                     {
                         if (CachedTx.Path == Tx.Path)
                         {
                             Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
-                            
+                            PO.Render(Renderer.SDLRenderer, Tx); 
                         }
                     }
 
@@ -475,47 +479,5 @@ namespace Lightning.Core
             }
         }
 
-        /// <summary>
-        /// Renders non-animated textures.
-        /// </summary>
-        /// <param name="PO"></param>
-        /// <param name="Tx"></param>
-        private void Rendering_RenderNonAnimatedTextures(List<PhysicalObject> PhysicalObjects)
-        {
-            foreach (PhysicalObject PO in PhysicalObjects)
-            {
-                SDL.SDL_Rect SrcRect = new SDL.SDL_Rect();
-
-                SrcRect.w = (int)PO.Size.X;
-                SrcRect.h = (int)PO.Size.Y;
-                SrcRect.x = 0;
-                SrcRect.y = 0;
-
-                SDL.SDL_Rect DstRect = new SDL.SDL_Rect();
-
-                DstRect.w = SrcRect.w;
-                DstRect.h = SrcRect.h;
-                DstRect.x = (int)PO.Position.X;
-                DstRect.y = (int)PO.Position.Y;
-
-                // don't bother error checking, as we've already done it
-
-                GetInstanceResult GIR = PO.GetFirstChildOfType("Texture");
-
-                Texture Tx = (Texture)GIR.Instance;
-
-                foreach (Texture Tx2 in Renderer.TextureCache)
-                {
-                    if (Tx.Path == Tx2.Path)
-                    {
-                        Tx.SDLTexturePtr = Tx2.SDLTexturePtr;
-
-                        SDL.SDL_RenderCopy(Renderer.SDLRenderer, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
-                    }
-                }
-
-            }
-
-        }
     }
 }
