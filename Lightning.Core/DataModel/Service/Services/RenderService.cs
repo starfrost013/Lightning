@@ -440,10 +440,12 @@ namespace Lightning.Core
             Rendering_DoRenderPhysicalObjects(ObjectsToRender);
 
             SDL.SDL_RenderPresent(Renderer.SDLRenderer);
+
         }
 
         private void Rendering_DoRenderPhysicalObjects(List<PhysicalObject> PhysicalObjects)
         {
+            
             foreach (PhysicalObject PO in PhysicalObjects)
             {
                 GetInstanceResult GIR = PO.GetFirstChildOfType("Texture");
@@ -456,13 +458,15 @@ namespace Lightning.Core
                 {
                     Texture Tx = (Texture)GIR.Instance;
 
+                    Rendering_RenderNonAnimatedTextures(PhysicalObjects);
+
                     // Set the tiling mode and then render the texture.
                     foreach (Texture CachedTx in Renderer.TextureCache)
                     {
                         if (CachedTx.Path == Tx.Path)
                         {
                             Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
-                            Rendering_RenderNonAnimatedTexture(PO, Tx);
+                            
                         }
                     }
 
@@ -476,23 +480,44 @@ namespace Lightning.Core
         /// </summary>
         /// <param name="PO"></param>
         /// <param name="Tx"></param>
-        private void Rendering_RenderNonAnimatedTexture(PhysicalObject PO, Texture Tx)
+        private void Rendering_RenderNonAnimatedTextures(List<PhysicalObject> PhysicalObjects)
         {
-            SDL.SDL_Rect SrcRect = new SDL.SDL_Rect();
+            foreach (PhysicalObject PO in PhysicalObjects)
+            {
+                SDL.SDL_Rect SrcRect = new SDL.SDL_Rect();
 
-            SrcRect.w = (int)PO.Size.X;
-            SrcRect.h = (int)PO.Size.Y;
-            SrcRect.x = (int)PO.Position.X;
-            SrcRect.y = (int)PO.Position.Y;
+                SrcRect.w = (int)PO.Size.X;
+                SrcRect.h = (int)PO.Size.Y;
+                SrcRect.x = 0;
+                SrcRect.y = 0;
 
-            SDL.SDL_Rect DstRect = new SDL.SDL_Rect();
+                SDL.SDL_Rect DstRect = new SDL.SDL_Rect();
 
-            DstRect.w = SrcRect.w;
-            DstRect.h = SrcRect.h;
-            DstRect.x = SrcRect.x;
-            DstRect.y = SrcRect.y;
+                DstRect.w = SrcRect.w;
+                DstRect.h = SrcRect.h;
+                DstRect.x = (int)PO.Position.X;
+                DstRect.y = (int)PO.Position.Y;
 
-            SDL.SDL_RenderCopy(Renderer.SDLRenderer, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
+                // don't bother error checking, as we've already done it
+
+                GetInstanceResult GIR = PO.GetFirstChildOfType("Texture");
+
+                Texture Tx = (Texture)GIR.Instance;
+
+                foreach (Texture Tx2 in Renderer.TextureCache)
+                {
+                    if (Tx.Path == Tx2.Path)
+                    {
+                        Tx.SDLTexturePtr = Tx2.SDLTexturePtr;
+
+                        SDL.SDL_RenderCopy(Renderer.SDLRenderer, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
+                    }
+                }
+                
+
+                
+            }
+
         }
 
         public override ServiceShutdownResult OnUnexpectedShutdown()

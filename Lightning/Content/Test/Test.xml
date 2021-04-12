@@ -67,13 +67,16 @@
     <Color3 Name="c03_03" R="150" G="100" B="100"/>
     <Vector2 Name="v1" X="50" Y="40"/>
 
-    <PhysicalObject Name="Block1" Position="10,10" Size="200,200">
+    <PhysicalObject Name="Block1" Position="50,50" Size="200,200">
       <Texture Name="Block1_Texture" Path="Content\Images\test_texture_small.png"/>
     </PhysicalObject>
 
-    <PhysicalObject Name="Block2" Position="400,400" Size="200,200">
+    <PhysicalObject Name="Block2" Position="60,60" Size="200,200">
       <Texture Name="Block2_Texture" Path="Content\Images\test_texture_small2.png"/>
     </PhysicalObject>
+
+
+
     <!-- RenderService -->
 
   </Workspace>
