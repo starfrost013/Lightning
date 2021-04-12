@@ -513,16 +513,9 @@ namespace Lightning.Core
                         SDL.SDL_RenderCopy(Renderer.SDLRenderer, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
                     }
                 }
-                
 
-                
             }
 
-        }
-
-        public override ServiceShutdownResult OnUnexpectedShutdown()
-        {
-            throw new NotImplementedException();
         }
     }
 }

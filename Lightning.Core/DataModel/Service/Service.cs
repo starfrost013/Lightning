@@ -29,12 +29,6 @@ namespace Lightning.Core
         public abstract void Poll();
         public abstract ServiceShutdownResult OnShutdown();
 
-        /// <summary>
-        /// The service encountered a fatal error that required it to shutdown.
-        /// </summary>
-        /// <returns></returns>
-        public abstract ServiceShutdownResult OnUnexpectedShutdown();
-
         
     }
 }

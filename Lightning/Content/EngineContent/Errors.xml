@@ -299,7 +299,7 @@ Do not change if you are not a dev
   </Error>
 
   <Error>
-    <Description>Attempted to convert an invalid string to a Vector2!</Description>
+    <Description>Attempted to convert an invalid string or an object that is not a string! to a Vector2!</Description>
     <Name>Vector2InvalidConversionException</Name>
     <Id>41</Id>
     <Severity>Error</Severity>
@@ -332,4 +332,55 @@ Do not change if you are not a dev
     <Id>45</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Attempted to convert an invalid length hexadecimal colour string to a Color3!</Description>
+    <Name>ErrorConvertingHexadecimalColourException</Name>
+    <Id>46</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorConvertingHexadecimalColourFormatException</Name>
+    <Id>47</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to convert an invalid length relative colour string to a Color3!</Description>
+    <Name>ErrorConvertingRelativeColourException</Name>
+    <Id>46</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorConvertingRelativeColourFormatException</Name>
+    <Id>47</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+
+  <Error>
+    <Description>Attempted to convert an invalid length colour string to a Color3!</Description>
+    <Name>ErrorConvertingCommaColourException</Name>
+    <Id>48</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorConvertingCommaColourFormatException</Name>
+    <Id>49</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to load a RelativeColour where one or more of the components was outside of the range [0,1]!</Description>
+    <Name>RelativeColourOutOfRangeException</Name>
+    <Id>49</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
 </Errors>
