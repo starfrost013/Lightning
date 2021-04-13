@@ -319,7 +319,7 @@ namespace Lightning.Core
                     
                     if (!File.Exists(Tx.Path))
                     {
-                        ErrorManager.ThrowError(ClassName, "CannotLoadNonexistentTextureException", $"Attempted to load a texture at {Tx.Path} that does not exist!");
+                        ErrorManager.ThrowError(ClassName, "CannotLoadNonexistentTextureException", $"Attempted to load a Texture at {Tx.Path} that does not exist!");
                         ServiceNotification SN2 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
                         ServiceNotifier.NotifySCM(SN2);
 
@@ -332,7 +332,7 @@ namespace Lightning.Core
 
                         if (Surface == IntPtr.Zero)
                         {
-                            ErrorManager.ThrowError(ClassName, "ErrorLoadingTextureException", $"An error occurred loading the texture at {Tx.Path}: {SDL.SDL_GetError()}");
+                            ErrorManager.ThrowError(ClassName, "ErrorLoadingTextureException", $"An error occurred loading the Texture at {Tx.Path}: {SDL.SDL_GetError()}");
                             ServiceNotification SN3 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
                             ServiceNotifier.NotifySCM(SN3);
                         }
@@ -457,7 +457,7 @@ namespace Lightning.Core
 
                 if (!GIR.Successful)
                 {
-                    PO.Render(Renderer.SDLRenderer, null);
+                    PO.Render(Renderer, null);
                     continue; 
                 }
                 else
@@ -470,7 +470,7 @@ namespace Lightning.Core
                         if (CachedTx.Path == Tx.Path)
                         {
                             Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
-                            PO.Render(Renderer.SDLRenderer, Tx); 
+                            PO.Render(Renderer, Tx); 
                         }
                     }
 

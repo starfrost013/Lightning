@@ -354,14 +354,32 @@ namespace Lightning.Core
                         {
                             case ServiceNotificationType.Shutdown:
                                 Logging.Log($"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it wishes to shut down. Killing it...", ClassName);
+                                
+                                if (SvcNotification.Reason != null)
+                                {
+                                    Logging.Log($"The service provided the following reason: {SvcNotification.Reason}", ClassName);
+                                }
+
                                 KillService(ClassName);
                                 return;
                             case ServiceNotificationType.Shutdown_ShutDownEngine:
                                 Logging.Log($"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it is shutting down as the user has requested an engine shutdown. Shutting down...", ClassName);
+
+                                if (SvcNotification.Reason != null)
+                                {
+                                    Logging.Log($"The service provided the following reason: {SvcNotification.Reason}", ClassName);
+                                }
+
                                 ShutdownEngine();
                                 return;
                             case ServiceNotificationType.Crash:
                                 Logging.Log($"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it has crashed. Attempting to recover the service...", ClassName);
+
+                                if (SvcNotification.Reason != null)
+                                {
+                                    Logging.Log($"The service provided the following reason: {SvcNotification.Reason}", ClassName);
+                                }
+
                                 HandleCrashedService(SvcNotification.ServiceClassName);
                                 return;
                         }

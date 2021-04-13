@@ -25,6 +25,11 @@ namespace Lightning.Core
         public override InstanceTags Attributes => base.Attributes;
 
         /// <summary>
+        /// Can this object collide?
+        /// </summary>
+        public bool CanCollide { get; set; }
+
+        /// <summary>
         /// The position of this object in the world. 
         /// </summary>
         public Vector2 Position { get; set; }
@@ -43,8 +48,9 @@ namespace Lightning.Core
         /// 
         /// It has already been loaded, so the object is not required to load textures or anything similar.
         /// </summary>
-        public virtual void Render(IntPtr SDL_Renderer, Texture Tx)
+        public virtual void Render(Renderer SDL_Renderer, Texture Tx)
         {
+            IntPtr SDL_RendererPtr = SDL_Renderer.SDLRenderer;
             // requisite error checking already done
 
             // create the source rect
@@ -59,13 +65,13 @@ namespace Lightning.Core
 
             SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
 
-            DestinationRect.x = (int)Position.X;
-            DestinationRect.y = (int)Position.Y;
+            DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
+            DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
 
             DestinationRect.w = (int)Size.X;
             DestinationRect.h = (int)Size.Y;
 
-            SDL.SDL_RenderCopy(SDL_Renderer, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+            SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
     }
 }

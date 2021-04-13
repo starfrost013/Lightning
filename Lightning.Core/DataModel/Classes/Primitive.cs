@@ -21,11 +21,16 @@ namespace Lightning.Core
         public Color4 Colour { get; set; }
 
         /// <summary>
+        /// Is this Primitive filled?
+        /// </summary>
+        public bool Fill { get; set; }
+
+        /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <param name="SDL_Renderer"></param>
         /// <param name="Tx"></param>
-        public override void Render(IntPtr SDL_Renderer, Texture Tx) => base.Render(SDL_Renderer, Tx);
+        public override void Render(Renderer SDL_Renderer, Texture Tx) => base.Render(SDL_Renderer, Tx);
 
     }
 }

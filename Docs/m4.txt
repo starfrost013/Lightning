@@ -1,0 +1,20 @@
+Lightning 0.2 (Milestone 4; Pre-Alpha SDK)
+Beginning April 12, 2021
+
+* Grouping (purely logical)
+* Ungrouping
+* Renderer refactoring
+* Animated textures
+* Untextured PhysicalObjects
+* Removal of Service.OnUnexpectedShutdown();
+* DDMS refactoring
+* Service 
+* Camera API
+* Lightning.Core/Lightning.Core.DataModel namespace split
+* Functional Scripting API
+* Removal of Error XML?
+* Color3Converter
+* Color4Converter
+* SDK installer
+
+* IDE? Very basic ver.

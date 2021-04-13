@@ -16,53 +16,31 @@ namespace Lightning.Core
     public class Circle : Primitive
     {
         public override string ClassName => "Circle";
-        /// <summary>
-        /// The diameter of the circle.
-        /// </summary>
-        private int Diameter { get; set; }
 
-        /// <summary>
-        /// backing field for radius
-        /// </summary>
-        private int _radius { get; set; }
-
-        /// <summary>
-        /// The radius of the circle. 
-        /// </summary>
-        public int Radius { get
-            {
-                return _radius;
-            }
-            set
-            {
-                Diameter = value * 2; // r = 2d
-                _radius = value; 
-            }
-
-        }
-
-        public override void Render(IntPtr SDLRenderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            SDL.SDL_SetRenderDrawBlendMode(SDLRenderer, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);
+            IntPtr SDL_RendererPtr = SDL_Renderer.SDLRenderer;
+
+            SDL.SDL_SetRenderDrawBlendMode(SDL_RendererPtr, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);
 
             if (Colour != null)
             {
-                SDL.SDL_SetRenderDrawColor(SDLRenderer, Colour.R, Colour.G, Colour.B, Colour.A);
+                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, Colour.R, Colour.G, Colour.B, Colour.A);
             }
             else
             {
-                SDL.SDL_SetRenderDrawColor(SDLRenderer, 255, 255, 255, 255);
+                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
             }
 
             // This isn't particularly efficient.
             // There's better ways to do this but this is the simplest for now. 
             for (int i = 0; i < 360; i++)
             {
-                double X = Radius * Math.Cos(MathUtil.DegreesToRadians(i)) + Position.X;
-                double Y = Radius * Math.Sin(MathUtil.DegreesToRadians(i)) + Position.Y;
+                double X = Size.X * Math.Cos(MathUtil.DegreesToRadians(i)) + Position.X;
+                double Y = Size.Y * Math.Sin(MathUtil.DegreesToRadians(i)) + Position.Y;
 
                 // draw a point. 
-                SDL.SDL_RenderDrawPointF(SDLRenderer, (float)X, (float)Y);
+                SDL.SDL_RenderDrawPointF(SDL_RendererPtr, (float)X - (float)SDL_Renderer.CCameraPosition.X, (float)Y - (float)SDL_Renderer.CCameraPosition.Y);
                 
             }
         }

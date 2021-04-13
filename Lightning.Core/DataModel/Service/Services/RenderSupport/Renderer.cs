@@ -14,6 +14,11 @@ namespace Lightning.Core
     public class Renderer
     {
         /// <summary>
+        /// The current Camera position. 
+        /// </summary>
+        public Vector2 CCameraPosition { get; set; }
+
+        /// <summary>
         /// The SDL window.
         /// </summary>
         public IntPtr Window { get; set; }
@@ -30,7 +35,9 @@ namespace Lightning.Core
 
         public Renderer()
         {
-            TextureCache = new List<Texture>(); 
+            TextureCache = new List<Texture>();
+            // not added to the datamodel
+            CCameraPosition = new Vector2();
         }
     }
 }
