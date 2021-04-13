@@ -10,7 +10,7 @@
 
   </Metadata>
   <Settings>
-    <!-- nothing here yet -->
+    
     <Setting>
       <Name>MaxFPS</Name>
       <Type>System.Int32</Type>

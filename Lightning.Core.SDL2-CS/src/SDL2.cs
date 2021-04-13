@@ -5730,6 +5730,22 @@ namespace Lightning.Core.SDL2
 			public SDL_Keycode sym;
 			public SDL_Keymod mod; /* UInt16 */
 			public UInt32 unicode; /* Deprecated */
+
+			// 2021-04-13
+
+			/// <summary>
+			/// Converts the sym property to a string.
+			/// </summary>
+			/// <returns></returns>
+			public override string ToString()
+            {
+				string S_Processed = sym.ToString();
+
+				S_Processed = S_Processed.Replace("SDLK_", "");
+				S_Processed = S_Processed.ToUpperInvariant();
+
+				return S_Processed; // Lightning only
+            }
 		}
 
 		/* Get the window which has kbd focus */

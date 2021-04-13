@@ -31,7 +31,6 @@ namespace Lightning.Core
             {
                 InstanceInfoMethodParameter IIMP = InstanceInfoMethodParameter.FromParameterInfo(PI);
 
-
                 IIMX.Parameters.Add(IIMP);
             }
 

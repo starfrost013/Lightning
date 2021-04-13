@@ -39,7 +39,7 @@ namespace Lightning.Core
             else
             {
                 SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
-                SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)Begin.X, (float)Begin.Y, (float)End.X, (float)End.Y);
+                SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)Begin.X - (float)SDL_Renderer.CCameraPosition.X, (float)Begin.Y - (float)SDL_Renderer.CCameraPosition.Y, (float)End.X - (float)SDL_Renderer.CCameraPosition.X, (float)End.Y - (float)SDL_Renderer.CCameraPosition.Y);
                 SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 0, 0, 0, 0);
             }
 

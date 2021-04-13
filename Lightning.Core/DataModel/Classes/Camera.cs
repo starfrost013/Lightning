@@ -11,8 +11,11 @@ namespace Lightning.Core
     /// 
     /// Defines a Camera. A Camera is the viewport of a Lightning level. 
     /// </summary>
-    public class Camera : PhysicalObject
+    public class Camera : ControllableObject
     {
+        public override string ClassName => "Camera";
+
+        public override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Destroyable | InstanceTags.Instantiable | InstanceTags.Serialisable | InstanceTags.ShownInIDE;
         /// <summary>
         /// Is this Camera active?
         /// </summary>
@@ -33,6 +36,32 @@ namespace Lightning.Core
             {
                 return; 
             }
+        }
+
+        public override void OnKeyDown(Control Control)
+        {
+            // TEMPORARY CODE
+            switch (Control.KeyCode.ToString())
+            {
+                case "LEFT":
+                case "A":
+                    Position.X += 10;
+                    return;
+                case "RIGHT":
+                case "D":
+                    Position.X -= 10;
+                    return;
+                case "UP":
+                case "W":
+                    Position.Y += 10;
+                    return;
+                case "DOWN":
+                case "S":
+                    Position.Y -= 10;
+                    return; 
+            }
+            // END TEMPORARY CODE
+
         }
 
     }

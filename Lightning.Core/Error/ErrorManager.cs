@@ -147,8 +147,6 @@ namespace Lightning.Core
                     Err.Description = ErrorDescription;
                     ThrowError(Component, ErrToThrow.Error);
                     return; 
-
-                    
                 }
                 else
                 {

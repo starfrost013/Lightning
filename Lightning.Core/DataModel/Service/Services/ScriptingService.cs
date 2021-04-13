@@ -34,5 +34,8 @@ namespace Lightning.Core
         {
             return; 
         }
+
+        public override void OnKeyDown(Control KeyCode) => throw new NotImplementedException();
+
     }
 }

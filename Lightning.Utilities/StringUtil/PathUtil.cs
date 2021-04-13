@@ -25,5 +25,17 @@ namespace Lightning.Utilities
 
             return @$"{LIPath}\{Path}";
         }
+
+        private static string GetXmlPath(string XmlPath, string Path)
+        {
+            if (!XmlPath.Contains(':'))
+            {
+                return Path;
+            }
+            else
+            {
+                return $@"{XmlPath}\{Path}";
+            }
+        }
     }
 }

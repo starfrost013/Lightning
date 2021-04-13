@@ -42,11 +42,34 @@ namespace Lightning.Core
         public static Vector2 operator -(Vector2 A, Vector2 B) => new Vector2(A.X - B.X, B.Y - B.Y);
         public static Vector2 operator *(Vector2 A, Vector2 B) => new Vector2(A.X * B.X, B.Y * B.Y);
         public static Vector2 operator /(Vector2 A, Vector2 B) => new Vector2(A.X / B.X, B.Y / B.Y);
+        public static bool operator ==(Vector2 A, Vector2 B)
+        {
+            if (A.X == B.X && A.Y == B.Y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool operator !=(Vector2 A, Vector2 B)
+        {
+            if (A.X == B.X && A.Y == B.Y)
+            {
+                return false;
+            }
+            else
+            {
+                return true; 
+            }
+
+        }
 
         public static Vector2 FromString(string Str, bool AddToDataModel = true)
         {
             // We do not add this to the DataModel, as it is an attribute
-
 
             // Do not change, as useless objects will pollute the workspace if we add it
 
@@ -61,7 +84,6 @@ namespace Lightning.Core
             {
                 V2 = new Vector2();
             }
-            
 
             string[] Str_Split = Str.Split(',');
 

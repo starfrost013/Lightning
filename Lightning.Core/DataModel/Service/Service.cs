@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Core.SDL2;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -28,7 +29,6 @@ namespace Lightning.Core
         /// </summary>
         public abstract void Poll();
         public abstract ServiceShutdownResult OnShutdown();
-
-        
+        public abstract void OnKeyDown(Control KeyCode);
     }
 }

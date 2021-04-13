@@ -42,7 +42,7 @@ namespace Lightning.Core
 
             foreach (ServiceStartupCommand SSC in StartupServices)
             {
-                Logging.Log($"Initialising startup service with name {SSC.ServiceName}, startup priority {SSC.StartOrder}", ClassName);
+                Logging.Log($"Initialising startup service with name {SSC.ServiceName}, startup priority {SSC.StartOrder}...", ClassName);
                 StartService(SSC.ServiceName);
             } 
         }
@@ -407,7 +407,7 @@ namespace Lightning.Core
             // Shuts down the engine by first killing all services, then clearing the DataModel
             // and finally exiting the process.
             KillAllServices();
-            DataModel.Clear();
+            DataModel.Shutdown();
 
             Logging.Log("The engine has shut down. Exiting.");
             Environment.Exit(0);

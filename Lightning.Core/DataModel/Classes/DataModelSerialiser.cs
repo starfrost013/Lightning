@@ -40,7 +40,6 @@ namespace Lightning.Core
         /// </summary>
         public static string XMLSCHEMA_VERSION = "0.2.3.0005";
 
-        
         public DataModel DDMS_Serialise(string Path)
         {
             try
@@ -844,5 +843,6 @@ namespace Lightning.Core
             // this should not run
             return DDSR; 
         }
+
     }
 }

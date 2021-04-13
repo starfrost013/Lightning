@@ -49,7 +49,7 @@ namespace Lightning.Core
 
                 if (!File.Exists(LWSchemaPath))
                 {
-                    string ErrorString = $"Cannot find the XML file at {LWSchemaPath}!";
+                    string ErrorString = $"Cannot find the XML schema at {LWSchemaPath}!";
 
                     ErrorManager.ThrowError("XML Schema Validator", "CannotFindXmlFileOrSchemaException", ErrorString);
                     XSR.FailureReason = ErrorString;
@@ -59,7 +59,7 @@ namespace Lightning.Core
                 {
                     if (!File.Exists(XSI.XmlPath))
                     {
-                        string ErrorString = $"Cannot find the XML schema at {XSI.XmlPath}!";
+                        string ErrorString = $"Cannot find the XML file at {XSI.XmlPath}!";
 
                         ErrorManager.ThrowError("XML Schema Validator", "CannotFindXmlFileOrSchemaException", ErrorString);
                         XSR.FailureReason = ErrorString;

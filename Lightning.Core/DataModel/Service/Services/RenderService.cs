@@ -398,7 +398,11 @@ namespace Lightning.Core
             {
                 switch (CurEvent.type)
                 {
-                    
+                    case SDL.SDL_EventType.SDL_KEYDOWN:
+                        Control Ctl = new Control();
+                        Ctl.KeyCode = CurEvent.key.keysym;
+                        HandleKeyDown(Ctl); 
+                        return; 
                     case SDL.SDL_EventType.SDL_QUIT:
                         // Less temp
                         ServiceNotification SN = new ServiceNotification { ServiceClassName = ClassName, NotificationType = ServiceNotificationType.Shutdown_ShutDownEngine };
@@ -479,5 +483,40 @@ namespace Lightning.Core
             }
         }
 
+        public override void OnKeyDown(Control KeyCode) => throw new NotImplementedException();
+
+        private void HandleKeyDown(Control Ctl)
+        {
+            List<ControllableObject> ControllableObjects = HandleKeyDown_BuildListOfControllableObjects();
+
+            HandleKeyDown_NotifyAllControllableObjects(ControllableObjects, Ctl);
+        }
+
+        private List<ControllableObject> HandleKeyDown_BuildListOfControllableObjects()
+        {
+            List<ControllableObject> ControllableObjects = new List<ControllableObject>();
+
+            Workspace Ws = DataModel.GetWorkspace();
+
+            foreach (Instance Ins in Ws.Children)
+            {
+                Type InsType = Ins.GetType();
+
+                if (InsType.IsSubclassOf(typeof(ControllableObject)))
+                {
+                    ControllableObjects.Add((ControllableObject)Ins);
+                }
+            }
+
+            return ControllableObjects;
+        }
+
+        private void HandleKeyDown_NotifyAllControllableObjects(List<ControllableObject> ControllableObjects, Control Ctl)
+        {
+            foreach (ControllableObject CO in ControllableObjects)
+            {
+                CO.OnKeyDown(Ctl);
+            }
+        }
     }
 }

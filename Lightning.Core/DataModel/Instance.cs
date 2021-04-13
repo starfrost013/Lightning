@@ -82,6 +82,16 @@ namespace Lightning.Core
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// This Instance is deprecated and will be removed in a future release of the engine. Using this in new projects is not recommended.
+        /// </summary>
+        public bool Deprecated { get; set; }
+
+        /// <summary>
+        /// This Instance is experimental and may be changed or removed at any time in a future release of the engine. Using this in projects you intend to release is not recommended.
+        /// </summary>
+        public bool Experimental { get; set; }
+
         public Instance()
         {
             Name = "Instance";
