@@ -19,5 +19,10 @@ namespace Lightning.Core
         {
             MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");
         }
+
+        public virtual void OnKeyUp(Control Control)
+        {
+
+        }
     }
 }

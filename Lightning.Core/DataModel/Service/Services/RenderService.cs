@@ -311,7 +311,7 @@ namespace Lightning.Core
                 if (!GIR.Successful)
                 {
                     // these don't have a texture *as a child* (physicalobject contains texture)
-                    return; 
+                    continue;
                 }
                 else
                 {
@@ -487,12 +487,12 @@ namespace Lightning.Core
 
         private void HandleKeyDown(Control Ctl)
         {
-            List<ControllableObject> ControllableObjects = HandleKeyDown_BuildListOfControllableObjects();
+            List<ControllableObject> ControllableObjects = BuildListOfControllableObjects();
 
             HandleKeyDown_NotifyAllControllableObjects(ControllableObjects, Ctl);
         }
 
-        private List<ControllableObject> HandleKeyDown_BuildListOfControllableObjects()
+        private List<ControllableObject> BuildListOfControllableObjects()
         {
             List<ControllableObject> ControllableObjects = new List<ControllableObject>();
 

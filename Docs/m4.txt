@@ -5,10 +5,9 @@ Beginning April 12, 2021
 * Ungrouping
 * Renderer refactoring
 * Animated textures
-* Untextured PhysicalObjects
+* Primitive API 
 * Removal of Service.OnUnexpectedShutdown();
 * DDMS refactoring
-* Service 
 * Camera API
 * Lightning.Core/Lightning.Core.DataModel namespace split
 * Functional Scripting API
@@ -16,5 +15,30 @@ Beginning April 12, 2021
 * Color3Converter
 * Color4Converter
 * SDK installer
+* GameSettings.CameraMoveSpeed
+* Working PhysicsService 
+* Player API
+* IDE, Very basic ver.
 
-* IDE? Very basic ver.
+4/13	19:04
+
+Grouping 		0%
+Ungrouping		0%
+Render refactoring	30%
+Animated textures	0%
+Primitive API		80%
+Removal of OUS		Complete
+DDMS refactor		20%
+Camera API		50% (no cameratype)
+Namespace split		0%
+Functional Scripting API0%
+Removal of Error XML?	0%; may not do
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		0%
+PhysicsService		0%
+Player API		0%
+
+More tasks may be required
+L./L.C.DM split		

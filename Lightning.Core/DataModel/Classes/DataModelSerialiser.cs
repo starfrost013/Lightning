@@ -131,7 +131,7 @@ namespace Lightning.Core
                 // Every file must have all compoennts
                 DDMSComponents DDMSComp = (DDMSComponents)Enum.Parse(typeof(DDMSComponents), ValidComponent);
                 Logging.Log($"Serialising file component: {DDMSComp}");
-                DDMSSerialisationResult DDSRMS = DDMS_SerialiseFileComponent(XD, DM, DDMSComp);
+                DDMSDeserialisationResult DDSRMS = DDMS_SerialiseFileComponent(XD, DM, DDMSComp);
 
                 if (DDSRMS.Successful)
                 {
@@ -199,9 +199,9 @@ namespace Lightning.Core
         /// <param name="DM">The DataModel to serialise to</param>
         /// <param name="Component">The DDMS Component to serialise</param>
         /// <returns></returns>
-        private DDMSSerialisationResult DDMS_SerialiseFileComponent(XDocument XD, DataModel DM, DDMSComponents Component)
+        private DDMSDeserialisationResult DDMS_SerialiseFileComponent(XDocument XD, DataModel DM, DDMSComponents Component)
         {
-            DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
+            DDMSDeserialisationResult DDSR = new DDMSDeserialisationResult();
             
             switch (Component)
             {
@@ -238,14 +238,14 @@ namespace Lightning.Core
         /// <param name="XM"></param>
         /// <param name="DM"></param>
         /// <returns></returns>
-        private DDMSSerialisationResult DDMS_ParseMetadataComponent(XDocument XD, DataModel DM)
+        private DDMSDeserialisationResult DDMS_ParseMetadataComponent(XDocument XD, DataModel DM)
         {
 
             // Clear global datamodel state
             // Might need to make it non-static
             DataModel.Clear();
 
-            DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
+            DDMSDeserialisationResult DDSR = new DDMSDeserialisationResult();
 
             GameMetadata GM = (GameMetadata)DataModel.CreateInstance("GameMetadata");
 
@@ -342,11 +342,11 @@ namespace Lightning.Core
             return DDSR;
         }
 
-        private DDMSSerialisationResult DDMS_ParseSettingsComponent(XDocument XD, DataModel DM)
+        private DDMSDeserialisationResult DDMS_ParseSettingsComponent(XDocument XD, DataModel DM)
         {
 
             // Serialises the game settings for this LGX file (Lightning Game XML)
-            DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
+            DDMSDeserialisationResult DDSR = new DDMSDeserialisationResult();
 
             List<XElement> XSettingsTreeNodeList = XD.Root.Elements("Settings").ToList();
 
@@ -552,10 +552,10 @@ namespace Lightning.Core
             }
         }
 
-        private DDMSSerialisationResult DDMS_ParseInstanceTreeComponent(XDocument XD, DataModel DM)
+        private DDMSDeserialisationResult DDMS_ParseInstanceTreeComponent(XDocument XD, DataModel DM)
         {
 
-            DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
+            DDMSDeserialisationResult DDSR = new DDMSDeserialisationResult();
 
             XElement XInstanceTreeNode;
 
@@ -581,7 +581,7 @@ namespace Lightning.Core
                     case XmlNodeType.Element:
                         try
                         {
-                            DDMSSerialisationResult DDSR_Element = DDMS_SerialiseElementToDMObject(DM, XInstanceChildNode);
+                            DDMSDeserialisationResult DDSR_Element = DDMS_SerialiseElementToDMObject(DM, XInstanceChildNode);
                             
                             if (DDSR_Element.Successful)
                             {
@@ -673,12 +673,12 @@ namespace Lightning.Core
         /// <param name="DM"></param>
         /// <param name="XInstanceChildNode"></param>
         /// <returns></returns>
-        private DDMSSerialisationResult DDMS_SerialiseElementToDMObject(DataModel DM, XElement XInstanceChildNode, Instance Parent = null)
+        private DDMSDeserialisationResult DDMS_SerialiseElementToDMObject(DataModel DM, XElement XInstanceChildNode, Instance Parent = null)
         {
 
             string XDataModelName = XInstanceChildNode.Name.LocalName;
 
-            DDMSSerialisationResult DDSR = new DDMSSerialisationResult();
+            DDMSDeserialisationResult DDSR = new DDMSDeserialisationResult();
             
             // Namespace path to DataModel
             string DATAMODELPATH = "Lightning.Core.";
