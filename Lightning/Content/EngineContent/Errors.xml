@@ -389,4 +389,25 @@ Do not change if you are not a dev
     <Id>50</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToSaveLgxException</Name>
+    <Id>51</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InvalidDataModelCannotSaveLgxException</Name>
+    <Id>52</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToAcquireInvalidPropertyInfoException</Name>
+    <Id>53</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

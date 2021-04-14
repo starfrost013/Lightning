@@ -67,6 +67,23 @@ namespace Lightning.Core
 
         }
 
+        public override bool Equals(object obj)
+        {
+            Type ObjType = obj.GetType();
+
+            if (typeof(Vector2) != ObjType)
+            {
+                return false;
+            }
+            else
+            {
+                return (this == (Vector2)obj);
+            }
+            
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
+
         public static Vector2 FromString(string Str, bool AddToDataModel = true)
         {
             // We do not add this to the DataModel, as it is an attribute

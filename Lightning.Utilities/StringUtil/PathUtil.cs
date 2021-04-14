@@ -34,7 +34,27 @@ namespace Lightning.Utilities
             }
             else
             {
-                return $@"{XmlPath}\{Path}";
+                string[] XmlPathComponents = XmlPath.Split('\\');
+
+                StringBuilder SB = new StringBuilder();
+                
+                if (XmlPathComponents.Length < 1)
+                {
+                    return Path; // obvious relative path
+                }
+                else
+                {
+                    // Exclude the last component (the filename)
+                    for (int i = 0; i < XmlPathComponents.Length - 1; i++)
+                    {
+                        string XmlPathComponent = XmlPathComponents[i];
+                        SB.Append(XmlPathComponent);
+                    }
+                }
+
+                SB.Append($@"\{Path}");
+
+                return SB.ToString(); 
             }
         }
     }

@@ -131,6 +131,29 @@ namespace Lightning.Core
                 );
         }
 
+        /// <summary>
+        /// Gets the value of the <paramref name="Obj"/> Instance's <paramref name="PropertyName"/> property.
+        /// </summary>
+        /// <param name="PropertyName">The name of the property you wish to acquire the value of.</param>
+        /// <param name="Obj">The object you wish to acquire the property value of. </param>
+        /// <returns>The value for the object if successful, otherwise returns null.</returns>
+        public object GetValue(string PropertyName, Instance Obj)
+        {
+            Type Typ = Obj.GetType();
+
+            foreach (InstanceInfoProperty IIP in Properties)
+            {
+                if (IIP.Name == PropertyName)
+                {
+                    PropertyInfo PI = Typ.GetProperty(PropertyName);
+                    return PI.GetValue(Obj);
+                }
+            }
+
+            ErrorManager.ThrowError("DataModel", "AttemptedToAcquireInvalidPropertyInfoException", $"Attempted to acquire the property name {PropertyName}, that is not in the type {Typ.Name}!");
+            return null; 
+        }
+
         public InstanceInfo()
         {
             Methods = new List<InstanceInfoMethod>();

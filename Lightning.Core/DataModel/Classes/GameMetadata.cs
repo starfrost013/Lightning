@@ -27,6 +27,11 @@ namespace Lightning.Core
         public string Description { get; set; }
 
         /// <summary>
+        /// The name of this Game. 
+        /// </summary>
+        public string GameName { get; set; }
+
+        /// <summary>
         /// The creation date of this Game.
         /// </summary>
         public DateTime CreationDate { get; set; }
@@ -37,8 +42,13 @@ namespace Lightning.Core
         public DateTime LastModifiedDate { get; set; }
 
         /// <summary>
-        /// The last 
+        /// The revision number of this Game. 0 if a game has not been saved yet. 
         /// </summary>
         public int RevisionNumber { get; set; }
+
+        /// <summary>
+        /// An optional version number.
+        /// </summary>
+        public string Version { get; set; }
     }
 }

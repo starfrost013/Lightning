@@ -247,7 +247,7 @@ namespace Lightning.Core
         private void Remove_PerformRemove(Instance ObjToRemove, Instance Parent = null)
         {
             // Remove all children of this Instance.
-            ObjToRemove.RemoveAllChildren();
+            ObjToRemove.RemoveAllChildren(); //TODO: move this
 
             if (Parent == null) // Parent will be passed as Workspace for those in the Workspace
             {
@@ -271,7 +271,8 @@ namespace Lightning.Core
             {
                 Instance Ins = Instances[i];
 
-                Instances.Remove(Ins);
+                // April 14, 2021: ACTUALLY use the custom remove method
+                Remove(Ins);
             }
         }
 

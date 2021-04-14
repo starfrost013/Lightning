@@ -96,9 +96,9 @@ namespace Lightning.Core
             {
                 if (Args.GameXMLPath != null)
                 {
-                    DataModelSerialiser DMS = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
+                    DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelSerialiser");
 
-                    DataModel DM = DMS.DDMS_Serialise(Args.GameXMLPath);
+                    DataModel DM = DMS.DDMS_Deserialise(Args.GameXMLPath);
 
                     // Check for a failure
                     if (DM == null)
@@ -190,10 +190,7 @@ namespace Lightning.Core
                         {
                             return Parent.Children.Instances[Parent.Children.Instances.Count - 1];
                         }
-                        
                     }
-
-
                 }
                 else
                 {
@@ -217,7 +214,12 @@ namespace Lightning.Core
             // Reinitialise
             Init();
         }
-        internal static void Shutdown() => State.Clear();
+        internal static void Shutdown()
+        {
+            Logging.Log("The DataModel is shutting down. Clearing it...");
+            State.Clear();
+        }
+        
 
 #if DEBUG
         private void ATest()
@@ -236,8 +238,8 @@ namespace Lightning.Core
         public void ATest_Serialise()
         {
 
-            DataModelSerialiser DDX = (DataModelSerialiser)CreateInstance("DataModelSerialiser");
-            DDX.DDMS_Serialise(@"Content\Test\Test.xml");
+            DataModelDeserialiser DDX = (DataModelDeserialiser)CreateInstance("DataModelSerialiser");
+            DDX.DDMS_Deserialise(@"Content\Test\Test.xml");
 
         }
 

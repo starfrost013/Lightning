@@ -4,7 +4,7 @@ Beginning April 12, 2021
 * Grouping (purely logical)
 * Ungrouping
 * Renderer refactoring
-* Animated textures
+* Animation API
 * Primitive API 
 * Removal of Service.OnUnexpectedShutdown();
 * DDMS refactoring
@@ -17,8 +17,10 @@ Beginning April 12, 2021
 * SDK installer
 * GameSettings.CameraMoveSpeed
 * Working PhysicsService 
+* Basic functionality ScriptingService
 * Player API
 * IDE, Very basic ver.
+* DDMS Saving
 
 4/13	19:04
 
@@ -39,6 +41,33 @@ SDK installer		0%
 CameraMoveSpeed		0%
 PhysicsService		0%
 Player API		0%
+L./L.C.DM split		0%
+IDE			0%
+DDMS Saving		0%
+
+4/14	14:22
+
+Grouping 		0%
+Ungrouping		0%
+Render refactoring	30%
+Animated textures	0%
+Primitive API		80%
+Removal of OUS		Complete
+DDMS refactor		20%
+Camera API		90%
+Namespace split		0%
+Functional Scripting API0%
+Removal of Error XML?	0%; may not do
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		0%
+PhysicsService		0%
+ScriptingService	5%
+Player API		0%
+L./L.C.DM split		0%
+IDE			0%
+DDMS Saving		0%
 
 More tasks may be required
-L./L.C.DM split		
+	
