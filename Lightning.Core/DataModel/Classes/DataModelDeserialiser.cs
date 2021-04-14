@@ -305,11 +305,16 @@ namespace Lightning.Core
                                             case "LastModifiedDate":
                                                 GM.LastModifiedDate = DateTime.Parse(ElementValue);
                                                 continue;
+                                            case "Name":
+                                                GM.GameName = ElementValue;
+                                                continue;
                                             // Game revision ID
                                             case "RevisionID":
                                                 GM.RevisionNumber = Convert.ToInt32(ElementValue);
                                                 continue;
-
+                                            case "Version":
+                                                GM.Version = ElementValue;
+                                                continue; 
                                         }
                                     }
                                     else

@@ -43,6 +43,14 @@ namespace Lightning.Core
         // Texture is a child. 
 
         /// <summary>
+        /// Ran on the spawning of an object, before it is rendered for the first time and after the initialisation of the renderer.
+        /// </summary>
+        public virtual void OnSpawn()
+        {
+            return; 
+        }
+
+        /// <summary>
         /// This is called on each frame by the RenderService to tell this object to 
         /// render itself.
         /// 

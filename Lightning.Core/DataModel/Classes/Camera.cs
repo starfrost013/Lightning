@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Lightning.Core
@@ -23,16 +24,72 @@ namespace Lightning.Core
         public bool Active { get; set; }
 
         /// <summary>
-        /// Must be a reference type. 
+        /// Must be a reference. 
         /// 
         /// The instance we are targeting. 
         /// </summary>
         public PhysicalObject Target { get; set; }
 
         /// <summary>
+        /// The name of the target. 
+        /// </summary>
+        public string TargetName { get; set; }
+
+        /// <summary>
         /// The type of the Camera - see <see cref="CameraType"/>
         /// </summary>
         public CameraType CameraType { get; set; }
+
+        public override void OnSpawn()
+        {
+            if (TargetName != null && Target == null)
+            {
+                Workspace Ws = DataModel.GetWorkspace();
+
+                TryFindTarget(TargetName, Ws); 
+            }
+        }
+
+        private void TryFindTarget(string TargetName, Instance Parent)
+        {
+            foreach (Instance InsC in Parent.Children)
+            {
+                if (InsC.Name == TargetName)
+                {
+                    Type InstanceType = InsC.GetType();
+
+                    if (InstanceType == typeof(PhysicalObject)
+                        || InstanceType.IsSubclassOf(typeof(PhysicalObject)))
+                    {
+                        Target = (PhysicalObject)InsC;
+                    }
+                    
+                }
+            }
+
+            // if we have not found it...
+            if (Target == null)
+            {
+                foreach (Instance InsC in Parent.Children)
+                {
+                    TryFindTarget(TargetName, InsC);
+                }
+
+                // if it has failed...
+
+                // if target is still null 
+                if (Target == null)
+                {
+                    ErrorManager.ThrowError(ClassName, "AttemptedToAcquireInvalidCameraTargetException", $"The Instance with name {TargetName} either does not exist or cannot be used as a CameraTarget!");
+                    return; 
+                }
+                else
+                {
+                    return; 
+                }
+            }
+
+        }
 
         /// <summary>
         /// <inheritdoc/>
@@ -66,6 +123,7 @@ namespace Lightning.Core
 
         }
 
+
         public override void OnKeyDown(Control Control)
         {
             switch (CameraType)
@@ -82,7 +140,7 @@ namespace Lightning.Core
 
         private void MoveFreeCamera(Control Control)
         {
-
+            // TODO: make non-hardcoded
             // TEMPORARY CODE
             switch (Control.KeyCode.ToString())
             {
@@ -106,7 +164,10 @@ namespace Lightning.Core
             // END TEMPORARY CODE
         }
 
-
+        /// <summary>
+        /// Renders the follow-object camera type. The follow-object camera always tries to put an object in the middle of the screen.
+        /// </summary>
+        /// <param name="SDL_Renderer"></param>
         private void RenderFollowObjectCamera(Renderer SDL_Renderer)
         {
             if (Target == null)
@@ -115,21 +176,44 @@ namespace Lightning.Core
             }
             else 
             {
-                Type TargetType = Target.GetType();
 
-                // If it inherits from PhysicalObject...
-                if (TargetType.IsSubclassOf(typeof(PhysicalObject)) || TargetType == typeof(PhysicalObject))
+                Workspace Ws = DataModel.GetWorkspace();
+
+                GetInstanceResult GGSR = Ws.GetFirstChildOfType("GameSettings");
+
+                // don't do paranoid checks
+
+                Debug.Assert(GGSR.Successful);
+
+                GameSettings GS = (GameSettings)GGSR.Instance;
+
+                GetGameSettingResult GameSettingResult_WindowHeight = GS.GetSetting("WindowHeight");
+                GetGameSettingResult GameSettingResult_WindowWidth = GS.GetSetting("WindowWidth");
+
+                if (!GameSettingResult_WindowHeight.Successful
+                    || !GameSettingResult_WindowWidth.Successful)
                 {
-                    // Set the position of the camera to the position of the target object. 
-                    Position.X = Target.Position.X;
-                    Position.Y = Target.Position.Y;
-
-                    SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
+                    ErrorManager.ThrowError(ClassName, "FailedToObtainCriticalGameSettingException", "WindowWidth or WindowHeight not set!");
+                    return;
                 }
                 else
                 {
-                    return; 
+                    GameSetting WindowHeight_Setting = GameSettingResult_WindowHeight.Setting;
+                    GameSetting WindowWidth_Setting = GameSettingResult_WindowWidth.Setting;
+
+                    int WindowHeight = (int)WindowHeight_Setting.SettingValue;
+                    int WindowWidth = (int)WindowWidth_Setting.SettingValue;
+
+                    // Set the position of the camera to the position of the target object. 
+                    Position.X = Target.Position.X + (WindowWidth / 2);
+                    Position.Y = Target.Position.Y + (WindowHeight / 2);
+
+
+                    SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
+                    // removed redundant physicalobject checks
                 }
+
+
             }
         }
 
@@ -153,6 +237,7 @@ namespace Lightning.Core
 
                     GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
 
+                    //todo: replace with assert
                     if (!GIR.Successful || GIR.Instance == null)
                     {
                         ErrorManager.ThrowError(ClassName, "CannotAcquireUnloadedGlobalSettingsException");
@@ -161,7 +246,7 @@ namespace Lightning.Core
                     else
                     {
                         // Set the window width settings
-                        GameSettings GS = (GameSetting)GIR.Instance;
+                        GameSettings GS = (GameSettings)GIR.Instance;
 
                         GetGameSettingResult WindowWidth_SettingResult = GS.GetSetting("WindowWidth");
                         GetGameSettingResult WindowHeight_SettingResult = GS.GetSetting("WindowHeight");

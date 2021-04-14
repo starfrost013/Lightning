@@ -297,5 +297,12 @@ namespace Lightning.Core
             DDCSR.XmlDocument = XD;
             return DDCSR; 
         }
+
+
+#if DEBUG
+        private void ATest() => DDMS_Serialise("WritingTest.xml");
+
+#endif
     }
+
 }

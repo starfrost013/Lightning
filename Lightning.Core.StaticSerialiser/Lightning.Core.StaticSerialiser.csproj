@@ -7,8 +7,8 @@
     <Company>Lightning Development Team</Company>
     <Authors>starfrost</Authors>
     <Version>0.1.0</Version>
-    <AssemblyVersion>0.1.144.21103</AssemblyVersion>
-    <FileVersion>0.1.144.21103</FileVersion>
+    <AssemblyVersion>0.1.145.21104</AssemblyVersion>
+    <FileVersion>0.1.145.21104</FileVersion>
     <Description>Serialises static .NET classes to XML and deserialises XML to static .NET classes
     </Description>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>

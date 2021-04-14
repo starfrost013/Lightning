@@ -410,4 +410,11 @@ Do not change if you are not a dev
     <Id>53</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToAcquireInvalidCameraTargetException</Name>
+    <Id>54</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

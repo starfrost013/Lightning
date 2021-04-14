@@ -108,7 +108,7 @@ namespace Lightning.Core
             }
             else
             {
-                return $"v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}.";
+                return $"v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
             }
 
         }

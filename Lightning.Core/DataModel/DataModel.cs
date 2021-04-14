@@ -9,7 +9,7 @@ namespace Lightning.Core
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.8.0) 
+    /// DataModel (API Version 0.9.0) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,7 +17,7 @@ namespace Lightning.Core
     public class DataModel
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
-        public static int DATAMODEL_API_VERSION_MINOR = 8;
+        public static int DATAMODEL_API_VERSION_MINOR = 9;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
@@ -43,7 +43,6 @@ namespace Lightning.Core
         {
             string DataModel_String = $"{DATAMODEL_API_VERSION_MAJOR}.{DATAMODEL_API_VERSION_MINOR}.{DATAMODEL_API_VERSION_REVISION}";
             Logging.Log($"DataModel\nAPI Version {DataModel_String}\nNow Initialising...", "DataModel");
-            
 
             State = new InstanceCollection();
 
@@ -96,7 +95,7 @@ namespace Lightning.Core
             {
                 if (Args.GameXMLPath != null)
                 {
-                    DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelSerialiser");
+                    DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelDeserialiser");
 
                     DataModel DM = DMS.DDMS_Deserialise(Args.GameXMLPath);
 

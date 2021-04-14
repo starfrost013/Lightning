@@ -216,6 +216,7 @@ namespace Lightning.Core
             if (!RENDERER_INITIALISED)
             {
                 InitRendering();
+               
                 return; 
             }
             else
@@ -251,7 +252,10 @@ namespace Lightning.Core
                     Renderer = SDIR.Renderer;
 
                     LoadAndCacheTextures();
+
                     RENDERER_INITIALISED = true;
+
+                    TriggerOnSpawn();
 
                     return;
                 }
@@ -266,6 +270,15 @@ namespace Lightning.Core
 
         }
 
+        private void TriggerOnSpawn()
+        {
+            List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects();
+
+            foreach (PhysicalObject PO in ObjectsToLoad)
+            {
+                PO.OnSpawn();
+            }
+        }
         /// <summary>
         /// Loads amd caches SDL_Textures.
         /// </summary>
@@ -273,6 +286,15 @@ namespace Lightning.Core
         {
             Logging.Log("Building list of object textures to load...", ClassName);
 
+            List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects();
+
+            Logging.Log("Built list of object textures to load. Loading object textures...", ClassName);
+            // Load the object textures from the physicalobjects we have acquired. 
+            LoadObjectTextures(ObjectsToLoad);
+        }
+
+        private List<PhysicalObject> BuildListOfPhysicalObjects()
+        {
             Workspace Ws = DataModel.GetWorkspace();
 
             List<PhysicalObject> ObjectsToLoad = new List<PhysicalObject>();
@@ -295,9 +317,8 @@ namespace Lightning.Core
                 }
             }
 
-            Logging.Log("Built list of object textures to load. Loading object textures...", ClassName);
-            // Load the object textures from the physicalobjects we have acquired. 
-            LoadObjectTextures(ObjectsToLoad);
+            return ObjectsToLoad;
+
         }
 
         private void LoadObjectTextures(List<PhysicalObject> ObjectsToLoad)

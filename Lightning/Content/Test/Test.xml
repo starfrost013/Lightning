@@ -1,12 +1,12 @@
 <Lightning>
   <Metadata>
     <!-- The first Lightning XML file -->
-    <DMSchemaVersion>0.2.3.0005</DMSchemaVersion>
+    <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-04-13 14:06:45</LastModifiedDate>
-    <RevisionID>23</RevisionID> <!-- Rev23: add camera -->
+    <LastModifiedDate>2021-04-13 19:24:21</LastModifiedDate>
+    <RevisionID>24</RevisionID> <!-- Rev24: update to schema 0.3 -->
 
   </Metadata>
   <Settings>

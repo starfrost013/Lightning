@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Lightning.Core.SDL2</RootNamespace>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.151.21103</AssemblyVersion>
-    <FileVersion>1.0.151.21103</FileVersion>
+    <AssemblyVersion>1.0.152.21104</AssemblyVersion>
+    <FileVersion>1.0.152.21104</FileVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>SDL2-CS for Lightning</PackageId>
     <Description>SDL2-CS for Lightning</Description>
