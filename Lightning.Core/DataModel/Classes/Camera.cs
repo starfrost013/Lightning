@@ -205,10 +205,10 @@ namespace Lightning.Core
                     int WindowWidth = (int)WindowWidth_Setting.SettingValue;
 
                     // Set the position of the camera to the position of the target object. 
-                    Position.X = Target.Position.X + (WindowWidth / 2);
-                    Position.Y = Target.Position.Y + (WindowHeight / 2);
+                    Position.X = (Target.Position.X - (WindowWidth / 2) + (Target.Size.X / 2));
+                    Position.Y = (Target.Position.Y - (WindowHeight / 2) + (Target.Size.Y / 2));
 
-
+                    
                     SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
                     // removed redundant physicalobject checks
                 }
