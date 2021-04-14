@@ -91,6 +91,7 @@ namespace Lightning.Core
                     }
                 }
 
+                XD.Save(Path);
                 GR.Successful = true;
                 return GR; 
             }

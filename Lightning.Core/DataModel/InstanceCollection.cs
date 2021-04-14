@@ -272,7 +272,13 @@ namespace Lightning.Core
                 Instance Ins = Instances[i];
 
                 // April 14, 2021: ACTUALLY use the custom remove method
-                Remove(Ins);
+                
+                // hack
+                if (Ins.Attributes.HasFlag(InstanceTags.Destroyable))
+                {
+                    Remove(Ins);
+                }
+                
             }
         }
 

@@ -16,10 +16,10 @@ namespace Lightning.Core
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.5.0
+    /// Version 0.8.0
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-04-09 (API Version 0.5.0: Merged all API Version constants)
+    /// Modified 2021-04-14 (API Version 0.8.0: Merged all API Version constants)
     /// 
     /// Dynamically serialises XML (.lgx files) to Lightning DataModel objects.
     /// </summary>
