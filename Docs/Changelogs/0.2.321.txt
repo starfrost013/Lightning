@@ -1,0 +1,36 @@
+Engine version 0.2.321 changelog
+
+API changes:
+API Version 0.9.0:
+Major updates to `Camera`:
+`Camera`s can now have multiple types; this is determined by their `CameraType` property.
+They can also now target objects - see the `TargetName` property.
+
+CameraType enum:
+`Free` - the camera is free, and can be moved throughout the level by the arrow keys or WASD. (next build will have these user-assignable)
+`FollowObject` - the camera will move itself as to centre an object in the middle of it. The object it targets is controlled by the `TargetName` property, where `TargetName` is the `Name` of any object that is or inherits from `PhysicalObject` in the game. - the `Target` will be able to be directly set in scripts as well. 
+`ChaseObject` - similar to `FollowObject`, except the camera will position itself behind and slightly above the object it is targeting, as if it was recording a chase.
+`Fixed` - the camera will not move.
+
+Added `PhysicalObject.OnSpawn()`: RenderService calls this after it finishes initialising and loading textures - PhysicalObjects can use this to initialise.
+
+GameMetadata has been updated with new properties:
+`Name`: The name of the Game.
+`Version`: An optional version number for the Game.
+
+DDMS:
+Added serialisation (saving) of files. Split serialisation and deserialisation into multiple files (partial classes ofc); had my terminology confused. Currently, this code isn't called by anything because it's unfinished - more work needs to be done before it will work properly.
+
+Updated the XML schema version to 0.3.0.0006:
+Adds `Metadata.Name` and `Metadata.Version`: these reflect GameMetadata's Name and Version properties.
+Made Description and Author optional.
+
+Other:
+Refactoring in various places of the engine.
+Added a helper method to InstanceInfo to get the value of an object from a property and an instance of the object.
+
+ServiceControlManager:
+Fixed the shutdown procedure to actually clear the DataModel in the intended way.
+
+Utilities:
+Overhauled `GetXmlPath` to actually work; the next build will fix the issue with XML paths as a result

@@ -69,5 +69,28 @@ L./L.C.DM split		0%
 IDE			0%
 DDMS Saving		0%
 
+4/14	20:38
+Grouping 		0%
+Ungrouping		0%
+Render refactoring	40%
+Animation API		0%
+Primitive API		80%
+Removal of OUS		Complete
+DDMS refactor		20%
+Camera API		98%
+Namespace split		0%
+Functional Scripting API0%
+Removal of Error XML?	0%; may not do
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		0%
+PhysicsService		0%
+ScriptingService	5%
+Player API		0%
+L./L.C.DM split		0%
+IDE			0%
+DDMS Saving		60%
+
 More tasks may be required
 	

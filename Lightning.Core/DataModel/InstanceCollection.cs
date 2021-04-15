@@ -283,6 +283,24 @@ namespace Lightning.Core
         }
 
         /// <summary>
+        /// Ungroups an instance - places all of its children into the children of its Parent and destroys the Instance.
+        /// </summary>
+        public void Ungroup(Instance Ins, Instance Parent)
+        {
+            foreach (Instance Child in Ins.Children)
+            {
+                // Move the child up one in the hierarchy.
+                Parent.AddChild(Child);
+
+                Ins.RemoveChild(Child);
+            }
+
+            // we don't need to recurse, as all of the children of the children are already a part of the datamodel
+
+            Remove(Ins); 
+        }
+
+        /// <summary>
         /// Direct check for finding a specific Instance in an InstanceCollection. 
         /// </summary>
         /// <param name="Obj">Does it contain Obj?</param>

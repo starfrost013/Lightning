@@ -258,15 +258,21 @@ namespace Lightning.Core
         /// </summary>
         /// <param name="Name"></param>
         /// <returns></returns>
-        public object AddChild(string ClassName) => DataModel.CreateInstance(ClassName, this); 
+        public object AddChild(string ClassName) => DataModel.CreateInstance(ClassName, this);
+
+        /// <summary>
+        /// Adds the Instance <paramref name="Ins"/> to the children of this Instance. Used for grouping and ungrouping
+        /// </summary>
+        /// <param name="Ins">The Instance you wish to add to the children of this Instance.</param>
+        public void AddChild(Instance Ins) => Children.Add(Ins, this);
 
         public GenericResult RemoveChild(Instance Chl)
         {
             GenericResult GR = new GenericResult();
             
-            if (Children.Instances.Contains(Chl))
+            if (Children.Contains(Chl))
             {
-                Children.Instances.Remove(Chl);
+                Children.Remove(Chl); // 2021-04-15: use the actual remove method
                 GR.Successful = true;
                 return GR; 
             }
