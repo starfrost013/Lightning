@@ -264,7 +264,7 @@ namespace Lightning.Core
         /// Adds the Instance <paramref name="Ins"/> to the children of this Instance. Used for grouping and ungrouping
         /// </summary>
         /// <param name="Ins">The Instance you wish to add to the children of this Instance.</param>
-        public void AddChild(Instance Ins) => Children.Add(Ins, this);
+        public void AddChildI(Instance Ins) => Children.Add(Ins, this);
 
         public GenericResult RemoveChild(Instance Chl)
         {

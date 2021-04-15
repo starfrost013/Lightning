@@ -301,7 +301,7 @@ namespace Lightning.Core
 
 
 #if DEBUG
-        private void ATest() => DDMS_Serialise("WritingTest.xml");
+        public void ATest() => DDMS_Serialise("WritingTest.xml");
 
 #endif
     }

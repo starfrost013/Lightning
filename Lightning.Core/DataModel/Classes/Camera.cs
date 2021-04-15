@@ -160,6 +160,11 @@ namespace Lightning.Core
                 case "S":
                     Position.Y -= 10;
                     return;
+                case "F9":
+                    // TEMP CODE FOR TESTING PURPOSES ONLY VERY TEMP VERY TEMP
+                    DataModelDeserialiser DDMS = (DataModelDeserialiser)DataModel.CreateInstance("DataModelDeserialiser");
+                    DDMS.ATest();
+                    return; 
             }
             // END TEMPORARY CODE
         }

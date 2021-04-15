@@ -138,7 +138,7 @@ namespace Lightning.Core
 
         }
 
-        public void Add_PerformAdd(object Obj, Instance Parent = null)
+        private void Add_PerformAdd(object Obj, Instance Parent = null)
         {
             // polymorphism mandates this being the instance we want.
 
@@ -287,10 +287,11 @@ namespace Lightning.Core
         /// </summary>
         public void Ungroup(Instance Ins, Instance Parent)
         {
+            Logging.Log("Ungrouping...", "DataModel");
             foreach (Instance Child in Ins.Children)
             {
                 // Move the child up one in the hierarchy.
-                Parent.AddChild(Child);
+                Parent.AddChildI(Child);
 
                 Ins.RemoveChild(Child);
             }
