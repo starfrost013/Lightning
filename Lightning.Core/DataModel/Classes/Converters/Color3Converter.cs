@@ -56,5 +56,20 @@ namespace Lightning.Core
             }
         }
 
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string) && value.GetType() == typeof(Color3))
+            {
+                return ConvertToString((Color3)value);
+            }
+            else
+            {
+                return base.ConvertTo(context, culture, value, destinationType);
+            }
+
+        }
+
+        public string ConvertToString(Color3 C3) => $"{C3.R},{C3.G},{C3.B}";
+
     }
 }

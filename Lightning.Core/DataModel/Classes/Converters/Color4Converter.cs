@@ -35,6 +35,21 @@ namespace Lightning.Core
             }
         }
 
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string) && value.GetType() == typeof(Color4))
+            {
+                return ConvertToString((Color4)value);
+            }
+            else
+            {
+                return base.ConvertTo(context, culture, value, destinationType);
+            }
+            
+        }
+
+        public string ConvertToString(Color4 C4) => $"{C4.A},{C4.R},{C4.G},{C4.B}";
+
         public new Color4 ConvertFromString(string Text)
         {
             // Determine the method we want to call.

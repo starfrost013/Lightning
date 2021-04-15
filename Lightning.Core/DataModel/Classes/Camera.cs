@@ -140,32 +140,84 @@ namespace Lightning.Core
 
         private void MoveFreeCamera(Control Control)
         {
-            // TODO: make non-hardcoded
-            // TEMPORARY CODE
-            switch (Control.KeyCode.ToString())
+            bool IsPressingLeft = false;
+            bool IsPressingRight = false;
+            bool IsPressingUp = false;
+            bool IsPressingDown = false;
+            bool IsPressingF9 = false;
+
+            string KeyCode = Control.KeyCode.ToString(); 
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
+
+            Debug.Assert(GIR.Successful);
+
+            GameSettings GS = (GameSettings)GIR.Instance;
+
+            GetGameSettingResult GGSR1 = GS.GetSetting("FreeCameraMoveIntensityX");
+            GetGameSettingResult GGSR2 = GS.GetSetting("FreeCameraMoveIntensityY");
+
+            int FreeCameraMoveIntensityX;
+            int FreeCameraMoveIntensityY;
+
+            // if it is not saved.
+            if (!GGSR1.Successful || !GGSR2.Successful)
             {
-                case "LEFT":
-                case "A":
-                    Position.X += 10;
-                    return;
-                case "RIGHT":
-                case "D":
-                    Position.X -= 10;
-                    return;
-                case "UP":
-                case "W":
-                    Position.Y += 10;
-                    return;
-                case "DOWN":
-                case "S":
-                    Position.Y -= 10;
-                    return;
-                case "F9":
-                    // TEMP CODE FOR TESTING PURPOSES ONLY VERY TEMP VERY TEMP
-                    DataModelDeserialiser DDMS = (DataModelDeserialiser)DataModel.CreateInstance("DataModelDeserialiser");
-                    DDMS.ATest();
-                    return; 
+                FreeCameraMoveIntensityX = 10;
+                FreeCameraMoveIntensityY = 10;
             }
+            else
+            {
+                GameSetting GSX = GGSR1.Setting;
+                GameSetting GSY = GGSR2.Setting;
+
+                FreeCameraMoveIntensityX = (int)GSX.SettingValue;
+                FreeCameraMoveIntensityY = (int)GSY.SettingValue;
+            }
+            
+            // cannot use switch statements here :((
+            if (KeyCode == "LEFT"
+                || KeyCode == "A")
+            {
+                IsPressingLeft = true;
+            }
+            else if (KeyCode == "RIGHT"
+                || KeyCode == "D")
+            {
+                IsPressingRight = true;
+            }
+            else if (KeyCode == "UP"
+                || KeyCode == "W")
+            {
+                IsPressingUp = true;
+            }
+            else if (KeyCode == "DOWN"
+                || KeyCode == "S")
+            {
+                IsPressingDown = true;
+            }
+            else if (KeyCode == "F9")
+            {
+                IsPressingF9 = true;
+            }
+            else
+            {
+                return; 
+            }
+
+            if (IsPressingLeft) Position.X += FreeCameraMoveIntensityX;
+            if (IsPressingRight) Position.X -= FreeCameraMoveIntensityX;
+            if (IsPressingUp) Position.Y += FreeCameraMoveIntensityY;
+            if (IsPressingDown) Position.Y -= FreeCameraMoveIntensityY;
+
+            if (IsPressingF9)
+            {
+                DataModelDeserialiser DDMS = (DataModelDeserialiser)DataModel.CreateInstance("DataModelDeserialiser");
+                DDMS.ATest();
+                return; 
+            }
+
             // END TEMPORARY CODE
         }
 
@@ -255,6 +307,8 @@ namespace Lightning.Core
 
                         GetGameSettingResult WindowWidth_SettingResult = GS.GetSetting("WindowWidth");
                         GetGameSettingResult WindowHeight_SettingResult = GS.GetSetting("WindowHeight");
+                        GetGameSettingResult ChaseCameraInFrontOrBehindObjectFactor_SettingResult = GS.GetSetting("ChaseCameraInFrontOrBehindObjectFactor");
+                        GetGameSettingResult ChaseCameraAboveOrBelowObjectFactor_SettingResult = GS.GetSetting("ChaseCameraAboveOrBelowObjectFactor");
 
                         if (!WindowHeight_SettingResult.Successful || WindowHeight_SettingResult.Setting == null
                             || !WindowWidth_SettingResult.Successful || WindowWidth_SettingResult.Setting == null)
@@ -265,18 +319,56 @@ namespace Lightning.Core
                         }
                         else
                         {
-                            // Acquire the settings...
+
                             GameSetting WindowWidth_Setting = WindowWidth_SettingResult.Setting;
                             GameSetting WindowHeight_Setting = WindowHeight_SettingResult.Setting;
+                            GameSetting ChaseCameraAboveOrBelowObjectFactor_Setting = ChaseCameraInFrontOrBehindObjectFactor_SettingResult.Setting;
+                            GameSetting ChaseCameraInFrontOrBehindObjectFactor_Setting = ChaseCameraInFrontOrBehindObjectFactor_SettingResult.Setting;
 
                             // Get the setting values..
                             int WindowWidth = (int)WindowWidth_Setting.SettingValue;
                             int WindowHeight = (int)WindowHeight_Setting.SettingValue;
 
+                            int ChaseCameraAboveOrBelowObjectFactor = 0;
+                            int ChaseCameraInFrontOrBehindObjectFactor = 0;
+
+                            if (!ChaseCameraAboveOrBelowObjectFactor_SettingResult.Successful || ChaseCameraAboveOrBelowObjectFactor_SettingResult.Setting == null
+                            || !ChaseCameraInFrontOrBehindObjectFactor_SettingResult.Successful || ChaseCameraInFrontOrBehindObjectFactor_SettingResult.Setting == null)
+                            {
+                                ChaseCameraAboveOrBelowObjectFactor = 13;
+                                ChaseCameraInFrontOrBehindObjectFactor = 3; 
+                            }
+                            else
+                            {
+                                ChaseCameraAboveOrBelowObjectFactor = (int)ChaseCameraAboveOrBelowObjectFactor_Setting.SettingValue;
+                                ChaseCameraInFrontOrBehindObjectFactor = (int)ChaseCameraInFrontOrBehindObjectFactor_Setting.SettingValue;
+
+                            }
+
+                            // Acquire the settings...
+
                             // Chase!
                             // slightly above and significantly behind
-                            Position.X = Target.Position.X - (WindowWidth / 3); // todo: add game setting
-                            Position.Y = Target.Position.Y + (WindowHeight / 13);
+
+                            if (ChaseCameraInFrontOrBehindObjectFactor < 0)
+                            {
+                                Position.X = Target.Position.X + (WindowWidth / Math.Abs(ChaseCameraInFrontOrBehindObjectFactor)); // todo: add game setting
+                            }
+                            else
+                            {
+                                Position.X = Target.Position.X - (WindowWidth / ChaseCameraInFrontOrBehindObjectFactor); // todo: add game setting
+                            }
+
+                            if (ChaseCameraInFrontOrBehindObjectFactor < 0)
+                            {
+                                Position.Y = Target.Position.Y - (WindowHeight / Math.Abs(ChaseCameraAboveOrBelowObjectFactor));
+                            }
+                            else
+                            {
+                                Position.Y = Target.Position.Y + (WindowHeight / ChaseCameraAboveOrBelowObjectFactor);
+                            }
+
+                            
 
                             SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
 
