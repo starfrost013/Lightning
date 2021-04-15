@@ -13,8 +13,8 @@ namespace Lightning.Core
     /// </summary>
     public class ControllableObject : PhysicalObject
     {
-        public override string ClassName => "ControllableObject";
-        public override InstanceTags Attributes => 0;
+        internal override string ClassName => "ControllableObject";
+        internal override InstanceTags Attributes => 0;
         public virtual void OnKeyDown(Control Control)
         {
             MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");

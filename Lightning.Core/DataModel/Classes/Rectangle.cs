@@ -14,7 +14,7 @@ namespace Lightning.Core
     /// </summary>
     public class Rectangle : Line
     {
-        public override string ClassName => "Rectangle";
+        internal override string ClassName => "Rectangle";
 
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {

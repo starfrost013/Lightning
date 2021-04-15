@@ -17,7 +17,7 @@ namespace Lightning.Core
         /// <summary>
         /// <inheritdoc/> -- set to Texture.
         /// </summary>
-        public override string ClassName => "Texture";
+        internal override string ClassName => "Texture";
 
         /// <summary>
         /// The path to the image of this non-animated texture.

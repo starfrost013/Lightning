@@ -15,7 +15,7 @@ namespace Lightning.Core
     /// </summary>
     public class Circle : Primitive
     {
-        public override string ClassName => "Circle";
+        internal override string ClassName => "Circle";
 
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {

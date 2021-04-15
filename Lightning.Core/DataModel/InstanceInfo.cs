@@ -1,6 +1,7 @@
 ﻿using Lightning.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection; 
 using System.Text;
 
@@ -41,7 +42,9 @@ namespace Lightning.Core
             }
             else
             {
-                MemberInfo[] MI = TType.GetMembers();
+                // Get ALL properties; this allows for internal and private properties.
+                MemberInfo[] MI = TType.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+
                 List<PropertyInfo> PIList = new List<PropertyInfo>();
                 List<MethodInfo> MIList = new List<MethodInfo>();
 
@@ -51,7 +54,7 @@ namespace Lightning.Core
                     {
                         case MemberTypes.Property:
                             // Get the name of the current member.
-                            PropertyInfo CurrentPI = TType.GetProperty(MemberInformation.Name);
+                            PropertyInfo CurrentPI = TType.GetProperty(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
 
                             PIList.Add(CurrentPI);
 
@@ -64,7 +67,7 @@ namespace Lightning.Core
 
                             if (PIInfo.Length > 0)
                             {
-                                //todo: cache type ifnormation
+                                //todo: cache type information
                                 if (PropertyType.IsAssignableFrom(typeof(Instance)))
                                 {
                                     // Prevents a stack overflow by preventing recursive instanceinfo parsing
@@ -83,7 +86,7 @@ namespace Lightning.Core
 
                             continue;
                         case MemberTypes.Method:
-                            MethodInfo CurrentMI = TType.GetMethod(MemberInformation.Name);
+                            MethodInfo CurrentMI = TType.GetMethod(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
 
                             MIList.Add(CurrentMI);
                             continue;
@@ -106,11 +109,35 @@ namespace Lightning.Core
                     IIP.Name = CurProperty.Name;
                     IIP.Type = CurProperty.PropertyType;
 
-                    //todo: set property security
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+                    MethodInfo? GetMethodIX = CurProperty.GetGetMethod(true);
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
-                    //IIP.Security = CurProperty.bINDIN
+                    if (GetMethodIX == null)
+                    {
+                        IIP.Accessibility = InstanceAccessibility.Public;
+                    }
+                    else
+                    {
+                        if (GetMethodIX.IsPrivate)
+                        {
+                            IIP.Accessibility = InstanceAccessibility.Private;
+                        }
+                        else if (GetMethodIX.IsAssembly)
+                        {
+                            IIP.Accessibility = InstanceAccessibility.Internal;
+                        }
+                        else
+                        {
+                            IIP.Accessibility = InstanceAccessibility.Public;
+                        }
+
+                    }
+
 
                     IIR.InstanceInformation.Properties.Add(IIP);
+
+                    
                 }
 
                 IIR.Successful = true;
@@ -145,7 +172,7 @@ namespace Lightning.Core
             {
                 if (IIP.Name == PropertyName)
                 {
-                    PropertyInfo PI = Typ.GetProperty(PropertyName);
+                    PropertyInfo PI = Typ.GetProperty(PropertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static);
                     return PI.GetValue(Obj);
                 }
             }

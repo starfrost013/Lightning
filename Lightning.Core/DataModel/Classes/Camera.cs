@@ -14,9 +14,9 @@ namespace Lightning.Core
     /// </summary>
     public class Camera : ControllableObject
     {
-        public override string ClassName => "Camera";
+        internal override string ClassName => "Camera";
 
-        public override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Destroyable | InstanceTags.Instantiable | InstanceTags.Serialisable | InstanceTags.ShownInIDE;
+        internal override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Destroyable | InstanceTags.Instantiable | InstanceTags.Serialisable | InstanceTags.ShownInIDE;
 
         /// <summary>
         /// Is this Camera active?

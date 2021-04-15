@@ -34,13 +34,14 @@ namespace Lightning.Core
                 XmlDocument XD = new XmlDocument();
 
                 XmlNode XNRoot = XD.CreateElement("Lightning");
-
+                XD.AppendChild(XNRoot);
 
                 foreach (string FName in Enum.GetNames(typeof(DDMSComponents)))
                 {
                     XmlNode XComponentNode = XD.CreateElement(FName);
 
                     XNRoot.AppendChild(XComponentNode);
+
                 }
 
                 Debug.Assert(XNRoot.HasChildNodes);
@@ -91,6 +92,7 @@ namespace Lightning.Core
                     }
                 }
 
+
                 XD.Save(Path);
                 GR.Successful = true;
                 return GR; 
@@ -128,7 +130,6 @@ namespace Lightning.Core
         {
             DDMSComponentSerialisationResult DDCSR = new DDMSComponentSerialisationResult();
 
-            
             // we already checked
             Workspace Ws = DataModel.GetWorkspace();
 
@@ -156,7 +157,7 @@ namespace Lightning.Core
                 return DDCSR; 
             }
 
-            string CurrentTime = DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss");
+            string CurrentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
             if (GMA.RevisionNumber == 0)
             {
@@ -178,14 +179,13 @@ namespace Lightning.Core
             if (XAuthor.InnerText != null) XMetadataNode.AppendChild(XAuthor);
             if (XDescription.InnerText != null) XMetadataNode.AppendChild(XDescription);
             XMetadataNode.AppendChild(XCreationDate);
-            XMetadataNode.AppendChild(XGameName); 
             XMetadataNode.AppendChild(XLastModifiedDate);
+            XMetadataNode.AppendChild(XGameName); 
             XMetadataNode.AppendChild(XRevisionID);
             if (XVersion.InnerText != null) XMetadataNode.AppendChild(XVersion); // only append if used.
 
-            XD.AppendChild(XMetadataNode);
-
             DDCSR.Successful = true;
+            DDCSR.XmlDocument = XD;
             return DDCSR; 
         }
 
@@ -207,7 +207,7 @@ namespace Lightning.Core
 
                 // continue if not a gamesetting
                 if (Setting.ClassName != "GameSetting"
-                    || SettingType == typeof(GameSetting))
+                    || SettingType != typeof(GameSetting))
                 {
                     continue; 
                 }
@@ -221,7 +221,9 @@ namespace Lightning.Core
                     XmlNode XTypeNode = XD.CreateElement("Type");
                     XmlNode XValueNode = XD.CreateElement("Value");
 
-                    XNameNode.InnerText = SettingToAdd.SettingValue.ToString();
+                    XNameNode.InnerText = SettingToAdd.SettingName.ToString();
+                    XValueNode.InnerText = SettingToAdd.SettingValue.ToString(); 
+
                     string XTypeNodeValueName = SettingToAdd.SettingType.FullName;
 
                     if (DDMS_ParseSettings_CheckIfValidTypeForInstantiation(XTypeNodeValueName))
@@ -232,7 +234,13 @@ namespace Lightning.Core
                         }
 
                         XTypeNode.InnerText = XTypeNodeValueName;
-                        
+
+                        XSettingNode.AppendChild(XNameNode);
+                        XSettingNode.AppendChild(XTypeNode);
+                        XSettingNode.AppendChild(XValueNode);
+
+                        XSettingsNode.AppendChild(XSettingNode);
+
                     }
                     else
                     {
@@ -240,16 +248,13 @@ namespace Lightning.Core
                         return DDCSR;
                     }
 
-                    XSettingNode.AppendChild(XNameNode);
-                    XSettingNode.AppendChild(XTypeNode);
-                    XSettingNode.AppendChild(XValueNode);
 
-                    XSettingsNode.AppendChild(XSettingNode);
 
                 }
             }
 
             DDCSR.Successful = true;
+            DDCSR.XmlDocument = XD; 
             return DDCSR;
         }
 
@@ -261,10 +266,14 @@ namespace Lightning.Core
 
             foreach (Instance Ins in Ws.Children)
             {
-                DDMS_Serialise_SerialiseDMObjectToElement(XD, XWorkspaceNode, Ins);
+                if (Ins.Attributes.HasFlag(InstanceTags.Archivable))
+                {
+                    DDCSR = DDMS_Serialise_SerialiseDMObjectToElement(XD, XWorkspaceNode, Ins);
+                }
             }
 
             DDCSR.Successful = true;
+            DDCSR.XmlDocument = XD;
             return DDCSR; 
         }
 
@@ -280,11 +289,28 @@ namespace Lightning.Core
             {
                 XmlAttribute XPropertyAttribute = XD.CreateAttribute(IIPItem.Name);
 
-                XPropertyAttribute.InnerText = Ins.Info.GetValue(XPropertyAttribute.Name, Ins).ToString();
-                XInstanceNode.Attributes.Append(XPropertyAttribute);
+                object Value = Ins.Info.GetValue(XPropertyAttribute.Name, Ins);
+                object AttributesValue = (InstanceTags)Ins.Info.GetValue("Attributes", Ins);
+
+                Debug.Assert(AttributesValue != null);
+
+                InstanceTags IT = (InstanceTags)AttributesValue;
+
+                if (Value == null
+                    || IIPItem.Accessibility != InstanceAccessibility.Public) // only save public properties
+                {
+                    continue;
+                }
+                else
+                {
+                    XPropertyAttribute.Value = Value.ToString();
+                    XInstanceNode.Attributes.Append(XPropertyAttribute);
+                }
+
+                
             }
 
-            XInstanceNode.AppendChild(XWorkspaceNode);
+            XWorkspaceNode.AppendChild(XInstanceNode);
 
             if (Ins.Children.Count != 0)
             {

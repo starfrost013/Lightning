@@ -12,13 +12,12 @@ namespace Lightning.Core
     /// </summary>
     public class ServiceControlManager : Instance
     {
-        public override string ClassName => "ServiceControlManager";
-        public override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Instantiable | InstanceTags.ParentLocked | InstanceTags.Serialisable;
-
+        internal override string ClassName => "ServiceControlManager";
+        internal override InstanceTags Attributes =>  InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
         /// <summary>
         /// A list of the currently running services. Each object is a reference to an object directly under the Workspace. 
         /// </summary>
-        public List<Service> RunningServices { get; set; }
+        internal List<Service> RunningServices { get; set; }
 
         /// <summary>
         /// A timer used to update each service. 

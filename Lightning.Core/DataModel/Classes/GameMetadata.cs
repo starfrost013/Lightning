@@ -14,7 +14,12 @@ namespace Lightning.Core
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public override string ClassName => "GameMetadata";
+        internal override string ClassName => "GameMetadata";
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable | InstanceTags.ShownInIDE | InstanceTags.ShownInProperties;
 
         /// <summary>
         /// The author of this Game.

@@ -6,8 +6,8 @@ namespace Lightning.Core
 {
     public class EnumInstance : SerialisableObject
     {
-        public override InstanceTags Attributes => InstanceTags.Instantiable;
-        public override string ClassName => "EnumInstance";
+        internal override InstanceTags Attributes => InstanceTags.Instantiable;
+        internal override string ClassName => "EnumInstance";
         public List<EnumValue> Values { get; set; }
 
         public EnumInstance()

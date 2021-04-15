@@ -21,7 +21,7 @@ namespace Lightning.Core
     {
 
         public bool RunningNow { get; set; }
-        public abstract ServiceImportance Importance { get; }
+        internal abstract ServiceImportance Importance { get; }
         public abstract ServiceStartResult OnStart();
 
         /// <summary>

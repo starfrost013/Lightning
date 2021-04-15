@@ -17,7 +17,7 @@ namespace Lightning.Core
     [TypeConverter(typeof(Color4Converter))]
     public class Color4 : SerialisableObject
     {
-        public override string ClassName => "Color4";
+        internal override string ClassName => "Color4";
 
         /// <summary>
         /// The alpha component of this colour.

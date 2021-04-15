@@ -9,8 +9,8 @@ namespace Lightning.Core
     /// </summary>
     public class EnumValue : SerialisableObject
     {
-        public override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Instantiable | InstanceTags.Destroyable;
-        public override string ClassName => "";
+        internal override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Instantiable | InstanceTags.Destroyable;
+        internal override string ClassName => "";
         
         // Name uses the actual Instance name. 
         public int Id { get; set; }

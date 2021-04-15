@@ -16,8 +16,8 @@ namespace Lightning.Core
     /// </summary>
     public class Workspace : SerialisableObject
     {
-        public override string ClassName => "Workspace";
-        public override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Instantiable | InstanceTags.ParentLocked | InstanceTags.ShownInIDE | InstanceTags.ParentCanBeNull | InstanceTags.ShownInProperties;
+        internal override string ClassName => "Workspace";
+        internal override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Instantiable | InstanceTags.ParentLocked | InstanceTags.ShownInIDE | InstanceTags.ParentCanBeNull | InstanceTags.ShownInProperties;
         
         
     }

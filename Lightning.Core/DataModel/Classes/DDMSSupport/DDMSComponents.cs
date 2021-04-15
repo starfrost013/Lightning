@@ -32,6 +32,6 @@ namespace Lightning.Core
         /// 
         /// Holds the instance tree of the game. 
         /// </summary>
-        InstanceTree = 2,
+        Workspace = 2,
     }
 }

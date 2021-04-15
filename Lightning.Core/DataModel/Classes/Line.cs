@@ -14,7 +14,7 @@ namespace Lightning.Core
     /// </summary>
     public class Line : Primitive
     {
-        public override string ClassName => "Line";
+        internal override string ClassName => "Line";
         public Vector2 Begin { get; set; }
         public Vector2 End { get; set; }
 

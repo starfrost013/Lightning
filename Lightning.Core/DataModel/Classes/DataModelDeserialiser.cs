@@ -26,8 +26,9 @@ namespace Lightning.Core
     public partial class DataModelDeserialiser : Instance
     {
 
-        public override string ClassName => "DataModelSerialiser";
+        internal override string ClassName => "DataModelSerialiser";
 
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable;
         /// <summary>
         /// An incredibly dumb hack to get around the compiler
         /// </summary>
@@ -49,7 +50,7 @@ namespace Lightning.Core
                 LXMLS.XSI.SchemaPath = GS.LightningXsdPath;
                 LXMLS.XSI.XmlPath = Path; 
 
-                return DDMS_Deserialise(LXMLS, Path);
+                return DDMS_DoDeserialise(LXMLS, Path);
             }
             catch (DirectoryNotFoundException err)
             {
@@ -84,7 +85,7 @@ namespace Lightning.Core
         /// <param name="Schema">The schema to utilise for serialisation.</param>
         /// <param name="Path">The path to the XML document to serialise. </param>
         /// <returns></returns>
-        private DataModel DDMS_Deserialise(LightningXMLSchema Schema, string Path)
+        private DataModel DDMS_DoDeserialise(LightningXMLSchema Schema, string Path)
         {
             XmlSchemaResult XSR = DDMS_Validate(Schema);
 
@@ -218,7 +219,7 @@ namespace Lightning.Core
                     DDSR.DataModel = DM;
 
                     return DDSR;
-                case DDMSComponents.InstanceTree:
+                case DDMSComponents.Workspace:
                     DDSR = DDMS_ParseInstanceTreeComponent(XD, DM);
                     return DDSR;
             }
@@ -238,7 +239,6 @@ namespace Lightning.Core
         /// <returns></returns>
         private DDMSDeserialisationResult DDMS_ParseMetadataComponent(XDocument XD, DataModel DM)
         {
-
             // Clear global datamodel state
             // Might need to make it non-static
             DataModel.Clear();
@@ -264,7 +264,6 @@ namespace Lightning.Core
 
                         try
                         {
-
                             List<XElement> XMetadataContentNodes = XMetadataNode.Elements().ToList();
 
                             if (XMetadataContentNodes.Count != 0)
@@ -423,8 +422,8 @@ namespace Lightning.Core
                         case "Name":
 
                             Logging.Log($"Loading Setting with Name: {ElementValue}...", ClassName);
-                            NewSetting.Name = ElementValue;
-
+                            NewSetting.SettingName = ElementValue;
+                            NewSetting.Name = NewSetting.SettingName;
                             continue; 
                         case "Type": // The type of the 
                             try

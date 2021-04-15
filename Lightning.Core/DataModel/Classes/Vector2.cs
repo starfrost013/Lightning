@@ -15,7 +15,7 @@ namespace Lightning.Core
     [TypeConverter(typeof(Vector2Converter))]
     public class Vector2 : SerialisableObject
     {
-        public override string ClassName => "Vector2";
+        internal override string ClassName => "Vector2";
 
         /// <summary>
         /// The X position.

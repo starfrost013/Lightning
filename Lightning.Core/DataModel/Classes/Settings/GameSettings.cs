@@ -9,8 +9,9 @@ namespace Lightning.Core
     /// </summary>
     public class GameSettings : SerialisableObject
     {
-        public override string ClassName => "GameSettings";
+        internal override string ClassName => "GameSettings";
 
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable | InstanceTags.ShownInIDE | InstanceTags.ShownInProperties;
         public GetGameSettingResult GetSetting(string Name)
         {
             GetGameSettingResult GGSR = new GetGameSettingResult();

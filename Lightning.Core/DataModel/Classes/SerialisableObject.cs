@@ -17,7 +17,7 @@ namespace Lightning.Core
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public override string ClassName => "SerialisableObject";
+        internal override string ClassName => "SerialisableObject";
         public static string SchemaName { get; set; }
     }
 }

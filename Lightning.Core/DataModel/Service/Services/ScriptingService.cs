@@ -13,7 +13,10 @@ namespace Lightning.Core
     /// </summary>
     public class ScriptingService : Service
     {
-        public override ServiceImportance Importance => ServiceImportance.High;
+        internal override string ClassName => "ScriptingService";
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
+
+        internal override ServiceImportance Importance => ServiceImportance.High;
 
         public override ServiceStartResult OnStart()
         {

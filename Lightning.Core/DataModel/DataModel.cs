@@ -198,9 +198,9 @@ namespace Lightning.Core
                 }
                 
             }
-            catch (Exception) //TODO: HANDLE VARIOUS TYPES OF EXCEPTION
+            catch (Exception err) //TODO: HANDLE VARIOUS TYPES OF EXCEPTION
             {
-                ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationUnknownErrorException"); 
+                ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationUnknownErrorException", err); 
                 return null; 
             }
         }

@@ -37,7 +37,7 @@ namespace Lightning.Core
         /// <summary>
         /// The parent of this instance.
         /// </summary>
-        public Instance Parent { get
+        internal Instance Parent { get
             {
 
                 // we used to do a lot more in this code block,
@@ -60,22 +60,22 @@ namespace Lightning.Core
         /// 
         /// Children must be classes that derive from this class.  (2021-03-21)
         /// </summary>
-        public InstanceCollection Children { get; set; }
+        internal InstanceCollection Children { get; set; }
 
         /// <summary>
         /// Attributes of this object. OVERRIDE OPTIONAL!
         /// </summary>
-        public virtual InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable); }
+        internal virtual InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable); }
 
         /// <summary>
         /// The properties and methods of this object.
         /// </summary>
-        public InstanceInfo Info { get; set; }
+        internal InstanceInfo Info { get; set; }
 
         /// <summary>
         /// The class name of this object. MUST OVERRIDE! -- READONLY
         /// </summary>
-        public virtual string ClassName { get; }
+        internal virtual string ClassName { get; }
 
         /// <summary>
         /// The user-friendly name of this object. OPTIONAL OVERRIDE
@@ -85,12 +85,12 @@ namespace Lightning.Core
         /// <summary>
         /// This Instance is deprecated and will be removed in a future release of the engine. Using this in new projects is not recommended.
         /// </summary>
-        public bool Deprecated { get; set; }
+        internal bool Deprecated { get; set; }
 
         /// <summary>
         /// This Instance is experimental and may be changed or removed at any time in a future release of the engine. Using this in projects you intend to release is not recommended.
         /// </summary>
-        public bool Experimental { get; set; }
+        internal bool Experimental { get; set; }
 
         public Instance()
         {

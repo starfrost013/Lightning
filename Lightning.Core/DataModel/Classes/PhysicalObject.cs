@@ -17,12 +17,12 @@ namespace Lightning.Core
         /// <summary>
         /// <inheritdoc/> -- set to PhysicalObject.
         /// </summary>
-        public override string ClassName => "PhysicalObject";
+        internal override string ClassName => "PhysicalObject";
 
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public override InstanceTags Attributes => base.Attributes;
+        internal override InstanceTags Attributes => base.Attributes;
 
         /// <summary>
         /// Can this object collide?

@@ -21,11 +21,13 @@ namespace Lightning.Core
     /// </summary>
     public class RenderService : Service
     {
-        public override string ClassName => "RenderService";
-        public override ServiceImportance Importance => ServiceImportance.High;
-        public Renderer Renderer { get; set; }
+        internal override string ClassName => "RenderService";
+        internal override ServiceImportance Importance => ServiceImportance.High;
 
-        public static bool RENDERER_INITIALISED { get; set; }
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
+        internal Renderer Renderer { get; set; }
+        private static bool RENDERER_INITIALISED { get; set; }
+
         public override ServiceStartResult OnStart()
         {
             // TEST code

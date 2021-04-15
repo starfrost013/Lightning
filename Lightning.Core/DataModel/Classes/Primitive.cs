@@ -14,7 +14,7 @@ namespace Lightning.Core
     /// </summary>
     public class Primitive : PhysicalObject
     {
-        public override string ClassName => "Primitive";
+        internal override string ClassName => "Primitive";
         /// <summary>
         /// The colour of this Primitive.
         /// </summary>
