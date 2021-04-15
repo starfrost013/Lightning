@@ -265,7 +265,6 @@ namespace Lightning.Core
                     Position.X = (Target.Position.X - (WindowWidth / 2) + (Target.Size.X / 2));
                     Position.Y = (Target.Position.Y - (WindowHeight / 2) + (Target.Size.Y / 2));
 
-                    
                     SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
                     // removed redundant physicalobject checks
                 }
@@ -367,8 +366,6 @@ namespace Lightning.Core
                             {
                                 Position.Y = Target.Position.Y + (WindowHeight / ChaseCameraAboveOrBelowObjectFactor);
                             }
-
-                            
 
                             SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
 

@@ -53,12 +53,13 @@
       <Value>False</Value>
     </Setting>
 
+    <!-- will be controlled by PhysicsService, which does not exist yet
     <Setting>
       <Name>PhysicalObjectDestructionLevel</Name>
       <Type>System.Int32</Type>
       <Value>-500</Value>
     </Setting>
-
+  -->
     <Setting>
       <Name>FreeCameraMoveIntensityX</Name>
       <Type>System.Int32</Type>

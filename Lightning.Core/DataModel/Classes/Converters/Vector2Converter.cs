@@ -43,6 +43,21 @@ namespace Lightning.Core
             
         }
 
+
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string))
+            {
+                return ConvertToString((Vector2)value); 
+            }
+            else
+            {
+                return base.ConvertTo(context, culture, value, destinationType);
+            }
+            
+        }
+
+        public string ConvertToString(Vector2 V2) => $"{V2.X},{V2.Y}";
         public new Vector2 ConvertFromString(string Str) => Vector2.FromString(Str, false);
     }
 }

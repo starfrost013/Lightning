@@ -1,0 +1,30 @@
+Engine version 0.2.349 changelog:
+
+API:
+API Version 0.10.0:
+
+General API stuff:
+Enhanced the extant Vector2, Color3, and Color4 converters to convert to strings as well as from them. This is required for XML output capabilities and therefore for the IDE.
+
+DataModel Core and InstanceInfo:
+This is where most of the work today went.
+
+InstanceInfo has been substantially overhauled to add functionality to dynamically identify and store the .NET accessibility level of properties.
+This is done with the InstanceAccessibility enum, and is required for proper XML output capabilities. Only public properties are serialised to XML; any property may be deserialised from XML.
+
+Therefore, many properties have been changed from public to internal, public to private and vice versa. It took almost two hours to fix all of the issues this required change caused.
+
+Implemented Ungrouping. Ungrouping is a method on the Instance class - Ungroup - where an Instance's children are moved to be children of its pareent and then the Instance is removed.
+
+DDMS:
+Added XML output capability. (it was technically in the last build but it was absurdly broken and unfinished).
+I haven't tested it, but it should work totally fine now with the engine! (don't worry I will test it lol). 
+DDMS now stores the last XML path; this will be moved to a static datamodel property.
+
+GameSettings:
+Several new GameSettings have been implemented:
+
+FreeCameraMoveIntensityX: The movement intensity of FreeCameras in the X direction.
+FreeCameraMoveIntensityY: The movement intensity of FreeCameras in the Y direction.
+ChaseCameraInFrontOrBehindObjectFactor: The factor by which ChaseCameras will place themselves in front or behind the object - in front is negative, behind is positive: larger is closer to the centre.
+ChaseCameraAboveOrBelowObjectFactor: The factor that ChaseCameras will place themselves above or below the object - above is negative, behind is positive: larger is closer to the centre.

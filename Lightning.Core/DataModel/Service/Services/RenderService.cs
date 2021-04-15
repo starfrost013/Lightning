@@ -1,4 +1,5 @@
 ﻿using Lightning.Core.SDL2;
+using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -208,7 +209,6 @@ namespace Lightning.Core
 
             SSR.Successful = true; 
 
-
             return SSR; // do nothing for now
         }
 
@@ -339,7 +339,11 @@ namespace Lightning.Core
                 else
                 {
                     Texture Tx = (Texture)GIR.Instance;
-                    
+
+                    string TexturePath = PathUtil.GetXmlPath(DataModelDeserialiser.LASTXML_PATH, Tx.Path);
+
+                    Tx.Path = TexturePath;
+
                     if (!File.Exists(Tx.Path))
                     {
                         ErrorManager.ThrowError(ClassName, "CannotLoadNonexistentTextureException", $"Attempted to load a Texture at {Tx.Path} that does not exist!");

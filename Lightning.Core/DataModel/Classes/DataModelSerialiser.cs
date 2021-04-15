@@ -171,7 +171,9 @@ namespace Lightning.Core
 
             XLastModifiedDate.InnerText = CurrentTime;
 
-            XRevisionID.InnerText = GMA.RevisionNumber + 1.ToString();
+            GMA.RevisionNumber += 1; 
+
+            XRevisionID.InnerText = GMA.RevisionNumber.ToString();
 
             // Version is optional
             if (GMA.Version != null) XVersion.InnerText = GMA.Version;
@@ -270,6 +272,11 @@ namespace Lightning.Core
                 if (Ins.Attributes.HasFlag(InstanceTags.Archivable))
                 {
                     DDCSR = DDMS_Serialise_SerialiseDMObjectToElement(XD, XWorkspaceNode, Ins);
+
+                    if (!DDCSR.Successful)
+                    {
+                        return DDCSR;
+                    }
                 }
             }
 
@@ -288,14 +295,16 @@ namespace Lightning.Core
 
             foreach (InstanceInfoProperty IIPItem in IIP)
             {
+
+                string PropertyName = IIPItem.Name;
+
                 XmlAttribute XPropertyAttribute = XD.CreateAttribute(IIPItem.Name);
 
-                object Value = Ins.Info.GetValue(XPropertyAttribute.Name, Ins);
+                object Value = Ins.Info.GetValue(PropertyName, Ins);
                 object AttributesValue = (InstanceTags)Ins.Info.GetValue("Attributes", Ins);
 
                 Debug.Assert(AttributesValue != null);
 
-                InstanceTags IT = (InstanceTags)AttributesValue;
 
                 if (Value == null
                     || IIPItem.Accessibility != InstanceAccessibility.Public) // only save public properties
@@ -304,11 +313,28 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    XPropertyAttribute.Value = Value.ToString();
-                    XInstanceNode.Attributes.Append(XPropertyAttribute);
+                    TypeConverter TC = TypeDescriptor.GetConverter(Value.GetType());
+
+                    try
+                    {
+                        XPropertyAttribute.Value = (string)TC.ConvertTo(null, null, Value, typeof(string));
+
+                        if (XPropertyAttribute == null)
+                        {
+                            DDCSR.FailureReason = $"An error occurred converting the attribute {IIPItem.Name} of the DataModel-enabled type {Ins.ClassName} to a string in order to save it to a file.";
+                            return DDCSR;
+                        }
+
+                        XInstanceNode.Attributes.Append(XPropertyAttribute);
+                    }
+                    catch (NotSupportedException)
+                    {
+                        DDCSR.FailureReason = $"An error occurred converting the attribute {IIPItem.Name} of the DataModel-enabled type {Ins.ClassName} to a string in order to save it to a file: The property cannot be converted to a string!";
+                        return DDCSR;
+                    }
+
                 }
 
-                
             }
 
             XWorkspaceNode.AppendChild(XInstanceNode);

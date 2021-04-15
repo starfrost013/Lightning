@@ -39,6 +39,7 @@ namespace Lightning.Core
         /// </summary>
         public static string XMLSCHEMA_VERSION = "0.3.0.0006";
 
+        public static string LASTXML_PATH { get; set; } // hacky test 
         public DataModel DDMS_Deserialise(string Path)
         {
             try
@@ -147,6 +148,7 @@ namespace Lightning.Core
 
             }
 
+            LASTXML_PATH = Path; 
             return DM; 
             
         }

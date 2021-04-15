@@ -58,7 +58,7 @@ namespace Lightning.Core
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == typeof(string) && value.GetType() == typeof(Color3))
+            if (destinationType == typeof(string))
             {
                 return ConvertToString((Color3)value);
             }
