@@ -27,7 +27,7 @@ namespace Lightning.Core
             Logging.Log($"Saving DataModel to {Path}.", ClassName); 
             GenericResult GR = new GenericResult();
 
-            if (!DDMS_Serialise_FindRequiredComponents())
+            if (DDMS_Serialise_FindRequiredComponents())
             {
                 // create a new XmlDocument and add a new node
                 // not using XDocument for writing as the api is fucked up the ass.
@@ -146,9 +146,9 @@ namespace Lightning.Core
             XmlNode XRevisionID = XD.CreateElement("RevisionID");
             XmlNode XVersion = XD.CreateElement("Version");
 
-            XDMSchemaVersion.Value = XMLSCHEMA_VERSION;
-            if (GMA.Author != null) XAuthor.Value = GMA.Author;
-            if (GMA.Description != null) XDescription.Value = GMA.Description;
+            XDMSchemaVersion.InnerText = XMLSCHEMA_VERSION;
+            if (GMA.Author != null) XAuthor.InnerText = GMA.Author;
+            if (GMA.Description != null) XDescription.InnerText = GMA.Description;
 
             if (GMA.Name == null || GMA.Name == "")
             {
@@ -160,28 +160,28 @@ namespace Lightning.Core
 
             if (GMA.RevisionNumber == 0)
             {
-                XCreationDate.Value = CurrentTime;
+                XCreationDate.InnerText = CurrentTime;
             }
             else
             {
-                XCreationDate.Value = GMA.CreationDate.ToString("yyyy-MM-dd HH:mm:ss");
+                XCreationDate.InnerText = GMA.CreationDate.ToString("yyyy-MM-dd HH:mm:ss");
             }
 
-            XLastModifiedDate.Value = CurrentTime;
+            XLastModifiedDate.InnerText = CurrentTime;
 
-            XRevisionID.Value = GMA.RevisionNumber + 1.ToString();
+            XRevisionID.InnerText = GMA.RevisionNumber + 1.ToString();
 
             // Version is optional
-            if (GMA.Version != null) XVersion.Value = GMA.Version;
+            if (GMA.Version != null) XVersion.InnerText = GMA.Version;
 
             XMetadataNode.AppendChild(XDMSchemaVersion);
-            if (XAuthor.Value != null) XMetadataNode.AppendChild(XAuthor);
-            if (XDescription.Value != null) XMetadataNode.AppendChild(XDescription);
+            if (XAuthor.InnerText != null) XMetadataNode.AppendChild(XAuthor);
+            if (XDescription.InnerText != null) XMetadataNode.AppendChild(XDescription);
             XMetadataNode.AppendChild(XCreationDate);
             XMetadataNode.AppendChild(XGameName); 
             XMetadataNode.AppendChild(XLastModifiedDate);
             XMetadataNode.AppendChild(XRevisionID);
-            if (XVersion.Value != null) XMetadataNode.AppendChild(XVersion); // only append if used.
+            if (XVersion.InnerText != null) XMetadataNode.AppendChild(XVersion); // only append if used.
 
             XD.AppendChild(XMetadataNode);
 
@@ -221,7 +221,7 @@ namespace Lightning.Core
                     XmlNode XTypeNode = XD.CreateElement("Type");
                     XmlNode XValueNode = XD.CreateElement("Value");
 
-                    XNameNode.Value = SettingToAdd.SettingValue.ToString();
+                    XNameNode.InnerText = SettingToAdd.SettingValue.ToString();
                     string XTypeNodeValueName = SettingToAdd.SettingType.FullName;
 
                     if (DDMS_ParseSettings_CheckIfValidTypeForInstantiation(XTypeNodeValueName))
@@ -231,7 +231,7 @@ namespace Lightning.Core
                             XTypeNodeValueName.Replace("Lightning.", "");
                         }
 
-                        XTypeNode.Value = XTypeNodeValueName;
+                        XTypeNode.InnerText = XTypeNodeValueName;
                         
                     }
                     else
@@ -280,7 +280,7 @@ namespace Lightning.Core
             {
                 XmlAttribute XPropertyAttribute = XD.CreateAttribute(IIPItem.Name);
 
-                XPropertyAttribute.Value = Ins.Info.GetValue(XPropertyAttribute.Name, Ins).ToString();
+                XPropertyAttribute.InnerText = Ins.Info.GetValue(XPropertyAttribute.Name, Ins).ToString();
                 XInstanceNode.Attributes.Append(XPropertyAttribute);
             }
 

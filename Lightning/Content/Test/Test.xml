@@ -84,7 +84,7 @@
 
     <!-- RenderService -->
 
-    <Camera Name="Camera1" Active="True" Position="-100,0"/>
+    <Camera Name="Camera1" Active="True" Position="-100,0" CameraType="Free"/>
       
   </Workspace>
 
