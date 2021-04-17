@@ -11,15 +11,15 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// Dynamic DataModel Serialiser
     /// 
-    /// Version 0.8.0
+    /// Version 0.9.1
     /// 
     /// Created 2021-03-16
-    /// Modified 2021-04-14 (API Version 0.8.0: Merged all API Version constants)
+    /// Modified 2021-04-17 (Version 0.9.0: Add XML output capabilities - version 0.9.1: Move to Lightning.Core.API)
     /// 
     /// Dynamically serialises XML (.lgx files) to Lightning DataModel objects.
     /// </summary>
@@ -541,14 +541,14 @@ namespace Lightning.Core
         {
             string[] TypeNameNamespaceDots = TypeName.Split('.');
 
-            // If it is in the Syst
+            // If it is in the System namespace, but not any child namespace...
             if (TypeName.Contains("System") && TypeNameNamespaceDots.Length == 2)
             {
                 return true;
             }
-            else if (TypeName.Contains("Lightning")) // If it's Lightin
+            else if (TypeName.Contains("Lightning")) // If it's in the Lightning namespace...
             {
-                return true; 
+                return true; // allow it
             }
             else
             {
@@ -685,9 +685,9 @@ namespace Lightning.Core
             DDMSDeserialisationResult DDSR = new DDMSDeserialisationResult();
             
             // Namespace path to DataModel
-            string DATAMODELPATH = "Lightning.Core.";
+
             // Todo: EngineGlobal?
-            Type XDR = Type.GetType($"{DATAMODELPATH}{XDataModelName}");
+            Type XDR = Type.GetType($"{DataModel.DATAMODEL_NAMESPACE_PATH}.{XDataModelName}");
 
             if (XDR != null)
             {

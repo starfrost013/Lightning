@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// Defines a variable token. Paired with an OperatorToken and a ValueToken.

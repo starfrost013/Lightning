@@ -4,12 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.10.0) 
+    /// DataModel (API Version 0.11.0) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,7 +17,7 @@ namespace Lightning.Core
     public class DataModel
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
-        public static int DATAMODEL_API_VERSION_MINOR = 10;
+        public static int DATAMODEL_API_VERSION_MINOR = 11;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
@@ -36,7 +36,7 @@ namespace Lightning.Core
         /// <summary>
         /// Path to the namespace that contains DataModel objects
         /// </summary>
-        public static string DATAMODEL_NAMESPACE_PATH = "Lightning.Core";
+        public static string DATAMODEL_NAMESPACE_PATH = "Lightning.Core.API";
 
         
         public DataModel()

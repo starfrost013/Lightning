@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Globalization; 
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// Color4

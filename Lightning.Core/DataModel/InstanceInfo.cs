@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Reflection; 
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// InstanceInfo class.

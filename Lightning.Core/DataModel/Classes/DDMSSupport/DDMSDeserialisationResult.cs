@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// DDMSDeserialisationResult (originally DDMSSerialisationResult)

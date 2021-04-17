@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Timers;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// Global data required across all Services.

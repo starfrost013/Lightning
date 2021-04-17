@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     public class LightningXMLSchema
     {

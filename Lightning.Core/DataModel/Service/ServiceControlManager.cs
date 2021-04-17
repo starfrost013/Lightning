@@ -5,10 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Timers; 
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
-    /// Controls services. 2021-03-10
+    /// ServiceControlManager
+    /// 
+    /// March 10, 2021 (modified April 17, 2021: Move to Lightning.Core.API)
+    /// 
+    /// Controls, manages, and updates services. Contains the main loop.
     /// </summary>
     public class ServiceControlManager : Instance
     {

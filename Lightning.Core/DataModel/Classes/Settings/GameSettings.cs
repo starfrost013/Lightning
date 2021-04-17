@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// A setting that can be created for a game.

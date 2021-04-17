@@ -9,7 +9,7 @@ Beginning April 12, 2021
 * Removal of Service.OnUnexpectedShutdown();
 * DDMS refactoring
 * Camera API
-* Lightning.Core/Lightning.Core.DataModel namespace split
+* Lightning.Core/Lightning.Core.API namespace split
 * Functional Scripting API
 * Removal of Error XML?
 * Color3Converter
@@ -41,7 +41,7 @@ SDK installer		0%
 CameraMoveSpeed		0%
 PhysicsService		0%
 Player API		0%
-L./L.C.DM split		0%
+L./L.C.API split	0%
 IDE			0%
 DDMS Saving		0%
 
@@ -65,7 +65,7 @@ CameraMoveSpeed		0%
 PhysicsService		0%
 ScriptingService	5%
 Player API		0%
-L./L.C.DM split		0%
+L./L.C.API split	0%
 IDE			0%
 DDMS Saving		0%
 
@@ -88,7 +88,7 @@ CameraMoveSpeed		0%
 PhysicsService		0%
 ScriptingService	5%
 Player API		0%
-L./L.C.DM split		0%
+L./L.C.API split	0%
 IDE			0%
 DDMS Saving		60%
 
@@ -110,7 +110,29 @@ CameraMoveSpeed		Complete
 PhysicsService		0%
 ScriptingService	5%
 Player API		0%
-L./L.C.DM split		0%
+L./L.C.API split	0%
+IDE			0%
+DDMS Saving		Complete
+
+4/17   	13:31
+Grouping 		0%
+Ungrouping		Complete
+Render refactoring	40%
+Animation API		0%
+Primitive API		80%
+Removal of OUS		Complete
+DDMS refactor		20%
+Camera API		Complete except optimisation
+Functional Scripting API0%
+Removal of Error XML?	0%; may not do
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		Complete
+PhysicsService		0%
+ScriptingService	15%
+Player API		0%
+L./L.C.API split	Complete
 IDE			0%
 DDMS Saving		Complete
 

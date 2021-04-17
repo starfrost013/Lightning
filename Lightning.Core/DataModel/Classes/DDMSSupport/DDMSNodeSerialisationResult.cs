@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// DDMSNodeSerialisationResult

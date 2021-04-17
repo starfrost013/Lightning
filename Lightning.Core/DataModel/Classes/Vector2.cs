@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
-    /// A GCSE Maths conforming implementation of 2D vectors.
+    /// Vector2
     /// 
-    /// 2021-03-09
+    /// March 9, 2021 (modified April 17, 2021: The great re-namespaceing).
     /// 
-    /// April 11, 2021: Added TypeConverter for DDMS
+    /// 
     /// </summary>
     [TypeConverter(typeof(Vector2Converter))]
     public class Vector2 : SerialisableObject

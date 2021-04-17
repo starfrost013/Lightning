@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// Dynamic DataModel Serialiser 0.x/1.x - DataModelSerialiser (DataModelDeserialiser class)

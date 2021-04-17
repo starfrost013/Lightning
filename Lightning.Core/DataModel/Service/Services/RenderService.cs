@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO; 
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// RenderService
@@ -18,7 +18,10 @@ namespace Lightning.Core
     /// 2021-04-08: Added test code.
     /// 2021-04-09: Added Renderer class and SDL renderer.
     /// 2021-04-10: Added event loop
-    /// 2021-04-11: Added nonanimated texture rendering
+    /// 2021-04-11: Added nonanimated texture rendering.
+    /// 2021-04-1x: Refactoring
+    /// 2021-04-17: Moved to Lightning.Core.API
+    /// 
     /// </summary>
     public class RenderService : Service
     {

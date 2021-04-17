@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     [TypeConverter]
     public class Color4Converter : TypeConverter

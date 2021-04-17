@@ -2,7 +2,7 @@
   "profiles": {
     "Lightning": {
       "commandName": "Project",
-      "commandLineArgs": "Content\\Test\\Test.xml"
+      "commandLineArgs": "Content\\Tests\\AllClasses.xml"
     }
   }
 }

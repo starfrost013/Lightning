@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Core
+namespace Lightning.Core.API
 {
     /// <summary>
     /// EndOfFileToken
@@ -13,5 +13,6 @@ namespace Lightning.Core
     /// </summary>
     public class EndOfFileToken : Token
     {
+
     }
 }
