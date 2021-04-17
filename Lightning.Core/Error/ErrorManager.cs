@@ -332,10 +332,26 @@ namespace Lightning.Core
                         MessageBox.Show($"{Err.Description}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     case MessageSeverity.Warning:
-                        MessageBox.Show($"Warning ({Err.Id}; {Err.Name}): {Err.Description}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                        if (Err.Id >= 1000) // append LS for script errors
+                        {
+                            MessageBox.Show($"Warning (LS{Err.Id}; {Err.Name}): {Err.Description}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Warning ({Err.Id}; {Err.Name}): {Err.Description}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+
                         return;
                     case MessageSeverity.Error:
-                        MessageBox.Show($"Error ({Err.Id}; {Err.Name}): {Err.Description}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        if (Err.Id >= 1000) // append LS for script errors
+                        {
+                            MessageBox.Show($"Error (LS{Err.Id}; {Err.Name}): {Err.Description}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Error ({Err.Id}; {Err.Name}): {Err.Description}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                         return;
                     case MessageSeverity.FatalError:
 

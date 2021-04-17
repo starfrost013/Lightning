@@ -5,19 +5,19 @@ using System.Text;
 namespace Lightning.Core
 {
     /// <summary>
-    /// ScriptingService
+    /// ScriptingService.
     /// 
     /// April 13, 2021
     /// 
-    /// Provides scripting services.
+    /// Provides scripting services. Manages LightningScript scripts.
     /// </summary>
     public class ScriptingService : Service
     {
         internal override string ClassName => "ScriptingService";
         internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
-
         internal override ServiceImportance Importance => ServiceImportance.High;
 
+        internal List<Script> RunningScripts { get; set; }
         public override ServiceStartResult OnStart()
         {
             Logging.Log("ScriptingService Init", ClassName);

@@ -6,9 +6,9 @@ namespace Lightning.Core
 {
 
     /// <summary>
-    /// Lightning
+    /// SerialisableObject
     /// 
-    /// Copyright © 2021 starfrost
+    /// March 5, 2021 (modified April 16, 2021)
     /// 
     /// Signifies an object that is serialisable using DDMS.
     /// </summary>

@@ -26,7 +26,7 @@ namespace Lightning.Core
     public partial class DataModelDeserialiser : Instance
     {
 
-        internal override string ClassName => "DataModelSerialiser";
+        internal override string ClassName => "DataModelDeserialiser";
 
         internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable;
         /// <summary>

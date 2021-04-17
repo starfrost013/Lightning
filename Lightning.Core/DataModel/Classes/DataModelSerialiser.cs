@@ -129,6 +129,8 @@ namespace Lightning.Core
 
         private DDMSComponentSerialisationResult DDMS_Serialise_SerialiseMetadataComponent(XmlDocument XD, XmlNode XMetadataNode)
         {
+            Logging.Log("Saving metadata...", ClassName);
+
             DDMSComponentSerialisationResult DDCSR = new DDMSComponentSerialisationResult();
 
             // we already checked
@@ -187,6 +189,8 @@ namespace Lightning.Core
             XMetadataNode.AppendChild(XRevisionID);
             if (XVersion.InnerText != null) XMetadataNode.AppendChild(XVersion); // only append if used.
 
+            Logging.Log("Saved metadata!", ClassName); 
+
             DDCSR.Successful = true;
             DDCSR.XmlDocument = XD;
             return DDCSR; 
@@ -194,6 +198,7 @@ namespace Lightning.Core
 
         private DDMSComponentSerialisationResult DDMS_Serialise_SerialiseSettingsComponent(XmlDocument XD, XmlNode XSettingsNode)
         {
+            Logging.Log("Saving GameSettings...", ClassName); 
 
             DDMSComponentSerialisationResult DDCSR = new DDMSComponentSerialisationResult();
 
@@ -244,6 +249,8 @@ namespace Lightning.Core
 
                         XSettingsNode.AppendChild(XSettingNode);
 
+                        Logging.Log($"Saved the GameSetting with the name {XNameNode.InnerText} of type {XTypeNode.InnerText} with the value {XValueNode.InnerText}!");
+
                     }
                     else
                     {
@@ -251,10 +258,10 @@ namespace Lightning.Core
                         return DDCSR;
                     }
 
-
-
                 }
             }
+
+            Logging.Log("Saved GameSettings!");
 
             DDCSR.Successful = true;
             DDCSR.XmlDocument = XD; 
@@ -287,6 +294,8 @@ namespace Lightning.Core
 
         private DDMSComponentSerialisationResult DDMS_Serialise_SerialiseDMObjectToElement(XmlDocument XD, XmlNode XWorkspaceNode, Instance Ins)
         {
+            Logging.Log("Saving Workspace...", ClassName); 
+
             DDMSComponentSerialisationResult DDCSR = new DDMSComponentSerialisationResult();
 
             XmlNode XInstanceNode = XD.CreateElement(Ins.ClassName);

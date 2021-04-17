@@ -418,4 +418,11 @@ Do not change if you are not a dev
     <Severity>Error</Severity>
   </Error>
 
+  <!-- Script Errors (1000+) -->
+  <Error>
+    <Description>Attempted to parse a non-LightningScript script!</Description>
+    <Name>CannotParseNonLSScriptFileException</Name>
+    <Id>1000</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>
