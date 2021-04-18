@@ -8,7 +8,6 @@ namespace Lightning.Utilities
 {
     public static class StringUtil
     {
-
         public static List<string> InnerXml_Parse(this String InnerXml)
         {
             // xml preprocessing
@@ -305,6 +304,28 @@ namespace Lightning.Utilities
             return DateTime;
 
              
+        }
+
+        /// <summary>
+        /// Determines if a string contains alphabetical characters. Required for LightningScript tokenisation (April 17, 2021)
+        /// </summary>
+        /// <param name="Str"></param>
+        /// <returns>A boolean av</returns>
+        public static bool ContainsAlpha(this string Str)
+        {
+            char[] StrCharacters = Str.ToCharArray();
+
+            foreach (char StrCharacter in StrCharacters)
+            {
+                if (StrCharacter < 0x30
+                    || (StrCharacter > 0x39) && (StrCharacter < 0x41)
+                    || StrCharacter > 0x5A)
+                {
+                    return false;
+                }
+            }
+
+            return true; 
         }
 
         

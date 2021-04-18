@@ -52,7 +52,5 @@ namespace Lightning.Core.API
         /// % (Modulus)
         /// </summary>
         Modulus = 7,
-
-
     }
 }

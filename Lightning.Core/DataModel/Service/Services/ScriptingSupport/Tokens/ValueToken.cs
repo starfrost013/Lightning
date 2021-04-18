@@ -14,6 +14,7 @@ namespace Lightning.Core.API
     public class ValueToken : Token 
     {
         public object Value { get; set; }
+        public Type ValueType { get; set; }
         public string ValueString { get; set; }
     }
 }

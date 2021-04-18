@@ -693,7 +693,7 @@ namespace Lightning.Core.API
             {
                 //bug: no checks
                 //see: polymorphism
-                //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE
+                //THIS IS NOT AN INSTANCE THIS IS WHATEVER CLASS WE HAVE JUST CREATED IT IS COMPILE-TIME AN INSTANCE BUT AT RUNTIME IT IS THE RESULT OF DATAMODEL.CREATEINSTANCE!
 
                 // Start any services that are not running,
                 // and if they are running, do nothing

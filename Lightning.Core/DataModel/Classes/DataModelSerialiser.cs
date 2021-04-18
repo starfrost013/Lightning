@@ -272,12 +272,23 @@ namespace Lightning.Core.API
         {
             DDMSComponentSerialisationResult DDCSR = new DDMSComponentSerialisationResult();
 
+            Logging.Log("Saving Workspace...", ClassName);
+
             Workspace Ws = DataModel.GetWorkspace();
 
             foreach (Instance Ins in Ws.Children)
             {
                 if (Ins.Attributes.HasFlag(InstanceTags.Archivable))
                 {
+                    if (Ins.Name != null)
+                    {
+                        Logging.Log($"Serialising ClassName: {Ins.ClassName}...");
+                    }
+                    else
+                    {
+                        Logging.Log($"Serialising ClassName: {Ins.ClassName} Name: {Ins.Name}...");
+                    }
+
                     DDCSR = DDMS_Serialise_SerialiseDMObjectToElement(XD, XWorkspaceNode, Ins);
 
                     if (!DDCSR.Successful)
@@ -287,6 +298,7 @@ namespace Lightning.Core.API
                 }
             }
 
+            Logging.Log("Saved Workspace!", ClassName);
             DDCSR.Successful = true;
             DDCSR.XmlDocument = XD;
             return DDCSR; 
@@ -294,7 +306,6 @@ namespace Lightning.Core.API
 
         private DDMSComponentSerialisationResult DDMS_Serialise_SerialiseDMObjectToElement(XmlDocument XD, XmlNode XWorkspaceNode, Instance Ins)
         {
-            Logging.Log("Saving Workspace...", ClassName); 
 
             DDMSComponentSerialisationResult DDCSR = new DDMSComponentSerialisationResult();
 
@@ -304,7 +315,7 @@ namespace Lightning.Core.API
 
             foreach (InstanceInfoProperty IIPItem in IIP)
             {
-
+                
                 string PropertyName = IIPItem.Name;
 
                 XmlAttribute XPropertyAttribute = XD.CreateAttribute(IIPItem.Name);
@@ -335,6 +346,8 @@ namespace Lightning.Core.API
                         }
 
                         XInstanceNode.Attributes.Append(XPropertyAttribute);
+
+                        Logging.Log($"Serialised Property {PropertyName} with value {XPropertyAttribute.Value}");
                     }
                     catch (NotSupportedException)
                     {

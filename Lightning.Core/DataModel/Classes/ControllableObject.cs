@@ -20,6 +20,10 @@ namespace Lightning.Core.API
             MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");
         }
 
+        /// <summary>
+        /// Runs on a key stopping being pressed.
+        /// </summary>
+        /// <param name="Control"></param>
         public virtual void OnKeyUp(Control Control)
         {
 
