@@ -17,72 +17,93 @@ namespace Lightning.Core.API
     {
         public TokenListResult Tokenise(Script Sc)
         {
-            TokenListResult TLR = new TokenListResult();
-
-            List<Token> Tokens = new List<Token>();
-
-            if (Sc.Name == null
-                || Sc.Name.Length == 0)
+            try
             {
-                ErrorManager.ThrowError("Script Tokenizer", "CannotParseNonLSScriptFileException");
-                TLR.FailureReason = "CannotParseNonLSScriptFileException";
-                return TLR;
-            }
-            else
-            {
-                Tokens.Add(new StartOfFileToken { ScriptName = Sc.Name });
-                
+                TokenListResult TLR = new TokenListResult();
 
-                foreach (string ScriptLine in Sc.ScriptContent)
+                List<Token> Tokens = new List<Token>();
+
+                if (Sc.Name == null
+                    || Sc.Name.Length == 0)
                 {
-                    string[] Tokens_Pre = ScriptLine.Split(' ');
+                    ErrorManager.ThrowError("Script Tokenizer", "CannotParseNonLSScriptFileException");
+                    TLR.FailureReason = "CannotParseNonLSScriptFileException";
+                    return TLR;
+                }
+                else
+                {
+                    Tokens.Add(new StartOfFileToken { ScriptName = Sc.Name });
 
-                    if (Tokens_Pre.Length == 0)
+
+                    foreach (string ScriptLine in Sc.ScriptContent)
                     {
-                        continue;
-                    }
-                    else
-                    {
-                        // Skip the last token as we store the next token 
-                        for (int i = 1; i < Tokens_Pre.Length - 1; i++)
+                        string[] Tokens_Pre = ScriptLine.Split(' ');
+
+                        if (Tokens_Pre.Length == 0)
                         {
-                            string PreviousToken = Tokens_Pre[i - 1];
-                            string ThisToken = Tokens_Pre[i];
-                            string NextToken = Tokens_Pre[i + 1];
-
-                            // Is an assignment to a variable.
-                            if (!PreviousToken.ContainsNumeric()
-                                && PreviousToken.ContainsAlpha()) 
+                            continue;
+                        }
+                        else
+                        {
+                            // Skip the last token as we store the next token 
+                            for (int i = 0; i < Tokens_Pre.Length; i++)
                             {
+                                string ThisToken = Tokens_Pre[i];
 
-                                Tokens.Add(new VariableToken { Name = PreviousToken.ToString() }) ;
+                                if (ThisToken.Length == 1)
+                                {
+                                    TypeConverter LCConv = TypeDescriptor.GetConverter(typeof(OperatorToken));
+
+                                    OperatorToken OT = (OperatorToken)LCConv.ConvertFrom(ThisToken);
+
+                                    Tokens.Add(OT);
+                                }
+                                else
+                                {
+                                    if (ThisToken.Contains("(")) // Function 
+                                    {
+                                        int Pos = ThisToken.IndexOf("(");
+                                        
+                                        if (!ThisToken.Contains(")"))
+                                        {
+                                            ScriptErrorManager.ThrowScriptError(new ScriptError
+                                            {
+                                                Name = ""
+                                            });
+                                        }
+                                        else
+                                        {
+                                            int PosEnd = ThisToken.IndexOf(")");
+
+                                            if (Pos > PosEnd)
+                                            {
+                                                ScriptError
+                                            }
+
+                                            FunctionToken FToken = new FunctionToken();
+
+                                            string FunctionParametersSubstring = ThisToken.Substring(Pos, PosEnd - Pos);
+                                        }
 
 
-
-                                TypeConverter TC0 = TypeDescriptor.GetConverter(typeof(OperatorToken));
-
-                                ValueToken VT = new ValueToken();
-
-                                TC0.ConvertTo(ThisToken, typeof(TypeConverter));
-                            }
-                            else if (!PreviousToken.ContainsAlpha()
-                                && PreviousToken.ContainsNumeric()) // previous token is a number...lol...
-                            {
+                                    }
+                                }
 
                             }
                         }
+
+                        Tokens.Add(new EndOfLineToken());
                     }
 
-                    Tokens.Add(new EndOfLineToken());
+                    Tokens.Add(new EndOfFileToken());
                 }
 
-                Tokens.Add(new EndOfFileToken());
+                // Set successful to true and return.
+                TLR.Successful = true;
+                TLR.TokenList = Tokens;
+                return TLR;
             }
-
-            // Set successful to true and return.
-            TLR.Successful = true; 
-            TLR.TokenList = Tokens;
-            return TLR;
+            
         }
     }
 }

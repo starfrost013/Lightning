@@ -68,7 +68,7 @@ namespace Lightning.Core
         /// </summary>
         /// <param name="ErrName"></param>
         /// <returns></returns>
-        private static GetErrorResult GetError(string ErrName)
+        internal static GetErrorResult GetError(string ErrName)
         {
             GetErrorResult ErrResult = new GetErrorResult();
 
@@ -390,14 +390,6 @@ namespace Lightning.Core
             }
         }
 
-        private static void HandleScriptError(ScriptError Sc)
-        {
-            switch (Sc.Severity)
-            {
-
-            }
-        }
-
         private static void EmergencyQuit(Error Err, string EmergencyString)
         {
             Logging.Log(EmergencyString);
@@ -473,11 +465,6 @@ namespace Lightning.Core
             }
         }
 
-        
-        private static void ReportScriptError(ScriptError Err)
-        {
 
-            string ErrText = $"Script Error!\n\nIn script: {Err.Name} at line {Err.Line}:\n\n{Err.Id}: {Err.Description}!";
-        }
     }
 }

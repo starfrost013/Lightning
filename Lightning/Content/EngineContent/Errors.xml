@@ -425,4 +425,11 @@ Do not change if you are not a dev
     <Id>1000</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Cannot have a ( in a method call without an ) - ) expected!</Description>
+    <Name>UnclosedBracketException</Name>
+    <Id>1001</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

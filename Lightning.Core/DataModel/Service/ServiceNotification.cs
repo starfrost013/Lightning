@@ -28,5 +28,11 @@ namespace Lightning.Core.API
         /// </summary>
         public string Reason { get; set; }
 
+        public ServiceNotification(ServiceNotificationType NotifType, string ClassName, string SReason)
+        {
+            NotificationType = NotifType;
+            ServiceClassName = ClassName;
+            Reason = SReason;
+        }
     }
 }
