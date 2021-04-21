@@ -18,15 +18,24 @@ namespace Lightning.Core.API
         {
            GetErrorResult Err = ErrorManager.GetError(Name);
 
+           
            if (!Err.Successful)
            {
                 ErrorManager.ThrowError("Script Error Handler", new Error { Id = 0x7171DEAD, Name = "TriedToThrowInvalidErrorException", Description = $"Attempted to throw an invalid Error - {Name} does not exist!", Severity = MessageSeverity.FatalError });
                 return; 
            }
            else
-            {
-                HandleScriptError(Err.Error);
-            }
+           {
+                Error CurError = Err.Error;
+
+                Type SCType = CurError.GetType();
+
+                if (SCType == typeof(ScriptError))
+                {
+                    HandleScriptError((ScriptError)CurError);
+                }
+                
+           }
         }
 
         /// <summary>
