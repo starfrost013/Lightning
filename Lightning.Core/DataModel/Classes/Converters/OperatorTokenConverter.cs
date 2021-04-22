@@ -24,7 +24,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                return base.CanConvertTo(context, destinationType;
+                return base.CanConvertTo(context, destinationType);
             }
             
         }
