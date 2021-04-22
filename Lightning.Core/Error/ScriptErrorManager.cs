@@ -14,35 +14,12 @@ namespace Lightning.Core.API
     public static class ScriptErrorManager
     {
 
-        public static void ThrowScriptError(string Name)
-        {
-           GetErrorResult Err = ErrorManager.GetError(Name);
-
-           
-           if (!Err.Successful)
-           {
-                ErrorManager.ThrowError("Script Error Handler", new Error { Id = 0x7171DEAD, Name = "TriedToThrowInvalidErrorException", Description = $"Attempted to throw an invalid Error - {Name} does not exist!", Severity = MessageSeverity.FatalError });
-                return; 
-           }
-           else
-           {
-                Error CurError = Err.Error;
-
-                Type SCType = CurError.GetType();
-
-                if (SCType == typeof(ScriptError))
-                {
-                    HandleScriptError((ScriptError)CurError);
-                }
-                
-           }
-        }
 
         /// <summary>
         /// ScriptErrors require special handling. Therefore we put them here. Woooooooooooo!
         /// </summary>
         /// <param name="Err"></param>
-        private static void HandleScriptError(ScriptError Err)
+        public static void ThrowScriptError(ScriptError Err)
         {
 
             string WarningErrText = $"Script Warning:\n\nIn script: {Err.Name} at line {Err.Line}:\n\n{Err.Id}: {Err.Description}!";

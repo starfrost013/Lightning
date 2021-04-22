@@ -22,7 +22,9 @@ namespace Lightning.Core
         /// </summary>
         public int StartOrder { get; set; }
 
-
+        /// <summary>
+        /// The service name to be started.
+        /// </summary>
         public string ServiceName { get; set; }
     }
 }

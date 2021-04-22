@@ -418,18 +418,10 @@ Do not change if you are not a dev
     <Severity>Error</Severity>
   </Error>
 
-  <!-- Script Errors (1000+) -->
   <Error>
-    <Description>Attempted to parse a non-LightningScript script!</Description>
-    <Name>CannotParseNonLSScriptFileException</Name>
-    <Id>1000</Id>
-    <Severity>Error</Severity>
-  </Error>
-
-  <Error>
-    <Description>Cannot have a ( in a method call without an ) - ) expected!</Description>
-    <Name>UnclosedBracketException</Name>
-    <Id>1001</Id>
-    <Severity>Error</Severity>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>TokenisationCannotConvertTypeInternalException</Name>
+    <Id>55</Id>
+    <Severity>FatalError</Severity>
   </Error>
 </Errors>

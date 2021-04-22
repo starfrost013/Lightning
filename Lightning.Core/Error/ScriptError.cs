@@ -15,6 +15,7 @@ namespace Lightning.Core
     {
 
         public string Line { get; set; }
+        public int LineNumber { get; set; }
         public string ScriptName { get; set; }
     }
 }

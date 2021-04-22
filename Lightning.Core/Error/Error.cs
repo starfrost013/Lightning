@@ -44,6 +44,5 @@ namespace Lightning.Core
         [XmlElement("Severity")]
         public MessageSeverity Severity { get; set; }
 
-        public string ErrorType { get; set; }
     }
 }
