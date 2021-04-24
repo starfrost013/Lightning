@@ -22,7 +22,7 @@ Welcome to the Lightning game engine main tree. We are going to have to ask you 
 
 * Please use either DDMS (for DataModel-related content ONLY) or XML serialisation for any and all code that deals with XML.
 
-* .NET Core 3.1 and .NET 5.0 are the only required frameworks/ 
+* .NET Core 3.1 (soon to be .NET 5.0) are the only required frameworks. 
 
 * ALL platform specific code MUST be wrapped in platform specific IFDEFS!
 
@@ -45,8 +45,8 @@ If it is a user-facing API, deals with scripting or does support a user API, it 
 	 ///
 	 /// <date of creation> (<date of modification>)
 	 ///
-	 /// <brief description of purpose>
-	 ```
+	 /// <brief description of purpose>```
+	 
 ### Version History
 
 **V2.0 (April 24, 2021)**
