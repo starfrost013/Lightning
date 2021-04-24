@@ -45,7 +45,8 @@ If it is a user-facing API, deals with scripting or does support a user API, it 
 	 ///
 	 /// <date of creation> (<date of modification>)
 	 ///
-	 /// <brief description of purpose>```
+	 /// <brief description of purpose>
+```
 	 
 ### Version History
 
