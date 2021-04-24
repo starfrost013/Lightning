@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// ServiceNotification
     /// 
-    /// April 10, 2021 (modified April 13, 2021: Introduce Reason)
+    /// April 10, 2021 (modified April 22, 2021: Add parameterless constructor)
     /// 
     /// Defines a notification that the service is about to perform an action 
     /// </summary>

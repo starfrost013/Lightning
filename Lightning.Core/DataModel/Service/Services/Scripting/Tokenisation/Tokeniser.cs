@@ -15,6 +15,13 @@ namespace Lightning.Core.API
     /// </summary>
     public class Tokeniser
     {
+        public ScriptScope CurScope { get; set; }
+
+        public Tokeniser()
+        {
+            CurScope = new ScriptScope(); 
+        }
+
         public TokenListResult Tokenise(Script Sc)
         {
             TokenListResult TLR = new TokenListResult();
