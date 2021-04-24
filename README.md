@@ -38,7 +38,7 @@ If it is a user-facing API, deals with scripting or does support a user API, it 
 
 * When adding an object to the DataModel, * **DO NOT** * use any IEnumerable objects, such as List<T>. Use the object's Children property, which is an `InstanceCollection`.
 
-* When adding a file to the source tree, please place some descriptive comments at the start in order
+* When adding a file to the source tree, please place some descriptive comments at the start of the file:
 
 ```cs
 	 /// <component class name>
