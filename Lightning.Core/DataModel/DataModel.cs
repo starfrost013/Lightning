@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.11.0) 
+    /// DataModel (API Version 0.12.0) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,10 +17,20 @@ namespace Lightning.Core.API
     public class DataModel
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
-        public static int DATAMODEL_API_VERSION_MINOR = 11;
+        public static int DATAMODEL_API_VERSION_MINOR = 12;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
+
+        /// <summary>
+        /// The last loaded XML file using DDMS.
+        /// </summary>
+        public static string DATAMODEL_LASTXML_PATH { get; set; }
+
+        /// <summary>
+        /// Path to the namespace that contains DataModel objects
+        /// </summary>
+        public static string DATAMODEL_NAMESPACE_PATH = "Lightning.Core.API";
 
         /// <summary>
         /// The global engine settings for this DataModel. 
@@ -33,12 +43,6 @@ namespace Lightning.Core.API
         /// </summary>
         private static InstanceCollection State;
 
-        /// <summary>
-        /// Path to the namespace that contains DataModel objects
-        /// </summary>
-        public static string DATAMODEL_NAMESPACE_PATH = "Lightning.Core.API";
-
-        
         public DataModel()
         {
             string DataModel_String = $"{DATAMODEL_API_VERSION_MAJOR}.{DATAMODEL_API_VERSION_MINOR}.{DATAMODEL_API_VERSION_REVISION}";

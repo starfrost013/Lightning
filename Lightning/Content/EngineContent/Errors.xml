@@ -424,4 +424,12 @@ Do not change if you are not a dev
     <Id>55</Id>
     <Severity>FatalError</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorExposingMethodToScriptingException</Name>
+    <Id>56</Id>
+    <Severity>Error</Severity> <!-- may be non-fatal: reboot possible? -->
+  </Error>
+
 </Errors>

@@ -38,7 +38,6 @@ namespace Lightning.Core.API
 
         }
 
-       
         public InstanceInfoMethod()
         {
             Parameters = new List<InstanceInfoMethodParameter>();

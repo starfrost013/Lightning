@@ -513,8 +513,6 @@ namespace Lightning.Core.API
             }
         }
 
-        public override void OnKeyDown(Control KeyCode) => throw new NotImplementedException();
-
         private void HandleKeyDown(Control Ctl)
         {
             List<ControllableObject> ControllableObjects = BuildListOfControllableObjects();

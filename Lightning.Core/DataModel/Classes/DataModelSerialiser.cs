@@ -234,7 +234,7 @@ namespace Lightning.Core.API
 
                     string XTypeNodeValueName = SettingToAdd.SettingType.FullName;
 
-                    if (DDMS_ParseSettings_CheckIfValidTypeForInstantiation(XTypeNodeValueName))
+                    if (XmlUtil.CheckIfValidTypeForInstantiation(XTypeNodeValueName))
                     {
                         if (XTypeNodeValueName.ContainsCaseInsensitive("Lightning."))
                         {

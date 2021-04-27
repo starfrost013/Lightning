@@ -206,8 +206,8 @@ namespace Lightning.Core.API
                 return; 
             }
 
-            if (IsPressingLeft) Position.X += FreeCameraMoveIntensityX;
-            if (IsPressingRight) Position.X -= FreeCameraMoveIntensityX;
+            if (IsPressingLeft) Position.X -= FreeCameraMoveIntensityX;
+            if (IsPressingRight) Position.X += FreeCameraMoveIntensityX;
             if (IsPressingUp) Position.Y += FreeCameraMoveIntensityY;
             if (IsPressingDown) Position.Y -= FreeCameraMoveIntensityY;
 

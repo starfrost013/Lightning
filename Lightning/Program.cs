@@ -44,7 +44,10 @@ namespace Lightning
                     return; // Returns
                 case LaunchArgsAction.LaunchGameXML:
                     // Write some basic information to the screen
+                    // Set the colour to blue temporarily
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("Lightning");
+                    Console.ForegroundColor = ConsoleColor.Gray;
 
                     // Load version information
                     LVersion.LoadVersion();
@@ -54,7 +57,6 @@ namespace Lightning
                     Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
                     // Test code
-
                     
                     DataModelX = new DataModel();
                     DataModel.Init(LAR.Arguments);

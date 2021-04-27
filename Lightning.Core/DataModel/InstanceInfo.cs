@@ -158,6 +158,32 @@ namespace Lightning.Core.API
                 );
         }
 
+        public InstanceInfoMethod GetMethod(string MethodName)
+        {
+            foreach (InstanceInfoMethod IIM in Methods)
+            {
+                if (IIM.MethodName == MethodName)
+                {
+                    return IIM; 
+                }
+            }
+
+            return null; // return null on failure/
+        }
+        
+        public InstanceInfoProperty GetProperty(string PropertyName)
+        {
+            foreach (InstanceInfoProperty IIP in Properties)
+            {
+                if (IIP.Name == PropertyName)
+                {
+                    return IIP;
+                }
+            }
+
+            return null; 
+            
+        }
         /// <summary>
         /// Gets the value of the <paramref name="Obj"/> Instance's <paramref name="PropertyName"/> property.
         /// </summary>

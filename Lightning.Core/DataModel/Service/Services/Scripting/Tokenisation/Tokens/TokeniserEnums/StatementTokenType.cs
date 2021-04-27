@@ -24,39 +24,43 @@ namespace Lightning.Core.API
         ElseIf = 1,
 
         /// <summary>
+        /// An else statement
+        /// </summary>
+        Else = 2,
+        /// <summary>
         /// A while statement
         /// </summary>
-        While = 2,
+        While = 3,
 
         /// <summary>
         /// A for statement
         /// </summary>
-        For = 3,
+        For = 4,
 
         /// <summary>
         /// A return statement
         /// </summary>
-        Return = 4,
+        Return = 5,
 
         /// <summary>
         /// A function declaration statement
         /// </summary>
-        FuncDec = 5,
+        FuncDec = 6,
 
         /// <summary>
         /// A break statement
         /// </summary>
-        Break = 6,
+        Break = 7,
 
         /// <summary>
         /// A continue statement
         /// </summary>
-        Continue = 7,
+        Continue = 8,
 
         /// <summary>
         /// A debug break statement (only available in Debug builds)
         /// </summary>
-        DebugBreak = 8
+        DebugBreak = 9
 
     }
 }

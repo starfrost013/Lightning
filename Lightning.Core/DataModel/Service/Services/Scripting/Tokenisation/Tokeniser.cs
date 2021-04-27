@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Tokeniser
     /// 
-    /// April 16, 2021 (modified April 22, 2021)
+    /// April 16, 2021 (modified April 27, 2021) 
     /// 
     /// Tokenises a LightningScript file - converts it to a sequence of Tokens that can be easily parsed.
     /// </summary>
@@ -75,12 +75,47 @@ namespace Lightning.Core.API
                                     }
                                     else
                                     {
-                                        TypeConverter LCConv = TypeDescriptor.GetConverter(typeof(OperatorToken));
+                                        switch (ThisToken) 
+                                        {
+                                            case "{":
+                                                if (CurScope.Type == ScriptScopeType.Statement)
+                                                {
+                                                    continue;
+                                                }
+                                                else
+                                                {
+                                                    if (CurScope.Type == ScriptScopeType.Function)
+                                                    {
+                                                        CurScope.Type = ScriptScopeType.Global;
+                                                    }
+                                                    else
+                                                    {
+                                                        CurScope.Type = ScriptScopeType.Statement;
+                                                    }
+                                                    
+                                                    continue;
+                                                }
+                                            case "}": // todo: last scope
+                                                if (CurScope.Type != ScriptScopeType.Global)
+                                                {
+                                                    CurScope.Type = ScriptScopeType.Global;
+                                                    continue;
+                                                }
+                                                else
+                                                {
+                                                    continue; 
+                                                }
+                                            default:
+                                                TypeConverter LCConv = TypeDescriptor.GetConverter(typeof(OperatorToken));
 
-                                        OperatorToken OT = (OperatorToken)LCConv.ConvertFrom(ThisToken);
+                                                OperatorToken OT = (OperatorToken)LCConv.ConvertFrom(ThisToken);
 
-                                        Tokens.Add(OT);
+                                                Tokens.Add(OT);
+                                                continue;
+                                        }
                                     }
+
+
 
                                 }
                                 else
@@ -88,6 +123,7 @@ namespace Lightning.Core.API
                                     if (ThisToken.Contains("(")) // Function call
                                     {
                                         int Pos = ThisToken.IndexOf("(");
+                                        
                                         
                                         if (!ThisToken.Contains(")"))
                                         {
@@ -123,11 +159,15 @@ namespace Lightning.Core.API
 
                                             FunctionToken FToken = new FunctionToken();
 
-                                            string FunctionParametersSubstring = ThisToken.Substring(Pos, PosEnd - Pos);
+                                            CurScope.Type = ScriptScopeType.Function;
+
+                                            string FunctionNameSubstring = ThisToken.Substring(0, Pos - 1);
+                                            string FunctionParametersSubstring = ThisToken.Substring(Pos + 1, PosEnd - (Pos + 1));
 
                                             // Obtain all function parameters
                                             string[] FunctionParameters = FunctionParametersSubstring.Split(',');
                                             
+
                                             foreach (string FParm in FunctionParameters)
                                             {
                                                 // todo: check for method existing...lol
@@ -150,6 +190,53 @@ namespace Lightning.Core.API
                                                     FToken.FunctionParameters.Add(FParm);
                                                 }
                                                 
+                                            }
+
+                                            CurScope.Type = ScriptScopeType.Global;
+                                        }
+
+                                    }
+                                    else // is a statement or a declaration of a variable or value 
+                                    {
+                                        // Allow any capitalisation
+
+                                        CurScope.Type = ScriptScopeType.Statement;
+
+                                        
+
+                                        if (ThisToken == null
+                                            || ThisToken == "")
+                                        {
+                                            ScriptErrorManager.ThrowScriptError(new ScriptError
+                                            {
+                                                ScriptName = Sc.Name,
+                                                Line = ScriptLine,
+                                                LineNumber = CurrentLine,
+                                                Id = 1004,
+                                                Severity = MessageSeverity.Error,
+                                                Description = "Invalid statement or variable declaration!" // LS1003
+
+                                            });
+                                        }
+                                        else
+                                        {
+                                            string TokenX = ThisToken.ToLower();
+
+                                            TypeConverter TC = TypeDescriptor.GetConverter(typeof(StatementToken));
+                                            StatementToken ST = (StatementToken)TC.ConvertFrom(null, null, TokenX);
+
+                                            if (ST == null) // assume variable declaration
+                                            {
+                                                VariableToken VT = new VariableToken();
+
+                                                VT.Name = ThisToken;
+                                                Tokens.Add(VT);
+
+                                            }
+                                            else
+                                            {
+                                                Tokens.Add(ST);
+                                                continue;
                                             }
                                         }
 

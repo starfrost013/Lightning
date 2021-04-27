@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// 
     /// Instance Tagging Services
     /// 
-    /// Holds attributes that are instance-wide.
+    /// Holds attributes that are instance-wide and control how that instance behaves and its interactions with other components of Lightning.
     /// </summary>
     public enum InstanceTags
     {
@@ -53,7 +53,8 @@ namespace Lightning.Core.API
         /// <summary>
         /// The Parent of this Instance can be null (can be on the bare DataModel). 
         /// </summary>
-        ParentCanBeNull = 128
+        ParentCanBeNull = 128,
+
 
     }
 }
