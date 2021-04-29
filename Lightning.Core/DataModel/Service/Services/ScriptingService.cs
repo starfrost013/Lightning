@@ -9,14 +9,13 @@ namespace Lightning.Core.API
     /// <summary>
     /// ScriptingService.
     /// 
-    /// April 13, 2021 (modified April 24, 2021)
+    /// April 13, 2021 (modified April 27, 2021)
     /// 
     /// Provides scripting services. Manages LightningScript scripts.
     /// </summary>
-    public class ScriptingService : Service
+    public partial class ScriptingService : Service
     {
         internal override string ClassName => "ScriptingService";
-        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created, non-destroyable as services should not be destroyed.
         internal override ServiceImportance Importance => ServiceImportance.High; // may be rebootable?
 
         internal ScriptInterpreter ScriptGlobals { get; set; }
@@ -27,18 +26,28 @@ namespace Lightning.Core.API
         }
 
 #if DEBUG
-        private void ATest()
+        public void ATest()
         {
+            // VERY dirty and lazy scripting code.
+            ScriptTokeniser ST = new ScriptTokeniser();
 
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetInstanceResult GIR = Ws.GetChild("WsTestScript");
+
+            Debug.Assert(GIR.Successful && GIR.FailureReason == null);
+
+            Script Sc2 = (Script)GIR.Instance;
+
+            ST.Tokenise(Sc2);
         }
 #endif
         public override ServiceStartResult OnStart()
         {
             Logging.Log("ScriptingService Init", ClassName);
-#if DEBUG
-            // Test method registration
-            RegisterMethod("Lightning.Core.API;ScriptingTest;ScTest");
-#endif
+
+            // Register the Scripting API.
+            RegisterAPI();
             ServiceStartResult SSR = new ServiceStartResult { Successful = true };
             SSR.Successful = true;
             return SSR;
@@ -53,12 +62,14 @@ namespace Lightning.Core.API
 
         /// <summary>
         /// Registers a method for the usage of scripts.
+        /// 
+        /// ONLY THROW FATAL ERRORS!!!!!
         /// </summary>
         /// <param name="MethodFullName"></param>
         internal void RegisterMethod(string MethodFullName)
         {
 
-            // Verify that this method can be instantiated.
+            // Verify that this method can be instantiated. If it fails...
             if (!XmlUtil.CheckIfValidTypeForInstantiation(MethodFullName))
             {
                 string ErrorString = $"Attempted to register {MethodFullName}, which is not in the System or Lightning.* namespaces and therefore cannot be registered for use by scripts!";
@@ -120,31 +131,35 @@ namespace Lightning.Core.API
                 else
                 {
                     // Create a test instance
-                    Instance TestIns = (Instance)Activator.CreateInstance(MType); // no point running tons of extra code to add and then remove from the DataModel.
-
-                    // we have to manually generate instanceinfo here as we don't want to add it to the datamodel
-                    TestIns.GenerateInstanceInfo();
-
-                    InstanceInfoMethod CIIM = TestIns.Info.GetMethod(Method);
-
-                    if (CIIM == null)
+                    if (!MType.IsAbstract)
                     {
-                        GSMR.FailureReason = $"The method {Method} does not exist in the class {MethodClass}!";
-                    }
-                    else
-                    {
-                        SM.Name = MethodFullName; // set it!
+                        Instance TestIns = (Instance)Activator.CreateInstance(MType); // no point running tons of extra code to add and then remove from the DataModel.
 
-                        foreach (InstanceInfoMethodParameter IIMP in CIIM.Parameters)
+                        // we have to manually generate instanceinfo here as we don't want to add it to the datamodel
+                        TestIns.GenerateInstanceInfo();
+
+                        InstanceInfoMethod CIIM = TestIns.Info.GetMethod(Method);
+
+                        if (CIIM == null)
                         {
-                            ScriptMethodParameter SMP = new ScriptMethodParameter();
+                            GSMR.FailureReason = $"The method {Method} does not exist in the class {MethodClass}!";
+                        }
+                        else
+                        {
+                            SM.Name = MethodFullName; // set it!
 
-                            SMP.Name = IIMP.ParamName;
-                            SMP.Type = IIMP.ParamType;
+                            foreach (InstanceInfoMethodParameter IIMP in CIIM.Parameters)
+                            {
+                                ScriptMethodParameter SMP = new ScriptMethodParameter();
 
-                            SM.Parameters.Add(SMP);
+                                SMP.Name = IIMP.ParamName;
+                                SMP.Type = IIMP.ParamType;
+
+                                SM.Parameters.Add(SMP);
+                            }
                         }
                     }
+                    
                 }
 
                 GSMR.Successful = true;

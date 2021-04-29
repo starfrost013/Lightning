@@ -19,7 +19,7 @@ namespace Lightning.Core.API
     /// </summary>
     public abstract class Service : Instance
     {
-
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable | InstanceTags.Archivable | InstanceTags.Serialisable;
         public bool RunningNow { get; set; }
         internal abstract ServiceImportance Importance { get; }
         public abstract ServiceStartResult OnStart();

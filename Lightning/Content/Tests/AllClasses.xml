@@ -115,7 +115,37 @@
     <!-- RenderService -->
 
     <Camera Name="Camera1" Active="True" Position="-100,0" CameraType="Free"/>
-      
+
+    <!-- test
+    considering moving to a ScriptContent class
+    -->
+    <Script Name="WsTestScript" Content="// LightningScript 
+// April 25, 2021&#13;&#10;
+// Comments are //&#13;&#10; 
+
+// methods are exposed by the engine and are called exactly how they are in C#&#13;&#10;
+Logging.Log('Hello world!'); // semicolon optional&#13;&#10;
+
+// Dynamically typed&#13;&#10;
+a = 'a'&#13;&#10;
+b = 2&#13;&#10;
+
+// Functions have C-like syntax&#13;&#10;
+function Test()&#13;&#10; 
+{&#13;&#10;
+	Logging.Log('I'm a script!')&#13;&#10;
+}&#13;&#10;
+
+if (b == 2) // statements have C-like syntax &#13;&#10;
+{&#13;&#10;
+	&#13;&#10;
+}&#13;&#10;
+
+// Infinite loop&#13;&#10;
+while (true)&#13;&#10;
+{&#13;&#10;
+	Test();&#13;&#10;
+}&#13;&#10;"></Script>
   </Workspace>
 
 </Lightning>

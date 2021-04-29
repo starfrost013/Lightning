@@ -10,7 +10,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// ServiceControlManager
     /// 
-    /// March 10, 2021 (modified April 17, 2021: Move to Lightning.Core.API)
+    /// March 10, 2021 (modified April 29, 2021: RunningServices is dead, now uses its native children property)
     /// 
     /// Controls, manages, and updates services. Contains the main loop.
     /// </summary>
@@ -18,10 +18,6 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "ServiceControlManager";
         internal override InstanceTags Attributes =>  InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
-        /// <summary>
-        /// A list of the currently running services. Each object is a reference to an object directly under the Workspace. 
-        /// </summary>
-        internal List<Service> RunningServices { get; set; }
 
         /// <summary>
         /// A timer used to update each service. 
@@ -30,7 +26,6 @@ namespace Lightning.Core.API
 
         public ServiceControlManager()
         {
-            RunningServices = new List<Service>();
             SvcGlobalData = new ServiceGlobalData(); 
         }
 
@@ -137,7 +132,7 @@ namespace Lightning.Core.API
                 // Check if another instance of this service is already running.
                 if (!StartService_CheckForDuplicateServiceRunning(ClassName))
                 {
-                    RunningServices.Add(Svc);
+                    Children.Add(Svc, this);
                     return Svc.OnStart();
                 }
                 else
@@ -165,7 +160,7 @@ namespace Lightning.Core.API
         // not bool?
         private bool StartService_CheckForDuplicateServiceRunning(string ClassName)
         {
-            foreach (Service Svc in RunningServices)
+            foreach (Service Svc in Children)
             {
                 if (ClassName == Svc.ClassName)
                 {
@@ -184,7 +179,7 @@ namespace Lightning.Core.API
         /// <returns>The service object, or null if it does not exist [TEMP]</returns>
         public Service GetService(string ServiceName)
         {
-            foreach (Service Svc in RunningServices)
+            foreach (Service Svc in Children)
             {
                 if (Svc.ClassName == ServiceName)
                 {
@@ -206,7 +201,7 @@ namespace Lightning.Core.API
 
             ServiceShutdownResult SSR = new ServiceShutdownResult(); 
 
-            foreach (Service Svc in RunningServices)
+            foreach (Service Svc in Children)
             {
                 if (Svc.ClassName == ServiceName)
                 {
@@ -222,12 +217,12 @@ namespace Lightning.Core.API
                             }
                             else
                             {
-                                RunningServices.Remove(Svc);
+                                Children.Remove(Svc);
                                 SSR.Successful = true;
                                 return SSR;
                             }
                         case true:
-                            RunningServices.Remove(Svc);
+                            Children.Remove(Svc);
                             SSR.Successful = true;
                             return SSR;
                     }   
@@ -249,9 +244,10 @@ namespace Lightning.Core.API
             ServiceShutdownResult SSR = new ServiceShutdownResult();
 
             // April 10, 2021: Change to a for loop to prevent pesky "collection was modified" errors.
-            for (int i = 0; i < RunningServices.Count; i++)
+            for (int i = 0; i < Children.Count; i++)
             {
-                Service Svc = RunningServices[i];
+                // temporary hack
+                Service Svc = (Service)Children[i];
 
                 string XClassName = Svc.ClassName;
 
@@ -288,7 +284,7 @@ namespace Lightning.Core.API
         /// </summary>
         private void UpdateServices()
         {
-            foreach (Service Svc in RunningServices)
+            foreach (Service Svc in Children)
             {
                 Svc.Poll();
             }
@@ -302,7 +298,7 @@ namespace Lightning.Core.API
         /// <returns></returns>
         public bool IsServiceRunning(string ClassName)
         {
-            foreach (Service Svc in RunningServices)
+            foreach (Service Svc in Children)
             {
                 if (Svc.ClassName == ClassName)
                 {

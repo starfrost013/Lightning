@@ -21,6 +21,7 @@ namespace Lightning.Core.API
     /// 2021-04-11: Added nonanimated texture rendering.
     /// 2021-04-1x: Refactoring
     /// 2021-04-17: Moved to Lightning.Core.API
+    /// 2021-04-29: Removed RunningServices; all services are now Children of the SCM
     /// 
     /// </summary>
     public class RenderService : Service
@@ -28,7 +29,7 @@ namespace Lightning.Core.API
         internal override string ClassName => "RenderService";
         internal override ServiceImportance Importance => ServiceImportance.High;
 
-        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
         internal Renderer Renderer { get; set; }
         private static bool RENDERER_INITIALISED { get; set; }
 

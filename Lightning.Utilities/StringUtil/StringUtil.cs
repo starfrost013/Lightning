@@ -163,25 +163,53 @@ namespace Lightning.Utilities
         }
 
         /// <summary>
-        /// Convert SGML-based (X(A)ML/HTML) formatted string to plaintext - replaces the most common mnemonics with their character equivalents
+        /// Convert SGML-based (X(A)ML/HTML) formatted string to plaintext - replaces the most common mnemonics and NCEs with their character equivalents
         /// </summary>
-        /// <param name="HTXAMLFormattedString"></param>
-        /// <returns></returns>
+        /// <param name="HTXAMLFormattedString">The string to process.</param>
+        /// <returns>A processed string.</returns>
         public static string Xaml2Cs(this string HTXAMLFormattedString)
         {
-            string Fnl = HTXAMLFormattedString;
-
-            if (Fnl.Contains("&amp;"))
+            if (HTXAMLFormattedString == null)
             {
-                Fnl = Fnl.Replace("&amp;", "&");
+                return null;
             }
 
+            string Fnl = HTXAMLFormattedString;
+
+            if (Fnl.Contains("&amp;")) Fnl = Fnl.Replace("&amp;", "&");
             if (Fnl.Contains("&lt;")) Fnl = Fnl.Replace("&lt;", "<");
             if (Fnl.Contains("&gt;")) Fnl = Fnl.Replace("&gt;", ">");
-            if (Fnl.Contains("&nbsp;")) Fnl = Fnl.Replace("&nbsp;", 0xA0.ToString());
+            if (Fnl.Contains("&nbsp;")
+                || Fnl.Contains("&#160;")) Fnl = Fnl.Replace("&nbsp;", 0xA0.ToString());
+            if (Fnl.Contains("&#10;")) Fnl = Fnl.Replace("&#10;", "\n");
+            if (Fnl.Contains("&#13;")) Fnl = Fnl.Replace("&#13;", "\r");
 
             return Fnl;
 
+        }
+
+        /// <summary>
+        /// Convert .NET formatted strings to X(A)ML / SGML-based formatted ones. Replaces the most common characters with their XML mnemonic / NCE equivalents.
+        /// </summary>
+        /// <param name="NormalString">The string to process.</param>
+        /// <returns>A processed string.</returns>
+        public static string Cs2Xaml(this string NormalString)
+        {
+            if (NormalString == null)
+            {
+                return null; 
+            }
+
+            string ProcessedString = NormalString;
+
+            if (ProcessedString.Contains("&")) ProcessedString = ProcessedString.Replace("<", "&amp;");
+            if (ProcessedString.Contains("<")) ProcessedString = ProcessedString.Replace("<", "&lt;");
+            if (ProcessedString.Contains(">")) ProcessedString = ProcessedString.Replace(">", "&gt;");
+            if (ProcessedString.Contains(0xA0.ToString())) ProcessedString = ProcessedString.Replace(0xA0.ToString(), "&nbsp;"); // Nonbreaking Space
+            if (ProcessedString.Contains("&#10;")) ProcessedString = ProcessedString.Replace("&#10;", "\n");
+            if (ProcessedString.Contains("&#13;")) ProcessedString = ProcessedString.Replace("&#13;", "\r");
+
+            return ProcessedString;
         }
 
         /// <summary>

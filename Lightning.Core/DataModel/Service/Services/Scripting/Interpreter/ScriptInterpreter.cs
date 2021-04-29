@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// LightningScript
     /// 
-    /// A dynamically typed scripting language for Lightning
+    /// A dynamically typed, interpreted, DataModel-aware scripting language for Lightning
     /// 
     /// April 27, 2021
     /// </summary>
@@ -29,6 +29,38 @@ namespace Lightning.Core.API
             RunningScripts = new List<Script>();
         }
 
-        public List<Script> ScX { get; set; }
+        /// <summary>
+        /// Prepares a loaded Script object to be run. 
+        /// </summary>
+        /// <param name="Sc"></param>
+        /// <returns></returns>
+        public LoadScriptResult LoadScript(Script Sc)
+        {
+            LoadScriptResult LSR = new LoadScriptResult();
+
+            if (Sc.Name == null
+                || Sc.Name.Length == 0)
+            {
+                ErrorManager.ThrowError("Script Loader", "CannotRunScriptWithInvalidNameException");
+                LSR.FailureReason = "Cannot run a script with an invalid name!";
+                return LSR; 
+            }
+            else
+            {
+                RunningScripts.Add(Sc); // run it.
+
+                LSR.Successful = true;
+                return LSR; 
+            }
+
+        }
+
+        /// <summary>
+        /// Advances all scripts by one token. Handles Runtime Errors.
+        /// </summary>
+        public void Interpret()
+        {
+
+        }
     }
 }

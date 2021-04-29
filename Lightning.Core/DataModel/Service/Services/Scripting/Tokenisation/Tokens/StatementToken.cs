@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Lightning.Core.API
@@ -11,6 +12,8 @@ namespace Lightning.Core.API
     /// 
     /// Defines a statement. Woo!
     /// </summary>
+    /// 
+    [TypeConverter(typeof(StatementTokenConverter))]
     public class StatementToken : Token 
     {
         public StatementTokenType Type { get; set; }

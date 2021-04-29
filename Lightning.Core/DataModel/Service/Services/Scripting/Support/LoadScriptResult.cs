@@ -6,18 +6,21 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// Result class for SDL2 renderer initialisation.
+    /// LoadScriptResult
+    /// 
+    /// April 27, 2021 
     /// </summary>
-    public class SDLInitialisationResult : IResult
+    public class LoadScriptResult : IResult
     {
+        /// <summary>
+        /// The script that has been loaded. Will only be valid if <see cref="FailureReason"/> is null and <see cref="Successful"/> is true. 
+        /// </summary>
+        public Script Script { get; set; }
 
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         public string FailureReason { get; set; }
-        public Renderer Renderer { get; set; }
-
-        public int SDLErrorCode { get; set; }
 
         /// <summary>
         /// <inheritdoc/>

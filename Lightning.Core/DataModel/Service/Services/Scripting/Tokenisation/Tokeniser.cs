@@ -13,11 +13,11 @@ namespace Lightning.Core.API
     /// 
     /// Tokenises a LightningScript file - converts it to a sequence of Tokens that can be easily parsed.
     /// </summary>
-    public class Tokeniser
+    public class ScriptTokeniser
     {
         public ScriptScope CurScope { get; set; }
 
-        public Tokeniser()
+        public ScriptTokeniser()
         {
             CurScope = new ScriptScope(); 
         }
@@ -33,19 +33,23 @@ namespace Lightning.Core.API
                 if (Sc.Name == null
                     || Sc.Name.Length == 0)
                 {
-                    ErrorManager.ThrowError("Script Tokenizer", "CannotParseNonLSScriptFileException");
+                    ErrorManager.ThrowError("Script Tokeniser", "CannotParseNonLSScriptFileException");
                     TLR.FailureReason = "CannotParseNonLSScriptFileException";
                     return TLR;
                 }
                 else
                 {
+                    Logging.Log("Tokenising...", "Script Tokeniser");
+
                     Tokens.Add(new StartOfFileToken { ScriptName = Sc.Name });
 
                     // set cur line
-                    int CurrentLine = 0; 
+                    int CurrentLine = 0;
 
-                    foreach (string ScriptLine in Sc.ScriptContent)
+                    for (int j = 0; j < Sc.ScriptContent.Count; j++)
                     {
+                        string ScriptLine = Sc.ScriptContent[j];
+
                         CurrentLine++;
 
                         string[] Tokens_Pre = ScriptLine.Split(' ');
@@ -63,39 +67,69 @@ namespace Lightning.Core.API
 
                                 ThisToken = ThisToken.Trim();
 
-                                if (ThisToken.Length == 1) // Operator
+                                if (ThisToken.Length <= 2) // Operator
                                 {
                                     if (ThisToken.ContainsNumeric())
                                     {
-                                        NumberToken VT = new NumberToken();
+                                        Logging.Log("Identified NumberToken", "Script Tokeniser");
 
-                                        VT.Value = Convert.ToInt32(ThisToken);
+                                        try
+                                        {
+                                            NumberToken VT = new NumberToken();
 
-                                        Tokens.Add(VT);
+                                            VT.Value = Convert.ToInt32(ThisToken);
+
+                                            Tokens.Add(VT);
+                                            continue; 
+                                        }
+                                        catch (FormatException err)
+                                        {
+                                            ScriptErrorManager.ThrowScriptError(new ScriptError
+                                            {
+                                                ScriptName = Sc.Name,
+                                                Line = ScriptLine,
+                                                LineNumber = CurrentLine,
+                                                Id = 1007,
+                                                Severity = MessageSeverity.Error,
+                                                Description = "Invalid numerical token!", // shouldn't happen but w/e
+#if DEBUG
+                                                BaseException = err
+#endif
+
+                                            }) ;
+                                        }
+
+
                                     }
                                     else
                                     {
                                         switch (ThisToken) 
                                         {
                                             case "{":
-                                                if (CurScope.Type == ScriptScopeType.Statement)
+                                                Logging.Log("Entering function or statement", "Script Tokeniser");
+                                                if (CurScope.Type == ScriptScopeType.Statement
+                                                    || CurScope.Type == ScriptScopeType.Function)
                                                 {
                                                     continue;
                                                 }
                                                 else
                                                 {
-                                                    if (CurScope.Type == ScriptScopeType.Function)
+
+                                                    ScriptErrorManager.ThrowScriptError(new ScriptError
                                                     {
-                                                        CurScope.Type = ScriptScopeType.Global;
-                                                    }
-                                                    else
-                                                    {
-                                                        CurScope.Type = ScriptScopeType.Statement;
-                                                    }
-                                                    
+                                                        ScriptName = Sc.Name,
+                                                        Line = ScriptLine,
+                                                        LineNumber = CurrentLine,
+                                                        Id = 1005,
+                                                        Severity = MessageSeverity.Error,
+                                                        Description = "Open curved parentheses - { - must be in statement or function context!" // LS1005
+
+                                                    }) ;
+
                                                     continue;
                                                 }
                                             case "}": // todo: last scope
+                                                Logging.Log("Exiting function or statement", "Script Tokeniser");
                                                 if (CurScope.Type != ScriptScopeType.Global)
                                                 {
                                                     CurScope.Type = ScriptScopeType.Global;
@@ -103,15 +137,19 @@ namespace Lightning.Core.API
                                                 }
                                                 else
                                                 {
+                                                    ScriptErrorManager.ThrowScriptError(new ScriptError
+                                                    {
+                                                        ScriptName = Sc.Name,
+                                                        Line = ScriptLine,
+                                                        LineNumber = CurrentLine,
+                                                        Id = 1006,
+                                                        Severity = MessageSeverity.Error,
+                                                        Description = "Closed curved parentheses - } - must be in statement or function context!" // LS1005
+
+                                                    });
+
                                                     continue; 
                                                 }
-                                            default:
-                                                TypeConverter LCConv = TypeDescriptor.GetConverter(typeof(OperatorToken));
-
-                                                OperatorToken OT = (OperatorToken)LCConv.ConvertFrom(ThisToken);
-
-                                                Tokens.Add(OT);
-                                                continue;
                                         }
                                     }
 
@@ -120,10 +158,19 @@ namespace Lightning.Core.API
                                 }
                                 else
                                 {
+                                    // Comments
+                                    if (ThisToken == "//")
+                                    {
+                                        Tokens.Add(new EndOfLineToken());
+                                        break;
+                                    }
+
                                     if (ThisToken.Contains("(")) // Function call
                                     {
+
+                                        Logging.Log("Identified function call", "Script Tokeniser");
+
                                         int Pos = ThisToken.IndexOf("(");
-                                        
                                         
                                         if (!ThisToken.Contains(")"))
                                         {
@@ -161,7 +208,10 @@ namespace Lightning.Core.API
 
                                             CurScope.Type = ScriptScopeType.Function;
 
-                                            string FunctionNameSubstring = ThisToken.Substring(0, Pos - 1);
+                                            string FunctionNameSubstring = ThisToken.Substring(0, Pos);
+
+                                            Logging.Log($"Name: {FunctionNameSubstring}", "Script Tokeniser");
+
                                             string FunctionParametersSubstring = ThisToken.Substring(Pos + 1, PosEnd - (Pos + 1));
 
                                             // Obtain all function parameters
@@ -173,6 +223,7 @@ namespace Lightning.Core.API
                                                 // todo: check for method existing...lol
                                                 if (FParm.Length == 0)
                                                 {
+                                                    
                                                     ScriptErrorManager.ThrowScriptError(new ScriptError
                                                     {
                                                         ScriptName = Sc.Name,
@@ -187,12 +238,14 @@ namespace Lightning.Core.API
                                                 }
                                                 else
                                                 {
+                                                    Logging.Log($"Adding function parameter {FParm}", "Script Tokeniser");
                                                     FToken.FunctionParameters.Add(FParm);
                                                 }
                                                 
                                             }
 
                                             CurScope.Type = ScriptScopeType.Global;
+                                            continue; 
                                         }
 
                                     }
@@ -201,8 +254,6 @@ namespace Lightning.Core.API
                                         // Allow any capitalisation
 
                                         CurScope.Type = ScriptScopeType.Statement;
-
-                                        
 
                                         if (ThisToken == null
                                             || ThisToken == "")
@@ -227,16 +278,30 @@ namespace Lightning.Core.API
 
                                             if (ST == null) // assume variable declaration
                                             {
-                                                VariableToken VT = new VariableToken();
+                                                // try opreator
 
-                                                VT.Name = ThisToken;
-                                                Tokens.Add(VT);
+                                                TypeConverter OTC = TypeDescriptor.GetConverter(typeof(OperatorToken));
 
+                                                OperatorToken OT = (OperatorToken)TC.ConvertFrom(null, null, TokenX);
+
+                                                if (OT == null) // it is a variable
+                                                {
+                                                    Tokens.Add(OT);
+                                                }
+                                                else
+                                                {
+                                                    Logging.Log($"Identified variable: {TokenX}", "Script Tokeniser");
+                                                    VariableToken VT = new VariableToken();
+
+                                                    VT.Name = ThisToken;
+                                                    Tokens.Add(VT);
+                                                }
                                             }
                                             else
                                             {
+                                                Logging.Log($"Identified statement: {ST.Type}", "Script Tokeniser");
                                                 Tokens.Add(ST);
-                                                continue;
+
                                             }
                                         }
 

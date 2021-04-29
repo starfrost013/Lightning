@@ -344,10 +344,15 @@ namespace Lightning.Core.API
                             DDCSR.FailureReason = $"An error occurred converting the attribute {IIPItem.Name} of the DataModel-enabled type {Ins.ClassName} to a string in order to save it to a file.";
                             return DDCSR;
                         }
+                        else
+                        {
+                            XPropertyAttribute.Value = XPropertyAttribute.Value.Cs2Xaml(); // convert illegal characters (April 29, 2021)
 
-                        XInstanceNode.Attributes.Append(XPropertyAttribute);
+                            XInstanceNode.Attributes.Append(XPropertyAttribute);
 
-                        Logging.Log($"Serialised Property {PropertyName} with value {XPropertyAttribute.Value}");
+                            Logging.Log($"Serialised Property {PropertyName} with value {XPropertyAttribute.Value}");
+                        }
+
                     }
                     catch (NotSupportedException)
                     {

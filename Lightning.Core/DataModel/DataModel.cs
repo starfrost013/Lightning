@@ -112,6 +112,12 @@ namespace Lightning.Core.API
                     {
                         // Enter the main loop.
 
+#if DEBUG
+                        ScriptingService Svc = (ScriptingService)SCM.GetService("ScriptingService");
+
+                        Svc.ATest();
+
+#endif
                         SCM.InitServiceUpdates();
                     }
                 }
@@ -161,20 +167,39 @@ namespace Lightning.Core.API
                         }
                         else
                         {
+
+                            Type InsType = NewInstance.GetType();
+
                             GetInstanceResult GIR = GetFirstChildOfType("Workspace");
-                            
-                            if (GIR.Successful)
-                            {
-                                Workspace TheWorkspace = (Workspace)GIR.Instance;
-                                return TheWorkspace.Children.Instances[TheWorkspace.Children.Instances.Count - 1];
-                            }
-                            else
+                            Workspace TheWorkspace = (Workspace)GIR.Instance;
+
+                            if (!GIR.Successful
+                                || GIR.Instance == null)
                             {
                                 // The workspace is trashed, die
                                 ErrorManager.ThrowError("DataModel", "TheWorkspaceHasBeenDestroyedException");
                             }
 
-                            return null;
+                            // Force Services into the SCM
+                            if (InsType.IsSubclassOf(typeof(Service)))
+                            {
+                                GetInstanceResult SGIR = TheWorkspace.GetFirstChildOfType("ServiceControlManager");
+
+                                if (!SGIR.Successful
+                                    || SGIR.Instance == null)
+                                {
+                                    ErrorManager.ThrowError("DataModel", "ServiceControlManagerFailureException");
+                                }
+
+                                ServiceControlManager SCM = (ServiceControlManager)SGIR.Instance;
+                                return SCM.Children[SCM.Children.Count - 1];
+                            
+                            }
+                            else
+                            {
+
+                                return TheWorkspace.Children[TheWorkspace.Children.Count - 1];
+                            }
                         }
                     }
                     else

@@ -76,22 +76,42 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-
                         GetInstanceResult WorkSvc = DataModel.GetFirstChildOfType("Workspace");
-                        
-                        if (!WorkSvc.Successful)
+
+                        if (!WorkSvc.Successful
+                            || WorkSvc.Instance == null) 
                         {
                             Debug.Assert(WorkSvc.FailureReason != null);
                             ErrorManager.ThrowError("DataModel", "WorkspaceHasBeenDestroyedException");
                         }
                         else
                         {
-                            // Get the current workspace.
 
-                            Workspace TheWorkspace = (Workspace)WorkSvc.Instance;
+                            Workspace Workspace = (Workspace)WorkSvc.Instance;
 
-                            Add_PerformAdd(Obj, TheWorkspace);
-                            return; 
+                            // Check for a Service, and redirect it to the SCM if it is one. 
+                            // April 29, 2021
+                            if (ObjType.IsSubclassOf(typeof(Service)))
+                            {
+                                GetInstanceResult ServiceControlManagerResult = Workspace.GetFirstChildOfType("ServiceControlManager");
+
+                                if (!ServiceControlManagerResult.Successful
+                                    || ServiceControlManagerResult.Instance == null)
+                                {
+                                    ErrorManager.ThrowError("DataModel", "ServiceControlManagerFailureException"); // Fatal Error
+                                }
+                                else
+                                {
+                                    ServiceControlManager SCM = (ServiceControlManager)ServiceControlManagerResult.Instance;
+
+                                    Add_PerformAdd(Obj, SCM);
+                                }
+                            }
+                            else
+                            {
+                                Add_PerformAdd(Obj, Workspace);
+                                return;
+                            }
                         }
                     }
                     
@@ -363,6 +383,13 @@ namespace Lightning.Core.API
                 return GIR;
             }
         }
+
+        /// <summary>
+        /// Indexer (April 29, 2021)
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public Instance this[int i] => Instances[i];
 
     }
 

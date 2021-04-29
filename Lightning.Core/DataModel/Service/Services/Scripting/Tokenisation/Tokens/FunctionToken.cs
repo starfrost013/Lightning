@@ -26,5 +26,10 @@ namespace Lightning.Core.API
         /// A list of strings defining the parameters for the function that is going to be called.
         /// </summary>
         public List<string> FunctionParameters { get; set; }
+
+        public FunctionToken()
+        {
+            FunctionParameters = new List<string>();
+        }
     }
 }
