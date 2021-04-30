@@ -110,6 +110,7 @@ namespace Lightning.Core.API
                                         {
                                             case "{":
                                                 Logging.Log("Entering function or statement", "Script Tokeniser");
+
                                                 if (CurScope.Type == ScriptScopeType.Statement
                                                     || CurScope.Type == ScriptScopeType.Function)
                                                 {
@@ -156,8 +157,6 @@ namespace Lightning.Core.API
                                         }
                                     }
 
-
-
                                 }
                                 else
                                 {
@@ -166,7 +165,7 @@ namespace Lightning.Core.API
                                     string Fc = StatementTokenType.FuncDec.ToString();
 
                                     if (ThisToken.Contains("(")
-                                        && !ThisToken.Contains(Fc)) // Function call
+                                        && !Tokens_Pre[i - 1].Contains("function")) // Function call
                                     {
 
                                         Logging.Log("Identified function call", "Script Tokeniser");
@@ -230,7 +229,7 @@ namespace Lightning.Core.API
 
                                     }
                                     else if (ThisToken.Contains("(")
-                                        && ThisToken.Contains(Fc)) // Function declaration (requires special handling)
+                                        && Tokens_Pre[i-1].Contains("function")) // Function declaration (requires special handling) - checks the last token to see if it matches "function"
                                     {
                                         int Pos = ThisToken.IndexOf("(");
 

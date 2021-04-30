@@ -35,7 +35,7 @@ namespace Lightning.Core.API
 
             GetInstanceResult GIR = Ws.GetChild("WsTestScript");
 
-            Debug.Assert(GIR.Successful && GIR.FailureReason == null);
+            if (!GIR.Successful || GIR.Instance == null) return; 
 
             Script Sc2 = (Script)GIR.Instance;
 
