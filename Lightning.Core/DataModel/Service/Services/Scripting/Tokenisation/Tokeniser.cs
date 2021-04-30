@@ -67,6 +67,9 @@ namespace Lightning.Core.API
 
                                 ThisToken = ThisToken.Trim();
 
+                                // comments
+                                if (ThisToken == "//") break;
+
                                 if (ThisToken.Length <= 2) // Operator
                                 {
                                     if (ThisToken.ContainsNumeric())
@@ -158,20 +161,16 @@ namespace Lightning.Core.API
                                 }
                                 else
                                 {
-                                    // Comments
-                                    if (ThisToken == "//")
-                                    {
-                                        Tokens.Add(new EndOfLineToken());
-                                        break;
-                                    }
+                                    // Function calls (not function declarations)
 
-                                    if (ThisToken.Contains("(")) // Function call
+                                    string Fc = StatementTokenType.FuncDec.ToString();
+
+                                    if (ThisToken.Contains("(")
+                                        && !ThisToken.Contains(Fc)) // Function call
                                     {
 
                                         Logging.Log("Identified function call", "Script Tokeniser");
 
-                                        int Pos = ThisToken.IndexOf("(");
-                                        
                                         if (!ThisToken.Contains(")"))
                                         {
                                             ScriptErrorManager.ThrowScriptError(new ScriptError
@@ -186,68 +185,117 @@ namespace Lightning.Core.API
                                             });
                                             
                                         }
-                                        else
+                                        else // CallTokens
                                         {
+                                            CallToken CT = new CallToken();
+
+                                            int Pos = ThisToken.IndexOf("(");
+
                                             int PosEnd = ThisToken.IndexOf(")");
 
-                                            if (Pos > PosEnd)
+                                            if (Pos > PosEnd
+                                                || Pos == -1
+                                                || PosEnd == -1)
                                             {
                                                 ScriptErrorManager.ThrowScriptError(new ScriptError
                                                 {
                                                     ScriptName = Sc.Name,
                                                     Line = ScriptLine,
                                                     LineNumber = CurrentLine,
-                                                    Id = 1002,
+                                                    Id = 1009,
                                                     Severity = MessageSeverity.Error,
                                                     Description = "Closed bracket must be before open bracket in method calls!"
 
                                                 });
                                             }
-
-                                            FunctionToken FToken = new FunctionToken();
-
-                                            CurScope.Type = ScriptScopeType.Function;
-
-                                            string FunctionNameSubstring = ThisToken.Substring(0, Pos);
-
-                                            Logging.Log($"Name: {FunctionNameSubstring}", "Script Tokeniser");
-
-                                            string FunctionParametersSubstring = ThisToken.Substring(Pos + 1, PosEnd - (Pos + 1));
-
-                                            // Obtain all function parameters
-                                            string[] FunctionParameters = FunctionParametersSubstring.Split(',');
-                                            
-
-                                            foreach (string FParm in FunctionParameters)
+                                            else
                                             {
-                                                // todo: check for method existing...lol
-                                                if (FParm.Length == 0)
-                                                {
-                                                    
-                                                    ScriptErrorManager.ThrowScriptError(new ScriptError
-                                                    {
-                                                        ScriptName = Sc.Name,
-                                                        Line = ScriptLine,
-                                                        LineNumber = CurrentLine,
-                                                        Id = 1003,
-                                                        Severity = MessageSeverity.Error,
-                                                        Description = "Closed bracket must be before open bracket in method calls!" // LS1003
+                                                string NameSubstring = ThisToken.Substring(0, ThisToken.Length - Pos);
 
-                                                    });
+                                                CT.Name = NameSubstring;
 
-                                                }
-                                                else
-                                                {
-                                                    Logging.Log($"Adding function parameter {FParm}", "Script Tokeniser");
-                                                    FToken.FunctionParameters.Add(FParm);
-                                                }
+                                                string ParametersSubstring = ThisToken.Substring(Pos + 1, (ThisToken.Length - PosEnd) - 1); // skip the (
                                                 
-                                            }
+                                                // if there are no parameters it will not run. 
+                                                string[] CommaArray = ParametersSubstring.Split(',');
 
-                                            CurScope.Type = ScriptScopeType.Global;
-                                            continue; 
+                                                foreach (string CA in CommaArray)
+                                                {
+                                                    CT.ParameterValues.Add(CA);
+                                                }
+
+                                                Tokens.Add(CT);
+                                            }
                                         }
 
+                                    }
+                                    else if (ThisToken.Contains("(")
+                                        && ThisToken.Contains(Fc)) // Function declaration (requires special handling)
+                                    {
+                                        int Pos = ThisToken.IndexOf("(");
+
+                                        int PosEnd = ThisToken.IndexOf(")");
+
+                                        if (Pos > PosEnd
+                                            || Pos == -1
+                                            || PosEnd == -1)
+                                        {
+                                            ScriptErrorManager.ThrowScriptError(new ScriptError
+                                            {
+                                                ScriptName = Sc.Name,
+                                                Line = ScriptLine,
+                                                LineNumber = CurrentLine,
+                                                Id = 1002,
+                                                Severity = MessageSeverity.Error,
+                                                Description = "Closed bracket must be before open bracket in method declarations!"
+
+                                            });
+                                        }
+
+                                        FunctionToken FToken = new FunctionToken();
+
+                                        CurScope.Type = ScriptScopeType.Function;
+
+                                        string FunctionNameSubstring = ThisToken.Substring(0, Pos);
+
+                                        Logging.Log($"Name: {FunctionNameSubstring}", "Script Tokeniser");
+
+                                        string FunctionParametersSubstring = ThisToken.Substring(Pos + 1, ThisToken.Length - PosEnd);
+
+                                        // Obtain all function parameters
+                                        string[] FunctionParameters = FunctionParametersSubstring.Split(',');
+
+
+                                        foreach (string FParm in FunctionParameters)
+                                        {
+                                            // todo: check for method existing...lol
+                                            if (FParm.Length == 0)
+                                            {
+
+                                                ScriptErrorManager.ThrowScriptError(new ScriptError
+                                                {
+                                                    ScriptName = Sc.Name,
+                                                    Line = ScriptLine,
+                                                    LineNumber = CurrentLine,
+                                                    Id = 1003,
+                                                    Severity = MessageSeverity.Error,
+                                                    Description = "Closed bracket must be before open bracket in method calls!" // LS1003
+
+                                                });
+
+                                            }
+                                            else
+                                            {
+                                                Logging.Log($"Adding function parameter {FParm}", "Script Tokeniser");
+                                                FToken.FunctionParameters.Add(FParm);
+                                            }
+
+                                        }
+
+                                        CurScope.Type = ScriptScopeType.Global;
+                                        Tokens.Add(FToken);
+
+                                        continue;
                                     }
                                     else // is a statement or a declaration of a variable or value 
                                     {
@@ -286,15 +334,16 @@ namespace Lightning.Core.API
 
                                                 if (OT == null) // it is a variable
                                                 {
-                                                    Tokens.Add(OT);
-                                                }
-                                                else
-                                                {
                                                     Logging.Log($"Identified variable: {TokenX}", "Script Tokeniser");
                                                     VariableToken VT = new VariableToken();
 
                                                     VT.Name = ThisToken;
                                                     Tokens.Add(VT);
+                                                }
+
+                                                else
+                                                {
+                                                    Tokens.Add(OT);
                                                 }
                                             }
                                             else
