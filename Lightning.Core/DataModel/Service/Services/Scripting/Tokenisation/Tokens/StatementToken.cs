@@ -33,6 +33,10 @@ namespace Lightning.Core.API
                 case "if":
                     St.Type = StatementTokenType.If;
                     return St;
+                case "function":
+                case "funcdec":
+                    St.Type = StatementTokenType.FuncDec;
+                    return St;
                 case "elif":
                 case "elseif":
                     St.Type = StatementTokenType.ElseIf;

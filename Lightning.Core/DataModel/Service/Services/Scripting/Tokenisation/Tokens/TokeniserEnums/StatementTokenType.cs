@@ -42,11 +42,10 @@ namespace Lightning.Core.API
         /// </summary>
         Return = 5,
 
-        // FuncDec [2021-04-30] - functions are now their own token typ
         /// <summary>
         /// A function declaration statement
         /// </summary>
-        //FuncDec = 6,
+        FuncDec = 6,
 
         /// <summary>
         /// A break statement
