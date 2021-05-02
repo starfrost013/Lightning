@@ -30,9 +30,6 @@ namespace Lightning.Core.API
                 case "for":
                     St.Type = StatementTokenType.For;
                     return St;
-                case "function":
-                    St.Type = StatementTokenType.FuncDec;
-                    return St;
                 case "if":
                     St.Type = StatementTokenType.If;
                     return St;

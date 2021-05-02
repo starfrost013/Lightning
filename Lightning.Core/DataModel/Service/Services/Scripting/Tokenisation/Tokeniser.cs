@@ -160,13 +160,39 @@ namespace Lightning.Core.API
                                 }
                                 else
                                 {
-
                                     if (ThisToken.Contains("(")) // Function declaration (requires special handling) - checks the last token to see if it matches "function"
                                     {
+
+                                        StringBuilder SB = new StringBuilder();
+                                        SB.Append(ThisToken); 
 
                                         int Pos = ThisToken.IndexOf("(");
 
                                         int PosEnd = ThisToken.IndexOf(")");
+
+                                        // search for the end of the method...
+                                        for (int k = i + 1; k < Tokens_Pre.Length; k++)
+                                        {
+                                            string NextToken = Tokens_Pre[k];
+
+
+                                            int NewPosEnd = NextToken.IndexOf(')');
+
+                                            if (NewPosEnd == -1)
+                                            {
+                                                continue; 
+                                            }
+                                            else
+                                            {
+                                                PosEnd = SB.Length + NewPosEnd;
+
+                                                i++; // skip the tokens as they have been handled
+
+                                                SB.Append($" {NextToken}"); // append any missing spaces betwen tokens - this will be stripped and trimmed anyway
+                                                break; 
+                                            }
+                                        }
+
 
                                         if (Pos > PosEnd
                                             || Pos == -1
@@ -184,38 +210,43 @@ namespace Lightning.Core.API
                                             });
                                         }
 
+                                        string FinalMethodString = SB.ToString();
 
-                                        if (Tokens_Pre[i-1].Contains("function"))
+                                        if (!Tokens_Pre[i-1].Contains("function"))
                                         {
+                                            Logging.Log("Identified function call", "Script Tokeniser");
                                             CallToken CT = new CallToken();
 
-                                            string NameSubstring = ThisToken.Substring(0, ThisToken.Length - Pos);
+                                            string NameSubstring = FinalMethodString.Substring(0, Pos);
 
                                             CT.Name = NameSubstring;
 
-                                            string ParametersSubstring = ThisToken.Substring(Pos + 1, (ThisToken.Length - PosEnd) - 1); // skip the (
+                                            string ParametersSubstring = FinalMethodString.Substring(Pos + 1, PosEnd - Pos); // skip the (
 
                                             // if there are no parameters it will not run. 
                                             string[] CommaArray = ParametersSubstring.Split(',');
 
                                             foreach (string CA in CommaArray)
                                             {
+                                                Logging.Log($"Adding parameter {CA} to function", "Script Tokeniser");
                                                 CT.ParameterValues.Add(CA);
                                             }
 
                                             Tokens.Add(CT);
+                                            continue; 
                                         }
                                         else
                                         {
+                                            Logging.Log("Identified function declaration", "Script Tokeniser");
                                             FunctionToken FToken = new FunctionToken();
 
                                             CurScope.Type = ScriptScopeType.Function;
 
-                                            string FunctionNameSubstring = ThisToken.Substring(0, Pos);
+                                            string FunctionNameSubstring = FinalMethodString.Substring(0, Pos);
 
                                             Logging.Log($"Name: {FunctionNameSubstring}", "Script Tokeniser");
 
-                                            string FunctionParametersSubstring = ThisToken.Substring(Pos + 1, ThisToken.Length - PosEnd);
+                                            string FunctionParametersSubstring = FinalMethodString.Substring(Pos + 1, PosEnd - (Pos + 1));
 
                                             // Obtain all function parameters
                                             string[] FunctionParameters = FunctionParametersSubstring.Split(',');
@@ -295,18 +326,20 @@ namespace Lightning.Core.API
 
                                                     VT.ValueString = ThisToken;
                                                     Tokens.Add(VT);
+                                                    continue; 
                                                 }
 
                                                 else
                                                 {
                                                     Tokens.Add(OT);
+                                                    continue; 
                                                 }
                                             }
                                             else
                                             {
                                                 Logging.Log($"Identified statement: {ST.Type}", "Script Tokeniser");
                                                 Tokens.Add(ST);
-
+                                                continue; 
                                             }
                                         }
 
