@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// ScriptingService.
     /// 
-    /// April 13, 2021 (modified April 27, 2021)
+    /// April 13, 2021 (modified May 3, 2021)
     /// 
     /// Provides scripting services. Manages LightningScript scripts.
     /// </summary>
@@ -20,28 +20,16 @@ namespace Lightning.Core.API
 
         internal ScriptInterpreter ScriptGlobals { get; set; }
 
+        private bool SCRIPTS_LOADED { get; set; }
+
+        internal ScriptTokeniser Tokeniser { get; set; }
+
         public ScriptingService()
         {
             ScriptGlobals = new ScriptInterpreter();
+            Tokeniser = new ScriptTokeniser();
         }
 
-#if DEBUG
-        public void ATest()
-        {
-            // VERY dirty and lazy scripting code.
-            ScriptTokeniser ST = new ScriptTokeniser();
-
-            Workspace Ws = DataModel.GetWorkspace();
-
-            GetInstanceResult GIR = Ws.GetChild("WsTestScript");
-
-            if (!GIR.Successful || GIR.Instance == null) return; 
-
-            Script Sc2 = (Script)GIR.Instance;
-
-            ST.Tokenise(Sc2);
-        }
-#endif
         public override ServiceStartResult OnStart()
         {
             Logging.Log("ScriptingService Init", ClassName);
@@ -171,7 +159,43 @@ namespace Lightning.Core.API
 
         public override void Poll()
         {
-            return; 
+            if (!SCRIPTS_LOADED)
+            {
+                Logging.Log("Serialising all scripts...", ClassName);
+                SerialiseAll();
+            }
+            else
+            {
+                return;
+            }
+            
+        }
+
+        public void SerialiseAll()
+        {
+            // TODO: "GETALLCHILDRENOFTYPE" that is also recursive
+            Workspace Ws = DataModel.GetWorkspace();
+
+            foreach (Instance Ins in Ws.Children)
+            {
+                if (Ins.GetType() == typeof(Script))
+                {
+                    Script LeScript = (Script)Ins;
+
+                    TokenListResult TLR = Tokeniser.Tokenise((Script)LeScript);
+
+                    if (!TLR.Successful)
+                    {
+                        ErrorManager.ThrowError(ClassName, "ErrorLoadingOrTokenisingScriptException");
+                    }
+                    else
+                    {
+                        LeScript.Tokens = TLR.TokenList;
+                    }
+                }
+            }
+
+            SCRIPTS_LOADED = true;
         }
 
     }

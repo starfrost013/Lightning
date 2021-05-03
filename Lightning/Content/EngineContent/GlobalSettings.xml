@@ -14,7 +14,11 @@
       <ServiceName>ScriptingService</ServiceName>
       <StartOrder>1</StartOrder>
     </ServiceStartupCommand>
-    
+
+    <ServiceStartupCommand>
+      <ServiceName>SoundService</ServiceName>
+      <StartOrder>2</StartOrder>
+    </ServiceStartupCommand>
   </ServiceStartupCommands>
 
   

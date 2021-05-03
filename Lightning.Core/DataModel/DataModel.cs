@@ -112,12 +112,6 @@ namespace Lightning.Core.API
                     {
                         // Enter the main loop.
 
-#if DEBUG
-                        ScriptingService Svc = (ScriptingService)SCM.GetService("ScriptingService");
-
-                        Svc.ATest();
-
-#endif
                         SCM.InitServiceUpdates();
                     }
                 }

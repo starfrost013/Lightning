@@ -80,7 +80,7 @@ namespace Lightning.Core.API
                                         NumberToken VT = new NumberToken();
 
                                         VT.Value = Convert.ToInt32(ThisToken);
-#
+
                                         Logging.Log($"Value: {VT.Value}");
                                         Tokens.Add(VT);
                                         continue;
@@ -186,7 +186,7 @@ namespace Lightning.Core.API
 
                                         if (ST == null) // assume variable declaration
                                         {
-                                            // try opreator
+                                            // try operators
 
                                             TypeConverter OTC = TypeDescriptor.GetConverter(typeof(OperatorToken));
 

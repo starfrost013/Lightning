@@ -438,4 +438,11 @@ Do not change if you are not a dev
     <Id>57</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorLoadingOrTokenisingScriptException</Name>
+    <Id>58</Id>
+    <Severity>Warning</Severity>
+  </Error>
 </Errors>

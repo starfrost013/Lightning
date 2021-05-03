@@ -196,6 +196,9 @@ namespace Lightning.Core.API
             {
                 Instance TestInstance = (Instance)Obj;
 
+                // Services are removed by the SCM.
+                if (ObjType.IsSubclassOf(typeof(Service))) return;
+
                 // Save the parent of this instance.
                 Instance InstanceParent;
 
@@ -235,6 +238,7 @@ namespace Lightning.Core.API
                         }
                         else // Id 
                         {
+
                             Workspace WS = DataModel.GetWorkspace();
                             
                             if (WS.Children.Contains(TestInstance))
