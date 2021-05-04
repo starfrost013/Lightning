@@ -50,6 +50,7 @@ namespace Lightning.Core.SDL2
 		// therefore we can't rename it. Using .csproj trickery to get around this
 		private const string nativeLibName = "SDL2";
 
+		private const string SDL2_LIGHTNING_VERSION = "SDL2-CS for Lightning version 0.2+ © 2021 starfrost / © 2013-2021 Ethan Lee";
 		#endregion
 
 		#region UTF8 Marshaling
