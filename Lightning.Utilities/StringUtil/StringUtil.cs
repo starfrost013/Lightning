@@ -119,7 +119,7 @@ namespace Lightning.Utilities
         }
 
 
-        private static bool IsNumeric(byte Byte) => (Byte >= 0x48 && Byte <= 0x59);
+        private static bool IsNumeric(byte Byte) => (Byte >= 0x30 && Byte <= 0x3A); // May 4, 2021: Fix this entire hting being fucking broken
 
         /// <summary>
         /// Gets the first index of a string that contains a numeric character.

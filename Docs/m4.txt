@@ -21,6 +21,9 @@ Beginning April 12, 2021
 * Player API
 * IDE, Very basic ver.
 * DDMS Saving
+* First-time setup & file associations
+
+M4 SPEC FROZEN (5/3	22:06)
 
 4/13	19:04
 
@@ -44,6 +47,7 @@ Player API		0%
 L./L.C.API split	0%
 IDE			0%
 DDMS Saving		0%
+Sound API		0%
 
 4/14	14:22
 
@@ -135,6 +139,29 @@ Player API		0%
 L./L.C.API split	Complete
 IDE			0%
 DDMS Saving		Complete
+
+5/3
+Grouping 		0%
+Ungrouping		Complete
+Render refactoring	40%
+Animation API		0%
+Primitive API		80%
+Removal of OUS		Complete
+DDMS refactor		20%
+Camera API		Complete except optimisation
+Functional Scripting API0%
+Removal of Error XML?	0%; may not do
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		Complete
+PhysicsService		0%
+ScriptingService	50%
+Player API		0%
+L./L.C.API split	Complete
+IDE			0%
+DDMS Saving		Complete
+Sound API		10%
 
 More tasks may be required
 	

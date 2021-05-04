@@ -69,9 +69,15 @@ namespace Lightning.Core.API
                                 string ThisToken = Tokens_Pre[i];
 
                                 // comments
-                                if (ThisToken == "//") break;
+                                if (ThisToken == "//")
+                                {
+                                    Logging.Log($"Skipping commented line", "Script Tokeniser");
+                                    break;
+                                }
+                                
 
-                                if (ThisToken.ContainsNumeric())
+                                if (ThisToken.ContainsNumeric()
+                                    && !ThisToken.ContainsAlpha())
                                 {
                                     Logging.Log("Identified NumberToken", "Script Tokeniser");
 
@@ -210,6 +216,7 @@ namespace Lightning.Core.API
                                         }
                                         else
                                         {
+                                            CurScope.Type = ScriptScopeType.Statement;
                                             Logging.Log($"Identified statement: {ST.Type}", "Script Tokeniser");
                                             Tokens.Add(ST);
                                             continue;
@@ -274,7 +281,8 @@ namespace Lightning.Core.API
 
                                     string FinalMethodString = SB.ToString();
 
-                                    if (!Tokens_Pre[i - 1].Contains("function"))
+                                    if (Tokens_Pre.Count > 1 &&
+                                        !Tokens_Pre[i - 1].Contains("function"))
                                     {
                                         Logging.Log("Identified function call", "Script Tokeniser");
                                         CallToken CT = new CallToken();
@@ -322,17 +330,7 @@ namespace Lightning.Core.API
                                                 || FParameterNoSpaces.Length == 0)
                                             {
 
-                                                ScriptErrorManager.ThrowScriptError(new ScriptError
-                                                {
-                                                    ScriptName = Sc.Name,
-                                                    Line = ScriptLine,
-                                                    LineNumber = CurrentLine,
-                                                    Id = 1003,
-                                                    Severity = MessageSeverity.Error,
-                                                    Description = "Closed bracket must be before open bracket in method calls!" // LS1003
-
-                                                });
-
+                                                continue; 
                                             }
                                             else
                                             {
@@ -343,7 +341,7 @@ namespace Lightning.Core.API
 
                                         }
 
-                                        CurScope.Type = ScriptScopeType.Global;
+                                        //CurScope.Type = ScriptScopeType.Global;
                                         Tokens.Add(FToken);
 
                                         continue;
@@ -373,7 +371,7 @@ namespace Lightning.Core.API
             }
         }
 
-        public List<string> Tokeniser_PreprocessTokenList(List<string> TokensPre)
+        private List<string> Tokeniser_PreprocessTokenList(List<string> TokensPre)
         {
             for (int i = 0; i < TokensPre.Count; i++)
             {
@@ -384,13 +382,21 @@ namespace Lightning.Core.API
 
                 // get rid of stuff 
                 TokenPre = TokenPre.Trim();
+                TokenPre = TokenPre.Replace("\r", "");
+                TokenPre = TokenPre.Replace("\n", "");
+
+                // adds useless fucking values unless we do this stupid fucking crap
+                TokenPre = TokenPre.Replace(@"\r", "");
+                TokenPre = TokenPre.Replace(@"\n", "");
 
                 // hack
                 TokensPre[i] = TokenPre; 
+
                 if (TokenPre.Length == 0
                     || TokenPre_NoSpaces.Length == 0)
                 {
-                    TokensPre.Remove(TokenPre); 
+                    TokensPre.Remove(TokenPre);
+                    i--;
 
                 }
             }

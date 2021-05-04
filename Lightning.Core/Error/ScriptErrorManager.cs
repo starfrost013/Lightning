@@ -22,17 +22,20 @@ namespace Lightning.Core.API
         public static void ThrowScriptError(ScriptError Err)
         {
 
-            string WarningErrText = $"Script Warning:\n\nIn script: {Err.Name} at line {Err.Line}:\n\n{Err.Id}: {Err.Description}!";
-            string ErrorErrText = $"Script Error:\n\nIn script: {Err.Name} at line {Err.Line}:\n\n{Err.Id}: {Err.Description}!";
+            string WarningErrText = $"Script Warning:\n\nIn script: {Err.Name} at line {Err.LineNumber} ({Err.Line}):\n\n{Err.Id}: {Err.Description}!";
+            string ErrorErrText = $"Script Error:\n\nIn script: {Err.Name} at line {Err.LineNumber}: ({Err.Line})\n\n{Err.Id}: {Err.Description}!";
 
             switch (Err.Severity)
             {
                 case MessageSeverity.Message:
-                    Logging.Log(WarningErrText, "Script Error Handler");
-                    return;
                 case MessageSeverity.Warning:
                     Logging.Log(WarningErrText, "Script Error Handler");
+                    return;
+                case MessageSeverity.Error:
+                case MessageSeverity.FatalError:
+                    Logging.Log(WarningErrText, "Script Error Handler");
                     MessageBox.Show(ErrorErrText, "Script Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     return;
             }
         }
