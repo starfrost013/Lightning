@@ -300,6 +300,36 @@ namespace Lightning.Core.API
             }
         }
 
+        public GetMultiInstanceResult GetAllChildrenOfType(string ClassName)
+        {
+            List<Instance> NewLI = new List<Instance>();
 
+            return GetAllChildrenOfType_DoGetChildren(this, ClassName);
+
+        }
+
+        private GetMultiInstanceResult GetAllChildrenOfType_DoGetChildren(Instance Parent, string ClassName)
+        {
+            GetMultiInstanceResult GIR = new GetMultiInstanceResult();
+            List<Instance> InstanceList = new List<Instance>();
+
+            foreach (Instance ThisChild in Children)
+            {
+                if (ThisChild.ClassName == ClassName
+                    && ThisChild.GetType().Name == ClassName)
+                {
+                    InstanceList.Add(ThisChild);
+
+                    if (ThisChild.Children.Count > 0)
+                    {
+                        GetAllChildrenOfType_DoGetChildren(Parent, InstanceList, ClassName);
+                    }
+                }
+            }
+
+            GIR.Successful = true;
+            GIR.InstanceList = InstanceList;
+            return GIR; 
+        }
     }
 }

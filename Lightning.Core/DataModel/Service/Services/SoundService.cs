@@ -14,6 +14,8 @@ namespace Lightning.Core.API
         {
             ServiceStartResult SSR = new ServiceStartResult();
 
+            Logging.Log("Initialising SDL2_mixer", ClassName);
+
             // Init SDL_mixer.
             int SDLMixerResult = SDL_mixer.Mix_Init(SDL_mixer.MIX_InitFlags.MIX_INIT_OGG | SDL_mixer.MIX_InitFlags.MIX_INIT_MP3 | SDL_mixer.MIX_InitFlags.MIX_INIT_FLAC);
 
@@ -24,6 +26,8 @@ namespace Lightning.Core.API
             }
             else
             {
+                Logging.Log("Initialising Audio", ClassName);
+
                 // Init audio. CD quality and stereo. We can go down to 22khz if necessary
                 int SDLDriverMixResult = SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.Mix_AudioFormat.MIX_DEFAULT_FORMAT, 2, 2048); // 2048 bytes should be okay, possibly reduce to 1024
 
