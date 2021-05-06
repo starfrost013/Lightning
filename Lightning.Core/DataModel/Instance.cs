@@ -304,14 +304,13 @@ namespace Lightning.Core.API
         {
             List<Instance> NewLI = new List<Instance>();
 
-            return GetAllChildrenOfType_DoGetChildren(this, ClassName);
+            return GetAllChildrenOfType_DoGetChildren(this, NewLI, ClassName);
 
         }
 
-        private GetMultiInstanceResult GetAllChildrenOfType_DoGetChildren(Instance Parent, string ClassName)
+        private GetMultiInstanceResult GetAllChildrenOfType_DoGetChildren(Instance Parent, List<Instance> InstanceList, string ClassName)
         {
             GetMultiInstanceResult GIR = new GetMultiInstanceResult();
-            List<Instance> InstanceList = new List<Instance>();
 
             foreach (Instance ThisChild in Children)
             {

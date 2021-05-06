@@ -10,6 +10,7 @@ namespace Lightning.Core.API
         internal override string ClassName => "SoundService";
         internal override ServiceImportance Importance => ServiceImportance.High;
 
+        public bool SOUNDS_LOADED { get; set; }
         public override ServiceStartResult OnStart()
         {
             ServiceStartResult SSR = new ServiceStartResult();
@@ -57,6 +58,35 @@ namespace Lightning.Core.API
 
         public override void Poll()
         {
+            // Load audio. 
+
+            if (!SOUNDS_LOADED)
+            {
+                Workspace Ws = DataModel.GetWorkspace();
+                GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("Sound");
+
+                if (GMIR.Successful
+                    && GMIR.InstanceList != null)
+                {
+                    List<Instance> IX = GMIR.InstanceList;
+
+                    foreach (Instance Ins in IX)
+                    {
+                        Sound Snd = (Sound)Ins;
+                        Snd.SoundPtr = SDL_mixer.Mix_LoadWAV(Snd.Path);
+
+                        if (Snd.SoundPtr)
+                        {
+
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+            }
+
             return; 
         }
     }
