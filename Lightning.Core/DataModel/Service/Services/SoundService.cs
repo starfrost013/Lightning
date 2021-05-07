@@ -1,6 +1,7 @@
 ﻿using Lightning.Core.SDL2;
 using System;
 using System.Collections.Generic;
+using System.IO; 
 using System.Text;
 
 namespace Lightning.Core.API
@@ -72,12 +73,27 @@ namespace Lightning.Core.API
 
                     foreach (Instance Ins in IX)
                     {
+
                         Sound Snd = (Sound)Ins;
-                        Snd.SoundPtr = SDL_mixer.Mix_LoadWAV(Snd.Path);
 
-                        if (Snd.SoundPtr)
+                        if (Snd.Path == null
+                            || !File.Exists(Snd.Path))
                         {
+                            ErrorManager.ThrowError(ClassName, "ErrorLoadingSoundChunkException", $"Cannot find the sound located at {Snd.Path}!");
+                        }
 
+                        Logging.Log($"Loading sound at {Snd.Path}...");
+
+                        Snd.SoundPtr = SDL_mixer.Mix_LoadMUS(Snd.Path);
+
+                        if (Snd.SoundPtr != IntPtr.Zero)
+                        {
+                            continue; 
+                        }
+                        else
+                        {
+                            ErrorManager.ThrowError(ClassName, "ErrorLoadingSoundChunkException", $"An error occurred loading the sound at {Snd.Path} - {SDL.SDL_GetError()}");
+                            return; 
                         }
                     }
                 }
