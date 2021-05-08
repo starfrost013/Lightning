@@ -330,5 +330,10 @@ namespace Lightning.Core.API
             GIR.InstanceList = InstanceList;
             return GIR; 
         }
+
+        public virtual void OnCreate()
+        {
+            return; 
+        }
     }
 }

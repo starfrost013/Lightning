@@ -158,20 +158,29 @@ namespace Lightning.Core.API
 
         }
 
+        /// <summary>
+        /// Adds an Instance to the InstanceCollection and then runs its OnCreate method. 
+        /// </summary>
+        /// <param name="Obj"></param>
+        /// <param name="Parent"></param>
         private void Add_PerformAdd(object Obj, Instance Parent = null)
         {
             // polymorphism mandates this being the instance we want.
 
+            Instance NewInstance = (Instance)Obj;
+
             if (Parent == null)
             {
-                Instances.Add((Instance)Obj);
+                Instances.Add(NewInstance);
             }
             else
             {
-                Instance InstanceObj = (Instance)Obj;
+                Instance InstanceObj = NewInstance;
                 InstanceObj.Parent = Parent; 
-                Parent.Children.Instances.Add((Instance)Obj);
+                Parent.Children.Instances.Add(NewInstance);
             }
+
+            NewInstance.OnCreate(); 
         }
 
         /// <summary>

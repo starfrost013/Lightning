@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Sound
     /// 
-    /// May 5, 2021
+    /// May 5, 2021 (modified May 8, 2021)
     /// 
     /// A sound. 
     /// </summary>
@@ -41,6 +41,9 @@ namespace Lightning.Core.API
         /// </summary>
         public double Volume { get; set; }
 
+        public SDL_mixer.MusicFinishedDelegate MFDelegate { get; set; }
+
+       
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
             SDL_mixer.Mix_VolumeMusic((int)Volume * 100);
@@ -48,12 +51,14 @@ namespace Lightning.Core.API
             // TEST CODE
             if (SoundPtr != IntPtr.Zero)
             {
-                //todo: musicstopped handling
-                Playing = true;
 
-                if (!Repeat)
+
+                if (!Repeat && !Playing)
                 {
+                    //todo: musicstopped handling
+                    Playing = true;
                     SDL_mixer.Mix_PlayMusic(SoundPtr, 1);
+                    
                 }
                 else
                 {
