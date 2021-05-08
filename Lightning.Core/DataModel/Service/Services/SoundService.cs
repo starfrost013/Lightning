@@ -12,14 +12,15 @@ namespace Lightning.Core.API
         internal override ServiceImportance Importance => ServiceImportance.High;
 
         public bool SOUNDS_LOADED { get; set; }
+
         public override ServiceStartResult OnStart()
         {
             ServiceStartResult SSR = new ServiceStartResult();
 
-            Logging.Log("Initialising SDL2_mixer", ClassName);
+            Logging.Log("Initialising SDL2_mixer...", ClassName);
 
             // Init SDL_mixer.
-            int SDLMixerResult = SDL_mixer.Mix_Init(SDL_mixer.MIX_InitFlags.MIX_INIT_OGG | SDL_mixer.MIX_InitFlags.MIX_INIT_MP3 | SDL_mixer.MIX_InitFlags.MIX_INIT_FLAC);
+            int SDLMixerResult = SDL_mixer.Mix_Init(SDL_mixer.MIX_InitFlags.MIX_INIT_OGG | SDL_mixer.MIX_InitFlags.MIX_INIT_MP3 | SDL_mixer.MIX_InitFlags.MIX_INIT_FLAC | SDL_mixer.MIX_InitFlags.MIX_INIT_MOD | SDL_mixer.MIX_InitFlags.MIX_INIT_OPUS | SDL_mixer.MIX_InitFlags.MIX_INIT_MID);
 
             if (SDLMixerResult < 0)
             {
@@ -96,10 +97,12 @@ namespace Lightning.Core.API
                             return; 
                         }
                     }
+
+                    SOUNDS_LOADED = true; 
                 }
                 else
                 {
-
+                    ErrorManager.ThrowError(ClassName, "ErrorAcquiringSoundListException");
                 }
             }
 

@@ -207,7 +207,7 @@ namespace Lightning.Core.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Mix_Quit();
 
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(nativeLibName, EntryPoint = "Mix_OpenAudio",  CallingConvention = CallingConvention.Cdecl)]
 		public static extern int INTERNAL__Mix_OpenAudio(
 			int frequency,
 			ushort format,

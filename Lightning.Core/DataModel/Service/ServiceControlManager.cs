@@ -17,7 +17,7 @@ namespace Lightning.Core.API
     public class ServiceControlManager : Instance
     {
         internal override string ClassName => "ServiceControlManager";
-        internal override InstanceTags Attributes =>  InstanceTags.Instantiable | InstanceTags.ParentLocked; // non-serialisable or archivable as it is automatically created
+        internal override InstanceTags Attributes =>  InstanceTags.Instantiable | InstanceTags.ParentLocked | InstanceTags.ParentCanBeNull; // non-serialisable or archivable as it is automatically created
 
         /// <summary>
         /// A timer used to update each service. 
@@ -133,7 +133,9 @@ namespace Lightning.Core.API
                 if (!StartService_CheckForDuplicateServiceRunning(ClassName))
                 {
                     Children.Add(Svc, this);
+                    Svc.RunningNow = true;
                     return Svc.OnStart();
+                    
                 }
                 else
                 {
@@ -162,7 +164,8 @@ namespace Lightning.Core.API
         {
             foreach (Service Svc in Children)
             {
-                if (ClassName == Svc.ClassName)
+                if (Svc.RunningNow
+                    && Svc.ClassName == ClassName)
                 {
                     return true;
                 }
@@ -217,11 +220,13 @@ namespace Lightning.Core.API
                             }
                             else
                             {
+                                Svc.RunningNow = false;
                                 Children.Remove(Svc);
                                 SSR.Successful = true;
                                 return SSR;
                             }
                         case true:
+                            Svc.RunningNow = false; 
                             Children.Remove(Svc);
                             SSR.Successful = true;
                             return SSR;

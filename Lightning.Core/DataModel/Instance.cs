@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning DataModel
     /// 
-    /// DataModel/Instance Ver0.4.1
+    /// DataModel/Instance Ver0.12.1
     /// 
     /// Provides the root for all objects provided in Lightning.
     /// 
@@ -24,7 +24,7 @@ namespace Lightning.Core.API
     /// 2020-04-05  Actually implemented InstanceCollection.Add(); and InstanceCollection.Clear(); - DataModel class itself now stores GlobalSettings.
     /// 2020-04-06  Added Workspace; made parent/child addition actually work...
     /// 2020-04-08  Modified Instance.AddChild(); to make it non-redundant
-    /// 
+    /// (continues...)
     /// </summary>
     /// 
     public abstract class Instance

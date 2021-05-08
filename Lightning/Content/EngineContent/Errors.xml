@@ -452,4 +452,11 @@ Do not change if you are not a dev
     <Id>59</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>An error occurred obtaining a list of sounds to play!</Description>
+    <Name>ErrorAcquiringSoundListException</Name>
+    <Id>60</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

@@ -17,9 +17,7 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "ScriptingService";
         internal override ServiceImportance Importance => ServiceImportance.High; // may be rebootable?
-
         internal ScriptInterpreter ScriptGlobals { get; set; }
-
         private bool SCRIPTS_LOADED { get; set; }
 
         internal ScriptTokeniser Tokeniser { get; set; }

@@ -51,7 +51,7 @@ namespace Lightning.Core.API
         ParentLocked = 64,
 
         /// <summary>
-        /// The Parent of this Instance can be null (can be on the bare DataModel). 
+        /// The Parent of this Instance can be null (can be on the bare DataModel) or outside of the Workspace.
         /// </summary>
         ParentCanBeNull = 128,
 

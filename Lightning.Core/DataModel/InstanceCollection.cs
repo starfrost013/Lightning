@@ -120,7 +120,7 @@ namespace Lightning.Core.API
                 {
                     Type ParentType = Parent.GetType();
 
-                    // Instance children must be the same or child classes
+                    // Instance children must be the same or child classes unless a flag is set in the instance' instancetags
                     if (ObjType == ParentType)
                     {
                         Add_PerformAdd(Obj, TestInstanceParent);
@@ -133,7 +133,7 @@ namespace Lightning.Core.API
                             Add_PerformAdd(Obj, TestInstanceParent);
                             return; 
                         }
-                        else if (TestInstanceParent.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
+                        else if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
                         {
                             Add_PerformAdd(Obj, TestInstanceParent);
                             return;
