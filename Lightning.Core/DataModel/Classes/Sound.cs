@@ -80,7 +80,10 @@ namespace Lightning.Core.API
                 {
                     Play();
                 }
-                
+                else
+                {
+                    if (Is3D) Set3DVolume(); 
+                }
 
             }
 
@@ -90,81 +93,12 @@ namespace Lightning.Core.API
 
         public void Play()
         {
+
             int NewVolume = (int)Volume * 128;
 
             if (!Is3D)
             {
                 SDL_mixer.Mix_VolumeMusic(NewVolume);
-            }
-            else
-            {
-                Workspace WsQ = DataModel.GetWorkspace();
-
-                PhysicalObject NewPO = null; 
-
-                if (TargetObject != null)
-                {
-                    GetInstanceResult GIR = WsQ.GetChild(TargetObject);
-
-                    if (GIR.Instance != null
-                        && GIR.Successful)
-                    {
-                        Instance TempInstance = (Instance)GIR.Instance;
-
-                        Type InstanceType = TempInstance.GetType();
-
-                        if (InstanceType.IsSubclassOf(typeof(PhysicalObject))
-                            || InstanceType == typeof(PhysicalObject))
-                        {
-                            NewPO = (PhysicalObject)TempInstance;
-                        }
-                        else
-                        {
-                            ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} must be or inherit from the PhysicalObject class!");
-                        }
-                    }
-                    else
-                    {
-                        ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} does not exist!");
-                        return;
-                    }
-                }
-                else
-                {
-                    ErrorManager.ThrowError(ClassName, "Err3DSoundRequiresTargetObjectException");
-                    return; 
-                }
-
-                // Actually move it
-
-                if (NewPO != null
-                    && Position != null
-                    && Radius > 0)
-                {
-                    double MX = NewPO.Position.X - Position.X;
-                    double MY = Position.Y - NewPO.Position.Y;
-
-                    // We can use trigonometry for this,
-                    // but as we only have one unknown it's easier to use Pythagoras' theorem (a^2 + b^2 = c^2)
-
-                    // Pixels
-                    double DiagDistance = Math.Pow(MX, 2) * Math.Pow(MY, 2);
-                    DiagDistance = Math.Sqrt(DiagDistance);
-
-                    NewVolume = (int)(NewVolume / (DiagDistance / Radius));
-
-                    // Shouldn't happen but just in case... 
-                    if (NewVolume > 128) NewVolume = 128;
-                    if (NewVolume < 0) NewVolume = 0; 
-
-                    SDL_mixer.Mix_VolumeMusic(NewVolume);
-                }
-                else
-                {
-                    ErrorManager.ThrowError(ClassName, "Err3DSoundRequiresSoundPositionAndRadiusException");
-                    return; 
-                }
-                
             }
 
             if (!Repeat)
@@ -182,7 +116,98 @@ namespace Lightning.Core.API
             }
         }
 
-        public void OnSoundFinished()
+        private void Set3DVolume()
+        {
+            Workspace WsQ = DataModel.GetWorkspace();
+
+            PhysicalObject NewPO = null;
+
+            if (TargetObject != null)
+            {
+                GetInstanceResult GIR = WsQ.GetChild(TargetObject);
+
+                if (GIR.Instance != null
+                    && GIR.Successful)
+                {
+                    Instance TempInstance = (Instance)GIR.Instance;
+
+                    Type InstanceType = TempInstance.GetType();
+
+                    if (InstanceType.IsSubclassOf(typeof(PhysicalObject))
+                        || InstanceType == typeof(PhysicalObject))
+                    {
+                        NewPO = (PhysicalObject)TempInstance;
+                    }
+                    else
+                    {
+                        ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} must be or inherit from the PhysicalObject class!");
+                    }
+                }
+                else
+                {
+                    ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} does not exist!");
+                    return;
+                }
+            }
+            else
+            {
+                ErrorManager.ThrowError(ClassName, "Err3DSoundRequiresTargetObjectException");
+                return;
+            }
+
+            // Actually move it
+
+            int NewVolume = (int)Volume * 128;  
+
+            if (NewPO != null
+                && Position != null
+                && Radius > 0)
+            {
+                double MX = NewPO.Position.X - Position.X;
+                double MY = NewPO.Position.Y - Position.Y;
+
+                // We can use trigonometry for this,
+                // but as we only have one unknown it's easier to use Pythagoras' theorem (a^2 + b^2 = c^2)
+
+                // Pixels
+                double DiagDistance = Math.Pow(MX, 2) * Math.Pow(MY, 2);
+                DiagDistance = Math.Sqrt(DiagDistance);
+
+                DiagDistance /= Radius;
+
+                if (DiagDistance > 0)
+                {
+                    NewVolume = (int)(NewVolume / (DiagDistance / 15));
+                }
+                else
+                {
+                    // either MX or MY is 0
+                    if (MX != 0)
+                    {
+                        NewVolume = (int)(NewVolume / (Math.Abs(MX) / 15));
+                    }
+                    else if (MY != 0)
+                    {
+                        NewVolume = (int)(NewVolume / (Math.Abs(MY) / 15));
+                    }
+                }
+
+                // Shouldn't happen but just in case... 
+                if (NewVolume > 128) NewVolume = 128;
+                if (NewVolume < 4) NewVolume /= 5; 
+                if (NewVolume < 0) NewVolume = 0;
+
+                Logging.Log($"Setting 3D sound volume to {NewVolume}...", ClassName);
+                SDL_mixer.Mix_VolumeMusic(NewVolume);
+            }
+            else
+            {
+                ErrorManager.ThrowError(ClassName, "Err3DSoundRequiresSoundPositionAndRadiusException");
+                return;
+            }
+        }
+
+        private void OnSoundFinished()
         {
             if (!Repeat) Completed = true; 
 

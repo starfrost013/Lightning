@@ -5,8 +5,8 @@
     <Author>starfrost</Author>
     <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-04-15 17:34:23</LastModifiedDate>
-    <RevisionID>25</RevisionID> <!-- Rev25: update for new settings -->
+    <LastModifiedDate>2021-05-09 21:00:01</LastModifiedDate>
+    <RevisionID>32</RevisionID> <!-- Rev25: update for new settings -->
 
   </Metadata>
   <Settings>
@@ -146,9 +146,12 @@ while (true)&#13;&#10;
 	Test();&#13;&#10;
 }&#13;&#10;"></Script>
 
-    <Sound Path="Content\Sounds\test.mp3" Repeat="True" Volume="1.0"></Sound>
+    <Sound Path="Content\Sounds\test.mp3" Repeat="True" Volume="1.00" Is3D="True" Radius="20" TargetObject="Camera1" Position="-100,0"></Sound>
 
-    <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0"></Sound>
+    <!--
+      works, but there are problems - only one music track...will need to modify SDL2_mixer or SDL2CS to aachieve this...
+      perhaps move to NAudio? but naudio is huge.
+    <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0"></Sound>-->
   </Workspace>
   
 </Lightning>

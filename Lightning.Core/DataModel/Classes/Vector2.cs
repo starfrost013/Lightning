@@ -44,26 +44,64 @@ namespace Lightning.Core.API
         public static Vector2 operator /(Vector2 A, Vector2 B) => new Vector2(A.X / B.X, B.Y / B.Y);
         public static bool operator ==(Vector2 A, Vector2 B)
         {
-            if (A.X == B.X && A.Y == B.Y)
+            // Prevent a stack overflow by upcasting
+            object OA = (object)A;
+            object OB = (object)B;
+
+            if (OA != null && OB != null)
             {
-                return true;
+                if (A.X == B.X && A.Y == B.Y)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false;
+                // One or the other is null...
+                if (OA == null && OB == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false; 
+                }
             }
         }
 
         public static bool operator !=(Vector2 A, Vector2 B)
         {
-            if (A.X == B.X && A.Y == B.Y)
+            // Prevent a stack overflow by upcasting
+            object OA = (object)A;
+            object OB = (object)B;
+
+            if (OA != null && OB != null)
             {
-                return false;
+                if (A.X == B.X && A.Y == B.Y)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
-                return true; 
+                if (OA == null && OB == null)
+                {
+                    return false; 
+                }
+                else
+                {
+                    return true; 
+                }
             }
+
 
         }
 
