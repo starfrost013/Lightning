@@ -8,18 +8,24 @@ namespace Lightning.Core.API
     /// <summary>
     /// Sound
     /// 
-    /// May 5, 2021 (modified May 8, 2021)
+    /// May 5, 2021 (modified May 9, 2021)
     /// 
     /// A sound. 
     /// </summary>
-    public class Sound : PhysicalObject 
+    public class Sound : PhysicalObject
     {
         internal override string ClassName => "Sound";
+
 
         /// <summary>
         /// Is this sound 3D? does it play from a point?
         /// </summary>
         public bool Is3D { get; set; }
+
+        /// <summary>
+        /// The object name to target. Ignored if <see cref="Is3D"/> is false. Defaults to the first camera if not set.
+        /// </summary>
+        public string TargetObject { get; set; }
 
         /// <summary>
         /// Internal pointer to the loaded sound chunk.
@@ -34,7 +40,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Is this sound playing?
         /// </summary>
-        public bool Playing { get; set; }
+        internal bool Playing { get; set; }
 
         /// <summary>
         /// Has this sound completed?
@@ -51,6 +57,11 @@ namespace Lightning.Core.API
         /// </summary>
         public double Volume { get; set; }
 
+        /// <summary>
+        /// The radius of this sound. 
+        /// </summary>
+        public double Radius { get; set; }
+
         public SDL_mixer.MusicFinishedDelegate MFDelegate { get; set; }
 
         public override void OnCreate()
@@ -60,7 +71,7 @@ namespace Lightning.Core.API
 
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            SDL_mixer.Mix_VolumeMusic((int)Volume * 128);
+            
 
             // TEST CODE
             if (SoundPtr != IntPtr.Zero)
@@ -79,6 +90,83 @@ namespace Lightning.Core.API
 
         public void Play()
         {
+            int NewVolume = (int)Volume * 128;
+
+            if (!Is3D)
+            {
+                SDL_mixer.Mix_VolumeMusic(NewVolume);
+            }
+            else
+            {
+                Workspace WsQ = DataModel.GetWorkspace();
+
+                PhysicalObject NewPO = null; 
+
+                if (TargetObject != null)
+                {
+                    GetInstanceResult GIR = WsQ.GetChild(TargetObject);
+
+                    if (GIR.Instance != null
+                        && GIR.Successful)
+                    {
+                        Instance TempInstance = (Instance)GIR.Instance;
+
+                        Type InstanceType = TempInstance.GetType();
+
+                        if (InstanceType.IsSubclassOf(typeof(PhysicalObject))
+                            || InstanceType == typeof(PhysicalObject))
+                        {
+                            NewPO = (PhysicalObject)TempInstance;
+                        }
+                        else
+                        {
+                            ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} must be or inherit from the PhysicalObject class!");
+                        }
+                    }
+                    else
+                    {
+                        ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} does not exist!");
+                        return;
+                    }
+                }
+                else
+                {
+                    ErrorManager.ThrowError(ClassName, "Err3DSoundRequiresTargetObjectException");
+                    return; 
+                }
+
+                // Actually move it
+
+                if (NewPO != null
+                    && Position != null
+                    && Radius > 0)
+                {
+                    double MX = NewPO.Position.X - Position.X;
+                    double MY = Position.Y - NewPO.Position.Y;
+
+                    // We can use trigonometry for this,
+                    // but as we only have one unknown it's easier to use Pythagoras' theorem (a^2 + b^2 = c^2)
+
+                    // Pixels
+                    double DiagDistance = Math.Pow(MX, 2) * Math.Pow(MY, 2);
+                    DiagDistance = Math.Sqrt(DiagDistance);
+
+                    NewVolume = (int)(NewVolume / (DiagDistance / Radius));
+
+                    // Shouldn't happen but just in case... 
+                    if (NewVolume > 128) NewVolume = 128;
+                    if (NewVolume < 0) NewVolume = 0; 
+
+                    SDL_mixer.Mix_VolumeMusic(NewVolume);
+                }
+                else
+                {
+                    ErrorManager.ThrowError(ClassName, "Err3DSoundRequiresSoundPositionAndRadiusException");
+                    return; 
+                }
+                
+            }
+
             if (!Repeat)
             {
                 //todo: musicstopped handling
@@ -96,7 +184,7 @@ namespace Lightning.Core.API
 
         public void OnSoundFinished()
         {
-            if (Completed) Completed = true 
+            if (!Repeat) Completed = true; 
 
             Playing = false; 
         }

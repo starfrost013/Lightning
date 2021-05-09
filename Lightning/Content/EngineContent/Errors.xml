@@ -459,4 +459,32 @@ Do not change if you are not a dev
     <Id>60</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>To use 3D sound, a Sound must have a Position and Radius!</Description>
+    <Name>Err3DSoundRequiresSoundPositionAndRadiusException</Name>
+    <Id>61</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>To use 3D sound, a Sound must have a target object!</Description>
+    <Name>Err3DSoundRequiresTargetObjectException</Name> <!-- have a target position? -->
+    <Id>62</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>Err3DSoundTargetObjectDoesNotExistException</Name>
+    <Id>63</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalObjectException</Name>
+    <Id>63</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

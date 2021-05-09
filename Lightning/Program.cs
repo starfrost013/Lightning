@@ -22,10 +22,7 @@ namespace Lightning
     /// </summary>
     public class Program
     {
-        /// <summary>
-        /// TEMP
-        /// </summary>
-        public static DataModel DataModelX { get; set; }
+        public static DataModel Engine { get; set; }
 
         /// <summary>
         /// Launches Lightning. This is very much not like the Emerald launcher. lol.
@@ -56,9 +53,8 @@ namespace Lightning
                     string LVersionString = LVersion.GetVersionString();
                     Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
 
-                    // Test code
-                    
-                    DataModelX = new DataModel();
+                    // Turns out this is how we will init after all. 
+                    Engine = new DataModel();
                     DataModel.Init(LAR.Arguments);
 
                     // -- EXITS AFTER END OF SESSION -- 

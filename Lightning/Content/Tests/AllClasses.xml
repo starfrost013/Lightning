@@ -147,6 +147,8 @@ while (true)&#13;&#10;
 }&#13;&#10;"></Script>
 
     <Sound Path="Content\Sounds\test.mp3" Repeat="True" Volume="1.0"></Sound>
+
+    <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0"></Sound>
   </Workspace>
   
 </Lightning>

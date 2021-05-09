@@ -39,6 +39,10 @@ namespace Lightning.Core.API
         /// </summary>
         public Vector2 Size { get; set; }
 
+        /// <summary>
+        /// The Z-index of this object.
+        /// </summary>
+        public int ZIndex { get; set; }
 
         // Texture is a child. 
 
