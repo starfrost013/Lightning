@@ -100,6 +100,7 @@
     <Line Name="Line1" Begin="100,100" End="400,400" Colour="100,100,100,255"/>
     <Circle Name="Circle1" Size="48,48" Position="40,40" Colour="255,255,0,0"/>
     <Circle Name="Circle2" Size="96,48" Position="120,40" Colour="200,255,255,255"/>
+    <Circle Name="Circle2" Size="96,48" Position="320,40" Colour="255,255,0,255" Fill="True"/>
     <Rectangle Name="NonFilledRectangle" Position="66,66" Size="40,40" Colour="140,70,20,140"/>
     <Rectangle Name="FilledRectangle" Position="110,66" Size="40,40" Colour="255,70,20,140" Fill="True"/>
     

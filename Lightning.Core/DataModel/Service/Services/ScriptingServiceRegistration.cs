@@ -13,8 +13,7 @@ namespace Lightning.Core.API
             // Test method registration
             RegisterMethod("Lightning.Core.API;ScriptingTest;ScTest");
 #endif
-            //RegisterMethod("Lightning.Core;Logging;Log");
-            //RegisterMethod("Lightning.Core;ErrorManager;ThrowError");
+            //RegisterMethod("Lightning.Core.API;Instance;AddChild");
         }
     }
 }

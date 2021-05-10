@@ -39,6 +39,36 @@ namespace Lightning.Core.API
                 double X = Size.X * Math.Cos(MathUtil.DegreesToRadians(i)) + Position.X;
                 double Y = Size.Y * Math.Sin(MathUtil.DegreesToRadians(i)) + Position.Y;
 
+                if (Fill)
+                {
+                    // 360 - 180 = 180
+
+
+                    double T1 = i - 180;
+                    double T2 = 180 - i;
+
+
+                    double FillLine1X = X;
+                    double FillLine1Y = Y;
+
+                    double FillLine2X;
+                    double FillLine2Y;
+
+                    if (i > 180)
+                    {
+                        FillLine2X = Size.X * Math.Cos(MathUtil.DegreesToRadians(Math.Abs(T1))) + Position.X;
+                        FillLine2Y = Size.Y * Math.Cos(MathUtil.DegreesToRadians(Math.Abs(T1))) + Position.Y;
+                    }
+                    else
+                    {
+                        FillLine2X = Size.X * Math.Cos(MathUtil.DegreesToRadians(Math.Abs(T2))) + Position.X;
+                        FillLine2Y = Size.Y * Math.Cos(MathUtil.DegreesToRadians(Math.Abs(T2))) + Position.Y;
+                    }
+
+                    SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)FillLine1X - (float)SDL_Renderer.CCameraPosition.X, (float)FillLine1Y - (float)SDL_Renderer.CCameraPosition.Y, (float)FillLine2X - (float)SDL_Renderer.CCameraPosition.X, (float)FillLine2Y - (float)SDL_Renderer.CCameraPosition.Y);
+
+                }
+
                 // draw a point. 
                 SDL.SDL_RenderDrawPointF(SDL_RendererPtr, (float)X - (float)SDL_Renderer.CCameraPosition.X, (float)Y - (float)SDL_Renderer.CCameraPosition.Y);
                 
