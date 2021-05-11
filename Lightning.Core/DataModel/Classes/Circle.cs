@@ -47,6 +47,8 @@ namespace Lightning.Core.API
                     double T1 = i - 180;
                     double T2 = 180 - i;
 
+                    if (T2 < 0) T2 = 0;
+                    if (T1 > 180) T1 = 180;
 
                     double FillLine1X = X;
                     double FillLine1Y = Y;
@@ -64,6 +66,9 @@ namespace Lightning.Core.API
                         FillLine2X = Size.X * Math.Cos(MathUtil.DegreesToRadians(Math.Abs(T2))) + Position.X;
                         FillLine2Y = Size.Y * Math.Cos(MathUtil.DegreesToRadians(Math.Abs(T2))) + Position.Y;
                     }
+
+                    // dumb hack but it might work?
+
 
                     SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)FillLine1X - (float)SDL_Renderer.CCameraPosition.X, (float)FillLine1Y - (float)SDL_Renderer.CCameraPosition.Y, (float)FillLine2X - (float)SDL_Renderer.CCameraPosition.X, (float)FillLine2Y - (float)SDL_Renderer.CCameraPosition.Y);
 
