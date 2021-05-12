@@ -54,9 +54,10 @@ namespace Lightning.Core.API
         /// <param name="MethodFullName"></param>
         internal void RegisterMethod(string MethodFullName)
         {
+            string ProcessedMethodName = MethodFullName.Replace(";", ".");
 
             // Verify that this method can be instantiated. If it fails...
-            if (!XmlUtil.CheckIfValidTypeForInstantiation(MethodFullName))
+            if (!XmlUtil.CheckIfValidTypeForInstantiation(ProcessedMethodName))
             {
                 string ErrorString = $"Attempted to register {MethodFullName}, which is not in the System or Lightning.* namespaces and therefore cannot be registered for use by scripts!";
 

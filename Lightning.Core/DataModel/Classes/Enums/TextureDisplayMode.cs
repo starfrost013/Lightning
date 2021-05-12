@@ -19,7 +19,7 @@ namespace Lightning.Core.API
         Tile = 0,
 
         /// <summary>
-        /// The texture will stretch to image.
+        /// The texture will stretch to its defined size.
         /// </summary>
         Stretch = 1,
 
