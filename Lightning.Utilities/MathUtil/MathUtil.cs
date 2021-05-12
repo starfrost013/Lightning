@@ -20,14 +20,10 @@ namespace Lightning.Utilities
         /// <returns></returns>
         public static double DegreesToRadians(double Deg)
         {
-            if (Deg < 0 || Deg > 360)
-            {
-                throw new OverflowException("Degrees must be between 0 and 360!");
-            }
-            else
-            {
-                return Deg * (Math.PI / 180);
-            }
+            if (Deg < 0 || Deg > 360) Deg = Math.Abs(Deg) % 360;
+
+            return Deg * (Math.PI / 180);
+
         }
         
     }
