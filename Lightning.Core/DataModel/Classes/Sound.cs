@@ -62,7 +62,7 @@ namespace Lightning.Core.API
         /// </summary>
         public double Radius { get; set; }
 
-        public SDL_mixer.MusicFinishedDelegate MFDelegate { get; set; }
+        internal SDL_mixer.MusicFinishedDelegate MFDelegate { get; set; }
 
         public override void OnCreate()
         {

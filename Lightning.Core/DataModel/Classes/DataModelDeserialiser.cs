@@ -320,8 +320,7 @@ namespace Lightning.Core.API
                                     }
                                     else
                                     {
-                                        DDSR.FailureReason = "Attempted to parse a null or zero-length metadata value!";
-                                        return DDSR;
+                                        continue; 
                                     }
                                 }
                             }

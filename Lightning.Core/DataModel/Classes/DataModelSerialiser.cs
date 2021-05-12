@@ -181,13 +181,16 @@ namespace Lightning.Core.API
             if (GMA.Version != null) XVersion.InnerText = GMA.Version;
 
             XMetadataNode.AppendChild(XDMSchemaVersion);
-            if (XAuthor.InnerText != null) XMetadataNode.AppendChild(XAuthor);
-            if (XDescription.InnerText != null) XMetadataNode.AppendChild(XDescription);
+            if (XAuthor.InnerText != null
+                && XAuthor.InnerText != "") XMetadataNode.AppendChild(XAuthor);
+            if (XDescription.InnerText != null
+                && XDescription.InnerText != "") XMetadataNode.AppendChild(XDescription);
             XMetadataNode.AppendChild(XCreationDate);
             XMetadataNode.AppendChild(XLastModifiedDate);
             XMetadataNode.AppendChild(XGameName); 
             XMetadataNode.AppendChild(XRevisionID);
-            if (XVersion.InnerText != null) XMetadataNode.AppendChild(XVersion); // only append if used.
+            if (XVersion.InnerText != null
+                && XVersion.InnerText != "") XMetadataNode.AppendChild(XVersion); // only append if used.
 
             Logging.Log("Saved metadata!", ClassName); 
 
@@ -324,7 +327,6 @@ namespace Lightning.Core.API
                 object AttributesValue = (InstanceTags)Ins.Info.GetValue("Attributes", Ins);
 
                 Debug.Assert(AttributesValue != null);
-
 
                 if (Value == null
                     || IIPItem.Accessibility != InstanceAccessibility.Public) // only save public properties

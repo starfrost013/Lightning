@@ -49,13 +49,14 @@ namespace Lightning.Core.API
                 int X1 = (int)Position.X + ((int)Size.X / 2);
                 int Y1 = (int)Position.Y + ((int)Size.Y / 2);
 
-                // bypass SDL2  only drawing single pixel lines (temporary code)...
+                // bypass SDL2 only drawing single pixel wide lines (temporary code)...
                 // write a custom line drawing api soon
 
                 // HACK UNTIL THEN
                 double IncrementerAmount = 1;
 
-                if (Size.X > 72) IncrementerAmount = (1 / (Size.X / 56));
+                // Vertical shouldn't be an issue in this case.
+                if (Size.X > 56) IncrementerAmount = (1 / (Size.X / 56));
 
                 for (double i = 0; i < 360; i += IncrementerAmount)
                 {
