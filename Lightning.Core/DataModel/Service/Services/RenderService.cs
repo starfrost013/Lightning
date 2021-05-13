@@ -3,7 +3,8 @@ using Lightning.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO; 
+using System.IO;
+using System.Linq; 
 using System.Text;
 
 namespace Lightning.Core.API
@@ -23,6 +24,7 @@ namespace Lightning.Core.API
     /// 2021-04-17: Moved to Lightning.Core.API
     /// 2021-04-29: Removed RunningServices; all services are now Children of the SCM
     /// 2021-05-08: Minor changes
+    /// 2021-05-13: Implemented ZIndex
     /// 
     /// </summary>
     public class RenderService : Service
@@ -471,29 +473,24 @@ namespace Lightning.Core.API
             // Get the workspace.
             Workspace Ws = DataModel.GetWorkspace();
 
-            List<PhysicalObject> ObjectsToRender = new List<PhysicalObject>(); 
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
 
-            foreach (Instance Ins in Ws.Children)
+            if (GMIR.InstanceList != null
+                && GMIR.Successful)
             {
-                Type Tt = Ins.GetType();
+                // perhaps this works?
+                List<PhysicalObject> ObjectsToRender = ListTransfer<Instance, PhysicalObject>.TransferBetweenTypes(GMIR.InstanceList); 
+                // Render each object.
+                Rendering_DoRenderPhysicalObjects(ObjectsToRender);
 
-                if (Tt == typeof(PhysicalObject))
-                {
-                    ObjectsToRender.Add((PhysicalObject)Ins);
-                }
-                else
-                {
-                    if (Tt.IsSubclassOf(typeof(PhysicalObject)))
-                    {
-                        ObjectsToRender.Add((PhysicalObject)Ins);
-                    }
-                }
+                SDL.SDL_RenderPresent(Renderer.SDLRenderer);
+            }
+            else
+            {
+
             }
 
-            // Render each object.
-            Rendering_DoRenderPhysicalObjects(ObjectsToRender);
-
-            SDL.SDL_RenderPresent(Renderer.SDLRenderer);
+            
 
         }
 

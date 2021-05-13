@@ -487,4 +487,11 @@ Do not change if you are not a dev
     <Id>63</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorObtainingListOfPhysicalObjectsToRenderException</Name>
+    <Id>64</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

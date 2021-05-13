@@ -184,7 +184,7 @@ Player API		0%
 L./L.C.API split	Complete
 IDE			0%
 DDMS Saving		Complete
-Sound API		Complete
+Sound API		Complete*
 
 More tasks may be required
-	
+*requires transfer to mix_chunk	
