@@ -1,38 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.8.21133</AssemblyVersion>
-    <FileVersion>1.0.8.21133</FileVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyVersion>1.0.1.21134</AssemblyVersion>
+    <FileVersion>1.0.1.21134</FileVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.3" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.3" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.3" />
-   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />
     <ProjectReference Include="..\Polaris.Core\Polaris.Core.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <Prefer32Bit>true</Prefer32Bit>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;WINDOWS,X64</DefineConstants>
-    <Optimize>false</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
-    <DefineConstants>TRACE;WINDOWS,X64</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
-  </PropertyGroup>
 </Project>
