@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.12.0) 
+    /// DataModel (API Version 0.12.1) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -18,7 +18,7 @@ namespace Lightning.Core.API
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
         public static int DATAMODEL_API_VERSION_MINOR = 12;
-        public static int DATAMODEL_API_VERSION_REVISION = 0;
+        public static int DATAMODEL_API_VERSION_REVISION = 1;
 
         // shouldn't be static? idk
 
@@ -92,30 +92,50 @@ namespace Lightning.Core.API
             ATest();
 #endif
             
-            SCM.InitStartupServices(Settings.ServiceStartupCommands);
-
-            // Handle arguments passed to the DataModel. 
             if (Args != null)
             {
-                if (Args.GameXMLPath != null)
+                if (Args.InitServices)
                 {
-                    DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelDeserialiser");
+                    // assume normal init 
+                    SCM.InitStartupServices(Settings.ServiceStartupCommands);
 
-                    DataModel DM = DMS.DDMS_Deserialise(Args.GameXMLPath);
-
-                    // Check for a failure
-                    if (DM == null)
+                    if (Args.GameXMLPath != null)
                     {
-                        HandleFailureToOpenDocument();
+                        DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelDeserialiser");
+
+                        DataModel DM = DMS.DDMS_Deserialise(Args.GameXMLPath);
+
+                        // Check for a failure
+                        if (DM == null)
+                        {
+                            HandleFailureToOpenDocument();
+                        }
+                        else
+                        {
+                            // Enter the main loop.
+
+                            SCM.InitServiceUpdates();
+                        }
                     }
                     else
                     {
-                        // Enter the main loop.
-
-                        SCM.InitServiceUpdates();
+                        // failsafe
+                        ErrorManager.ThrowError("DataModel", "FailureToOpenLgxException", "No LGX file was supplied and the condition was not handled.");
                     }
                 }
+                else
+                {
+                    Logging.Log("Skipping service initialisation: NoInitServices supplied", "DataModel");
+                    Logging.Log("Initialisation completed", "DataModel");
+                    return; 
+                }
+
             }
+            else
+            {
+                
+            }
+            
         }
 
         private static void HandleFailureToOpenDocument()

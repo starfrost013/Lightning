@@ -7,5 +7,6 @@ namespace Lightning.Core
     public class LaunchArgs
     {
         public string GameXMLPath { get; set; }
+        public bool InitServices { get; set; }
     }
 }

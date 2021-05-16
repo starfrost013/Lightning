@@ -8,11 +8,15 @@
         Title="Polaris (pre-alpha)" Height="450" Width="800">
     <Viewbox MinWidth="300" MinHeight="300">
         <Grid x:Name="Polaris_Main" Height="450" Width="800">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="133*"/>
+                <RowDefinition Height="317*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="327*"/>
                 <ColumnDefinition Width="73*"/>
             </Grid.ColumnDefinitions>
-            <Menu x:Name="Polaris_Menu" Margin="263,0,0,431" HorizontalAlignment="Left">
+            <Menu x:Name="Polaris_Menu" Margin="263,0,0,114" HorizontalAlignment="Left">
                 <MenuItem x:Name="Polaris_WelcomeToLightningSDK" Header="LightningSDK" IsEnabled="False"></MenuItem>
                 <MenuItem x:Name="Polaris_FileMenu" Header="File">
                     <MenuItem x:Name="Polaris_FileMenu_New" Header="New"></MenuItem>
@@ -44,13 +48,16 @@
                     <MenuItem x:Name="Polaris_HelpMenu_About" Header="About LightningSDK..."></MenuItem>
                 </MenuItem>
             </Menu>
-            <TextBlock x:Name="Polaris_Explorer_Header"  Height="17" Margin="598,0,62,0" Text="DataModel Explorer:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-            <TreeView x:Name="Polaris_Explorer" Margin="598,18,0,138" Grid.ColumnSpan="2"></TreeView>
+            <TextBlock x:Name="Polaris_Explorer_Header"  Height="17" Margin="603,0,57,0" Text="DataModel Explorer:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <TreeView x:Name="Polaris_Explorer" Margin="603,24,0,134" Grid.ColumnSpan="2" Grid.RowSpan="2"></TreeView>
 
-            <TextBlock x:Name="Polaris_Output_Header"  Height="17" Margin="10,342,504,0" Text="Output:" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <Border x:Name="Polaris_Output_Border" HorizontalAlignment="Left" Height="81" Margin="10,359,0,0" VerticalAlignment="Top" Width="587">
-                
+            <TextBlock x:Name="Polaris_Output_Header"  Height="17" Margin="10,209,504,0" Text="Output:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
+            <Border x:Name="Polaris_Output_Border" HorizontalAlignment="Left" Height="81" Margin="10,226,0,0" VerticalAlignment="Top" Width="587" Grid.Row="1">
+
             </Border>
+            <TabControl x:Name="Polaris_TabManager" HorizontalAlignment="Left" Height="313" Margin="11,22,0,0" VerticalAlignment="Top" Width="587" Grid.RowSpan="2">
+                <!-- tabitems are programmatic -->
+            </TabControl>
 
         </Grid>
     </Viewbox>

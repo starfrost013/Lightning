@@ -88,8 +88,12 @@ namespace Lightning
                     {
                         switch (Argument)
                         {
+                            case "-noservices":
+                                LAR.Action = LaunchArgsAction.InitNoServices;
+                                continue; 
                             default:
                                 LAR.Arguments.GameXMLPath = Argument;
+                                LAR.Arguments.InitServices = true; 
                                 continue; 
                         }
                     }

@@ -15,5 +15,6 @@ namespace Lightning.Core.API
     {
         public List<char> Characters { get; set; }
 
+        public List<Token> ASTTokenTree { get; set; }
     }
 }

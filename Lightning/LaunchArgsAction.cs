@@ -10,8 +10,19 @@ namespace Lightning
     /// </summary>
     public enum LaunchArgsAction
     {
+        /// <summary>
+        /// Launch a GameXML.
+        /// </summary>
         LaunchGameXML = 0,
 
-        DoNothing = 1
+        /// <summary>
+        /// Do nothing.
+        /// </summary>
+        DoNothing = 1,
+
+        /// <summary>
+        /// Initialise, but do not start any services. [Polaris / LightningSDK only]
+        /// </summary>
+        InitNoServices = 2
     }
 }

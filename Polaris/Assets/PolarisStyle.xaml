@@ -30,4 +30,9 @@
         <Setter Property="BorderBrush" Value="#FFCCCCCC"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
     </Style>
+
+    <Style TargetType="TabControl">
+        <Setter Property="BorderBrush" Value="#FFCCCCCC"></Setter>
+    </Style>
+    
 </ResourceDictionary>
