@@ -1,14 +1,17 @@
-; Lightning SDK Setup ver 0.2.000.00002
+; Lightning SDK Setup ver 0.2.000.00003
 ; May 4, 2021
 
-
+; v0.2.000.00003  May 16, 2021  Added INSTALLPACKAGE_INSTALL_SDK ifdef for Polaris
+; v0.2.000.00002  May 4, 2021   First functional version
 #define MyAppName "Lightning SDK"
-#define MyAppVersion "0.2.XXX.XXXXX"
+#define MyAppVersion "0.2.XXX.XXXXX" ; set to version when a version is there
 #define MyAppPublisher "starfrost/Lightning Dev Team"
 #define MyAppExeName "Lightning.exe"
 #define MyAppAssocName "Lightning Game Project"
 #define MyAppAssocExt ".lgx"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
+
+#define INSTALLPACKAGE_INSTALL_SDK
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -59,6 +62,10 @@ Source: "D:\Lightning_builds\latest\Lightning.dll"; DestDir: "{app}"; Flags: ign
 Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.dev.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.Utilities.dll"; DestDir: "{app}"; Flags: ignoreversion
+#ifdef INSTALLPACKAGE_INSTALL_SDK
+Source: "D:\Lightning_builds\latest\Polaris.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\Polaris.Core.dll"; DestDir: "{app}"; Flags: ignoreversion 
+#endif
 Source: "D:\Lightning_builds\latest\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\SDL2_image-v2.0.5-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\SDL2_mixer-v2.0.4-x64.dll"; DestDir: "{app}"; Flags: ignoreversion

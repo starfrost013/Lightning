@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- LightningSDK (Polaris - Development Environment) UI tab 
+
+Move to GlobalSettings?
+
+-->
+
+<Tabs>
+  <SchemaVersion>0.1.0.0001</SchemaVersion>
+  <Tab>
+    <FriendlyName>Test Tab</FriendlyName>
+    <Name>TestTab</Name>
+    <UserControlClassName>TestTab</UserControlClassName>
+  </Tab>
+</Tabs>

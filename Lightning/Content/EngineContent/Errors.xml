@@ -494,4 +494,18 @@ Do not change if you are not a dev
     <Id>64</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisTabCollectionEnumeratorOverflowException</Name>
+    <Id>65</Id>
+    <Severity>FatalError</Severity> <!-- fatal for now -->
+  </Error>
+
+  <Error>
+    <Description>--overrideappid was specified without an appname to override, ignoring</Description>
+    <Name>OverrideAppIdSpecifiedWithNoAppId</Name>
+    <Id>66</Id>
+    <Severity>Warning</Severity>
+  </Error>
 </Errors>

@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.12.1) 
+    /// DataModel (API Version 0.12.2) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -18,7 +18,7 @@ namespace Lightning.Core.API
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
         public static int DATAMODEL_API_VERSION_MINOR = 12;
-        public static int DATAMODEL_API_VERSION_REVISION = 1;
+        public static int DATAMODEL_API_VERSION_REVISION = 2;
 
         // shouldn't be static? idk
 
@@ -94,6 +94,17 @@ namespace Lightning.Core.API
             
             if (Args != null)
             {
+
+                if (Args.AppName != null)
+                {
+                    // Allow for SDK-specific behaviour.
+                    if (Args.AppName.Contains("Polaris")
+                        || Args.AppName.Contains("LightningSDK"))
+                    {
+                        Logging.Log($"SDK Launching...", "DataModel");
+                    }
+                }
+
                 if (Args.InitServices)
                 {
                     // assume normal init 

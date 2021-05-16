@@ -12,7 +12,13 @@ using System.Windows;
 namespace Polaris
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Polaris (LightningSDK Development Environment)
+    /// 
+    /// © 2021 Lightning Development Team.
+    /// 
+    /// Development package for Lightning-based games. 
+    /// 
+    /// Development begun       May 13, 2021
     /// </summary>
     public partial class App : Application
     {
