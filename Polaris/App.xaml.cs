@@ -23,14 +23,8 @@ namespace Polaris
     public partial class App : Application
     {
         private void Application_Activated(object sender, EventArgs e)
-        {
-            LaunchArgs LA = new LaunchArgs();
+        { 
 
-            // Do not initialise services or game xml
-
-            DataModel DM = new DataModel();
-
-            DataModel.Init();
 
         }
     }

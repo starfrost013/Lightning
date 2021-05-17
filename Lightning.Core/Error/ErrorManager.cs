@@ -70,21 +70,31 @@ namespace Lightning.Core
         /// <returns></returns>
         internal static GetErrorResult GetError(string ErrName)
         {
-            GetErrorResult ErrResult = new GetErrorResult();
-
-            foreach (Error Err in Errors)
+            if (Errors.Count == 0
+                || Errors == null)
             {
-                if (Err.Name == ErrName)
+                HandleError("Error Manager", new Error { Id = 0xDEA7BABE, Name = "AttemptingToThrowErrorBeforeErrorManagerInitialisedException", Description = "Attempted to throw an error when the error manager has not been initialised!", Severity = MessageSeverity.FatalError});
+                return null; 
+            }
+            else
+            {
+                GetErrorResult ErrResult = new GetErrorResult();
+
+                foreach (Error Err in Errors)
                 {
-                    // by default a bool is false
-                    ErrResult.Successful = true;
-                    ErrResult.Error = Err;
-                    return ErrResult;
+                    if (Err.Name == ErrName)
+                    {
+                        // by default a bool is false
+                        ErrResult.Successful = true;
+                        ErrResult.Error = Err;
+                        return ErrResult;
+                    }
+
                 }
 
+                return ErrResult;
             }
 
-            return ErrResult;
         }
 
         /// <summary>
@@ -96,17 +106,27 @@ namespace Lightning.Core
         {
             GetErrorResult ErrResult = new GetErrorResult();
 
-            foreach (Error Err in Errors)
+            if (Errors.Count == 0
+                || Errors == null)
             {
-                if (Err.Id == ErrorId)
-                {
-                    ErrResult.Successful = true;
-                    ErrResult.Error = Err;
-                    return ErrResult;
-                }
+                HandleError("Error Manager", new Error { Id = 0xDEA7BABE, Name = "AttemptingToThrowErrorBeforeErrorManagerInitialisedException", Description = "Attempted to throw an error when the error manager has not been initialised!", Severity = MessageSeverity.FatalError });
+                return null;
             }
+            else
+            {
+                foreach (Error Err in Errors)
+                {
+                    if (Err.Id == ErrorId)
+                    {
+                        ErrResult.Successful = true;
+                        ErrResult.Error = Err;
+                        return ErrResult;
+                    }
+                }
 
-            return ErrResult; 
+                return ErrResult;
+            }
+            
         }
 
         /// <summary>
@@ -456,7 +476,7 @@ namespace Lightning.Core
             {
                 // Throw an error
                 string ErrorString = $"Error serialising error: {err}";
-                ThrowError(ErrorString, new Error { Name = "ErrorSerialisingErrorXmlException", Description = ErrorString, Id = 0x4444DEAD, Severity = MessageSeverity.FatalError, BaseException = err });
+                ThrowError(ErrorString, new Error { Name = "ErrorSerialisingErrorXmlException", Description = ErrorString, Id = 0x4444BABE, Severity = MessageSeverity.FatalError, BaseException = err });
                 // prevent compile error
 
                 // Successful is false by default

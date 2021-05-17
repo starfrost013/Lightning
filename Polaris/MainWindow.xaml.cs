@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Polaris.Core; 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,10 @@ namespace Polaris
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// TEMP: Polaris state
+        /// </summary>
+        public PolarisState PolarisState { get; set; }
         public MainWindow()
         {
             InitializeComponent();

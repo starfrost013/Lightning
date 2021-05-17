@@ -101,6 +101,8 @@ namespace Lightning.Core
             ErrorList.Add((Error)Obj);
         }
 
+        public int Count => ErrorList.Count;
+
     }
 
     public class ErrorCollectionEnumerator : IEnumerator
@@ -134,6 +136,8 @@ namespace Lightning.Core
                 Errors.Add(CurErr);
             }
         }
+
+
     }
 
 }

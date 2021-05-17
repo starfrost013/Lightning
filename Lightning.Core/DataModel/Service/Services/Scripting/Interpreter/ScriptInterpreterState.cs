@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// ScriptInterpreterState
     /// 
-    /// May 3, 2021
+    /// May 3, 2021 (modified May 17, 2021: added basic stack functions0
     /// </summary>
     public class ScriptInterpreterState
     {
@@ -16,9 +16,25 @@ namespace Lightning.Core.API
         /// </summary>
         public List<Variable> Variables { get; set; }
 
+        /// <summary>
+        /// An FIFO stack.
+        /// </summary>
+        public List<Token> Stack { get; set; }
+        
         public ScriptInterpreterState()
         {
+            Stack = new List<Token>();
             Variables = new List<Variable>();
         }
+
+        /// <summary>
+        /// TokenCollection?
+        /// 
+        /// Pops a token to the stack.
+        /// </summary>
+        /// <returns></returns>
+        public Token Pop() => Stack[Stack.Count - 1];
+
+        public void  Push(Token TokenToPush) => Stack.Add(TokenToPush); 
     }
 }

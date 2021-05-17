@@ -21,6 +21,11 @@ namespace Polaris.Core
         [XmlElement("Tab")]
         public List<Tab> Tabs { get; set; }
 
+        public TabCollection()
+        {
+
+        }
+
         public TabCollection(List<Tab> TabList)
         {
             foreach (Tab Tab in TabList)
