@@ -4,8 +4,9 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyVersion>1.0.2.21135</AssemblyVersion>
-    <FileVersion>1.0.2.21135</FileVersion>
+    <AssemblyVersion>1.0.11.21137</AssemblyVersion>
+    <FileVersion>1.0.11.21137</FileVersion>
+    <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,4 +14,26 @@
     <ProjectReference Include="..\Polaris.Core\Polaris.Core.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <Prefer32Bit>true</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;WINDOWS,X64</DefineConstants>
+    <Optimize>false</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>C:\Users\FiercePC\Lightning\Lightning\Lightning\bin\Debug.Win64</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+    <DefineConstants>TRACE;WINDOWS,X64</DefineConstants>
+    <OutputPath>C:\Users\FiercePC\Lightning\Lightning\Lightning\bin\Release.Win64</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+  </PropertyGroup>
+  
 </Project>

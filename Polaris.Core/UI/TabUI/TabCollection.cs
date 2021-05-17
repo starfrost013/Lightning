@@ -88,7 +88,7 @@ namespace Polaris.Core
 #if DEBUG
                     ErrorManager.ThrowError("Polaris", "PolarisTabCollectionEnumeratorOverflowException", $"Overflow when attempting to access Tab - value is {Current} when it must be between -1 and {Tabs.Count - 1}!", err);
 #else
-                    ErrorMaager.ThrowError("Polaris", "PolarisTabCollectionEnumeratorOverflowException", $"Overflow when attempting to access Tab - value is {Current} when it must be between -1 and {Tabs.Count - 1}!");
+                    ErrorManager.ThrowError("Polaris", "PolarisTabCollectionEnumeratorOverflowException", $"Overflow when attempting to access Tab - value is {Current} when it must be between -1 and {Tabs.Count - 1}!");
 #endif
 
                     return null; // will not run

@@ -39,6 +39,8 @@
     <None Remove="Content\EngineContent\GlobalSettings.xml" />
     <None Remove="Content\Images\test_texture_small.png" />
     <None Remove="Content\Images\test_texture_small2.png" />
+    <None Remove="Content\Polaris\Schema\TabCollection.xsd" />
+    <None Remove="Content\Polaris\Tabs.xml" />
     <None Remove="Content\Schema\Errors.xsd" />
     <None Remove="Content\Schema\GlobalSettings.xsd" />
     <None Remove="Content\Schema\Lightning.xsd" />
@@ -75,6 +77,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\test_texture_small2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Polaris\Schema\TabCollection.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Polaris\Tabs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Schema\GlobalSettings.xsd">
