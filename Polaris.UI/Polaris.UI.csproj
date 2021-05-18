@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.198.21138</AssemblyVersion>
-    <FileVersion>1.0.198.21138</FileVersion>
-    <PackageId>Lightning Standard Libraries</PackageId>
+    <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
+    <AssemblyVersion>1.0.3.21138</AssemblyVersion>
+    <FileVersion>1.0.3.21138</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,4 +28,13 @@
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Content\Setup\SetupHandle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\Setup\SetupHandle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

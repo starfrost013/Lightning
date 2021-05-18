@@ -22,10 +22,11 @@ namespace Polaris
     /// </summary>
     public partial class App : Application
     {
-        private void Application_Activated(object sender, EventArgs e)
-        { 
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            LaunchArgsResult LA = LaunchArgs.HandleArgs(e.Args);
 
-
+            LaunchArgs LA_Args = LA.Arguments;
         }
     }
 }

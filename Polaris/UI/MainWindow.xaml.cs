@@ -1,4 +1,5 @@
-﻿using Polaris.Core; 
+﻿using Polaris.Core;
+using Polaris.UI; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,21 @@ namespace Polaris
         public MainWindow()
         {
             InitializeComponent();
+
         }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            PolarisState = new PolarisState();
+            PolarisState.Init();
+        }
+
+        /// <summary>
+        /// Test event handler for uilauncher
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Polaris_HelpMenu_About_Click(object sender, RoutedEventArgs e) => UILauncher<AboutWindowHost>.LaunchUI(new AboutWindowHost()); 
+
     }
 }

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning
+namespace Lightning.Core
 {
     /// <summary>
     /// Launcher: Actions to perform 

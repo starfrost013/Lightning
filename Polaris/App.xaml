@@ -2,8 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Polaris"
-             StartupUri="MainWindow.xaml" Activated="Application_Activated">
+             StartupUri="UI\MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
-        <ResourceDictionary Source="/Polaris;component/Assets/PolarisStyle.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Polaris.UI;component/Assets/PolarisStyle.xaml"></ResourceDictionary>
     </Application.Resources>
 </Application>

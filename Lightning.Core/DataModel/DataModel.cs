@@ -144,7 +144,8 @@ namespace Lightning.Core.API
             }
             else
             {
-                
+                ErrorManager.ThrowError("DataModel", "GameXmlFileRequiredException");
+                return; 
             }
             
         }

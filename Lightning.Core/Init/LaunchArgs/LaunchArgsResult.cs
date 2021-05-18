@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning
+namespace Lightning.Core
 {
     public class LaunchArgsResult
     {

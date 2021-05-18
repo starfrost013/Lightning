@@ -4,14 +4,37 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyVersion>1.0.11.21137</AssemblyVersion>
-    <FileVersion>1.0.11.21137</FileVersion>
+    <AssemblyVersion>1.0.21.21138</AssemblyVersion>
+    <FileVersion>1.0.21.21138</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Content\Polaris\Schema\TabCollection.xsd" />
+    <None Remove="Content\Polaris\Tabs.xml" />
+    <None Remove="Content\Splash\IDESplash_D.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\Polaris\Schema\TabCollection.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\Polaris\Tabs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />
     <ProjectReference Include="..\Polaris.Core\Polaris.Core.csproj" />
+    <ProjectReference Include="..\Polaris.UI\Polaris.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Content\Splash\IDESplash_D.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </SplashScreen>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -508,4 +508,11 @@ Do not change if you are not a dev
     <Id>66</Id>
     <Severity>Warning</Severity>
   </Error>
+
+  <Error>
+    <Description>Please provide a Game XML file to load!</Description>
+    <Name>GameXmlFileRequiredException</Name>
+    <Id>67</Id>
+    <Severity>FatalError</Severity>
+  </Error>
 </Errors>

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Polaris.UI.AboutWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Polaris.UI"
+             mc:Ignorable="d" Height="430" Width="745">
+    <Grid>
+        <TextBlock x:Name="PolarisAbout_Header" HorizontalAlignment="Left" Margin="12,-10,0,0" Text="Polaris" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="72"/>
+        <TextBlock x:Name="PolarisAbout_Header_LightningSDK" HorizontalAlignment="Left" Margin="16,66,0,0" Text="Lightning Software Development Kit" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Foreground="#0060A0"/>
+        <TextBlock x:Name="PolarisAbout_Header_Copyright" HorizontalAlignment="Left" Margin="16,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="386" Height="80" FontSize="14">
+            <TextBlock.Text>
+
+                LightningSDK © 2021 Lightning Dev Team. Created by starfrost.
+                
+                This software is bound by the End-User License Agreement and is not open-source unless ten years have elapsed since its release date.
+
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock x:Name="PolarisAbout_Version" HorizontalAlignment="Left" Margin="16,191,0,0" Text="Version 0.2.486.21138 (pre-alpha) (Debug)" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.5,0.248"/>
+        <Button x:Name="PolarisAbout_ExitButton" Content="Exit" HorizontalAlignment="Left" Height="29" Margin="16,228,0,0" VerticalAlignment="Top" Width="99"/>
+        <Line x:Name="PolarisAbout_Divider" Stroke="#FFCCCCCC" StrokeThickness="1" X1="500" Y1="0" X2="500" Y2="430"></Line>
+        <Image x:Name="PolarisAbout_TempImage" Height="375" Margin="574,23,78,0" VerticalAlignment="Top" Source="Content\Setup\SetupHandle.png"/>
+
+
+
+
+    </Grid>
+</UserControl>
