@@ -22,11 +22,13 @@ namespace Polaris
     /// </summary>
     public partial class App : Application
     {
+        public static LaunchArgs ProcessedLaunchArguments { get; set; }
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             LaunchArgsResult LA = LaunchArgs.HandleArgs(e.Args);
 
-            LaunchArgs LA_Args = LA.Arguments;
+            ProcessedLaunchArguments = LA.Arguments;
+
         }
     }
 }

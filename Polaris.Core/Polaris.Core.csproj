@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.23.21138</AssemblyVersion>
-    <FileVersion>1.0.23.21138</FileVersion>
+    <AssemblyVersion>1.0.34.21139</AssemblyVersion>
+    <FileVersion>1.0.34.21139</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 
@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />
+    <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
   </ItemGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

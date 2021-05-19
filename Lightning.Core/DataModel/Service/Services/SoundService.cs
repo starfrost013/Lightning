@@ -68,9 +68,9 @@ namespace Lightning.Core.API
                 GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("Sound");
 
                 if (GMIR.Successful
-                    && GMIR.InstanceList != null)
+                    && GMIR.Instances != null)
                 {
-                    List<Instance> IX = GMIR.InstanceList;
+                    List<Instance> IX = GMIR.Instances;
 
                     foreach (Instance Ins in IX)
                     {

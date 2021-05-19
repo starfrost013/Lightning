@@ -475,11 +475,11 @@ namespace Lightning.Core.API
 
             GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
 
-            if (GMIR.InstanceList != null
+            if (GMIR.Instances != null
                 && GMIR.Successful)
             {
                 // perhaps this works?
-                List<PhysicalObject> ObjectsToRender = ListTransfer<Instance, PhysicalObject>.TransferBetweenTypes(GMIR.InstanceList); 
+                List<PhysicalObject> ObjectsToRender = ListTransfer<Instance, PhysicalObject>.TransferBetweenTypes(GMIR.Instances); 
                 // Render each object.
                 Rendering_DoRenderPhysicalObjects(ObjectsToRender);
 

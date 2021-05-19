@@ -81,7 +81,7 @@
     <PhysicalObject CanCollide="False" Position="60,60" Size="200,200" ZIndex="0" Name="Block2">
       <Texture Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
     </PhysicalObject>
-    <Camera Active="True" CameraType="Free" CanCollide="False" Position="570,0" ZIndex="0" Name="Camera1" />
+    <Camera Active="True" CameraType="Free" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" />
     <Script Content="// LightningScript  // April 25, 2021&#xD;&#xA; // Comments are //&#xD;&#xA;   // methods are exposed by the engine and are called exactly how they are in C#&#xD;&#xA; Logging.Log('Hello world!'); // semicolon optional&#xD;&#xA;  // Dynamically typed&#xD;&#xA; a = 'a'&#xD;&#xA; b = 2&#xD;&#xA;  // Functions have C-like syntax&#xD;&#xA; function Test()&#xD;&#xA;  {&#xD;&#xA;  Logging.Log('I'm a script!')&#xD;&#xA; }&#xD;&#xA;  if (b == 2) // statements have C-like syntax &#xD;&#xA; {&#xD;&#xA;  &#xD;&#xA; }&#xD;&#xA;  // Infinite loop&#xD;&#xA; while (true)&#xD;&#xA; {&#xD;&#xA;  Test();&#xD;&#xA; }&#xD;&#xA;" Name="WsTestScript" />
     <Sound Is3D="True" TargetObject="Camera1" Path="Content\Sounds\test.mp3" Repeat="True" Volume="1" Radius="20" CanCollide="False" Position="-100,0" ZIndex="0" Name="Instance" />
   </Workspace>

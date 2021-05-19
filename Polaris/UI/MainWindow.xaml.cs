@@ -35,7 +35,7 @@ namespace Polaris
         private void Window_Initialized(object sender, EventArgs e)
         {
             PolarisState = new PolarisState();
-            PolarisState.Init();
+            PolarisState.Init(App.ProcessedLaunchArguments);
         }
 
         /// <summary>

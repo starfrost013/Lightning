@@ -312,22 +312,20 @@ namespace Lightning.Core.API
         {
             GetMultiInstanceResult GIR = new GetMultiInstanceResult();
 
-            foreach (Instance ThisChild in Children)
+            foreach (Instance ThisChild in Parent.Children)
             {
+                Type ParentType = Type.GetType($"{DataModel.DATAMODEL_NAMESPACE_PATH}.{ClassName}");
+                Type ChildType = ThisChild.GetType();
+
                 if (ThisChild.ClassName == ClassName
-                    && ThisChild.GetType().Name == ClassName)
+                    || ChildType.IsSubclassOf(ParentType))
                 {
                     InstanceList.Add(ThisChild);
-
-                    if (ThisChild.Children.Count > 0)
-                    {
-                        GetAllChildrenOfType_DoGetChildren(Parent, InstanceList, ClassName);
-                    }
                 }
             }
 
             GIR.Successful = true;
-            GIR.InstanceList = InstanceList;
+            GIR.Instances = InstanceList;
             return GIR; 
         }
 

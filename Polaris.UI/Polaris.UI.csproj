@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.3.21138</AssemblyVersion>
-    <FileVersion>1.0.3.21138</FileVersion>
+    <AssemblyVersion>1.0.4.21139</AssemblyVersion>
+    <FileVersion>1.0.4.21139</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

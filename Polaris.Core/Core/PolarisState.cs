@@ -41,23 +41,33 @@ namespace Polaris.Core
             Tabs = new TabCollection();
         }
 
-        public void Init()
+        public void Init(LaunchArgs DataModelLaunchArgs = null)
         {
-            Init_InitDataModel();
+            Init_InitDataModel(DataModelLaunchArgs);
             Init_SerialiseTabs();
         }
 
-        private void Init_InitDataModel()
+        private void Init_InitDataModel(LaunchArgs DataModelLaunchArgs = null)
         {
-            LaunchArgs LA = new LaunchArgs();
+
+            LaunchArgs LA = null; 
 
             // Do not initialise services or game xml
+
+            if (DataModelLaunchArgs != null)
+            {
+                LA = DataModelLaunchArgs;
+            }
+            else
+            {
+                LA = new LaunchArgs();
+            }
 
             LA.AppName = "Polaris";
 
             DataModel = new DataModel();
 
-            DataModel.Init();
+            DataModel.Init(LA);
         }
 
         private void Init_SerialiseTabs()
