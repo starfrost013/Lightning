@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Polaris"
         xmlns:Polaris="clr-namespace:Polaris.UI;assembly=Polaris.UI"
         mc:Ignorable="d"
-        Title="AboutWindowHost" Height="450" Width="800">
+        Title="About Polaris" Height="450" Width="756">
     <Grid>
         <Polaris:AboutWindow></Polaris:AboutWindow>
     </Grid>

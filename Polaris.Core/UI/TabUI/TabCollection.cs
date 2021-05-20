@@ -23,11 +23,12 @@ namespace Polaris.Core
 
         public TabCollection()
         {
-
+            Tabs = new List<Tab>();
         }
 
         public TabCollection(List<Tab> TabList)
         {
+            Tabs = new List<Tab>();
             foreach (Tab Tab in TabList)
             {
                 Tabs.Add(Tab);
@@ -38,7 +39,18 @@ namespace Polaris.Core
 
         public TabCollectionEnumerator GetEnumerator()=> new TabCollectionEnumerator(Tabs);
 
-        
+        public void Add(object Obj)
+        {
+            if (Obj.GetType() != typeof(Tab))
+            {
+                ErrorManager.ThrowError("TabCollection", "PolarisCannotAddNonTabToTabCollectionException");
+                return;
+            }
+            else
+            {
+                Tabs.Add((Tab)Obj);
+            }
+        }
 
     }
 

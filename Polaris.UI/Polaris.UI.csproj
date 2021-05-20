@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.4.21139</AssemblyVersion>
-    <FileVersion>1.0.4.21139</FileVersion>
+    <AssemblyVersion>1.0.6.21140</AssemblyVersion>
+    <FileVersion>1.0.6.21140</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -2,13 +2,14 @@
 using Lightning.Core.API;
 using System;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Polaris.Core
 {
     /// <summary>
     /// PolarisState
     /// 
-    /// May 13, 2021 (modified May 17, 2021)
+    /// May 13, 2021 (modified May 20, 2021)
     /// 
     /// Defines the global state for Polaris.
     /// </summary>
@@ -63,7 +64,9 @@ namespace Polaris.Core
                 LA = new LaunchArgs();
             }
 
+            // override some (services will not be initialised)
             LA.AppName = "Polaris";
+            LA.InitServices = false;
 
             DataModel = new DataModel();
 
@@ -89,7 +92,11 @@ namespace Polaris.Core
 
         private void Init_SerialiseTabs_Serialise()
         {
+            XmlSerializer XS = new XmlSerializer(typeof(TabCollection));
 
+            XmlReader XRA = XmlReader.Create(@"Content\Polaris\Tabs.xml");
+
+            Tabs = (TabCollection)XS.Deserialize(XRA);
         }
 
 

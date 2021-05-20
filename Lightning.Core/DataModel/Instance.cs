@@ -333,5 +333,18 @@ namespace Lightning.Core.API
         {
             return; 
         }
+
+        public GetMultiInstanceResult GetChildren()
+        {
+            GetMultiInstanceResult GMIR = new GetMultiInstanceResult();
+
+            foreach (Instance Child in Children)
+            {
+                GMIR.Instances.Add(Child);
+            }
+
+            return GMIR;
+        }
+
     }
 }

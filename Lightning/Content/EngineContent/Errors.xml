@@ -515,4 +515,18 @@ Do not change if you are not a dev
     <Id>67</Id>
     <Severity>FatalError</Severity>
   </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisNoDataModelLoadedException</Name>
+    <Id>68</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot add a non-Tab to a TabCollection!</Description>
+    <Name>PolarisCannotAddNonTabToTabCollectionException</Name>
+    <Id>69</Id>
+    <Severity>FatalError</Severity>
+  </Error>
 </Errors>

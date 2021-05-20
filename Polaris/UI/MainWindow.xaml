@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Polaris"
         mc:Ignorable="d"
-        Title="Polaris (pre-alpha)" Height="450" Width="800" Initialized="Window_Initialized">
+        Title="Polaris (pre-alpha)" Height="450" Width="800" Initialized="Window_Initialized" Loaded="Window_Loaded">
     <Viewbox MinWidth="300" MinHeight="300">
         <Grid x:Name="Polaris_Main" Height="450" Width="800">
             <Grid.RowDefinitions>
@@ -48,8 +48,8 @@
                     <MenuItem x:Name="Polaris_HelpMenu_About" Header="About LightningSDK..." Click="Polaris_HelpMenu_About_Click"></MenuItem>
                 </MenuItem>
             </Menu>
-            <TextBlock x:Name="Polaris_Explorer_Header"  Height="17" Margin="603,9,57,0" Text="DataModel Explorer:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-            <TreeView x:Name="Polaris_Explorer" Margin="603,24,0,134" Grid.ColumnSpan="2" Grid.RowSpan="2"></TreeView>
+            <TextBlock x:Name="Polaris_Explorer_Header" Height="17" Margin="603,9,57,0" Text="DataModel Explorer:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <TreeView x:Name="Polaris_Explorer" Margin="603,24,0,134" Grid.ColumnSpan="2" Grid.RowSpan="2" ItemsSource="{Binding}" DisplayMemberPath="Name"></TreeView>
 
             <TextBlock x:Name="Polaris_Output_Header"  Height="17" Margin="10,209,504,0" Text="Output:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
             <Border x:Name="Polaris_Output_Border" HorizontalAlignment="Left" Height="81" Margin="10,226,0,0" VerticalAlignment="Top" Width="587" Grid.Row="1">

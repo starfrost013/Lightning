@@ -43,7 +43,12 @@ namespace Polaris
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Polaris_HelpMenu_About_Click(object sender, RoutedEventArgs e) => UILauncher<AboutWindowHost>.LaunchUI(new AboutWindowHost()); 
+        private void Polaris_HelpMenu_About_Click(object sender, RoutedEventArgs e) => UILauncher<AboutWindowHost>.LaunchUI(new AboutWindowHost());
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UIPopulator UIP = new UIPopulator();
+            UIP.PopulateTreeView(PolarisState, Polaris_Explorer); // pass by value and update the object.
+        }
     }
 }
