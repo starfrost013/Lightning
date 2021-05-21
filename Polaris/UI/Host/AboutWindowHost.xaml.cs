@@ -21,5 +21,10 @@ namespace Polaris
         {
             InitializeComponent();
         }
+
+        public void ExitHit(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

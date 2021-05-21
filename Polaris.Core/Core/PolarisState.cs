@@ -15,6 +15,7 @@ namespace Polaris.Core
     /// </summary>
     public class PolarisState
     {
+
         /// <summary>
         /// The Lightning DataModel.
         /// </summary>

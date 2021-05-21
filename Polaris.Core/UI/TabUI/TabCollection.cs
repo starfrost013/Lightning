@@ -21,6 +21,9 @@ namespace Polaris.Core
         [XmlElement("Tab")]
         public List<Tab> Tabs { get; set; }
 
+        // may need to be moved
+        public static string POLARIS_TAB_COLLECTION_NAMESPACE_PATH = "Polaris.UI";
+
         public TabCollection()
         {
             Tabs = new List<Tab>();
@@ -66,6 +69,8 @@ namespace Polaris.Core
 
         public TabCollectionEnumerator(List<Tab> TabList)
         {
+            Tabs = new List<Tab>();
+
             foreach (Tab Tab in TabList)
             {
                 Tabs.Add(Tab);

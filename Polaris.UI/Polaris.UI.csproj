@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.6.21140</AssemblyVersion>
-    <FileVersion>1.0.6.21140</FileVersion>
+    <AssemblyVersion>1.0.19.21141</AssemblyVersion>
+    <FileVersion>1.0.19.21141</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -36,5 +36,9 @@
     <Content Include="Content\Setup\SetupHandle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />
   </ItemGroup>
 </Project>

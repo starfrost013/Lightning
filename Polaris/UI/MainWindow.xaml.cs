@@ -49,6 +49,7 @@ namespace Polaris
         {
             UIPopulator UIP = new UIPopulator();
             UIP.PopulateTreeView(PolarisState, Polaris_Explorer); // pass by value and update the object.
+            UIP.PopulateTabs(PolarisState, Polaris_TabManager); 
         }
     }
 }

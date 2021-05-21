@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="About Polaris" Height="450" Width="756">
     <Grid>
-        <Polaris:AboutWindow></Polaris:AboutWindow>
+        <Polaris:AboutWindow ExitHit="ExitHit"></Polaris:AboutWindow>
     </Grid>
 </Window>

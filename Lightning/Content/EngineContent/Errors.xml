@@ -529,4 +529,25 @@ Do not change if you are not a dev
     <Id>69</Id>
     <Severity>FatalError</Severity>
   </Error>
+
+  <Error>
+    <Description>Attempted to populate TabUI when Tabs have not been loaded!</Description>
+    <Name>PolarisCannotPopulateTabUIWithNoTabsException</Name>
+    <Id>70</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisCannotLoadNonexistentUserControlForTabUseException</Name>
+    <Id>71</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisCannotLoadNonUserControlForTabUseException</Name>
+    <Id>72</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

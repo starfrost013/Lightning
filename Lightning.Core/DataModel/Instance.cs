@@ -343,6 +343,7 @@ namespace Lightning.Core.API
                 GMIR.Instances.Add(Child);
             }
 
+            GMIR.Successful = true; 
             return GMIR;
         }
 

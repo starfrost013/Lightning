@@ -31,6 +31,50 @@
         <Setter Property="BorderThickness" Value="1"></Setter>
     </Style>
 
+    <!-- Button style -->
+    <Style TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border x:Name="Polaris_Button_Border" CornerRadius="3" BorderThickness="0.6">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#e0e0e0" Offset="0.0"></GradientStop>
+                                    <GradientStop Color="#ffffff" Offset="0.5"></GradientStop>
+                                    <GradientStop Color="#e0e0e0" Offset="1.0"></GradientStop>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#b4b4b4" Offset="0.0"></GradientStop>
+                                    <GradientStop Color="#d0d0d0" Offset="0.5"></GradientStop>
+                                    <GradientStop Color="#b4b4b4" Offset="1.0"></GradientStop>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                        </Border>
+                        
+                        <ContentPresenter x:Name="Polaris_Button_ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#a4a4a4" Offset="0.0"></GradientStop>
+                                        <GradientStop Color="#c0c0c0" Offset="0.5"></GradientStop>
+                                        <GradientStop Color="#a4a4a4" Offset="1.0"></GradientStop>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="TabControl">
         <Setter Property="BorderBrush" Value="#FFCCCCCC"></Setter>
     </Style>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Core;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +19,33 @@ namespace Polaris.UI
     /// </summary>
     public partial class AboutWindow : UserControl
     {
+
+        public EventHandler ExitHit { get; set; }
+
         public AboutWindow()
         {
             InitializeComponent();
         }
+
+        private string GetVersionString()
+        {
+            StringBuilder SB = new StringBuilder();
+
+            // Split version and engine version? maybe?
+            SB.Append(LVersion.GetVersionString());
+
+#if DEBUG
+            SB.Append(" (Debug)");
+#endif
+
+            return SB.ToString(); 
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            PolarisAbout_Version.Text = GetVersionString(); 
+        }
+
+        private void PolarisAbout_ExitButton_Click(object sender, RoutedEventArgs e) => ExitHit(this, e);
     }
 }

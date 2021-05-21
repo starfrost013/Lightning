@@ -46,7 +46,8 @@ namespace Lightning.Utilities
             {
                 return true;
             }
-            else if (TypeName.Contains("Lightning")) // If it's in the Lightning namespace...
+            else if (TypeName.Contains("Lightning")
+                || TypeName.Contains("Polaris")) // If it's in the Lightning or Polaris namespaces...
             {
                 return true; // allow it
             }

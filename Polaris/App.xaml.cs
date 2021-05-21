@@ -25,6 +25,9 @@ namespace Polaris
         public static LaunchArgs ProcessedLaunchArguments { get; set; }
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            // Load the version information. 
+            LVersion.LoadVersion(); 
+
             LaunchArgsResult LA = LaunchArgs.HandleArgs(e.Args);
 
             ProcessedLaunchArguments = LA.Arguments;

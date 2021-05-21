@@ -1,13 +1,17 @@
-; Lightning SDK Setup ver 0.2.001.00006
-; May 18, 2021
+; Lightning SDK Setup ver 0.2.002.00009
+; May 21, 2021
 
+; v0.2.002.00009  May 21, 2021  Modified Polaris shortcut name 
+; v0.2.002.00008  May 21, 2021  Moved Start Menu icons into a folder
+; v0.2.002.00007  May 21, 2021  Added Polaris shortcut
 ; v0.2.001.00006  May 18, 2021  Added setup version def
 ; v0.2.001.00005  May 18, 2021  Added ifdef checks so that fgx files launch Polaris
 ; v0.2.000.00004  May 18, 2021  Added Polaris.UI
 ; v0.2.000.00003  May 16, 2021  Added INSTALLPACKAGE_INSTALL_SDK ifdef for Polaris
 ; v0.2.000.00002  May 4, 2021   First functional version
-#define MyAppName "Lightning Game Engine"
-#define PolarisAppName "LightningSDK - Polaris Development Environment"
+
+#define MyAppName "Lightning SDK"
+#define PolarisAppName "Lightning SDK - Polaris Development Environment"
 #define MyAppVersion "0.2.XXX.XXXXX" ; set to version when a version is there
 #define MyAppPublisher "starfrost/Lightning Dev Team"
 #define MyAppExeName "Lightning.exe"
@@ -18,7 +22,7 @@
 
 #define INSTALLPACKAGE_INSTALL_SDK
 
-#define SETUP_VERSION "0.2.001.00006"
+#define SETUP_VERSION "0.2.002.00008"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -96,7 +100,10 @@ Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\shell\open\command"; Value
 Root: HKA; Subkey: "Software\Classes\Applications\{#MyAppExeName}\SupportedTypes"; ValueType: string; ValueName: ".myp"; ValueData: ""
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autoprograms}\{#MyAppName}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+#ifdef INSTALLPACKAGE_INSTALL_SDK
+Name: "{autoprograms}\{#MyAppName}\{#PolarisAppName}"; Filename: "{app}\{#PolarisAppExeName}"
+#endif
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
