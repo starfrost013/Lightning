@@ -9,7 +9,7 @@ namespace Polaris.Core
     /// <summary>
     /// PolarisState
     /// 
-    /// May 13, 2021 (modified May 20, 2021)
+    /// May 13, 2021 (modified May 22, 2021)
     /// 
     /// Defines the global state for Polaris.
     /// </summary>

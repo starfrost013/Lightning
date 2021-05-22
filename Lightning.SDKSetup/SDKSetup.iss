@@ -1,6 +1,7 @@
-; Lightning SDK Setup ver 0.2.002.00009
+; Lightning SDK Setup ver 0.2.003.00010
 ; May 21, 2021
 
+; v0.2.003.00010  May 22, 2021  Added Polaris.dll...*facepalm*
 ; v0.2.002.00009  May 21, 2021  Modified Polaris shortcut name 
 ; v0.2.002.00008  May 21, 2021  Moved Start Menu icons into a folder
 ; v0.2.002.00007  May 21, 2021  Added Polaris shortcut
