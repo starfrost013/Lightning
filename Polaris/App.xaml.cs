@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,9 +23,13 @@ namespace Polaris
     /// </summary>
     public partial class App : Application
     {
+        public static ConsoleRedirector StandardOutput { get; set; }
         public static LaunchArgs ProcessedLaunchArguments { get; set; }
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            StandardOutput = new ConsoleRedirector(); 
+
+            Console.SetOut(StandardOutput);
             // Load the version information. 
             LVersion.LoadVersion(); 
 

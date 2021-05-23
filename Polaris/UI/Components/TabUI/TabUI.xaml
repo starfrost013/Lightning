@@ -1,0 +1,14 @@
+﻿<Page x:Class="Polaris.UI.TabUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Polaris.UI"
+             mc:Ignorable="d" Height="456" Width="561">
+    <Grid>
+        <TabControl x:Name="Polaris_TabManager" x:FieldModifier="public" Margin="10,0,0,0">
+
+            <!-- tabitems are programmatic -->
+        </TabControl>
+    </Grid>
+</Page>

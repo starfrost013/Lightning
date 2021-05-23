@@ -2,6 +2,7 @@
 using Polaris.UI; 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,8 +35,14 @@ namespace Polaris
 
         private void Window_Initialized(object sender, EventArgs e)
         {
+            App.StandardOutput.StringWritten += Output_StringWritten;
             PolarisState = new PolarisState();
             PolarisState.Init(App.ProcessedLaunchArguments);
+        }
+
+        private void Output_StringWritten(object sender, ConsoleRedirectorEventArgs e)
+        {
+            Debug.WriteLine(e.TheString);
         }
 
         /// <summary>
@@ -45,11 +52,20 @@ namespace Polaris
         /// <param name="e"></param>
         private void Polaris_HelpMenu_About_Click(object sender, RoutedEventArgs e) => UILauncher<AboutWindowHost>.LaunchUI(new AboutWindowHost());
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Polaris_TabUIFrame_Navigated(object sender, NavigationEventArgs e)
         {
+            TabUI TUI = (TabUI)e.Content;
+
             UIPopulator UIP = new UIPopulator();
-            UIP.PopulateTreeView(PolarisState, Polaris_Explorer); // pass by value and update the object.
-            UIP.PopulateTabs(PolarisState, Polaris_TabManager); 
+            UIP.PopulateTabs(PolarisState, TUI.Polaris_TabManager);
+        }
+
+        private void Polaris_ExplorerFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            Explorer Explorer = (Explorer)e.Content; 
+
+            UIPopulator UIP = new UIPopulator();
+            UIP.PopulateTreeView(PolarisState, Explorer.Polaris_Explorer); 
         }
     }
 }

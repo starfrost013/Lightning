@@ -76,6 +76,7 @@ Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.json"; DestDir: "{ap
 Source: "D:\Lightning_builds\latest\Lightning.Utilities.dll"; DestDir: "{app}"; Flags: ignoreversion
 #ifdef INSTALLPACKAGE_INSTALL_SDK
 Source: "D:\Lightning_builds\latest\Polaris.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\Polaris.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Polaris.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Polaris.UI.dll"; DestDir: "{app}"; Flags: ignoreversion 
 #endif

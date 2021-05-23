@@ -1,0 +1,20 @@
+﻿<Page x:Class="Polaris.UI.Output"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Polaris.UI"
+        mc:Ignorable="d"
+        Title="Lilium" Height="135" Width="577">
+    <Grid>
+        <TextBlock x:Name="Polaris_Output_Header" Height="17"  Text="Output:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,10,0,0" Grid.Row="2"/>
+        <Border x:Name="Polaris_Output_Border" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="560" Margin="0,27,0,0">
+            <Grid x:Name="Polaris_Output_Grid">
+                <ScrollViewer>
+                    <ListBox x:Name="Polaris_Output_MessageList"></ListBox>
+                </ScrollViewer>
+                
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

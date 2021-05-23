@@ -19,7 +19,7 @@ namespace Polaris.Core
         /// <summary>
         /// The Lightning DataModel.
         /// </summary>
-        public DataModel DataModel { get; set; }
+        public static DataModel DataModel { get; set; }
 
         /// <summary>
         /// The XML document that will be used as a tree for saving.

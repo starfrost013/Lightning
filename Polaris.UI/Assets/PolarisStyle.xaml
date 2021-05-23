@@ -78,5 +78,8 @@
     <Style TargetType="TabControl">
         <Setter Property="BorderBrush" Value="#FFCCCCCC"></Setter>
     </Style>
-    
+
+    <Style TargetType="Frame">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+    </Style>
 </ResourceDictionary>

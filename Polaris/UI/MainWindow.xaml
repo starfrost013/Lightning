@@ -5,60 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Polaris"
         mc:Ignorable="d"
-        Title="Polaris (pre-alpha)" Height="450" Width="800" Initialized="Window_Initialized" Loaded="Window_Loaded">
-    <Viewbox MinWidth="300" MinHeight="300">
-        <Grid x:Name="Polaris_Main" Height="450" Width="800">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="133*"/>
-                <RowDefinition Height="317*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="327*"/>
-                <ColumnDefinition Width="73*"/>
-            </Grid.ColumnDefinitions>
-            <Menu x:Name="Polaris_Menu" Margin="263,0,0,114" HorizontalAlignment="Left">
-                <MenuItem x:Name="Polaris_WelcomeToLightningSDK" Header="LightningSDK" IsEnabled="False"></MenuItem>
-                <MenuItem x:Name="Polaris_FileMenu" Header="File">
-                    <MenuItem x:Name="Polaris_FileMenu_New" Header="New"></MenuItem>
-                    <MenuItem x:Name="Polaris_FileMenu_Open" Header="Open"></MenuItem>
-                    <MenuItem x:Name="Polaris_FileMenu_Save" Header="Save"></MenuItem>
-                    <MenuItem x:Name="Polaris_FileMenu_SaveAs" Header="Save as"></MenuItem>
-                    <Separator/>
-                    <MenuItem x:Name="Polaris_FileMenu_Package" Header="Package Game for Distribution"></MenuItem>
-                    <Separator/>
-                    <MenuItem x:Name="Polaris_FileMenu_EditGlobalSettings" Header="Edit Global Settings"></MenuItem>
-                    <MenuItem x:Name="Polaris_FileMenu_Licensing" Header="License"></MenuItem>
-                    <MenuItem x:Name="Polaris_FileMenu_Exit" Header="Exit"></MenuItem>
-                </MenuItem>
-                <MenuItem x:Name="Polaris_EditMenu" Header="Edit">
-                    <MenuItem x:Name="Polaris_EditMenu_GameMetadata" Header="Game Metadata..."></MenuItem>
-                    <MenuItem x:Name="Polaris_EditMenu_GameSettings" Header="Game Settings..."></MenuItem>
-                    <Separator/>
-                    <MenuItem x:Name="Polaris_EditMenu_Script" Header="Script"></MenuItem>
-                </MenuItem>
-                <MenuItem x:Name="Polaris_ObjectMenu" Header="Object">
-                    <MenuItem x:Name="Polaris_ObjectMenu_InsertObject" Header="Insert Object"></MenuItem>
-                </MenuItem>
-                <MenuItem x:Name="Polaris_TestMenu" Header="Test">
-                    <MenuItem x:Name="Polaris_TestMenu_LaunchNow" Header="Launch for Test"></MenuItem>
-                </MenuItem>
-                <MenuItem x:Name="Polaris_HelpMenu" Header="Help">
-                    <MenuItem x:Name="Polaris_HelpMenu_Documentation" Header="View Online Documentation"></MenuItem>
-                    <Separator/>
-                    <MenuItem x:Name="Polaris_HelpMenu_About" Header="About LightningSDK..." Click="Polaris_HelpMenu_About_Click"></MenuItem>
-                </MenuItem>
-            </Menu>
-            <TextBlock x:Name="Polaris_Explorer_Header" Height="17" Margin="603,9,57,0" Text="DataModel Explorer:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-            <TreeView x:Name="Polaris_Explorer" Margin="603,24,0,134" Grid.ColumnSpan="2" Grid.RowSpan="2" ItemsSource="{Binding}" DisplayMemberPath="Name"></TreeView>
+        Title="Polaris (pre-alpha)" Height="450" Width="800" Initialized="Window_Initialized" SizeToContent="WidthAndHeight">
+    <Grid x:Name="Polaris_Main">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Menu x:Name="Polaris_Menu" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20">
+            <MenuItem x:Name="Polaris_WelcomeToLightningSDK" Header="LightningSDK" IsEnabled="False"></MenuItem>
+            <MenuItem x:Name="Polaris_FileMenu" Header="File">
+                <MenuItem x:Name="Polaris_FileMenu_New" Header="New"></MenuItem>
+                <MenuItem x:Name="Polaris_FileMenu_Open" Header="Open"></MenuItem>
+                <MenuItem x:Name="Polaris_FileMenu_Save" Header="Save"></MenuItem>
+                <MenuItem x:Name="Polaris_FileMenu_SaveAs" Header="Save as"></MenuItem>
+                <Separator/>
+                <MenuItem x:Name="Polaris_FileMenu_Package" Header="Package Game for Distribution"></MenuItem>
+                <Separator/>
+                <MenuItem x:Name="Polaris_FileMenu_EditGlobalSettings" Header="Edit Global Settings"></MenuItem>
+                <MenuItem x:Name="Polaris_FileMenu_Licensing" Header="License"></MenuItem>
+                <MenuItem x:Name="Polaris_FileMenu_Exit" Header="Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="Polaris_EditMenu" Header="Edit">
+                <MenuItem x:Name="Polaris_EditMenu_GameMetadata" Header="Game Metadata..."></MenuItem>
+                <MenuItem x:Name="Polaris_EditMenu_GameSettings" Header="Game Settings..."></MenuItem>
+                <Separator/>
+                <MenuItem x:Name="Polaris_EditMenu_Script" Header="Script"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="Polaris_ObjectMenu" Header="Object">
+                <MenuItem x:Name="Polaris_ObjectMenu_InsertObject" Header="Insert Object"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="Polaris_TestMenu" Header="Test">
+                <MenuItem x:Name="Polaris_TestMenu_LaunchNow" Header="Launch for Test"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="Polaris_HelpMenu" Header="Help">
+                <MenuItem x:Name="Polaris_HelpMenu_Documentation" Header="View Online Documentation"></MenuItem>
+                <Separator/>
+                <MenuItem x:Name="Polaris_HelpMenu_About" Header="About LightningSDK..." Click="Polaris_HelpMenu_About_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
 
-            <TextBlock x:Name="Polaris_Output_Header"  Height="17" Margin="10,209,504,0" Text="Output:" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
-            <Border x:Name="Polaris_Output_Border" HorizontalAlignment="Left" Height="81" Margin="10,226,0,0" VerticalAlignment="Top" Width="587" Grid.Row="1">
+        <Frame x:Name="Polaris_TabUIFrame" Source="Components\TabUI\TabUI.xaml" Margin="36,32,109,22" Navigated="Polaris_TabUIFrame_Navigated"/>
+        <Frame x:Name="Polaris_OutputFrame" Source="Components\Output\Output.xaml" Margin="36,8,142,10" Grid.Row="1"/>
+        <Frame x:Name="Polaris_ExplorerFrame" Source="Components\Explorer\Explorer.xaml" Margin="28,10,31,0" Navigated="Polaris_ExplorerFrame_Navigated" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-            </Border>
-            <TabControl x:Name="Polaris_TabManager" HorizontalAlignment="Left" Height="313" Margin="11,22,0,0" VerticalAlignment="Top" Width="587" Grid.RowSpan="2">
-                <!-- tabitems are programmatic -->
-            </TabControl>
+        </Frame>
 
-        </Grid>
-    </Viewbox>
+    </Grid>
 </Window>

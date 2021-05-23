@@ -20,7 +20,7 @@ namespace Polaris.Core
     {
         public void PopulateTreeView(PolarisState PS, TreeView TreeView)
         {
-            if (PS.DataModel == null)
+            if (PolarisState.DataModel == null)
             {
                 ErrorManager.ThrowError("Polaris UI Populator", "PolarisNoDataModelLoadedException");
                 return; 
