@@ -263,7 +263,7 @@ namespace Lightning.Core.API
             // Reinitialise
             Init();
         }
-        internal static void Shutdown()
+        public static void Shutdown()
         {
             Logging.Log("The DataModel is shutting down. Clearing it...");
             State.Clear();

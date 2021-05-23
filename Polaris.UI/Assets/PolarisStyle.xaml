@@ -82,4 +82,31 @@
     <Style TargetType="Frame">
         <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
+
+    <Style TargetType="ListBox">
+        <Setter Property="BorderBrush" Value="#00000000"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+    </Style>
+
+    <Style TargetType="ListBoxItem">
+        <Setter Property="BorderBrush" Value="#00000000"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+    </Style>
+    
+    <Style TargetType="ListBoxItem" x:Key="ListBoxItem_Message">
+        <Setter Property="Foreground" Value="#0050aa"></Setter>
+    </Style>
+
+    <Style TargetType="ListBoxItem" x:Key="ListBoxItem_Warning">
+        <Setter Property="Foreground" Value="#ffff00"></Setter>
+    </Style>
+
+    <Style TargetType="ListBoxItem" x:Key="ListBoxItem_Error">
+        <Setter Property="Foreground" Value="#ff9000"></Setter>
+    </Style>
+
+    <Style TargetType="ListBoxItem" x:Key="ListBoxItem_FatalError">
+        <Setter Property="Foreground" Value="#ff0000"></Setter>
+    </Style>
+    
 </ResourceDictionary>

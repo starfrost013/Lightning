@@ -100,6 +100,9 @@ namespace Polaris.Core
             Tabs = (TabCollection)XS.Deserialize(XRA);
         }
 
-
+        public void Shutdown()
+        {
+            DataModel.Shutdown();
+        }
     }
 }

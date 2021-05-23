@@ -1,4 +1,5 @@
-﻿using Polaris.Core;
+﻿using Lightning.Core;
+using Polaris.Core;
 using Polaris.UI; 
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace Polaris
         /// TEMP: Polaris state
         /// </summary>
         public PolarisState PolarisState { get; set; }
+        private bool UI_INITIALISED { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -42,6 +44,13 @@ namespace Polaris
 
         private void Output_StringWritten(object sender, ConsoleRedirectorEventArgs e)
         {
+            if (UI_INITIALISED)
+            {
+                Output OutputUI = (Output)Polaris_OutputFrame.Content;
+
+                OutputUI.AddMessage(e.TheString, MessageSeverity.Message);
+            }
+
             Debug.WriteLine(e.TheString);
         }
 
@@ -66,6 +75,20 @@ namespace Polaris
 
             UIPopulator UIP = new UIPopulator();
             UIP.PopulateTreeView(PolarisState, Explorer.Polaris_Explorer); 
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UI_INITIALISED = true;
+
+#if DEBUG
+            Logging.Log("TEST!", "Polaris MainWindow Testing Utilities", MessageSeverity.Message);
+#endif
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            PolarisState.Shutdown(); ;
         }
     }
 }

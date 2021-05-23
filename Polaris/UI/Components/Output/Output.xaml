@@ -11,7 +11,7 @@
         <Border x:Name="Polaris_Output_Border" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="560" Margin="0,27,0,0">
             <Grid x:Name="Polaris_Output_Grid">
                 <ScrollViewer>
-                    <ListBox x:Name="Polaris_Output_MessageList"></ListBox>
+                    <ListBox x:Name="Polaris_Output_MessageList" ItemsSource="{Binding}" DisplayMemberPath="Message"></ListBox>
                 </ScrollViewer>
                 
             </Grid>

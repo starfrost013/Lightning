@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Lightning.Core;
+using Polaris.Core;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,14 +19,42 @@ namespace Polaris.UI
     /// </summary>
     public partial class Output : Page
     {
-        public List<string> Messages { get; set; }
+        public List<LoggingMessage> Messages { get; set; }
 
         public Output()
         {
-            Messages = new List<string>(); 
+            Messages = new List<LoggingMessage>(); 
             InitializeComponent();
-        }
 
+            Polaris_Output_MessageList.DataContext = Messages;
+            UpdateLayout();
+        }
+        
+        public AddMessageResult AddMessage(string Message, MessageSeverity Severity)
+        {
+            AddMessageResult AMR = new AddMessageResult();
+
+            LoggingMessage MS = new LoggingMessage();
+
+            if (Message == null)
+            {
+                string ErrorString = "Cannot add a LoggingMessage to Polaris output tab - message string is null!!";
+
+                AMR.FailureReason = ErrorString;
+                ErrorManager.ThrowError("Polaris Output Message Manager", "PolarisCannotAddNullMessageToPolarisOutputTab", ErrorString);
+
+                return AMR;
+            }
+
+
+            MS.Message = Message;
+            MS.Severity = Severity;
+
+            Messages.Add(MS);
+
+            AMR.Successful = true;
+            return AMR;
+        }
         
     }
 }

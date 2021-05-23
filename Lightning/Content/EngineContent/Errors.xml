@@ -550,4 +550,11 @@ Do not change if you are not a dev
     <Id>72</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Cannot add a null message to the Polaris Output tab!</Description>
+    <Name>PolarisCannotAddNullMessageToPolarisOutputTab</Name>
+    <Id>73</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

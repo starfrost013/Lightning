@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Polaris"
         mc:Ignorable="d"
-        Title="Polaris (pre-alpha)" Height="450" Width="800" Initialized="Window_Initialized" SizeToContent="WidthAndHeight">
+        Title="Polaris (pre-alpha)" Height="450" Width="800" Initialized="Window_Initialized" Loaded="Window_Loaded" SizeToContent="WidthAndHeight" Closing="Window_Closing">
     <Grid x:Name="Polaris_Main">
         <Grid.RowDefinitions>
             <RowDefinition Height="2.5*"/>
