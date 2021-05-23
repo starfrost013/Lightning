@@ -105,15 +105,20 @@ namespace Lightning.Core.API
             {
                 //todo: musicstopped handling
                 Playing = true;
-                SDL_mixer.Mix_PlayMusic(SoundPtr, 1);
+                SDL_mixer.Mix_PlayChannel(1, SoundPtr, 1);
 
             }
             else
             {
                 Playing = true;
                 // repeat endlessly (-1 = infinite)
-                SDL_mixer.Mix_PlayMusic(SoundPtr, -1);
+                SDL_mixer.Mix_PlayChannel(1, SoundPtr, -1);
             }
+        }
+
+        public void Pause()
+        {
+            SDL_mixer.Mix_Pause(1); 
         }
 
         private void Set3DVolume()

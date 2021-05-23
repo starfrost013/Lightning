@@ -85,7 +85,7 @@ namespace Lightning.Core.API
 
                         Logging.Log($"Loading sound at {Snd.Path}...");
 
-                        Snd.SoundPtr = SDL_mixer.Mix_LoadMUS(Snd.Path);
+                        Snd.SoundPtr = SDL_mixer.Mix_LoadWAV(Snd.Path);
 
                         if (Snd.SoundPtr != IntPtr.Zero)
                         {
