@@ -5,6 +5,13 @@ using System.Text;
 
 namespace Lightning.Core.API
 {
+    /// <summary>
+    /// Control
+    /// 
+    /// April 14, 2021 (modified May 24, 2021)
+    /// 
+    /// A control binding.
+    /// </summary>
     public class Control : SerialisableObject
     {
         internal override string ClassName => "Control";

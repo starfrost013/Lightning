@@ -62,7 +62,17 @@ namespace Lightning.Core.API
         /// </summary>
         public double Radius { get; set; }
 
+        /// <summary>
+        /// The SDL channel that this sound is played on.
+        /// </summary>
+        internal int Channel { get; set; }
+
         internal SDL_mixer.MusicFinishedDelegate MFDelegate { get; set; }
+
+        /// <summary>
+        /// The Loop Count of this sound. 
+        /// </summary>
+        public int LoopCount { get; set; }
 
         public override void OnCreate()
         {
@@ -105,14 +115,14 @@ namespace Lightning.Core.API
             {
                 //todo: musicstopped handling
                 Playing = true;
-                SDL_mixer.Mix_PlayChannel(1, SoundPtr, 1);
+                SDL_mixer.Mix_PlayChannel(Channel, SoundPtr, LoopCount);
 
             }
             else
             {
                 Playing = true;
                 // repeat endlessly (-1 = infinite)
-                SDL_mixer.Mix_PlayChannel(1, SoundPtr, -1);
+                SDL_mixer.Mix_PlayChannel(Channel, SoundPtr, -1);
             }
         }
 
@@ -203,7 +213,7 @@ namespace Lightning.Core.API
                 if (NewVolume < 0) NewVolume = 0;
 
                 Logging.Log($"Setting 3D sound volume to {NewVolume}...", ClassName);
-                SDL_mixer.Mix_VolumeMusic(NewVolume);
+                SDL_mixer.Mix_Volume(Channel, NewVolume);
             }
             else
             {

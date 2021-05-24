@@ -1,6 +1,7 @@
-; Lightning SDK Setup ver 0.2.003.00010
-; May 21, 2021
+; Lightning SDK Setup ver 0.2.004.00011
+; May 24, 2021
 
+; v0.2.004.00011  May 24, 2021  Added Polaris files so that it actually works properly
 ; v0.2.003.00010  May 22, 2021  Added Polaris.dll...*facepalm*
 ; v0.2.002.00009  May 21, 2021  Modified Polaris shortcut name 
 ; v0.2.002.00008  May 21, 2021  Moved Start Menu icons into a folder
@@ -23,7 +24,7 @@
 
 #define INSTALLPACKAGE_INSTALL_SDK
 
-#define SETUP_VERSION "0.2.002.00008"
+#define SETUP_VERSION "0.2.004.00011"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -76,6 +77,9 @@ Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.json"; DestDir: "{ap
 Source: "D:\Lightning_builds\latest\Lightning.Utilities.dll"; DestDir: "{app}"; Flags: ignoreversion
 #ifdef INSTALLPACKAGE_INSTALL_SDK
 Source: "D:\Lightning_builds\latest\Polaris.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\Polaris.deps.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\Polaris.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\Polaris.runtimeconfig.dev.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Polaris.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Polaris.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Polaris.UI.dll"; DestDir: "{app}"; Flags: ignoreversion 

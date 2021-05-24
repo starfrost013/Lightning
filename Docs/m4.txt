@@ -186,5 +186,28 @@ IDE			0%
 DDMS Saving		Complete
 Sound API		Complete*
 
+5/24
+Grouping 		0%
+Ungrouping		Complete
+Render refactoring	40%
+Animation API		0%
+Primitive API		Complete
+Removal of OUS		Complete
+DDMS refactor		20%
+Camera API		Complete except optimisation
+Functional Scripting API10%
+Removal of Error XML?	0%; may not do
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		Complete
+PhysicsService		0%
+ScriptingService	70%
+Player API		0%
+L./L.C.API split	Complete
+IDE			25%
+DDMS Saving		Complete
+Sound API		Complete*
+
 More tasks may be required
 *requires transfer to mix_chunk	

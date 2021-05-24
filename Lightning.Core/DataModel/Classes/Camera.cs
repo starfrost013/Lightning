@@ -211,12 +211,14 @@ namespace Lightning.Core.API
             if (IsPressingUp) Position.Y -= FreeCameraMoveIntensityY;
             if (IsPressingDown) Position.Y += FreeCameraMoveIntensityY;
 
+#if DEBUG
             if (IsPressingF9)
             {
                 DataModelDeserialiser DDMS = (DataModelDeserialiser)DataModel.CreateInstance("DataModelDeserialiser");
                 DDMS.ATest();
                 return; 
             }
+#endif
 
             // END TEMPORARY CODE
         }

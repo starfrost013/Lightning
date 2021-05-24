@@ -72,8 +72,12 @@ namespace Lightning.Core.API
                 {
                     List<Instance> IX = GMIR.Instances;
 
+                    int CurChannel = 0;
+
                     foreach (Instance Ins in IX)
                     {
+                        // this must be here
+                        CurChannel++; 
 
                         Sound Snd = (Sound)Ins;
 
@@ -86,6 +90,8 @@ namespace Lightning.Core.API
                         Logging.Log($"Loading sound at {Snd.Path}...");
 
                         Snd.SoundPtr = SDL_mixer.Mix_LoadWAV(Snd.Path);
+
+                        Snd.Channel = CurChannel;
 
                         if (Snd.SoundPtr != IntPtr.Zero)
                         {

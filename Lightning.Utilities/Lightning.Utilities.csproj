@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.210.21143</AssemblyVersion>
-    <FileVersion>1.0.210.21143</FileVersion>
+    <AssemblyVersion>1.0.212.21144</AssemblyVersion>
+    <FileVersion>1.0.212.21144</FileVersion>
     <PackageId>Lightning Standard Libraries</PackageId>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>

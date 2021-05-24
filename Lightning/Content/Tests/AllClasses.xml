@@ -148,11 +148,8 @@ while (true)&#13;&#10;
 }&#13;&#10;"></Script>
 
     <Sound Path="Content\Sounds\test.mp3" Repeat="True" Volume="1.00" Is3D="True" Radius="20" TargetObject="Camera1" Position="-100,0"></Sound>
-
-    <!--
-      works, but there are problems - only one music track...will need to modify SDL2_mixer or SDL2CS to aachieve this...
-      perhaps move to NAudio? but naudio is huge.
-    <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0"></Sound>-->
+    <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0"></Sound>
+    
   </Workspace>
   
 </Lightning>

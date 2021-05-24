@@ -795,6 +795,7 @@ namespace Lightning.Core.API
                             }
                         }
                     }
+
                     List<XElement> XMetadataChildren = XInstanceChildNode.Elements().ToList();
 
                     if (XMetadataChildren.Count == 0)
