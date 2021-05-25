@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.12.2) 
+    /// DataModel (API Version 0.13.0) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,8 +17,8 @@ namespace Lightning.Core.API
     public class DataModel
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
-        public static int DATAMODEL_API_VERSION_MINOR = 12;
-        public static int DATAMODEL_API_VERSION_REVISION = 2;
+        public static int DATAMODEL_API_VERSION_MINOR = 13;
+        public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
 
@@ -58,91 +58,112 @@ namespace Lightning.Core.API
         /// <param name="Args"></param>
         public static void Init(LaunchArgs Args = null)
         {
-            if (!ErrorManager.ERRORMANAGER_LOADED)
+            if (!Init_VerifyCompatibleSystem())
             {
-                ErrorManager.Init();
+                // Error Maanger isn't initialised so just throw a messagebox and exit
+                MessageBox.Show("Your system is not compatible with Lightning.\nLightning requires a system with more than one hardware thread (i.e. a dual core processor or a single-core processor with hyperthreading or SMT).", "Fatal Error 0000", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0x0001DEAD);
             }
-
-            // init the SCM
-            Workspace WorkSvc = (Workspace)CreateInstance("Workspace");
-
-            ServiceControlManager SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
-            
-            if (!GlobalSettings.GLOBALSETTINGS_LOADED)
+            else
             {
-                GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
-
-                if (GSR.Successful)
+                if (!ErrorManager.ERRORMANAGER_LOADED)
                 {
-                    // set the globalsettings if successful 
-                    Settings = GSR.Settings;
+                    ErrorManager.Init();
+                }
+
+                // init the SCM
+                Workspace WorkSvc = (Workspace)CreateInstance("Workspace");
+
+                ServiceControlManager SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
+
+                if (!GlobalSettings.GLOBALSETTINGS_LOADED)
+                {
+                    GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
+
+                    if (GSR.Successful)
+                    {
+                        // set the globalsettings if successful 
+                        Settings = GSR.Settings;
 #if DEBUG
-                    Settings.ATest();
+                        Settings.ATest();
 #endif
-
+                    }
+                    else
+                    {
+                        return; // this should not really be running rn 
+                    }
                 }
-                else
-                {
-                    return; // this should not really be running rn 
-                }
-            }
 
 
 #if DEBUG_ATEST_DATAMODEL //todo: unit testing
             ATest();
 #endif
-            
-            if (Args != null)
-            {
 
-                if (Args.AppName != null)
+                if (Args != null)
                 {
-                    // Allow for SDK-specific behaviour.
-                    if (Args.AppName.Contains("Polaris")
-                        || Args.AppName.Contains("LightningSDK"))
+
+                    if (Args.AppName != null)
                     {
-                        Logging.Log($"SDK Launching...", "DataModel");
-                    }
-                }
-
-                if (Args.InitServices)
-                {
-                    // assume normal init 
-                    SCM.InitStartupServices(Settings.ServiceStartupCommands);
-
-                    if (Args.GameXMLPath != null)
-                    {
-                        DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelDeserialiser");
-
-                        DataModel DM = DMS.DDMS_Deserialise(Args.GameXMLPath);
-
-                        // Check for a failure
-                        if (DM == null)
+                        // Allow for SDK-specific behaviour.
+                        if (Args.AppName.Contains("Polaris")
+                            || Args.AppName.Contains("LightningSDK"))
                         {
-                            HandleFailureToOpenDocument();
+                            Logging.Log($"SDK Launching...", "DataModel");
+                        }
+                    }
+
+                    if (Args.InitServices)
+                    {
+                        // assume normal init 
+                        SCM.InitStartupServices(Settings.ServiceStartupCommands);
+
+                        if (Args.GameXMLPath != null)
+                        {
+                            DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelDeserialiser");
+
+                            DataModel DM = DMS.DDMS_Deserialise(Args.GameXMLPath);
+
+                            // Check for a failure
+                            if (DM == null)
+                            {
+                                HandleFailureToOpenDocument();
+                            }
+                            else
+                            {
+                                // Enter the main loop.
+
+                                SCM.InitServiceUpdates();
+                            }
                         }
                         else
                         {
-                            // Enter the main loop.
-
-                            SCM.InitServiceUpdates();
+                            // failsafe
+                            ErrorManager.ThrowError("DataModel", "FailureToOpenLgxException", "No LGX file was supplied and the condition was not handled.");
                         }
                     }
                     else
                     {
-                        // failsafe
-                        ErrorManager.ThrowError("DataModel", "FailureToOpenLgxException", "No LGX file was supplied and the condition was not handled.");
+                        Logging.Log("Skipping service initialisation: NoInitServices supplied", "DataModel");
+                        Logging.Log("Initialisation completed", "DataModel");
+                        return;
                     }
-                }
-                else
-                {
-                    Logging.Log("Skipping service initialisation: NoInitServices supplied", "DataModel");
-                    Logging.Log("Initialisation completed", "DataModel");
-                    return; 
-                }
 
+                }
             }
             
+            
+        }
+
+        private static bool Init_VerifyCompatibleSystem()
+        {
+            if (Environment.ProcessorCount == 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true; 
+            }
         }
 
         private static void HandleFailureToOpenDocument()
