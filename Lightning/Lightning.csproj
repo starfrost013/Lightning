@@ -48,6 +48,7 @@
     <None Remove="Content\Tests\WritingTest.xml" />
     <None Remove="Content\test_texture.png" />
     <None Remove="Content\test_texture_2.png" />
+    <None Remove="Content\Textures\HumanoidTest\TrincidStandingL.png" />
     <None Remove="libFLAC-8.dll" />
     <None Remove="libfreetype-6.dll" />
     <None Remove="libjpeg-9.dll" />
@@ -105,6 +106,9 @@
 
   <ItemGroup>
     <Content Include="Content\Schema\Errors.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\HumanoidTest\TrincidStandingL.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="libFLAC-8.dll">
