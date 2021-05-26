@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Humanoid
     /// 
-    /// May 24, 2021
+    /// May 24, 2021 (modified May 26, 2021)
     /// 
     /// Defines a Humanoid.
     /// </summary>
@@ -17,7 +17,7 @@ namespace Lightning.Core.API
         internal override string ClassName => "Humanoid";
 
         /// <summary>
-        /// The name of the character.
+        /// The name of the character. Will be implemented when Text is implemented.
         /// </summary>
         public string CharName { get; set; }
 
@@ -95,6 +95,21 @@ namespace Lightning.Core.API
         /// Health bar second colour - used for the areas of the health bar that don't have health
         /// </summary>
         public Color3 HealthBarColour2 { get; set; }
+
+        /// <summary>
+        /// Key used for moving left.
+        /// </summary>
+        public string KeyLeft { get; set; }
+
+        /// <summary>
+        /// Key used for moving right
+        /// </summary>
+        public string KeyRight { get; set; }
+
+        /// <summary>
+        /// Key used for jumping
+        /// </summary>
+        public string KeyJump { get; set; }
 
         public override void Render(Renderer SDL_Renderer, Texture Tx = null)
         {

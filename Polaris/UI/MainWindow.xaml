@@ -34,6 +34,8 @@
                 <MenuItem x:Name="Polaris_EditMenu_GameSettings" Header="Game Settings..."></MenuItem>
                 <Separator/>
                 <MenuItem x:Name="Polaris_EditMenu_Script" Header="Script"></MenuItem>
+                <Separator/>
+                <MenuItem x:Name="Polaris_EditMenu_Text" Header="Text..."></MenuItem>
             </MenuItem>
             <MenuItem x:Name="Polaris_ObjectMenu" Header="Object">
                 <MenuItem x:Name="Polaris_ObjectMenu_InsertObject" Header="Insert Object"></MenuItem>
