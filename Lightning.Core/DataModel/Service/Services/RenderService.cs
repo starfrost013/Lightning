@@ -510,6 +510,9 @@ namespace Lightning.Core.API
                 {
                     Texture Tx = (Texture)GIR.Instance;
                     
+                    // Try to fix the weird position crashing issues
+                    
+
                     // Set the tiling mode and then render the texture.
                     foreach (Texture CachedTx in Renderer.TextureCache)
                     {

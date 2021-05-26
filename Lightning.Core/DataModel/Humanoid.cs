@@ -14,6 +14,8 @@ namespace Lightning.Core.API
     /// </summary>
     public class Humanoid : ControllableObject
     {
+        internal override string ClassName => "Humanoid";
+
         /// <summary>
         /// The name of the character.
         /// </summary>
@@ -60,17 +62,17 @@ namespace Lightning.Core.API
         public Color3 HighHealthColour { get; set; }
 
         /// <summary>
-        /// Low health colour threshold. [0-1]
+        /// Low health colour threshold. 
         /// </summary>
         public double LowHealthThreshold { get; set; }
 
         /// <summary>
-        /// Medium health colour threshold. [0-1]
+        /// Medium health colour threshold. 
         /// </summary>
         public double MediumHealthThreshold { get; set; }
 
         /// <summary>
-        /// High health colour threshold. [0-1]
+        /// High health colour threshold. 
         /// </summary>
         public double HighHealthThreshold { get; set; }
 
@@ -103,7 +105,10 @@ namespace Lightning.Core.API
             if (!Invincible)
             {
                 if (MaxHealth == 0) MaxHealth = 100;
-                
+
+                // Default
+                if (RespawnPoint == null) RespawnPoint = new Vector2(999999999, 999999999);
+
                 if (Health <= 0
                 || (Position.X > RespawnPoint.X
                 && Position.Y > RespawnPoint.Y))
@@ -115,25 +120,28 @@ namespace Lightning.Core.API
                 if (DisplayHealthBar)
                 {
                     // Set a default health bar length and some other values.
-                    if (HealthBarLength == 0) HealthBarLength = 50;
+                    if (HealthBarLength == 0) HealthBarLength = 25;
                     if (LowHealthColour == null) LowHealthColour = new Color3 { R = 0, G = 0, B = 255 };
                     if (MediumHealthColour == null) MediumHealthColour = new Color3 { R = 255, G = 216, B = 0 };
                     if (HighHealthColour == null) HighHealthColour = new Color3 { R = 0, G = 85, B = 16 };
-                    if (LowHealthThreshold == 0) LowHealthThreshold = 25;
-                    if (MediumHealthThreshold == 0) MediumHealthThreshold = 50;
-                    if (HighHealthThreshold == 0) HighHealthThreshold = 75;
+                    if (LowHealthThreshold == 0) LowHealthThreshold = Health / 4;
+                    if (MediumHealthThreshold == 0) MediumHealthThreshold = Health / 2;
+                    if (HighHealthThreshold == 0) HighHealthThreshold = Health / 1.5;
                     if (HealthBarColour2 == null) HealthBarColour2 = new Color3 { R = 255, G = 255, B = 255 };
+                    if (LowHealthThreshold > MaxHealth) LowHealthThreshold = Health / 4;
+                    if (MediumHealthThreshold > MaxHealth) MediumHealthThreshold = Health / 2;
+                    if (HighHealthThreshold > MaxHealth) HighHealthThreshold = Health / 1.5;
 
                     // Temp code until the Text system is implemented
                     double HBPositionX = Position.X;
-                    double HBPositionY = Position.Y - 30;
+                    double HBPositionY = Position.Y - 3;
 
-                    int HealthPercent = (int)MaxHealth / Health;
+                    double HealthPercent = (double)Health / (double)MaxHealth;
 
-                    int HealthBarLine1EndXPos = (int)Position.X + (HealthBarLength * HealthPercent);
+                    int HealthBarLine1EndXPos = (int)(Position.X + (HealthBarLength * HealthPercent));
                     int HealthBarLine2EndXPos = (int)Position.X + HealthBarLength;
 
-                    int HealthBarLine2StartXPos = (int)HBPositionX + HealthBarLine1EndXPos;
+                    int HealthBarLine2StartXPos = (int)(HBPositionX + (HealthBarLine1EndXPos - Position.X));
 
                     // eww elseif
                     // but it is required :(
@@ -151,17 +159,16 @@ namespace Lightning.Core.API
                         SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, HighHealthColour.R, HighHealthColour.G, HighHealthColour.B, 255);
                     }
 
-                    SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, (float)HBPositionX, (float)HBPositionY, HealthBarLine1EndXPos, (float)HBPositionY);
+                    SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, (float)HBPositionX - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine1EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
 
                     SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, HealthBarColour2.R, HealthBarColour2.G, HealthBarColour2.B, 255);
 
-                    SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, (float)HealthBarLine2StartXPos, (float)HBPositionY, HealthBarLine2EndXPos, (float)HBPositionY);
+                    SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, (float)HealthBarLine2StartXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine2EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
 
                     // Reset draw colour. 
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, 255, 255, 255, 255);
+                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, 0, 0, 0, 255);
                 }
             }
-
 
             base.Render(SDL_Renderer, Tx);
         }
@@ -169,7 +176,12 @@ namespace Lightning.Core.API
 
         private void Kill()
         {
-            Position = RespawnPoint;
+            // There are no respawn points
+            if (RespawnPoint != null)
+            {
+                Position = RespawnPoint;
+            }
+
             Health = MaxHealth; 
         }
     }

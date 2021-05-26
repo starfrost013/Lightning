@@ -100,7 +100,6 @@ namespace Lightning.Core.API
             // slightly less temporary code
             while (true)
             {
-                // The 
                 long ElapsedMillisecondsSinceStart = SvcGlobalData.ServiceUpdateTimer.ElapsedMilliseconds;
 
                 int TargetFrameTimeMS = 1000 / MaxFPS;

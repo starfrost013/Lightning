@@ -557,4 +557,11 @@ Do not change if you are not a dev
     <Id>73</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>An error occurred removing ambiguous matches for generation of instance information.</Description>
+    <Name>InstanceInfoErrorRemovingAmbiguousMatchesException</Name>
+    <Id>75</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

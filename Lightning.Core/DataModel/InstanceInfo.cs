@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq; 
 using System.Reflection; 
 using System.Text;
 
@@ -53,8 +54,12 @@ namespace Lightning.Core.API
                     switch (MemberInformation.MemberType)
                     {
                         case MemberTypes.Property:
-                            // Get the name of the current member.
-                            PropertyInfo CurrentPI = TType.GetProperty(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+
+                            PropertyInfo CurrentPI = null;
+
+                            CurrentPI = TType.GetProperty(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+
+                            if (CurrentPI == null) continue;
 
                             PIList.Add(CurrentPI);
 
@@ -73,9 +78,9 @@ namespace Lightning.Core.API
                                     // Prevents a stack overflow by preventing recursive instanceinfo parsing
                                     if (!InstanceInfo_CheckIfFiltered(MemberInformation.Name)) FromType(PropertyType);
                                 }
-                                else 
+                                else
                                 {
-                                    continue; 
+                                    continue;
                                 }
                             }
                             else
@@ -86,13 +91,17 @@ namespace Lightning.Core.API
 
                             continue;
                         case MemberTypes.Method:
-                            MethodInfo CurrentMI = TType.GetMethod(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                            MethodInfo CurrentMI = null;
+
+                            Type[] Types = new Type[] { TType };
+
+                            CurrentMI = TType.GetMethod(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
 
                             MIList.Add(CurrentMI);
                             continue;
                     }
                 }
-            
+
                 // Process each method and add its parameters
                 foreach (MethodInfo CurMethod in MIList)
                 {
@@ -137,13 +146,12 @@ namespace Lightning.Core.API
 
                     IIR.InstanceInformation.Properties.Add(IIP);
 
-                    
                 }
 
                 IIR.Successful = true;
-                return IIR; 
+                return IIR;
             }
-            
+
         } 
 
         /// <summary>
@@ -156,6 +164,43 @@ namespace Lightning.Core.API
             return (PropertyName.ContainsCaseInsensitive("Parent")
                 || PropertyName.ContainsCaseInsensitive("Child")
                 );
+        }
+
+        private static MemberInfoResult InstanceInfo_RemoveAmbiguousMatches(Type ThisType, MemberInfo[] MemberInformation)
+        {
+            MemberInfoResult IIR = new MemberInfoResult(); 
+
+            List<MemberInfo> MIList = MemberInformation.ToList();
+
+            for (int i = 0; i < MIList.Count; i++)
+            {
+                MemberInfo MI = MIList[i];
+
+                for (int j = 0; j < MIList.Count; j++)
+                {
+                    MemberInfo MI2 = MIList[j];
+
+                    if (MI2 == MI)
+                    {
+                        if (MI2.DeclaringType.IsSubclassOf(ThisType)
+                            || MI2.DeclaringType == ThisType)
+                        {
+
+                            MIList.Remove(MI2);
+                        }
+                        else
+                        {
+                            MIList.Remove(MI); 
+                        }
+
+
+                    }
+                }
+            }
+
+            IIR.Successful = true;
+            IIR.MemberInfo = MIList;
+            return IIR; 
         }
 
         public InstanceInfoMethod GetMethod(string MethodName)

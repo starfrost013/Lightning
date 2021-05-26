@@ -17,7 +17,8 @@ namespace Lightning.Core.API
         internal override InstanceTags Attributes => 0;
         public virtual void OnKeyDown(Control Control)
         {
-            MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");
+            // Remove old placeholder code (May 26, 2021)
+            //MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");
         }
 
         /// <summary>

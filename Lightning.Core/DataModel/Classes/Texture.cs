@@ -19,6 +19,8 @@ namespace Lightning.Core.API
         /// </summary>
         internal override string ClassName => "Texture";
 
+        internal override InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable | InstanceTags.ParentCanBeNull); }
+
         /// <summary>
         /// The path to the image of this non-animated texture.
         /// </summary>
