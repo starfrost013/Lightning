@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics; 
 using System.Linq; 
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers; 
 
 namespace Lightning.Core.API
@@ -10,7 +11,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// ServiceControlManager
     /// 
-    /// March 10, 2021 (modified April 29, 2021: RunningServices is dead, now uses its native children property)
+    /// March 10, 2021 (modified May 27, 2021: Multithreading)
     /// 
     /// Controls, manages, and updates services. Contains the main loop.
     /// </summary>
@@ -134,7 +135,16 @@ namespace Lightning.Core.API
                 {
                     Children.Add(Svc, this);
                     Svc.RunningNow = true;
-                    return Svc.OnStart();
+
+                    Svc.RunningTask = new Task(() =>
+                    {
+                        SSR = Svc.OnStart(); 
+                    });
+
+                    Svc.RunningTask.Start();
+
+
+                    return SSR;
                     
                 }
                 else
@@ -291,7 +301,11 @@ namespace Lightning.Core.API
         {
             foreach (Service Svc in Children)
             {
-                //Svc.Poll();
+                Svc.RunningTask = new Task(() =>
+                {
+                    Svc.Poll();
+                };
+ 
             }
 
         }

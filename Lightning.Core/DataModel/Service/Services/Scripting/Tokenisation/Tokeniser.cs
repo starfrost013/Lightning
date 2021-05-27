@@ -8,9 +8,9 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// Tokeniser
+    /// Tokeniser 2.0 (AST edition)
     /// 
-    /// April 16, 2021 (modified May 2, 2021) 
+    /// April 16, 2021 (modified May 27, 2021) 
     /// 
     /// Tokenises a LightningScript file - converts it to a sequence of Tokens that can be easily parsed.
     /// </summary>
