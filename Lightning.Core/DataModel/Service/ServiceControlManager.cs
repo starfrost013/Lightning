@@ -304,7 +304,7 @@ namespace Lightning.Core.API
                 Svc.RunningTask = new Task(() =>
                 {
                     Svc.Poll();
-                };
+                });
  
             }
 
