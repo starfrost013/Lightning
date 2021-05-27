@@ -88,5 +88,8 @@
     <Humanoid Position="150,150" Size="42,68" CanCollide="True" Name="Trincid2021TestOnly" DisplayHealthBar="True" Health="95" MaxHealth="100">
       <Texture Path="Content\Textures\HumanoidTest\TrincidStandingL.png" Name="Trincid2021TestOnly_StandLeft"/>
     </Humanoid>
+    <Sky Name="SkyBG" ForceToBack="True">
+      <Texture Path="Content\Textures\Clouds.png"></Texture>
+    </Sky>
   </Workspace>
 </Lightning>

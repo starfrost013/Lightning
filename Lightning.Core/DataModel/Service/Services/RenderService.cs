@@ -25,6 +25,7 @@ namespace Lightning.Core.API
     /// 2021-04-29: Removed RunningServices; all services are now Children of the SCM
     /// 2021-05-08: Minor changes
     /// 2021-05-13: Implemented ZIndex
+    /// 2021-05-27: ACTUALLY implemented ZIndex (????)
     /// 
     /// </summary>
     public class RenderService : Service
@@ -158,6 +159,16 @@ namespace Lightning.Core.API
 
                     Logging.Log("Initialising SDL Window...");
                     SDIR.Renderer = new Renderer();
+
+                    if (WindowWidth == 0 || WindowHeight == 0)
+                    {
+                        SDIR.Renderer.WindowSize = new Vector2(DefaultWindowX, DefaultWindowY);
+                    }
+                    else
+                    {
+                        SDIR.Renderer.WindowSize = new Vector2(WindowWidth, WindowHeight);
+                    }
+                    
 
                     // Create a fullscreen window if fullscreen is false.
                     if (Fullscreen)
@@ -319,9 +330,11 @@ namespace Lightning.Core.API
         {
             Workspace Ws = DataModel.GetWorkspace();
 
+            InstanceCollection Children = Ws.Children;
+
             List<PhysicalObject> ObjectsToLoad = new List<PhysicalObject>();
 
-            foreach (Instance WsChild in Ws.Children)
+            foreach (Instance WsChild in Children)
             {
                 Type ChiType = WsChild.GetType();
 
@@ -487,7 +500,8 @@ namespace Lightning.Core.API
             }
             else
             {
-
+                ErrorManager.ThrowError(ClassName, "ErrorOccurredAcquiringPhysicalObjectListException");
+                return; 
             }
 
             
@@ -496,6 +510,7 @@ namespace Lightning.Core.API
 
         private void Rendering_DoRenderPhysicalObjects(List<PhysicalObject> PhysicalObjects)
         {
+            PhysicalObjects = PhysicalObjects.OrderBy(PO => PO.ZIndex).ToList();
             
             foreach (PhysicalObject PO in PhysicalObjects)
             {

@@ -564,4 +564,18 @@ Do not change if you are not a dev
     <Id>75</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>An error occurred acquiring the list of physical objects to render.</Description>
+    <Name>ErrorOccurredAcquiringPhysicalObjectListException</Name>
+    <Id>76</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>A Sky object must have a Texture!</Description>
+    <Name>SkyObjectMustHaveTextureException</Name>
+    <Id>77</Id>
+    <Severity>FatalError</Severity> <!-- fatal for now -->
+  </Error>
 </Errors>

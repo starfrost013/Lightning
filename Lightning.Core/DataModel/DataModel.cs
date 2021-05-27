@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.13.0) 
+    /// DataModel (API Version 0.13.1) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -18,7 +18,7 @@ namespace Lightning.Core.API
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
         public static int DATAMODEL_API_VERSION_MINOR = 13;
-        public static int DATAMODEL_API_VERSION_REVISION = 0;
+        public static int DATAMODEL_API_VERSION_REVISION = 1;
 
         // shouldn't be static? idk
 

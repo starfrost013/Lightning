@@ -33,6 +33,11 @@ namespace Lightning.Core.API
         /// </summary>
         public List<Texture> TextureCache { get; set; }
 
+        /// <summary>
+        /// The window size.
+        /// </summary>
+        public Vector2 WindowSize { get; set; }
+
         public Renderer()
         {
             TextureCache = new List<Texture>();
