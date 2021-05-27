@@ -143,6 +143,11 @@ namespace Lightning.Core.API
 
                     Svc.RunningTask.Start();
 
+                    Svc.RunningTask = new Task(() =>
+                    {
+                        Svc.Poll();
+                    });
+
 
                     return SSR;
                     
@@ -301,10 +306,12 @@ namespace Lightning.Core.API
         {
             foreach (Service Svc in Children)
             {
-                Svc.RunningTask = new Task(() =>
+                if (Svc.RunningTask.Status == TaskStatus.Created)
                 {
-                    Svc.Poll();
-                });
+                    Svc.RunningTask.Start();
+                }
+                    
+                
  
             }
 
