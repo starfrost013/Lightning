@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Lightning.Core.API
 {
@@ -21,6 +22,7 @@ namespace Lightning.Core.API
     {
         internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ParentCanBeNull;
         public bool RunningNow { get; set; }
+        internal Task RunningTask { get; set; }
         internal abstract ServiceImportance Importance { get; }
         public abstract ServiceStartResult OnStart();
 

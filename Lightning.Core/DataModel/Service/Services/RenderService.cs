@@ -40,9 +40,16 @@ namespace Lightning.Core.API
             ServiceStartResult SSR = new ServiceStartResult();
 
             Logging.Log("RenderService Init", ClassName);
-
             OnStart_InitSDL();
 
+            RunningTask = new System.Threading.Tasks.Task(() =>
+            {
+                while(this.RunningNow)
+                {
+                    Poll();
+                }
+            });
+            RunningTask.Start();
             SSR.Successful = true;
             return SSR; 
         

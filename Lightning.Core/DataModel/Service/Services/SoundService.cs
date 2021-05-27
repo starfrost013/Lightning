@@ -41,6 +41,14 @@ namespace Lightning.Core.API
                 }
                 else
                 {
+                    RunningTask = new System.Threading.Tasks.Task(() =>
+                    {
+                        while (this.RunningNow)
+                        {
+                            Poll();
+                        }
+                    });
+                    RunningTask.Start();
                     SSR.Successful = true;
                     return SSR;
                 }

@@ -35,7 +35,14 @@ namespace Lightning.Core.API
             // Register the Scripting API.
             RegisterAPI();
             ServiceStartResult SSR = new ServiceStartResult { Successful = true };
-            SSR.Successful = true;
+            RunningTask = new System.Threading.Tasks.Task(() =>
+            {
+                while (this.RunningNow)
+                {
+                    Poll();
+                }
+            });
+            RunningTask.Start();
             return SSR;
         }
 

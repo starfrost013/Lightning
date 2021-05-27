@@ -291,7 +291,7 @@ namespace Lightning.Core.API
         {
             foreach (Service Svc in Children)
             {
-                Svc.Poll();
+                //Svc.Poll();
             }
 
         }
