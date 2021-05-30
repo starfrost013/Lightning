@@ -51,6 +51,10 @@ namespace Lightning.Core
         /// </summary>
         public string LightningXsdPath { get; set; }
 
+        /// <summary>
+        /// Use the AST Tokeniser.
+        /// </summary>
+        public static bool UseASTTokeniser { get; set; }
        
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 

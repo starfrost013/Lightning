@@ -578,4 +578,11 @@ Do not change if you are not a dev
     <Id>77</Id>
     <Severity>FatalError</Severity> <!-- fatal for now -->
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>TokenCollectionIndexOutOfRangeException</Name>
+    <Id>78</Id>
+    <Severity>FatalError</Severity>
+  </Error>
 </Errors>
