@@ -34,7 +34,91 @@ namespace Lightning.Core.API
             return (IEnumerator)GetEnumerator(); 
         }
 
-        public TokenCollectionEnumerator GetEnumerator() => new TokenCollectionEnumerator(TokenList);
+        public void Add(object Obj, Token Parent = null)
+        {
+            Type ObjType = Obj.GetType();
+
+            if (ObjType != typeof(Token))
+            {
+                ErrorManager.ThrowError("AST Tokeniser", "CannotAddNonTokenToTokenCollectionException");
+                return; 
+            }
+            else
+            {
+                if (Parent != null)
+                {
+                    if (!Add_SearchForParent(Parent, (Token)Obj))
+                    {
+                        ErrorManager.ThrowError("AST Tokeniser", "CannotAddTokenWithParentThatIsNotInTokenCollectionException");
+                        return; // Do not add
+                    }
+                }
+
+                Add_PerformAdd(Obj, Parent);
+            }
+        }
+
+        private void Add_PerformAdd(object Obj, Token Parent = null)
+        {
+            if (Parent != null)
+            {
+                Parent.Children.Add((Token)Obj);
+            }
+            else
+            {
+                Tokens.Add((Token)Obj);
+            }
+        }
+
+        
+        private bool Add_SearchForParent(Token ParentObj, Token CurObj)
+        {
+            foreach (Token Token in Tokens)
+            {
+                if (Token == ParentObj)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (Token.Children.Count > 0)
+                    {
+                        Add_SearchForParent(ParentObj, Token);
+                    }
+                    else
+                    {
+                        continue; 
+                    }
+                }
+                
+            }
+
+            return false; 
+        }
+
+        public TokenCollectionEnumerator GetEnumerator() => new TokenCollectionEnumerator(Tokens);
+
+        /// <summary>
+        /// Subsumes another list of tokens into this TokenCollection, with an optional parent.
+        /// </summary>
+        /// <param name="TokenList"></param>
+        /// <param name="Parent"></param>
+        public void Subsume(List<Token> TokenList, Token Parent = null)
+        {
+            foreach (Token Token in TokenList)
+            {
+                if (Parent != null)
+                {
+                    Add(Token, Parent);
+                }
+                else
+                {
+                    Add(Token);
+                }
+
+                
+            }
+        }
     }
 
     public class TokenCollectionEnumerator : IEnumerator

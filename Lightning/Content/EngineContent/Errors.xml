@@ -585,4 +585,19 @@ Do not change if you are not a dev
     <Id>78</Id>
     <Severity>FatalError</Severity>
   </Error>
+
+  <Error>
+    <Description>Cannot add a non-Token to a TokenCollection!</Description>
+    <Name>CannotAddNonTokenToTokenCollectionException</Name>
+    <Id>79</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot add a Token with a Parent that is not in the TokenCollection to a TokenCollection!</Description>
+    <Name>CannotAddTokenWithParentThatIsNotInTokenCollectionException</Name>
+    <Id>80</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
 </Errors>

@@ -1,4 +1,4 @@
 M4 Refactoring
 
 * Move InstanceTags checking to InstanceInfo
-* Move LASTXML_PATH to DataModel
+* Move LASTXML_PATH to DataModel [Completed]

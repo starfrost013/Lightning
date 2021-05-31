@@ -122,6 +122,30 @@ namespace Lightning.Utilities
         private static bool IsNumeric(byte Byte) => (Byte >= 0x30 && Byte <= 0x3A); // May 4, 2021: Fix this entire hting being fucking broken
 
         /// <summary>
+        /// Checks if a string contains numerical characters exclusively.
+        /// </summary>
+        /// <param name="Text">The string you wish to check for numerical characters.</param>
+        /// <returns></returns>
+        public static bool ExclusivelyContainsNumeric(this string Text)
+        {
+            if (!ContainsNumeric(Text))
+            {
+                return false;
+            }
+            else
+            {
+                List<byte> TextByteArray = Text.ToByteList(); 
+
+                foreach (byte Byte in TextByteArray)
+                {
+                    if (!IsNumeric(Byte)) return false;
+                }
+            }
+
+            return true; 
+        }
+
+        /// <summary>
         /// Gets the first index of a string that contains a numeric character.
         /// </summary>
         /// <param name="Text">The string you wish to pass</param>

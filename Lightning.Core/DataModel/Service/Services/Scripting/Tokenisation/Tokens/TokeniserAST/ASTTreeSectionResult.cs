@@ -7,7 +7,7 @@ namespace Lightning.Core.API
 {
     public class ASTTreeSectionResult : IResult
     {
-        public TokenCollection TokenList { get; set; }
+        public List<Token> TokenList { get; set; }
         public string FailureReason { get; set; }
         public bool Successful { get; set; }
 

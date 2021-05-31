@@ -374,12 +374,20 @@ namespace Lightning.Core.API
             }
             else
             {
-                // Tokeniser 2.0
-                Logging.Log("Building syntax tree...");
+                string LogComponent = "AST Tokeniser";
 
-                List<Token> AST = new List<Token>();
+                // Tokeniser 2.0
+                Logging.Log("Building syntax tree...", LogComponent);
+
+                TokenCollection TC = new TokenCollection();
+
+                Logging.Log("Adding start of file token...", LogComponent);
 
                 ASTTreeSectionResult ASTSR = Tokeniser2_BuildASTRoot();
+
+                TC.Subsume(ASTSR.TokenList);
+
+                Logging.Log("Phase 1 parsing", LogComponent);
             }
             
         }
@@ -390,6 +398,22 @@ namespace Lightning.Core.API
             ASTSR.TokenList.Add(new StartOfFileToken());
             return ASTSR;
             
+        }
+
+        private ASTTreeSectionResult Tokeniser2_ParseASTSectionPhase1(string Line)
+        {
+            
+            string[] LineComponents = Line.Split(' ');
+
+            foreach (string LineComponent in LineComponents)
+            {
+                ASTTreeSectionResult ASTSR = Tokeniser2_ParseASTSection_ParseComponentPhase1(LineComponent);
+            }
+        }
+
+        private ASTTreeSectionResult Tokeniser2_ParseASTSection_ParseComponentPhase1(string LineComponent)
+        {
+
         }
 
         private List<string> Tokeniser_PreprocessTokenList(List<string> TokensPre)

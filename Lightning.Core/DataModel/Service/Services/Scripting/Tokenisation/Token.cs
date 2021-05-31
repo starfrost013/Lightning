@@ -18,6 +18,6 @@ namespace Lightning.Core.API
         /// <summary>
         /// The logical AST token tree of this element.
         /// </summary>
-        public List<Token> TokenTree { get; set; }
+        public List<Token> Children { get; set; }
     }
 }
