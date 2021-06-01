@@ -103,7 +103,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="TokenList"></param>
         /// <param name="Parent"></param>
-        public void Subsume(List<Token> TokenList, Token Parent = null)
+        public void Subsume(TokenCollection TokenList, Token Parent = null)
         {
             foreach (Token Token in TokenList)
             {
@@ -119,6 +119,10 @@ namespace Lightning.Core.API
                 
             }
         }
+
+        public int Count => Count; 
+
+        public Token this[int index] => Tokens[index];
     }
 
     public class TokenCollectionEnumerator : IEnumerator

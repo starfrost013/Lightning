@@ -29,348 +29,17 @@ namespace Lightning.Core.API
 
             if (!GlobalSettings.UseASTTokeniser)
             {
-                try
-                {
-                    List<Token> Tokens = new List<Token>();
+                // DO BANNED OLD TOKENISER
+                ErrorManager.ThrowError("Script Tokeniser", "OldTokeniserRemovedException");
+                
+                // Fake being successful.
+                // Set successful to true and return.
+                TLR.Successful = true;
+                TLR.TokenList = new List<Token>();
 
-                    if (Sc.Name == null
-                        || Sc.Name.Length == 0)
-                    {
-                        ErrorManager.ThrowError("Script Tokeniser", "CannotParseNonLSScriptFileException");
-                        TLR.FailureReason = "CannotParseNonLSScriptFileException";
-                        return TLR;
-                    }
-                    else
-                    {
-                        Logging.Log("Tokenising...", "Script Tokeniser");
 
-                        Tokens.Add(new StartOfFileToken { ScriptName = Sc.Name });
+                return TLR;
 
-                        // set cur line
-                        int CurrentLine = 0;
-
-                        for (int j = 0; j < Sc.ScriptContent.Count; j++)
-                        {
-                            string ScriptLine = Sc.ScriptContent[j];
-
-                            CurrentLine++;
-
-                            List<string> Tokens_Pre = ScriptLine.Split(' ').ToList();
-
-                            Tokens_Pre = Tokeniser_PreprocessTokenList(Tokens_Pre);
-
-                            if (Tokens_Pre.Count == 0)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                // Skip the last token as we store the next token 
-                                for (int i = 0; i < Tokens_Pre.Count; i++)
-                                {
-                                    string ThisToken = Tokens_Pre[i];
-
-                                    // comments
-                                    if (ThisToken == "//")
-                                    {
-                                        Logging.Log($"Skipping commented line", "Script Tokeniser");
-                                        break;
-                                    }
-
-
-                                    if (ThisToken.ContainsNumeric()
-                                        && !ThisToken.ContainsAlpha())
-                                    {
-                                        Logging.Log("Identified NumberToken", "Script Tokeniser");
-
-                                        try
-                                        {
-                                            NumberToken VT = new NumberToken();
-
-                                            VT.Value = Convert.ToInt32(ThisToken);
-
-                                            Logging.Log($"Value: {VT.Value}");
-                                            Tokens.Add(VT);
-                                            continue;
-                                        }
-                                        catch (FormatException err)
-                                        {
-                                            ScriptErrorManager.ThrowScriptError(new ScriptError
-                                            {
-                                                ScriptName = Sc.Name,
-                                                Line = ScriptLine,
-                                                LineNumber = CurrentLine,
-                                                Id = 1007,
-                                                Severity = MessageSeverity.Error,
-                                                Description = "Invalid numerical token!", // shouldn't happen but w/e
-#if DEBUG
-                                                BaseException = err
-#endif
-
-                                            });
-                                        }
-
-
-                                    }
-                                    else
-                                    {
-                                        switch (ThisToken)
-                                        {
-                                            case "{":
-
-                                                if (CurScope.Type == ScriptScopeType.Statement
-                                                    || CurScope.Type == ScriptScopeType.Function)
-                                                {
-                                                    continue;
-                                                }
-                                                else
-                                                {
-
-                                                    ScriptErrorManager.ThrowScriptError(new ScriptError
-                                                    {
-                                                        ScriptName = Sc.Name,
-                                                        Line = ScriptLine,
-                                                        LineNumber = CurrentLine,
-                                                        Id = 1005,
-                                                        Severity = MessageSeverity.Error,
-                                                        Description = "Open curved parentheses - { - must be in statement or function context!" // LS1005
-
-                                                    });
-
-                                                    continue;
-                                                }
-                                            case "}": // todo: last scope
-
-                                                if (CurScope.Type != ScriptScopeType.Global)
-                                                {
-                                                    CurScope.Type = ScriptScopeType.Global;
-                                                    continue;
-                                                }
-                                                else
-                                                {
-                                                    ScriptErrorManager.ThrowScriptError(new ScriptError
-                                                    {
-                                                        ScriptName = Sc.Name,
-                                                        Line = ScriptLine,
-                                                        LineNumber = CurrentLine,
-                                                        Id = 1006,
-                                                        Severity = MessageSeverity.Error,
-                                                        Description = "Closed curved parentheses - } - must be in statement or function context!" // LS1005
-
-                                                    });
-
-                                                    continue;
-                                                }
-
-                                        }
-                                    }
-
-                                    if (!ThisToken.Contains("("))
-                                    {
-                                        // Allow any capitalisation
-
-                                        CurScope.Type = ScriptScopeType.Statement;
-
-                                        if (ThisToken == null
-                                            || ThisToken == "")
-                                        {
-                                            ScriptErrorManager.ThrowScriptError(new ScriptError
-                                            {
-                                                ScriptName = Sc.Name,
-                                                Line = ScriptLine,
-                                                LineNumber = CurrentLine,
-                                                Id = 1004,
-                                                Severity = MessageSeverity.Error,
-                                                Description = "Invalid statement or variable declaration!" // LS1003
-
-                                            });
-                                        }
-                                        else
-                                        {
-                                            string TokenX = ThisToken.ToLower();
-
-                                            TypeConverter TC = TypeDescriptor.GetConverter(typeof(StatementToken));
-                                            StatementToken ST = (StatementToken)TC.ConvertFrom(null, null, TokenX);
-
-                                            if (ST == null) // assume variable declaration
-                                            {
-                                                // try operators
-
-                                                TypeConverter OTC = TypeDescriptor.GetConverter(typeof(OperatorToken));
-
-                                                OperatorToken OT = (OperatorToken)OTC.ConvertFrom(null, null, TokenX);
-
-                                                if (OT == null) // it is a variable
-                                                {
-                                                    Logging.Log($"Identified value: {TokenX}", "Script Tokeniser");
-                                                    ValueToken VT = new ValueToken();
-
-                                                    VT.ValueString = ThisToken;
-                                                    Tokens.Add(VT);
-                                                    continue;
-                                                }
-                                                else
-                                                {
-                                                    Logging.Log($"Identified operator: {TokenX}", "Script Tokeniser");
-                                                    Tokens.Add(OT);
-                                                    continue;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                CurScope.Type = ScriptScopeType.Statement;
-                                                Logging.Log($"Identified statement: {ST.Type}", "Script Tokeniser");
-                                                Tokens.Add(ST);
-                                                continue;
-                                            }
-                                        }
-
-                                    }
-                                    else // is a statement or a declaration of a variable or value 
-                                    {
-                                        StringBuilder SB = new StringBuilder();
-                                        SB.Append(ThisToken);
-
-                                        int Pos = ThisToken.IndexOf("(");
-
-                                        int PosEnd = ThisToken.IndexOf(")");
-
-                                        if (PosEnd == -1)
-                                        {
-
-                                            PosEnd = ThisToken.Length;
-
-                                            // search for the end of the method...
-                                            for (int k = i + 1; k < Tokens_Pre.Count; k++)
-                                            {
-                                                string NextToken = Tokens_Pre[k];
-
-                                                int NewPosEnd = NextToken.IndexOf(')');
-
-                                                i++; // skip the tokens as they have been handled
-
-                                                SB.Append($" {NextToken}"); // append any missing spaces betwen tokens - this will be stripped and trimmed anyway
-
-                                                if (NewPosEnd != -1)
-                                                {
-                                                    PosEnd = PosEnd + NewPosEnd;
-                                                    break;
-                                                }
-                                                else
-                                                {
-                                                    PosEnd = PosEnd + NextToken.Length;
-                                                    continue;
-                                                }
-
-                                            }
-                                        }
-
-                                        if (Pos > PosEnd
-                                            || Pos == -1
-                                            || PosEnd == -1)
-                                        {
-                                            ScriptErrorManager.ThrowScriptError(new ScriptError
-                                            {
-                                                ScriptName = Sc.Name,
-                                                Line = ScriptLine,
-                                                LineNumber = CurrentLine,
-                                                Id = 1002,
-                                                Severity = MessageSeverity.Error,
-                                                Description = "Closed bracket must be before open bracket in method declarations!"
-
-                                            });
-                                        }
-
-                                        string FinalMethodString = SB.ToString();
-
-                                        if (Tokens_Pre.Count > 1 &&
-                                            !Tokens_Pre[i - 1].Contains("function"))
-                                        {
-                                            Logging.Log("Identified function call", "Script Tokeniser");
-                                            CallToken CT = new CallToken();
-
-                                            string NameSubstring = FinalMethodString.Substring(0, Pos);
-
-                                            CT.Name = NameSubstring;
-
-                                            string ParametersSubstring = FinalMethodString.Substring(Pos + 1, PosEnd - (Pos + 1)); // skip the ( & ) 
-
-                                            // if there are no parameters it will not run. 
-                                            string[] CommaArray = ParametersSubstring.Split(',');
-
-                                            foreach (string CA in CommaArray)
-                                            {
-                                                Logging.Log($"Adding parameter {CA} to function", "Script Tokeniser");
-                                                CT.ParameterValues.Add(CA);
-                                            }
-
-                                            Tokens.Add(CT);
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            Logging.Log("Identified function declaration", "Script Tokeniser");
-                                            FunctionToken FToken = new FunctionToken();
-
-                                            CurScope.Type = ScriptScopeType.Function;
-
-                                            string FunctionNameSubstring = FinalMethodString.Substring(0, Pos);
-
-                                            Logging.Log($"Name: {FunctionNameSubstring}", "Script Tokeniser");
-
-                                            string FunctionParametersSubstring = FinalMethodString.Substring(Pos + 1, PosEnd - (Pos + 1));
-
-                                            // Obtain all function parameters
-                                            string[] FunctionParameters = FunctionParametersSubstring.Split(',');
-
-                                            foreach (string FParm in FunctionParameters)
-                                            {
-                                                string FParameterNoSpaces = FParm.Replace(" ", "");
-
-                                                // todo: check for method existing...lol
-                                                if (FParm.Length == 0
-                                                    || FParameterNoSpaces.Length == 0)
-                                                {
-
-                                                    continue;
-                                                }
-                                                else
-                                                {
-
-                                                    Logging.Log($"Adding function parameter {FParm}", "Script Tokeniser");
-                                                    FToken.FunctionParameters.Add(FParm);
-                                                }
-
-                                            }
-
-                                            //CurScope.Type = ScriptScopeType.Global;
-                                            Tokens.Add(FToken);
-
-                                            continue;
-                                        }
-                                    }
-                                }
-                            }
-
-                            Tokens.Add(new EndOfLineToken());
-                        }
-
-                        Tokens.Add(new EndOfFileToken());
-                    }
-
-                    // Set successful to true and return.
-                    TLR.Successful = true;
-                    TLR.TokenList = Tokens;
-
-
-                    return TLR;
-                }
-                catch (NotSupportedException err)
-                {
-                    // is fatal.
-                    ErrorManager.ThrowError("Script Tokeniser", $"TokenisationCannotConvertTypeInternalException", err);
-                    return TLR;
-                }
             }
             else
             {
@@ -381,21 +50,32 @@ namespace Lightning.Core.API
 
                 TokenCollection TC = new TokenCollection();
 
-                Logging.Log("Adding start of file token...", LogComponent);
+                Logging.Log("Phase 1 parsing in progress...", LogComponent);
 
-                ASTTreeSectionResult ASTSR = Tokeniser2_BuildASTRoot();
+                ASTTreeSectionResult ASTSR = Tokeniser2_ParsePhase1(Sc);
 
                 TC.Subsume(ASTSR.TokenList);
 
-                Logging.Log("Phase 1 parsing", LogComponent);
             }
             
         }
 
-        private ASTTreeSectionResult Tokeniser2_BuildASTRoot()
+        /// <summary>
+        /// Performs Phase 1 AST tokenisation.
+        /// </summary>
+        /// <param name="Sc"></param>
+        /// <returns></returns>
+        private ASTTreeSectionResult Tokeniser2_ParsePhase1(Script Sc)
         {
             ASTTreeSectionResult ASTSR = new ASTTreeSectionResult();
             ASTSR.TokenList.Add(new StartOfFileToken());
+
+            foreach (string ScriptLine in Sc.ScriptContent)
+            {
+                ASTTreeSectionResult ASTSR2 = Tokeniser2_ParseASTSectionPhase1(ScriptLine);
+                ASTSR.TokenList.Subsume(ASTSR2.TokenList);
+            }
+
             return ASTSR;
             
         }
@@ -405,15 +85,84 @@ namespace Lightning.Core.API
             
             string[] LineComponents = Line.Split(' ');
 
+            List<Token> TempPhase1List = new List<Token>();
+            ASTTreeSectionResult ASTSR = new ASTTreeSectionResult();
+
             foreach (string LineComponent in LineComponents)
             {
-                ASTTreeSectionResult ASTSR = Tokeniser2_ParseASTSection_ParseComponentPhase1(LineComponent);
+                ASTTreeSectionResult ASTSR2 = Tokeniser2_ParseASTSection_ParseComponentPhase1(LineComponent);
+
+                ASTSR.TokenList.Subsume(ASTSR2.TokenList);
             }
+
+            EndOfLineToken EOFT = new EndOfLineToken();
+
+            ASTSR.TokenList.Add(EOFT);
+
+            return ASTSR; 
         }
 
         private ASTTreeSectionResult Tokeniser2_ParseASTSection_ParseComponentPhase1(string LineComponent)
         {
+            ASTTreeSectionResult ASTSR = new ASTTreeSectionResult(); 
 
+            if (LineComponent.ExclusivelyContainsNumeric())
+            {
+                NumberToken NT = new NumberToken();
+                NT.Value = Convert.ToInt32(LineComponent);
+
+                ASTSR.TokenList.Add(NT);
+                ASTSR.Successful = true; 
+                return ASTSR; 
+            }
+            else
+            {
+                OperatorToken OT = OperatorToken.FromString(LineComponent);
+
+                if (OT != null)
+                {
+                    ASTSR.TokenList.Add(OT);
+                    ASTSR.Successful = true;
+                    return ASTSR;
+                }
+                else
+                {
+                    StatementToken ST = StatementToken.FromString(LineComponent);
+
+                    if (ST != null)
+                    {
+                        ASTSR.TokenList.Add(ST);
+                        ASTSR.Successful = true;
+                        return ASTSR;
+                    }
+                    else
+                    {
+                        ValueToken VT = new ValueToken();
+                        VT.Value = LineComponent;
+                        ASTSR.Successful = true;
+                        ASTSR.TokenList.Add(ST);
+                        return ASTSR; 
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Performs Phase 2 AST tokenisation. Transforms a flat list of tokens into an AST tree.
+        /// </summary>
+        /// <param name="FlatList"></param>
+        /// <returns></returns>
+        private ASTTreeSectionResult Tokeniser2_ParseASTSection_Phase2(TokenCollection FlatList)
+        {
+            // PATTERN RECOGNITION TIME LOL
+
+            for (int i = 1; i < FlatList.Count; i++)
+            {
+                Token T0 = FlatList[i - 1];
+                Token T1 = FlatList[i];
+                Token T2 = FlatList[i + 1];
+            }
         }
 
         private List<string> Tokeniser_PreprocessTokenList(List<string> TokensPre)

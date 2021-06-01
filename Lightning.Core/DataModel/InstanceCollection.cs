@@ -166,7 +166,7 @@ namespace Lightning.Core.API
         private void Add_PerformAdd(object Obj, Instance Parent = null)
         {
             // polymorphism mandates this being the instance we want.
-
+            
             Instance NewInstance = (Instance)Obj;
 
             if (Parent == null)
@@ -175,12 +175,18 @@ namespace Lightning.Core.API
             }
             else
             {
+                // June 1, 2021: Recursive search
                 Instance InstanceObj = NewInstance;
                 InstanceObj.Parent = Parent; 
                 Parent.Children.Instances.Add(NewInstance);
             }
 
             NewInstance.OnCreate(); 
+        }
+
+        private void Add_CheckThatParentIsInCollection()
+        {
+
         }
 
         /// <summary>

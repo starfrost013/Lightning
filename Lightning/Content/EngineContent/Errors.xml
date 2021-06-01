@@ -599,5 +599,12 @@ Do not change if you are not a dev
     <Id>80</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>The old Tokeniser has been removed as of June 1, 2021. Please use the AST Tokeniser instead!</Description>
+    <Name>OldTokeniserRemovedException</Name>
+    <Id>81</Id>
+    <Severity>Error</Severity>
+  </Error>
   
 </Errors>

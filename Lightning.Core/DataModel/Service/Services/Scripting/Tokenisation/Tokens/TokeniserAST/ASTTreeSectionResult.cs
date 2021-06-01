@@ -7,13 +7,13 @@ namespace Lightning.Core.API
 {
     public class ASTTreeSectionResult : IResult
     {
-        public List<Token> TokenList { get; set; }
+        public TokenCollection TokenList { get; set; }
         public string FailureReason { get; set; }
         public bool Successful { get; set; }
 
         public ASTTreeSectionResult()
         {
-            TokenList = new List<Token>(); 
+            TokenList = new TokenCollection(); 
         }
     }
 }
