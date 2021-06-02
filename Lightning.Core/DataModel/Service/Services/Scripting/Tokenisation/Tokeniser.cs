@@ -20,12 +20,13 @@ namespace Lightning.Core.API
 
         public ScriptTokeniser()
         {
-            CurScope = new ScriptScope(); 
+            CurScope = new ScriptScope();
+            ASTPatterns.RegisterPatterns();
         }
 
-        public TokenListResult Tokenise(Script Sc)
+        public ASTTreeSectionResult Tokenise(Script Sc)
         {
-            TokenListResult TLR = new TokenListResult();
+            ASTTreeSectionResult TLR = new ASTTreeSectionResult();
 
             if (!GlobalSettings.UseASTTokeniser)
             {
@@ -35,7 +36,7 @@ namespace Lightning.Core.API
                 // Fake being successful.
                 // Set successful to true and return.
                 TLR.Successful = true;
-                TLR.TokenList = new List<Token>();
+                TLR.TokenList = new TokenCollection();
 
 
                 return TLR;
@@ -55,6 +56,9 @@ namespace Lightning.Core.API
                 ASTTreeSectionResult ASTSR = Tokeniser2_ParsePhase1(Sc);
 
                 TC.Subsume(ASTSR.TokenList);
+
+                ASTSR.Successful = true;
+                return ASTSR; 
 
             }
             
@@ -157,14 +161,56 @@ namespace Lightning.Core.API
         {
             // PATTERN RECOGNITION TIME LOL
 
+            string ComponentName = "AST Tokeniser";
+
+            Logging.Log("Pattern identification in progress...", ComponentName);
+
+            ASTTreeSectionResult ASTSR = new ASTTreeSectionResult();
+
             for (int i = 1; i < FlatList.Count; i++)
             {
+                // Store 3 tokens.
                 Token T0 = FlatList[i - 1];
                 Token T1 = FlatList[i];
                 Token T2 = FlatList[i + 1];
+
+                Type T0Type = T0.GetType();
+                Type T1Type = T1.GetType();
+                Type T2Type = T2.GetType(); 
+
+                // Basic pattern recognition 
+                // Operator token
+                foreach (ASTPattern ASTP in ASTPatterns.Patterns)
+                {
+                    if (ASTP.TokenList.Count <= 2)
+                    {
+                        string ErrorMessage = "An ASTPattern must have at least three elements - cannot access its index 2 or below!";
+
+                        ErrorManager.ThrowError("AST Tokeniser", "AstPatternMustHaveAtLeast3Elements");
+
+                        ASTSR.FailureReason = ErrorMessage;
+                        return ASTSR; 
+                    }
+                    else
+                    {
+
+                        if (T0Type == ASTP.TokenList[0].GetType()) 
+                        if (T1Type == ASTP.TokenList[1].GetType()) 
+                        if (T2Type == ASTP.TokenList[2].GetType())
+                                {
+                                    string CompName = ASTP.PatternName;
+
+                                    Logging.Log($"Identified pattern: {CompName}", ComponentName);
+                                }
+
+                        
+                    }
+
+                }
             }
         }
 
+        
         private List<string> Tokeniser_PreprocessTokenList(List<string> TokensPre)
         {
             for (int i = 0; i < TokensPre.Count; i++)

@@ -128,21 +128,30 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        if (ObjType.IsSubclassOf(ParentType))
+                        // Check that the parent is actually in the InstanceCollection.
+                        // June 1, 2021
+                        if (Add_CheckThatParentIsInCollection(Parent))
                         {
-                            Add_PerformAdd(Obj, TestInstanceParent);
-                            return; 
-                        }
-                        else if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
-                        {
-                            Add_PerformAdd(Obj, TestInstanceParent);
-                            return;
+                            if (ObjType.IsSubclassOf(ParentType))
+                            {
+                                Add_PerformAdd(Obj, TestInstanceParent);
+                                return;
+                            }
+                            else if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
+                            {
+                                Add_PerformAdd(Obj, TestInstanceParent);
+                                return;
+                            }
+                            else
+                            {
+
+                                ErrorManager.ThrowError("DataModel", "CannotAddThatInstanceAsChildException", $"{ObjType.Name} cannot be a child of {ParentType.Name}!");
+                                return;
+                            }
                         }
                         else
                         {
 
-                            ErrorManager.ThrowError("DataModel", "CannotAddThatInstanceAsChildException", $"{ObjType.Name} cannot be a child of {ParentType.Name}!");
-                            return; 
                         }
 
 
@@ -175,7 +184,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                // June 1, 2021: Recursive search
+                
                 Instance InstanceObj = NewInstance;
                 InstanceObj.Parent = Parent; 
                 Parent.Children.Instances.Add(NewInstance);
@@ -184,8 +193,27 @@ namespace Lightning.Core.API
             NewInstance.OnCreate(); 
         }
 
-        private void Add_CheckThatParentIsInCollection()
+
+        private bool Add_CheckThatParentIsInCollection(Instance Parent, InstanceCollection CheckParent = null)
         {
+            // sort of a hack...probably a better way to do this...perhaps do it in the Instancer?  
+            if (CheckParent == null) CheckParent = this; 
+
+            foreach (Instance Ins in CheckParent)
+            {
+                if (Ins == Parent)
+                {
+                    return true;
+                }
+
+                if (Ins.Children.Count > 0)
+                {
+                    Add_CheckThatParentIsInCollection(Parent, Ins.Children); 
+                }
+
+            }
+
+            return false;
 
         }
 

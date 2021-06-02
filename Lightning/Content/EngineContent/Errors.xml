@@ -606,5 +606,19 @@ Do not change if you are not a dev
     <Id>81</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Cannot add an Instance to a Parent that is not in the InstanceCollection you are attempting to add it to!</Description>
+    <Name>CannotAddNonexistentInstanceToInstanceCollectionException</Name>
+    <Id>82</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>An ASTPattern must have at least three elements - cannot access its index 2 or below!</Description>
+    <Name>AstPatternMustHaveAtLeast3Elements</Name>
+    <Id>83</Id>
+    <Severity>Error</Severity>
+  </Error>
   
 </Errors>
