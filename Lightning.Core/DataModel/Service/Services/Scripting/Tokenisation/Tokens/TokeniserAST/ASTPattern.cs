@@ -15,7 +15,6 @@ namespace Lightning.Core.API
     {
         public string PatternName { get; set; }
         public List<Token> TokenList { get; set; }
-
         public ASTPattern()
         {
             TokenList = new List<Token>(); 

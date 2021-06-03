@@ -96,6 +96,9 @@ namespace Lightning.Core.API
             return false; 
         }
 
+        // temporary
+        public void Remove(Token Obj) => Tokens.Remove(Obj); 
+
         public TokenCollectionEnumerator GetEnumerator() => new TokenCollectionEnumerator(Tokens);
 
         /// <summary>

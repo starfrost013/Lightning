@@ -9,10 +9,13 @@ namespace Lightning.Core.API
     /// 
     /// A dynamically typed, interpreted, DataModel-aware scripting language for Lightning
     /// 
-    /// April 27, 2021
+    /// April 27, 2021 (modified June 3, 2021)
     /// </summary>
-    public class ScriptInterpreter
+    public class ScriptInterpreter : Instance // in the DataModel for now
     {
+        internal override string ClassName => "ScriptInterpreter";
+
+        internal override InstanceTags Attributes => InstanceTags.Instantiable;
         /// <summary>
         /// All methods that have been exposed.
         /// </summary>
@@ -21,7 +24,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// A list of currently running scripts.
         /// </summary>
-        public List<Script> RunningScripts { get; set; }
+        public List<Script> RunningScripts { get; set; } // potentially move to children
 
         public ScriptInterpreter()
         {   
@@ -56,9 +59,17 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Advances all scripts by one token. Handles Runtime Errors.
+        /// Advances all scripts by one line. Handles Runtime Errors.
         /// </summary>
         public void Interpret()
+        {
+            foreach (Script Sc in RunningScripts)
+            {
+
+            }
+        }
+
+        private void InterpretLine()
         {
 
         }

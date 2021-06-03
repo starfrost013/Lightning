@@ -20,10 +20,51 @@ namespace Lightning.Core.API
         internal override string ClassName => "Script";
 
         /// <summary>
+        /// Backing field for CurrentlyExecutingLine
+        /// </summary>
+        private int _currentlyexecutingline { get; set; }
+
+        public override void OnCreate()
+        {
+            ScriptContent = new List<string>(); 
+        }
+
+        /// <summary>
+        /// The currently executing line.
+        /// </summary>
+        internal int CurrentlyExecutingLine { get
+            {
+                return _currentlyexecutingline;
+            }
+            set
+            {
+                if (_currentlyexecutingline < 0
+                    || _currentlyexecutingline > ScriptContent.Count)
+                {
+                    if (Name != null)
+                    {
+                        ErrorManager.ThrowError(ClassName, "ErrorAcquiredInvalidLineException", $"Attempted to acquire invalid line {value} for the script with name {Name}!");
+                    }
+                    else
+                    {
+                        ErrorManager.ThrowError(ClassName, "ErrorAcquiredInvalidLineException", $"Attempted to acquire invalid line {value} for a script!");
+                    }
+                    
+                }
+                else
+                {
+                    _currentlyexecutingline = value; 
+                }
+            }
+
+        }
+
+        /// <summary>
         /// A list of the script's lines.
         /// </summary>
         internal List<string> ScriptContent { get; set; }
         
+
         private string _content { get; set; }
         /// <summary>
         /// Used for seamless DataModel serialisation. 

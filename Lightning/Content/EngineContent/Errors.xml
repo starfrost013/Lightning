@@ -620,5 +620,18 @@ Do not change if you are not a dev
     <Id>83</Id>
     <Severity>Error</Severity>
   </Error>
-  
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>SyntaxErrorException</Name>  
+    <Id>84</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorAcquiredInvalidLineException</Name>
+    <Id>85</Id>
+    <Severity>FatalError</Severity>
+  </Error>
 </Errors>

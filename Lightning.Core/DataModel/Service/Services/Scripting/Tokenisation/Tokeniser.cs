@@ -54,8 +54,12 @@ namespace Lightning.Core.API
                 Logging.Log("Phase 1 parsing in progress...", LogComponent);
 
                 ASTTreeSectionResult ASTSR = Tokeniser2_ParsePhase1(Sc);
+                
+                Logging.Log("Phase 2 parsing in progress...", LogComponent);
 
-                TC.Subsume(ASTSR.TokenList);
+                ASTTreeSectionResult ASTSR_Phase2 = Tokeniser2_ParsePhase2(ASTSR.TokenList);
+
+                TC.Subsume(ASTSR_Phase2.TokenList);
 
                 ASTSR.Successful = true;
                 return ASTSR; 
@@ -157,7 +161,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="FlatList"></param>
         /// <returns></returns>
-        private ASTTreeSectionResult Tokeniser2_ParseASTSection_Phase2(TokenCollection FlatList)
+        private ASTTreeSectionResult Tokeniser2_ParsePhase2(TokenCollection FlatList)
         {
             // PATTERN RECOGNITION TIME LOL
 
@@ -169,20 +173,11 @@ namespace Lightning.Core.API
 
             for (int i = 1; i < FlatList.Count; i++)
             {
-                // Store 3 tokens.
-                Token T0 = FlatList[i - 1];
-                Token T1 = FlatList[i];
-                Token T2 = FlatList[i + 1];
-
-                Type T0Type = T0.GetType();
-                Type T1Type = T1.GetType();
-                Type T2Type = T2.GetType(); 
-
                 // Basic pattern recognition 
                 // Operator token
                 foreach (ASTPattern ASTP in ASTPatterns.Patterns)
                 {
-                    if (ASTP.TokenList.Count <= 2)
+                    if (ASTP.TokenList.Count < 2)
                     {
                         string ErrorMessage = "An ASTPattern must have at least three elements - cannot access its index 2 or below!";
 
@@ -194,20 +189,48 @@ namespace Lightning.Core.API
                     else
                     {
 
-                        if (T0Type == ASTP.TokenList[0].GetType()) 
-                        if (T1Type == ASTP.TokenList[1].GetType()) 
-                        if (T2Type == ASTP.TokenList[2].GetType())
+                        string CompName = ASTP.PatternName;
+
+                        Logging.Log($"Identified pattern: {CompName}", ComponentName);
+
+                        foreach (Token ASTPToken in ASTP.TokenList)
+                        {
+                            if (ASTPToken.IsCentralToken)
+                            {
+                                int CurFlatListID = i - 1; 
+
+                                if (ASTP.TokenList.Count - CurFlatListID < 0)
                                 {
-                                    string CompName = ASTP.PatternName;
 
-                                    Logging.Log($"Identified pattern: {CompName}", ComponentName);
                                 }
+                                else
+                                {
+                                    for (int j = CurFlatListID; i < CurFlatListID + ASTP.TokenList.Count; j++)
+                                    {
 
-                        
+                                        Token ListToken = FlatList[CurFlatListID];
+                                        CurFlatListID++;
+
+                                        if (ListToken != ASTPToken)
+                                        {
+                                            ListToken.Children.Add(ASTPToken);
+                                            FlatList.Remove(ASTPToken);
+                                        }
+                                    }
+
+                                }
+                                
+                            }
+                        }
                     }
 
                 }
             }
+
+
+            ASTSR.TokenList = FlatList;
+            ASTSR.Successful = true;
+            return ASTSR;
         }
 
         
