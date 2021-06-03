@@ -64,6 +64,10 @@ namespace Lightning.Core.API
         /// </summary>
         internal List<string> ScriptContent { get; set; }
         
+        /// <summary>
+        /// The tokenised script content if this script.
+        /// </summary>
+        internal List<Token> TokenisedScriptContent { get; set; }
 
         private string _content { get; set; }
         /// <summary>
@@ -92,7 +96,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// The list of tokens that make up the script.
         /// </summary>
-        internal List<Token> Tokens { get; set; }
+        internal TokenCollection Tokens { get; set; }
 
         /// <summary>
         /// Backing field for <see cref="CurToken"/>.

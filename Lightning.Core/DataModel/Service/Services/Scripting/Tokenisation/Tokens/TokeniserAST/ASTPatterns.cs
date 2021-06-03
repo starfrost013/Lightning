@@ -20,6 +20,8 @@ namespace Lightning.Core.API
         /// </summary>
         public static void RegisterPatterns()
         {
+            Patterns = new List<ASTPattern>();
+
             Patterns.Add(new ASTPattern { PatternName = "NUMBER OPERATOR NUMBER", TokenList = new List<Token> { new NumberToken(), new OperatorToken { IsCentralToken = true }, new NumberToken() } }) ;
             Patterns.Add(new ASTPattern { PatternName = "VALUE OPERATOR NUMBER", TokenList = new List<Token> { new ValueToken(), new OperatorToken { IsCentralToken = true }, new NumberToken() } });
             Patterns.Add(new ASTPattern { PatternName = "NUMBER OPERATOR VALUE", TokenList = new List<Token> { new NumberToken(), new OperatorToken { IsCentralToken = true }, new ValueToken() } });

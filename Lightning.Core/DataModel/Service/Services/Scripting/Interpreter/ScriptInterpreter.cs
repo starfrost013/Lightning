@@ -26,10 +26,13 @@ namespace Lightning.Core.API
         /// </summary>
         public List<Script> RunningScripts { get; set; } // potentially move to children
 
+        public ScriptInterpreterState State { get; set; }
+
         public ScriptInterpreter()
         {   
             ExposedMethods = new List<ScriptMethod>();
             RunningScripts = new List<Script>();
+            State = new ScriptInterpreterState(); 
         }
 
         /// <summary>
@@ -59,19 +62,79 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Advances all scripts by one line. Handles Runtime Errors.
+        /// Advances all scripts by one token and its children. Handles Runtime Errors.
         /// </summary>
         public void Interpret()
         {
             foreach (Script Sc in RunningScripts)
             {
+                string CurLine = Sc.ScriptContent[Sc.CurrentlyExecutingLine];
 
+                Sc.CurrentlyExecutingLine++; 
             }
         }
 
-        private void InterpretLine()
+        /// <summary>
+        /// Interprets an individual Token in each script.
+        /// 
+        /// </summary>
+        /// <param name="T0"></param>
+        private void InterpretToken(Token T0)
         {
+            Type T0Type = T0.GetType();
 
+
+            if (T0Type == typeof(OperatorToken))
+            {
+                OperatorToken T0_Op = (OperatorToken)T0;
+
+                switch (T0_Op.Type)
+                {
+                    case OperatorTokenType.Assignment:
+                        return;
+                    case OperatorTokenType.Plus: // todo: implement last token set feature so that we can do stuff like 1 + 2 + 3 + 4 + 5
+
+                        for (int i = 0; i < T0_Op.Children.Count; i++)
+                        {
+                            Token NT = T0_Op.Children[i];
+
+                            try
+                            {
+
+                                if (i == 0)
+                                {
+                                    Variable Vf = new Variable();
+                                    // TEMP
+                                    Vf.Name = Variable.GenerateAutomaticVariableName();
+                                    continue; 
+                                }
+                                else
+                                {
+                                    Type NTType = NT.GetType();
+
+                                    if (NTType == typeof(NumberToken))
+                                    {
+                                        NumberToken OT = (NumberToken)NT;
+                                        OT.
+                                    }
+                                    else if (NTType == typeof(ValueToken))
+                                    {
+                                        ValueToken VT = (ValueToken)NT;
+                                    }
+                                }
+                            }
+                            catch (InvalidOperationException err)
+                            {
+                                ErrorManager.ThrowError(ClassName, "SyntaxErrorException", "Must have a variable or number within an operation!", err);
+                            }
+
+
+                        }
+
+                        return;
+                }
+            }
+            
         }
     }
 }

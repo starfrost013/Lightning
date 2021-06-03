@@ -35,6 +35,11 @@ namespace Lightning.Core.API
         /// <returns></returns>
         public Token Pop() => Stack[Stack.Count - 1];
 
-        public void  Push(Token TokenToPush) => Stack.Add(TokenToPush); 
+        /// <summary>
+        /// Pushes a token to the stack.
+        /// </summary>
+        /// <param name="TokenToPush"></param>
+
+        public void Push(Token TokenToPush) => Stack.Add(TokenToPush); 
     }
 }

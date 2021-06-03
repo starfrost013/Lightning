@@ -181,7 +181,7 @@ namespace Lightning.Core.API
                 {
                     Script LeScript = (Script)Ins;
 
-                    TokenListResult TLR = Tokeniser.Tokenise((Script)LeScript);
+                    ASTTreeSectionResult TLR = Tokeniser.Tokenise((Script)LeScript);
 
                     if (!TLR.Successful)
                     {

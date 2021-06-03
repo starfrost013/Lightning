@@ -197,7 +197,7 @@ namespace Lightning.Core.API
         private bool Add_CheckThatParentIsInCollection(Instance Parent, InstanceCollection CheckParent = null)
         {
             // sort of a hack...probably a better way to do this...perhaps do it in the Instancer?  
-            if (CheckParent == null) CheckParent = this; 
+            if (CheckParent == null) CheckParent = DataModel.GetState(); 
 
             foreach (Instance Ins in CheckParent)
             {
