@@ -197,24 +197,33 @@ namespace Lightning.Core.API
         private bool Add_CheckThatParentIsInCollection(Instance Parent, InstanceCollection CheckParent = null)
         {
             // sort of a hack...probably a better way to do this...perhaps do it in the Instancer?  
-            if (CheckParent == null) CheckParent = DataModel.GetState(); 
+            if (CheckParent == null) CheckParent = DataModel.GetState();
 
+            bool MatchFound = false;
+
+            MatchFound = Add_CheckThatParentIsInCollection_PerformCheck(Parent, CheckParent); 
+
+            return MatchFound;
+
+        }
+
+        private bool Add_CheckThatParentIsInCollection_PerformCheck(Instance Parent, InstanceCollection CheckParent)
+        {
             foreach (Instance Ins in CheckParent)
             {
                 if (Ins == Parent)
                 {
-                    return true;
+                    return true; 
                 }
 
                 if (Ins.Children.Count > 0)
                 {
-                    Add_CheckThatParentIsInCollection(Parent, Ins.Children); 
+                    return Add_CheckThatParentIsInCollection_PerformCheck(Parent, Ins.Children);
                 }
 
             }
 
-            return false;
-
+            return false; 
         }
 
         /// <summary>

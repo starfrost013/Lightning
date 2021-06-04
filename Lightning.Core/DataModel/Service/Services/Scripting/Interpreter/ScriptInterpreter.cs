@@ -115,7 +115,7 @@ namespace Lightning.Core.API
                                     if (NTType == typeof(NumberToken))
                                     {
                                         NumberToken OT = (NumberToken)NT;
-                                        OT.
+                                       
                                     }
                                     else if (NTType == typeof(ValueToken))
                                     {
