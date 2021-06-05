@@ -38,7 +38,8 @@ namespace Lightning.Core.API
         {
             Type ObjType = Obj.GetType();
 
-            if (ObjType != typeof(Token))
+            if (ObjType != typeof(Token)
+                && !ObjType.IsSubclassOf(typeof(Token)))
             {
                 ErrorManager.ThrowError("AST Tokeniser", "CannotAddNonTokenToTokenCollectionException");
                 return; 
@@ -123,7 +124,7 @@ namespace Lightning.Core.API
             }
         }
 
-        public int Count => Count; 
+        public int Count => Tokens.Count; 
 
         public Token this[int index] => Tokens[index];
     }
@@ -133,6 +134,7 @@ namespace Lightning.Core.API
 
         public TokenCollectionEnumerator(List<Token> TokenList)
         {
+            Tokens = new List<Token>(); 
             foreach (Token Token in TokenList)
             {
                 Tokens.Add(Token);

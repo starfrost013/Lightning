@@ -634,4 +634,18 @@ Do not change if you are not a dev
     <Id>85</Id>
     <Severity>FatalError</Severity>
   </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>LuaScriptCrashedException</Name>
+    <Id>86</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Lua state invalid or trying to parse a script before ScriptingService has started.</Description>
+    <Name>LuaStateFailureException</Name>
+    <Id>87</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

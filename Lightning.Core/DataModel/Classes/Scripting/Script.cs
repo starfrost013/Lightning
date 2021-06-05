@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq; 
 using System.Text;
 
@@ -23,6 +24,33 @@ namespace Lightning.Core.API
         /// Backing field for CurrentlyExecutingLine
         /// </summary>
         private int _currentlyexecutingline { get; set; }
+
+
+        /// <summary>
+        /// The current execution time of this Lua script.
+        /// </summary>
+        public int ExecutionTime { get; set; }
+
+        /// <summary>
+        /// Is this Lua script paused?
+        /// 
+        /// As we currently use a single thread, every script has to yield on its own,
+        /// as if we were using an old-school cooperative multitasking operating system.
+        /// 
+        /// As a result of this, each script will need to pause if it uses an infinite loop. The maximum execution time also needs to be low in order to prevent poorly written scripts
+        /// lagging the game
+        /// </summary>
+        public bool IsPaused { get; set; }
+
+        /// <summary>
+        /// Stopwatch for the current script.
+        /// </summary>
+        public Stopwatch CurrentScriptRunningStopwatch { get; set; }
+
+        /// <summary>
+        /// Stopwatch used for wait time.
+        /// </summary>
+        public Stopwatch WaitCountdownStopwatch { get; set; }
 
         public override void OnCreate()
         {

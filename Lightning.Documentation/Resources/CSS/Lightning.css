@@ -1,0 +1,74 @@
+/* Media import for fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');/* Header styles */ 
+
+div, p
+{
+	font-family: "Noto Sans JP", Arial, Helvetica, sans-serif; 
+}
+
+div.lightningsdk-header, p.lightningsdk-header, .lightningsdk-header
+{
+	font-weight: 800;
+}
+
+div.lightningsdk-header-h1, p.lightningsdk-header-h1, .lightningsdk-header-h1
+{
+	font-size: 72px;
+}
+
+div.lightningsdk-header-h2, p.lightningsdk-header-h2, .lightningsdk-header-h2
+{
+	font-size: 48px;
+}
+
+div.lightningsdk-header-h3, p.lightningsdk-header-h3, .lightningsdk-header-h3
+{
+	font-size: 35px;
+}
+
+div.lightningsdk-header-h4, p.lightningsdk-header-h4, .lightningsdk-header-h4
+{
+	font-size: 28px;
+}
+
+div.lightningsdk-header-h5, p.lightningsdk-header-h5, .lightningsdk-header-h5
+{
+	font-size: 24px;
+}
+
+div.lightningsdk-header-h6, p.lightningsdk-header-h6, .lightningsdk-header-h6
+{
+	font-size: 18px;
+}
+
+/* Content styles */
+
+div.lightningsdk-content-header, p.lightningsdk-content-header, .lightningsdk-content-header
+{
+	color: #ff0000;
+	text-decoration: underline;
+	text-align: center; 
+}
+
+div.lightningsdk-content-header-private, p.lightningsdk-content-header-private, .lightningsdk-content-header-private
+{
+	color: #00ff00;
+	text-decoration: underline;
+	text-align: center; 
+	content: "PrivateAPI"; 
+	-moz-content: "PrivateAPI";
+}
+
+/* Content link styles */
+
+div a.lightningsdk-link, p a.lightningsdk-content--link, a.lightningsdk-content--link
+{
+	color: #004060;
+	text-decoration: none;
+}
+
+div a.lightningsdk-content-header, p a.lightningsdk-content-header, a.lightningsdk-content-header
+{
+	color: #004060;
+	text-decoration: none;
+}

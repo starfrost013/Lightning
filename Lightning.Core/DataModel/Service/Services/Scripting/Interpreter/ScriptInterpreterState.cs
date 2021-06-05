@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics; 
 using System.Text;
 
 namespace Lightning.Core.API
@@ -7,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// ScriptInterpreterState
     /// 
-    /// May 3, 2021 (modified May 17, 2021: added basic stack functions0
+    /// May 3, 2021 (modified June 5, 2021: Lua)
     /// </summary>
     public class ScriptInterpreterState
     {
@@ -20,7 +21,8 @@ namespace Lightning.Core.API
         /// An FIFO stack.
         /// </summary>
         public List<Token> Stack { get; set; }
-        
+
+       
         public ScriptInterpreterState()
         {
             Stack = new List<Token>();

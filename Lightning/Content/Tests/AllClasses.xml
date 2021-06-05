@@ -1,155 +1,95 @@
 <Lightning>
   <Metadata>
-    <!-- The first Lightning XML file -->
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
-    <Description>A test file</Description>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-05-09 21:00:01</LastModifiedDate>
-    <RevisionID>32</RevisionID> <!-- Rev25: update for new settings -->
-
+    <LastModifiedDate>2021-05-12 22:36:20</LastModifiedDate>
+    <RevisionID>36</RevisionID>
+    <Version />
   </Metadata>
   <Settings>
-    
     <Setting>
       <Name>MaxFPS</Name>
       <Type>System.Int32</Type>
       <Value>60</Value>
     </Setting>
-
     <Setting>
       <Name>DefaultWindowPositionX</Name>
       <Type>System.Int32</Type>
       <Value>300</Value>
     </Setting>
-
     <Setting>
       <Name>DefaultWindowPositionY</Name>
       <Type>System.Int32</Type>
       <Value>300</Value>
     </Setting>
-
     <Setting>
       <Name>WindowWidth</Name>
       <Type>System.Int32</Type>
       <Value>960</Value>
     </Setting>
-
     <Setting>
       <Name>WindowHeight</Name>
       <Type>System.Int32</Type>
       <Value>640</Value>
     </Setting>
-
     <Setting>
       <Name>WindowTitle</Name>
       <Type>System.String</Type>
       <Value>Lightning - Test Game</Value>
     </Setting>
-
     <Setting>
       <Name>Fullscreen</Name>
       <Type>System.Boolean</Type>
       <Value>False</Value>
     </Setting>
-
-    <!-- will be controlled by PhysicsService, which does not exist yet
-    <Setting>
-      <Name>PhysicalObjectDestructionLevel</Name>
-      <Type>System.Int32</Type>
-      <Value>-500</Value>
-    </Setting>
-  -->
     <Setting>
       <Name>FreeCameraMoveIntensityX</Name>
       <Type>System.Int32</Type>
       <Value>10</Value>
     </Setting>
-
     <Setting>
       <Name>FreeCameraMoveIntensityY</Name>
       <Type>System.Int32</Type>
       <Value>10</Value>
     </Setting>
-
     <Setting>
       <Name>ChaseCameraInFrontOrBehindObjectFactor</Name>
       <Type>System.Int32</Type>
       <Value>3</Value>
     </Setting>
-
     <Setting>
       <Name>ChaseCameraAboveOrBelowObjectFactor</Name>
       <Type>System.Int32</Type>
       <Value>13</Value>
     </Setting>
   </Settings>
-
   <Workspace>
-
-    <ServiceControlManager>
-      <RenderService/>
-    </ServiceControlManager>
-
-
-    <Color3 Name="c03_01" R="100" G="100" B="100"/>
-    <Color3 Name="c03_02" R="150" G="100" B="100"/>
-    <Color3 Name="c03_03" R="150" G="100" B="100"/>
-    <Vector2 Name="v1" X="50" Y="40"/>
-
-    <Line Name="Line1" Begin="100,100" End="400,400" Colour="100,100,100,255"/>
-    <Circle Name="Circle1" Size="48,48" Position="40,40" Colour="255,255,0,0"/>
-    <Circle Name="Circle2" Size="96,48" Position="120,40" Colour="200,255,255,255"/>
-    <Circle Name="Circle2" Size="96,48" Position="320,40" Colour="255,255,0,255" Fill="True"/>
-    <Rectangle Name="NonFilledRectangle" Position="66,66" Size="40,40" Colour="140,70,20,140"/>
-    <Rectangle Name="FilledRectangle" Position="110,66" Size="40,40" Colour="255,70,20,140" Fill="True"/>
-    
-    <PhysicalObject Name="Block1" Position="50,50" Size="200,200">
-      <Texture Name="Block1_Texture" Path="Content\Images\test_texture_small.png"/>
+    <Color3 R="100" G="100" B="100" Name="c03_01" />
+    <Color3 R="150" G="100" B="100" Name="c03_02" />
+    <Color3 R="150" G="100" B="100" Name="c03_03" />
+    <Vector2 X="50" Y="40" Name="v1" />
+    <Line Begin="100,100" End="400,400" Colour="100,100,100,255" Fill="False" CanCollide="False" ZIndex="0" Name="Line1" />
+    <Circle Colour="255,255,0,0" Fill="False" CanCollide="False" Position="40,40" Size="48,48" ZIndex="0" Name="Circle1" />
+    <Circle Colour="200,255,255,255" Fill="False" CanCollide="False" Position="120,40" Size="96,48" ZIndex="0" Name="Circle2" />
+    <Circle Colour="255,255,0,255" Fill="True" CanCollide="False" Position="320,40" Size="96,48" ZIndex="0" Name="Circle2" />
+    <Rectangle Colour="140,70,20,140" Fill="False" CanCollide="False" Position="66,66" Size="40,40" ZIndex="0" Name="NonFilledRectangle" />
+    <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="110,66" Size="40,40" ZIndex="0" Name="FilledRectangle" />
+    <PhysicalObject CanCollide="False" Position="50,50" Size="200,200" ZIndex="0" Name="Block1">
+      <Texture Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block1_Texture" />
     </PhysicalObject>
-
-    <PhysicalObject Name="Block2" Position="60,60" Size="200,200">
-      <Texture Name="Block2_Texture" Path="Content\Images\test_texture_small2.png"/>
+    <PhysicalObject CanCollide="False" Position="60,60" Size="200,200" ZIndex="0" Name="Block2">
+      <Texture Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
     </PhysicalObject>
-
-    <!-- RenderService -->
-
-    <Camera Name="Camera1" Active="True" Position="-100,0" CameraType="Free"/>
-
-    <!-- test
-    considering moving to a ScriptContent class
-    -->
-    <Script Name="WsTestScript" Content="// LightningScript 
-// April 25, 2021&#13;&#10;
-// Comments are //&#13;&#10; 
-
-// methods are exposed by the engine and are called exactly how they are in C#&#13;&#10;
-Logging.Log('Hello world!'); // semicolon optional&#13;&#10;
-
-// Dynamically typed&#13;&#10;
-a = 'a'&#13;&#10;
-b = 2&#13;&#10;
-
-// Functions have C-like syntax&#13;&#10;
-function Test()&#13;&#10; 
-{&#13;&#10;
-	Logging.Log('I'm a script!')&#13;&#10;
-}&#13;&#10;
-
-if (b == 2) // statements have C-like syntax &#13;&#10;
-{&#13;&#10;
-	&#13;&#10;
-}&#13;&#10;
-
-// Infinite loop&#13;&#10;
-while (true)&#13;&#10;
-{&#13;&#10;
-	Test();&#13;&#10;
-}&#13;&#10;"></Script>
-
-    <Sound Path="Content\Sounds\test.mp3" Repeat="True" Volume="1.00" Is3D="True" Radius="20" TargetObject="Camera1" Position="-100,0"></Sound>
-    <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0"></Sound>
-    
+    <Camera Active="True" CameraType="Free" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" />
+    <Script Content="// LightningScript  // April 25, 2021&#xD;&#xA; // Comments are //&#xD;&#xA;   // methods are exposed by the engine and are called exactly how they are in C#&#xD;&#xA; Logging.Log('Hello world!'); // semicolon optional&#xD;&#xA;  // Dynamically typed&#xD;&#xA; a = 'a'&#xD;&#xA; b = 2&#xD;&#xA;  // Functions have C-like syntax&#xD;&#xA; function Test()&#xD;&#xA;  {&#xD;&#xA;  Logging.Log('I'm a script!')&#xD;&#xA; }&#xD;&#xA;  if (b == 2) // statements have C-like syntax &#xD;&#xA; {&#xD;&#xA;  &#xD;&#xA; }&#xD;&#xA;  // Infinite loop&#xD;&#xA; while (true)&#xD;&#xA; {&#xD;&#xA;  Test();&#xD;&#xA; }&#xD;&#xA;" Name="WsTestScript" />
+    <Sound Is3D="True" TargetObject="Camera1" Path="Content\Sounds\test.mp3" Repeat="True" Volume="1" Radius="20" CanCollide="False" Position="-100,0" ZIndex="0" Name="Instance" />
+    <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0" LoopCount="5"></Sound>
+    <Humanoid Position="150,150" Size="42,68" CanCollide="True" Name="Trincid2021TestOnly" DisplayHealthBar="True" Health="95" MaxHealth="100">
+      <Texture Path="Content\Textures\HumanoidTest\TrincidStandingL.png" Name="Trincid2021TestOnly_StandLeft"/>
+    </Humanoid>
+    <Sky Name="SkyBG" ForceToBack="True">
+      <Texture Path="Content\Textures\Clouds.png"></Texture>
+    </Sky>
   </Workspace>
-  
 </Lightning>

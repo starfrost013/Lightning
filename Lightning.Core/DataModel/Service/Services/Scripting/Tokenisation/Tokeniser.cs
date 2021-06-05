@@ -28,7 +28,9 @@ namespace Lightning.Core.API
         {
             ASTTreeSectionResult TLR = new ASTTreeSectionResult();
 
-            if (!GlobalSettings.UseASTTokeniser)
+            GlobalSettings GS = DataModel.GetGlobalSettings();
+
+            if (!GS.UseASTTokeniser)
             {
                 // DO BANNED OLD TOKENISER
                 ErrorManager.ThrowError("Script Tokeniser", "OldTokeniserRemovedException");
@@ -148,7 +150,7 @@ namespace Lightning.Core.API
                         ValueToken VT = new ValueToken();
                         VT.Value = LineComponent;
                         ASTSR.Successful = true;
-                        ASTSR.TokenList.Add(ST);
+                        ASTSR.TokenList.Add(VT);
                         return ASTSR; 
                     }
                 }

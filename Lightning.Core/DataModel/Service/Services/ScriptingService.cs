@@ -1,4 +1,5 @@
-﻿using Lightning.Utilities;
+﻿using NLua;
+using Lightning.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics; 
@@ -22,18 +23,24 @@ namespace Lightning.Core.API
 
         internal ScriptTokeniser Tokeniser { get; set; }
 
+        public Lua LuaState { get; set; }
         public ScriptingService()
         {
             ScriptGlobals = new ScriptInterpreter();
             Tokeniser = new ScriptTokeniser();
+
         }
 
         public override ServiceStartResult OnStart()
         {
             Logging.Log("ScriptingService Init", ClassName);
 
+            // Initialise Lua 
+            LuaState = new Lua();
+            LuaState.LoadCLRPackage();
+            
             // Register the Scripting API.
-            RegisterAPI();
+            RegisterAPI(true);
             ServiceStartResult SSR = new ServiceStartResult { Successful = true };
             SSR.Successful = true;
             return SSR;
@@ -52,14 +59,14 @@ namespace Lightning.Core.API
         /// ONLY THROW FATAL ERRORS!!!!!
         /// </summary>
         /// <param name="MethodFullName"></param>
-        internal void RegisterMethod(string MethodFullName)
+        internal void RegisterMethod(string MethodFullName, bool IsLua = false)
         {
             string ProcessedMethodName = MethodFullName.Replace(";", ".");
 
             // Verify that this method can be instantiated. If it fails...
             if (!XmlUtil.CheckIfValidTypeForInstantiation(ProcessedMethodName))
             {
-                string ErrorString = $"Attempted to register {MethodFullName}, which is not in the System or Lightning.* namespaces and therefore cannot be registered for use by scripts!";
+                string ErrorString = $"Attempted to register {MethodFullName}, which is not in the System or Lightning.* namespaces and therefore cannot be registered for use by Lua scripts!";
 
                 ErrorManager.ThrowError(ClassName, "AttemptedToExposeInvalidMethodToScriptingException", ErrorString);
 
@@ -71,7 +78,7 @@ namespace Lightning.Core.API
             {
                 Logging.Log($"Registering method {MethodFullName}", ClassName);
 
-                GetScriptMethodResult GSMR = RegisterMethod_DoRegisterMethod(MethodFullName);
+                GetScriptMethodResult GSMR = RegisterMethod_DoRegisterMethod(MethodFullName, IsLua);
 
                 if (!GSMR.Successful)
                 {
@@ -89,7 +96,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private GetScriptMethodResult RegisterMethod_DoRegisterMethod(string MethodFullName)
+        private GetScriptMethodResult RegisterMethod_DoRegisterMethod(string MethodFullName, bool IsLua = false)
         {
             GetScriptMethodResult GSMR = new GetScriptMethodResult();
 
@@ -127,23 +134,35 @@ namespace Lightning.Core.API
 
                         InstanceInfoMethod CIIM = TestIns.Info.GetMethod(Method);
 
-                        if (CIIM == null)
+                        if (!IsLua)
                         {
-                            GSMR.FailureReason = $"The method {Method} does not exist in the class {MethodClass}!";
+
+                            if (CIIM == null)
+                            {
+                                GSMR.FailureReason = $"The method {Method} does not exist in the class {MethodClass}!";
+                            }
+                            else
+                            {
+                                SM.Name = MethodFullName; // set it!
+
+                                foreach (InstanceInfoMethodParameter IIMP in CIIM.Parameters)
+                                {
+                                    ScriptMethodParameter SMP = new ScriptMethodParameter();
+
+                                    SMP.Name = IIMP.ParamName;
+                                    SMP.Type = IIMP.ParamType;
+
+                                    SM.Parameters.Add(SMP);
+                                }
+                            }
                         }
                         else
                         {
-                            SM.Name = MethodFullName; // set it!
+                            LuaState.RegisterFunction(CIIM.MethodName, MType.GetMethod(CIIM.MethodName));
 
-                            foreach (InstanceInfoMethodParameter IIMP in CIIM.Parameters)
-                            {
-                                ScriptMethodParameter SMP = new ScriptMethodParameter();
-
-                                SMP.Name = IIMP.ParamName;
-                                SMP.Type = IIMP.ParamType;
-
-                                SM.Parameters.Add(SMP);
-                            }
+                            GSMR.Successful = true;
+                            GSMR.Method = new ScriptMethod(); // will be changed to genericresult in future
+                            return GSMR; 
                         }
                     }
                     
@@ -165,6 +184,8 @@ namespace Lightning.Core.API
             }
             else
             {
+                ScriptGlobals.Interpret(LuaState);
+
                 return;
             }
             
