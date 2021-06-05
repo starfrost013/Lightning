@@ -1,0 +1,161 @@
+﻿<Lightning>
+  <Metadata>
+    <!-- The first Lightning XML file -->
+    <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
+    <Author>starfrost</Author>
+    <Description>An empty game</Description>
+    <CreationDate>2021-03-22 19:32:04</CreationDate>
+    <LastModifiedDate>2021-06-05 19:22:11</LastModifiedDate>
+    <RevisionID>26</RevisionID>
+    <!-- Rev25: update for new settings -->
+
+  </Metadata>
+  <Settings>
+
+    <Setting>
+      <Name>MaxFPS</Name>
+      <Type>System.Int32</Type>
+      <Value>60</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionX</Name>
+      <Type>System.Int32</Type>
+      <Value>300</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionY</Name>
+      <Type>System.Int32</Type>
+      <Value>300</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowWidth</Name>
+      <Type>System.Int32</Type>
+      <Value>960</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowHeight</Name>
+      <Type>System.Int32</Type>
+      <Value>640</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowTitle</Name>
+      <Type>System.String</Type>
+      <Value>Lightning - Empty Game</Value>
+    </Setting>
+
+
+  </Settings>
+
+  <Workspace>
+    <!-- Lua doesn't work yet so we have to do this manually -->
+    <Circle Colour="140,20,50,60" Size="200,200" Position="0,0" Fill="True" ZIndex="123131237"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="1,1" Fill="True" ZIndex="-48718"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="2,2" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="3,3" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="4,4" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="5,5" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="6,6" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="7,7" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="8,8" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="9,9" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="10,10" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="11,11" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="12,12" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="13,13" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="14,14" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="15,15" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="1,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="2,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="3,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="4,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="5,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="6,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="7,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="8,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="9,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="10,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="11,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="12,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="13,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="14,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="15,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="16,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="17,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="18,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="19,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="20,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="21,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="22,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="23,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="24,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="25,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="26,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="27,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="28,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="29,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="30,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="31,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="32,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="33,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="34,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="35,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="36,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="37,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="38,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="39,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="40,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="41,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="42,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="43,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="44,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="45,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="46,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="47,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="48,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="49,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="50,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="51,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="52,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="53,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="54,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="55,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="56,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="57,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="58,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="59,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="60,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="61,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="62,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="63,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="64,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="65,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="66,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="67,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="68,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="69,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="70,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="71,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="72,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="73,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="74,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="75,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="76,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="77,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="78,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="79,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="80,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="81,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="82,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="83,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="84,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="85,0" Fill="True"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="86,0" Fill="True"></Circle>
+    
+  </Workspace>
+
+</Lightning>

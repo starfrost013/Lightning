@@ -23,7 +23,7 @@
 #define MyAppAssocExt ".lgx"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
 
-#define INSTALLPACKAGE_INSTALL_SDK
+;#define INSTALLPACKAGE_INSTALL_SDK
 
 ; Valid values:
 ; "Windows" (64-bit Windows 7/8.1/10 1607+: we don't support 32-bit Windows anymore)
@@ -60,6 +60,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "D:\Lightning_builds\latest\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\KeraLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\libFLAC-8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\libjpeg-9.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -82,7 +83,7 @@ Source: "D:\Lightning_builds\latest\Lightning.deps.json"; DestDir: "{app}"; Flag
 Source: "D:\Lightning_builds\latest\Lightning.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.dev.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Lightning_builds\latest\Lightning.Utilities.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\NLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 #ifdef INSTALLPACKAGE_INSTALL_SDK
 Source: "D:\Lightning_builds\latest\Polaris.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Polaris.deps.json"; DestDir: "{app}"; Flags: ignoreversion

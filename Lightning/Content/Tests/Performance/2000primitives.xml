@@ -54,7 +54,7 @@
   <Workspace>
     <!-- Lua doesn't work yet so we have to do this manually -->
     <Circle Colour="140,20,50,60" Size="200,200" Position="0,0" Fill="True" ZIndex="123131237"></Circle>
-    <Circle Colour="140,20,50,60" Size="200,200" Position="1,1" Fill="True" ZIndex="-4871823781723"></Circle>
+    <Circle Colour="140,20,50,60" Size="200,200" Position="1,1" Fill="True" ZIndex="-48718"></Circle>
     <Circle Colour="140,20,50,60" Size="200,200" Position="2,2" Fill="True"></Circle>
     <Circle Colour="140,20,50,60" Size="200,200" Position="3,3" Fill="True"></Circle>
     <Circle Colour="140,20,50,60" Size="200,200" Position="4,4" Fill="True"></Circle>
@@ -1030,7 +1030,7 @@
     <Circle Colour="140,20,50,60" Size="200,200" Position="959,0" Fill="True"></Circle>
     <Circle Colour="140,20,50,60" Size="200,200" Position="960,0" Fill="True"></Circle>
     <Rectangle Colour="140,20,50,60" Size="200,200" Position="0,0" Fill="True" ZIndex="123131237"></Rectangle>
-    <Rectangle Colour="140,20,50,60" Size="200,200" Position="1,1" Fill="True" ZIndex="-4871823781723"></Rectangle>
+    <Rectangle Colour="140,20,50,60" Size="200,200" Position="1,1" Fill="True" ZIndex="-48712"></Rectangle>
     <Rectangle Colour="140,20,50,60" Size="200,200" Position="2,2" Fill="True"></Rectangle>
     <Rectangle Colour="140,20,50,60" Size="200,200" Position="3,3" Fill="True"></Rectangle>
     <Rectangle Colour="140,20,50,60" Size="200,200" Position="4,4" Fill="True"></Rectangle>

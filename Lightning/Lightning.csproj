@@ -45,7 +45,6 @@
     <None Remove="Content\Sounds\test.mp3" />
     <None Remove="Content\Tests\AllClasses.xml" />
     <None Remove="Content\Tests\Empty.xml" />
-    <None Remove="Content\Tests\Performance\PrimitivePerformanceTest.xml" />
     <None Remove="Content\Tests\WritingTest.xml" />
     <None Remove="Content\test_texture.png" />
     <None Remove="Content\test_texture_2.png" />
@@ -93,9 +92,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tests\AllClasses.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Tests\Performance\PrimitivePerformanceTest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tests\WritingTest.xml">
