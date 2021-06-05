@@ -21,13 +21,10 @@ namespace Lightning.Core.API
         internal ScriptInterpreter ScriptGlobals { get; set; }
         private bool SCRIPTS_LOADED { get; set; }
 
-        internal ScriptTokeniser Tokeniser { get; set; }
-
         public Lua LuaState { get; set; }
         public ScriptingService()
         {
             ScriptGlobals = new ScriptInterpreter();
-            Tokeniser = new ScriptTokeniser();
 
         }
 
@@ -179,8 +176,8 @@ namespace Lightning.Core.API
         {
             if (!SCRIPTS_LOADED)
             {
-                Logging.Log("Serialising all scripts...", ClassName);
-                SerialiseAll();
+                //Logging.Log("Serialising all scripts...", ClassName);
+                //SerialiseAll();
             }
             else
             {
@@ -193,29 +190,8 @@ namespace Lightning.Core.API
 
         public void SerialiseAll()
         {
-            // TODO: "GETALLCHILDRENOFTYPE" that is also recursive
-            Workspace Ws = DataModel.GetWorkspace();
-
-            foreach (Instance Ins in Ws.Children)
-            {
-                if (Ins.GetType() == typeof(Script))
-                {
-                    Script LeScript = (Script)Ins;
-
-                    ASTTreeSectionResult TLR = Tokeniser.Tokenise((Script)LeScript);
-
-                    if (!TLR.Successful)
-                    {
-                        ErrorManager.ThrowError(ClassName, "ErrorLoadingOrTokenisingScriptException");
-                    }
-                    else
-                    {
-                        LeScript.Tokens = TLR.TokenList;
-                    }
-                }
-            }
-
-            SCRIPTS_LOADED = true;
+            // we might need to do somehing for lua
+            return; 
         }
 
     }

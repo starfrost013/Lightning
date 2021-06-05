@@ -17,31 +17,13 @@ namespace Lightning.Core.API
         /// </summary>
         public List<Variable> Variables { get; set; }
 
-        /// <summary>
-        /// An FIFO stack.
-        /// </summary>
-        public List<Token> Stack { get; set; }
 
        
         public ScriptInterpreterState()
         {
-            Stack = new List<Token>();
             Variables = new List<Variable>();
         }
 
-        /// <summary>
-        /// TokenCollection?
-        /// 
-        /// Pops a token to the stack.
-        /// </summary>
-        /// <returns></returns>
-        public Token Pop() => Stack[Stack.Count - 1];
 
-        /// <summary>
-        /// Pushes a token to the stack.
-        /// </summary>
-        /// <param name="TokenToPush"></param>
-
-        public void Push(Token TokenToPush) => Stack.Add(TokenToPush); 
     }
 }

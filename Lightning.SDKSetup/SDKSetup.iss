@@ -1,6 +1,7 @@
-; Lightning SDK Setup ver 0.2.004.00011
-; May 24, 2021
+; Lightning SDK Setup ver 0.2.005.00012
+; June 5, 2021
 
+; v0.2.005.00012  June 5, 2021  Add the Lua files, define INSTALLPACKAGE_INSTALL_PLATFORM
 ; v0.2.004.00011  May 24, 2021  Added Polaris files so that it actually works properly
 ; v0.2.003.00010  May 22, 2021  Added Polaris.dll...*facepalm*
 ; v0.2.002.00009  May 21, 2021  Modified Polaris shortcut name 
@@ -24,7 +25,14 @@
 
 #define INSTALLPACKAGE_INSTALL_SDK
 
-#define SETUP_VERSION "0.2.004.00011"
+; Valid values:
+; "Windows" (64-bit Windows 7/8.1/10 1607+: we don't support 32-bit Windows anymore)
+; "MacOS" (macOS 10.13+) for x64/ARM64
+; "Linux" (linux X64) - anything where .NET Core 3.1 is supported
+#define INSTALLPACKAGE_INSTALL_PLATFORM "Windows"
+
+#define SETUP_VERSION "0.2.005.00012"
+
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -91,6 +99,15 @@ Source: "D:\Lightning_builds\latest\SDL2_ttf-v2.0.15-x64.dll"; DestDir: "{app}";
 Source: "D:\Lightning_builds\latest\WritingTest.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Content\*"; DestDir: "{app}\Content"; Flags: ignoreversion recursesubdirs createallsubdirs
+#if INSTALLPACKAGE_INSTALL_PLATFORM == "Windows"
+Source: "D:\Lightning_builds\latest\runtimes\win-x64\*"; DestDir: "{app}\runtimes\win-x64"; Flags: ignoreversion recursesubdirs createallsubdirs
+#elif INSTALLPACKAGE_INSTALL_PLATFORM == "MacOS"
+Source: "D:\Lightning_builds\latest\runtimes\osx\*"; DestDir: "{app}\runtimes\osx"; Flags: ignoreversion recursesubdirs createallsubdirs
+#else
+Source: "D:\Lightning_builds\latest\runtimes\linux\*"; DestDir: "{app}\runtimes\linux"; Flags: ignoreversion recursesubdirs createallsubdirs  
+#endif
+
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
