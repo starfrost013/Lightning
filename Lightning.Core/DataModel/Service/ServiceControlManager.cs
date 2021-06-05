@@ -98,8 +98,9 @@ namespace Lightning.Core.API
 
         private void UpdateGame(int MaxFPS)
         {
+#if DEBUG
             SvcGlobalData.StopwatchMsAtLastFPSCheck = SvcGlobalData.ServiceUpdateTimer.ElapsedMilliseconds;
-
+#endif
             // slightly less temporary code
             while (true)
             {
