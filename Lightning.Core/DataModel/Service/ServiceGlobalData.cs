@@ -13,5 +13,22 @@ namespace Lightning.Core.API
     {
         public Stopwatch ServiceUpdateTimer { get; set; }
 
+#if DEBUG
+        /// <summary>
+        /// TEMPORARY
+        /// 
+        /// A frame counter
+        /// </summary>
+        internal long StopwatchMsAtLastFPSCheck { get; set; }
+
+        internal int FrameCount { get; set; }
+        /// <summary>
+        /// TEMPORARY
+        /// 
+        /// FPS counter for performance test build (574 / Pre-TP2)
+        /// </summary>
+        internal double FPS { get; set; }
+#endif
+
     }
 }

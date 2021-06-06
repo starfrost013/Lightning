@@ -128,10 +128,9 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        // Check that the parent is actually in the InstanceCollection.
-                        // June 1, 2021
-                        if (Add_CheckThatParentIsInCollection(Parent))
-                        {
+                        // for some reason this is completely fucked up and i need to figure out why
+                        //if (Add_CheckThatParentIsInCollection(Parent))
+                        //{
                             if (ObjType.IsSubclassOf(ParentType))
                             {
                                 Add_PerformAdd(Obj, TestInstanceParent);
@@ -148,11 +147,7 @@ namespace Lightning.Core.API
                                 ErrorManager.ThrowError("DataModel", "CannotAddThatInstanceAsChildException", $"{ObjType.Name} cannot be a child of {ParentType.Name}!");
                                 return;
                             }
-                        }
-                        else
-                        {
-
-                        }
+                        //}
 
 
                     }
@@ -194,28 +189,47 @@ namespace Lightning.Core.API
         }
 
 
+        /*
         private bool Add_CheckThatParentIsInCollection(Instance Parent, InstanceCollection CheckParent = null)
         {
             // sort of a hack...probably a better way to do this...perhaps do it in the Instancer?  
-            if (CheckParent == null) CheckParent = DataModel.GetState(); 
+            if (CheckParent == null) CheckParent = DataModel.GetState();
 
-            foreach (Instance Ins in CheckParent)
+            bool MatchFound = false;
+
+            MatchFound = Add_CheckThatParentIsInCollection_PerformCheck(Parent, CheckParent, CheckParent); 
+
+            return MatchFound;
+
+        }
+
+        private bool Add_CheckThatParentIsInCollection_PerformCheck(Instance Parent, InstanceCollection OriginalCheckParent, InstanceCollection CheckParent)
+        {
+            for (int i = 0; i < CheckParent.Count; i++)
             {
+                Instance Ins = CheckParent.Instances[i];
+
+                if (Ins.Children.Count > 0)
+                {
+                    CheckParent = Ins.Children;
+                    
+                    Add_CheckThatParentIsInCollection_PerformCheck(Parent, OriginalCheckParent, CheckParent);
+                    
+                    // when we return from here, force to the next loop
+                    continue; 
+                }
+
+
                 if (Ins == Parent)
                 {
                     return true;
                 }
 
-                if (Ins.Children.Count > 0)
-                {
-                    Add_CheckThatParentIsInCollection(Parent, Ins.Children); 
-                }
-
             }
 
-            return false;
-
+            return false; 
         }
+        */ 
 
         /// <summary>
         /// Removes an Object from the InstanceCollection. 

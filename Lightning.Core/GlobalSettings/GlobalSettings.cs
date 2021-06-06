@@ -54,8 +54,13 @@ namespace Lightning.Core
         /// <summary>
         /// Use the AST Tokeniser.
         /// </summary>
-        public static bool UseASTTokeniser { get; set; }
+        public bool UseASTTokeniser { get; set; }
        
+        /// <summary>
+        /// Maximmu Lua script execution time.
+        /// </summary>
+        public int MaxLuaScriptExecutionTime { get; set; }
+
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 
         /// </summary>
@@ -98,6 +103,7 @@ namespace Lightning.Core
                 GSR.Settings = SSR.Settings;
 
                 GLOBALSETTINGS_LOADED = true; 
+
                 if (!SSR.Successful)
                 {
                     ErrorManager.ThrowError("GlobalSettings Serialiser", "FailedToSerialiseGlobalSettingsException", $"Failed to serialise GlobalSettings: {SSR.FailureReason}", SSR.BaseException);

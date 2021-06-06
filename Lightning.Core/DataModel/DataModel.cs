@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.14.0) 
+    /// DataModel (API Version 0.15.0) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -17,7 +17,7 @@ namespace Lightning.Core.API
     public class DataModel
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
-        public static int DATAMODEL_API_VERSION_MINOR = 14;
+        public static int DATAMODEL_API_VERSION_MINOR = 15;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
@@ -45,10 +45,6 @@ namespace Lightning.Core.API
 
         public DataModel()
         {
-            string DataModel_String = $"{DATAMODEL_API_VERSION_MAJOR}.{DATAMODEL_API_VERSION_MINOR}.{DATAMODEL_API_VERSION_REVISION}";
-            Logging.Log($"DataModel\nAPI Version {DataModel_String}\nNow Initialising...", "DataModel");
-
-            State = new InstanceCollection();
 
         }
 
@@ -56,7 +52,7 @@ namespace Lightning.Core.API
         /// Initialises the DataModel 
         /// </summary>
         /// <param name="Args"></param>
-        public static void Init(LaunchArgs Args = null)
+        public static void Init(LaunchArgs Args = null, bool Reinitialising = false)
         {
             if (!Init_VerifyCompatibleSystem())
             {
@@ -66,15 +62,55 @@ namespace Lightning.Core.API
             }
             else
             {
+
+                string DataModel_String = $"{DATAMODEL_API_VERSION_MAJOR}.{DATAMODEL_API_VERSION_MINOR}.{DATAMODEL_API_VERSION_REVISION}";
+                Logging.Log($"DataModel\nAPI Version {DataModel_String}\nNow Initialising...", "DataModel");
+
+                if (!Reinitialising)
+                {
+                    State = new InstanceCollection();
+                }
+                
+
+
                 if (!ErrorManager.ERRORMANAGER_LOADED)
                 {
                     ErrorManager.Init();
                 }
 
-                // init the SCM
-                Workspace WorkSvc = (Workspace)CreateInstance("Workspace");
+                Workspace WorkSvc = null;
+                ServiceControlManager SCM = null;
 
-                ServiceControlManager SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
+
+                if (!Reinitialising)
+                {
+                    // init the SCM
+                    WorkSvc = (Workspace)CreateInstance("Workspace");
+
+                    SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
+                }
+                else
+                {
+                    WorkSvc = DataModel.GetWorkspace();
+
+                    GetInstanceResult GIR = WorkSvc.GetFirstChildOfType("ServiceControlManager");
+
+                    if (!GIR.Successful
+                        && GIR.Instance == null)
+                    {
+                        ErrorManager.ThrowError("DataModel", "ReinitialisingBeforeInitialisingDataModelException");
+                    }
+                    else
+                    {
+                        SCM = (ServiceControlManager)GIR.Instance; 
+                    }
+                }
+
+                if (WorkSvc == null
+                    || SCM == null)
+                {
+                    ErrorManager.ThrowError("DataModel", "ReinitialisingBeforeInitialisingDataModelException");
+                }
 
                 if (!GlobalSettings.GLOBALSETTINGS_LOADED)
                 {
@@ -282,7 +318,7 @@ namespace Lightning.Core.API
             // we will need to do a lot more than this
             State.Clear();
             // Reinitialise
-            Init();
+            Init(null, true);
         }
         public static void Shutdown()
         {

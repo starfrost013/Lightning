@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq; 
 using System.Text;
 
@@ -24,9 +25,38 @@ namespace Lightning.Core.API
         /// </summary>
         private int _currentlyexecutingline { get; set; }
 
+
+        /// <summary>
+        /// The current execution time of this Lua script.
+        /// </summary>
+        public int ExecutionTime { get; set; }
+
+        /// <summary>
+        /// Is this Lua script paused?
+        /// 
+        /// As we currently use a single thread, every script has to yield on its own,
+        /// as if we were using an old-school cooperative multitasking operating system.
+        /// 
+        /// As a result of this, each script will need to pause if it uses an infinite loop. The maximum execution time also needs to be low in order to prevent poorly written scripts
+        /// lagging the game
+        /// </summary>
+        public bool IsPaused { get; set; }
+
+        /// <summary>
+        /// Stopwatch for the current script.
+        /// </summary>
+        public Stopwatch CurrentScriptRunningStopwatch { get; set; }
+
+        /// <summary>
+        /// Stopwatch used for wait time.
+        /// </summary>
+        public Stopwatch WaitCountdownStopwatch { get; set; }
+
         public override void OnCreate()
         {
-            ScriptContent = new List<string>(); 
+            ScriptContent = new List<string>();
+            CurrentScriptRunningStopwatch = new Stopwatch();
+            WaitCountdownStopwatch = new Stopwatch(); 
         }
 
         /// <summary>
@@ -64,10 +94,6 @@ namespace Lightning.Core.API
         /// </summary>
         internal List<string> ScriptContent { get; set; }
         
-        /// <summary>
-        /// The tokenised script content if this script.
-        /// </summary>
-        internal List<Token> TokenisedScriptContent { get; set; }
 
         private string _content { get; set; }
         /// <summary>
@@ -91,51 +117,6 @@ namespace Lightning.Core.API
 
                 _content = value; 
             }
-        }
-        
-        /// <summary>
-        /// The list of tokens that make up the script.
-        /// </summary>
-        internal TokenCollection Tokens { get; set; }
-
-        /// <summary>
-        /// Backing field for <see cref="CurToken"/>.
-        /// </summary>
-        private int _curtoken { get; set; }
-
-        /// <summary>
-        /// The index of the current token. 
-        /// </summary>
-        internal int CurToken { get
-            {
-                return _curtoken; 
-            }
-
-            set
-            {
-                if (value < 0 ||
-                    value > Tokens.Count)
-                {
-                    ScriptErrorManager.ThrowScriptError(new ScriptError
-                    {
-                        ScriptName = Name,
-                        Id = 1008,
-                        Severity = MessageSeverity.Error,
-                        Description = "Script does not have a valid end of file token or CurToken somehow ended up below 0 -- internal bug!!" // LS1008
-
-                    });
-
-                }
-                else
-                {
-                    _curtoken = value;
-                }
-            }
-        }
-
-        internal void Update()
-        {
-            Token CToken = Tokens[CurToken];
         }
 
     }

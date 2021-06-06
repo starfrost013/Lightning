@@ -87,7 +87,7 @@ namespace Lightning.Core.API
                             ErrorManager.ThrowError(ClassName, "ErrorLoadingSoundChunkException", $"Cannot find the sound located at {Snd.Path}!");
                         }
 
-                        Logging.Log($"Loading sound at {Snd.Path}...");
+                        Logging.Log($"Loading sound at {Snd.Path}...", ClassName);
 
                         Snd.SoundPtr = SDL_mixer.Mix_LoadWAV(Snd.Path);
 

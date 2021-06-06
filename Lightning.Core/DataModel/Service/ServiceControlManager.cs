@@ -24,6 +24,7 @@ namespace Lightning.Core.API
         /// </summary>
         private ServiceGlobalData SvcGlobalData { get; set; }
 
+
         public ServiceControlManager()
         {
             SvcGlobalData = new ServiceGlobalData(); 
@@ -97,6 +98,9 @@ namespace Lightning.Core.API
 
         private void UpdateGame(int MaxFPS)
         {
+#if DEBUG
+            SvcGlobalData.StopwatchMsAtLastFPSCheck = SvcGlobalData.ServiceUpdateTimer.ElapsedMilliseconds;
+#endif
             // slightly less temporary code
             while (true)
             {
@@ -104,8 +108,23 @@ namespace Lightning.Core.API
 
                 int TargetFrameTimeMS = 1000 / MaxFPS;
 
+#if DEBUG
+                // Check FPS
+                if (ElapsedMillisecondsSinceStart - SvcGlobalData.StopwatchMsAtLastFPSCheck >= 1000)
+                {
+                    SvcGlobalData.FPS = SvcGlobalData.FrameCount;
+                    SvcGlobalData.StopwatchMsAtLastFPSCheck = ElapsedMillisecondsSinceStart;
+                    SvcGlobalData.FrameCount = 0;
+
+                    Logging.Log($"FPS: {SvcGlobalData.FPS} Target FPS: {MaxFPS}", ClassName);
+                }
+#endif
+
                 if (ElapsedMillisecondsSinceStart % TargetFrameTimeMS == 0)
                 {
+#if DEBUG
+                    SvcGlobalData.FrameCount++;
+#endif
                     UpdateServices();
                 }
             }

@@ -2,7 +2,8 @@
 <GlobalSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <LightningXsdPath>Content\Schema\Lightning.xsd</LightningXsdPath>
-  <UseASTTokeniser>True</UseASTTokeniser>
+  <UseASTTokeniser>true</UseASTTokeniser>
+  <MaxLuaScriptExecutionTime>300</MaxLuaScriptExecutionTime>
   
   <ServiceStartupCommands>
     

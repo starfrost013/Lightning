@@ -50,8 +50,8 @@
             </MenuItem>
         </Menu>
 
-        <Frame x:Name="Polaris_TabUIFrame" Source="Components\TabUI\TabUI.xaml" Margin="36,32,109,22" Navigated="Polaris_TabUIFrame_Navigated"/>
-        <Frame x:Name="Polaris_OutputFrame" Source="Components\Output\Output.xaml" Margin="36,8,142,10" Grid.Row="1"/>
+        <Frame x:Name="Polaris_TabUIFrame" Source="Components\TabUI\TabUI.xaml" Margin="36,32,109,22" Navigated="Polaris_TabUIFrame_Navigated" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Frame x:Name="Polaris_OutputFrame" Source="Components\Output\Output.xaml" Margin="36,8,142,10" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <Frame x:Name="Polaris_ExplorerFrame" Source="Components\Explorer\Explorer.xaml" Margin="28,10,31,0" Navigated="Polaris_ExplorerFrame_Navigated" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         </Frame>

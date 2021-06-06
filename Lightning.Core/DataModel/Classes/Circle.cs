@@ -32,49 +32,119 @@ namespace Lightning.Core.API
                 SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
             }
 
+
+            // Midpoint ellipse algorithm
+            // June 5, 2021
+            // Old algo worked but was thousands of times (multiple orders of magnitude) slower
+
+            double StartX = 0;
+            double StartY = Position.Y;
+
+            // Decision parameter for the next stage of calculations
+
+            double DecisionParam1 = (Size.Y * Size.Y) - (Size.X * Size.X * Size.Y) + (0.25 * Size.X * Size.X);
+
+            // faster than Math.Pow()?
+            // why not use it 
+            double DecisionParamX = 2 * Size.Y * Size.Y * StartX;
+            double DecisionParamY = 2 * Size.X * Size.X * StartY;
+
+            // Initial points
+            Render_PlotPoints(SDL_Renderer, StartX, StartY);
+
+            while (DecisionParamX < DecisionParamY)
+            {
+                if (DecisionParam1 < 0)
+                {
+                    StartX++;
+                    DecisionParamX = DecisionParamX + (2 * Size.Y * Size.Y);
+                    DecisionParam1 = DecisionParam1 + DecisionParamX + (Size.Y * Size.Y);
+                }
+                else
+                {
+                    StartX++;
+                    StartY--;
+                    DecisionParamX = DecisionParamX + (2 * Size.Y * Size.Y);
+                    DecisionParamY = DecisionParamY - (2 * Size.X * Size.X);
+                    DecisionParam1 = DecisionParam1 + DecisionParamX - DecisionParamY + (Size.Y * Size.Y);
+                }
+
+                // Region 1
+                Render_PlotPoints(SDL_Renderer, StartX, StartY);
+            }
+
+            // PERFORM MATHEMATICS 
+            double DecisionParam2 = ((Size.Y * Size.Y) * ((StartX + 0.5) * (StartX + 0.5)))
+                + (Size.X * Size.X) * ((StartY - 1) * (StartY - 1))
+                - (Size.X * Size.X * Size.Y * Size.Y);
+
+            while (StartY >= 0)
+            {
+                // Region 2
+                Render_PlotPoints(SDL_Renderer, StartX, StartY);
+
+                if (DecisionParam2 > 0)
+                {
+                    StartY--;
+                    DecisionParamY = DecisionParamY - (2 * Size.X * Size.X);
+                    DecisionParam2 = DecisionParam2 + (Size.X * Size.X) - DecisionParamY;
+                }
+                else
+                {
+                    StartY--;
+                    StartX++;
+                    DecisionParamX = DecisionParamX + (2 * Size.Y * Size.Y);
+                    DecisionParamY = DecisionParamY + (2 * Size.X * Size.X);
+                    DecisionParam2 = DecisionParam2 + DecisionParamX - DecisionParamY + (Size.X * Size.X); 
+                }
+            }
+        }
+
+        /// <summary>
+        /// Plots the points of each region of a midpoint drawn circle. 
+        /// </summary>
+        /// <param name="SDL_Renderer"></param>
+        /// <param name="StartX">X position to start drawing for each regio.n</param>
+        /// <param name="StartY">Y position to start drawing for each region.</param>
+        private void Render_PlotPoints(Renderer SDL_Renderer, double StartX, double StartY)
+        {
+            // draw the points
             if (!Fill)
             {
-                for (int i = 0; i < 360; i++)
+                // Set up the points we must draw for the circle.
+                SDL.SDL_FPoint[] FPointSet = new SDL.SDL_FPoint[]
                 {
-                    double X = Size.X * Math.Cos(MathUtil.DegreesToRadians(i)) + Position.X;
-                    double Y = Size.Y * Math.Sin(MathUtil.DegreesToRadians(i)) + Position.Y;
+                        new SDL.SDL_FPoint
+                        {
+                            x = ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
+                            y = ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                        },
+                        new SDL.SDL_FPoint
+                        {
+                            x = ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
+                            y = ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                        },
+                        new SDL.SDL_FPoint
+                        {
+                            x = ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
+                            y = ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                        },
+                        new SDL.SDL_FPoint
+                        {
+                            x = ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
+                            y = ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                        },
+                };
 
-                    // draw a point. 
-                    SDL.SDL_RenderDrawPointF(SDL_RendererPtr, (float)X - (float)SDL_Renderer.CCameraPosition.X, (float)Y - (float)SDL_Renderer.CCameraPosition.Y);
-
-                }
+                SDL.SDL_RenderDrawPointsF(SDL_Renderer.SDLRenderer, FPointSet, 4);
             }
             else
             {
-                int X1 = (int)Position.X + ((int)Size.X / 2);
-                int Y1 = (int)Position.Y + ((int)Size.Y / 2);
-
-                // bypass SDL2 only drawing single pixel wide lines (temporary code)...
-                // write a custom line drawing api soon
-
-                // HACK UNTIL THEN
-                double IncrementerAmount = 1;
-
-                // Vertical shouldn't be an issue in this case.
-                if (Size.X > 56) IncrementerAmount = (1 / (Size.X / 56));
-
-                for (double i = 0; i < 360; i += IncrementerAmount)
-                {
-                    double X2 = Size.X * Math.Cos(MathUtil.DegreesToRadians(i)) + Position.X;
-                    double Y2 = Size.Y * Math.Sin(MathUtil.DegreesToRadians(i)) + Position.Y;
-
-                    SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)X1 - (float)SDL_Renderer.CCameraPosition.X, (float)Y1 - (float)SDL_Renderer.CCameraPosition.Y, (float)X2 - (float)SDL_Renderer.CCameraPosition.X, (float)Y2 - (float)SDL_Renderer.CCameraPosition.Y);
-                }
+                SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
             }
 
-            // This isn't particularly efficient.
-            // There's better ways to do this but this is the simplest for now. 
-            
-
-
-
         }
-
 
     }
 }

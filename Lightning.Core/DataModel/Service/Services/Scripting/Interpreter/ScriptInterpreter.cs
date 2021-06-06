@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NLua;
+using NLua.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -64,13 +66,13 @@ namespace Lightning.Core.API
         /// <summary>
         /// Advances all scripts by one token and its children. Handles Runtime Errors.
         /// </summary>
-        public void Interpret()
+        public void Interpret(Lua LuaState)
         {
-            foreach (Script Sc in RunningScripts)
+            for (int i = 0; i < RunningScripts.Count; i++)
             {
-                string CurLine = Sc.ScriptContent[Sc.CurrentlyExecutingLine];
+                Script Sc = RunningScripts[i];
 
-                Sc.CurrentlyExecutingLine++; 
+                InterpretToken(Sc, true, LuaState); 
             }
         }
 
@@ -79,60 +81,59 @@ namespace Lightning.Core.API
         /// 
         /// </summary>
         /// <param name="T0"></param>
-        private void InterpretToken(Token T0)
+        private void InterpretToken(Script Sc, bool IsLua = false, Lua LuaState = null)
         {
-            Type T0Type = T0.GetType();
 
-
-            if (T0Type == typeof(OperatorToken))
+            try
             {
-                OperatorToken T0_Op = (OperatorToken)T0;
-
-                switch (T0_Op.Type)
+                if (LuaState != null
+                    && !Sc.IsPaused)
                 {
-                    case OperatorTokenType.Assignment:
-                        return;
-                    case OperatorTokenType.Plus: // todo: implement last token set feature so that we can do stuff like 1 + 2 + 3 + 4 + 5
+                    // this is a crap implementation
+                    // but it might work
+                    Sc.CurrentScriptRunningStopwatch.Start();
+                    LuaState.DoString(Sc.Content);
 
-                        for (int i = 0; i < T0_Op.Children.Count; i++)
+                    Sc.CurrentScriptRunningStopwatch.Stop();
+
+                    GlobalSettings GS = DataModel.GetGlobalSettings();
+
+                    if (Sc.CurrentScriptRunningStopwatch.ElapsedMilliseconds > GS.MaxLuaScriptExecutionTime)
+                    {
+                        // prevent the script from running
+
+                        // don't throw an error
+                        if (Sc.Name != null)
                         {
-                            Token NT = T0_Op.Children[i];
-
-                            try
-                            {
-
-                                if (i == 0)
-                                {
-                                    Variable Vf = new Variable();
-                                    // TEMP
-                                    Vf.Name = Variable.GenerateAutomaticVariableName();
-                                    continue; 
-                                }
-                                else
-                                {
-                                    Type NTType = NT.GetType();
-
-                                    if (NTType == typeof(NumberToken))
-                                    {
-                                        NumberToken OT = (NumberToken)NT;
-                                        OT.
-                                    }
-                                    else if (NTType == typeof(ValueToken))
-                                    {
-                                        ValueToken VT = (ValueToken)NT;
-                                    }
-                                }
-                            }
-                            catch (InvalidOperationException err)
-                            {
-                                ErrorManager.ThrowError(ClassName, "SyntaxErrorException", "Must have a variable or number within an operation!", err);
-                            }
-
-
+                            Logging.Log($"The Lua script {Sc.Name} was stopped due to reaching the global execution time limit ({GS.MaxLuaScriptExecutionTime}ms)", ClassName, MessageSeverity.Error);
+                            RunningScripts.Remove(Sc);
                         }
 
-                        return;
+                    }
                 }
+                else
+                {
+
+                    ErrorManager.ThrowError(ClassName, "LuaStateFailureException");
+
+                    return; // will never run 
+
+
+                }
+            }
+            catch (LuaScriptException err)
+            {
+                if (Sc.Name != null)
+                {
+                    ErrorManager.ThrowError(ClassName, "LuaScriptCrashedException", $"The script {Sc.Name} terminated due to a fatal execution error: {err.Message}", err);
+                }
+                else
+                {
+                    ErrorManager.ThrowError(ClassName, "LuaScriptCrashedException", $"A script has terminated due to a fatal execution error: {err.Message}", err);
+                    
+                }
+
+                RunningScripts.Remove(Sc);
             }
             
         }

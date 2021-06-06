@@ -212,7 +212,8 @@ namespace Lightning.Core.API
                 if (NewVolume < 4) NewVolume /= 5; 
                 if (NewVolume < 0) NewVolume = 0;
 
-                Logging.Log($"Setting 3D sound volume to {NewVolume}...", ClassName);
+                //commented out for fps test build 
+                //Logging.Log($"Setting 3D sound volume to {NewVolume}...", ClassName);
                 SDL_mixer.Mix_Volume(Channel, NewVolume);
             }
             else
