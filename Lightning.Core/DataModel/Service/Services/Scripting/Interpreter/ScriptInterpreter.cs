@@ -68,11 +68,9 @@ namespace Lightning.Core.API
         /// </summary>
         public void Interpret(Lua LuaState)
         {
-            foreach (Script Sc in RunningScripts)
+            for (int i = 0; i < RunningScripts.Count; i++)
             {
-                string CurLine = Sc.ScriptContent[Sc.CurrentlyExecutingLine];
-
-                Sc.CurrentlyExecutingLine++;
+                Script Sc = RunningScripts[i];
 
                 InterpretToken(Sc, true, LuaState); 
             }
@@ -132,8 +130,10 @@ namespace Lightning.Core.API
                 else
                 {
                     ErrorManager.ThrowError(ClassName, "LuaScriptCrashedException", $"A script has terminated due to a fatal execution error: {err.Message}", err);
+                    
                 }
 
+                RunningScripts.Remove(Sc);
             }
             
         }

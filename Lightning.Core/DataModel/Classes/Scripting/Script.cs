@@ -54,7 +54,9 @@ namespace Lightning.Core.API
 
         public override void OnCreate()
         {
-            ScriptContent = new List<string>(); 
+            ScriptContent = new List<string>();
+            CurrentScriptRunningStopwatch = new Stopwatch();
+            WaitCountdownStopwatch = new Stopwatch(); 
         }
 
         /// <summary>

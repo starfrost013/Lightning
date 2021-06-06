@@ -648,4 +648,20 @@ Do not change if you are not a dev
     <Id>87</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Cannot obtain a list of Lua scripts to run!</Description>
+    <Name>LuaCannotObtainListOfScriptsToRunException</Name>
+    <Id>88</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+
+  <Error>
+    <Description>Attempted to reinitialise the DataModel before it has been initialised!</Description>
+    <Name>ReinitialisingBeforeInitialisingDataModelException</Name>
+    <Id>89</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+  
 </Errors>

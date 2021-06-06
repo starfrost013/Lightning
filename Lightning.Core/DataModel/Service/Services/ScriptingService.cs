@@ -38,6 +38,8 @@ namespace Lightning.Core.API
             
             // Register the Scripting API.
             RegisterAPI(true);
+
+            
             ServiceStartResult SSR = new ServiceStartResult { Successful = true };
             SSR.Successful = true;
             return SSR;
@@ -177,7 +179,7 @@ namespace Lightning.Core.API
             if (!SCRIPTS_LOADED)
             {
                 //Logging.Log("Serialising all scripts...", ClassName);
-                //SerialiseAll();
+                SerialiseAll();
             }
             else
             {
@@ -190,7 +192,29 @@ namespace Lightning.Core.API
 
         public void SerialiseAll()
         {
-            // we might need to do somehing for lua
+            // just some temporary code
+            // this is here to make sure lua scripts get run at the right time and get run
+
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("Script");
+
+            if (!GMIR.Successful
+                || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "LuaCannotObtainListOfScriptsToRunException");
+            }
+            else
+            {
+                List<Script> ScriptList = ListTransfer<Instance, Script>.TransferBetweenTypes(GMIR.Instances);
+
+                foreach (Script Sc in ScriptList)
+                {
+                    ScriptGlobals.RunningScripts.Add(Sc);
+                }
+            }
+
+            SCRIPTS_LOADED = true; 
             return; 
         }
 

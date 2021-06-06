@@ -17,8 +17,6 @@ namespace Lightning.Core.API
         /// </summary>
         public List<Variable> Variables { get; set; }
 
-
-       
         public ScriptInterpreterState()
         {
             Variables = new List<Variable>();

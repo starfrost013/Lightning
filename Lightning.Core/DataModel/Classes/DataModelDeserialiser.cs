@@ -103,7 +103,6 @@ namespace Lightning.Core.API
             // Create the datamodel that we will be returning.
             DataModel DM = new DataModel();
             
-
             List<string> ValidComponents = new List<string>();
 
             foreach (int EVal in Enum.GetValues(typeof(DDMSComponents)))

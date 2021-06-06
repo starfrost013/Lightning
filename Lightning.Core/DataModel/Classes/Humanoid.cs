@@ -17,7 +17,7 @@ namespace Lightning.Core.API
         internal override string ClassName => "Humanoid";
 
         /// <summary>
-        /// The name of the character. Will be implemented when Text is implemented.
+        /// The name of the character. Will be implemented when UI is implemented.
         /// </summary>
         public string CharName { get; set; }
 

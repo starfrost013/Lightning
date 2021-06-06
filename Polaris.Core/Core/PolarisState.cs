@@ -69,8 +69,6 @@ namespace Polaris.Core
             LA.AppName = "Polaris";
             LA.InitServices = false;
 
-            DataModel = new DataModel();
-
             DataModel.Init(LA);
         }
 

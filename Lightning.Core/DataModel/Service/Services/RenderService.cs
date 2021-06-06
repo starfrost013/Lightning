@@ -26,7 +26,7 @@ namespace Lightning.Core.API
     /// 2021-05-08: Minor changes
     /// 2021-05-13: Implemented ZIndex
     /// 2021-05-27: ACTUALLY implemented ZIndex (????)
-    /// 2021-06-05: Add an FPS metre
+    /// 2021-06-05: Add an FPS meter
     /// 
     /// </summary>
     public class RenderService : Service
