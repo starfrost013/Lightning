@@ -656,11 +656,17 @@ Do not change if you are not a dev
     <Severity>FatalError</Severity>
   </Error>
 
-
   <Error>
     <Description>Attempted to reinitialise the DataModel before it has been initialised!</Description>
     <Name>ReinitialisingBeforeInitialisingDataModelException</Name>
     <Id>89</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Multiple scripts are running while not paused! That is not allowed - stopping all except the first...</Description>
+    <Name>CannotHaveMultipleUnpausedScriptsRunningException</Name>
+    <Id>90</Id>
     <Severity>FatalError</Severity>
   </Error>
   

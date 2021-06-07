@@ -20,11 +20,7 @@ namespace Lightning.Core.API
         /// </summary>
         internal override string ClassName => "Script";
 
-        /// <summary>
-        /// Backing field for CurrentlyExecutingLine
-        /// </summary>
         private int _currentlyexecutingline { get; set; }
-
 
         /// <summary>
         /// The current execution time of this Lua script.
@@ -41,6 +37,11 @@ namespace Lightning.Core.API
         /// lagging the game
         /// </summary>
         public bool IsPaused { get; set; }
+
+        /// <summary>
+        /// Is this Lua script running?
+        /// </summary>
+        public bool IsRunning { get; set; }
 
         /// <summary>
         /// Stopwatch for the current script.

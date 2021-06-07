@@ -73,6 +73,7 @@ namespace Lightning.Core.API
                 Script Sc = RunningScripts[i];
 
                 InterpretToken(Sc, true, LuaState); 
+                
             }
         }
 
@@ -110,6 +111,8 @@ namespace Lightning.Core.API
                         }
 
                     }
+
+                    
                 }
                 else
                 {

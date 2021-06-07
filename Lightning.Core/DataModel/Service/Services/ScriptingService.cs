@@ -45,6 +45,13 @@ namespace Lightning.Core.API
             return SSR;
         }
 
+        private void OnStart_ExecuteCoreScripts()
+        {
+            ScriptGlobals.RunningScripts.Add(new SandboxCoreScript());
+            ScriptGlobals.Interpret(LuaState);
+
+        }
+
         public override ServiceShutdownResult OnShutdown()
         {
             Logging.Log("ScriptingService Shutdown", ClassName);

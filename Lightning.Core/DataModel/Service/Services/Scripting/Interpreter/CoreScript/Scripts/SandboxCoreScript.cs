@@ -11,12 +11,17 @@ namespace Lightning.Core.API
     /// 
     /// Defines a corescript that overrides the Lua import function to prevent importation of non-trusted assemblies.
     /// </summary>
-    public class ImportOverrideCoreScript : CoreScript 
+    public class SandboxCoreScript : CoreScript 
     {
         internal override string ClassName => "ImportOverrideCoreScript";
 
+        /// <summary>
+        /// Protected corescript content. 
+        /// 
+        /// Restricts global environment to safe objects.
+        /// </summary>
         internal override string ProtectedContent => 
-            "function import()\n" +
-            "end";
+            "Print = print;\n" +
+            "_G = {print};";
     }
 }
