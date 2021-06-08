@@ -39,7 +39,9 @@ namespace Lightning.Core.API
             // Register the Scripting API.
             RegisterAPI(true);
 
-            
+            OnStart_SetLuaDebugHook();
+            OnStart_ExecuteCoreScripts();
+
             ServiceStartResult SSR = new ServiceStartResult { Successful = true };
             SSR.Successful = true;
             return SSR;
@@ -219,6 +221,7 @@ namespace Lightning.Core.API
                 {
                     ScriptGlobals.RunningScripts.Add(Sc);
                 }
+
             }
 
             SCRIPTS_LOADED = true; 

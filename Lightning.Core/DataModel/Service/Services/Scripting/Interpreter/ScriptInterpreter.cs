@@ -90,29 +90,67 @@ namespace Lightning.Core.API
                 if (LuaState != null
                     && !Sc.IsPaused)
                 {
+                    bool NameIsNull = false;
+
+                    if (Sc.Name == null) NameIsNull = true; 
+
                     // this is a crap implementation
                     // but it might work
                     Sc.CurrentScriptRunningStopwatch.Start();
-                    LuaState.DoString(Sc.Content);
+
+                    Type ScType = Sc.GetType();
+
+                    if (ScType.IsSubclassOf(typeof(CoreScript)))
+                    {
+                        CoreScript CoreSc = (CoreScript)Sc;
+
+                        if (CoreSc.ProtectedContent == null
+                                || CoreSc.ProtectedContent.Length == 0)
+                        {
+                            if (NameIsNull)
+                            {
+                                ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaCoreScriptWithNoProtectedContentException", "The currently running CoreScript has null or empty ProtectedContent! The script has been terminated.");
+                            }
+                            else
+                            {
+                                ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaCoreScriptWithNoProtectedContentException", $"The CoreScript {CoreSc.Name} has null or empty ProtectedContent! The script has been terminated.");
+                            }
+
+                            RunningScripts.Remove(CoreSc);
+
+                            return;
+                        }
+                        else
+                        {
+                            LuaState.DoString(CoreSc.ProtectedContent);
+                        }
+                    }
+                    else
+                    {
+                        if (Sc.Content == null
+                        || Sc.Content.Length == 0)
+                        {
+                            if (NameIsNull)
+                            {
+                                ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaScriptWithNoContentException", "The currently running cript has null or empty Content! The script has been terminated.");
+                            }
+                            else
+                            {
+                                ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaScriptWithNoContentException", $"The Script {Sc.Name} has null or empty Content! The script has been terminated.");
+                            }
+                        }
+                        else
+                        {
+                            LuaState.DoString(Sc.Content);
+                        }
+                    }
+                    // Check if the script content is null or empty and then call dostring to run the script
+                    // script will be captured by Lua's debug hook 
+
+                    Sc.CurrentlyExecutingLine = 0;
 
                     Sc.CurrentScriptRunningStopwatch.Stop();
 
-                    GlobalSettings GS = DataModel.GetGlobalSettings();
-
-                    if (Sc.CurrentScriptRunningStopwatch.ElapsedMilliseconds > GS.MaxLuaScriptExecutionTime)
-                    {
-                        // prevent the script from running
-
-                        // don't throw an error
-                        if (Sc.Name != null)
-                        {
-                            Logging.Log($"The Lua script {Sc.Name} was stopped due to reaching the global execution time limit ({GS.MaxLuaScriptExecutionTime}ms)", ClassName, MessageSeverity.Error);
-                            RunningScripts.Remove(Sc);
-                        }
-
-                    }
-
-                    
                 }
                 else
                 {

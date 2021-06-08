@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics; 
 using System.Text;
 
 namespace Lightning.Core.API
@@ -23,5 +24,16 @@ namespace Lightning.Core.API
         internal override string ProtectedContent => 
             "Print = print;\n" +
             "_G = {print};";
+        
+        /// <summary>
+        /// Constructor for the SandboxCoreScript class. Instantiated as this class is not actually added to the DataModel and therefore its oncreate() is never run
+        /// todo: fix this
+        /// </summary>
+        public SandboxCoreScript()
+        {
+            ScriptContent = new List<string>();
+            CurrentScriptRunningStopwatch = new Stopwatch();
+            WaitCountdownStopwatch = new Stopwatch();
+        }
     }
 }

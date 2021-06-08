@@ -669,5 +669,32 @@ Do not change if you are not a dev
     <Id>90</Id>
     <Severity>FatalError</Severity>
   </Error>
-  
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InternalLuaStateErrorException</Name>
+    <Id>91</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToRunLuaScriptWithNoContentException</Name>
+    <Id>92</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToRunLuaCoreScriptWithNoProtectedContentExceptionn</Name>
+    <Id>93</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InternalInstanceAdditionErrorException</Name>
+    <Id>94</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

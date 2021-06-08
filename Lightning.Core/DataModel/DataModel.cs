@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.15.0) 
+    /// DataModel (API Version 0.15.1) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -18,7 +18,7 @@ namespace Lightning.Core.API
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
         public static int DATAMODEL_API_VERSION_MINOR = 15;
-        public static int DATAMODEL_API_VERSION_REVISION = 0;
+        public static int DATAMODEL_API_VERSION_REVISION = 1;
 
         // shouldn't be static? idk
 
@@ -305,6 +305,11 @@ namespace Lightning.Core.API
                 }
                 
             }
+            catch (IndexOutOfRangeException err)
+            {
+                ErrorManager.ThrowError(ClassName, "InternalInstanceAdditionErrorException", err);
+                return null; 
+            }
             catch (Exception err) //TODO: HANDLE VARIOUS TYPES OF EXCEPTION
             {
                 ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationUnknownErrorException", err); 
@@ -312,7 +317,11 @@ namespace Lightning.Core.API
             }
         }
 
-       
+        public static void RemoveInstance(string ClassName, Instance Parent = null)
+        {
+            return; 
+        }
+
         public static void Clear()
         {
             // we will need to do a lot more than this
