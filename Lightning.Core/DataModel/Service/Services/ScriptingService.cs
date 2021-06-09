@@ -21,7 +21,7 @@ namespace Lightning.Core.API
         internal ScriptInterpreter ScriptGlobals { get; set; }
         private bool SCRIPTS_LOADED { get; set; }
 
-        public Lua LuaState { get; set; }
+
         public ScriptingService()
         {
             ScriptGlobals = new ScriptInterpreter();
@@ -33,26 +33,19 @@ namespace Lightning.Core.API
             Logging.Log("ScriptingService Init", ClassName);
 
             // Initialise Lua 
-            LuaState = new Lua();
-            LuaState.LoadCLRPackage();
+            ScriptGlobals.LuaState = new Lua();
+            ScriptGlobals.LuaState.LoadCLRPackage();
             
             // Register the Scripting API.
             RegisterAPI(true);
 
             OnStart_SetLuaDebugHook();
-            OnStart_ExecuteCoreScripts();
 
             ServiceStartResult SSR = new ServiceStartResult { Successful = true };
             SSR.Successful = true;
             return SSR;
         }
 
-        private void OnStart_ExecuteCoreScripts()
-        {
-            ScriptGlobals.RunningScripts.Add(new SandboxCoreScript());
-            ScriptGlobals.Interpret(LuaState);
-
-        }
 
         public override ServiceShutdownResult OnShutdown()
         {
@@ -166,7 +159,7 @@ namespace Lightning.Core.API
                         }
                         else
                         {
-                            LuaState.RegisterFunction(CIIM.MethodName, MType.GetMethod(CIIM.MethodName));
+                            ScriptGlobals.LuaState.RegisterFunction(CIIM.MethodName, MType.GetMethod(CIIM.MethodName));
 
                             GSMR.Successful = true;
                             GSMR.Method = new ScriptMethod(); // will be changed to genericresult in future
@@ -192,7 +185,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                ScriptGlobals.Interpret(LuaState);
+                ScriptGlobals.Interpret(ScriptGlobals.LuaState);
 
                 return;
             }

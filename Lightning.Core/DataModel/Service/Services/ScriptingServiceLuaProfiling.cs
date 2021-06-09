@@ -18,32 +18,36 @@ namespace Lightning.Core.API
     {
         public void OnStart_SetLuaDebugHook()
         {
-            LuaState.DebugHook += LuaDebugHook; 
+            ScriptGlobals.LuaState.DebugHook += LuaDebugHook;
+
+            // fix my retardation
+            ScriptGlobals.LuaState.SetDebugHook(LuaHookMask.Line | LuaHookMask.Return, 0);
         }
 
-        private void LuaDebugHook(object sender, DebugHookEventArgs e)
+        public void LuaDebugHook(object sender, DebugHookEventArgs e)
         {
             Script RunningScript = null;
 
             foreach (Script Sc in ScriptGlobals.RunningScripts)
             {
-                if (Sc.IsRunning)
+                Type ScType = Sc.GetType();
+
+                bool IsCoreScript = (ScType == typeof(CoreScript)
+            || ScType.IsSubclassOf(typeof(CoreScript)));
+
+                if (!Sc.IsPaused)
                 {
-                    if (Sc.Content != e.LuaDebug.Source)
-                    {
-                        // block multiple scripts
-                        ErrorManager.ThrowError(ClassName, "CannotHaveMultipleUnpausedScriptsRunningException");
-                    }
-                    else
-                    {
-                        RunningScript = Sc;
-                    }
+                    RunningScript = Sc;
+                }
+                else
+                {
+                    continue; 
                 }
             }
 
             if (RunningScript == null)
             {
-                ErrorManager.ThrowError(ClassName, "InternalLuaStateErrorException", "For some reason the Lua debug hook got called despite no scripts running. This is bad and probably means something very bad happened.");
+                return; 
             }
             else
             {
@@ -73,7 +77,11 @@ namespace Lightning.Core.API
                 {
                     case LuaHookEvent.Line:
                         RunningScript.CurrentlyExecutingLine++;
+                        Logging.Log($"Current line: {RunningScript.CurrentlyExecutingLine}", ClassName);
                         return;
+                    case LuaHookEvent.Return:
+                        RunningScript.CurrentlyExecutingLine = 0;
+                        return; 
                         
                 }
             }

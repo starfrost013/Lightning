@@ -30,6 +30,7 @@ namespace Lightning.Core.API
 
         public ScriptInterpreterState State { get; set; }
 
+        public Lua LuaState { get; set; }
         public ScriptInterpreter()
         {   
             ExposedMethods = new List<ScriptMethod>();
@@ -54,12 +55,21 @@ namespace Lightning.Core.API
                 return LSR; 
             }
             else
-            {
+            {  
                 RunningScripts.Add(Sc); // run it.
 
                 LSR.Successful = true;
                 return LSR; 
             }
+
+        }
+
+        internal void RunCoreScripts()
+        {
+            // Pretty temporary code lol
+            SandboxCoreScript Sc = new SandboxCoreScript();
+
+            LuaState.DoString(Sc.ProtectedContent); 
 
         }
 
@@ -116,13 +126,17 @@ namespace Lightning.Core.API
                                 ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaCoreScriptWithNoProtectedContentException", $"The CoreScript {CoreSc.Name} has null or empty ProtectedContent! The script has been terminated.");
                             }
 
+
                             RunningScripts.Remove(CoreSc);
 
                             return;
                         }
                         else
                         {
-                            LuaState.DoString(CoreSc.ProtectedContent);
+                            // Set the __SCRIPTCONTENT global variable to allow load() to be used so that we can sandbox the environment.
+                            LuaState["__SCRIPTCONTENT"] = CoreSc.ProtectedContent;
+                            RunCoreScripts();
+                            Interpret(LuaState);
                         }
                     }
                     else
@@ -132,7 +146,7 @@ namespace Lightning.Core.API
                         {
                             if (NameIsNull)
                             {
-                                ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaScriptWithNoContentException", "The currently running cript has null or empty Content! The script has been terminated.");
+                                ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaScriptWithNoContentException", "The currently running script has null or empty Content! The script has been terminated.");
                             }
                             else
                             {
@@ -141,7 +155,9 @@ namespace Lightning.Core.API
                         }
                         else
                         {
-                            LuaState.DoString(Sc.Content);
+                            // Set the __SCRIPTCONTENT global variable to allow load() to be used so that we can sandbox the environment.
+                            LuaState["__SCRIPTCONTENT"] = Sc.Content;
+                            RunCoreScripts();
                         }
                     }
                     // Check if the script content is null or empty and then call dostring to run the script

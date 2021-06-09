@@ -14,24 +14,28 @@ namespace Lightning.Core.API
     /// </summary>
     public class SandboxCoreScript : CoreScript 
     {
-        internal override string ClassName => "ImportOverrideCoreScript";
+        internal override string ClassName => "SandboxCoreScript";
 
         /// <summary>
         /// Protected corescript content. 
         /// 
         /// Restricts global environment to safe objects.
+        /// 
+        /// Uses load(); 
         /// </summary>
-        internal override string ProtectedContent => 
+        internal override string ProtectedContent =>
             "Print = print;\n" +
-            "_G = {print};";
-        
+            "NEW_ENV = {print = print};\n" +
+            "print(__SCRIPTCONTENT);\n" +
+            "local called_chunk = load(__SCRIPTCONTENT, \"CHUNK\", \"t\", NEW_ENV)" +
+            "pcall(called_chunk)";
+
         /// <summary>
         /// Constructor for the SandboxCoreScript class. Instantiated as this class is not actually added to the DataModel and therefore its oncreate() is never run
         /// todo: fix this
         /// </summary>
         public SandboxCoreScript()
         {
-            ScriptContent = new List<string>();
             CurrentScriptRunningStopwatch = new Stopwatch();
             WaitCountdownStopwatch = new Stopwatch();
         }
