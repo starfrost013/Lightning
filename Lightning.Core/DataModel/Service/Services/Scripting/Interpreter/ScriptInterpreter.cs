@@ -40,7 +40,10 @@ namespace Lightning.Core.API
         {   
             ExposedMethods = new List<ScriptMethod>();
             RunningScripts = new List<Script>();
-            State = new ScriptInterpreterState(); 
+            State = new ScriptInterpreterState();
+            // Pretty temporary code lol
+            Sandbox = new LuaSandbox();
+            LoadScript(Sandbox);
         }
 
         /// <summary>
@@ -71,9 +74,8 @@ namespace Lightning.Core.API
 
         internal void RunCoreScripts()
         {
-            // Pretty temporary code lol
-            Sandbox = new LuaSandbox();
 
+            LuaState.DoString(Sandbox.ProtectedContent); 
         }
 
         /// <summary>
@@ -139,7 +141,6 @@ namespace Lightning.Core.API
                             // Set the __SCRIPTCONTENT global variable to allow load() to be used so that we can sandbox the environment.
                             LuaState["__SCRIPTCONTENT"] = CoreSc.ProtectedContent;
                             RunCoreScripts();
-                            Interpret(LuaState);
                         }
                     }
                     else
@@ -159,6 +160,8 @@ namespace Lightning.Core.API
                         else
                         {
                             // Set the __SCRIPTCONTENT global variable to allow load() to be used so that we can sandbox the environment.
+
+                            // This will run the sandbox, which will sandbox the user's script, and run it using Lua's pcall() function. Woo!
                             LuaState["__SCRIPTCONTENT"] = Sc.Content;
                             RunCoreScripts();
                         }
@@ -169,6 +172,8 @@ namespace Lightning.Core.API
                     Sc.CurrentlyExecutingLine = 0;
 
                     Sc.CurrentScriptRunningStopwatch.Stop();
+
+                    RunningScripts.Remove(Sc); 
 
                 }
                 else

@@ -35,11 +35,12 @@ namespace Lightning.Core.API
             // Initialise Lua 
             ScriptGlobals.LuaState = new Lua();
             ScriptGlobals.LuaState.LoadCLRPackage();
-            
+
             // Register the Scripting API.
             RegisterAPI();
 
             OnStart_SetLuaDebugHook();
+
 
             ServiceStartResult SSR = new ServiceStartResult { Successful = true };
             SSR.Successful = true;

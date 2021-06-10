@@ -82,7 +82,7 @@
       <Texture Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
     </PhysicalObject>
     <Camera Active="True" CameraType="Free" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" />
-    <Script Content="print('i am die');" Name="WsTestScript" />
+    <Script Content="print('i am die');&#xD;&#xA;ScTest(); " Name="WsTestScript" />
     <Sound Is3D="True" TargetObject="Camera1" Path="Content\Sounds\test.mp3" Repeat="True" Volume="1" Radius="20" CanCollide="False" Position="-100,0" ZIndex="0" Name="Instance" />
     <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0" LoopCount="5"></Sound>
     <Humanoid Position="150,150" Size="42,68" CanCollide="True" Name="Trincid2021TestOnly" DisplayHealthBar="True" Health="95" MaxHealth="100">

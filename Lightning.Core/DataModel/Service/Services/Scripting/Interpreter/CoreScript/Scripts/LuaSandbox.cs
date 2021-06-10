@@ -17,6 +17,9 @@ namespace Lightning.Core.API
         internal override string ClassName => "SandboxCoreScript";
 
         internal string Environment = "print = print";
+
+        internal bool LUASANDBOX_INITIALISED { get; set; }
+
         /// <summary>
         /// Protected corescript content. 
         /// 
@@ -39,6 +42,7 @@ namespace Lightning.Core.API
         {
             CurrentScriptRunningStopwatch = new Stopwatch();
             WaitCountdownStopwatch = new Stopwatch();
+            LUASANDBOX_INITIALISED = true; 
         }
 
         public void AddToSandbox(string FunctionName)
@@ -49,10 +53,14 @@ namespace Lightning.Core.API
                 ErrorManager.ThrowError(ClassName, "AttemptedToAddInvalidFunctionToSandboxException");
                 // we crash here
             }
-            StringBuilder SB = new StringBuilder();
-            SB.Append(Environment);
-            SB.Append($", {FunctionName} = {FunctionName} ");
-            Environment = SB.ToString(); 
+            else
+            {
+                StringBuilder SB = new StringBuilder();
+                SB.Append(Environment);
+                SB.Append($", {FunctionName} = {FunctionName} ");
+                Environment = SB.ToString();
+            }
+
         }
     }
 }
