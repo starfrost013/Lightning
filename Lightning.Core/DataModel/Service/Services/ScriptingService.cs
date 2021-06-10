@@ -37,7 +37,7 @@ namespace Lightning.Core.API
             ScriptGlobals.LuaState.LoadCLRPackage();
             
             // Register the Scripting API.
-            RegisterAPI(true);
+            RegisterAPI();
 
             OnStart_SetLuaDebugHook();
 
@@ -60,7 +60,7 @@ namespace Lightning.Core.API
         /// ONLY THROW FATAL ERRORS!!!!!
         /// </summary>
         /// <param name="MethodFullName"></param>
-        internal void RegisterMethod(string MethodFullName, bool IsLua = false)
+        internal void RegisterMethod(string MethodFullName)
         {
             string ProcessedMethodName = MethodFullName.Replace(";", ".");
 
@@ -79,7 +79,7 @@ namespace Lightning.Core.API
             {
                 Logging.Log($"Registering method {MethodFullName}", ClassName);
 
-                GetScriptMethodResult GSMR = RegisterMethod_DoRegisterMethod(MethodFullName, IsLua);
+                GetScriptMethodResult GSMR = RegisterMethod_DoRegisterMethod(MethodFullName);
 
                 if (!GSMR.Successful)
                 {
@@ -97,7 +97,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private GetScriptMethodResult RegisterMethod_DoRegisterMethod(string MethodFullName, bool IsLua = false)
+        private GetScriptMethodResult RegisterMethod_DoRegisterMethod(string MethodFullName)
         {
             GetScriptMethodResult GSMR = new GetScriptMethodResult();
 
@@ -135,36 +135,12 @@ namespace Lightning.Core.API
 
                         InstanceInfoMethod CIIM = TestIns.Info.GetMethod(Method);
 
-                        if (!IsLua)
-                        {
+                        ScriptGlobals.Sandbox.AddToSandbox(CIIM.MethodName);
+                        ScriptGlobals.LuaState.RegisterFunction(CIIM.MethodName, MType.GetMethod(CIIM.MethodName));
 
-                            if (CIIM == null)
-                            {
-                                GSMR.FailureReason = $"The method {Method} does not exist in the class {MethodClass}!";
-                            }
-                            else
-                            {
-                                SM.Name = MethodFullName; // set it!
-
-                                foreach (InstanceInfoMethodParameter IIMP in CIIM.Parameters)
-                                {
-                                    ScriptMethodParameter SMP = new ScriptMethodParameter();
-
-                                    SMP.Name = IIMP.ParamName;
-                                    SMP.Type = IIMP.ParamType;
-
-                                    SM.Parameters.Add(SMP);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            ScriptGlobals.LuaState.RegisterFunction(CIIM.MethodName, MType.GetMethod(CIIM.MethodName));
-
-                            GSMR.Successful = true;
-                            GSMR.Method = new ScriptMethod(); // will be changed to genericresult in future
-                            return GSMR; 
-                        }
+                        GSMR.Successful = true;
+                        GSMR.Method = new ScriptMethod(); // will be changed to genericresult in future
+                        return GSMR;
                     }
                     
                 }

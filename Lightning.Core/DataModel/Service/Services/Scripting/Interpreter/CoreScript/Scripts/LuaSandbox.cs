@@ -12,10 +12,11 @@ namespace Lightning.Core.API
     /// 
     /// Defines a corescript that overrides the Lua import function to prevent importation of non-trusted assemblies.
     /// </summary>
-    public class SandboxCoreScript : CoreScript 
+    public class LuaSandbox : CoreScript 
     {
         internal override string ClassName => "SandboxCoreScript";
 
+        internal string Environment = "print = print";
         /// <summary>
         /// Protected corescript content. 
         /// 
@@ -25,7 +26,7 @@ namespace Lightning.Core.API
         /// </summary>
         internal override string ProtectedContent =>
             "Print = print;\n" +
-            "NEW_ENV = {print = print};\n" +
+            $"NEW_ENV = {{{Environment}}};\n" +
             "print(__SCRIPTCONTENT);\n" +
             "local called_chunk = load(__SCRIPTCONTENT, \"CHUNK\", \"t\", NEW_ENV)" +
             "pcall(called_chunk)";
@@ -34,10 +35,24 @@ namespace Lightning.Core.API
         /// Constructor for the SandboxCoreScript class. Instantiated as this class is not actually added to the DataModel and therefore its oncreate() is never run
         /// todo: fix this
         /// </summary>
-        public SandboxCoreScript()
+        public LuaSandbox()
         {
             CurrentScriptRunningStopwatch = new Stopwatch();
             WaitCountdownStopwatch = new Stopwatch();
+        }
+
+        public void AddToSandbox(string FunctionName)
+        {
+            if (FunctionName == null
+                || FunctionName.Length == 0)
+            {
+                ErrorManager.ThrowError(ClassName, "AttemptedToAddInvalidFunctionToSandboxException");
+                // we crash here
+            }
+            StringBuilder SB = new StringBuilder();
+            SB.Append(Environment);
+            SB.Append($", {FunctionName} = {FunctionName} ");
+            Environment = SB.ToString(); 
         }
     }
 }

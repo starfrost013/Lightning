@@ -697,4 +697,11 @@ Do not change if you are not a dev
     <Id>94</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Attempted to add an invalid function to the Lua sandbox!</Description>
+    <Name>AttemptedToAddInvalidFunctionToSandboxException</Name>
+    <Id>95</Id>
+    <Severity>FatalError</Severity> <!-- Change to non-fatal? -->
+  </Error>
 </Errors>

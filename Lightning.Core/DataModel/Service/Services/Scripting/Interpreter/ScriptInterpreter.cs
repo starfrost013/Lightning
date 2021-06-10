@@ -30,6 +30,11 @@ namespace Lightning.Core.API
 
         public ScriptInterpreterState State { get; set; }
 
+        /// <summary>
+        /// The Lua sandbox.
+        /// </summary>
+        public LuaSandbox Sandbox { get; set; }
+
         public Lua LuaState { get; set; }
         public ScriptInterpreter()
         {   
@@ -67,9 +72,7 @@ namespace Lightning.Core.API
         internal void RunCoreScripts()
         {
             // Pretty temporary code lol
-            SandboxCoreScript Sc = new SandboxCoreScript();
-
-            LuaState.DoString(Sc.ProtectedContent); 
+            Sandbox = new LuaSandbox();
 
         }
 
