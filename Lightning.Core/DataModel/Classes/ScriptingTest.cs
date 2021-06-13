@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Core.NativeInterop;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,7 +22,7 @@ namespace Lightning.Core.API
         /// </summary>
         public void ScTest()
         {
-            Logging.Log("Hi! I'm a script!", ClassName);
+            MessageBox.Show("I AM A SCRIPT PLEASE LISTEN TO ME");
         }
 
     }

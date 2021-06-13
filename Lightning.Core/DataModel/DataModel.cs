@@ -317,8 +317,18 @@ namespace Lightning.Core.API
             }
         }
 
-        public static void RemoveInstance(string ClassName, Instance Parent = null)
+        public static void RemoveInstance(Instance Ins, Instance Parent = null)
         {
+            if (Parent == null)
+            {
+                State.Remove(Ins);
+            }
+            else
+            {
+                State.Remove(Ins, Parent); 
+            }
+
+
             return; 
         }
 

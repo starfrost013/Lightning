@@ -16,7 +16,7 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "SandboxCoreScript";
 
-        internal string Environment = "print = print";
+        internal string Environment = "print = print, pairs = pairs, ipairs = ipairs, load = load, pcall = pcall, __SCRIPTCONTENT = __SCRIPTCONTENT";
 
         internal bool LUASANDBOX_INITIALISED { get; set; }
 
@@ -30,8 +30,12 @@ namespace Lightning.Core.API
         internal override string ProtectedContent =>
             "Print = print;\n" +
             $"NEW_ENV = {{{Environment}}};\n" +
-            "print(__SCRIPTCONTENT);\n" +
-            "local called_chunk = load(__SCRIPTCONTENT, \"CHUNK\", \"t\", NEW_ENV)" +
+            "_ENV = NEW_ENV;\n" +
+            "for i, v in pairs(_ENV) do\n" +
+            "   print(i);\n" +
+            "end\n" +
+            "print(ScTest);" +
+            "local called_chunk = load(__SCRIPTCONTENT, \"CHUNK\", \"t\", _ENV)" +
             "pcall(called_chunk)";
 
         /// <summary>

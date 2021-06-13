@@ -704,4 +704,18 @@ Do not change if you are not a dev
     <Id>95</Id>
     <Severity>FatalError</Severity> <!-- Change to non-fatal? -->
   </Error>
+
+  <Error>
+    <Description>Attempted to convert a non-String to a list of strings.</Description>
+    <Name>AttemptedToConvertNonStringToStringListException</Name>
+    <Id>96</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToConvertInvalidStringToStringListException</Name>
+    <Id>97</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

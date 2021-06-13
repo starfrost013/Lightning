@@ -40,6 +40,31 @@ namespace Lightning.Core.API
         /// </summary>
         public CameraType CameraType { get; set; }
 
+        /// <summary>
+        /// Camera move left key binding for free cameras.
+        /// </summary>
+        public string LeftKeyBinding { get; set; }
+
+        /// <summary>
+        /// Camera move right key binding for free cameras.
+        /// </summary>
+        public string RightKeyBinding { get; set; }
+
+        /// <summary>
+        /// Camera move up key binding for free cameras.
+        /// </summary>
+        public string UpKeyBinding { get; set; }
+
+        /// <summary>
+        /// Camera move down key binding for free cameras.
+        /// </summary>
+        public string DownKeyBinding { get; set; }
+
+        /// <summary>
+        /// Camera temporary output to XML key binding for free cameras.
+        /// </summary>
+        public string TempSaveKeyBinding { get; set; }
+
         public override void OnSpawn()
         {
             if (TargetName != null && Target == null)
@@ -48,6 +73,13 @@ namespace Lightning.Core.API
 
                 TryFindTarget(TargetName, Ws); 
             }
+
+            if (LeftKeyBinding == null) LeftKeyBinding = "A";
+            if (RightKeyBinding == null) RightKeyBinding = "D";
+            if (UpKeyBinding == null) UpKeyBinding = "W";
+            if (DownKeyBinding == null) DownKeyBinding = "S";
+            if (TempSaveKeyBinding == null) TempSaveKeyBinding = "F9";
+
         }
 
         private void TryFindTarget(string TargetName, Instance Parent)
