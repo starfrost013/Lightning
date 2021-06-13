@@ -43,27 +43,27 @@ namespace Lightning.Core.API
         /// <summary>
         /// Camera move left key binding for free cameras.
         /// </summary>
-        public string LeftKeyBinding { get; set; }
+        public ConvertableStringList LeftKeyBinding { get; set; }
 
         /// <summary>
         /// Camera move right key binding for free cameras.
         /// </summary>
-        public string RightKeyBinding { get; set; }
+        public ConvertableStringList RightKeyBinding { get; set; }
 
         /// <summary>
         /// Camera move up key binding for free cameras.
         /// </summary>
-        public string UpKeyBinding { get; set; }
+        public ConvertableStringList UpKeyBinding { get; set; }
 
         /// <summary>
         /// Camera move down key binding for free cameras.
         /// </summary>
-        public string DownKeyBinding { get; set; }
+        public ConvertableStringList DownKeyBinding { get; set; }
 
         /// <summary>
         /// Camera temporary output to XML key binding for free cameras.
         /// </summary>
-        public string TempSaveKeyBinding { get; set; }
+        public ConvertableStringList TempSaveKeyBinding { get; set; }
 
         public override void OnSpawn()
         {
@@ -74,11 +74,11 @@ namespace Lightning.Core.API
                 TryFindTarget(TargetName, Ws); 
             }
 
-            if (LeftKeyBinding == null) LeftKeyBinding = "A";
-            if (RightKeyBinding == null) RightKeyBinding = "D";
-            if (UpKeyBinding == null) UpKeyBinding = "W";
-            if (DownKeyBinding == null) DownKeyBinding = "S";
-            if (TempSaveKeyBinding == null) TempSaveKeyBinding = "F9";
+            if (LeftKeyBinding == null) LeftKeyBinding = new ConvertableStringList { "LEFT", "A" };
+            if (RightKeyBinding == null) RightKeyBinding = new ConvertableStringList { "RIGHT", "D" };
+            if (UpKeyBinding == null) UpKeyBinding = new ConvertableStringList { "UP", "W" };
+            if (DownKeyBinding == null) DownKeyBinding = new ConvertableStringList { "DOWN", "S" };
+            if (TempSaveKeyBinding == null) TempSaveKeyBinding = new ConvertableStringList { "F9" }; ;
 
         }
 
@@ -209,33 +209,54 @@ namespace Lightning.Core.API
             }
             
             // cannot use switch statements here :((
-            if (KeyCode == "LEFT"
-                || KeyCode == "A")
+
+            foreach (string CSLItem1 in LeftKeyBinding)
             {
-                IsPressingLeft = true;
+                if (KeyCode == CSLItem1)
+                {
+                    IsPressingLeft = true; 
+                }
+
             }
-            else if (KeyCode == "RIGHT"
-                || KeyCode == "D")
+
+
+            foreach (string CSLItem2 in RightKeyBinding)
             {
-                IsPressingRight = true;
+                if (KeyCode == CSLItem2)
+                {
+                    IsPressingRight = true;
+                }
+
             }
-            else if (KeyCode == "UP"
-                || KeyCode == "W")
+
+
+            foreach (string CSLItem3 in UpKeyBinding)
             {
-                IsPressingUp = true;
+                if (KeyCode == CSLItem3)
+                {
+                    IsPressingUp = true;
+                }
+
             }
-            else if (KeyCode == "DOWN"
-                || KeyCode == "S")
+
+
+            foreach (string CSLItem4 in DownKeyBinding)
             {
-                IsPressingDown = true;
+                if (KeyCode == CSLItem4)
+                {
+                    IsPressingDown = true;
+                }
+
             }
-            else if (KeyCode == "F9")
+
+
+            foreach (string CSLItem5 in TempSaveKeyBinding)
             {
-                IsPressingF9 = true;
-            }
-            else
-            {
-                return; 
+                if (KeyCode == CSLItem5)
+                {
+                    IsPressingF9 = true;
+                }
+
             }
 
             if (IsPressingLeft) Position.X -= FreeCameraMoveIntensityX;

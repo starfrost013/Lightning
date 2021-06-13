@@ -44,7 +44,7 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    List<string> LS0 = new List<string>();  
+                    ConvertableStringList LS0 = new ConvertableStringList();  
 
                     foreach (string SValue_Comma in SValue_Commas)
                     {

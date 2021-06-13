@@ -1,4 +1,6 @@
-﻿<UserControl x:Class="Polaris.UI.ScriptEditor"
+﻿<!-- Polaris ScriptEditor for Lua (GB news edition)-->
+    
+    <UserControl x:Class="Polaris.UI.ScriptEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
