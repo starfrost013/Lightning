@@ -108,5 +108,19 @@
     <Style TargetType="ListBoxItem" x:Key="ListBoxItem_FatalError">
         <Setter Property="Foreground" Value="#ff0000"></Setter>
     </Style>
-    
+
+
+    <Style TargetType="local:ScriptEditorCore">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border x:Name="ScriptEditorCore_Core_Border" Width="100" Height="40" CornerRadius="3">
+                            <Rectangle x:Name="ScriptEditorCore_Core_Border" Fill="#FFFFFF"></Rectangle>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -380,6 +380,20 @@ namespace Lightning.Utilities
             return true; 
         }
 
+        public static int CountNewlines(this string Str)
+        {
+            if (Str == null) return 0;
+
+            int NewLineCount = 0;
+
+            foreach (char Character in Str)
+            {
+                if (Character == '\n') NewLineCount++;
+            }
+
+            return NewLineCount; 
+        }
+
         
     }
 }

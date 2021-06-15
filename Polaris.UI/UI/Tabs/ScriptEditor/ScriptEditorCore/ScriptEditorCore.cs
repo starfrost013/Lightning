@@ -22,12 +22,25 @@ namespace Polaris.UI
     /// </summary>
     public class ScriptEditorCore : Control
     {
+        public ScriptEditorHighlight Highlight { get; set; }
         public List<TextChunk> Text { get; set; }
-
-
-        static ScriptEditorCore()
+        
+        public ScriptEditorCore()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ScriptEditorCore), new FrameworkPropertyMetadata(typeof(ScriptEditorCore)));
+
+        }
+
+
+        private void Init()
+        {
+            base.MouseDown += OnMouseDown;
+            Highlight = new ScriptEditorHighlight();
+        }
+
+        public override void OnMouseDown(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

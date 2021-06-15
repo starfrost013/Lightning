@@ -13,6 +13,8 @@ namespace Polaris.UI
     /// </summary>
     public class TextChunk
     {
-        public string TextChk { get; set; }
+        public string Text { get; set; }
+
+
     }
 }
