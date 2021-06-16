@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities; 
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -23,7 +24,8 @@ namespace Polaris.UI
     public class ScriptEditorCore : Control
     {
         public ScriptEditorHighlight Highlight { get; set; }
-        public List<TextChunk> Text { get; set; }
+        public ScriptEditorSettings Settings { get; set; }
+        public TextChunkCollection Text { get; set; }
         
         public ScriptEditorCore()
         {
@@ -35,12 +37,16 @@ namespace Polaris.UI
         private void Init()
         {
             base.MouseDown += OnMouseDown;
+            
             Highlight = new ScriptEditorHighlight();
+            Text = new TextChunkCollection();
+            Settings = new ScriptEditorSettings(); 
         }
 
-        public override void OnMouseDown(object sender, MouseEventArgs e)
+        public void OnMouseDown(object sender, MouseEventArgs e)
         {
-
+            // Sets the highlightposition.
+            string ConcatenatedString = Text.Concatenate(); 
         }
     }
 }

@@ -15,8 +15,8 @@ namespace Lightning.Core
     {
         /// <summary>
         /// Windows
-        /// .NET Core 3.1.0
-        /// Windows 7, 8.1, or 10.0 (version 1607; build 14393)+
+        /// .NET Core 3.1.0 
+        /// Windows 7, 8.1, 10 (version 1607; build 14393)+, or Windows 11
         /// x86-32
         /// </summary>
         Win32 = 0,
@@ -24,7 +24,7 @@ namespace Lightning.Core
         /// <summary>
         /// Windows
         /// .NET Core 3.1.0
-        /// Windows 7, 8.1, or 10.0 (version 1607; build 14393)+
+        /// Windows 7, 8.1, or 10.0 (version 1607; build 14393), or Windows 11
         /// x86-64
         /// </summary>
         Win64 = 1,

@@ -718,4 +718,18 @@ Do not change if you are not a dev
     <Id>97</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>Attempted to add a non-TextChunk to a TextChunkCollection!</Description>
+    <Name>AttemptedToAddANonTextChunkToATextChunkCollection</Name>
+    <Id>98</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to add a TextChunk with no length to a TextChunkCollection!</Description>
+    <Name>AttemptedToAddATextChunkWithNoLengthToATextChunkCollection</Name>
+    <Id>99</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

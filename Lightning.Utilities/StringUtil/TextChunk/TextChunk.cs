@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Polaris.UI
+namespace Lightning.Utilities
 {
     /// <summary>
     /// TextChunk
     /// 
-    /// June 13, 2021
+    /// June 13, 2021 (modified June 16, 2021)
     /// 
     /// Defines a text chunk. A text chunk is a chunk of text separated from other chunks by a newline or a space.
     /// </summary>
@@ -15,6 +15,6 @@ namespace Polaris.UI
     {
         public string Text { get; set; }
 
-
+        public int Length => Text.Length; 
     }
 }
