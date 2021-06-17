@@ -8,6 +8,11 @@ namespace Lightning.Utilities
 {
     public static class StringUtil
     {
+        /// <summary>
+        /// [DEPRECATED - DO NOT USE] 
+        /// </summary>
+        /// <param name="InnerXml"></param>
+        /// <returns></returns>
         public static List<string> InnerXml_Parse(this String InnerXml)
         {
             // xml preprocessing
@@ -40,9 +45,23 @@ namespace Lightning.Utilities
             return FinalList;
         }
 
-        public static double RoundNearest(double x, double amount) => Math.Round((x * amount) / amount);
+        /// <summary>
+        /// [DEPRECATED] 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static double RoundNearest(double x, double amount) => Math.Round((x / amount) * amount); // swap signs for anti-retardation measures
 
-
+        /// <summary>
+        /// Converts an array to a string, with an optional (redundant?) line ending.
+        /// 
+        /// [DEPRECATED - USE TEXTCHUNK]
+        /// </summary>
+        /// <param name="String">The string array to convert to a string.</param>
+        /// <param name="UseNewline">If true, a newline will be appended to every string.</param>
+        /// <param name="LE">The <see cref="LineEnding"/> to use.</param>
+        /// <returns></returns>
         public static string ConvertArrayToString(this string[] String, bool UseNewline = false, LineEnding LE = LineEnding.Windows) // UseNewline and LineEnding added on conversion to UL5
         {
             StringBuilder SB = new StringBuilder();
@@ -74,16 +93,27 @@ namespace Lightning.Utilities
             return SB.ToString();
         }
 
+        /// <summary>
+        /// Gets the number of months between two dates.
+        /// </summary>
+        /// <param name="Initial">The initial date.</param>
+        /// <param name="EndDate">The end date.</param>
+        /// <returns>An int value representing the number of months between two dates.</returns>
         public static int GetMonthsBetweenTwoDates(DateTime Initial, DateTime EndDate) // DO NOT DO THE ABSOLUTE!
         {
             return 12 * (Initial.Year - EndDate.Year) - Initial.Month + EndDate.Month;
         }
 
-
-        public static string PadZero(int X, int Zeros = 1)
+        /// <summary>
+        /// Pads the passed value with the number of zeros passed.
+        /// </summary>
+        /// <param name="Value">The value to be padded.</param>
+        /// <param name="Zeros">The number of zeros </param>
+        /// <returns>A string containing <see cref="Value"/> appended with the number of zeros passed with the <see cref="Zeros"/> parameter.</returns>
+        public static string PadZero(int Value, int Zeros = 1)
         {
             // we don't do this for >10
-            if (X > 9) return X.ToString();
+            if (Value > 9) return Value.ToString();
 
             StringBuilder SB = new StringBuilder();
 
@@ -92,7 +122,7 @@ namespace Lightning.Utilities
                 SB.Append("0");
             }
 
-            SB.Append(X.ToString());
+            SB.Append(Value.ToString());
 
             return SB.ToString();
         }
@@ -103,7 +133,7 @@ namespace Lightning.Utilities
         /// Checks if a string contains numerical characters.
         /// </summary>
         /// <param name="Text">The string you wish to check for numerical characters.</param>
-        /// <returns>v2.1 only</returns>
+        /// <returns>A boolean value that determines if the string contains numeric values.</returns>
         public static bool ContainsNumeric(this string Text)
         {
             List<byte> TextByteArray = Text.ToByteList();
@@ -125,7 +155,7 @@ namespace Lightning.Utilities
         /// Checks if a string contains numerical characters exclusively.
         /// </summary>
         /// <param name="Text">The string you wish to check for numerical characters.</param>
-        /// <returns></returns>
+        /// <returns>A boolean value determining if the string passed exclusively contains numerical characters.</returns>
         public static bool ExclusivelyContainsNumeric(this string Text)
         {
             if (!ContainsNumeric(Text))
@@ -164,6 +194,11 @@ namespace Lightning.Utilities
             return -1;
         }
 
+        /// <summary>
+        /// Converts a string to a <see cref="List{T}"/> of bytes.
+        /// </summary>
+        /// <param name="Text">Extension method - call on object</param>
+        /// <returns>A <see cref="(List{byte})"/> containing each character of the string in a byte representation</returns>
         public static List<byte> ToByteList(this string Text)
         {
             List<byte> ByteList = new List<byte>();
@@ -190,7 +225,7 @@ namespace Lightning.Utilities
         /// Convert SGML-based (X(A)ML/HTML) formatted string to plaintext - replaces the most common mnemonics and NCEs with their character equivalents
         /// </summary>
         /// <param name="HTXAMLFormattedString">The string to process.</param>
-        /// <returns>A processed string.</returns>
+        /// <returns>A processed string formatted for use in .NET framework or native code applications.</returns>
         public static string Xaml2Cs(this string HTXAMLFormattedString)
         {
             if (HTXAMLFormattedString == null)
@@ -216,7 +251,7 @@ namespace Lightning.Utilities
         /// Convert .NET formatted strings to X(A)ML / SGML-based formatted ones. Replaces the most common characters with their XML mnemonic / NCE equivalents.
         /// </summary>
         /// <param name="NormalString">The string to process.</param>
-        /// <returns>A processed string.</returns>
+        /// <returns>A processed string formatted for use in xML (SGML / HTML / XAML / XML).</returns>
         public static string Cs2Xaml(this string NormalString)
         {
             if (NormalString == null)
@@ -240,7 +275,7 @@ namespace Lightning.Utilities
         /// Convert a byte array to a string.
         /// </summary>
         /// <param name="ByteArray"></param>
-        /// <returns></returns>
+        /// <returns>The passed byte array converted to a string.</returns>
 
         public static string ByteArrayToString(this byte[] ByteArray)
         {
@@ -252,7 +287,7 @@ namespace Lightning.Utilities
         /// Convert a byte array to a hex string. (v722.1)
         /// </summary>
         /// <param name="ByteArray"></param>
-        /// <returns></returns>
+        /// <returns>The passed byte array converted to a hexadecimal format string.</returns>
 
         public static string ByteArrayToHexString(this byte[] ByteArray)
         {
@@ -264,7 +299,7 @@ namespace Lightning.Utilities
         /// Convert a list of bytes to a string.
         /// </summary>
         /// <param name="ByteList"></param>
-        /// <returns></returns>
+        /// <returns>The passed byte list converted to a hexadecimal format string.</returns>
         public static string ByteListToString(this List<byte> ByteList)
         {
             if (ByteList == null)
@@ -296,7 +331,7 @@ namespace Lightning.Utilities
         /// Convert a list of bytes to a hex string. TODO: Reduce code reuse
         /// </summary>
         /// <param name="ByteList"></param>
-        /// <returns></returns>
+        /// <returns>A hexadecimal string.</returns>
         public static string ByteListToHexString(this List<byte> ByteList)
         {
             if (ByteList == null)
@@ -332,7 +367,7 @@ namespace Lightning.Utilities
         /// This is required for appveyor builds.
         /// </summary>
         /// <param name="DateTime"></param>
-        /// <returns></returns>
+        /// <returns>A string with the days of the week removed.</returns>
         public static string RemoveDaysOfWeek(this string DateTime)
         {
             string Monday = "Mon";
@@ -362,7 +397,7 @@ namespace Lightning.Utilities
         /// Determines if a string contains alphabetical characters. Required for LightningScript tokenisation (April 17, 2021)
         /// </summary>
         /// <param name="Str"></param>
-        /// <returns>A boolean av</returns>
+        /// <returns>A boolean that determines if the string contains alpha characters</returns>
         public static bool ContainsAlpha(this string Str)
         {
             char[] StrCharacters = Str.ToCharArray();
@@ -380,6 +415,11 @@ namespace Lightning.Utilities
             return true; 
         }
 
+        /// <summary>
+        /// Counts the number of newlines in the string <see cref="Str"/>.
+        /// </summary>
+        /// <param name="Str">Extension method, call on string objct</param>
+        /// <returns>An int with the number of newlines. If the string is null, returns 0.</returns>
         public static int CountNewlines(this string Str)
         {
             if (Str == null) return 0;
@@ -392,6 +432,42 @@ namespace Lightning.Utilities
             }
 
             return NewLineCount; 
+        }
+
+        /// <summary>
+        /// Returns the string with ;ine ID <paramref name="LineID"/>
+        /// </summary>
+        /// <param name="Str"></param>
+        /// <param name="LineID"></param>
+        /// <returns></returns>
+        public static string GetLineWithId(this string Str, int LineID)
+        {
+            int LineCount = Str.CountNewlines(); 
+
+            if (LineCount == 0)
+            {
+                if (LineID != 0) // zero-based for now
+                {
+                    return null;
+                }
+                else
+                {
+                    return Str; 
+                }
+            }
+            else
+            {
+                if (LineID > LineCount)
+                {
+                    return null;
+                }
+                else
+                {
+                    string[] SplitLines = Str.Split('\n');
+
+                    return SplitLines[LineID];
+                }
+            }
         }
 
         

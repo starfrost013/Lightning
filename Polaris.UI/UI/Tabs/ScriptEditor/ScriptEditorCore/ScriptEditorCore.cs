@@ -45,8 +45,55 @@ namespace Polaris.UI
 
         public void OnMouseDown(object sender, MouseEventArgs e)
         {
-            // Sets the highlightposition.
-            string ConcatenatedString = Text.Concatenate(); 
+            // Sets the highlightposition and snaps it to the nearest character.
+            string ConcatenatedString = Text.Concatenate();
+
+            int NewlineCountY = ConcatenatedString.CountNewlines();
+
+            double ConvertedSingleCharacterPixelCount = ScreenUtil.WPFToPixels(Settings.FontSize);
+            
+            double MaxPosY = ConvertedSingleCharacterPixelCount * NewlineCountY;
+
+            
+            // PROBABLY easier to indirectly determine the line ID
+
+            Point MousePos = e.GetPosition(this);
+
+            int LineID = Convert.ToInt32(NewlineCountY * (MaxPosY / MousePos.Y));
+
+            string TheLine = ConcatenatedString.GetLineWithId(LineID);
+
+
+            if (TheLine == null)
+            {
+                return; // do something else?
+            }
+            else
+            {
+
+                double YPos  = ConvertedSingleCharacterPixelCount * LineID;
+
+                double LinePixelLength = ConvertedSingleCharacterPixelCount * TheLine.Length;
+
+                // no percentage required, this is easier
+                double XPos = LinePixelLength * (LinePixelLength / ConvertedSingleCharacterPixelCount);
+
+                Point LinePos = new Point(XPos, YPos);
+
+                Line Indicator = new Line();
+                Indicator.X1 = XPos;
+                Indicator.X2 = XPos;
+                Indicator.Y1 = YPos;
+                Indicator.Y2 = YPos;
+                Indicator.StrokeThickness = 1;
+                Indicator.Stroke
+                // all positions relative to this
+
+                this.AddVisualChild(Indicator);
+
+            }
+
+            
         }
     }
 }
