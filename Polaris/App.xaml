@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Polaris"
              StartupUri="UI\MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
-        <ResourceDictionary Source="/Polaris.UI;component/Assets/PolarisStyle.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Polaris.UI;component/Themes/PolarisStyle.xaml"></ResourceDictionary>
     </Application.Resources>
 </Application>

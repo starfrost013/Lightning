@@ -53,7 +53,7 @@ namespace Polaris.UI
             }
         }
 
-        public Color3 ColourStrokeColour { get; set; }
+        public Color3 CursorStrokeColour { get; set; }
         public Color3 HighlightColour { get; set; }
         public Color3 KeywordColour { get; set; }
         public Color3 StatementColour { get; set; }

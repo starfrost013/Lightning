@@ -116,7 +116,7 @@
                 <ControlTemplate>
                     <Grid>
                         <Border x:Name="ScriptEditorCore_Core_Border" Width="100" Height="40" CornerRadius="3">
-                            <Rectangle x:Name="ScriptEditorCore_Core_Border" Fill="#FFFFFF"></Rectangle>
+                            <Rectangle x:Name="ScriptEditorCore_Core_BorderRectangle" Fill="#FFFFFF"></Rectangle>
                         </Border>
                     </Grid>
                 </ControlTemplate>

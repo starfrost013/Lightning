@@ -13,4 +13,10 @@ Move to GlobalSettings?
     <Name>TestTab</Name>
     <UserControlClassName>TestTab</UserControlClassName>
   </Tab>
+
+  <Tab>
+    <FriendlyName>Script Editor [TEST]</FriendlyName>
+    <Name>ScriptEditor</Name>
+    <UserControlClassName>ScriptEditor</UserControlClassName>
+  </Tab>
 </Tabs>

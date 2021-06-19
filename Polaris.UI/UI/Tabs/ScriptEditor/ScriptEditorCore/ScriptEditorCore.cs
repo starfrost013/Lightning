@@ -21,7 +21,7 @@ namespace Polaris.UI
     /// 
     /// Implements a Lua script editor for Polaris. 
     /// </summary>
-    public class ScriptEditorCore : Control
+    public partial class ScriptEditorCore : Control
     {
         public ScriptEditorHighlight Highlight { get; set; }
         public ScriptEditorSettings Settings { get; set; }
@@ -30,14 +30,14 @@ namespace Polaris.UI
         public ScriptEditorCore()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ScriptEditorCore), new FrameworkPropertyMetadata(typeof(ScriptEditorCore)));
-
+            Init(); 
         }
 
 
         private void Init()
         {
             base.MouseDown += OnMouseDown;
-            
+            base.KeyDown += OnKeyDown; 
             Highlight = new ScriptEditorHighlight();
             Text = new TextChunkCollection();
             Settings = new ScriptEditorSettings(); 
@@ -50,50 +50,79 @@ namespace Polaris.UI
 
             int NewlineCountY = ConcatenatedString.CountNewlines();
 
-            double ConvertedSingleCharacterPixelCount = ScreenUtil.WPFToPixels(Settings.FontSize);
-            
-            double MaxPosY = ConvertedSingleCharacterPixelCount * NewlineCountY;
-
-            
-            // PROBABLY easier to indirectly determine the line ID
-
-            Point MousePos = e.GetPosition(this);
-
-            int LineID = Convert.ToInt32(NewlineCountY * (MaxPosY / MousePos.Y));
-
-            string TheLine = ConcatenatedString.GetLineWithId(LineID);
-
-
-            if (TheLine == null)
+            if (NewlineCountY == 0) 
             {
-                return; // do something else?
+                return;
             }
             else
             {
+                double ConvertedSingleCharacterPixelCount = ScreenUtil.WPFToPixels(Settings.FontSize);
 
-                double YPos  = ConvertedSingleCharacterPixelCount * LineID;
+                double MaxPosY = ConvertedSingleCharacterPixelCount * NewlineCountY;
 
-                double LinePixelLength = ConvertedSingleCharacterPixelCount * TheLine.Length;
 
-                // no percentage required, this is easier
-                double XPos = LinePixelLength * (LinePixelLength / ConvertedSingleCharacterPixelCount);
+                // PROBABLY easier to indirectly determine the line ID
 
-                Point LinePos = new Point(XPos, YPos);
+                Point MousePos = e.GetPosition(this);
 
-                Line Indicator = new Line();
-                Indicator.X1 = XPos;
-                Indicator.X2 = XPos;
-                Indicator.Y1 = YPos;
-                Indicator.Y2 = YPos;
-                Indicator.StrokeThickness = 1;
-                Indicator.Stroke
-                // all positions relative to this
+                int LineID = Convert.ToInt32(NewlineCountY * (MaxPosY / MousePos.Y));
 
-                this.AddVisualChild(Indicator);
+                string TheLine = ConcatenatedString.GetLineWithId(LineID);
+
+
+                if (TheLine == null)
+                {
+                    return; // do something else?
+                }
+                else
+                {
+
+                    double YPos = ConvertedSingleCharacterPixelCount * LineID;
+
+                    double LinePixelLength = ConvertedSingleCharacterPixelCount * TheLine.Length;
+
+                    // no percentage required, this is easier
+                    double XPos = LinePixelLength * (LinePixelLength / ConvertedSingleCharacterPixelCount);
+
+                    Point LinePos = new Point(XPos, YPos);
+
+                    Line Indicator = new Line();
+                    Indicator.X1 = XPos;
+                    Indicator.X2 = XPos;
+                    Indicator.Y1 = YPos;
+                    Indicator.Y2 = YPos;
+                    Indicator.StrokeThickness = 1;
+
+                    //TODO: SET COLOUR
+                    // all positions relative to this
+
+                    this.AddVisualChild(Indicator);
+
+                }
 
             }
 
-            
+        }
+
+        public void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    if (e.Key == Key.Enter) // feel like this isn't the best idea 
+                    {
+                        TextChunk TC = new TextChunk();
+                    }
+                    else
+                    {
+
+                    }
+                    return;
+                case Key.Space:
+                    return;
+                default:
+                    return;
+            }
         }
     }
 }

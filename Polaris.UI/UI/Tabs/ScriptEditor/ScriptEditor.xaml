@@ -9,6 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <local:ScriptEditorCore></local:ScriptEditorCore>
+        <local:ScriptEditorCore Width="800" Height="450"></local:ScriptEditorCore>
     </Grid>
 </UserControl>
