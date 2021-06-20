@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -62,3 +63,4 @@ namespace Lightning.Core.NativeInterop
         public IntPtr hStdError { get; set; }
     }
 }
+#endif

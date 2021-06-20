@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ScriptEditorSettings"
+    targetNamespace="http://tempuri.org/ScriptEditorSettings.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/ScriptEditorSettings.xsd"
+    xmlns:mstns="http://tempuri.org/ScriptEditorSettings.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <!-- Lightning
+
+Polaris Script Editor Settings Schema
+
+June 18, 2021
+-->
+  <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema" name="ScriptEditorSettings">
+    <xs:sequence>
+      <xs:element name="ScriptEditorSettings">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="SchemaVersion" type="xs:string"/>
+            <!-- 0.1.0.0001-->
+            <xs:element name="FontFamily" type="xs:string"/>
+            <xs:element name="FontSize" type="xs:string"/>
+            <xs:element name="CursorStrokeColor" type="xs:string"/>
+            <xs:element name="HighlightColor" type="xs:string"/>
+            <xs:element name="KeywordColor" type="xs:string"/>
+            <xs:element name="StatementColor" type="xs:string"/>
+            <xs:element name="VariableColor" type="xs:string"/>
+
+            <xs:element name="Keywords">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Keyword">
+
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+
+            <xs:element name="Statements">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Statement">
+
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
+
+

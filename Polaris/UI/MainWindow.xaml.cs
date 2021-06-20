@@ -1,4 +1,5 @@
 ﻿using Lightning.Core;
+using Lightning.Core.API;  
 using Polaris.Core;
 using Polaris.UI; 
 using System;
@@ -79,16 +80,27 @@ namespace Polaris
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            UI_INITIALISED = true;
+
 
 #if DEBUG
             Logging.Log("TEST!", "Polaris MainWindow Testing Utilities", MessageSeverity.Message);
 #endif
+            Window_SetTitleWithFilename(DataModel.DATAMODEL_LASTXML_PATH);
+
+            UI_INITIALISED = true;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             PolarisState.Shutdown(); 
+        }
+
+        private void Window_SetTitleWithFilename(string FileName)
+        {
+            if (DataModel.DATAMODEL_LASTXML_PATH != null)
+            {
+                Title = $"Polaris (pre-alpha) ({DataModel.DATAMODEL_LASTXML_PATH})";
+            }
         }
     }
 }

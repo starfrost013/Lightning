@@ -16,7 +16,6 @@ namespace Polaris.UI
 
             string[] TextArray = TBText.Split('\n');
 
-            
 
             foreach (string TextLine in TextArray)
             {

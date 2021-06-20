@@ -73,7 +73,7 @@ namespace Lightning.Core
         /// <param name="Image">The icon to sue for the messagebox.</param>
         /// <param name="Options"></param>
         /// <param name="HWND">The Win32 window HWND to display on top of. OPTIONAL.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="MessageBoxResult"/> object</returns>
         private static MessageBoxResult DoShow(string Text, string Caption, MessageBoxButton ButtonSet, MessageBoxImage Image, MessageBoxOptions Options, IntPtr? HWND = null)
         {
             uint ButtonType = (uint)ButtonSet;

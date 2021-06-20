@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Lightning.Utilities
@@ -470,6 +471,16 @@ namespace Lightning.Utilities
             }
         }
 
-        
+        public static string Append(this string StringToAppendTo, char Character) => Append<char>(StringToAppendTo, Character.ToString());
+
+        public static string Append<T>(this string StringToAppendTo, T StringToConvert)
+        {
+            Type TypeOfString = typeof(T); 
+            
+            // i'd check that the user isn't being an idiot
+            // but i have more important things to do
+            return $"{StringToAppendTo}{StringToConvert.ToString()}";
+        }
+
     }
 }

@@ -64,7 +64,8 @@ namespace Lightning.Core.NativeInterop.Win32
             string lpCaption,
             [MarshalAs(UnmanagedType.U4)]
             MessageBoxType uType);
-        public static uint Win32__AttachConsole_Default_PID = 0x0ffffffff; // .NET 
+
+        public static uint Win32__AttachConsole_Default_PID = 0x0ffffffff; // .NET REQUIREMENT 
 
 
         

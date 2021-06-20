@@ -54,7 +54,7 @@
 
       </xs:element>
 
-      <!-- Mandatory File Component: InstanceTree -->
+      <!-- Mandatory File Component: Workspace -->
       <xs:element name="Workspace">
         <xs:complexType>
           <xs:sequence>

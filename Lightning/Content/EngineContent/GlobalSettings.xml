@@ -16,10 +16,20 @@
       <ServiceName>ScriptingService</ServiceName>
       <StartOrder>1</StartOrder>
     </ServiceStartupCommand>
+    
+    <ServiceStartupCommand>
+      <ServiceName>PhysicsService</ServiceName>
+      <StartOrder>2</StartOrder>
+    </ServiceStartupCommand>
 
     <ServiceStartupCommand>
       <ServiceName>SoundService</ServiceName>
-      <StartOrder>2</StartOrder>
+      <StartOrder>3</StartOrder>
+    </ServiceStartupCommand>
+
+    <ServiceStartupCommand>
+      <ServiceName>UIService</ServiceName>
+      <StartOrder>4</StartOrder>
     </ServiceStartupCommand>
   </ServiceStartupCommands>
 

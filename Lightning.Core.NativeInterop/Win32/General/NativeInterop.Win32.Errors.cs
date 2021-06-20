@@ -8,7 +8,7 @@ namespace Lightning.Core.NativeInterop.Win32
     /// <summary>
     /// Lightning Native Interop (Win32)
     /// 
-    /// March 5, 2021 (v1.0.10)
+    /// March 5, 2021 (v1.0.10) - modified June 20, 2021
     /// 
     /// An enum that contains Win32 errors for Win32 interop.
     /// 
@@ -25,7 +25,17 @@ namespace Lightning.Core.NativeInterop.Win32
         /// <summary>
         /// Access denied.
         /// </summary>
-        AccessDenied = 5
+        AccessDenied = 5,
+
+        /// <summary>
+        /// The process cannot access the file because it is being used by another process.
+        /// </summary>
+        SharingViolation = 20,
+
+        /// <summary>
+        /// Failed to open files
+        /// </summary>
+        OpenFailed = 110,
     }
 }
 #endif

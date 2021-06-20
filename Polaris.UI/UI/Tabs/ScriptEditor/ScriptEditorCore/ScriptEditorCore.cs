@@ -25,8 +25,10 @@ namespace Polaris.UI
     {
         public ScriptEditorHighlight Highlight { get; set; }
         public ScriptEditorSettings Settings { get; set; }
+        public ScriptEditorState State { get; set; }
         public TextChunkCollection Text { get; set; }
         
+        private TextChunk CurrentTextChunk { get; set; }
         public ScriptEditorCore()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ScriptEditorCore), new FrameworkPropertyMetadata(typeof(ScriptEditorCore)));
@@ -37,10 +39,13 @@ namespace Polaris.UI
         private void Init()
         {
             base.MouseDown += OnMouseDown;
-            base.KeyDown += OnKeyDown; 
+            base.KeyDown += OnKeyDown;
+
+            State = new ScriptEditorState();
             Highlight = new ScriptEditorHighlight();
             Text = new TextChunkCollection();
-            Settings = new ScriptEditorSettings(); 
+            Settings = new ScriptEditorSettings();
+            
         }
 
         public void OnMouseDown(object sender, MouseEventArgs e)
@@ -56,6 +61,8 @@ namespace Polaris.UI
             }
             else
             {
+                State.IsSelected = true; 
+
                 double ConvertedSingleCharacterPixelCount = ScreenUtil.WPFToPixels(Settings.FontSize);
 
                 double MaxPosY = ConvertedSingleCharacterPixelCount * NewlineCountY;
@@ -68,7 +75,6 @@ namespace Polaris.UI
                 int LineID = Convert.ToInt32(NewlineCountY * (MaxPosY / MousePos.Y));
 
                 string TheLine = ConcatenatedString.GetLineWithId(LineID);
-
 
                 if (TheLine == null)
                 {
@@ -104,23 +110,21 @@ namespace Polaris.UI
 
         }
 
+        public void OnMouseUp(object sender, MouseEventArgs e) => State.IsSelected = false;
+
         public void OnKeyDown(object sender, KeyEventArgs e)
         {
+            
             switch (e.Key)
             {
-                case Key.Enter:
-                    if (e.Key == Key.Enter) // feel like this isn't the best idea 
-                    {
-                        TextChunk TC = new TextChunk();
-                    }
-                    else
-                    {
-
-                    }
-                    return;
                 case Key.Space:
+                    TextChunk TC = new TextChunk();
+
+                    CurrentTextChunk = TC;
+
                     return;
                 default:
+                    CurrentTextChunk.Text.Append<string>(e.Key.ToString());
                     return;
             }
         }

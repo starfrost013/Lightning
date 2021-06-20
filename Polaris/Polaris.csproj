@@ -37,6 +37,10 @@
     </SplashScreen>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UI\Components\MainWindowComponents\" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <Prefer32Bit>true</Prefer32Bit>
