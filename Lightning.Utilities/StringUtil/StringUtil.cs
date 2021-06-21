@@ -471,7 +471,7 @@ namespace Lightning.Utilities
             }
         }
 
-        public static string Append(this string StringToAppendTo, char Character) => Append<char>(StringToAppendTo, Character.ToString());
+        public static string Append(this string StringToAppendTo, char Character) => Append<char>(StringToAppendTo, Character);
 
         public static string Append<T>(this string StringToAppendTo, T StringToConvert)
         {

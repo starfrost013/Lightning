@@ -8,20 +8,19 @@ using LParam = System.UInt32;
 namespace Lightning.Core.NativeInterop.Win32
 {
     /// <summary>
-    /// Delegate used for changing the sources of window messages in the Win32 open file dialog 
+    /// Delegate used for redirecting window messages to the Print dialog.
     /// </summary>
     /// <param name="Param1"></param>
     /// <param name="Param2"></param>
     /// <param name="Param3"></param>
     /// <param name="Param4"></param>
     /// <returns></returns>
-    public delegate IntPtr OpenFileDialogHookCallback
-        (
-            IntPtr Param1,
-            uint Param2,
-            WParam Param3,
-            LParam Param4
-        );
-
+    public delegate UIntPtr PrintDialogHookCallback
+    (
+        IntPtr Param1,
+        uint Param2,
+        WParam Param3,
+        LParam Param4
+    );
 }
 #endif

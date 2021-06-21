@@ -9,7 +9,7 @@ namespace Lightning.Core.NativeInterop.Win32
     /// <summary>
     /// StandardDialogAPI
     /// 
-    /// June 20, 2021
+    /// June 20, 2021 (modified June 21, 2021)
     /// 
     /// Defines P/Invoke definitions for the Win32 COMDLG32 library.
     /// </summary>
@@ -19,12 +19,18 @@ namespace Lightning.Core.NativeInterop.Win32
         /// Colour Dialog
         /// </summary>
         /// <param name="CC"></param>
-        /// <returns></returns>
+        /// <returns>true if successful - Call commdlggetextendederror() if false</returns>
         [DllImport("comdlg32.dll", SetLastError = true)]
         public static extern bool CHOOSECOLOR([In, Out] ChooseColor CC);
 
         [DllImport("comdlg32.dll", SetLastError = true)]
         public static extern bool GetOpenFileName([In, Out] OpenFileName OFN);
+
+        [DllImport("comdlg32.dll", SetLastError = true)]
+        public static extern bool GetSaveFileName([In, Out] OpenFileName OFN);
+
+        [DllImport("comdlg32.dll"), SetLastError = true]
+        public static extern bool PrintDlg([In, Out] PrintDialog PD);
     }
 }
 #endif
