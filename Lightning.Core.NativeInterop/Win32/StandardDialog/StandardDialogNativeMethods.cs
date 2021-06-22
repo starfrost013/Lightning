@@ -18,19 +18,27 @@ namespace Lightning.Core.NativeInterop.Win32
         /// <summary>
         /// Colour Dialog
         /// </summary>
-        /// <param name="CC"></param>
+        /// <param name="CC">See <see cref="ChooseColor"/>.</param>
         /// <returns>true if successful - Call commdlggetextendederror() if false</returns>
         [DllImport("comdlg32.dll", SetLastError = true)]
         public static extern bool CHOOSECOLOR([In, Out] ChooseColor CC);
 
+        /// <summary>
+        /// Opens an Open File N
+        /// </summary>
+        /// <param name="OFN"></param>
+        /// <returns></returns>
         [DllImport("comdlg32.dll", SetLastError = true)]
         public static extern bool GetOpenFileName([In, Out] OpenFileName OFN);
 
         [DllImport("comdlg32.dll", SetLastError = true)]
         public static extern bool GetSaveFileName([In, Out] OpenFileName OFN);
 
-        [DllImport("comdlg32.dll"), SetLastError = true]
+        [DllImport("comdlg32.dll", SetLastError = true)]
         public static extern bool PrintDlg([In, Out] PrintDialog PD);
+
+        [DllImport("comdlg32.dll", SetLastError = true)]
+        public static extern bool ChooseFont([In, Out] ChooseFont CF); 
     }
 }
 #endif
