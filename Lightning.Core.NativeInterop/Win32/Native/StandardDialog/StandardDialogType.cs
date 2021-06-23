@@ -10,7 +10,7 @@ namespace Lightning.Core.NativeInterop.Win32
     /// 
     /// June 20, 2021
     /// 
-    /// Enumeration for standard dialogs for Win32
+    /// Enumeration for standard dialogs for Win32 (probably should have used COM, but oh well...)
     /// </summary>
     public enum StandardDialogType
     {

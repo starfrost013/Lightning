@@ -1,4 +1,7 @@
-﻿using System;
+﻿#if WINDOWS
+using Lightning.Core.NativeInterop.Win32;
+#endif
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -179,5 +182,16 @@ namespace Lightning.Core.API
 
             return V2;
         }
+
+#if WINDOWS
+        /// <summary>
+        /// [WIN32-ONLY] Gets a Native Point.
+        /// </summary>
+        /// <returns></returns>
+        public static Vector2 FromNativePoint(Win32Point PointW32, bool AddToDataModel = true)
+        {
+            Vector2 V2 = new Vector2(); 
+        }
+#endif
     }
 }
