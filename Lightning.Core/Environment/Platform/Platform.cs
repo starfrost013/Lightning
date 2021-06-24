@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lightning.Core
 {
-    public static class Platform
+    public static partial class Platform
     {
         public static Platforms GetPlatforms()
         {
