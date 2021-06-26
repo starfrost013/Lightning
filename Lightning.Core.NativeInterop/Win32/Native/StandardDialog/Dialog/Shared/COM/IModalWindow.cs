@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using HRESULT = System.UInt32;
 
 namespace Lightning.Core.NativeInterop.Win32
 {
@@ -19,6 +20,10 @@ namespace Lightning.Core.NativeInterop.Win32
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), PreserveSig]
         int Show([In] IntPtr Parent);
+
+
+
+
     }
 }
 #endif
