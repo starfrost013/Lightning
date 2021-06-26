@@ -54,6 +54,7 @@ namespace Lightning.Core.API
                 // todo: refactor to only get it once
                 GlobalSettings GS = DataModel.GetGlobalSettings();
 
+                Logging.Log($"Lua script {RunningScript.Name} currently has run for: {RunningScript.CurrentScriptRunningStopwatch.ElapsedMilliseconds}", ClassName); 
                 if (RunningScript.CurrentScriptRunningStopwatch.ElapsedMilliseconds > GS.MaxLuaScriptExecutionTime)
                 {
 

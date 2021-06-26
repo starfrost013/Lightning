@@ -73,7 +73,7 @@ namespace Lightning.Core.NativeInterop.Win32
             IFileDialog PFD,
             [In]
             [MarshalAs(UnmanagedType.Interface)]
-            IShellItem PSI,
+            IShellItem PSI
 
             );
     }

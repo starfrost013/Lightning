@@ -72,11 +72,7 @@ namespace Lightning.Core.API
 
         }
 
-        internal void RunCoreScripts()
-        {
-
-            LuaState.DoString(Sandbox.ProtectedContent); 
-        }
+        internal void RunScriptUsingSandbox() => LuaState.DoString(Sandbox.ProtectedContent); 
 
         /// <summary>
         /// Advances all scripts by one token and its children. Handles Runtime Errors.
@@ -87,7 +83,11 @@ namespace Lightning.Core.API
             {
                 Script Sc = RunningScripts[i];
 
-                InterpretToken(Sc, true, LuaState); 
+                if (!Sc.IsSandbox)
+                {
+                    InterpretToken(Sc, true, LuaState);
+                }
+                
                 
             }
         }
@@ -140,11 +140,14 @@ namespace Lightning.Core.API
                         {
                             // Set the __SCRIPTCONTENT global variable to allow load() to be used so that we can sandbox the environment.
                             LuaState["__SCRIPTCONTENT"] = CoreSc.ProtectedContent;
-                            RunCoreScripts();
+                            RunScriptUsingSandbox();
                         }
                     }
                     else
                     {
+
+                        Sc.CurrentScriptRunningStopwatch.Start();
+
                         if (Sc.Content == null
                         || Sc.Content.Length == 0)
                         {
@@ -163,7 +166,7 @@ namespace Lightning.Core.API
 
                             // This will run the sandbox, which will sandbox the user's script, and run it using Lua's pcall() function. Woo!
                             LuaState["__SCRIPTCONTENT"] = Sc.Content;
-                            RunCoreScripts();
+                            RunScriptUsingSandbox();
                         }
                     }
                     // Check if the script content is null or empty and then call dostring to run the script

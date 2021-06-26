@@ -14,9 +14,12 @@ namespace Lightning.Core.API
     public class UIService : Service
     {
         internal override ServiceImportance Importance => ServiceImportance.Low;
-        public override ServiceStartResult OnStart() => throw new NotImplementedException();
-        public override ServiceShutdownResult OnShutdown() => throw new NotImplementedException();
+        public override ServiceStartResult OnStart() => new ServiceStartResult { Successful = true };
+        public override ServiceShutdownResult OnShutdown() => new ServiceShutdownResult { Successful = true };
 
-        public override void Poll() => throw new NotImplementedException();
+        public override void Poll()
+        {
+            return; 
+        }
     }
 }

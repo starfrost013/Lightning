@@ -732,4 +732,11 @@ Do not change if you are not a dev
     <Id>99</Id>
     <Severity>Error</Severity>
   </Error>
+
+  <Error>
+    <Description>[WINDOWS ONLY] Attempted to pass a null or invalid Win32Point to Vector2.FromNativePoint(); -- position will be set to (0,0).</Description>
+    <Name>AttemptedToPassInvalidW32PointToVector2FromNativePointException</Name>
+    <Id>100</Id>
+    <Severity>Error</Severity> <!-- fatal? -->
+  </Error>
 </Errors>

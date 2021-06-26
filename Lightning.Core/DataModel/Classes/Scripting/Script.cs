@@ -42,6 +42,11 @@ namespace Lightning.Core.API
         /// </summary>
         public Stopwatch WaitCountdownStopwatch { get; set; }
 
+        /// <summary>
+        /// Is this script the Lua Sandbox?
+        /// </summary>
+        internal virtual bool IsSandbox { get; }
+
         public override void OnCreate()
         {
             CurrentScriptRunningStopwatch = new Stopwatch();

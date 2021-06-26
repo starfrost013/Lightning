@@ -88,7 +88,7 @@ namespace Lightning.Core.API
                     int MaxFPS = (int)MaxFPS_Setting.SettingValue;
                     
                     SvcGlobalData.ServiceUpdateTimer.Start();
-                    UpdateGame(MaxFPS); 
+                    UpdateGame(MaxFPS); // REFACTOR THIS
 
                 }
 

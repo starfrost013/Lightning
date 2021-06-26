@@ -42,16 +42,23 @@ namespace Lightning
                 case LaunchArgsAction.LaunchGameXML:
                     // Write some basic information to the screen
                     // Set the colour to blue temporarily
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("Light");
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("Lightning");
+                    Console.WriteLine("ning");
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                     // Load version information
                     LVersion.LoadVersion();
 
+                    // Display platform information
+                    Platform.PopulatePlatformInformation(); 
+
+                    Console.WriteLine($"Running on {Platform.PlatformName} -- version {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})"); // 2021-06-26
+
                     // Display version information
                     string LVersionString = LVersion.GetVersionString();
-                    Console.WriteLine($"© 2021 starfrost. All rights reserved. Version {LVersionString}");
+                    Console.WriteLine($"© 2021 starfrost/Lightning Dev Team. All rights reserved. Version {LVersionString}"); 
 
                     // Turns out this is how we will init after all. 
                     DataModel.Init(LAR.Arguments);

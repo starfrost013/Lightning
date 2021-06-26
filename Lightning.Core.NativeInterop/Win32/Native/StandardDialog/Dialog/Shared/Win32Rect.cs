@@ -33,6 +33,6 @@ namespace Lightning.Core.NativeInterop.Win32
         /// </summary>
         long Bottom;
 
-        // TODO: Convert from AABB/paired Vec2 in PhysicsService...?
+        // TODO: Convert from AABB/paired Vec2 in PhysicsService.
     }
 }

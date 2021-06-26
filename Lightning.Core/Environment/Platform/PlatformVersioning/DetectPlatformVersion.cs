@@ -15,7 +15,7 @@ namespace Lightning.Core
     /// </summary>
     public static partial class Platform
     {
-        public static PlatformVersion GetPlatformVersion() => PlatformVersionAcquirer.GetPlatformVersion();
+        private static PlatformVersion GetPlatformVersion() => PlatformVersionAcquirer.GetPlatformVersion();
 
     }
 }

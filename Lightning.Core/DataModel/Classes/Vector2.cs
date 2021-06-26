@@ -190,7 +190,31 @@ namespace Lightning.Core.API
         /// <returns></returns>
         public static Vector2 FromNativePoint(Win32Point PointW32, bool AddToDataModel = true)
         {
-            Vector2 V2 = new Vector2(); 
+            Vector2 V2 = null; // SHOULD NEVER STAY NULL
+
+            if (!AddToDataModel)
+            {
+                V2 = new Vector2();
+            }
+            else
+            {
+                V2 = (Vector2)DataModel.CreateInstance("Vector2"); 
+            }
+           
+            
+            if (PointW32 == null)
+            {
+                ErrorManager.ThrowError("Vector2 Converter", "AttemptedToPassInvalidW32PointToVector2FromNativePointException");
+                return V2; 
+            }
+            else
+            {
+                V2.X = PointW32.X;
+                V2.Y = PointW32.Y;
+
+                return V2;
+            }
+
         }
 #endif
     }

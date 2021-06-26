@@ -20,6 +20,8 @@ namespace Lightning.Core.API
 
         internal bool LUASANDBOX_INITIALISED { get; set; }
 
+        internal override bool IsSandbox => true;
+        
         /// <summary>
         /// Protected corescript content. 
         /// 
