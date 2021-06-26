@@ -102,5 +102,10 @@ namespace Polaris
                 Title = $"Polaris (pre-alpha) ({DataModel.DATAMODEL_LASTXML_PATH})";
             }
         }
+
+        private void Polaris_FileMenu_Open_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

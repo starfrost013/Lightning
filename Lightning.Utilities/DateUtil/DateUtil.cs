@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities.DateUtil
+namespace Lightning.Utilities
 {
     public static class DateUtil
     {
