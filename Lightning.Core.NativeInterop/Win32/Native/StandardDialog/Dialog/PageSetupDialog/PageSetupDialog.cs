@@ -13,7 +13,7 @@ namespace Lightning.Core.NativeInterop.Win32
     /// 
     /// Defines a class used to control the properties and behaviour of the Win32 Page Setup Dialog.
     /// </summary>
-    public class PageSetupDialog
+    public struct PageSetupDialog // struct for marshalling
     {
         /// <summary>
         /// Size of this structure.

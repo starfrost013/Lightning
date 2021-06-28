@@ -128,7 +128,17 @@ namespace Lightning.Core.API
 
         public void Pause()
         {
-            SDL_mixer.Mix_Pause(1); 
+            SDL_mixer.Mix_Pause(Channel); 
+        }
+
+        /// <summary>
+        /// Stops playing this sound.
+        /// </summary>
+        public void Stop()
+        {
+            Playing = false;
+            Completed = true;
+            OnSoundFinished(); 
         }
 
         private void Set3DVolume()

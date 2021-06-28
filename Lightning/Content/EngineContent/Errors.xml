@@ -739,4 +739,11 @@ Do not change if you are not a dev
     <Id>100</Id>
     <Severity>Error</Severity> <!-- fatal? -->
   </Error>
+
+  <Error>
+    <Description>Failed to obtain list of GuiRoots - UIService will now crash!</Description>
+    <Name>FailedToObtainListOfGuiRootsException</Name>
+    <Id>101</Id>
+    <Severity>Error</Severity> <!-- fatal? -->
+  </Error>
 </Errors>

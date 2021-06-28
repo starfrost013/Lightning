@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lightning.Core.NativeInterop.Win32
 {
-    public class ChooseFont
+    public struct ChooseFont // struct for marshalling
     {
         public int LStructSize;
 

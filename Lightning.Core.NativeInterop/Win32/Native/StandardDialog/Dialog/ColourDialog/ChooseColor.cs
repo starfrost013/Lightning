@@ -15,7 +15,7 @@ namespace Lightning.Core.NativeInterop.Win32
     /// 
     /// Win32 choose colour class
     /// </summary>
-    public class ChooseColor
+    public struct ChooseColor // struct for marshalling
     {
         /// <summary>
         /// INTERNAL: size of structure

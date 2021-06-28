@@ -12,7 +12,7 @@ namespace Lightning.Core.NativeInterop.Win32
     /// 
     /// Defines settings and flags for the Open File Dialog
     /// </summary>
-    public class OpenFileName
+    public struct OpenFileName // struct for marshaling purposes
     {
         /// <summary>
         /// Size of this structure [INTERNAL] 

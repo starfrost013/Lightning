@@ -1,4 +1,5 @@
-﻿using Lightning.Utilities; 
+﻿using Lightning.Core;
+using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,11 +46,17 @@ namespace Polaris.UI
             Highlight = new ScriptEditorHighlight();
             Text = new TextChunkCollection();
             Settings = new ScriptEditorSettings();
-            
+
+            // Set up the first text chunk. 
+            CurrentTextChunk = new TextChunk();
+            Text.Add(CurrentTextChunk);
+
         }
 
         public void OnMouseDown(object sender, MouseEventArgs e)
         {
+            State.IsSelected = true; 
+
             // Sets the highlightposition and snaps it to the nearest character.
             string ConcatenatedString = Text.Concatenate();
 
@@ -61,7 +68,6 @@ namespace Polaris.UI
             }
             else
             {
-                State.IsSelected = true; 
 
                 double ConvertedSingleCharacterPixelCount = ScreenUtil.WPFToPixels(Settings.FontSize);
 
@@ -114,19 +120,73 @@ namespace Polaris.UI
 
         public void OnKeyDown(object sender, KeyEventArgs e)
         {
-            
-            switch (e.Key)
+
+            if (State.IsSelected)
             {
-                case Key.Space:
-                    TextChunk TC = new TextChunk();
+                switch (e.Key)
+                {
+                    case Key.LWin:
+                    case Key.RWin:
+                    case Key.Apps:
+                    case Key.Sleep:
+                        return; // exempt keys
+                    case Key.Back:
+                        int TextLength = CurrentTextChunk.Length;
 
-                    CurrentTextChunk = TC;
+                        if (TextLength != 0)
+                        {
+                            CurrentTextChunk.Text = CurrentTextChunk.Text.Remove(TextLength - 1);
+                        }
+                        else
+                        {
+                            if (Text.Count > 1)
+                            {
+                                Text.Chunks.Remove(CurrentTextChunk);
 
-                    return;
-                default:
-                    CurrentTextChunk.Text.Append<string>(e.Key.ToString());
-                    return;
+                                CurrentTextChunk = Text[Text.Count - 2];
+                            }
+                            else
+                            {
+                                return; 
+                            }
+
+                        }
+
+                        return;
+                    case Key.Space:
+                        TextChunk TC = new TextChunk();
+
+                        Text.Add(TC); 
+
+                        CurrentTextChunk = TC;
+
+                        return;
+                    default:
+                        CurrentTextChunk.Text = CurrentTextChunk.Text.Append<string>(e.Key.ToString());
+
+                        TextBlock TB = GetTextForDisplay();
+
+                        foreach (Inline IL in TB.Inlines)
+                        {
+                            // ONLY runs are used
+                            Run RL = (Run)IL;
+
+                            string ComponentName = "Polaris Script Editor";
+
+                            Logging.Log($"{RL.Text} ", ComponentName);
+                             
+                        }
+                        
+                        return;
+                }
+
             }
+            else
+            {
+                return; 
+            }
+
+
         }
     }
 }

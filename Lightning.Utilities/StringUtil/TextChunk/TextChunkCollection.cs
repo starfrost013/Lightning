@@ -77,6 +77,12 @@ namespace Lightning.Utilities
 
             return SB.ToString(); 
         }
+
+        public int Count => Chunks.Count; 
+    
+        public TextChunk this[int i] => Chunks[i];
+
+        
     }
 
     public class TextChunkCollectionEnumerator : IEnumerator

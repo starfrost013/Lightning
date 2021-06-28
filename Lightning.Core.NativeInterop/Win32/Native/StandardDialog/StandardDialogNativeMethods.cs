@@ -62,6 +62,9 @@ namespace Lightning.Core.NativeInterop.Win32
         /// <returns>true if successful - Call commdlggetextendederror() if false</returns>
         [DllImport("comdlg32.dll", SetLastError = true)]
         public static extern bool PageSetupDlg(ref PageSetupDialog PSD);
+
+        [DllImport("comdlg32.dll", SetLastError = true)]
+        public static extern int CommDlgExtendedError();
     }
 }
 #endif

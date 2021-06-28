@@ -16,5 +16,10 @@ namespace Lightning.Utilities
         public string Text { get; set; }
 
         public int Length => Text.Length; 
+
+        public TextChunk()
+        {
+            Text = "";
+        }
     }
 }

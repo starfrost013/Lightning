@@ -55,6 +55,14 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
+        /// Run when this object is first rendered.
+        /// </summary>
+        public virtual void OnFirstRender()
+        {
+            return; 
+        }
+
+        /// <summary>
         /// This is called on each frame by the RenderService to tell this object to 
         /// render itself.
         /// 

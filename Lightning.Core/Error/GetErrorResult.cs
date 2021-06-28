@@ -8,7 +8,6 @@ namespace Lightning.Core
     public class GetErrorResult : IResult
     {
         public Error Error { get; set; }
-        
         public string FailureReason { get; set; }
         public bool Successful { get; set; }
     }

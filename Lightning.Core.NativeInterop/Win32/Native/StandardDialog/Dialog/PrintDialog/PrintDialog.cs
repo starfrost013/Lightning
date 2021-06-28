@@ -13,7 +13,7 @@ namespace Lightning.Core.NativeInterop.Win32
     ///
     /// Defines parameters for the Win32 common print dialog
     /// </summary>
-    public class PrintDialog
+    public struct PrintDialog
     {
         public int LStructSize;
 

@@ -64,7 +64,7 @@ namespace Lightning.Utilities
         /// May 27, 2021
         /// </summary>
         /// <param name="List1"></param>
-        public static List<T> CopyList(List<T> List1)
+        private static List<T> CopyList(List<T> List1)
         {
             List<T> List2 = new List<T>();
 

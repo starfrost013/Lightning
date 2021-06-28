@@ -444,6 +444,7 @@ namespace Lightning.Core.API
             switch (Svc.Importance)
             {
                 case ServiceImportance.Low:
+                    Logging.Log($"Trying to reboot the service {ClassName}...", ClassName);
                     // Forcibly kill the service and reboot it
                     KillService(ClassName, true);
                     StartService(ClassName);

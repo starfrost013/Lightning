@@ -14,16 +14,19 @@ namespace Polaris.UI
 
             string TBText = Text.Concatenate();
 
-            string[] TextArray = TBText.Split('\n');
-
+            string[] TextArray = TBText.Split(' ');
 
             foreach (string TextLine in TextArray)
             {
-
-                Paragraph Paragraph = new Paragraph();
                 TB.Inlines.Add(new Run(TextLine));
-                
             }
+
+            // TEST
+            TB.Width = 60;
+            TB.Height = 60;
+            
+            
+            AddVisualChild(TB);
 
             return TB;
         }
