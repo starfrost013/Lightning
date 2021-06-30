@@ -55,6 +55,11 @@ namespace Lightning.Core.API
         /// </summary>
         ParentCanBeNull = 128,
 
-
+        /// <summary>
+        /// Uses a custom, non-standard render path.
+        /// 
+        /// Render(); will not be called on this object if this is set.
+        /// </summary>
+        UsesCustomRenderPath = 256
     }
 }

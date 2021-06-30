@@ -518,7 +518,8 @@ namespace Lightning.Core.API
             {
                 GetInstanceResult GIR = PO.GetFirstChildOfType("Texture");
 
-                if (!GIR.Successful)
+                if (!GIR.Successful
+                    && !PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)) // check for custom render path being used (i.e. render() is not being called by something else) 
                 {
                     PO.Render(Renderer, null);
                     continue; 
