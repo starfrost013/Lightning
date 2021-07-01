@@ -22,19 +22,61 @@ namespace Lightning.Core.API
             // hack
             // need to find a better way to do this
 
-            GetMultiInstanceResult GMIR = GetAllChildrenOfType("GuiRoot");
+            // force the position to a screen position
+            GetMultiInstanceResult GMIR = GetAllChildrenOfType("GuiElement");
 
             if (!GMIR.Successful
                 || GMIR.Instances == null)
             {
-
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfGuiRootsException");
+                return; 
             }
             else
             {
                 foreach (Instance Instance in GMIR.Instances)
                 {
-                    GuiRoot GIR = (GuiRoot)Instance;
+                    GuiElement GuiRoot = (GuiElement)Instance;
                     //todo: finish this
+
+                    if (GuiRoot.Position != null)
+                    {
+                        GetInstanceResult GIR = DataModel.GetFirstChildOfType("GameSettings");
+
+                        if (!GIR.Successful
+                            || GIR.Instance == null)
+                        {
+                            ErrorManager.ThrowError(ClassName, "GameSettingsFailedToLoadException", "Failed to obtain GameSettings for UI...");
+                        }
+                        else
+                        {
+                            GameSettings GS = (GameSettings)GIR.Instance;
+
+                            GetGameSettingResult WindowWidthSettingResult = GS.GetSetting("WindowWidth");
+                            GetGameSettingResult WindowHeightSettingResult = GS.GetSetting("WindowHeight");
+                            
+                            if (!WindowHeightSettingResult.Successful
+                                || !WindowWidthSettingResult.Successful)
+                            {
+                                ErrorManager.ThrowError(ClassName, "FailedToObtainCriticalGameSettingException", "Failed to obtain WindowWidth or WindowHeight setting!");
+                                return; // will never run
+                            }
+                            else
+                            {
+                                GameSetting WindowWidthSetting = WindowWidthSettingResult.Setting;
+                                GameSetting WindowHeightSetting = WindowHeightSettingResult.Setting;
+
+                                int WindowWidth = (int)WindowWidthSetting.SettingValue;
+                                int WindowHeight = (int)WindowHeightSetting.SettingValue;
+
+                                if (GuiRoot.Position.X > WindowWidth) GuiRoot.Position.X = WindowWidth;
+                                if (GuiRoot.Position.X < 0) GuiRoot.Position.X = 0;
+                                if (GuiRoot.Position.Y > WindowHeight) GuiRoot.Position.Y = WindowHeight;
+                                if (GuiRoot.Position.Y < 0) GuiRoot.Position.Y = 0;
+
+                            }
+                        }
+                    }
+                
                 }
             }
 

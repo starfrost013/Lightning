@@ -24,6 +24,7 @@ namespace Lightning.Core.API
         internal abstract ServiceImportance Importance { get; }
         public abstract ServiceStartResult OnStart();
 
+        internal int FailureCount { get; set; }
         /// <summary>
         /// Runs on every single frame. 
         /// </summary>

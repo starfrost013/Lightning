@@ -746,4 +746,11 @@ Do not change if you are not a dev
     <Id>101</Id>
     <Severity>Error</Severity> <!-- fatal? -->
   </Error>
+
+  <Error>
+    <Description>Failed to initialise SDL2_ttf!</Description>
+    <Name>FailedToInitialiseSDL2TtfException</Name>
+    <Id>102</Id>
+    <Severity>Error</Severity>
+  </Error>
 </Errors>

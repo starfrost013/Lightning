@@ -1,4 +1,5 @@
-﻿using Lightning.Utilities; 
+﻿using Lightning.Core.SDL2;
+using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,8 +15,27 @@ namespace Lightning.Core.API
     /// </summary>
     public class UIService : Service
     {
+        internal override string ClassName => base.ClassName;
         internal override ServiceImportance Importance => ServiceImportance.Low;
-        public override ServiceStartResult OnStart() => new ServiceStartResult { Successful = true };
+        public List<Font> Fonts { get; set; }
+        public override ServiceStartResult OnStart()
+        {
+            ServiceStartResult SSR = new ServiceStartResult();
+
+            Logging.Log("Initialising SDL2_ttf...", ClassName);
+
+            if (SDL_ttf.TTF_Init() < 0)
+            {
+                SSR.FailureReason = $"Failed to initialise SDL2_ttf: {SDL.SDL_GetError()}";
+            }
+            else
+            {
+                SSR.Successful = true;
+                return SSR; 
+            }
+
+            return SSR; 
+        }
         public override ServiceShutdownResult OnShutdown() => new ServiceShutdownResult { Successful = true };
 
         private static bool UISERVICE_INITIALISED { get; set; }
@@ -26,10 +46,11 @@ namespace Lightning.Core.API
             {
                 Init();
             }
-            else
-            {
-
-            }
+            //main loop goes here
+            //else 
+            //{
+            //
+            //}
 
             return; 
         }

@@ -42,7 +42,15 @@ namespace Lightning.Core.API
             foreach (ServiceStartupCommand SSC in StartupServices)
             {
                 Logging.Log($"Initialising startup service with name {SSC.ServiceName}, startup priority {SSC.StartOrder}...", ClassName);
-                StartService(SSC.ServiceName);
+                ServiceStartResult SSR = StartService(SSC.ServiceName);
+
+                if (!SSR.Successful) // June 30, 2021
+                {
+
+                    Logging.Log($"Service {SSC.ServiceName} failed to start, trying to recover...", ClassName);
+                    HandleCrashedService(SSC.ServiceName);
+
+                }
             } 
         }
 
