@@ -15,10 +15,6 @@ namespace Lightning.Core.API
     public class Primitive : PhysicalObject
     {
         internal override string ClassName => "Primitive";
-        /// <summary>
-        /// The colour of this Primitive.
-        /// </summary>
-        public Color4 Colour { get; set; }
 
         /// <summary>
         /// Is this Primitive filled?

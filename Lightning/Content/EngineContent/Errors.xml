@@ -1,6 +1,8 @@
 ﻿<!-- Lightning Error XML
 Do not change if you are not a dev 
 © 2021 starfrost/Lightning Dev Team (just me atm lol)
+
+Soon to be killed (July 1, 2021)
 -->
 
 <Errors>
@@ -752,5 +754,54 @@ Do not change if you are not a dev
     <Name>FailedToInitialiseSDL2TtfException</Name>
     <Id>102</Id>
     <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Failed to load font: Null or zero-length font file name specified! - font will not be loaded.</Description>
+    <Name>NullOrZeroLengthFileFontNameException</Name>
+    <Id>103</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Failed to load font: Invalid font size specified! - font will not be loaded.</Description>
+    <Name>InvalidFontSizeException</Name>
+    <Id>104</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToLoadFontException</Name>
+    <Id>107</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Failed to obtain list of fonts!</Description>
+    <Name>FailedToObtainListOfFontsException</Name>
+    <Id>108</Id>
+    <Severity>FatalError</Severity> <!-- not sure if should be fatal -->
+  </Error>
+
+  <Error>
+    <Description>There are no fonts installed - cannot use UI!</Description>
+    <Name>NoFontsInstalledCannotUseUIException</Name>
+    <Id>109</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToRenderTextException</Name>
+    <Id>110</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Fonts must declare a name: This font will not be loaded. This will probably cause errors later down the line. Oh well</Description>
+    <Name>FontMustDeclareNameException</Name>
+    <Id>111</Id>
+    <Severity>Warning</Severity>
   </Error>
 </Errors>

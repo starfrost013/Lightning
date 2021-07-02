@@ -44,6 +44,11 @@ namespace Lightning.Core.API
         /// </summary>
         public int ZIndex { get; set; }
 
+        /// <summary>
+        /// The colour of this object. Not actually used by this class *specifically* but IS used by classes that inherit from this.
+        /// </summary>
+        public Color4 Colour { get; set; }
+
         // Texture is a child. 
 
         /// <summary>

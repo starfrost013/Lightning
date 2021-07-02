@@ -34,7 +34,7 @@ namespace Lightning.Core.API
         {
             Workspace Ws = DataModel.GetWorkspace();
 
-            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("GuiRoot");
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("GuiElement");
 
             if (!GMIR.Successful
                 || GMIR.Instances == null)
@@ -48,7 +48,7 @@ namespace Lightning.Core.API
 
                 foreach (Instance Instance in GuiRoots)
                 {
-                    GuiRoot GuiRoot = (GuiRoot)Instance;
+                    GuiElement GuiRoot = (GuiElement)Instance;
 
                     // for now
                     GuiRoot.Render(SDL_Renderer, null); 

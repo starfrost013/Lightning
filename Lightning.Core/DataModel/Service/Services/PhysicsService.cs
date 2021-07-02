@@ -13,6 +13,7 @@ namespace Lightning.Core.API
     /// </summary>
     public class PhysicsService : Service
     {
+        internal override string ClassName => "PhysicsService";
         internal override ServiceImportance Importance => ServiceImportance.Low;
         public override ServiceStartResult OnStart() => new ServiceStartResult { Successful = true };
         public override ServiceShutdownResult OnShutdown() => new ServiceShutdownResult { Successful = true };

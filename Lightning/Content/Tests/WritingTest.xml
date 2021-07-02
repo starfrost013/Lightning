@@ -3,8 +3,8 @@
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-05-12 22:36:20</LastModifiedDate>
-    <RevisionID>36</RevisionID>
+    <LastModifiedDate>2021-07-01 16:14:43</LastModifiedDate>
+    <RevisionID>51</RevisionID>
     <Version />
   </Metadata>
   <Settings>
@@ -65,6 +65,8 @@
     </Setting>
   </Settings>
   <Workspace>
+    <Font Family="Content\Fonts\Arial.ttf" Name="Arial.18pt" FontSize="18"></Font>
+    
     <Color3 R="100" G="100" B="100" Name="c03_01" />
     <Color3 R="150" G="100" B="100" Name="c03_02" />
     <Color3 R="150" G="100" B="100" Name="c03_03" />
@@ -91,5 +93,7 @@
     <Sky Name="SkyBG" ForceToBack="True">
       <Texture Path="Content\Textures\Clouds.png"></Texture>
     </Sky>
+
+    <Text Content="I am text" Colour="255,255,255,255" Position="0,0" FontFamily="Arial.18pt"></Text>
   </Workspace>
 </Lightning>

@@ -22,6 +22,7 @@ namespace Lightning.Core.API
             // hack
             // need to find a better way to do this
 
+            // move to oncreate?
             // force the position to a screen position
             GetMultiInstanceResult GMIR = GetAllChildrenOfType("GuiElement");
 
@@ -73,6 +74,7 @@ namespace Lightning.Core.API
                                 if (GuiRoot.Position.Y > WindowHeight) GuiRoot.Position.Y = WindowHeight;
                                 if (GuiRoot.Position.Y < 0) GuiRoot.Position.Y = 0;
 
+                                GuiRoot.ForceToScreen = true; 
                             }
                         }
                     }
