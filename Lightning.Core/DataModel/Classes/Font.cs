@@ -20,13 +20,12 @@ namespace Lightning.Core.API
         /// <summary>
         /// Path to the font file of this font
         /// </summary>
-        public string Family { get; set; }
+        public string FontPath { get; set; }
 
         /// <summary>
         /// Size of the font to be loaded
         /// </summary>
         public int FontSize { get; set; }
-
 
         /// <summary>
         /// Unmanaged ptr to SDL2_ttf font structure
@@ -42,8 +41,8 @@ namespace Lightning.Core.API
         /// <param name="FontFamily">The name of the font family to laod.</param>
         public void Load() // change to result class?
         {
-            if (Family == null
-                || Family.Length == 0)
+            if (FontPath == null
+                || FontPath.Length == 0)
             {
                 ErrorManager.ThrowError(ClassName, "NullOrZeroLengthFileFontNameException");
                 return; 
@@ -57,7 +56,7 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    FontPointer = SDL_ttf.TTF_OpenFont($"{Family}", FontSize);
+                    FontPointer = SDL_ttf.TTF_OpenFont($"{FontPath}", FontSize);
 
                     if (FontPointer == IntPtr.Zero)
                     {

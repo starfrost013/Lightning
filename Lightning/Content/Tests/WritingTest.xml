@@ -4,7 +4,7 @@
     <Author>starfrost</Author>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
     <LastModifiedDate>2021-07-01 16:14:43</LastModifiedDate>
-    <RevisionID>51</RevisionID>
+    <RevisionID>53</RevisionID>
     <Version />
   </Metadata>
   <Settings>
@@ -65,7 +65,7 @@
     </Setting>
   </Settings>
   <Workspace>
-    <Font Family="Content\Fonts\Arial.ttf" Name="Arial.18pt" FontSize="18"></Font>
+    <Font FontPath="Content\Fonts\Arial.ttf" Name="Arial.18pt" FontSize="18"></Font>
     
     <Color3 R="100" G="100" B="100" Name="c03_01" />
     <Color3 R="150" G="100" B="100" Name="c03_02" />

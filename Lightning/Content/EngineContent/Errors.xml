@@ -336,20 +336,6 @@ Soon to be killed (July 1, 2021)
   </Error>
 
   <Error>
-    <Description>Attempted to convert an invalid length hexadecimal colour string to a Color3!</Description>
-    <Name>ErrorConvertingHexadecimalColourException</Name>
-    <Id>46</Id>
-    <Severity>Error</Severity>
-  </Error>
-
-  <Error>
-    <Description>!!this should be overridden in code!!</Description>
-    <Name>ErrorConvertingHexadecimalColourFormatException</Name>
-    <Id>47</Id>
-    <Severity>Error</Severity>
-  </Error>
-
-  <Error>
     <Description>Attempted to convert an invalid length relative colour string to a Color3!</Description>
     <Name>ErrorConvertingRelativeColourException</Name>
     <Id>46</Id>
@@ -374,13 +360,6 @@ Soon to be killed (July 1, 2021)
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>ErrorConvertingCommaColourFormatException</Name>
-    <Id>49</Id>
-    <Severity>Error</Severity>
-  </Error>
-
-  <Error>
-    <Description>Attempted to load a RelativeColour where one or more of the components was outside of the range [0,1]!</Description>
-    <Name>RelativeColourOutOfRangeException</Name>
     <Id>49</Id>
     <Severity>Error</Severity>
   </Error>
@@ -485,13 +464,6 @@ Soon to be killed (July 1, 2021)
 
   <Error>
     <Description>!!this should be overridden in code!!</Description>
-    <Name>Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalObjectException</Name>
-    <Id>63</Id>
-    <Severity>Error</Severity>
-  </Error>
-
-  <Error>
-    <Description>!!this should be overridden in code!!</Description>
     <Name>ErrorObtainingListOfPhysicalObjectsToRenderException</Name>
     <Id>64</Id>
     <Severity>Error</Severity>
@@ -560,6 +532,13 @@ Soon to be killed (July 1, 2021)
     <Severity>Error</Severity>
   </Error>
 
+  <Error>
+    <Description>this is a dummy error because i am retarded and Errors.xml will be killed soon</Description>
+    <Name>DummyError1Exception</Name>
+    <Id>74</Id>
+    <Severity>Message</Severity>
+  </Error>
+  
   <Error>
     <Description>An error occurred removing ambiguous matches for generation of instance information.</Description>
     <Name>InstanceInfoErrorRemovingAmbiguousMatchesException</Name>
@@ -773,35 +752,64 @@ Soon to be killed (July 1, 2021)
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>FailedToLoadFontException</Name>
-    <Id>107</Id>
+    <Id>105</Id>
     <Severity>Error</Severity>
   </Error>
 
   <Error>
     <Description>Failed to obtain list of fonts!</Description>
     <Name>FailedToObtainListOfFontsException</Name>
-    <Id>108</Id>
+    <Id>106</Id>
     <Severity>FatalError</Severity> <!-- not sure if should be fatal -->
   </Error>
 
   <Error>
     <Description>There are no fonts installed - cannot use UI!</Description>
     <Name>NoFontsInstalledCannotUseUIException</Name>
-    <Id>109</Id>
+    <Id>107</Id>
     <Severity>Error</Severity>
   </Error>
 
   <Error>
     <Description>!!this should be overridden in code!!</Description>
     <Name>FailedToRenderTextException</Name>
-    <Id>110</Id>
+    <Id>108</Id>
     <Severity>Error</Severity>
   </Error>
 
   <Error>
     <Description>Fonts must declare a name: This font will not be loaded. This will probably cause errors later down the line. Oh well</Description>
     <Name>FontMustDeclareNameException</Name>
-    <Id>111</Id>
+    <Id>109</Id>
     <Severity>Warning</Severity>
+  </Error>
+
+  <Error>
+    <!-- renumbered from 49 for correct serialisation -->
+    <Description>Attempted to load a RelativeColour where one or more of the components was outside of the range [0,1]!</Description>
+    <Name>RelativeColourOutOfRangeException</Name>
+    <Id>110</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error> <!-- renumbered from 63 for correct serialisation-->
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalObjectException</Name>
+    <Id>111</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error> <!-- renumbered from 46 for correct serialisation -->
+    <Description>Attempted to convert an invalid length hexadecimal colour string to a Color3!</Description>
+    <Name>ErrorConvertingHexadecimalColourException</Name>
+    <Id>112</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error> <!-- renumbered from 47 for correct serialisation -->
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorConvertingHexadecimalColourFormatException</Name>
+    <Id>113</Id>
+    <Severity>Error</Severity>
   </Error>
 </Errors>

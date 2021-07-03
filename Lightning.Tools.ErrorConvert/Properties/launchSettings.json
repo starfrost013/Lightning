@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Lightning.Tools.ErrorConvert": {
+      "commandName": "Project",
+      "commandLineArgs": "Content\\EngineContent\\Errors.xml Test.cs"
+    }
+  }
+}

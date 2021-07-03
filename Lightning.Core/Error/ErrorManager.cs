@@ -379,7 +379,7 @@ namespace Lightning.Core
                         // Temporary - we don't have a clean shutdown method yet
                         MessageBox.Show($"Guru Meditation {Err.Id}\n\n{Err.Name}: {Err.Description}\n\nLightning must exit. Sorry!\nYou may wish to file a bug report with the game's developers.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                        string VeryBadString = "Something very bad has happened(or we are early in init) and the SCM cannot be called to shutdown cleanly. Exiting...";
+                        string VeryBadString = "Something very bad has happened (or we are early in init) and the SCM cannot be called to shutdown cleanly. Exiting...";
 
                         if (DataModel.GetState() == null || DataModel.GetState().Count == 0)
                         {
@@ -417,7 +417,7 @@ namespace Lightning.Core
             Environment.Exit(0xDEAD * (int)Err.Id);
         }
 
-        private static GenericResult SerialiseErrors(string Path)
+        private static GenericResult SerialiseErrors(string Path) 
         {
             GenericResult GR = new GenericResult();
 
@@ -447,7 +447,7 @@ namespace Lightning.Core
             }
         }
 
-        private static XmlSchemaResult SerialiseErrors_Validate(string Path)
+        public static XmlSchemaResult SerialiseErrors_Validate(string Path) // changed to public (from private) because I am writing a tool to convert from old to new error system and I want to spend the minimum time possible on it - this will be changed back later
         {
             LightningXMLSchema LXMLS = new LightningXMLSchema();
 
@@ -458,7 +458,7 @@ namespace Lightning.Core
         }
 
         
-        private static ErrorSerialisationResult SerialiseErrors_Serialise(string Path)
+        public static ErrorSerialisationResult SerialiseErrors_Serialise(string Path) // changed to public (from private) because I am writing a tool to convert from old to new error system and I want to spend the minimum time possible on it - this will be changed back later
         {
             ErrorSerialisationResult GR = new ErrorSerialisationResult();
 
@@ -486,5 +486,9 @@ namespace Lightning.Core
         }
 
 
+        internal static void RegisterError(Error Err)
+        {
+
+        }
     }
 }

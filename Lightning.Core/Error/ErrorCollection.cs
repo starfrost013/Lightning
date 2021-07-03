@@ -108,8 +108,22 @@ namespace Lightning.Core
     public class ErrorCollectionEnumerator : IEnumerator
     { 
         private List<Error> Errors { get; set; }
+
         public int Position = -1;
-        public Error Current { get; set; }
+        public Error Current
+        {
+            get
+            {
+                try
+                {
+                    return Errors[Position];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    return null;
+                }
+            }
+        }
 
         object IEnumerator.Current
         {
@@ -123,7 +137,6 @@ namespace Lightning.Core
         public bool MoveNext()
         {
             Position++;
-            Current = Errors[Position];
             return (Position < Errors.Count);
         }
 
