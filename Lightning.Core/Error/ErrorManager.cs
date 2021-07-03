@@ -38,7 +38,8 @@ namespace Lightning.Core
         {
             Errors = new ErrorCollection();
             //pre-globalsettings
-            SerialiseErrors(ERRORMANAGER_XML_PATH);
+
+            ErrorRegistration.RegisterErrors();
 #if DEBUG
             ATest_CheckErrorSerialisedCorrectly();
 #endif
@@ -417,36 +418,12 @@ namespace Lightning.Core
             Environment.Exit(0xDEAD * (int)Err.Id);
         }
 
-        private static GenericResult SerialiseErrors(string Path) 
-        {
-            GenericResult GR = new GenericResult();
-
-            XmlSchemaResult XSR = SerialiseErrors_Validate(Path);
-            
-            if (!XSR.Successful)
-            {
-                GR.FailureReason = $"Failed to validate Error XML (Schema-based validation failure): {XSR.FailureReason}";
-                return GR;
-            }
-            else
-            {
-                ErrorSerialisationResult GR2 = SerialiseErrors_Serialise(Path);
-
-                if (!GR2.Successful)
-                {
-                    GR.FailureReason = $"Error serialising error XML!: {GR.FailureReason}";
-                    return GR;
-                }
-                else
-                {
-                    // successful
-                    Errors = GR2.ErrorCollection;
-                    GR.Successful = true;
-                    return GR;
-                }
-            }
-        }
-
+   
+        /// <summary>
+        /// Deprecated - still exists just in case Lightning.Tools.ErrorConvert needs to be used
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <returns></returns>
         public static XmlSchemaResult SerialiseErrors_Validate(string Path) // changed to public (from private) because I am writing a tool to convert from old to new error system and I want to spend the minimum time possible on it - this will be changed back later
         {
             LightningXMLSchema LXMLS = new LightningXMLSchema();
@@ -457,7 +434,11 @@ namespace Lightning.Core
             return LXMLS.Validate();
         }
 
-        
+        /// <summary>
+        /// Deprecated - still exists just in case Lightning.Tools.ErrorConvert needs to be used
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <returns></returns>
         public static ErrorSerialisationResult SerialiseErrors_Serialise(string Path) // changed to public (from private) because I am writing a tool to convert from old to new error system and I want to spend the minimum time possible on it - this will be changed back later
         {
             ErrorSerialisationResult GR = new ErrorSerialisationResult();
@@ -486,9 +467,6 @@ namespace Lightning.Core
         }
 
 
-        internal static void RegisterError(Error Err)
-        {
-
-        }
+        internal static void RegisterError(Error Err) => Errors.Add(Err);
     }
 }
