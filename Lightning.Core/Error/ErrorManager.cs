@@ -417,56 +417,7 @@ namespace Lightning.Core
             // Temporary Code (yeah this is dumb)
             Environment.Exit(0xDEAD * (int)Err.Id);
         }
-
-   
-        /// <summary>
-        /// Deprecated - still exists just in case Lightning.Tools.ErrorConvert needs to be used
-        /// </summary>
-        /// <param name="Path"></param>
-        /// <returns></returns>
-        public static XmlSchemaResult SerialiseErrors_Validate(string Path) // changed to public (from private) because I am writing a tool to convert from old to new error system and I want to spend the minimum time possible on it - this will be changed back later
-        {
-            LightningXMLSchema LXMLS = new LightningXMLSchema();
-
-            LXMLS.XSI.SchemaPath = ERRORMANAGER_XSD_PATH;
-            LXMLS.XSI.XmlPath = Path;
-
-            return LXMLS.Validate();
-        }
-
-        /// <summary>
-        /// Deprecated - still exists just in case Lightning.Tools.ErrorConvert needs to be used
-        /// </summary>
-        /// <param name="Path"></param>
-        /// <returns></returns>
-        public static ErrorSerialisationResult SerialiseErrors_Serialise(string Path) // changed to public (from private) because I am writing a tool to convert from old to new error system and I want to spend the minimum time possible on it - this will be changed back later
-        {
-            ErrorSerialisationResult GR = new ErrorSerialisationResult();
-
-            try
-            {
-                XmlReader XR = XmlReader.Create(Path);
-
-                XmlSerializer XS = new XmlSerializer(typeof(ErrorCollection));
-                GR.ErrorCollection = (ErrorCollection)XS.Deserialize(XR);
-
-                GR.Successful = true;
-                return GR; 
-            }
-            catch (InvalidOperationException err)
-            {
-                // Throw an error
-                string ErrorString = $"Error serialising error: {err}";
-                ThrowError(ErrorString, new Error { Name = "ErrorSerialisingErrorXmlException", Description = ErrorString, Id = 0x4444BABE, Severity = MessageSeverity.FatalError, BaseException = err });
-                // prevent compile error
-
-                // Successful is false by default
-                GR.FailureReason = ErrorString;
-                return GR;
-            }
-        }
-
-
+       
         internal static void RegisterError(Error Err) => Errors.Add(Err);
     }
 }
