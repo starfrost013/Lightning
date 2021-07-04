@@ -13,7 +13,9 @@ namespace Lightning.Core.API
     /// </summary>
     public class GuiElement : GuiRoot
     {
-    
+        internal override string ClassName => "GuiElement";
+
+        internal override InstanceTags Attributes => base.Attributes | InstanceTags.ParentCanBeNull | InstanceTags.UsesCustomRenderPath; // THESE twomust be set for all guielements
         /// <summary>
         /// This is completely fucking bullshit but is required for screengui and it makes me sad
         /// </summary>

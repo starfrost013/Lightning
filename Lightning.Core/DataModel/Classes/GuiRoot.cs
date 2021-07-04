@@ -32,9 +32,8 @@ namespace Lightning.Core.API
         /// <param name="Tx"></param>
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            Workspace Ws = DataModel.GetWorkspace();
 
-            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("GuiElement");
+            GetMultiInstanceResult GMIR = GetAllChildrenOfType("GuiRoot");
 
             if (!GMIR.Successful
                 || GMIR.Instances == null)
@@ -48,7 +47,7 @@ namespace Lightning.Core.API
 
                 foreach (Instance Instance in GuiRoots)
                 {
-                    GuiElement GuiRoot = (GuiElement)Instance;
+                    GuiRoot GuiRoot = (GuiRoot)Instance;
 
                     // for now
                     GuiRoot.Render(SDL_Renderer, null); 

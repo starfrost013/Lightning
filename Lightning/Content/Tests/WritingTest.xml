@@ -94,6 +94,11 @@
       <Texture Path="Content\Textures\Clouds.png"></Texture>
     </Sky>
 
-    <Text Content="I am text" Colour="255,255,255,255" Position="0,0" FontFamily="Arial.18pt"></Text>
+    <GuiRoot>
+      <ScreenGui Name="ScGui">
+        <Text Content="I am text" Colour="255,255,255,255" Position="329,261" FontFamily="Arial.18pt"></Text>
+      </ScreenGui>
+    </GuiRoot>
+
   </Workspace>
 </Lightning>

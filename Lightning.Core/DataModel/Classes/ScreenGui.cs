@@ -15,22 +15,37 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "ScreenGui";
 
-
+        private bool SCREENGUI_INITIALISED { get; set; }
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
+            if (!SCREENGUI_INITIALISED)
+            {
+                EnforceScreenGui();
+            }
+            else
+            {
+                // render all children
+                base.Render(SDL_Renderer, Tx);
+            }
 
+
+        }
+
+        private void EnforceScreenGui()
+        {
             // hack
             // need to find a better way to do this
 
-            // move to oncreate?
             // force the position to a screen position
             GetMultiInstanceResult GMIR = GetAllChildrenOfType("GuiElement");
+
+            Workspace WS = DataModel.GetWorkspace();
 
             if (!GMIR.Successful
                 || GMIR.Instances == null)
             {
                 ErrorManager.ThrowError(ClassName, "FailedToObtainListOfGuiRootsException");
-                return; 
+                return;
             }
             else
             {
@@ -41,7 +56,8 @@ namespace Lightning.Core.API
 
                     if (GuiRoot.Position != null)
                     {
-                        GetInstanceResult GIR = DataModel.GetFirstChildOfType("GameSettings");
+
+                        GetInstanceResult GIR = WS.GetFirstChildOfType("GameSettings");
 
                         if (!GIR.Successful
                             || GIR.Instance == null)
@@ -54,7 +70,7 @@ namespace Lightning.Core.API
 
                             GetGameSettingResult WindowWidthSettingResult = GS.GetSetting("WindowWidth");
                             GetGameSettingResult WindowHeightSettingResult = GS.GetSetting("WindowHeight");
-                            
+
                             if (!WindowHeightSettingResult.Successful
                                 || !WindowWidthSettingResult.Successful)
                             {
@@ -74,16 +90,17 @@ namespace Lightning.Core.API
                                 if (GuiRoot.Position.Y > WindowHeight) GuiRoot.Position.Y = WindowHeight;
                                 if (GuiRoot.Position.Y < 0) GuiRoot.Position.Y = 0;
 
-                                GuiRoot.ForceToScreen = true; 
+                                GuiRoot.ForceToScreen = true;
                             }
                         }
                     }
-                
+
                 }
+
+                SCREENGUI_INITIALISED = true;
+                return; 
             }
 
-            // render all children
-            base.Render(SDL_Renderer, Tx);
         }
     }
 }
