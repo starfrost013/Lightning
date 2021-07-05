@@ -1,0 +1,62 @@
+Lightning version 0.3.637
+
+General:
+Updated version to 0.3
+Updated API version to 0.16.0.
+
+API:
+- Began work on UI:
+
+Began work on events too, but there's not much in there right now.
+
+Implemented GuiRoot:
+The root of all GUIs. Currently unused - used in the latest builds but not in 637.
+
+Implemented ScreenGui:
+A GUI that appears locked to the physical screen. Currently unused - used in the latest builds but not in 637.
+
+Implemented Font:
+A font.
+FontPath: The path to a TTF file containing the font. MUST BE TTF!
+FontSize: The font size to load from the TTF file.
+
+Implemented Text:
+
+Implements FreeType text.
+
+Properties:
+Content: The content of the text you wish to render.
+Bold: If true, the text is bold.
+Italic: If true, the text is italic.
+Underline: If true, the text is underline.
+OutlinePixels: If more than 0, the text will have an outline, with the size in pixels being the value of this property.
+FontFamily: The font family of the text. MUST be set to the Name property of a VALID Font loaded in your XML
+The Color and Position properties also work as you would expect.
+
+Services:
+PhysicsService:
+Handles physics. Currently a stub, has no functionality yet.
+
+UIService:
+Handles and renders UI.
+
+Scripting:
+- Added a Lua sandbox. Lua code is sent to a specialised script that runs your Lua code.
+- Implemented a Lua debugging profiler using the Lua debug hook.
+    - Lightning now prints out how long a Lua script has been running for.
+    - Lightning now aborts a script if it has been running longer than a specified time - this is defined as MaxLuaScriptExecutionTime in GlobalSettings.xml
+
+Native Interop:
+Added tons of code for Win32 and COM common dialogs to Lightning.Core.NativeInterop.
+
+Polaris:
+A lot of work has gone into the script editor behind the scnees, so that it now actually works, although text isn't displayed.
+The Open dialog box now tries to do something, even if it fails.
+
+Miscellaneous:
+- Platform system rewritten:
+    + Lightning now detects the version of the platform that you are running on - in earlier versions it simply detected the platform itself. Lightning currently detects Windows 7, 8.1, 10, and 11.
+* Changed colour of "Lightning" text in the Launcher.
+- Minor refactoring to adding instances.
+probably some stuff missing
+and it's quite brief due to just how much has changed

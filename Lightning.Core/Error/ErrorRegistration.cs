@@ -129,6 +129,8 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 111 } );
          ErrorManager.RegisterError( new Error { Name = "ErrorConvertingHexadecimalColourException", Description = "Attempted to convert an invalid length hexadecimal colour string to a Color3!", Severity = MessageSeverity.Error, Id = 112 } );
          ErrorManager.RegisterError( new Error { Name = "ErrorConvertingHexadecimalColourFormatException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 113 } );
-      }
+         ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGuiElementsException", Description = "Failed to get a list of GUI elements", Severity = MessageSeverity.Error, Id = 114 });
+         ErrorManager.RegisterError( new Error { Name = "FailedToObtainSurfaceGuiTargetObjectException", Description = "Failed to obtain the target for a SurfaceGui! This SurfaceGui will not be rendered.", Severity = MessageSeverity.Error, Id = 115 });
+        }
   }
 }

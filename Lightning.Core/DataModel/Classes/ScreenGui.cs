@@ -44,7 +44,7 @@ namespace Lightning.Core.API
             if (!GMIR.Successful
                 || GMIR.Instances == null)
             {
-                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfGuiRootsException");
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfGuiElementsException");
                 return;
             }
             else

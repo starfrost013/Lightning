@@ -1,0 +1,26 @@
+Lightning version 0.3.646
+
+**Errors:**
+Errors.xml is no longer used.
+
+Instead, errors have been converted to a function in the static ErrorRegistration class (transpiled from XML by the Lightning.Tools.ErrorConvert.exe tool) that is called by the error manager code.
+
+**UI:**
+All UI elements must be wrapped in a valid GUI type, wrapped inside a GuiRoot, like so:
+example:
+
+    <GuiRoot>
+      <WorldGui Name="ScGui">
+        <Text Content="I am world text!" Colour="255,255,0,0" Position="329,461" FontFamily="Arial.18pt"></Text>
+      </WorldGui>
+    </GuiRoot>
+
+Implemented `WorldGui`:
+A GUI where all of the UI elements are placed within the world, as opposed to on the scren with ScreenGui.
+
+Other:
+* Refactored the UI system to make it less bleh.
+* Changed the error message used by ScreenGui when it fails to acquire the list of GUI elements to draw.
+
+637 stuff I forgot:
+Added InstanceTags.UsesNonstandardRenderPath: Signifies that this type uses a non-standard rendering path (such as being rendered by another object). This must be on for all GUI objects.
