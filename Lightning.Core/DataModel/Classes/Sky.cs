@@ -71,7 +71,7 @@ namespace Lightning.Core.API
                 DestinationRect.h = (int)Size.Y;
 
                 // Do not move with camera
-                SDL.SDL_RenderCopy(Renderer.SDLRenderer, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+                SDL.SDL_RenderCopy(Renderer.RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
             }
             
         }

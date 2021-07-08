@@ -162,26 +162,26 @@ namespace Lightning.Core.API
                     // but it is required :(
                     if (Health <= LowHealthThreshold)
                     {
-                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, LowHealthColour.R, LowHealthColour.G, LowHealthColour.B, 255);
+                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, LowHealthColour.R, LowHealthColour.G, LowHealthColour.B, 255);
                     }
                     else if (Health > LowHealthThreshold
                         && Health <= MediumHealthThreshold)
                     {
-                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, MediumHealthColour.R, MediumHealthColour.G, MediumHealthColour.B, 255);
+                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, MediumHealthColour.R, MediumHealthColour.G, MediumHealthColour.B, 255);
                     }
                     else
                     {
-                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, HighHealthColour.R, HighHealthColour.G, HighHealthColour.B, 255);
+                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HighHealthColour.R, HighHealthColour.G, HighHealthColour.B, 255);
                     }
 
-                    SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, (float)HBPositionX - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine1EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
+                    SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HBPositionX - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine1EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
 
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, HealthBarColour2.R, HealthBarColour2.G, HealthBarColour2.B, 255);
+                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HealthBarColour2.R, HealthBarColour2.G, HealthBarColour2.B, 255);
 
-                    SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, (float)HealthBarLine2StartXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine2EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
+                    SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HealthBarLine2StartXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine2EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
 
                     // Reset draw colour. 
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.SDLRenderer, 0, 0, 0, 255);
+                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 255);
                 }
             }
 

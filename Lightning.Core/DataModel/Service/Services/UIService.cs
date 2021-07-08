@@ -41,9 +41,6 @@ namespace Lightning.Core.API
             return SSR; 
         }
 
-
-
-
         private static bool UISERVICE_INITIALISED { get; set; }
 
         private void LoadAllFonts()
@@ -170,11 +167,19 @@ namespace Lightning.Core.API
         {
             ServiceShutdownResult SSR = new ServiceShutdownResult();
 
-            UnloadAllFonts(); 
+            UnloadAllFonts();
+            ShutdownSDL2TTF();
 
             SSR.Successful = true;
 
             return SSR;
+        }
+
+        private void ShutdownSDL2TTF()
+        {
+            Logging.Log("Shutting down SDL2_ttf...", ClassName);
+            SDL_ttf.TTF_Quit();
+            return; 
         }
     }
 }

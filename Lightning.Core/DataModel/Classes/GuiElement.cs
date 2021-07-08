@@ -20,10 +20,18 @@ namespace Lightning.Core.API
         /// This is completely fucking bullshit but is required for screengui and it makes me sad
         /// </summary>
         internal bool ForceToScreen { get; set; }
+
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
             base.Render(SDL_Renderer, Tx);
         }
-       
+
+
+        public Color4 BackgroundColour { get; set; }
+
+        public override void OnClick(object Sender, ClickEventArgs EventArgs)
+        {
+            return; 
+        }
     }
 }

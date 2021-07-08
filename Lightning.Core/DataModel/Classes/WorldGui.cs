@@ -11,7 +11,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a GUI that exists in the wordl.
     /// </summary>
-    public class WorldGui : GuiRoot
+    public class WorldGui : Gui
     {
         private bool WORLDGUI_INITIALISED { get; set; }
 
@@ -26,6 +26,11 @@ namespace Lightning.Core.API
                 ForceToWorld(); 
             }
             
+        }
+
+        public override void OnCreate()
+        {
+            base.OnCreate();
         }
 
         private void ForceToWorld()
@@ -54,5 +59,7 @@ namespace Lightning.Core.API
                 WORLDGUI_INITIALISED = true; 
             }
         }
+
+        public override void OnClick(object Sender, ClickEventArgs EventArgs) => base.OnClick(Sender, EventArgs);
     }
 }

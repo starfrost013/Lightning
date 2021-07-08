@@ -18,9 +18,33 @@ namespace Lightning.Core.API
         /// <summary>
         /// Run when this UI element is clicked.
         /// </summary>
-        public virtual void OnClick(Vector2 RelativePosition)
+        public override void OnClick(object Sender, ClickEventArgs EventArgs)
         {
+           
+            // This is called by RenderService
+            
+            // Simply send it through to the UI
+
+            foreach (Instance Ins in Children)
+            {
+                Type InstanceType = Ins.GetType();
+
+                if (InstanceType.IsSubclassOf(typeof(Gui))) // skip guiroots in guiroot
+                {
+                    Gui GR = (Gui)Ins;
+
+                    GR.OnClick(Sender, EventArgs); // send it on its way
+                }
+
+
+            }
+
             return; 
+        }
+
+        public override void OnCreate()
+        {
+            Click += OnClick; 
         }
 
         /// <summary>

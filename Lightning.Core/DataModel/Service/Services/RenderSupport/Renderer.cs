@@ -26,7 +26,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// The SDL renderer.
         /// </summary>
-        public IntPtr SDLRenderer { get; set; }
+        public IntPtr RendererPtr { get; set; }
 
         /// <summary>
         /// A cache of textures.

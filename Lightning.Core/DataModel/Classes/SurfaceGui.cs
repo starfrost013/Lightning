@@ -11,7 +11,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a GUI that is attached and displays on a specific object.
     /// </summary>
-    public class SurfaceGui : GuiRoot
+    public class SurfaceGui : Gui
     {
         /// <summary>
         /// The target object name
@@ -31,6 +31,11 @@ namespace Lightning.Core.API
                 base.Render(SDL_Renderer, Tx);
             }
             
+        }
+
+        public override void OnCreate()
+        {
+            base.OnCreate();
         }
 
         private void ForceToSurface()
@@ -105,5 +110,7 @@ namespace Lightning.Core.API
             GTOR.FailureReason = $"Failed to obtain target object -- the Instance with the name {TargetObjectName} does not exist!";
             return GTOR;
         }
+
+        public override void OnClick(object Sender, ClickEventArgs EventArgs) => base.OnClick(Sender, EventArgs);
     }
 }

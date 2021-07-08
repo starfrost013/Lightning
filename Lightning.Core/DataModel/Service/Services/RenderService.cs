@@ -190,9 +190,9 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        SDIR.Renderer.SDLRenderer = SDL.SDL_CreateRenderer(SDIR.Renderer.Window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
+                        SDIR.Renderer.RendererPtr = SDL.SDL_CreateRenderer(SDIR.Renderer.Window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
 
-                        if (SDIR.Renderer.SDLRenderer == IntPtr.Zero)
+                        if (SDIR.Renderer.RendererPtr == IntPtr.Zero)
                         {
                             SDIR.FailureReason = $"Failed to initialise renderer: {SDL.SDL_GetError()}";
                             return SDIR;
@@ -399,7 +399,7 @@ namespace Lightning.Core.API
                             ServiceNotifier.NotifySCM(SN3);
                         }
 
-                        IntPtr Texture = SDL.SDL_CreateTextureFromSurface(Renderer.SDLRenderer, Surface);
+                        IntPtr Texture = SDL.SDL_CreateTextureFromSurface(Renderer.RendererPtr, Surface);
 
                         // Do we add this texture to the cache?
                         bool AddToCache = true;
@@ -464,6 +464,9 @@ namespace Lightning.Core.API
                         Control Ctl = new Control();
                         Ctl.KeyCode = CurEvent.key.keysym;
                         HandleKeyDown(Ctl); 
+                        return;
+                    case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                        HandleMouseDown(CurEvent);
                         return; 
                     case SDL.SDL_EventType.SDL_QUIT:
                         // Less temp
@@ -483,7 +486,7 @@ namespace Lightning.Core.API
         private void Rendering_RenderPhysicalObjects()
         {
             // Clear the renderer
-            SDL.SDL_RenderClear(Renderer.SDLRenderer);
+            SDL.SDL_RenderClear(Renderer.RendererPtr);
 
             // Get the workspace.
             Workspace Ws = DataModel.GetWorkspace();
@@ -498,7 +501,7 @@ namespace Lightning.Core.API
                 // Render each object.
                 Rendering_DoRenderPhysicalObjects(ObjectsToRender);
 
-                SDL.SDL_RenderPresent(Renderer.SDLRenderer);
+                SDL.SDL_RenderPresent(Renderer.RendererPtr);
             }
             else
             {
@@ -577,6 +580,40 @@ namespace Lightning.Core.API
             foreach (ControllableObject CO in ControllableObjects)
             {
                 CO.OnKeyDown(Ctl);
+            }
+        }
+
+        private void HandleMouseDown(SDL.SDL_Event Event)
+        {
+            List<PhysicalObject> POList = BuildListOfPhysicalObjects();
+
+            HandleMouseDown_NotifyAllPhysicalObjects(POList, Event); 
+        }
+
+        /// <summary>
+        /// Private: Invokes the click event on all physicalobjects that hold it.
+        /// </summary>
+        /// <param name="PhysicalObjects"></param>
+        /// <param name="CurEvent"></param>
+        private void HandleMouseDown_NotifyAllPhysicalObjects(List<PhysicalObject> PhysicalObjects, SDL.SDL_Event CurEvent)
+        {
+            foreach (PhysicalObject PO in PhysicalObjects)
+            {
+                if (PO.Click != null)
+                {
+                    ClickEventArgs CEA = new ClickEventArgs();
+
+                    CEA.Button = (MouseButton)CurEvent.button.button;
+                    CEA.ClickCount = CurEvent.button.clicks;
+                    CEA.RelativePosition = new Vector2(CurEvent.button.x, CurEvent.button.y);
+
+                    PO.Click(this, CEA);
+                }
+                else
+                {
+                    continue; 
+                }
+                
             }
         }
     }

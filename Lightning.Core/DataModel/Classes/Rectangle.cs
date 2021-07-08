@@ -16,9 +16,10 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "Rectangle";
 
+        
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.SDLRenderer;
+            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
 
             // todo: FX api 
             SDL.SDL_SetRenderDrawBlendMode(SDL_RendererPtr, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);

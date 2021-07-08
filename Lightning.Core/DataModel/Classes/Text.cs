@@ -56,7 +56,10 @@ namespace Lightning.Core.API
         /// </summary>
         public int OutlinePixels { get; set; }
 
-
+        public Text()
+        {
+            Position = new Vector2();
+        }
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
             if (Content == null) Content = "";
@@ -115,7 +118,7 @@ namespace Lightning.Core.API
 
 
                 // Convert to texture for hardware rendering
-                IntPtr TextTexture = SDL.SDL_CreateTextureFromSurface(SDL_Renderer.SDLRenderer, SurfaceSDL);
+                IntPtr TextTexture = SDL.SDL_CreateTextureFromSurface(SDL_Renderer.RendererPtr, SurfaceSDL);
 
                 // corre
                 SDL.SDL_Rect SourceRect = new SDL.SDL_Rect
@@ -144,7 +147,7 @@ namespace Lightning.Core.API
                     DestinationRect.h = FontHeight;
                 }
 
-                SDL.SDL_RenderCopy(SDL_Renderer.SDLRenderer, TextTexture, ref SourceRect, ref DestinationRect);
+                SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, TextTexture, ref SourceRect, ref DestinationRect);
 
 
             }
@@ -199,5 +202,6 @@ namespace Lightning.Core.API
             return FFR; 
         }
 
+        
     }
 }

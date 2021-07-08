@@ -11,7 +11,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a GUI that is placed on the screen. Its position is relative to the screen resolution.
     /// </summary>
-    public class ScreenGui : GuiRoot
+    public class ScreenGui : Gui
     {
         internal override string ClassName => "ScreenGui";
 
@@ -29,6 +29,11 @@ namespace Lightning.Core.API
             }
 
 
+        }
+
+        public override void OnCreate()
+        {
+            base.OnCreate();
         }
 
         private void EnforceScreenGui()
@@ -102,5 +107,7 @@ namespace Lightning.Core.API
             }
 
         }
+
+        public override void OnClick(object Sender, ClickEventArgs EventArgs) => base.OnClick(Sender, EventArgs);
     }
 }

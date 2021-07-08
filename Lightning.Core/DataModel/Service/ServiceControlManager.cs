@@ -226,7 +226,7 @@ namespace Lightning.Core.API
         /// <returns>A <see cref="ServiceShutdownResult"/> object. Success is determined by the <see cref="ServiceShutdownResult.Successful"/> property. For further information, see the documentation for <see cref="ServiceShutdownResult"/>.</returns>
         private ServiceShutdownResult KillService(string ServiceName, bool ForceShutdown = false)
         {
-            Logging.Log($"Attempting to kill the service with type {ServiceName}");
+            Logging.Log($"Attempting to kill the service with type {ServiceName}", ClassName);
 
             ServiceShutdownResult SSR = new ServiceShutdownResult(); 
 

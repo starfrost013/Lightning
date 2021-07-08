@@ -1,4 +1,4 @@
-Lightning 0.2 (Milestone 4; Pre-Alpha SDK)
+Lightning 0.3 (Milestone 4; Pre-Alpha SDK)
 Beginning April 12, 2021
 
 * Grouping (purely logical)
@@ -22,9 +22,9 @@ Beginning April 12, 2021
 * IDE, Very basic ver.
 * DDMS Saving
 * First-time setup & file associations
-* Lua integration (Testing to see if it's easier to do...)
+* Lua integration 
 
-M4 SPEC FROZEN (5/3	22:06)
+M4 SPEC ACTUALLY FROZEN (JULY 7, 2021 18:15)
 
 4/13	19:04
 
@@ -233,6 +233,34 @@ IDE			25%
 DDMS Saving		Complete
 Sound API		Complete*
 
+7/7
+Grouping 		Complete
+Ungrouping		Complete
+Render refactoring	40% (will be completed with Animation API)
+Animation API		0%
+Primitive API		Complete
+Removal of OUS		Complete
+DDMS refactor		20%
+Camera API		Complete except optimisation
+Functional Scripting API15%
+Removal of Error XML	Complete
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		Complete
+PhysicsService		0%
+ScriptingService	80% 
+Player API		50%
+L./L.C.API split	Complete
+IDE			25%
+DDMS Saving		Complete
+Sound API		Complete*
+Humanoid		50%
+Sky			Complete
+UI			40%
+SCM init refactoring	0%
+Events			25%
+Documentation		5%
 
 More tasks may be required
 *requires transfer to mix_chunk	

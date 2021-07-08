@@ -1,6 +1,6 @@
 # Lightning Game Engine
 
-## Code of Conduct & Style Guide (version 2.0) (April 24, 2021)
+## Code of Conduct & Style Guide (version 2.1) (July 7, 2021)
 
 Welcome to the Lightning game engine main tree. We are going to have to ask you abide by a few rules if you wish to contribute code.
 
@@ -47,8 +47,12 @@ If it is a user-facing API, deals with scripting or does support a user API, it 
 	 ///
 	 /// <brief description of purpose>
 ```
-	 
+* If you set InstanceTags.UsesNonstandardRenderPath on a class, ALL derived classes must also use it!
+
 ### Version History
+
+**V2.1 (July 7, 2021)**
+* 
 
 **V2.0 (April 24, 2021)**
 * Rewording

@@ -4651,7 +4651,8 @@ namespace Lightning.Core.SDL2
 			private byte padding1;
 			public Int32 x;
 			public Int32 y;
-		}
+
+        }
 #pragma warning restore 0169
 
 		/* Mouse wheel event structure (event.wheel.*) */

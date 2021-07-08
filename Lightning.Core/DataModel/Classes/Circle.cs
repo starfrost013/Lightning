@@ -19,7 +19,7 @@ namespace Lightning.Core.API
 
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.SDLRenderer;
+            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
 
             SDL.SDL_SetRenderDrawBlendMode(SDL_RendererPtr, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);
 
@@ -136,12 +136,12 @@ namespace Lightning.Core.API
                         },
                 };
 
-                SDL.SDL_RenderDrawPointsF(SDL_Renderer.SDLRenderer, FPointSet, 4);
+                SDL.SDL_RenderDrawPointsF(SDL_Renderer.RendererPtr, FPointSet, 4);
             }
             else
             {
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.SDLRenderer, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
             }
 
         }

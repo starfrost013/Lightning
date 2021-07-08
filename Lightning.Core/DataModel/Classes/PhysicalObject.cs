@@ -59,6 +59,15 @@ namespace Lightning.Core.API
             return; 
         }
 
+        /// <summary>
+        /// Click event handler.
+        /// 
+        /// Default event handler may be implemented by any Lightning GUI class.
+        /// 
+        /// Scripts may modify the event handler function. 
+        /// </summary>
+
+        public ClickEvent Click { get; set; }
 
         /// <summary>
         /// This is called on each frame by the RenderService to tell this object to 
@@ -68,7 +77,7 @@ namespace Lightning.Core.API
         /// </summary>
         public virtual void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.SDLRenderer;
+            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
             // requisite error checking already done
 
             // create the source rect
@@ -90,6 +99,13 @@ namespace Lightning.Core.API
             DestinationRect.h = (int)Size.Y;
 
             SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+        }
+
+
+
+        public virtual void OnClick(object Sender, ClickEventArgs EventArgs)
+        {
+            return; 
         }
     }
 }

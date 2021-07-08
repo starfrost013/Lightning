@@ -52,6 +52,8 @@ namespace Lightning.Core.API
         {
             ServiceShutdownResult SSR = new ServiceShutdownResult();
 
+            Logging.Log("Shutting down SDL2_mixer...", ClassName); 
+
             SDL_mixer.Mix_Quit();
 
             SSR.Successful = true;
