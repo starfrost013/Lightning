@@ -112,7 +112,18 @@ namespace Lightning.Core.API
 
         }
 
-        public override void OnClick(object Sender, ClickEventArgs EventArgs) => State.Open = !State.Open;
+        public override void OnClick(object Sender, ClickEventArgs EventArgs)
+        {
+            if (EventArgs.RelativePosition.X > Position.X
+                && EventArgs.RelativePosition.X < (Position.X + Size.X)
+                && EventArgs.RelativePosition.Y > Position.Y
+                && EventArgs.RelativePosition.Y < (Position.Y + Size.Y) // change this code when we get AABBs.
+                )
+            {
+                State.Open = !State.Open; 
+            }
+                
+        }
 
     }
 }
