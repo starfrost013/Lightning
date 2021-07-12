@@ -103,7 +103,6 @@ namespace Lightning.Core
                 || !IsLoaded 
                 )
             {
-                //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionAuxillaryInformationException");
                 return null;
             }
             else

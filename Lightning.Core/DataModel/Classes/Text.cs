@@ -147,9 +147,11 @@ namespace Lightning.Core.API
                     DestinationRect.h = FontHeight;
                 }
 
+
                 SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, TextTexture, ref SourceRect, ref DestinationRect);
 
-
+                SDL.SDL_FreeSurface(SurfaceSDL);
+                SDL.SDL_DestroyTexture(TextTexture);
             }
 
         }

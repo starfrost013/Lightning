@@ -106,7 +106,6 @@
       </WorldGui>
     </GuiRoot>
 
-
     <GuiRoot>
       <SurfaceGui Name="SuGui" TargetObjectName="Block1">
         <Text Content="I am surface text!" Colour="127,0,0,255" Position="329,461" FontFamily="Arial.18pt"></Text>

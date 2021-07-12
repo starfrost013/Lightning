@@ -47,19 +47,26 @@ namespace Lightning.Core
         public ServiceStartupCommandCollection ServiceStartupCommands { get; set; }
 
         /// <summary>
+        /// The default font path used when no other font is available. This is ONLY used in debug builds!
+        /// </summary>
+        public string DebugDefaultFontPath { get; set; }
+
+        /// <summary>
         /// The path to Lightning.xsd, the XML schema for LGX files.
         /// </summary>
         public string LightningXsdPath { get; set; }
 
         /// <summary>
+        /// Maximum Lua script execution time in milliseconds.
+        /// </summary>
+        public int MaxLuaScriptExecutionTime { get; set; }
+
+        /// <summary>
         /// Use the AST Tokeniser.
         /// </summary>
         public bool UseASTTokeniser { get; set; }
-       
-        /// <summary>
-        /// Maximmu Lua script execution time.
-        /// </summary>
-        public int MaxLuaScriptExecutionTime { get; set; }
+
+
 
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 

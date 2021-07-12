@@ -6,6 +6,11 @@ namespace Lightning.Utilities
 {
     public static class DateUtil
     {
+        /// <summary>
+        /// Determines if a particular year is a leap year.
+        /// </summary>
+        /// <param name="Year">An Int32 containing the year you wish to check.</param>
+        /// <returns></returns>
         public static bool IsYearLeapYear(this int Year)
         {
             if (Year % 4 == 0)

@@ -18,6 +18,14 @@ namespace Lightning.Core.API
         internal override string ClassName => "UIService";
         internal override ServiceImportance Importance => ServiceImportance.Low;
 
+#if DEBUG
+
+        /// <summary>
+        /// DEBUG only - funny string to be displayed with debug text
+        /// </summary>
+        private string FunnyHahaDebugString { get; set; }
+
+#endif
         public override ServiceStartResult OnStart()
         {
             ServiceStartResult SSR = new ServiceStartResult();
@@ -30,9 +38,6 @@ namespace Lightning.Core.API
             }
             else
             {
-
-                
-
                 SSR.Successful = true;
                 return SSR; 
             }
@@ -118,34 +123,16 @@ namespace Lightning.Core.API
 
         private void Init()
         {
+#if DEBUG
+
+            FunnyHahaDebugString = DebugStrings.GetDebugString();
+            RenderDebugText(); // call before font loading so we don't have to load the font again
+#endif
+
             LoadAllFonts();
+
+
             UISERVICE_INITIALISED = true; 
-        }
-
-        private List<GuiElement> GetAllUIElements()
-        {
-            Workspace WS = DataModel.GetWorkspace();
-
-            GetMultiInstanceResult IC = WS.GetAllChildrenOfType("GuiElement"); 
-
-            if (IC.Instances == null
-                || !IC.Successful)
-            {
-                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfGuiRootsException");
-                ServiceNotification SN = new ServiceNotification(ServiceNotificationType.Crash, ClassName, "Failed to obtain list of GUIElements");
-                ServiceNotifier.NotifySCM(SN);
-                return null; // probably doesn't actually run
-            }
-            else
-            {
-                List<Instance> GuiObjects = IC.Instances;
-
-                List<GuiElement> GuiRootList = ListTransfer<Instance, GuiElement>.TransferBetweenTypes(GuiObjects, true);
-
-                return GuiRootList; 
-            }
-
-             
         }
 
         public override void Poll()
@@ -181,5 +168,76 @@ namespace Lightning.Core.API
             SDL_ttf.TTF_Quit();
             return; 
         }
+
+        /// <summary>
+        /// DEBUG ONLY: Renders engine debugging information.
+        /// </summary>
+        private void RenderDebugText()
+        {
+#if DEBUG
+            // Because Text by definition must be within a GUI,
+            // we can't just add text.
+            //
+            // As this is a debug feature, we are just going to create a new screengui object
+            // and put it in the workspace.
+            // 
+            // This is better than adding tons of (redundant...) code in order to write a debug feature.
+
+            GuiRoot GR = (GuiRoot)DataModel.CreateInstance("GuiRoot"); // will enter workspace
+
+            ScreenGui SG = (ScreenGui)DataModel.CreateInstance("ScreenGui", GR);
+
+            Text DebugText = (Text)DataModel.CreateInstance("Text", SG);
+
+            string DoNotUse = "Debug GUI Component - Do not use!";
+
+            GR.Name = DoNotUse;
+            SG.Name = DoNotUse;
+            DebugText.Name = DoNotUse;
+
+            DebugText.Content =
+                $"Lightning Engine version {LVersion.GetVersionString()}\n (Debug)" +
+                $"{FunnyHahaDebugString}" +
+                $"DataModel version {DataModel.DATAMODEL_API_VERSION_MAJOR}.{DataModel.DATAMODEL_API_VERSION_MINOR}.{DataModel.DATAMODEL_API_VERSION_REVISION}";
+
+            DebugText.Colour = new Color4 { A = 255, R = 255, G = 255, B = 255 };
+            DebugText.BackgroundColour = new Color4 { A = 0, R = 0, G = 0, B = 0 };
+
+            // TODO: default positioning stuff so we don't have to do this
+            
+            Vector2 Position = new Vector2(0, 0);
+
+            GR.Position = Position;
+            SG.Position = Position;
+            DebugText.Position = Position;
+
+            string FontName = "Arial.18pt for DEBUG";
+            DebugText.FontFamily = FontName;
+
+            // setup font
+
+            Font Fnt = (Font)DataModel.CreateInstance("Font");
+
+            GlobalSettings GS = DataModel.GetGlobalSettings();
+
+            if (GS.DebugDefaultFontPath == null)
+            {
+                // destroy everything
+                DataModel.RemoveInstance(GR);
+                return; 
+            }
+            else
+            {
+                Fnt.FontPath = GS.DebugDefaultFontPath;
+                Fnt.FontSize = 18;
+                Fnt.Name = FontName;
+                return; // font will be loaded setc
+            }
+#else
+            throw new Exception("Do not call on Release builds ever!");
+#endif
+        }
+
+
     }
 }

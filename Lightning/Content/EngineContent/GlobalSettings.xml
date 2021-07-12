@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Lightning Game Engine Global Settings
+
+Do not modify unless you know what you are doing.
+-->
 <GlobalSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-  <LightningXsdPath>Content\Schema\Lightning.xsd</LightningXsdPath>
-  <UseASTTokeniser>true</UseASTTokeniser>
-  <MaxLuaScriptExecutionTime>300</MaxLuaScriptExecutionTime>
-  
+  <!-- 
+  ESPECIALLY DO NOT MODIFY THIS PART UNLESS YOU ABSOLUTELY 100% KNOW WHAT YOU ARE DOING
+  YOUR INSTALLATION MAY NOT EVEN START IF YOU SCREW THIS PART UP.
+  YOU HAVE BEEN WARNED. IF YOU MODIFY THIS AND YOUR SDK/ENGINE/RUNTIME/WHATEVER INSTALL FAILS TO START PROPERLY, IT'S YOUR OWN FAULT. 
+  -->
   <ServiceStartupCommands>
-    
+
     <ServiceStartupCommand>
       <ServiceName>RenderService</ServiceName>
       <StartOrder>0</StartOrder>
@@ -16,7 +23,7 @@
       <ServiceName>ScriptingService</ServiceName>
       <StartOrder>1</StartOrder>
     </ServiceStartupCommand>
-    
+
     <ServiceStartupCommand>
       <ServiceName>PhysicsService</ServiceName>
       <StartOrder>2</StartOrder>
@@ -32,6 +39,14 @@
       <StartOrder>4</StartOrder>
     </ServiceStartupCommand>
   </ServiceStartupCommands>
+
+  <!-- Stuff after here is slightly more safe to modify -->
+  
+  <LightningXsdPath>Content\Schema\Lightning.xsd</LightningXsdPath>
+  <DebugDefaultFontPath>Content\Fonts\Arial.ttf</DebugDefaultFontPath>
+  <UseASTTokeniser>true</UseASTTokeniser>
+  <MaxLuaScriptExecutionTime>300</MaxLuaScriptExecutionTime>
+
 
   
 </GlobalSettings>
