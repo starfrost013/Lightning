@@ -13,7 +13,7 @@ namespace Lightning.Core.API
     /// 
     /// Event args for the UI click event.
     /// </summary>
-    public class ClickEventArgs
+    public class ClickEventArgs : EventArgs
     {
         /// <summary>
         /// The mouse button that has been clicked - see <see cref="MouseButton"/>.

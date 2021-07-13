@@ -187,32 +187,38 @@ namespace Lightning.Core.API
 
             ScreenGui SG = (ScreenGui)DataModel.CreateInstance("ScreenGui", GR);
 
-            Text DebugText = (Text)DataModel.CreateInstance("Text", SG);
-
+            // create 3 lines of text (todo: multiline text)
+            Text DebugTextLine1 = (Text)DataModel.CreateInstance("Text", SG);
+            Text DebugTextLine2 = (Text)DataModel.CreateInstance("Text", SG);
+            Text DebugTextLine3 = (Text)DataModel.CreateInstance("Text", SG);
+            
             string DoNotUse = "Debug GUI Component - Do not use!";
 
             GR.Name = DoNotUse;
             SG.Name = DoNotUse;
-            DebugText.Name = DoNotUse;
+            DebugTextLine1.Name = DoNotUse;
+            DebugTextLine2.Name = DoNotUse;
+            DebugTextLine3.Name = DoNotUse;
 
-            DebugText.Content =
-                $"Lightning Engine version {LVersion.GetVersionString()}\n (Debug)" +
-                $"{FunnyHahaDebugString}" +
-                $"DataModel version {DataModel.DATAMODEL_API_VERSION_MAJOR}.{DataModel.DATAMODEL_API_VERSION_MINOR}.{DataModel.DATAMODEL_API_VERSION_REVISION}";
-
-            DebugText.Colour = new Color4 { A = 255, R = 255, G = 255, B = 255 };
-            DebugText.BackgroundColour = new Color4 { A = 0, R = 0, G = 0, B = 0 };
-
+            DebugTextLine1.Content = $"Lightning for {Platform.PlatformName} version {LVersion.GetVersionString()} (Debug)";
+            DebugTextLine2.Content = $"DataModel version {DataModel.DATAMODEL_API_VERSION_MAJOR}.{DataModel.DATAMODEL_API_VERSION_MINOR}.{DataModel.DATAMODEL_API_VERSION_REVISION}";
+            DebugTextLine3.Content = FunnyHahaDebugString;
+            
             // TODO: default positioning stuff so we don't have to do this
             
             Vector2 Position = new Vector2(0, 0);
 
+            // TEMP for DEBUG only
             GR.Position = Position;
             SG.Position = Position;
-            DebugText.Position = Position;
+            DebugTextLine1.Position = Position;
+            DebugTextLine2.Position = new Vector2(Position.X, Position.Y + 18);
+            DebugTextLine3.Position = new Vector2(Position.X, Position.Y + 36);
 
-            string FontName = "Arial.18pt for DEBUG";
-            DebugText.FontFamily = FontName;
+            string FontName = "Arial.14pt for DEBUG";
+            DebugTextLine1.FontFamily = FontName;
+            DebugTextLine2.FontFamily = DebugTextLine1.FontFamily;
+            DebugTextLine3.FontFamily = DebugTextLine2.FontFamily;
 
             // setup font
 
@@ -229,7 +235,7 @@ namespace Lightning.Core.API
             else
             {
                 Fnt.FontPath = GS.DebugDefaultFontPath;
-                Fnt.FontSize = 18;
+                Fnt.FontSize = 14;
                 Fnt.Name = FontName;
                 return; // font will be loaded setc
             }

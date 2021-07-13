@@ -51,6 +51,21 @@ namespace Lightning.Core.API
 
         // Texture is a child. 
 
+
+        /// <summary>
+        /// Gets or sets the colour of the border of this GuiElement. 
+        /// </summary>
+        public Color4 BorderColour { get; set; }
+
+        /// <summary>
+        /// Gets or sets the border width of this GuiElement - if it is set to zero, border drawing will be skipped as there is nothing to draw.
+        /// </summary>
+        public int BorderWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the border fill state. If true, the border will be filled. If false, it will not.
+        /// </summary>
+        public bool BorderFill { get; set; }
         /// <summary>
         /// Ran on the spawning of an object, before it is rendered for the first time and after the initialisation of the renderer.
         /// </summary>
@@ -77,6 +92,7 @@ namespace Lightning.Core.API
         /// </summary>
         public virtual void Render(Renderer SDL_Renderer, Texture Tx)
         {
+
             IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
             // requisite error checking already done
 

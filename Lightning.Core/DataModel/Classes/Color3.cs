@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Color3
     /// 
-    /// March 7, 2021 (Modified April 12, 2021)
+    /// March 7, 2021 (modified July 12, 2021: add constructor)
     /// 
     /// Defines an RGB colour.
     /// </summary>
@@ -207,6 +207,19 @@ namespace Lightning.Core.API
                     return null;
                 }
             }
+        }
+
+        public Color3() // old code compat (July 12, 2021)
+        {
+
+        }
+
+        public Color3(byte CR, byte CG, byte CB)
+        {
+            // use for non-DataModel ONLY
+            R = CR;
+            G = CG;
+            B = CB;
         }
 
     }

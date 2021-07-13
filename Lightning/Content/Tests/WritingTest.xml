@@ -75,8 +75,10 @@
     <Circle Colour="255,255,0,0" Fill="False" CanCollide="False" Position="40,40" Size="48,48" ZIndex="0" Name="Circle1" />
     <Circle Colour="200,255,255,255" Fill="False" CanCollide="False" Position="120,40" Size="96,48" ZIndex="0" Name="Circle2" />
     <Circle Colour="255,255,0,255" Fill="True" CanCollide="False" Position="320,40" Size="96,48" ZIndex="0" Name="Circle2" />
-    <Rectangle Colour="140,70,20,140" Fill="False" CanCollide="False" Position="66,66" Size="40,40" ZIndex="0" Name="NonFilledRectangle" />
-    <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="110,66" Size="40,40" ZIndex="0" Name="FilledRectangle" />
+    <Rectangle Colour="140,70,20,140" Fill="False" CanCollide="False" Position="266,66" Size="40,40" ZIndex="0" Name="NonFilledRectangle" />
+    <Rectangle Colour="127,70,20,140" Fill="True" CanCollide="False" Position="310,66" Size="40,40" ZIndex="0" Name="FilledRectangle" />
+    <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
+    
     <PhysicalObject CanCollide="False" Position="50,50" Size="200,200" ZIndex="0" Name="Block1">
       <Texture Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block1_Texture" />
     </PhysicalObject>

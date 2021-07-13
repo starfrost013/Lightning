@@ -27,6 +27,7 @@ namespace Lightning.Core.API
     /// 2021-05-13: Implemented ZIndex
     /// 2021-05-27: ACTUALLY implemented ZIndex (????)
     /// 2021-06-05: Add an FPS meter
+    /// 2021-07-13: Add blend mode changing, various other stuff
     /// 
     /// </summary>
     public class RenderService : Service
@@ -36,7 +37,6 @@ namespace Lightning.Core.API
         internal Renderer Renderer { get; set; }
         private static bool RENDERER_INITIALISED { get; set; }
 
-        
         public override ServiceStartResult OnStart()
         {
             // TEST code
@@ -83,10 +83,6 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-
-                    Workspace Ws = DataModel.GetWorkspace();
-
-                    GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
 
                     SDIR.Successful = true;
                     return SDIR;
@@ -285,8 +281,9 @@ namespace Lightning.Core.API
                 else
                 {
                     Renderer = SDIR.Renderer;
+                    InitRendering_GetBlendMode();
 
-                    LoadAndCacheTextures();
+                    InitRendering_LoadAndCacheTextures();
 
                     RENDERER_INITIALISED = true;
 
@@ -305,6 +302,51 @@ namespace Lightning.Core.API
 
         }
 
+        /// <summary>
+        /// Private: Gets and sets up the rendering blend mode for this game.
+        /// </summary>
+        private void InitRendering_GetBlendMode()
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
+
+            if (!GIR.Successful
+                || GIR.Instance == null)
+            {
+                ErrorManager.ThrowError(ClassName, "GameSettingsFailedToLoadException");
+            }
+            else
+            {
+                GameSettings GS = (GameSettings)GIR.Instance;
+
+                GetGameSettingResult GGSR = GS.GetSetting("RenderingBlendMode");
+                
+                if (!GGSR.Successful) // set a default if we do not work
+                {
+                    Renderer.BlendMode = RenderingBlendMode.None;
+                    return; 
+                }
+                else
+                {
+                    // if it has been successfully loaded...
+                    GameSetting BlendModeSetting = GGSR.Setting;
+
+                    if (BlendModeSetting.SettingValue != null) // check for a valid logo
+                    {
+                        Renderer.BlendMode = (RenderingBlendMode)BlendModeSetting.SettingValue;
+                    }
+                    else
+                    {
+                        // set a default and return if invalid value
+                        Renderer.BlendMode = RenderingBlendMode.None; // .default? 
+                    }
+
+                    return;
+                }
+            }
+        }
+
         private void TriggerOnSpawn()
         {
             List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects();
@@ -317,7 +359,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Loads amd caches SDL_Textures.
         /// </summary>
-        private void LoadAndCacheTextures()
+        private void InitRendering_LoadAndCacheTextures()
         {
             Logging.Log("Building list of object textures to load...", ClassName);
 

@@ -26,14 +26,12 @@ namespace Lightning.Core.API
         /// </summary>
         public string FontFamily { get; set; }
 
-        /// <summary>
-        /// The Font size of the text of this MenuItem
-        /// </summary>
-        public int FontSize { get; set; }
         private bool MENUITEM_INITIALISED { get; set; } 
 
         private Rectangle ItemRectangle { get; set; }
         private Text ItemText { get; set;  }
+
+        public MenuState State { get; set; }
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
             // rendered by menu
@@ -58,7 +56,8 @@ namespace Lightning.Core.API
             // Set default values if the user has not specified default values.
             if (Size.X == 0) Size.X = 50;
             if (Size.Y == 0) Size.Y = 20;
-            if (FontSize == 0) FontSize = 14;
+
+            if (Position == null) Position = new Vector2(0, 0);
 
             if (BackgroundColour == null)
             {
@@ -103,10 +102,7 @@ namespace Lightning.Core.API
             ItemText.Content = Content;
             ItemText.Colour = Colour;
             ItemText.FontFamily = FontFamily;
-            ItemText.FontSize = FontSize;
             ItemText.Position = Position;
-
-            
 
             MENUITEM_INITIALISED = true;
         }

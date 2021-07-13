@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Color4
     /// 
-    /// March 9, 2021 (modified April 11, 2021)
+    /// March 9, 2021 (modified July 12, 2021: add constructor)
     /// 
     /// An ARGB colour.
     /// </summary>
@@ -231,5 +231,20 @@ namespace Lightning.Core.API
                 }
             }
         }
+
+        public Color4() // old code compat (July 12, 2021)
+        {
+
+        }
+
+        public Color4(byte CA, byte CR, byte CG, byte CB)
+        {
+            // use for non-DataModel ONLY
+            A = CA;
+            R = CR;
+            G = CG;
+            B = CB;
+        }
+
     }
 }

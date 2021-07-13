@@ -21,14 +21,27 @@ namespace Lightning.Core.API
         /// </summary>
         internal bool ForceToScreen { get; set; }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="SDL_Renderer"></param>
+        /// <param name="Tx"></param>
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
             base.Render(SDL_Renderer, Tx);
         }
 
-
+        /// <summary>
+        /// Gets or sets the background colour of this GuiElement.
+        /// </summary>
         public Color4 BackgroundColour { get; set; }
 
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="SDL_Renderer"></param>
+        /// <param name="Tx"></param>
         public override void OnClick(object Sender, ClickEventArgs EventArgs)
         {
             return; 
