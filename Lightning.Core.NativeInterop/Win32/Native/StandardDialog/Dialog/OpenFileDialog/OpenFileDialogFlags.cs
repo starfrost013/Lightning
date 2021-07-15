@@ -15,6 +15,13 @@ namespace Lightning.Core.NativeInterop.Win32
     /// </summary>
     public enum OpenFileDialogFlags
     {
+        /// <summary>
+        /// Unofficial: used for marking none
+        /// 
+        /// Doing it this way is clearer than simply checking for 0.
+        /// </summary>
+        OFN_NONE = 0x0,
+
         OFN_READONLY = 0x1, 
 
         OFN_OVERWRITEPROMPT = 0x2,
@@ -30,6 +37,10 @@ namespace Lightning.Core.NativeInterop.Win32
         OFN_ENABLETEMPLATEHANDLE = 0x80,
 
         OFN_NOVALIDATE = 0x100,
+
+        /// <summary>
+        /// If set, multi-selection will be enabled.
+        /// </summary>
 
         OFN_ALLOWMULTISELECT = 0x200,
 

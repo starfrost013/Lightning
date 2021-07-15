@@ -16,7 +16,7 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "SandboxCoreScript";
 
-        internal string Environment = "print = print, pairs = pairs, ipairs = ipairs, load = load, pcall = pcall, __SCRIPTCONTENT = __SCRIPTCONTENT";
+        internal string Environment = "print = print, CLRPackage = CLRPackage, pairs = pairs, ipairs = ipairs, load = load, pcall = pcall, __SCRIPTCONTENT = __SCRIPTCONTENT";
 
         internal bool LUASANDBOX_INITIALISED { get; set; }
 
