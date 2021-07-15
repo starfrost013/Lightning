@@ -72,12 +72,22 @@ namespace Polaris
         /// <param name="e"></param>
         private void Polaris_FileMenu_Open_Click(object sender, RoutedEventArgs e)
         {
-            
+
 #if WINDOWS // temp
 
-            
             WindowInteropHelper WLH = new WindowInteropHelper(this);
-            IntPtr HWND = WLH.Handle; 
+            IntPtr HWND = WLH.Handle;
+
+            OpenFileDialog OFD = new OpenFileDialog();
+
+            OFD.WindowTitle = "Open LGX...";
+            OFD.Filter.AddItem("lgx", "Lightning Game XML");
+
+            OFD.ShowDialog(HWND);
+
+            Logging.Log(OFD.FileName, "Polaris UI Event Response Handler");
+            /*
+
 
             OpenFileName OFN = new OpenFileName();
 
@@ -111,6 +121,7 @@ namespace Polaris
                 Logging.Log($"Comdlg32 error - TEMP - {(CommDlgExtendedError)StandardDialogNativeMethods.CommDlgExtendedError()}");
                 return; 
             }
+            */
             
 #endif
         }

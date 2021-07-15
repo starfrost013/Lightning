@@ -19,7 +19,7 @@ namespace Lightning.Core.NativeInterop.Win32
         /// 
         /// Doing it this way is clearer than simply checking for 0.
         /// </summary>
-        OFN_NONE = 0x0, 
+        OFN_EX_NONE = 0x0, 
 
         /// <summary>
         /// If set, the Places Bar will not be displayed in the enum. 

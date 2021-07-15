@@ -24,6 +24,9 @@ namespace Lightning.Core.NativeInterop.Win32
 
         OFN_READONLY = 0x1, 
 
+        /// <summary>
+        /// If this flag is set, the dialog will trigger on overwrite.
+        /// </summary>
         OFN_OVERWRITEPROMPT = 0x2,
 
         OFN_NOCHANGEDIR = 0x8,

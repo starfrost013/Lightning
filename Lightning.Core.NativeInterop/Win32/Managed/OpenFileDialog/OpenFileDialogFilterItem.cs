@@ -20,7 +20,7 @@ namespace Lightning.Core.NativeInterop.Win32
         public string Description { get; set; }
 
         /// <summary>
-        /// The extension of this filter item. Required - a <see cref="ArgumentNullException"> will be thrown if ToString(); is called when this property is set to null.</see>
+        /// The extension of this filter item. Required - a <see cref="ArgumentNullException"> will be thrown if ToString(); is called when this property is set to null.</see> THE DOT MUST NOT BE ADDED!
         /// </summary>
         public string Extension { get; set; }
 

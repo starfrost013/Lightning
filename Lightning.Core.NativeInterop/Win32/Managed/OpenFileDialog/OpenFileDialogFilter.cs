@@ -19,5 +19,30 @@ namespace Lightning.Core.NativeInterop.Win32
         {
             Items = new List<OpenFileDialogFilterItem>();
         }
+
+        public void AddItem(string Extension, string Description = null)
+        {
+            OpenFileDialogFilterItem OFDFI = new OpenFileDialogFilterItem();
+
+            OFDFI.Extension = Extension;
+            OFDFI.Description = Description;
+
+            Items.Add(OFDFI);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder SB = new StringBuilder();
+            
+            for (int i = 0; i < Items.Count; i++) // for loop for checking last id
+            {
+                OpenFileDialogFilterItem FilterItem = Items[i];
+
+                SB.Append(FilterItem.ToString()); // add each filter
+                if (i < (Items.Count - 1)) SB.Append("|"); // if we are not the last item, append the pipe to delimit items
+            }
+
+            return SB.ToString(); 
+        }
     }
 }

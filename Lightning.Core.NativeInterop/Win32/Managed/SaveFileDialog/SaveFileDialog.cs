@@ -10,11 +10,11 @@ namespace Lightning.Core.NativeInterop.Win32
     /// <summary>
     /// OpenFileDialog
     /// 
-    /// July 14, 2021 (modified July 15, 2021: Functional)
+    /// July 15, 2021
     /// 
     /// Defines an actually nice API for using the W32 common Open File Dialog.
     /// </summary>
-    public class OpenFileDialog
+    public class SaveFileDialog
     {
         /// <summary>
         /// The filename. Automatically filled in by the API.
@@ -75,7 +75,7 @@ namespace Lightning.Core.NativeInterop.Win32
         /// </summary>
         public string InitialDirectory { get; set; }
 
-        public OpenFileDialog()
+        public SaveFileDialog()
         {
             Filter = new OpenFileDialogFilter(); 
         }
@@ -148,7 +148,7 @@ namespace Lightning.Core.NativeInterop.Win32
                 OFD.LPInitialDirectory = null;
             }
 
-            StandardDialogNativeMethods.GetOpenFileName(OFD);
+            StandardDialogNativeMethods.GetSaveFileName(OFD);
             FileName = OFD.LPFileName; 
 
             
