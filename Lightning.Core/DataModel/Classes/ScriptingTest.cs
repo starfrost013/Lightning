@@ -17,10 +17,11 @@ namespace Lightning.Core.API
         internal override string ClassName => "ScriptingTest";
 
         internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable;
+
         /// <summary>
         /// Tests scripting
         /// </summary>
-        public void ScTest()
+        public static void ScTest()
         {
             MessageBox.Show("I AM A SCRIPT PLEASE LISTEN TO ME");
         }

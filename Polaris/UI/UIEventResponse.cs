@@ -65,6 +65,11 @@ namespace Polaris
             PolarisState.Shutdown();
         }
 
+        private void Polaris_FileMenu_New_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         /// <summary>
         /// Launches the Win32 open dialog.
         /// </summary>
@@ -86,44 +91,10 @@ namespace Polaris
             OFD.ShowDialog(HWND);
 
             Logging.Log(OFD.FileName, "Polaris UI Event Response Handler");
-            /*
-
-
-            OpenFileName OFN = new OpenFileName();
-
-            // initialise the structure
-            OFN.Flags = OpenFileDialogFlags.OFN_OVERWRITEPROMPT;
-            OFN.LStructSize = Marshal.SizeOf(OFN);
-            OFN.LPFilter = @"All Files\*.*\[0]\[0]";
-            OFN.StartFilterIndex = 0;
-            OFN.LPDialogTitle = "Penis";
-            OFN.LPFileName = "";
-            OFN.LPFileNameLength = 32767;
-            OFN.LPStrDefinedExtension = null;
-            OFN.LPInitialDirectory = null;
-            OFN.LPFileTitleLength = 0;
-            OFN.LCustomData = IntPtr.Zero;
-            OFN.LPFileNameHook = null;
-            OFN.LPTemplateName = null;
-            OFN.LPStrDefinedExtension = null;
-            OFN.NFileOffset = 0;
-            OFN.FlagsEx = (OpenFileDialogFlagsEx)0;
-            OFN.HInstance = IntPtr.Zero;
-            OFN.LPTemplateName = null; 
-            
-            OFN.HwndOwner = HWND; 
-
-            bool Result = StandardDialogNativeMethods.GetOpenFileName(OFN);
-
-            if (!Result)
-            {
-                // TEMP: API TEST
-                Logging.Log($"Comdlg32 error - TEMP - {(CommDlgExtendedError)StandardDialogNativeMethods.CommDlgExtendedError()}");
-                return; 
-            }
-            */
             
 #endif
         }
+
+
     }
 }

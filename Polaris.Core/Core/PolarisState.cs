@@ -104,5 +104,8 @@ namespace Polaris.Core
         {
             DataModel.Shutdown();
         }
+
+        public void Clear() => DataModel.Clear();
+
     }
 }

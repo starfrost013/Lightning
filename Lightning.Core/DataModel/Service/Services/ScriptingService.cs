@@ -36,6 +36,8 @@ namespace Lightning.Core.API
             ScriptGlobals.LuaState = new Lua();
             ScriptGlobals.LuaState.LoadCLRPackage();
 
+            // Load Lightning.Core
+            LoadAPI();
             // Register the Scripting API.
             RegisterAPI();
 
@@ -56,7 +58,7 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Registers a method for the usage of scripts.
+        /// Registers a global method for the usage of scripts.
         /// 
         /// ONLY THROW FATAL ERRORS!!!!!
         /// </summary>

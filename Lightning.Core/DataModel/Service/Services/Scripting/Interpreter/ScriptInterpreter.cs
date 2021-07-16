@@ -93,8 +93,7 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Interprets an individual Token in each script.
-        /// 
+        /// Runs a Lua script.
         /// </summary>
         /// <param name="T0"></param>
         private void InterpretToken(Script Sc, bool IsLua = false, Lua LuaState = null)

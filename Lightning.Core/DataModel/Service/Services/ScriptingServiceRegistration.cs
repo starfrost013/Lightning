@@ -8,6 +8,12 @@ namespace Lightning.Core.API
 {
     public partial class ScriptingService
     {
+        public void LoadAPI()
+        {
+            Logging.Log("Loading Lightning.Core for Lua use...", ClassName); 
+            ScriptGlobals.LuaState.DoString("luanet.load_assembly('Lightning.Core')", "LuaNET Lightning Namespace Loader");
+        }
+
         public void RegisterAPI()
         {
 
@@ -15,7 +21,7 @@ namespace Lightning.Core.API
             
 #if DEBUG
             // Test method registration
-            RegisterMethod("Lightning.Core.API;ScriptingTest;ScTest");
+            //RegisterMethod("Lightning.Core.API;ScriptingTest;ScTest");
 #endif
             //RegisterMethod("Lightning.Core.API;Instance;AddChild");
 

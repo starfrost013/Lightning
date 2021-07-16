@@ -100,8 +100,7 @@ namespace Lightning.Core
         {
             if (BuildDate == null
                 || Owner == null
-                || !IsLoaded 
-                )
+                || !IsLoaded )
             {
                 return null;
             }

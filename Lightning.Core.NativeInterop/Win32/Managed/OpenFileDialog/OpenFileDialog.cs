@@ -10,7 +10,7 @@ namespace Lightning.Core.NativeInterop.Win32
     /// <summary>
     /// OpenFileDialog
     /// 
-    /// July 14, 2021 (modified July 15, 2021: Functional)
+    /// July 14, 2021 (modified July 15, 2021: FunctionalA)
     /// 
     /// Defines an actually nice API for using the W32 common Open File Dialog.
     /// </summary>
@@ -27,9 +27,10 @@ namespace Lightning.Core.NativeInterop.Win32
         public OpenFileDialogFilter Filter { get; set; }
 
         /// <summary>
-        /// Gets or sets a boolean that determine if a
+        /// Gets or sets a boolean that determine if 
         /// </summary>
         public bool ReadOnly { get; set; }
+
         /// <summary>
         /// Gets or sets a boolean that determines if the user will be prompted on overwrite. Alternative to <see cref="Flags"/>.  Will be disregarded if <see cref="Flags"/> is set.
         /// </summary>
@@ -148,8 +149,35 @@ namespace Lightning.Core.NativeInterop.Win32
                 OFD.LPInitialDirectory = null;
             }
 
-            StandardDialogNativeMethods.GetOpenFileName(OFD);
-            FileName = OFD.LPFileName; 
+            bool Result = StandardDialogNativeMethods.GetOpenFileName(OFD);
+
+            bool CallWasSuccessful = false;
+
+            int ErrorCode = 0; // INIT 
+
+            if (!Result)
+            {
+                ErrorCode = StandardDialogNativeMethods.CommDlgExtendedError();
+
+                if (ErrorCode == 0)
+                {
+                    CallWasSuccessful = true;
+                }
+            }
+            else
+            {
+                CallWasSuccessful = true;
+            }
+
+            if (CallWasSuccessful)
+            {
+                FileName = OFD.LPFileName;
+            }
+            else
+            {
+                throw new Win32Exception($"COMDLG32 error ==> {(CommDlgExtendedError)ErrorCode}");
+            }
+            
 
             
         }

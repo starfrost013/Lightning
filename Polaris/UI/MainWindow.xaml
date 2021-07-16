@@ -18,7 +18,7 @@
         <Menu x:Name="Polaris_Menu" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20">
             <MenuItem x:Name="Polaris_WelcomeToLightningSDK" Header="LightningSDK" IsEnabled="False"></MenuItem>
             <MenuItem x:Name="Polaris_FileMenu" Header="File">
-                <MenuItem x:Name="Polaris_FileMenu_New" Header="New"></MenuItem>
+                <MenuItem x:Name="Polaris_FileMenu_New" Header="New" Click="Polaris_FileMenu_New_Click"></MenuItem>
                 <MenuItem x:Name="Polaris_FileMenu_Open" Header="Open" Click="Polaris_FileMenu_Open_Click"></MenuItem>
                 <MenuItem x:Name="Polaris_FileMenu_Save" Header="Save"></MenuItem>
                 <MenuItem x:Name="Polaris_FileMenu_SaveAs" Header="Save as"></MenuItem>
