@@ -155,20 +155,13 @@ namespace Lightning.Core.API
 
                         if (Args.GameXMLPath != null)
                         {
-                            DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelDeserialiser");
-
-                            DataModel DM = DMS.DDMS_Deserialise(Args.GameXMLPath);
-
-                            // Check for a failure
-                            if (DM == null)
+                            if (LoadFile(Args.GameXMLPath))
                             {
-                                HandleFailureToOpenDocument();
+                                SCM.InitServiceUpdates();
                             }
                             else
                             {
-                                // Enter the main loop.
-
-                                SCM.InitServiceUpdates();
+                                HandleFailureToOpenDocument();
                             }
                         }
                         else
@@ -188,6 +181,29 @@ namespace Lightning.Core.API
             }
             
             
+        }
+
+        /// <summary>
+        /// Private: Loads a file for the
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <returns></returns>
+        public static bool LoadFile(string Path) // todo: LoadDataModelResult in DDMS
+        {
+            DataModelDeserialiser DMS = (DataModelDeserialiser)CreateInstance("DataModelDeserialiser");
+
+            DataModel DM = DMS.DDMS_Deserialise(Path);
+
+            // Check for a failure
+            if (DM == null)
+            {
+                return false; 
+            }
+            else
+            {
+                // Enter the main loop.
+                return true;
+            }
         }
 
         private static bool Init_VerifyCompatibleSystem()

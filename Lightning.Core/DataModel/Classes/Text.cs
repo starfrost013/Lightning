@@ -156,6 +156,14 @@ namespace Lightning.Core.API
 
         }
 
+        /// <summary>
+        /// Gets the font size of a font.
+        /// </summary>
+        /// <returns></returns>
+        internal Vector2 GetFontSize()
+        {
+
+        }
         private FindFontResult FindFont()
         {
             // this is basically the only SOLUTION to this until we figure out how to PASS SHIT from the FUCKING SERVICE

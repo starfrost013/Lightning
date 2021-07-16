@@ -37,7 +37,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Border x:Name="Polaris_Button_Border" CornerRadius="3" BorderThickness="0.6">
+                        <Border x:Name="Polaris_Button_Border" CornerRadius="3" BorderThickness="1" BorderBrush="#a0a0a0">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <GradientStop Color="#e0e0e0" Offset="0.0"></GradientStop>
@@ -45,13 +45,6 @@
                                     <GradientStop Color="#e0e0e0" Offset="1.0"></GradientStop>
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <Border.BorderBrush>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#b4b4b4" Offset="0.0"></GradientStop>
-                                    <GradientStop Color="#d0d0d0" Offset="0.5"></GradientStop>
-                                    <GradientStop Color="#b4b4b4" Offset="1.0"></GradientStop>
-                                </LinearGradientBrush>
-                            </Border.BorderBrush>
                         </Border>
                         
                         <ContentPresenter x:Name="Polaris_Button_ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
@@ -109,16 +102,34 @@
         <Setter Property="Foreground" Value="#ff0000"></Setter>
     </Style>
 
-
     <Style TargetType="local:ScriptEditorCore">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
-                        <Border x:Name="ScriptEditorCore_Core_Border" Width="100" Height="40" CornerRadius="3">
+                        <Border x:Name="ScriptEditorCore_Core_Border" CornerRadius="3">
                             <Rectangle x:Name="ScriptEditorCore_Core_BorderRectangle" Fill="#FFFFFF"></Rectangle>
                         </Border>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Menu">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderThickness="1" BorderBrush="#a0a0a0">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0.0" Color="#a0a0a0"></GradientStop>
+                                <GradientStop Offset="0.5" Color="#ffffff"></GradientStop>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ItemsPresenter/>
+                    </Border>
+                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

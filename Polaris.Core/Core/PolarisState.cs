@@ -107,5 +107,6 @@ namespace Polaris.Core
 
         public void Clear() => DataModel.Clear();
 
+        public bool LoadFile(string FileName) => DataModel.LoadFile(FileName);
     }
 }

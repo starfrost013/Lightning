@@ -23,12 +23,34 @@ namespace Lightning.Core.API
         private bool BUTTON_INITIALISED { get; set; }
 
         private Rectangle ItemRectangle { get; set; }
+
         private Text ItemText { get; set; }
 
         /// <summary>
         /// Will this Button be filled?
         /// </summary>
         public bool Fill { get; set; }
+
+        /// <summary>
+        /// If true, the text of this Button will be bold.
+        /// </summary>
+        public bool Bold { get; set; }
+
+        /// <summary>
+        /// If true, the text of this Button will be italic.
+        /// </summary>
+        public bool Italic { get; set; }
+
+        /// <summary>
+        /// If true, the text of this Button will be underlined.
+        /// </summary>
+        public bool Underline { get; set; }
+        
+        /// <summary>
+        /// If true, the text of this Button will be strikethrough.
+        /// </summary>
+        public bool Strikethrough { get; set; }
+
 
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
@@ -38,7 +60,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                DoRender();
+                DoRender(SDL_Renderer, Tx);
             }
             
         }
@@ -50,23 +72,43 @@ namespace Lightning.Core.API
             if (Position == null) Position = new Vector2(0, 0);
             if (Colour == null) Colour = new Color4(255, 255, 255, 255);
             if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0); // do not draw by default
+            if (BackgroundColour == null) BackgroundColour = new Color4(255, 0, 0, 0);
+
+            if (FontFamily == null
+                || FontFamily == "")
+            {
+                ErrorManager.ThrowError(ClassName, "MustDefineFontForGuiElementException", "Buttons require their FontFamily property to be set.");
+                
+                return; 
+            }
 
             ItemRectangle.Position = Position;
             ItemRectangle.Colour = Colour;
-            ItemRectangle.BorderColour = BorderColour;
             ItemRectangle.Fill = Fill;
             ItemRectangle.BorderWidth = BorderWidth;
-
+            ItemRectangle.BorderColour = BorderColour;
+            ItemRectangle.Size = Size;
+            
             ItemText = (Text)DataModel.CreateInstance("Text", this);
 
+            ItemText.Content = Content;
             ItemText.FontFamily = FontFamily;
-            
+            ItemText.Position = Position;
+            ItemText.Bold = Bold;
+            ItemText.Italic = Italic;
+            ItemText.Underline = Underline;
+            ItemText.Strikethrough = Strikethrough;
+            ItemText.BorderWidth = BorderWidth;
+            ItemText.BorderColour = BorderColour;
+
             BUTTON_INITIALISED = true; 
         }
 
-        private void DoRender()
+        private void DoRender(Renderer SDL_Renderer, Texture Tx)
         {
+            ItemRectangle.Render(SDL_Renderer, Tx);
 
+            ItemText.Render(SDL_Renderer, Tx);
         }
     }
 }

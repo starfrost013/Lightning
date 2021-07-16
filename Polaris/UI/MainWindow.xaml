@@ -27,7 +27,7 @@
                 <Separator/>
                 <MenuItem x:Name="Polaris_FileMenu_EditGlobalSettings" Header="Edit Global Settings"></MenuItem>
                 <MenuItem x:Name="Polaris_FileMenu_Licensing" Header="License"></MenuItem>
-                <MenuItem x:Name="Polaris_FileMenu_Exit" Header="Exit"></MenuItem>
+                <MenuItem x:Name="Polaris_FileMenu_Exit" Header="Exit" Click="Polaris_FileMenu_Exit_Click"></MenuItem>
             </MenuItem>
             <MenuItem x:Name="Polaris_EditMenu" Header="Edit">
                 <MenuItem x:Name="Polaris_EditMenu_GameMetadata" Header="Game Metadata..."></MenuItem>

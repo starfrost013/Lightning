@@ -67,7 +67,7 @@ namespace Polaris
 
         private void Polaris_FileMenu_New_Click(object sender, RoutedEventArgs e)
         {
-
+            PolarisState.Clear(); 
         }
 
         /// <summary>
@@ -91,10 +91,26 @@ namespace Polaris
             OFD.ShowDialog(HWND);
 
             Logging.Log(OFD.FileName, "Polaris UI Event Response Handler");
+
+            if (OFD.FileName != "")
+            {
+                // todo: result class for this
+                bool LoadFileResult = PolarisState.LoadFile(OFD.FileName); 
+
+                if (LoadFileResult)
+                {
+                    return;
+                }
+                else
+                {
+                    ErrorManager.ThrowError("Polaris", "FailedToOpenLgxException");
+                }
+            }
             
 #endif
         }
 
+        private void Polaris_FileMenu_Exit_Click(object sender, RoutedEventArgs e) => PolarisState.Shutdown(); 
 
     }
 }

@@ -40,7 +40,12 @@ namespace Lightning.Core.NativeInterop.Win32
                 OpenFileDialogFilterItem FilterItem = Items[i];
 
                 SB.Append(FilterItem.ToString()); // add each filter
-                if (i < (Items.Count - 1)) SB.Append("|"); // if we are not the last item, append the pipe to delimit items
+                if (i < (Items.Count - 1))
+                {
+                    // terminated by two 0x00s
+                    SB.Append("\0");
+                    SB.Append("\0");
+                }
             }
 
             return SB.ToString(); 

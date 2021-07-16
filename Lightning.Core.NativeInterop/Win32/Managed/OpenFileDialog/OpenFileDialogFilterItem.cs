@@ -45,7 +45,7 @@ namespace Lightning.Core.NativeInterop.Win32
                     SB.Append($"{Description}");
                 }
 
-                SB.Append("|"); // pipe is used to separate items
+                SB.Append("\0"); // pipe is used to separate items
 
                 SB.Append($"*.{Extension}");
 

@@ -294,5 +294,35 @@ SCM init refactoring	0%
 Events			75%
 Documentation		5%
 
+7/16
+
+Grouping 		Complete
+Ungrouping		Complete
+Render refactoring	40% (will be completed with Animation API)
+Animation API		0%
+Primitive API		Complete
+Removal of OUS		Complete
+DDMS refactor		25%
+Camera API		Complete except optimisation
+Functional Scripting API20%
+Removal of Error XML	Complete
+Color3Converter		Complete
+Color4Converter		Complete
+SDK installer		0%
+CameraMoveSpeed		Complete
+PhysicsService		0%
+ScriptingService	85% 
+Player API		50%
+L./L.C.API split	Complete
+IDE			25%
+DDMS Saving		Complete
+Sound API		Complete*
+Humanoid		50%
+Sky			Complete
+UI			50% 
+SCM init refactoring	15%
+Events			75%
+Documentation		5%
+
 More tasks may be required
 *requires transfer to mix_chunk	
