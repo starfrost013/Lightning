@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities; 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,6 +22,13 @@ namespace Lightning.Core.API
         public string FontFamily { get; set; }
         
         private bool BUTTON_INITIALISED { get; set; }
+
+        /// <summary>
+        /// TEMP: Defines init failure
+        /// 
+        /// TODO: Result class
+        /// </summary>
+        private bool BUTTON_INITIALISATION_FAILED { get; set; }
 
         private Rectangle ItemRectangle { get; set; }
 
@@ -51,9 +59,15 @@ namespace Lightning.Core.API
         /// </summary>
         public bool Strikethrough { get; set; }
 
+        /// <summary>
+        /// Padding around the text. 
+        /// </summary>
+        public Vector2 Padding { get; set; }
 
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
+            if (BUTTON_INITIALISATION_FAILED) return; 
+            
             if (!BUTTON_INITIALISED)
             {
                 Init();
@@ -73,6 +87,7 @@ namespace Lightning.Core.API
             if (Colour == null) Colour = new Color4(255, 255, 255, 255);
             if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0); // do not draw by default
             if (BackgroundColour == null) BackgroundColour = new Color4(255, 0, 0, 0);
+            if (Size == null) Size = new Vector2(50, 25);
 
             if (FontFamily == null
                 || FontFamily == "")
@@ -83,37 +98,89 @@ namespace Lightning.Core.API
             }
 
             ItemRectangle.Position = Position;
+            
             ItemRectangle.Colour = Colour;
             ItemRectangle.Fill = Fill;
             ItemRectangle.BorderWidth = BorderWidth;
             ItemRectangle.BorderColour = BorderColour;
-            ItemRectangle.Size = Size;
             
             ItemText = (Text)DataModel.CreateInstance("Text", this);
 
             ItemText.Content = Content;
             ItemText.FontFamily = FontFamily;
+            
 
-            if (HorizontalAlignment == Alignment.None)
+            if (ItemRectangle.Size == null)
             {
-                ItemText.Position = Position;
+                FindFontResult FFR = ItemText.FindFont();
+
+                if (!FFR.Successful
+                    || FFR.Font == null)
+                {
+                    BUTTON_INITIALISATION_FAILED = true;
+                    return; 
+                }
+                else
+                {
+                    Font FontOfText = FFR.Font; 
+                    Vector2 FontSize = ItemText.GetApproximateFontSize(FontOfText);
+
+                    if (FontSize == null)
+                    {
+                        ItemRectangle.Size = Size; 
+                    }
+                    else
+                    {
+                        if (Padding == null)
+                        {
+                            ItemRectangle.Size = FontSize + new Vector2(10, 10); 
+                        }
+                        else
+                        {
+                            ItemRectangle.Size = FontSize + Padding;
+                        }
+                        
+                    }
+                }
+                
+            }
+
+            if (HorizontalAlignment == Alignment.None
+                || HorizontalAlignment == Alignment.Left)
+            {
+                ItemText.Position.X = Position.X;
             }
             else
             {
-                if (HorizontalAlignment == Alignment.Left)
-                {
-                    ItemText.Position = ItemRectangle.Position;
-                }
-                else if (HorizontalAlignment == Alignment.Centre)
+                if (HorizontalAlignment == Alignment.Centre)
                 {
                     // Try to approximate centering.
                     ItemText.Position = new Vector2((ItemRectangle.Position.X) - (ItemRectangle.Position.X / 2) - ((ItemRectangle.Size.X / Content.Length) ), ItemRectangle.Position.Y);
                 }
-                else if (HorizontalAlignment == Alignment.Right)
+                else if (HorizontalAlignment == Alignment.Right) // ew elseif
                 {
                     ItemText.Position = new Vector2(ItemRectangle.Position.X + ItemRectangle.Size.X, ItemRectangle.Position.Y);
                 }
 
+            }
+
+            if (VerticalAlignment == Alignment.None
+                || VerticalAlignment == Alignment.Left
+                || VerticalAlignment == Alignment.Top)
+            {
+                ItemText.Position.Y = Position.Y;
+            }
+            else
+            {
+                if (VerticalAlignment == Alignment.Centre)
+                {
+                    ItemText.Position.Y = ItemRectangle.Position.Y - (ItemRectangle.Position.Y / 2) - (ItemRectangle.Size.Y / Content.Length); 
+                }
+                else if (VerticalAlignment == Alignment.Right
+                    || VerticalAlignment == Alignment.Bottom) // ew elseif
+                {
+                    ItemText.Position.Y = ItemRectangle.Position.Y + ItemRectangle.Size.Y; 
+                }
             }
             
             ItemText.Bold = Bold;
@@ -122,7 +189,7 @@ namespace Lightning.Core.API
             ItemText.Strikethrough = Strikethrough;
             ItemText.BorderWidth = BorderWidth;
             ItemText.BorderColour = BorderColour;
-
+            
             BUTTON_INITIALISED = true; 
         }
 

@@ -31,6 +31,26 @@ namespace Lightning.Core.API
         private Rectangle ItemRectangle { get; set; }
         private Text ItemText { get; set;  }
 
+        /// <summary>
+        /// See <see cref="Text.Bold"/>.
+        /// </summary>
+        public bool Bold { get; set; }
+
+        /// <summary>
+        /// See <see cref="Text.Italic"/>.
+        /// </summary>
+        public bool Italic { get; set; }
+
+        /// <summary>
+        /// See <see cref="Text.Underline"/>.
+        /// </summary>
+        public bool Underline { get; set; }
+
+        /// <summary>
+        /// See <see cref="Text.Strikethrough"/>.
+        /// </summary>
+        public bool Strikethrough { get; set; }
+
         public MenuState State { get; set; }
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
@@ -56,6 +76,7 @@ namespace Lightning.Core.API
             // Set default values if the user has not specified default values.
             if (Size.X == 0) Size.X = 50;
             if (Size.Y == 0) Size.Y = 20;
+
 
             if (Position == null) Position = new Vector2(0, 0);
 
@@ -103,6 +124,11 @@ namespace Lightning.Core.API
             ItemText.Colour = Colour;
             ItemText.FontFamily = FontFamily;
             ItemText.Position = Position;
+
+            ItemText.Bold = Bold;
+            ItemText.Italic = Italic;
+            ItemText.Underline = Underline;
+            ItemText.Strikethrough = Strikethrough;
 
             MENUITEM_INITIALISED = true;
         }

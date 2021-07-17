@@ -116,7 +116,12 @@
             <MenuItem Position="0,460" Content="Test" BackgroundColour="255,255,0,0" Colour="255,0,0,0" Size="50,20" FontFamily="Arial.18pt" FontSize="18"></MenuItem>
           </MenuItem>
         </Menu>
-        <Button Content="I am a button" Position="400,150" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="50,20" BorderColour="255,0,0,255"></Button>
+        <Button Content="I am an automatically resizing button using tnos of temporary code because I forgot about class hierarchy and did buttons before textboxes OOPS" Position="400,150" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" BorderColour="255,0,0,255" BorderWidth="3" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+        <Button Content="I am a button" Position="400,202" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Centre" VerticalAlignment="Top"></Button>
+        <Button Content="I am a button" Position="400,254" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Right" VerticalAlignment="Top"></Button>
+        <Button Content="I am a button" Position="400,306" Colour="255,255,255,255" BackgroundColour="255,255,0,0" Fill="True" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+        <Button Content="I am a button" Position="400,358" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Centre"></Button>
+        <Button Content="I am a button" Position="400,410" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Button>
       </SurfaceGui>
     </GuiRoot>
     

@@ -24,6 +24,11 @@ namespace Lightning.Core.API
         Left = 1,
 
         /// <summary>
+        /// Top text alignment
+        /// </summary>
+        Top = Left,
+
+        /// <summary>
         /// Centre text alignment
         /// </summary>
         Centre = 2,
@@ -32,6 +37,11 @@ namespace Lightning.Core.API
         /// Right text alignment
         /// </summary>
         Right = 3,
+
+        /// <summary>
+        /// Bottom text alignment
+        /// </summary>
+        Bottom = Right,
 
         /// <summary>
         /// Justify text
