@@ -18,9 +18,14 @@ namespace Lightning.Core.API
         internal override InstanceTags Attributes => base.Attributes | InstanceTags.ParentCanBeNull | InstanceTags.UsesCustomRenderPath; // THESE twomust be set for all guielements
 
         /// <summary>
-        /// Alignment of this element. 
+        /// The horizontal alignment of this element. 
         /// </summary>
-        public Alignment Alignment { get; set; }
+        public Alignment HorizontalAlignment { get; set; }
+
+        /// <summary>
+        /// The vertical alignment of this element.
+        /// </summary>
+        public Alignment VerticalAlignment { get; set; }
 
         /// <summary>
         /// This is completely fucking bullshit but is required for screengui and it makes me sad

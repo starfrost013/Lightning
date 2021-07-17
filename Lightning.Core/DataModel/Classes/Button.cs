@@ -93,7 +93,29 @@ namespace Lightning.Core.API
 
             ItemText.Content = Content;
             ItemText.FontFamily = FontFamily;
-            ItemText.Position = Position;
+
+            if (HorizontalAlignment == Alignment.None)
+            {
+                ItemText.Position = Position;
+            }
+            else
+            {
+                if (HorizontalAlignment == Alignment.Left)
+                {
+                    ItemText.Position = ItemRectangle.Position;
+                }
+                else if (HorizontalAlignment == Alignment.Centre)
+                {
+                    // Try to approximate centering.
+                    ItemText.Position = new Vector2((ItemRectangle.Position.X) - (ItemRectangle.Position.X / 2) - ((ItemRectangle.Size.X / Content.Length) ), ItemRectangle.Position.Y);
+                }
+                else if (HorizontalAlignment == Alignment.Right)
+                {
+                    ItemText.Position = new Vector2(ItemRectangle.Position.X + ItemRectangle.Size.X, ItemRectangle.Position.Y);
+                }
+
+            }
+            
             ItemText.Bold = Bold;
             ItemText.Italic = Italic;
             ItemText.Underline = Underline;
@@ -110,5 +132,7 @@ namespace Lightning.Core.API
 
             ItemText.Render(SDL_Renderer, Tx);
         }
+
+        
     }
 }
