@@ -5,6 +5,13 @@ using System.Text;
 
 namespace Lightning.Core
 {
+    /// <summary>
+    /// GetErrorResult
+    /// 
+    /// March 7, 2021 (modified July 18, 2021: Add comment block)
+    /// 
+    /// Defines a result class for errors.
+    /// </summary>
     public class GetErrorResult : IResult
     {
         public Error Error { get; set; }

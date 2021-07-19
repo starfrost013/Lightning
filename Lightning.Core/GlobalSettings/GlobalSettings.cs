@@ -52,6 +52,11 @@ namespace Lightning.Core
         public string DebugDefaultFontPath { get; set; }
 
         /// <summary>
+        /// The default splash screen
+        /// </summary>
+        public string DefaultSplashScreen { get; set; }
+
+        /// <summary>
         /// The path to Lightning.xsd, the XML schema for LGX files.
         /// </summary>
         public string LightningXsdPath { get; set; }
@@ -65,8 +70,6 @@ namespace Lightning.Core
         /// Use the AST Tokeniser.
         /// </summary>
         public bool UseASTTokeniser { get; set; }
-
-
 
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 

@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.3.719.21198</AssemblyVersion>
-    <FileVersion>0.3.719.21198</FileVersion>
+    <AssemblyVersion>0.3.723.21200</AssemblyVersion>
+    <FileVersion>0.3.723.21200</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>Lightning Runtime</PackageId>
     <Description>Lightning Runtime</Description>
@@ -50,6 +50,7 @@
     <None Remove="Content\Sounds\BREAKING_NEWS.mp3" />
     <None Remove="Content\Sounds\ItSeemsTodayThatAllYouSeeIsViolenceInMoviesAndSexOnTV.mp3" />
     <None Remove="Content\Sounds\test.mp3" />
+    <None Remove="Content\Splash\Splash.png" />
     <None Remove="Content\Tests\AllClasses.xml" />
     <None Remove="Content\Tests\Empty.xml" />
     <None Remove="Content\Tests\Performance\1000primitives.xml" />
@@ -108,6 +109,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sounds\test.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Splash\Splash.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tests\Empty.xml">

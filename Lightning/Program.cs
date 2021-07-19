@@ -45,8 +45,10 @@ namespace Lightning
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("Light");
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("ning");
+                    Console.Write("ning ");
                     Console.ForegroundColor = ConsoleColor.Gray;
+
+                    Console.WriteLine("Pre-Alpha SDK release");
 
                     // Load version information
                     LVersion.LoadVersion();
@@ -54,7 +56,7 @@ namespace Lightning
                     // Display platform information
                     Platform.PopulatePlatformInformation(); 
 
-                    Console.WriteLine($"Running on {Platform.PlatformName} -- version {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})"); // 2021-06-26
+                    Console.WriteLine($"Running on {Platform.PlatformName}\nVersion {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})"); // 2021-06-26
 
                     // Display version information
                     string LVersionString = LVersion.GetVersionString();

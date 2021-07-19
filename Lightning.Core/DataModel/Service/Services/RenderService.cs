@@ -280,14 +280,22 @@ namespace Lightning.Core.API
                 }
                 else
                 {
+
+                    
+
                     Renderer = SDIR.Renderer;
+
+                    InitRendering_DisplaySplash();
+
                     InitRendering_GetBlendMode();
 
                     InitRendering_LoadAndCacheTextures();
 
-                    RENDERER_INITIALISED = true;
-
                     TriggerOnSpawn();
+
+                    Workspace Ws = DataModel.GetWorkspace();
+
+                    RENDERER_INITIALISED = true;
 
                     return;
                 }
@@ -300,6 +308,34 @@ namespace Lightning.Core.API
             }
 
 
+        }
+
+        private void InitRendering_DisplaySplash()
+        {
+            SplashScreen SS = (SplashScreen)DataModel.CreateInstance("SplashScreen");
+
+            GetInstanceResult GIR = SS.GetFirstChildOfType("Texture");
+
+            if (!GIR.Successful
+                || GIR.Instance == null)
+            {
+                return;
+            }
+            else
+            {
+                Texture Tx = (Texture)GIR.Instance;
+
+                Tx.Position = new Vector2(0, 0);
+                Tx.Size = Renderer.WindowSize;
+
+                Tx.SDLTexturePtr = SDL_image.IMG_Load(Tx.Path);
+
+                SS.Render(Renderer, Tx);
+
+                SDL.SDL_RenderPresent(Renderer.RendererPtr); 
+            }
+
+            
         }
 
         /// <summary>
