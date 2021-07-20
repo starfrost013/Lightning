@@ -5,7 +5,7 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// MouseEnterEvent
+    /// MouseLeaveEvent
     /// 
     /// July 19, 2021
     /// 
@@ -13,9 +13,9 @@ namespace Lightning.Core.API
     /// </summary>
     /// <param name="Sender">The sender of this object - always <see cref="RenderService"/></param>
     /// <param name="EventArguments">Event arguments - there are none.</param>
-    public delegate void MouseEnterEvent
+    public delegate void MouseLeaveEvent
     (
         object Sender,
-        EventArgs Arguments
+        EventArgs EventArguments
     );
 }

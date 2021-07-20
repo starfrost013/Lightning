@@ -108,7 +108,8 @@ namespace Lightning.Core.API
 
             ItemText.Content = Content;
             ItemText.FontFamily = FontFamily;
-            
+
+            Vector2 FontSize = null;
 
             if (ItemRectangle.Size == null)
             {
@@ -123,7 +124,7 @@ namespace Lightning.Core.API
                 else
                 {
                     Font FontOfText = FFR.Font; 
-                    Vector2 FontSize = ItemText.GetApproximateFontSize(FontOfText);
+                    FontSize = ItemText.GetApproximateFontSize(FontOfText);
 
                     if (FontSize == null)
                     {
@@ -154,8 +155,16 @@ namespace Lightning.Core.API
             {
                 if (HorizontalAlignment == Alignment.Centre)
                 {
-                    // Try to approximate centering.
-                    ItemText.Position = new Vector2((ItemRectangle.Position.X) - (ItemRectangle.Position.X / 2) - ((ItemRectangle.Size.X / Content.Length) ), ItemRectangle.Position.Y);
+                    if (FontSize != null)
+                    {
+                        ItemText.Position = new Vector2((ItemRectangle.Position.X) + (ItemRectangle.Size.X / 2) - (FontSize.X / 2), ItemRectangle.Position.Y);
+                    }
+                    else
+                    {
+                        // Approximate centering
+                        ItemText.Position = new Vector2((ItemRectangle.Position.X) + (ItemRectangle.Size.X / 2), ItemRectangle.Position.Y);
+                    }
+
                 }
                 else if (HorizontalAlignment == Alignment.Right) // ew elseif
                 {
@@ -174,7 +183,14 @@ namespace Lightning.Core.API
             {
                 if (VerticalAlignment == Alignment.Centre)
                 {
-                    ItemText.Position.Y = ItemRectangle.Position.Y - (ItemRectangle.Position.Y / 2) - (ItemRectangle.Size.Y / Content.Length); 
+                    if (FontSize != null)
+                    {
+                        ItemText.Position.Y = ItemRectangle.Position.Y + (ItemRectangle.Size.Y / 2) - (FontSize.Y / 2);
+                    }
+                    else
+                    {
+                        ItemText.Position.Y = ItemRectangle.Position.Y + (ItemRectangle.Size.Y / 2);
+                    }
                 }
                 else if (VerticalAlignment == Alignment.Right
                     || VerticalAlignment == Alignment.Bottom) // ew elseif

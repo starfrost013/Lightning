@@ -28,6 +28,7 @@ namespace Lightning.Core.API
     /// 2021-05-27: ACTUALLY implemented ZIndex (????)
     /// 2021-06-05: Add an FPS meter
     /// 2021-07-13: Add blend mode changing, various other stuff
+    /// 2021-07-19: Implemented many events
     /// 
     /// </summary>
     public class RenderService : Service
@@ -543,10 +544,27 @@ namespace Lightning.Core.API
                         Ctl.KeyCode = CurEvent.key.keysym;
                         HandleKeyDown(Ctl); 
                         return;
+                    case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
+                        HandleMouseUp(CurEvent);
+                        return;
                     case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
                         HandleMouseDown(CurEvent);
-                        return; 
+                        return;
+                    case SDL.SDL_EventType.SDL_WINDOWEVENT:
+                        switch (CurEvent.window.windowEvent)
+                        {
+                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
+                                HandleMouseEnter(CurEvent);
+                                return;
+                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
+                                HandleMouseLeave(CurEvent);
+                                return;
+                            default:
+                                return; 
+                        }
+
                     case SDL.SDL_EventType.SDL_QUIT:
+                        ThrowQuitEvent(CurEvent); 
                         // Less temp
                         ServiceNotification SN = new ServiceNotification { ServiceClassName = ClassName, NotificationType = ServiceNotificationType.Shutdown_ShutDownEngine };
                         ServiceNotifier.NotifySCM(SN); 
@@ -629,9 +647,9 @@ namespace Lightning.Core.API
 
         private void HandleKeyDown(Control Ctl)
         {
-            List<ControllableObject> ControllableObjects = BuildListOfControllableObjects();
+            List<PhysicalObject> ControllableObjects = BuildListOfPhysicalObjects();
 
-            HandleKeyDown_NotifyAllControllableObjects(ControllableObjects, Ctl);
+            HandleKeyDown_NotifyAllPhysicalObjects(ControllableObjects, Ctl);
         }
 
         private List<ControllableObject> BuildListOfControllableObjects()
@@ -653,11 +671,11 @@ namespace Lightning.Core.API
             return ControllableObjects;
         }
 
-        private void HandleKeyDown_NotifyAllControllableObjects(List<ControllableObject> ControllableObjects, Control Ctl)
+        private void HandleKeyDown_NotifyAllPhysicalObjects(List<PhysicalObject> ControllableObjects, Control Ctl)
         {
-            foreach (ControllableObject CO in ControllableObjects)
+            foreach (PhysicalObject PO in ControllableObjects)
             {
-                CO.OnKeyDown(Ctl);
+                PO.OnKeyDown(Ctl);
             }
         }
 
@@ -679,7 +697,7 @@ namespace Lightning.Core.API
             {
                 if (PO.Click != null)
                 {
-                    ClickEventArgs CEA = new ClickEventArgs();
+                    MouseEventArgs CEA = new MouseEventArgs();
 
                     CEA.Button = (MouseButton)CurEvent.button.button;
                     CEA.ClickCount = CurEvent.button.clicks;
@@ -693,6 +711,81 @@ namespace Lightning.Core.API
                 }
                 
             }
+        }
+
+        private void HandleMouseUp(SDL.SDL_Event CurEvent)
+        {
+            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+
+            HandleMouseUp_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects)
+        }
+
+        private void HandleMouseUp_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        {
+            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            {
+                if (PhysicalObject.OnMouseUp != null)
+                {
+                    MouseEventArgs EventArgs = new MouseEventArgs();
+                    EventArgs.Button = (MouseButton)CurEvent.button.button;
+                    EventArgs.ClickCount = CurEvent.button.clicks;
+                    EventArgs.RelativePosition = new Vector2(CurEvent.button.x, CurEvent.button.y);
+
+                    PhysicalObject.OnMouseUp(this, EventArgs);
+                }
+            }
+        }
+
+        private void HandleMouseEnter(SDL.SDL_Event CurEvent)
+        {
+            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+            HandleMouseEnter_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
+        }
+
+        private void HandleMouseEnter_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        {
+            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            {
+                if (PhysicalObject.OnMouseEnter != null)
+                {
+                    PhysicalObject.OnMouseEnter(this, new EventArgs());
+                }
+            }
+        }
+
+        private void HandleMouseLeave(SDL.SDL_Event CurEvent)
+        {
+            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+
+            HandleMouseLeave_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
+        }
+
+        private void HandleMouseLeave_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        {
+            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            {
+                if (PhysicalObject.OnMouseLeave != null)
+                {
+                    PhysicalObject.OnMouseLeave(this, new EventArgs());
+                }
+            }
+        }
+
+        private void ThrowQuitEvent(SDL.SDL_Event CurEvent)
+        {
+            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+
+        }
+
+        private void ThrowQuitEvent_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        {
+
+        }
+
+
+        public override void OnDataSent(object Data)
+        {
+            return;
         }
     }
 }

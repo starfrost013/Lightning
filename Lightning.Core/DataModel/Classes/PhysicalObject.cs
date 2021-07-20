@@ -77,12 +77,46 @@ namespace Lightning.Core.API
         /// <summary>
         /// Click event handler.
         /// 
-        /// Default event handler may be implemented by any Lightning GUI class.
+        /// Default event handler may be implemented by any Lightning class.
         /// 
         /// Scripts may modify the event handler function. 
         /// </summary>
 
-        public ClickEvent Click { get; set; }
+        public MouseDownEvent Click { get; set; }
+
+        /// <summary>
+        /// Mouse enter event handler.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function. 
+        /// </summary>
+        public MouseEnterEvent OnMouseEnter { get; set; }
+
+        /// <summary>
+        /// Mouse leave event handler.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function. 
+        /// </summary>
+        public MouseLeaveEvent OnMouseLeave { get; set; }
+
+        /// <summary>
+        /// Mouse up event handler.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function. 
+        /// </summary>
+        public MouseUpEvent OnMouseUp { get; set; }
+
+        /// <summary>
+        /// Engine shutdown event handler.
+        /// 
+        /// Called on engine shutdown.
+        /// </summary>
+        public ShutdownEvent OnShutdown { get; set; }
 
         /// <summary>
         /// This is called on each frame by the RenderService to tell this object to 
@@ -119,9 +153,24 @@ namespace Lightning.Core.API
 
 
 
-        public virtual void OnClick(object Sender, ClickEventArgs EventArgs)
+        public virtual void OnClick(object Sender, MouseEventArgs EventArgs)
         {
             return; 
+        }
+
+        public virtual void OnKeyDown(Control Control)
+        {
+            // Remove old placeholder code (May 26, 2021)
+            //MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");
+        }
+
+        /// <summary>
+        /// Runs on a key stopping being pressed.
+        /// </summary>
+        /// <param name="Control"></param>
+        public virtual void OnKeyUp(Control Control)
+        {
+
         }
     }
 }

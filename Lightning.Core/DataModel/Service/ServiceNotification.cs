@@ -28,6 +28,11 @@ namespace Lightning.Core.API
         /// </summary>
         public string Reason { get; set; }
 
+        /// <summary>
+        /// Optional data to be sent.
+        /// </summary>
+        public object Data { get; set; }
+
         public ServiceNotification()
         {
 
@@ -38,6 +43,14 @@ namespace Lightning.Core.API
             NotificationType = NotifType;
             ServiceClassName = ClassName;
             Reason = SReason;
+        }
+
+        public ServiceNotification(ServiceNotificationType NotifType, string ClassName, string SReason, object NotifData)
+        {
+            NotificationType = NotifType;
+            ServiceClassName = ClassName;
+            Reason = SReason;
+            Data = NotifData;
         }
     }
 }

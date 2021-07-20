@@ -29,9 +29,14 @@ namespace Lightning.Core.API
         Crash = 2,
 
         /// <summary>
-        /// The service is shutting down due to a crash that cannot be recovered in any circumstances.
+        /// The service is shutting down due to a crash that cannot be recovered under any circumstances.
         /// </summary>
-        UnrecoverableCrash = 3
+        UnrecoverableCrash = 3,
+
+        /// <summary>
+        /// Data is being sent to a service.
+        /// </summary>
+        DataSend = 4
 
     }
 }

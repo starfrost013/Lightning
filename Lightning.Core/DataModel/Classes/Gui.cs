@@ -22,7 +22,7 @@ namespace Lightning.Core.API
             Click += OnClick; 
         }
 
-        public override void OnClick(object Sender, ClickEventArgs EventArgs)
+        public override void OnClick(object Sender, MouseEventArgs EventArgs)
         {
             foreach (Instance Ins in Children)
             {

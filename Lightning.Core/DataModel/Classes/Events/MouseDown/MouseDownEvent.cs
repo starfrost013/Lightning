@@ -11,9 +11,9 @@ namespace Lightning.Core.API
     /// 
     /// Defines a click event for UI.
     /// </summary>
-    public delegate void ClickEvent
+    public delegate void MouseDownEvent
     (
         object Sender,
-        ClickEventArgs EventArgs
+        MouseEventArgs EventArgs
     );
 }

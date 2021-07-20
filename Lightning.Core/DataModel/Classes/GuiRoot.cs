@@ -18,7 +18,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Run when this UI element is clicked.
         /// </summary>
-        public override void OnClick(object Sender, ClickEventArgs EventArgs)
+        public override void OnClick(object Sender, MouseEventArgs EventArgs)
         {
            
             // This is called by RenderService

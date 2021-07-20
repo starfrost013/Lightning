@@ -60,6 +60,6 @@ namespace Lightning.Core.API
             }
         }
 
-        public override void OnClick(object Sender, ClickEventArgs EventArgs) => base.OnClick(Sender, EventArgs);
+        public override void OnClick(object Sender, MouseEventArgs EventArgs) => base.OnClick(Sender, EventArgs);
     }
 }

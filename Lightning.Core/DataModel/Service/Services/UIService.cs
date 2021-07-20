@@ -245,5 +245,11 @@ namespace Lightning.Core.API
         }
 
 
+        public override void OnDataSent(object Data)
+        {
+            return;
+        }
+
+
     }
 }

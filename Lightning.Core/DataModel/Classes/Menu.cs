@@ -112,7 +112,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void OnClick(object Sender, ClickEventArgs EventArgs)
+        public override void OnClick(object Sender, MouseEventArgs EventArgs)
         {
             if (EventArgs.RelativePosition.X > Position.X
                 && EventArgs.RelativePosition.X < (Position.X + Size.X)

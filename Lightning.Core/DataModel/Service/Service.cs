@@ -30,5 +30,6 @@ namespace Lightning.Core.API
         /// </summary>
         public abstract void Poll();
         public abstract ServiceShutdownResult OnShutdown();
+        public abstract void OnDataSent(object Data);
     }
 }

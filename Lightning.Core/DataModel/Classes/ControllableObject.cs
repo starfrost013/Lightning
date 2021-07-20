@@ -15,19 +15,6 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "ControllableObject";
         internal override InstanceTags Attributes => 0;
-        public virtual void OnKeyDown(Control Control)
-        {
-            // Remove old placeholder code (May 26, 2021)
-            //MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");
-        }
 
-        /// <summary>
-        /// Runs on a key stopping being pressed.
-        /// </summary>
-        /// <param name="Control"></param>
-        public virtual void OnKeyUp(Control Control)
-        {
-
-        }
     }
 }

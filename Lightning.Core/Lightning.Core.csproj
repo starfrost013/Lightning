@@ -4,8 +4,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.3.731.21200</AssemblyVersion>
-    <FileVersion>0.3.731.21200</FileVersion>
+    <AssemblyVersion>0.3.737.21200</AssemblyVersion>
+    <FileVersion>0.3.737.21200</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 
@@ -60,6 +60,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataModel\Classes\Events\KeyDown\" />
   </ItemGroup>
 
 </Project>

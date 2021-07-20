@@ -412,6 +412,8 @@ namespace Lightning.Core.API
 
                                 HandleCrashedService(SvcNotification.ServiceClassName);
                                 return;
+                            case ServiceNotificationType.DataSend:
+                                return; 
                         }
                     }
                 }
@@ -461,6 +463,14 @@ namespace Lightning.Core.API
                     ErrorManager.ThrowError(ClassName, "CriticalServiceFailureException", $"The critical service {ClassName} has failed - the engine cannot continue to run.");
                     return; 
             }
+        }
+
+        private void SendDataToService(string ClassName, object Data)
+        {
+            Service Svc = GetService(ClassName);
+
+
+            Svc.OnDataSent(Data);
         }
     }
 }
