@@ -34,9 +34,9 @@ namespace Lightning.Core.API
         UnrecoverableCrash = 3,
 
         /// <summary>
-        /// Data is being sent to a service.
+        /// A message is being sent to a service.
         /// </summary>
-        DataSend = 4
+        MessageSend = 4
 
     }
 }

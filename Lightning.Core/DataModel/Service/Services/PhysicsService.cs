@@ -15,6 +15,8 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "PhysicsService";
         internal override ServiceImportance Importance => ServiceImportance.Low;
+
+        private bool PHYSICSSERVICE_INITIALISED { get; set; }
         public override ServiceStartResult OnStart()
         {
             Logging.Log("PhysicsService starting...", ClassName);
@@ -25,10 +27,28 @@ namespace Lightning.Core.API
 
         public override void Poll()
         {
-            return; 
+            if (!PHYSICSSERVICE_INITIALISED)
+            {
+                Init();
+            }
+            else
+            {
+                return;
+            }
+                 
         }
 
-        public override void OnDataSent(object Data)
+        private void Init()
+        {
+            
+        }
+
+        private PhysicsController GetObjectPhysicsController(ControllableObject CO)
+        {
+            return (PhysicsController)CO.PhysicsController;
+        }
+
+        public override void OnDataSent(ServiceMessage Data)
         {
             return; 
         }

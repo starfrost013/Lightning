@@ -31,7 +31,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Optional data to be sent.
         /// </summary>
-        public object Data { get; set; }
+        public ServiceMessa Data { get; set; }
 
         public ServiceNotification()
         {

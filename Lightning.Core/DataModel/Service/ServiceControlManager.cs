@@ -412,7 +412,8 @@ namespace Lightning.Core.API
 
                                 HandleCrashedService(SvcNotification.ServiceClassName);
                                 return;
-                            case ServiceNotificationType.DataSend:
+                            case ServiceNotificationType.MessageSend:
+
                                 return; 
                         }
                     }
@@ -465,10 +466,9 @@ namespace Lightning.Core.API
             }
         }
 
-        private void SendDataToService(string ClassName, object Data)
+        private void SendDataToService(string ClassName, ServiceMessage Data)
         {
             Service Svc = GetService(ClassName);
-
 
             Svc.OnDataSent(Data);
         }
