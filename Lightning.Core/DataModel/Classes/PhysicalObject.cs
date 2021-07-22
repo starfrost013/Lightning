@@ -75,6 +75,15 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
+        /// Key down event handler.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function. 
+        /// </summary>
+        public KeyDownEvent OnKeyDownHandler { get; set; }
+
+        /// <summary>
         /// Click event handler.
         /// 
         /// Default event handler may be implemented by any Lightning class.

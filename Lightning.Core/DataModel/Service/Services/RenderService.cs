@@ -29,6 +29,7 @@ namespace Lightning.Core.API
     /// 2021-06-05: Add an FPS meter
     /// 2021-07-13: Add blend mode changing, various other stuff
     /// 2021-07-19: Implemented many events
+    /// 2021-07-21: KeyDown now an event
     /// 
     /// </summary>
     public class RenderService : Service
@@ -281,9 +282,6 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-
-                    
-
                     Renderer = SDIR.Renderer;
 
                     InitRendering_DisplaySplash();
@@ -540,9 +538,7 @@ namespace Lightning.Core.API
                 switch (CurEvent.type)
                 {
                     case SDL.SDL_EventType.SDL_KEYDOWN:
-                        Control Ctl = new Control();
-                        Ctl.KeyCode = CurEvent.key.keysym;
-                        HandleKeyDown(Ctl); 
+                        HandleKeyDown(CurEvent); 
                         return;
                     case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
                         HandleMouseUp(CurEvent);
@@ -645,11 +641,11 @@ namespace Lightning.Core.API
             }
         }
 
-        private void HandleKeyDown(Control Ctl)
+        private void HandleKeyDown(SDL.SDL_Event CurEvent)
         {
             List<PhysicalObject> ControllableObjects = BuildListOfPhysicalObjects();
 
-            HandleKeyDown_NotifyAllPhysicalObjects(ControllableObjects, Ctl);
+            HandleKeyDown_NotifyAllPhysicalObjects(ControllableObjects, CurEvent);
         }
 
         private List<ControllableObject> BuildListOfControllableObjects()
@@ -671,11 +667,22 @@ namespace Lightning.Core.API
             return ControllableObjects;
         }
 
-        private void HandleKeyDown_NotifyAllPhysicalObjects(List<PhysicalObject> ControllableObjects, Control Ctl)
+        private void HandleKeyDown_NotifyAllPhysicalObjects(List<PhysicalObject> ControllableObjects, SDL.SDL_Event CurEvent)
         {
             foreach (PhysicalObject PO in ControllableObjects)
             {
-                PO.OnKeyDown(Ctl);
+                if (PO.OnKeyDownHandler != null)
+                {
+                    KeyEventArgs KEA = new KeyEventArgs();
+                    KEA.Key = new Control();
+                    KEA.Key.KeyCode = CurEvent.key.keysym;
+
+                    KEA.Repeat = (CurEvent.key.repeat > 0);
+                    KEA.RepeatCount = CurEvent.key.repeat;
+
+                    PO.OnKeyDownHandler(this, KEA);
+                }
+                
             }
         }
 
@@ -717,7 +724,7 @@ namespace Lightning.Core.API
         {
             List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
 
-            HandleMouseUp_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects)
+            HandleMouseUp_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
         }
 
         private void HandleMouseUp_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)

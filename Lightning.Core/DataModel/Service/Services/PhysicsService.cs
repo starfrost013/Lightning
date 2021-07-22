@@ -33,6 +33,7 @@ namespace Lightning.Core.API
             }
             else
             {
+                UpdatePhysics();
                 return;
             }
                  
@@ -43,9 +44,80 @@ namespace Lightning.Core.API
             
         }
 
-        private PhysicsController GetObjectPhysicsController(ControllableObject CO)
+        private void UpdatePhysics()
         {
-            return (PhysicsController)CO.PhysicsController;
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("ControllableObject");
+
+            if (!GMIR.Successful
+                || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfControllableObjectsException");
+            }
+            else
+            {
+                List<Instance> InstanceList = GMIR.Instances;
+
+                foreach (Instance Instance in InstanceList)
+                {
+                    ControllableObject CO = (ControllableObject)Instance;
+
+                    GetPhysicsControllerResult GPCR = GetPhysicsController(CO);
+
+                    if (GPCR.Successful && CO.PhysicsEnabled)
+                    {
+                        PhysicsController PC = (PhysicsController)GPCR.PhysController;
+
+                        PC.OnTick();
+                    }
+                }
+            }
+
+        }
+
+        private GetPhysicsControllerResult GetPhysicsController(ControllableObject CO) // COMPLETE THIS 2021-07-22 MORNING (ADD TYPE CHECKING ETC)
+        {
+            GetPhysicsControllerResult GPCR = new GetPhysicsControllerResult();
+
+            // Set up the physics controller - throw an error and disable physics if there is none. 
+            if (CO.PhysicsEnabled)
+            {
+                if (CO.PhysicsController == null)
+                {
+
+                    if (CO.Name != null)
+                    {
+                        ErrorManager.ThrowError(ClassName, "EnablePhysicsSetButNoPhysicsControllerSet", $"The object with name {CO.Name} does not have a PhysicsController set, but PhysicsEnabled is set - disabling physics for this object...");
+                    }
+                    else
+                    {
+                        ErrorManager.ThrowError(ClassName, "EnablePhysicsSetButNoPhysicsControllerSet", $"A {CO.ClassName} class name does not have a PhysicsController set, but PhysicsEnabled is set - disabling physics for this object...");
+                        CO.PhysicsEnabled = false;
+
+                    }
+
+                    GPCR.FailureReason = "PhysicsEnabled is set but no PhysicsController is set";
+                    return GPCR;
+                }
+                else
+                {
+                    PhysicsController COPhysCtrl = (PhysicsController)CO.PhysicsController;
+
+                    GPCR.PhysController = COPhysCtrl;
+                    GPCR.Successful = true;
+                    return GPCR;
+                }
+            }
+            else
+            {
+                GPCR.FailureReason = "Physics not enabled";
+                // physicsenabled set ot false by default
+            }
+
+
+            return GPCR; 
+            
         }
 
         public override void OnDataSent(ServiceMessage Data)

@@ -188,49 +188,6 @@ namespace Lightning.Core.API
             NewInstance.OnCreate(); 
         }
 
-
-        /*
-        private bool Add_CheckThatParentIsInCollection(Instance Parent, InstanceCollection CheckParent = null)
-        {
-            // sort of a hack...probably a better way to do this...perhaps do it in the Instancer?  
-            if (CheckParent == null) CheckParent = DataModel.GetState();
-
-            bool MatchFound = false;
-
-            MatchFound = Add_CheckThatParentIsInCollection_PerformCheck(Parent, CheckParent, CheckParent); 
-
-            return MatchFound;
-
-        }
-
-        private bool Add_CheckThatParentIsInCollection_PerformCheck(Instance Parent, InstanceCollection OriginalCheckParent, InstanceCollection CheckParent)
-        {
-            for (int i = 0; i < CheckParent.Count; i++)
-            {
-                Instance Ins = CheckParent.Instances[i];
-
-                if (Ins.Children.Count > 0)
-                {
-                    CheckParent = Ins.Children;
-                    
-                    Add_CheckThatParentIsInCollection_PerformCheck(Parent, OriginalCheckParent, CheckParent);
-                    
-                    // when we return from here, force to the next loop
-                    continue; 
-                }
-
-
-                if (Ins == Parent)
-                {
-                    return true;
-                }
-
-            }
-
-            return false; 
-        }
-        */ 
-
         /// <summary>
         /// Removes an Object from the InstanceCollection. 
         /// 
@@ -451,6 +408,36 @@ namespace Lightning.Core.API
         /// <param name="i"></param>
         /// <returns></returns>
         public Instance this[int i] => Instances[i];
+
+        public GetMultiInstanceResult GetAllChildrenOfType(string ClassName)
+        {
+            List<Instance> NewLI = new List<Instance>();
+
+            return GetAllChildrenOfType_DoGetChildren(NewLI, ClassName);
+
+        }
+
+        private GetMultiInstanceResult GetAllChildrenOfType_DoGetChildren(List<Instance> InstanceList, string ClassName)
+        {
+            GetMultiInstanceResult GIR = new GetMultiInstanceResult();
+
+            foreach (Instance ThisChild in this)
+            {
+                Type ParentType = Type.GetType($"{DataModel.DATAMODEL_NAMESPACE_PATH}.{ClassName}");
+                Type ChildType = ThisChild.GetType();
+
+                if (ThisChild.ClassName == ClassName
+                    || ChildType.IsSubclassOf(ParentType))
+                {
+                    InstanceList.Add(ThisChild);
+                }
+            }
+
+            GIR.Successful = true;
+            GIR.Instances = InstanceList;
+            return GIR;
+        }
+
 
     }
 

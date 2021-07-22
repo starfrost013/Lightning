@@ -62,8 +62,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DataModel\Classes\Events\KeyDown\" />
-  </ItemGroup>
-
 </Project>

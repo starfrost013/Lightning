@@ -300,6 +300,9 @@ namespace Lightning.Core.API
             }
         }
 
+        public GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => Children.GetAllChildrenOfType(ClassName);
+
+        /*
         public GetMultiInstanceResult GetAllChildrenOfType(string ClassName)
         {
             List<Instance> NewLI = new List<Instance>();
@@ -328,6 +331,7 @@ namespace Lightning.Core.API
             GIR.Instances = InstanceList;
             return GIR; 
         }
+        */
 
         public virtual void OnCreate()
         {

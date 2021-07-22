@@ -131,7 +131,10 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "ErrorConvertingHexadecimalColourFormatException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 113 } );
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGuiElementsException", Description = "Failed to get a list of GUI elements", Severity = MessageSeverity.Error, Id = 114 });
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainSurfaceGuiTargetObjectException", Description = "Failed to obtain the target for a SurfaceGui! This SurfaceGui will not be rendered.", Severity = MessageSeverity.Error, Id = 115 });
-         ErrorManager.RegisterError( new Error { Name = "MustDefineFontForGuiElementException", Description = "!!should be overridden in code!!", Severity = MessageSeverity.Error, Id = 115 });   
-     }
+         ErrorManager.RegisterError( new Error { Name = "MustDefineFontForGuiElementException", Description = "!!should be overridden in code!!", Severity = MessageSeverity.Error, Id = 115 });
+         ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfPhysicsControllersException", Description = "Failed to obtain a list of physics controllers!", Severity = MessageSeverity.FatalError, Id = 116 }); // possibly nonfatal?  
+         ErrorManager.RegisterError( new Error { Name = "EnablePhysicsSetButNoPhysicsControllerSet", Description = "!!should be overridden in code!!", Severity = MessageSeverity.Error, Id = 117 });
+          ErrorManager.RegisterError(new Error { Name = "FailedToAcquireListOfControllableObjectsException", Description = "Failed to obtain a list of controllable objects!", Severity = MessageSeverity.FatalError, Id = 118 });
+        }
   }
 }

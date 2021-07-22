@@ -522,6 +522,8 @@ namespace Lightning.Core.API
         /// This gets the DataModel root.. It's the best option available.
         /// </summary>
         /// <returns></returns>
-        internal static InstanceCollection GetState() => State; 
+        internal static InstanceCollection GetState() => State;
+
+        public static GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => State.GetAllChildrenOfType(ClassName); 
     }
 }
