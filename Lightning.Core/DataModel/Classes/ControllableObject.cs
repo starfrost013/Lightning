@@ -16,6 +16,10 @@ namespace Lightning.Core.API
         internal override string ClassName => "ControllableObject";
         internal override InstanceTags Attributes => 0;
 
+        /// <summary>
+        /// The mass of this object. (kg)
+        /// </summary>
+        public double Mass { get; set; }
         public bool PhysicsEnabled { get; set; }
         internal object PhysicsController { get; set; }
     }

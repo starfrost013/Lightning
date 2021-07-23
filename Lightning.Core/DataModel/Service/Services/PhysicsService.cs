@@ -65,12 +65,23 @@ namespace Lightning.Core.API
 
                     GetPhysicsControllerResult GPCR = GetPhysicsController(CO);
 
-                    if (GPCR.Successful && CO.PhysicsEnabled)
+                    if (CO.PhysicsEnabled)
                     {
-                        PhysicsController PC = (PhysicsController)GPCR.PhysController;
+                        if (!GPCR.Successful || CO.PhysicsController == null)
+                        {
+                            ErrorManager.ThrowError(ClassName, "FailedToObtainPhysicsControllerException");
+                            CO.PhysicsEnabled = false;
+                            continue;
+                        }
+                        else
+                        {
+                            PhysicsController PC = (PhysicsController)GPCR.PhysController;
 
-                        PC.OnTick();
+                            PC.OnTick(CO);
+                        }
+
                     }
+
                 }
             }
 
@@ -97,26 +108,35 @@ namespace Lightning.Core.API
 
                     }
 
-                    GPCR.FailureReason = "PhysicsEnabled is set but no PhysicsController is set";
+                    GPCR.FailureReason = "PhysicsEnabled is set but no PhysicsController is set!";
                     return GPCR;
                 }
                 else
                 {
-                    PhysicsController COPhysCtrl = (PhysicsController)CO.PhysicsController;
+                    Type PhysCtrlType = CO.PhysicsController.GetType();
 
-                    GPCR.PhysController = COPhysCtrl;
-                    GPCR.Successful = true;
-                    return GPCR;
+                    if (!PhysCtrlType.IsSubclassOf(typeof(PhysicsController)))
+                    {
+                        GPCR.FailureReason = $"The PhysicsController set is not a PhysicsController - it is of type {PhysCtrlType}!";
+                        return GPCR;
+                    }
+                    else
+                    {
+
+                        GPCR.PhysController = (PhysicsController)CO.PhysicsController;
+                        GPCR.Successful = true;
+                        return GPCR;
+                    }
+
+
                 }
             }
             else
             {
-                GPCR.FailureReason = "Physics not enabled";
+                GPCR.FailureReason = "Physics not enabled for this object";
                 // physicsenabled set ot false by default
+                return GPCR; 
             }
-
-
-            return GPCR; 
             
         }
 

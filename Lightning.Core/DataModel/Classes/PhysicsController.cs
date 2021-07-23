@@ -25,7 +25,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Ran each frame.
         /// </summary>
-        public abstract void OnTick();
+        public abstract void OnTick(ControllableObject Object);
         /// <summary>
         /// Ran on the start of a collision.
         /// </summary>
