@@ -17,9 +17,12 @@ namespace Lightning.Core.API
         internal override ServiceImportance Importance => ServiceImportance.Low;
 
         private bool PHYSICSSERVICE_INITIALISED { get; set; }
+
+        private PhysicsState PhysState { get; set; }
         public override ServiceStartResult OnStart()
         {
             Logging.Log("PhysicsService starting...", ClassName);
+            PhysState = new PhysicsState();
             return new ServiceStartResult { Successful = true };
 
         }
@@ -41,7 +44,14 @@ namespace Lightning.Core.API
 
         private void Init()
         {
-            
+            GetGameSettingResult GGSR_GravityLevel = GS.GetSetting("GravityLevel");
+            GetGameSettingResult GGSR_GravityState = GS.GetSetting("GravityState");
+            GetGameSettingResult GGSR_ObjectKillBoundary = GS.GetSetting("ObjectKillBoundary");
+
+            if (GGSR_GravityLevel.Successful)
+            {
+
+            }
         }
 
         private void UpdatePhysics()

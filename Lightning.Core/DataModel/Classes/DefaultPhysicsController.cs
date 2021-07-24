@@ -29,15 +29,43 @@ namespace Lightning.Core.API
             if (!GIR.Successful
             || GIR.Instance == null)
             {
-                
+                ErrorManager.ThrowError(ClassName, "GameSettingsFailedToLoadException");
+                return; // never runs
             }
             else
             {
                 GameSettings GS = (GameSettings)GIR.Instance;
 
-                GetGameSettingResult GGSR_GravityLevel = GS.GetSetting("GravityLevel");
-                GetGameSettingResult GGSR_GravFlipped = GS.GetSetting("GravityState");
 
+                AABB CAABB = Object.AABB;
+
+                GetMultiInstanceResult GMIR = DataModel.GetAllChildrenOfType("ControllableObject");
+
+                if (CAABB == null) return; 
+
+                if (!GMIR.Successful
+                || GMIR.Instances == null)
+                {
+                    return; // Position and Size must be set somheow for Physics to be enabled, but this error is thrown somewhere else
+                }
+                else
+                {
+                    List<Instance> ControllableObjectList = GMIR.Instances;
+
+                    foreach (Instance Instance in ControllableObjectList)
+                    {
+                        ControllableObject CO = (ControllableObject)Instance;
+
+                        if (CO.AABB == null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                }
             }
 
             return;
