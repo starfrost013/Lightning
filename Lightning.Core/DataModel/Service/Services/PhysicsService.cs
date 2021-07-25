@@ -44,14 +44,85 @@ namespace Lightning.Core.API
 
         private void Init()
         {
-            GetGameSettingResult GGSR_GravityLevel = GS.GetSetting("GravityLevel");
-            GetGameSettingResult GGSR_GravityState = GS.GetSetting("GravityState");
-            GetGameSettingResult GGSR_ObjectKillBoundary = GS.GetSetting("ObjectKillBoundary");
+            Workspace Ws = DataModel.GetWorkspace();
 
-            if (GGSR_GravityLevel.Successful)
+            GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
+
+            if (!GIR.Successful 
+            || GIR.Instance == null)
             {
+                ErrorManager.ThrowError(ClassName, "GameSettingsFailedToLoadException");
+                return; // will never run
+            }
+            else
+            {
+                GameSettings GS = (GameSettings)GIR.Instance;
+
+                GetGameSettingResult GGSR_GravityLevel = GS.GetSetting("GravityLevel");
+                GetGameSettingResult GGSR_GravityState = GS.GetSetting("GravityState");
+                GetGameSettingResult GGSR_ObjectKillBoundary = GS.GetSetting("ObjectKillBoundary");
+
+
+                if (!GGSR_GravityLevel.Successful
+                || GGSR_GravityLevel.Setting == null) 
+                {
+                    PhysState.Gravity = PhysicsState.GravityDefaultValue; // todo: move to globalsettings?
+                }
+                else
+                {
+                    GameSetting GravityLevel_Setting = GGSR_GravityLevel.Setting;
+
+                    Vector2 Gravity = null; 
+
+                    try
+                    {
+                        Gravity = (Vector2)GravityLevel_Setting.SettingValue;
+                        
+                    }
+                    catch (InvalidCastException)
+                    {
+                        Gravity = PhysicsState.GravityDefaultValue;
+                    }
+                    finally
+                    {
+                        PhysState.Gravity = Gravity;
+                    }
+
+
+                }
+
+                if (!GGSR_GravityState.Successful
+                || GGSR_GravityState.Setting == null)
+                {
+                    PhysState.GravityState = GravityState.Normal;
+                }
+                else 
+                {
+                    GameSetting PhysicsState_Setting = GGSR_GravityState.Setting;
+
+                    try
+                    {
+                        GravityState GSState = (GravityState)PhysicsState_Setting.SettingValue;
+                        PhysState.GravityState = GSState;
+                    }
+                    catch (InvalidCastException)
+                    {
+                        PhysState.GravityState = GravityState.Normal;
+                    }
+                }
+
+                if (!GGSR_ObjectKillBoundary.Successful
+                || GGSR_ObjectKillBoundary.Setting == null)
+                {
+                    PhysState.ObjectKillBoundary = PhysicsState.ObjectKillBoundaryDefaultValue;
+                }
+                else
+                {
+                    GameSetting ObjectKillBoundary_Setting = GGSR_ObjectKillBoundary.Setting;
+                }
 
             }
+
         }
 
         private void UpdatePhysics()
