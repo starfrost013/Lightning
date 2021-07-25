@@ -10,6 +10,7 @@ namespace Lightning.Core.API
     /// July 22, 2021 (updated July 24, 2021) 
     /// 
     /// Implements the default physics engine. (I did GCSE Physics too!)
+    /// The default physics controller implements a box collider. 
     /// </summary>
     public class DefaultPhysicsController : PhysicsController
     {
@@ -54,21 +55,56 @@ namespace Lightning.Core.API
 
                     foreach (Instance Instance in ControllableObjectList)
                     {
-                        ControllableObject CO = (ControllableObject)Instance;
+                        ControllableObject ObjectToTest = (ControllableObject)Instance;
 
-                        if (CO.AABB == null)
+                        if (ObjectToTest.AABB == null)
                         {
                             continue;
                         }
                         else
                         {
+                            AABB AABBToTestForCollision = ObjectToTest.AABB;
                             
+                            // Move it according to its current acceleration. 
+                            Object.Speed += Object.Acceleration;
+                            Object.Position += Object.Speed;
+
+                            if (AABBtoAABB(CAABB, AABBToTestForCollision))
+                            {
+                            
+                            }
+                            else
+                            {
+                                continue; 
+                            }
+
                         }
                     }
                 }
             }
 
             return;
+        }
+
+        /// <summary>
+        /// Collision test - AABB vs AABB. Checks if AABB1 is in AABB2,
+        /// </summary>
+        /// <param name="AABB1">The forist</param>
+        /// <param name="AABB2"></param>
+        /// <returns></returns>
+        private bool AABBtoAABB(AABB AABB1, AABB AABB2)
+        {
+            if (AABB1.Position.X > AABB2.Position.X
+            && AABB1.Position.X < AABB2.Position.X + AABB2.Size.X
+            && AABB1.Position.Y > AABB2.Position.Y
+            && AABB1.Position.Y < AABB2.Position.Y + AABB2.Size.Y)
+            {
+                return true;
+            }
+            else
+            {
+                return false; 
+            }
         }
         public override void OnCollisionStart()
         {
