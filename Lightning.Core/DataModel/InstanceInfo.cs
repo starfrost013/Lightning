@@ -44,7 +44,7 @@ namespace Lightning.Core.API
             else
             {
                 // Get ALL properties; this allows for internal and private properties.
-                MemberInfo[] MI = TType.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                MemberInfo[] MI = TType.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
                 List<PropertyInfo> PIList = new List<PropertyInfo>();
                 List<MethodInfo> MIList = new List<MethodInfo>();
@@ -57,7 +57,7 @@ namespace Lightning.Core.API
 
                             PropertyInfo CurrentPI = null;
 
-                            CurrentPI = TType.GetProperty(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                            CurrentPI = TType.GetProperty(MemberInformation.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
                             if (CurrentPI == null) continue;
 

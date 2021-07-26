@@ -49,18 +49,20 @@ namespace Lightning
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                     Console.WriteLine("Pre-Alpha SDK release");
+                    Console.WriteLine($"© 2021 starfrost/Lightning Dev Team. All rights reserved");
 
                     // Load version information
                     LVersion.LoadVersion();
 
                     // Display platform information
-                    Platform.PopulatePlatformInformation(); 
+                    Platform.PopulatePlatformInformation();
 
-                    Console.WriteLine($"Running on {Platform.PlatformName}\nVersion {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})"); // 2021-06-26
-
+                    Console.WriteLine($"Running on {Platform.PlatformName}"); // 2021-06-26
+                    Console.WriteLine($"Platform version {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})");
                     // Display version information
                     string LVersionString = LVersion.GetVersionString();
-                    Console.WriteLine($"© 2021 starfrost/Lightning Dev Team. All rights reserved. Version {LVersionString}"); 
+                    Console.WriteLine($"Engine version {LVersionString}");
+                    
 
                     // Turns out this is how we will init after all. 
                     DataModel.Init(LAR.Arguments);
