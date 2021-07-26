@@ -35,5 +35,10 @@ namespace Lightning.Core.API
             Position = Pos;
             Size = InsSize;
         }
+
+        public static AABB operator +(AABB A, AABB B) => new AABB(new Vector2(A.Position.X + B.Position.X, A.Position.X + B.Position.X), new Vector2(A.Size.X + B.Size.X, A.Size.Y + B.Size.Y));
+        public static AABB operator -(AABB A, AABB B) => new AABB(new Vector2(A.Position.X - B.Position.X, A.Position.X - B.Position.X), new Vector2(A.Size.X - B.Size.X, A.Size.Y - B.Size.Y));
+        public static AABB operator *(AABB A, AABB B) => new AABB(new Vector2(A.Position.X * B.Position.X, A.Position.X * B.Position.X), new Vector2(A.Size.X * B.Size.X, A.Size.Y * B.Size.Y));
+        public static AABB operator /(AABB A, AABB B) => new AABB(new Vector2(A.Position.X / B.Position.X, A.Position.X / B.Position.X), new Vector2(A.Size.X / B.Size.X, A.Size.Y / B.Size.Y));
     }
 }

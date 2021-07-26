@@ -41,10 +41,18 @@ namespace Lightning.Core.API
             Y = NY;
         }
 
-        public static Vector2 operator +(Vector2 A, Vector2 B) => new Vector2(A.X + B.X, B.Y + B.Y);
-        public static Vector2 operator -(Vector2 A, Vector2 B) => new Vector2(A.X - B.X, B.Y - B.Y);
-        public static Vector2 operator *(Vector2 A, Vector2 B) => new Vector2(A.X * B.X, B.Y * B.Y);
-        public static Vector2 operator /(Vector2 A, Vector2 B) => new Vector2(A.X / B.X, B.Y / B.Y);
+        // July 25, 2021: These were totally busted, so I had to fix them. 
+        public static Vector2 operator +(Vector2 A, Vector2 B) => new Vector2(A.X + B.X, A.Y + B.Y);
+        public static Vector2 operator +(Vector2 A, double B) => new Vector2(A.X + B, A.Y + B);
+        public static Vector2 operator -(Vector2 A, Vector2 B) => new Vector2(A.X - B.X, A.Y - B.Y);
+        public static Vector2 operator -(Vector2 A, double B) => new Vector2(A.X - B, A.Y - B);
+        public static Vector2 operator -(double A, Vector2 B) => new Vector2(A - B.X, A - B.Y);
+        public static Vector2 operator *(Vector2 A, Vector2 B) => new Vector2(A.X * B.X, A.Y * B.Y);
+        public static Vector2 operator *(Vector2 A, double B) => new Vector2(A.X * B, A.Y * B);
+        public static Vector2 operator /(Vector2 A, Vector2 B) => new Vector2(A.X / B.X, A.Y / B.Y);
+        public static Vector2 operator /(Vector2 A, double B) => new Vector2(A.X / B, A.Y / B);
+        public static Vector2 operator /(double A, Vector2 B) => new Vector2(A / B.X, A / B.Y);
+
         public static bool operator ==(Vector2 A, Vector2 B)
         {
             // Prevent a stack overflow by upcasting
@@ -217,5 +225,9 @@ namespace Lightning.Core.API
 
         }
 #endif
+
+        public static double GetDotProduct(Vector2 A, Vector2 B) => (A.X * B.X + A.Y * B.Y);
+
+
     }
 }

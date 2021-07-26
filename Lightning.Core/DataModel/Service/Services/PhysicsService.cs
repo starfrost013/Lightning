@@ -79,7 +79,7 @@ namespace Lightning.Core.API
                         Gravity = (Vector2)GravityLevel_Setting.SettingValue;
                         
                     }
-                    catch (InvalidCastException)
+                    catch (Exception)
                     {
                         Gravity = PhysicsState.GravityDefaultValue;
                     }
@@ -105,7 +105,7 @@ namespace Lightning.Core.API
                         GravityState GSState = (GravityState)PhysicsState_Setting.SettingValue;
                         PhysState.GravityState = GSState;
                     }
-                    catch (InvalidCastException)
+                    catch (Exception)
                     {
                         PhysState.GravityState = GravityState.Normal;
                     }
@@ -119,6 +119,19 @@ namespace Lightning.Core.API
                 else
                 {
                     GameSetting ObjectKillBoundary_Setting = GGSR_ObjectKillBoundary.Setting;
+
+                    Vector2 ObjectKillBoundary_SettingValue = null;
+
+                    try
+                    {
+                        ObjectKillBoundary_SettingValue = (Vector2)ObjectKillBoundary_Setting.SettingValue;
+                        PhysState.ObjectKillBoundary = ObjectKillBoundary_SettingValue;
+                    }
+                    catch (Exception)
+                    {
+                        PhysState.ObjectKillBoundary = PhysicsState.ObjectKillBoundaryDefaultValue;
+                        
+                    }
                 }
 
             }

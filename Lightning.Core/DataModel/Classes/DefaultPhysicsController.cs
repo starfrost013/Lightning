@@ -37,7 +37,6 @@ namespace Lightning.Core.API
             {
                 GameSettings GS = (GameSettings)GIR.Instance;
 
-
                 AABB CAABB = Object.AABB;
 
                 GetMultiInstanceResult GMIR = DataModel.GetAllChildrenOfType("ControllableObject");
@@ -65,13 +64,35 @@ namespace Lightning.Core.API
                         {
                             AABB AABBToTestForCollision = ObjectToTest.AABB;
                             
-                            // Move it according to its current acceleration. 
-                            Object.Speed += Object.Acceleration;
-                            Object.Position += Object.Speed;
+                            Object.Position += Object.Velocity;
 
                             if (AABBtoAABB(CAABB, AABBToTestForCollision))
                             {
+                                // We have a collision. 
+                                Vector2 CollisionNormal = Object.Velocity - ObjectToTest.Velocity;
+
+                                // Identify the velocity at normal.
+                                double NormalVelocity = Vector2.GetDotProduct(CollisionNormal, ObjectToTest.Velocity);
                             
+                                if (NormalVelocity > 0)
+                                {
+                                    continue; 
+                                }
+
+                                // Calculate elasticity
+                                double MinimumElasticity = Math.Min(Object.Elasticity, ObjectToTest.Elasticity);
+
+                                // Calculate impulse scalar (multiplier for the impulse)
+
+                                double ImpulseScalar = -(1 * MinimumElasticity) * NormalVelocity;
+                                ImpulseScalar /= (Object.InverseMass + ObjectToTest.InverseMass);
+
+                                // Apply force in OPPOSITE directions to force apart
+                                Vector2 CollisionImpulse = CollisionNormal * ImpulseScalar;
+
+                                Object.Velocity -= CollisionImpulse * Object.InverseMass;
+                                ObjectToTest.Velocity += CollisionImpulse * Object.InverseMass;
+
                             }
                             else
                             {
@@ -87,11 +108,11 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Collision test - AABB vs AABB. Checks if AABB1 is in AABB2,
+        /// Collision test - AABB vs AABB. Checks if the AABB represented by <paramref name="AABB1"/> is within tge AABB represented by <paramref name="AABB2"/>
         /// </summary>
-        /// <param name="AABB1">The forist</param>
-        /// <param name="AABB2"></param>
-        /// <returns></returns>
+        /// <param name="AABB1">The first AABB you wish to check.</param>
+        /// <param name="AABB2">The second </param>
+        /// <returns>A boolean determining if the AABB represented by <paramref name="AABB1"/> is within the AABB represented by <paramref name="AABB2"/></returns>
         private bool AABBtoAABB(AABB AABB1, AABB AABB2)
         {
             if (AABB1.Position.X > AABB2.Position.X

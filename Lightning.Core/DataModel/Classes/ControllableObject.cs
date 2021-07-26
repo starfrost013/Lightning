@@ -32,20 +32,41 @@ namespace Lightning.Core.API
                 
             }
         }
+
+        /// <summary>
+        /// Backing field for <see cref="_mass"/>
+        /// </summary>
+        private double _mass { get; set; }
+
         /// <summary>
         /// The mass of this object. (kg)
         /// </summary>
-        public double Mass { get; set; }
+        public double Mass
+        {
+            get
+            {
+                return _mass;
+            }
+            set
+            {
+                InverseMass = 1 / value;
+                _mass = value;
+            }
+
+        }
 
         /// <summary>
-        /// The acceleration of this object. (m/s2)
+        /// Inverse mass of this object.
         /// </summary>
-        public Vector2 Acceleration { get; set; }
+        internal double InverseMass { get; private set; }
+
 
         /// <summary>
         /// The speed of this object. (m/s)
         /// </summary>
-        public Vector2 Speed { get; set; }
+        public Vector2 Velocity { get; set; }
+
+        public double Elasticity { get; set; }
         public bool PhysicsEnabled { get; set; }
         internal object PhysicsController { get; set; }
     }
