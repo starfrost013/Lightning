@@ -13,6 +13,7 @@ namespace Lightning.Core.API
     /// </summary>
     public class TextBox : GuiElement
     {
+        internal override string ClassName => "TextBox";
         public bool AntiAliasingDisabled { get; set; }
         public bool Bold { get; set; }
         public bool Italic { get; set; }

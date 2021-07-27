@@ -144,6 +144,12 @@ namespace Lightning.Core.API
             }
         }
 
+
+        /// <summary>
+        /// Determines if this object is anchored - if so, gravity is not active on it. (<see cref="PhysicsEnabled"/> must be set to true.)
+        /// </summary>
+        public bool Anchored { get; set; }
+
         /// <summary>
         /// Backing field for <see cref="_mass"/>
         /// </summary>
@@ -197,6 +203,7 @@ namespace Lightning.Core.API
         /// Determines if physics is enabled.
         /// </summary>
         public bool PhysicsEnabled { get; set; }
+
 
         /// <summary>
         /// The PhysicsController of this PhysicsObject - see <see cref="PhysicsController"/>.

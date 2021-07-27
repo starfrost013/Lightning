@@ -139,7 +139,8 @@ namespace Lightning.Core.API
 
                                 AbsoluteTerminalVelocity /= 10;
 
-                                if (Object.Velocity < PS.TerminalVelocity.GetAbs()) // falling to the ground
+                                if (Object.Velocity < PS.TerminalVelocity.GetAbs()
+                                && !Object.Anchored) // falling to the ground
                                 {
                                     Object.Velocity.X += PS.Gravity.X / 10;
                                     Object.Velocity.Y -= PS.Gravity.Y / 10;
