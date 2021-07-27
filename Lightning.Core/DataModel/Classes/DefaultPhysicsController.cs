@@ -135,11 +135,16 @@ namespace Lightning.Core.API
                             }
                             else
                             {
-                                if (Object.Velocity < PS.TerminalVelocity)
+                                Vector2 AbsoluteTerminalVelocity = PS.TerminalVelocity.GetAbs();
+
+                                AbsoluteTerminalVelocity /= 10;
+
+                                if (Object.Velocity < PS.TerminalVelocity.GetAbs()) // falling to the ground
                                 {
-                                    Object.Velocity.X += PS.Gravity.X;
-                                    Object.Velocity.Y -= PS.Gravity.Y;
-                                }
+                                    Object.Velocity.X += PS.Gravity.X / 10;
+                                    Object.Velocity.Y -= PS.Gravity.Y / 10;
+                                    // TEMP testing - /10 MAY be moved to gamesettings.
+                                } 
                                 
                                 continue; 
                             }

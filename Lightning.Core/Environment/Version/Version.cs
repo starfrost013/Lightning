@@ -84,6 +84,12 @@ namespace Lightning.Core
             string BuildDatePath = Properties.Resources.BuildDate;
             string OwnerPath = Properties.Resources.BuildInformation;
 
+            if (BuildDatePath == null
+            || BuildDatePath.Length == 0) BuildDatePath = "Failed to load build date - it is either not present or empty in Lightning.Core.resources!";
+
+            if (OwnerPath == null
+            || OwnerPath.Length == 0) OwnerPath = "Failed to load build owner information - it is either not present or empty in Lightning.Core.resources!";
+
             BuildDatePath = BuildDatePath.RemoveDaysOfWeek();
             BuildDatePath = BuildDatePath.Trim();
 
@@ -107,7 +113,7 @@ namespace Lightning.Core
             else
             {
 #if DEBUG
-                return $"Debug v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
+                return $"v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
 #else
                 return $"v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
 #endif

@@ -264,8 +264,9 @@ namespace Lightning.Core.API
         }
 #endif
 
-        public static double GetDotProduct(Vector2 A, Vector2 B) => (A.X * B.X + A.Y * B.Y);
+        public static double GetDotProduct(Vector2 A, Vector2 B) => ((A.X * B.X) + (B.Y * B.Y));
 
+        public Vector2 GetAbs() => new Vector2(Math.Abs(X), Math.Abs(Y));
 
     }
 }
