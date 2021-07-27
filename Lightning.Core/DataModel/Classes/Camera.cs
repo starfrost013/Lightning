@@ -65,6 +65,11 @@ namespace Lightning.Core.API
         /// </summary>
         public ConvertableStringList TempSaveKeyBinding { get; set; }
 
+        public override void OnCreate()
+        {
+            OnKeyDownHandler += OnKeyDown; 
+        }
+
         public override void OnSpawn()
         {
             if (TargetName != null && Target == null)
@@ -156,12 +161,12 @@ namespace Lightning.Core.API
         }
 
 
-        public override void OnKeyDown(Control Control)
+        public void OnKeyDown(object Sender, KeyEventArgs EventArgs)
         {
             switch (CameraType)
             {
                 case CameraType.Free:
-                    MoveFreeCamera(Control);
+                    MoveFreeCamera(EventArgs.Key);
                     return;
                 default:
                     return; 

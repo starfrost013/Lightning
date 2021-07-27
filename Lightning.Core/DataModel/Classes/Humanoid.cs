@@ -77,7 +77,7 @@ namespace Lightning.Core.API
         public double HighHealthThreshold { get; set; }
 
         /// <summary>
-        /// Triggers the name being displayed or not.
+        /// Triggers the <see cref="Name"/> of this object being displayed or not.
         /// </summary>
         public bool DisplayName { get; set; }
 
@@ -117,6 +117,7 @@ namespace Lightning.Core.API
 
             // Prevent health going above MaxHealth
 
+            
             if (!Invincible)
             {
                 if (MaxHealth == 0) MaxHealth = 100;
@@ -131,58 +132,58 @@ namespace Lightning.Core.API
                     // Kill the player if they aren't invincible
                     Kill();
                 }
+            }
 
-                if (DisplayHealthBar)
+            if (DisplayHealthBar)
+            {
+                // Set a default health bar length and some other values.
+                if (HealthBarLength == 0) HealthBarLength = 25;
+                if (LowHealthColour == null) LowHealthColour = new Color3 { R = 0, G = 0, B = 255 };
+                if (MediumHealthColour == null) MediumHealthColour = new Color3 { R = 255, G = 216, B = 0 };
+                if (HighHealthColour == null) HighHealthColour = new Color3 { R = 0, G = 85, B = 16 };
+                if (LowHealthThreshold == 0) LowHealthThreshold = Health / 4;
+                if (MediumHealthThreshold == 0) MediumHealthThreshold = Health / 2;
+                if (HighHealthThreshold == 0) HighHealthThreshold = Health / 1.5;
+                if (HealthBarColour2 == null) HealthBarColour2 = new Color3 { R = 255, G = 255, B = 255 };
+                if (LowHealthThreshold > MaxHealth) LowHealthThreshold = Health / 4;
+                if (MediumHealthThreshold > MaxHealth) MediumHealthThreshold = Health / 2;
+                if (HighHealthThreshold > MaxHealth) HighHealthThreshold = Health / 1.5;
+
+                // Temp code until the Text system is implemented
+                double HBPositionX = Position.X;
+                double HBPositionY = Position.Y - 3;
+
+                double HealthPercent = (double)Health / (double)MaxHealth;
+
+                int HealthBarLine1EndXPos = (int)(Position.X + (HealthBarLength * HealthPercent));
+                int HealthBarLine2EndXPos = (int)Position.X + HealthBarLength;
+
+                int HealthBarLine2StartXPos = (int)(HBPositionX + (HealthBarLine1EndXPos - Position.X));
+
+                // eww elseif
+                // but it is required :(
+                if (Health <= LowHealthThreshold)
                 {
-                    // Set a default health bar length and some other values.
-                    if (HealthBarLength == 0) HealthBarLength = 25;
-                    if (LowHealthColour == null) LowHealthColour = new Color3 { R = 0, G = 0, B = 255 };
-                    if (MediumHealthColour == null) MediumHealthColour = new Color3 { R = 255, G = 216, B = 0 };
-                    if (HighHealthColour == null) HighHealthColour = new Color3 { R = 0, G = 85, B = 16 };
-                    if (LowHealthThreshold == 0) LowHealthThreshold = Health / 4;
-                    if (MediumHealthThreshold == 0) MediumHealthThreshold = Health / 2;
-                    if (HighHealthThreshold == 0) HighHealthThreshold = Health / 1.5;
-                    if (HealthBarColour2 == null) HealthBarColour2 = new Color3 { R = 255, G = 255, B = 255 };
-                    if (LowHealthThreshold > MaxHealth) LowHealthThreshold = Health / 4;
-                    if (MediumHealthThreshold > MaxHealth) MediumHealthThreshold = Health / 2;
-                    if (HighHealthThreshold > MaxHealth) HighHealthThreshold = Health / 1.5;
-
-                    // Temp code until the Text system is implemented
-                    double HBPositionX = Position.X;
-                    double HBPositionY = Position.Y - 3;
-
-                    double HealthPercent = (double)Health / (double)MaxHealth;
-
-                    int HealthBarLine1EndXPos = (int)(Position.X + (HealthBarLength * HealthPercent));
-                    int HealthBarLine2EndXPos = (int)Position.X + HealthBarLength;
-
-                    int HealthBarLine2StartXPos = (int)(HBPositionX + (HealthBarLine1EndXPos - Position.X));
-
-                    // eww elseif
-                    // but it is required :(
-                    if (Health <= LowHealthThreshold)
-                    {
-                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, LowHealthColour.R, LowHealthColour.G, LowHealthColour.B, 255);
-                    }
-                    else if (Health > LowHealthThreshold
-                        && Health <= MediumHealthThreshold)
-                    {
-                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, MediumHealthColour.R, MediumHealthColour.G, MediumHealthColour.B, 255);
-                    }
-                    else
-                    {
-                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HighHealthColour.R, HighHealthColour.G, HighHealthColour.B, 255);
-                    }
-
-                    SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HBPositionX - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine1EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
-
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HealthBarColour2.R, HealthBarColour2.G, HealthBarColour2.B, 255);
-
-                    SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HealthBarLine2StartXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine2EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
-
-                    // Reset draw colour. 
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 255);
+                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, LowHealthColour.R, LowHealthColour.G, LowHealthColour.B, 255);
                 }
+                else if (Health > LowHealthThreshold
+                    && Health <= MediumHealthThreshold)
+                {
+                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, MediumHealthColour.R, MediumHealthColour.G, MediumHealthColour.B, 255);
+                }
+                else
+                {
+                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HighHealthColour.R, HighHealthColour.G, HighHealthColour.B, 255);
+                }
+
+                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HBPositionX - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine1EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
+
+                SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HealthBarColour2.R, HealthBarColour2.G, HealthBarColour2.B, 255);
+
+                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HealthBarLine2StartXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine2EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
+
+                // Reset draw colour. 
+                SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 255);
             }
 
             base.Render(SDL_Renderer, Tx);

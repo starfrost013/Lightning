@@ -21,7 +21,7 @@ namespace Lightning.Core.API
             return; 
         }
 
-        public override void OnTick(ControllableObject Object)
+        public override void OnTick(PhysicalObject Object, PhysicsState PS) // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
         {
             Workspace Ws = DataModel.GetWorkspace();
 
@@ -39,7 +39,7 @@ namespace Lightning.Core.API
 
                 AABB CAABB = Object.AABB;
 
-                GetMultiInstanceResult GMIR = DataModel.GetAllChildrenOfType("ControllableObject");
+                GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
 
                 if (CAABB == null) return; 
 
@@ -54,9 +54,10 @@ namespace Lightning.Core.API
 
                     foreach (Instance Instance in ControllableObjectList)
                     {
-                        ControllableObject ObjectToTest = (ControllableObject)Instance;
+                        PhysicalObject ObjectToTest = (PhysicalObject)Instance;
 
-                        if (ObjectToTest.AABB == null)
+                        if (ObjectToTest.AABB == null
+                        || !ObjectToTest.PhysicsEnabled)
                         {
                             continue;
                         }
@@ -66,36 +67,80 @@ namespace Lightning.Core.API
                             
                             Object.Position += Object.Velocity;
 
-                            if (AABBtoAABB(CAABB, AABBToTestForCollision))
-                            {
-                                // We have a collision. 
-                                Vector2 CollisionNormal = Object.Velocity - ObjectToTest.Velocity;
+                            CollisionResult CollisionResult = AABBtoAABB(Object, ObjectToTest);
 
-                                // Identify the velocity at normal.
-                                double NormalVelocity = Vector2.GetDotProduct(CollisionNormal, ObjectToTest.Velocity);
-                            
-                                if (NormalVelocity > 0)
+                            if (CollisionResult.Successful)
+                            {
+                                // Probably NOT the way it's supposed to be done and a bit hacky, but meh
+
+                                // Handles when an object is spawned within another object (i.e. no velocity to resolve an impulse).
+                                if (Object.Velocity == new Vector2(0, 0)
+                                && ObjectToTest.Velocity == new Vector2(0, 0))
                                 {
+                                    Manifold CollisionManifold = CollisionResult.Manifold;
+                                    
+                                    // eww elseif
+                                    if (CollisionManifold.NormalVector == new Vector2(-1, 0))
+                                    {
+                                        Object.Position.X += (CollisionManifold.PenetrationAmount / 2);
+                                        ObjectToTest.Position.X -= (CollisionManifold.PenetrationAmount / 2);
+                                    }
+                                    else if (CollisionManifold.NormalVector == new Vector2(0, 0))
+                                    {
+                                        Object.Position.X -= (CollisionManifold.PenetrationAmount / 2);
+                                        ObjectToTest.Position.X += (CollisionManifold.PenetrationAmount / 2);
+                                    }
+                                    else if (CollisionManifold.NormalVector == new Vector2(0, -1)) 
+                                    {
+                                        Object.Position.Y += (CollisionManifold.PenetrationAmount / 2);
+                                        ObjectToTest.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
+                                    }
+                                    else
+                                    {
+                                        Object.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
+                                        ObjectToTest.Position.Y += (CollisionManifold.PenetrationAmount / 2);
+                                    }
+                                    
+
                                     continue; 
                                 }
+                                else
+                                {
+                                    // We have a collision. 
+                                    Vector2 CollisionNormal = Object.Velocity - ObjectToTest.Velocity;
 
-                                // Calculate elasticity
-                                double MinimumElasticity = Math.Min(Object.Elasticity, ObjectToTest.Elasticity);
+                                    // Identify the velocity at normal.
+                                    double NormalVelocity = Vector2.GetDotProduct(CollisionNormal, ObjectToTest.Velocity);
 
-                                // Calculate impulse scalar (multiplier for the impulse)
+                                    if (NormalVelocity > 0)
+                                    {
+                                        continue;
+                                    }
 
-                                double ImpulseScalar = -(1 * MinimumElasticity) * NormalVelocity;
-                                ImpulseScalar /= (Object.InverseMass + ObjectToTest.InverseMass);
+                                    // Calculate elasticity
+                                    double MinimumElasticity = Math.Min(Object.Elasticity, ObjectToTest.Elasticity);
 
-                                // Apply force in OPPOSITE directions to force apart
-                                Vector2 CollisionImpulse = CollisionNormal * ImpulseScalar;
+                                    // Calculate impulse scalar (multiplier for the impulse)
 
-                                Object.Velocity -= CollisionImpulse * Object.InverseMass;
-                                ObjectToTest.Velocity += CollisionImpulse * Object.InverseMass;
+                                    double ImpulseScalar = -(1 * MinimumElasticity) * NormalVelocity;
+                                    ImpulseScalar /= (Object.InverseMass + ObjectToTest.InverseMass);
 
+                                    // Apply force in OPPOSITE directions to force apart
+                                    Vector2 CollisionImpulse = CollisionNormal * ImpulseScalar;
+
+                                    Object.Velocity -= CollisionImpulse * Object.InverseMass;
+                                    ObjectToTest.Velocity += CollisionImpulse * Object.InverseMass;
+
+                                }
                             }
                             else
                             {
+                                if (Object.Velocity < PS.TerminalVelocity)
+                                {
+                                    Object.Velocity.X += PS.Gravity.X;
+                                    Object.Velocity.Y -= PS.Gravity.Y;
+                                }
+                                
                                 continue; 
                             }
 
@@ -113,18 +158,82 @@ namespace Lightning.Core.API
         /// <param name="AABB1">The first AABB you wish to check.</param>
         /// <param name="AABB2">The second </param>
         /// <returns>A boolean determining if the AABB represented by <paramref name="AABB1"/> is within the AABB represented by <paramref name="AABB2"/></returns>
-        private bool AABBtoAABB(AABB AABB1, AABB AABB2)
+        private CollisionResult AABBtoAABB(PhysicalObject ObjA, PhysicalObject ObjB)
         {
-            if (AABB1.Position.X > AABB2.Position.X
-            && AABB1.Position.X < AABB2.Position.X + AABB2.Size.X
-            && AABB1.Position.Y > AABB2.Position.Y
-            && AABB1.Position.Y < AABB2.Position.Y + AABB2.Size.Y)
+
+            CollisionResult CR = new CollisionResult();
+
+            // is this required?
+            CR.Manifold.PhysicalObjectA = ObjA;
+            CR.Manifold.PhysicalObjectB = ObjB;
+
+            if (ObjA.AABB == null
+            || ObjB.AABB == null)
             {
-                return true;
+                CR.FailureReason = "One or both objects does not have a valid AABB!";
+                return CR;
+            }    
+
+            Vector2 AB = ObjB.Position - ObjA.Position;
+
+            AABB AABB_A = ObjA.AABB;
+            AABB AABB_B = ObjB.AABB;
+
+            // Calculate half
+            double HalfX_A = (AABB_A.Maximum.X - AABB_A.Position.X) / 2;
+            double HalfX_B = (AABB_B.Maximum.X - AABB_B.Position.X) / 2;
+
+            double XOverlap = HalfX_B + HalfX_A - Math.Abs(AB.X);
+            
+            if (XOverlap > 0)
+            {
+                double HalfY_A = (AABB_A.Maximum.Y - AABB_A.Position.Y) / 2;
+                double HalfY_B = (AABB_B.Maximum.Y - AABB_B.Position.Y) / 2;
+
+                double YOverlap = HalfY_B + HalfY_A - Math.Abs(AB.Y);
+
+                if (YOverlap > 0) // check for overlap
+                {
+                    if (XOverlap > YOverlap)
+                    {
+                        if (AB.X < 0)
+                        {
+                            CR.Manifold.NormalVector = new Vector2(-1, 0); // negative x-axis (leftmost side is closest)
+                        }
+                        else
+                        { 
+                            CR.Manifold.NormalVector = new Vector2(0, 0); // positive x-axis (rightmost side is closest)
+                        }
+                        CR.Manifold.PenetrationAmount = XOverlap;
+                        CR.Successful = true;
+                        return CR;
+                    }
+                    else
+                    {
+                        if (AB.Y < 0)
+                        {
+                            CR.Manifold.NormalVector = new Vector2(0, -1); // negative y-axis (top side is closest)
+                        }
+                        else
+                        {
+                            CR.Manifold.NormalVector = new Vector2(0, 1); // positive x-axis (bottom side is closest)
+                        }
+
+                        CR.Manifold.PenetrationAmount = YOverlap;
+                        CR.Successful = true;
+                        return CR; 
+                    }
+                }
+                else
+                {
+                    CR.FailureReason = "Objects not colliding";
+                    return CR;
+                }
             }
             else
             {
-                return false; 
+                CR.FailureReason = "Objects not colliding";
+                return CR;
             }
         }
         public override void OnCollisionStart()

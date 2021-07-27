@@ -10,12 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Content\Polaris\Schema\ScriptEditorSettings.xsd" />
     <None Remove="Content\Polaris\Schema\TabCollection.xsd" />
     <None Remove="Content\Polaris\Tabs.xml" />
-    <None Remove="Content\Splash\IDESplash_D.png" />
+    <None Remove="Content\Splash\Splash_v0.3.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <SplashScreen Include="Content\Splash\Splash_v0.3.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\Polaris\Schema\ScriptEditorSettings.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Polaris\Schema\TabCollection.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -32,13 +40,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <SplashScreen Include="Content\Splash\IDESplash_D.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </SplashScreen>
+    <Folder Include="UI\Components\MainWindowComponents\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UI\Components\MainWindowComponents\" />
+    <None Update="Content\Splash\IDESplash_D.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -127,6 +127,88 @@ namespace Lightning.Core.API
         /// </summary>
         public ShutdownEvent OnShutdown { get; set; }
 
+        public AABB AABB
+        {
+            get
+            {
+                if (Position == null
+                || Size == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new AABB(Position, Size);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="_mass"/>
+        /// </summary>
+        private double _mass { get; set; }
+
+        /// <summary>
+        /// The mass of this object. (kg)
+        /// </summary>
+        public double Mass
+        {
+            get
+            {
+                return _mass;
+            }
+            set
+            {
+                if (value == 0)
+                {
+                    InverseMass = 0; // prevents objects spazzing off to infinity...
+                }
+                else 
+                {
+                    InverseMass = 1 / value;
+                }
+                _mass = value;
+            }
+
+        }
+
+        /// <summary>
+        /// Inverse mass of this object.
+        /// </summary>
+        internal double InverseMass { get; private set; }
+
+        /// <summary>
+        /// The speed of this object. (m/s)
+        /// </summary>
+        internal Vector2 Velocity { get; set; }
+
+        /// <summary>
+        /// The elasticity of this object.
+        /// </summary>
+        public double Elasticity { get; set; }
+
+        /// <summary>
+        /// The maximum force that this object can tolerate before breaking. A random modifier will be applied to simulate real world effects.
+        /// </summary>
+        public double MaximumForce { get; set; }
+
+        /// <summary>
+        /// Determines if physics is enabled.
+        /// </summary>
+        public bool PhysicsEnabled { get; set; }
+
+        /// <summary>
+        /// The PhysicsController of this PhysicsObject - see <see cref="PhysicsController"/>.
+        /// </summary>
+        public PhysicsController PhysicsController { get; set; }
+
+        public override void OnCreate()
+        {
+            PhysicsController = new DefaultPhysicsController(); 
+            if (Velocity == null) Velocity = new Vector2(0, 0);
+        }
+
         /// <summary>
         /// This is called on each frame by the RenderService to tell this object to 
         /// render itself.
@@ -167,19 +249,21 @@ namespace Lightning.Core.API
             return; 
         }
 
-        public virtual void OnKeyDown(Control Control)
-        {
-            // Remove old placeholder code (May 26, 2021)
-            //MessageBox.Show($"You pressed {Control.KeyCode.ToString()}!");
-        }
-
         /// <summary>
-        /// Runs on a key stopping being pressed.
+        /// Applies an instantenous impulse force to this object.
         /// </summary>
-        /// <param name="Control"></param>
-        public virtual void OnKeyUp(Control Control)
+        /// <param name="Impulse">A <see cref="Vector2"/> containing the impulse force to apply to this PhysicalObject.</param>
+        public void ApplyImpulse(Vector2 Impulse)
         {
-
+            if (Impulse == null)
+            {
+                ErrorManager.ThrowError(ClassName, "AttemptedToApplyInvalidImpulseException");
+            }
+            else
+            {
+                Velocity += Impulse; 
+            }
         }
+
     }
 }

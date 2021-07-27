@@ -106,7 +106,11 @@ namespace Lightning.Core
             }
             else
             {
+#if DEBUG
+                return $"Debug v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
+#else
                 return $"v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
+#endif
             }
 
         }

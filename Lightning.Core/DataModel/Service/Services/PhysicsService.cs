@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// PhysicsService
     /// 
-    /// June 20, 2021
+    /// June 20, 2021 (modified July 26, 2021)
     /// 
     /// Implements a 2D rigid body physics engine for Lightning.
     /// </summary>
@@ -61,7 +61,7 @@ namespace Lightning.Core.API
                 GetGameSettingResult GGSR_GravityLevel = GS.GetSetting("GravityLevel");
                 GetGameSettingResult GGSR_GravityState = GS.GetSetting("GravityState");
                 GetGameSettingResult GGSR_ObjectKillBoundary = GS.GetSetting("ObjectKillBoundary");
-
+                GetGameSettingResult GGSR_TerminalVelocity = GS.GetSetting("TerminalVelocity");
 
                 if (!GGSR_GravityLevel.Successful
                 || GGSR_GravityLevel.Setting == null) 
@@ -134,6 +134,28 @@ namespace Lightning.Core.API
                     }
                 }
 
+                if (!GGSR_TerminalVelocity.Successful
+                || GGSR_TerminalVelocity.Setting == null)
+                {
+                    PhysState.TerminalVelocity = PhysicsState.TerminalVelocityDefaultValue;
+                }
+                else
+                {
+                    GameSetting TerminalVelocity_Setting = GGSR_TerminalVelocity.Setting;
+
+                    try
+                    {
+                        PhysState.TerminalVelocity = (Vector2)TerminalVelocity_Setting.SettingValue; 
+                    }
+                    catch (Exception)
+                    {
+                        PhysState.TerminalVelocity = PhysicsState.TerminalVelocityDefaultValue;
+                    }
+                }
+
+                PHYSICSSERVICE_INITIALISED = true;
+                return; 
+
             }
 
         }
@@ -142,7 +164,7 @@ namespace Lightning.Core.API
         {
             Workspace Ws = DataModel.GetWorkspace();
 
-            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("ControllableObject");
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
 
             if (!GMIR.Successful
                 || GMIR.Instances == null)
@@ -155,7 +177,7 @@ namespace Lightning.Core.API
 
                 foreach (Instance Instance in InstanceList)
                 {
-                    ControllableObject CO = (ControllableObject)Instance;
+                    PhysicalObject CO = (PhysicalObject)Instance;
 
                     GetPhysicsControllerResult GPCR = GetPhysicsController(CO);
 
@@ -171,7 +193,7 @@ namespace Lightning.Core.API
                         {
                             PhysicsController PC = (PhysicsController)GPCR.PhysController;
 
-                            PC.OnTick(CO);
+                            PC.OnTick(CO, PhysState); // Very BAD test AND temp code
                         }
 
                     }
@@ -181,7 +203,7 @@ namespace Lightning.Core.API
 
         }
 
-        private GetPhysicsControllerResult GetPhysicsController(ControllableObject CO) // COMPLETE THIS 2021-07-22 MORNING (ADD TYPE CHECKING ETC)
+        private GetPhysicsControllerResult GetPhysicsController(PhysicalObject CO) // COMPLETE THIS 2021-07-22 MORNING (ADD TYPE CHECKING ETC)
         {
             GetPhysicsControllerResult GPCR = new GetPhysicsControllerResult();
 
@@ -197,7 +219,7 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        ErrorManager.ThrowError(ClassName, "EnablePhysicsSetButNoPhysicsControllerSet", $"A {CO.ClassName} class name does not have a PhysicsController set, but PhysicsEnabled is set - disabling physics for this object...");
+                        ErrorManager.ThrowError(ClassName, "EnablePhysicsSetButNoPhysicsControllerSet", $"An {CO.ClassName} object does not have a PhysicsController set, but PhysicsEnabled is set - disabling physics for this object...");
                         CO.PhysicsEnabled = false;
 
                     }

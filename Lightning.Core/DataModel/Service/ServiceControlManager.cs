@@ -24,7 +24,6 @@ namespace Lightning.Core.API
         /// </summary>
         private ServiceGlobalData SvcGlobalData { get; set; }
 
-
         public ServiceControlManager()
         {
             SvcGlobalData = new ServiceGlobalData(); 

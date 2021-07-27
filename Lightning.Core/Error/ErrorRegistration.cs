@@ -133,9 +133,10 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainSurfaceGuiTargetObjectException", Description = "Failed to obtain the target for a SurfaceGui! This SurfaceGui will not be rendered.", Severity = MessageSeverity.Error, Id = 115 });
          ErrorManager.RegisterError( new Error { Name = "MustDefineFontForGuiElementException", Description = "!!should be overridden in code!!", Severity = MessageSeverity.Error, Id = 115 });
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfPhysicsControllersException", Description = "Failed to obtain a list of physics controllers!", Severity = MessageSeverity.FatalError, Id = 116 }); // possibly nonfatal?  
-         ErrorManager.RegisterError( new Error { Name = "EnablePhysicsSetButNoPhysicsControllerSet", Description = "!!should be overridden in code!!", Severity = MessageSeverity.Error, Id = 117 });
+         ErrorManager.RegisterError( new Error { Name = "EnablePhysicsSetButNoPhysicsControllerSet", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 117 });
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfControllableObjectsException", Description = "Failed to obtain a list of controllable objects!", Severity = MessageSeverity.FatalError, Id = 118 });
-         ErrorManager.RegisterError(new Error { Name = "FailedToObtainPhysicsControllerException", Description = "Failed to obtain physics controller", Severity = MessageSeverity.Error, Id = 119 });
-        }
+         ErrorManager.RegisterError( new Error { Name = "FailedToObtainPhysicsControllerException", Description = "Failed to obtain physics controller", Severity = MessageSeverity.Error, Id = 119 });
+         ErrorManager.RegisterError( new Error { Name = "AttemptedToApplyInvalidImpulseException", Description = "Attempted to apply an invalid impulse to a PhysicalObject!", Severity = MessageSeverity.Error, Id = 120 });   
+     }
   }
 }

@@ -25,7 +25,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Ran each frame.
         /// </summary>
-        public abstract void OnTick(ControllableObject Object);
+        public abstract void OnTick(PhysicalObject Object, PhysicsState PS); // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
         /// <summary>
         /// Ran on the start of a collision.
         /// </summary>
