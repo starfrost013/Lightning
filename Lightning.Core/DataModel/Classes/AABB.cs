@@ -14,8 +14,6 @@ namespace Lightning.Core.API
     /// </summary>
     public class AABB
     {
-
-        public Vector2 Minimum { get; set; }
         /// <summary>
         /// The position of this object.
         /// </summary>
@@ -30,7 +28,11 @@ namespace Lightning.Core.API
         /// The maximum extent of this AABB
         /// </summary>
         public Vector2 Maximum { get; set; }
-
+        
+        /// <summary>
+        /// The centre of this AABB
+        /// </summary>
+        public Vector2 Centre { get; set; }
         public AABB()
         {
 
@@ -41,7 +43,7 @@ namespace Lightning.Core.API
             Position = Pos;
             Size = InsSize;
             Maximum = Position + Size;
-            Minimum = Position - Size; 
+            Centre = Position + (Size / 2);
         }
 
         public static AABB operator +(AABB A, AABB B) => new AABB(new Vector2(A.Position.X + B.Position.X, A.Position.X + B.Position.X), new Vector2(A.Size.X + B.Size.X, A.Size.Y + B.Size.Y));

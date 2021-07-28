@@ -80,7 +80,7 @@
     <Rectangle Colour="127,70,20,140" Fill="True" CanCollide="False" Position="310,66" Size="40,40" ZIndex="0" Name="FilledRectangle" />
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     
-    <PhysicalObject CanCollide="False" Position="450,300" Size="200,150" ZIndex="0" Name="Block1" PhysicsEnabled="True" Anchored="True" Mass="0">
+    <PhysicalObject CanCollide="False" Position="430,300" Size="200,150" ZIndex="0" Name="Block1" PhysicsEnabled="True" Anchored="True" Mass="0">
       <Texture Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block1_Texture" />
     </PhysicalObject>
     <PhysicalObject CanCollide="False" Position="60,60" Size="200,150" ZIndex="0" Name="Block2" PhysicsEnabled="True" Mass="0">

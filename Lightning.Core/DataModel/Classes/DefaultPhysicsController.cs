@@ -87,23 +87,23 @@ namespace Lightning.Core.API
                                     // eww elseif
                                     if (CollisionManifold.NormalVector == new Vector2(-1, 0))
                                     {
-                                        Object.Position.X += (CollisionManifold.PenetrationAmount / 2);
-                                        ObjectToTest.Position.X -= (CollisionManifold.PenetrationAmount / 2);
+                                        if (!Object.Anchored) Object.Position.X += (CollisionManifold.PenetrationAmount / 2);
+                                        if (!ObjectToTest.Anchored) ObjectToTest.Position.X -= (CollisionManifold.PenetrationAmount / 2);
                                     }
                                     else if (CollisionManifold.NormalVector == new Vector2(0, 0))
                                     {
-                                        Object.Position.X -= (CollisionManifold.PenetrationAmount / 2);
-                                        ObjectToTest.Position.X += (CollisionManifold.PenetrationAmount / 2);
+                                        if (!Object.Anchored) Object.Position.X -= (CollisionManifold.PenetrationAmount / 2);
+                                        if (!ObjectToTest.Anchored) ObjectToTest.Position.X += (CollisionManifold.PenetrationAmount / 2);
                                     }
                                     else if (CollisionManifold.NormalVector == new Vector2(0, -1)) 
                                     {
-                                        Object.Position.Y += (CollisionManifold.PenetrationAmount / 2);
-                                        ObjectToTest.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
+                                        if (!Object.Anchored) Object.Position.Y += (CollisionManifold.PenetrationAmount / 2);
+                                        if (!ObjectToTest.Anchored) ObjectToTest.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
                                     }
                                     else
                                     {
-                                        Object.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
-                                        ObjectToTest.Position.Y += (CollisionManifold.PenetrationAmount / 2);
+                                        if (!Object.Anchored) Object.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
+                                        if (!ObjectToTest.Anchored) ObjectToTest.Position.Y += (CollisionManifold.PenetrationAmount / 2);
                                     }
                                     
 
@@ -150,13 +150,13 @@ namespace Lightning.Core.API
                             {
                                 Vector2 AbsoluteTerminalVelocity = PS.TerminalVelocity.GetAbs();
 
-                                AbsoluteTerminalVelocity /= 8;
+                                AbsoluteTerminalVelocity /= 5;
 
                                 if (Object.Velocity < PS.TerminalVelocity.GetAbs()
                                 && !Object.Anchored) // falling to the ground
                                 {
-                                    Object.Velocity.X += PS.Gravity.X / 8;
-                                    Object.Velocity.Y -= PS.Gravity.Y / 8;
+                                    Object.Velocity.X += PS.Gravity.X / 5;
+                                    Object.Velocity.Y -= PS.Gravity.Y / 5;
                                     // TEMP testing - /10 MAY be moved to gamesettings.
                                 } 
                                 
@@ -191,23 +191,24 @@ namespace Lightning.Core.API
             {
                 CR.FailureReason = "One or both objects does not have a valid AABB!";
                 return CR;
-            }    
+            }
 
-            Vector2 AB = ObjB.Position - ObjA.Position;
 
             AABB AABB_A = ObjA.AABB;
             AABB AABB_B = ObjB.AABB;
 
+            Vector2 AB = AABB_B.Centre - AABB_A.Centre;
+
             // Calculate half
-            double HalfX_A = (AABB_A.Maximum.X - AABB_A.Minimum.X) / 2;
-            double HalfX_B = (AABB_B.Maximum.X - AABB_B.Minimum.X) / 2;
+            double HalfX_A = (AABB_A.Maximum.X - AABB_A.Position.X) / 2;
+            double HalfX_B = (AABB_B.Maximum.X - AABB_B.Position.X) / 2;
 
             double XOverlap = HalfX_B + HalfX_A - Math.Abs(AB.X);
             
             if (XOverlap > 0)
             {
-                double HalfY_A = (AABB_A.Maximum.Y - AABB_A.Minimum.Y) / 2;
-                double HalfY_B = (AABB_B.Maximum.Y - AABB_B.Minimum.Y) / 2;
+                double HalfY_A = (AABB_A.Maximum.Y - AABB_A.Position.Y) / 2;
+                double HalfY_B = (AABB_B.Maximum.Y - AABB_B.Position.Y) / 2;
 
                 double YOverlap = HalfY_B + HalfY_A - Math.Abs(AB.Y);
 
