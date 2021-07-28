@@ -762,6 +762,12 @@ namespace Lightning.Core.API
                                 {
                                     PropertyInfo PI = XDR.GetProperty(XPropertyName);
 
+                                    if (PI == null)
+                                    {
+                                        ErrorManager.ThrowError(ClassName, "AttemptedToSetInvalidPropertyException", $"Attempted to set invalid property {XPropertyName} on an object of class {IIP.Type}");
+                                        continue; 
+                                    }
+
                                     if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
                                     {
                                         Instance CInstanceObject = (Instance)CConvertedObject;

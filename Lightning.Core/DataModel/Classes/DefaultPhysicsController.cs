@@ -70,6 +70,19 @@ namespace Lightning.Core.API
                         {
                             AABB AABBToTestForCollision = ObjectToTest.AABB;
                             
+                            if (Object.Velocity > PS.TerminalVelocity.GetAbs())
+                            {
+                                if (Object.Velocity.X < 0 && PS.TerminalVelocity.X < 0
+                                || (Object.Velocity.X > 0 && PS.TerminalVelocity.X > 0)) Object.Velocity.X = PS.TerminalVelocity.X;
+                                if (Object.Velocity.X < 0 && PS.TerminalVelocity.X > 0
+                                || (Object.Velocity.X > 0 && PS.TerminalVelocity.X < 0)) Object.Velocity.X = -PS.TerminalVelocity.X;
+
+                                if (Object.Velocity.Y < 0 && PS.TerminalVelocity.Y < 0
+                                || (Object.Velocity.Y > 0 && PS.TerminalVelocity.Y > 0)) Object.Velocity.Y = PS.TerminalVelocity.Y;
+                                if (Object.Velocity.Y < 0 && PS.TerminalVelocity.Y > 0
+                                || (Object.Velocity.Y > 0 && PS.TerminalVelocity.Y < 0)) Object.Velocity.Y = -PS.TerminalVelocity.Y;
+                            }
+
                             Object.Position += Object.Velocity;
 
                             CollisionResult CollisionResult = AABBtoAABB(Object, ObjectToTest);
@@ -152,8 +165,7 @@ namespace Lightning.Core.API
 
                                 AbsoluteTerminalVelocity /= 5;
 
-                                if (Object.Velocity < PS.TerminalVelocity.GetAbs()
-                                && !Object.Anchored) // falling to the ground
+                                if (!Object.Anchored) // falling to the ground
                                 {
                                     Object.Velocity.X += PS.Gravity.X / 5;
                                     Object.Velocity.Y -= PS.Gravity.Y / 5;
@@ -192,7 +204,6 @@ namespace Lightning.Core.API
                 CR.FailureReason = "One or both objects does not have a valid AABB!";
                 return CR;
             }
-
 
             AABB AABB_A = ObjA.AABB;
             AABB AABB_B = ObjB.AABB;

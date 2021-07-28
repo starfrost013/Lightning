@@ -99,17 +99,69 @@ namespace Lightning.Core.API
         /// <summary>
         /// Key used for moving left.
         /// </summary>
-        public string KeyLeft { get; set; }
+        public ConvertableStringList KeyLeft { get; set; }
 
         /// <summary>
         /// Key used for moving right
         /// </summary>
-        public string KeyRight { get; set; }
+        public ConvertableStringList KeyRight { get; set; }
 
         /// <summary>
         /// Key used for jumping
         /// </summary>
-        public string KeyJump { get; set; }
+        public ConvertableStringList KeyJump { get; set; }
+
+        private bool HUMANOID_INITIALISED { get; set; }
+        public override void OnCreate()
+        {
+            base.OnCreate();
+            OnKeyDownHandler += OnKeyDown;
+        }
+
+        private void Init()
+        {
+            if (KeyLeft == null) KeyLeft = new ConvertableStringList { "LEFT", "A" };
+            if (KeyRight == null) KeyRight = new ConvertableStringList { "RIGHT", "D" };
+            if (KeyJump == null) KeyJump = new ConvertableStringList { "SPACE" };
+
+            if (HealthBarLength == 0) HealthBarLength = 25;
+            if (LowHealthColour == null) LowHealthColour = new Color3 { R = 0, G = 0, B = 255 };
+            if (MediumHealthColour == null) MediumHealthColour = new Color3 { R = 255, G = 216, B = 0 };
+            if (HighHealthColour == null) HighHealthColour = new Color3 { R = 0, G = 85, B = 16 };
+            if (LowHealthThreshold == 0) LowHealthThreshold = Health / 4;
+            if (MediumHealthThreshold == 0) MediumHealthThreshold = Health / 2;
+            if (HighHealthThreshold == 0) HighHealthThreshold = Health / 1.5;
+            if (HealthBarColour2 == null) HealthBarColour2 = new Color3 { R = 255, G = 255, B = 255 };
+            if (LowHealthThreshold > MaxHealth) LowHealthThreshold = Health / 4;
+            if (MediumHealthThreshold > MaxHealth) MediumHealthThreshold = Health / 2;
+            if (HighHealthThreshold > MaxHealth) HighHealthThreshold = Health / 1.5;
+
+            HUMANOID_INITIALISED = true;
+        }
+
+        public void OnKeyDown(object Sender, KeyEventArgs KeyArgs)
+        {
+
+            Control ControlHit = KeyArgs.Key;
+
+            string KeyCode = KeyArgs.Key.KeyCode.ToString();
+
+            if (KeyLeft.Contains(KeyCode))
+            {
+                ApplyImpulse(new Vector2(-2, 0)); // move to the left
+            }
+            else if (KeyRight.Contains(KeyCode))
+            {
+                ApplyImpulse(new Vector2(2, 0)); // move to the left
+            }
+            else if (KeyJump.Contains(KeyCode))
+            {
+                // TODO: buffer stuff so holding it for longer is equal to a different jump height
+                if (!KeyArgs.Repeat) ApplyImpulse(new Vector2(0, -2)); // move to the left
+            }
+           
+
+        }
 
         public override void Render(Renderer SDL_Renderer, Texture Tx = null)
         {
@@ -117,7 +169,19 @@ namespace Lightning.Core.API
 
             // Prevent health going above MaxHealth
 
+            if (!HUMANOID_INITIALISED)
+            {
+                Init();
+            }
+            else
+            {
+                DoRender(SDL_Renderer, Tx);
+            }
             
+        }
+
+        private void DoRender(Renderer SDL_Renderer, Texture Tx = null)
+        {
             if (!Invincible)
             {
                 if (MaxHealth == 0) MaxHealth = 100;
@@ -137,17 +201,7 @@ namespace Lightning.Core.API
             if (DisplayHealthBar)
             {
                 // Set a default health bar length and some other values.
-                if (HealthBarLength == 0) HealthBarLength = 25;
-                if (LowHealthColour == null) LowHealthColour = new Color3 { R = 0, G = 0, B = 255 };
-                if (MediumHealthColour == null) MediumHealthColour = new Color3 { R = 255, G = 216, B = 0 };
-                if (HighHealthColour == null) HighHealthColour = new Color3 { R = 0, G = 85, B = 16 };
-                if (LowHealthThreshold == 0) LowHealthThreshold = Health / 4;
-                if (MediumHealthThreshold == 0) MediumHealthThreshold = Health / 2;
-                if (HighHealthThreshold == 0) HighHealthThreshold = Health / 1.5;
-                if (HealthBarColour2 == null) HealthBarColour2 = new Color3 { R = 255, G = 255, B = 255 };
-                if (LowHealthThreshold > MaxHealth) LowHealthThreshold = Health / 4;
-                if (MediumHealthThreshold > MaxHealth) MediumHealthThreshold = Health / 2;
-                if (HighHealthThreshold > MaxHealth) HighHealthThreshold = Health / 1.5;
+
 
                 // Temp code until the Text system is implemented
                 double HBPositionX = Position.X;
@@ -188,7 +242,6 @@ namespace Lightning.Core.API
 
             base.Render(SDL_Renderer, Tx);
         }
-
 
         private void Kill()
         {

@@ -139,6 +139,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "AttemptedToApplyInvalidImpulseException", Description = "Attempted to apply an invalid impulse to a PhysicalObject!", Severity = MessageSeverity.Error, Id = 120 });
          ErrorManager.RegisterError( new Error { Name = "PhysicsStatePositionalCorrectionPercentageMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 121 });
          ErrorManager.RegisterError( new Error { Name = "PhysicsStatePositionalCorrectionSlopMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 122 });
+            ErrorManager.RegisterError(new Error { Name = "AttemptedToSetInvalidPropertyException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 123 });       
      }
   }
 }
