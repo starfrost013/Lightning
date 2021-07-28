@@ -13,7 +13,7 @@ namespace Lightning.Core.API
     /// 
     /// March 9, 2021 (modified April 17, 2021: The great re-namespaceing).
     /// 
-    /// 
+    /// Defines a two-dimensional vector.
     /// </summary>
     [TypeConverter(typeof(Vector2Converter))]
     public class Vector2 : SerialisableObject
@@ -21,12 +21,12 @@ namespace Lightning.Core.API
         internal override string ClassName => "Vector2";
 
         /// <summary>
-        /// The X position.
+        /// The X component of this Vector2.
         /// </summary>
         public double X { get; set; }
 
         /// <summary>
-        /// The Y position. 
+        /// The Y component of this Vector2.. 
         /// </summary>
         public double Y { get; set; }
 
@@ -49,6 +49,7 @@ namespace Lightning.Core.API
         public static Vector2 operator -(double A, Vector2 B) => new Vector2(A - B.X, A - B.Y);
         public static Vector2 operator *(Vector2 A, Vector2 B) => new Vector2(A.X * B.X, A.Y * B.Y);
         public static Vector2 operator *(Vector2 A, double B) => new Vector2(A.X * B, A.Y * B);
+        
         public static Vector2 operator /(Vector2 A, Vector2 B) => new Vector2(A.X / B.X, A.Y / B.Y);
         public static Vector2 operator /(Vector2 A, double B) => new Vector2(A.X / B, A.Y / B);
         public static Vector2 operator /(double A, Vector2 B) => new Vector2(A / B.X, A / B.Y);

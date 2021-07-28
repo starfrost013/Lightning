@@ -80,17 +80,17 @@
     <Rectangle Colour="127,70,20,140" Fill="True" CanCollide="False" Position="310,66" Size="40,40" ZIndex="0" Name="FilledRectangle" />
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     
-    <PhysicalObject CanCollide="False" Position="50,50" Size="200,150" ZIndex="0" Name="Block1" PhysicsEnabled="True">
+    <PhysicalObject CanCollide="False" Position="450,300" Size="200,150" ZIndex="0" Name="Block1" PhysicsEnabled="True" Anchored="True" Mass="0">
       <Texture Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block1_Texture" />
     </PhysicalObject>
-    <PhysicalObject CanCollide="False" Position="60,60" Size="200,150" ZIndex="0" Name="Block2" PhysicsEnabled="True">
+    <PhysicalObject CanCollide="False" Position="60,60" Size="200,150" ZIndex="0" Name="Block2" PhysicsEnabled="True" Mass="0">
       <Texture Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
     </PhysicalObject>
     <Camera Active="True" CameraType="Free" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" />
     <Script Content="print('i am die');&#xD;&#xA;ScriptingTest.ScTest();&#xD;&#xA;" Name="WsTestScript" />
     <Sound Is3D="True" TargetObject="Camera1" Path="Content\Sounds\test.mp3" Repeat="True" Volume="1" Radius="20" CanCollide="False" Position="-100,0" ZIndex="0" Name="Instance" />
     <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0" LoopCount="5"></Sound>
-    <Humanoid Position="450,150" Size="42,68" CanCollide="True" Name="Trincid2021TestOnly" DisplayHealthBar="True" Health="95" MaxHealth="100" PhysicsEnabled="True">
+    <Humanoid Position="450,150" Size="42,68" CanCollide="True" Name="Trincid2021TestOnly" DisplayHealthBar="True" Health="95" MaxHealth="100" PhysicsEnabled="True" Mass="0">
       <Texture Path="Content\Textures\HumanoidTest\TrincidStandingL.png" Name="Trincid2021TestOnly_StandLeft"/>
     </Humanoid>
     <Sky Name="SkyBG" ForceToBack="True">

@@ -10,8 +10,9 @@ var searchData=
   ['additiveblending_7',['AdditiveBlending',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a55b2009972903a90babbfccd52ab1ad8',1,'Lightning::Core::API']]],
   ['alignment_8',['Alignment',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84',1,'Lightning::Core::API']]],
   ['alphablending_9',['AlphaBlending',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a8bb7dc17a08b6afa19cc4c18c6334eee',1,'Lightning::Core::API']]],
-  ['antialiasingdisabled_10',['AntiAliasingDisabled',['../class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a396d09181fa154a46aaec603aa3e2e24',1,'Lightning::Core::API::Text']]],
-  ['applyimpulse_11',['ApplyImpulse',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adfae95d8683554151e77b026c90391a4',1,'Lightning::Core::API::PhysicalObject']]],
-  ['archivable_12',['Archivable',['../namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e',1,'Lightning::Core::API']]],
-  ['author_13',['Author',['../class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3',1,'Lightning::Core::API::GameMetadata']]]
+  ['anchored_10',['Anchored',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adab647a99da7a6cd110aac024689637a',1,'Lightning::Core::API::PhysicalObject']]],
+  ['antialiasingdisabled_11',['AntiAliasingDisabled',['../class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a396d09181fa154a46aaec603aa3e2e24',1,'Lightning::Core::API::Text']]],
+  ['applyimpulse_12',['ApplyImpulse',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adfae95d8683554151e77b026c90391a4',1,'Lightning::Core::API::PhysicalObject']]],
+  ['archivable_13',['Archivable',['../namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e',1,'Lightning::Core::API']]],
+  ['author_14',['Author',['../class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3',1,'Lightning::Core::API::GameMetadata']]]
 ];

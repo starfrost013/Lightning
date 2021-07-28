@@ -7,6 +7,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object =
     [ "Render", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a2b30cdacca6bc9054e55e83c4338839e", null ],
     [ "_mass", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a1371281369b93209953931374edf9f4d", null ],
     [ "AABB", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a98295de4257435a20f723da6ced7aa52", null ],
+    [ "Anchored", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adab647a99da7a6cd110aac024689637a", null ],
     [ "Attributes", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a3f7c1c55fc50323392bcc8b4bf5d315c", null ],
     [ "BorderColour", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#afec86f6ebd83f10c506627a759081985", null ],
     [ "BorderFill", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a36acb09174c38d0ae98e19d15d954713", null ],

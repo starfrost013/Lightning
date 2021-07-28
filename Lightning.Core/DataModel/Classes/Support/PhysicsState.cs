@@ -35,5 +35,18 @@
 
         internal static readonly Vector2 TerminalVelocityDefaultValue = new Vector2(25, -8);
 
+        /// <summary>
+        /// Percentage to use for positionally correcting in the physics engine.
+        /// </summary>
+        public double PositionalCorrectionPercentage { get; set; }
+
+        internal static readonly double PositionalCorrectionPercentageDefaultValue = 0.2;
+
+        /// <summary>
+        /// Slop to use for positionally corrcting in the physics engine.
+        /// </summary>
+        public double PositionalCorrectionSlop { get; set; }
+
+        internal static readonly double PositionalCorrectionSlopDefaultValue = 0.01; 
     }
 }

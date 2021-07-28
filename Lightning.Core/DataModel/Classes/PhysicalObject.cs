@@ -168,12 +168,13 @@ namespace Lightning.Core.API
             {
                 if (value == 0)
                 {
-                    InverseMass = 0; // prevents objects spazzing off to infinity...
+                    InverseMass = 1; // prevents objects spazzing off to infinity...
                 }
                 else 
                 {
                     InverseMass = 1 / value;
                 }
+
                 _mass = value;
             }
 
@@ -214,6 +215,7 @@ namespace Lightning.Core.API
         {
             PhysicsController = new DefaultPhysicsController(); 
             if (Velocity == null) Velocity = new Vector2(0, 0);
+            if (InverseMass == 0) InverseMass = 1; // hacky code test temp
         }
 
         /// <summary>

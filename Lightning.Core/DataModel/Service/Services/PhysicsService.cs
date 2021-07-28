@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// PhysicsService
     /// 
-    /// June 20, 2021 (modified July 26, 2021)
+    /// June 20, 2021 (modified July 28, 2021)
     /// 
     /// Implements a 2D rigid body physics engine for Lightning.
     /// </summary>
@@ -62,6 +62,8 @@ namespace Lightning.Core.API
                 GetGameSettingResult GGSR_GravityState = GS.GetSetting("GravityState");
                 GetGameSettingResult GGSR_ObjectKillBoundary = GS.GetSetting("ObjectKillBoundary");
                 GetGameSettingResult GGSR_TerminalVelocity = GS.GetSetting("TerminalVelocity");
+                GetGameSettingResult GGSR_PositionalCorrectionPercentage = GS.GetSetting("PositionalCorrectionPercentage");
+                GetGameSettingResult GGSR_PositionalCorrectionSlop = GS.GetSetting("PositionalCorrectionSlop");
 
                 if (!GGSR_GravityLevel.Successful
                 || GGSR_GravityLevel.Setting == null) 
@@ -102,8 +104,7 @@ namespace Lightning.Core.API
 
                     try
                     {
-                        GravityState GSState = (GravityState)PhysicsState_Setting.SettingValue;
-                        PhysState.GravityState = GSState;
+                        PhysState.GravityState = (GravityState)PhysicsState_Setting.SettingValue;
                     }
                     catch (Exception)
                     {
@@ -120,12 +121,9 @@ namespace Lightning.Core.API
                 {
                     GameSetting ObjectKillBoundary_Setting = GGSR_ObjectKillBoundary.Setting;
 
-                    Vector2 ObjectKillBoundary_SettingValue = null;
-
                     try
                     {
-                        ObjectKillBoundary_SettingValue = (Vector2)ObjectKillBoundary_Setting.SettingValue;
-                        PhysState.ObjectKillBoundary = ObjectKillBoundary_SettingValue;
+                        PhysState.ObjectKillBoundary = (Vector2)ObjectKillBoundary_Setting.SettingValue;
                     }
                     catch (Exception)
                     {
@@ -153,6 +151,58 @@ namespace Lightning.Core.API
                     }
                 }
 
+                if (!GGSR_PositionalCorrectionPercentage.Successful
+                || GGSR_PositionalCorrectionPercentage == null)
+                {
+                    PhysState.PositionalCorrectionPercentage = PhysicsState.PositionalCorrectionPercentageDefaultValue;
+                }
+                else
+                {
+                    GameSetting PositionalCorrectionPercentage_Setting = GGSR_TerminalVelocity.Setting;
+
+                    try
+                    {
+                        PhysState.PositionalCorrectionPercentage = (double)PositionalCorrectionPercentage_Setting.SettingValue; 
+                    }
+                    catch (Exception)
+                    {
+                        PhysState.PositionalCorrectionPercentage = (double)PhysicsState.PositionalCorrectionPercentageDefaultValue;
+                    }
+                }
+
+                if (!GGSR_PositionalCorrectionSlop.Successful
+                || GGSR_PositionalCorrectionSlop.Setting == null)
+                {
+                    PhysState.PositionalCorrectionSlop = PhysicsState.PositionalCorrectionSlopDefaultValue;
+                }
+                else 
+                {
+                    GameSetting PositionalCorrectionSlop_Setting = GGSR_TerminalVelocity.Setting;
+
+                    try
+                    {
+                        PhysState.PositionalCorrectionSlop = (double)PositionalCorrectionSlop_Setting.SettingValue;
+                    }
+                    catch (Exception)
+                    {
+                        PhysState.PositionalCorrectionSlop = PhysicsState.PositionalCorrectionSlopDefaultValue;
+                    }
+                }
+
+                if (PhysState.PositionalCorrectionPercentage <= 0)
+                {
+                    ErrorManager.ThrowError(ClassName, "PhysicsStatePositionalCorrectionPercentageMustBeAboveZeroException", $"The PositionalCorrectionPercentage GameSetting must be set to a value above zero (it is currently set to {PhysState.PositionalCorrectionPercentage}). It has been reset to a higher value");
+                    PhysState.PositionalCorrectionPercentage = PhysicsState.PositionalCorrectionPercentageDefaultValue;
+                }
+                else
+                {
+                    if (PhysState.PositionalCorrectionSlop <= 0)
+                    {
+                        ErrorManager.ThrowError(ClassName, "PhysicsStatePositionalCorrectionSlopMustBeAboveZeroException", $"The PositionalCorrectionSlop GameSetting must be set to a value above zero (it is currently set to {PhysState.PositionalCorrectionPercentage}). It has been reset to a higher value");
+                        PhysState.PositionalCorrectionSlop = PhysicsState.PositionalCorrectionSlopDefaultValue;
+                    }
+                }
+                
                 PHYSICSSERVICE_INITIALISED = true;
                 return; 
 

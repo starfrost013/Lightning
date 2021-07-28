@@ -56,6 +56,11 @@ namespace Lightning.Core.API
                     {
                         PhysicalObject ObjectToTest = (PhysicalObject)Instance;
 
+                        if (Object == ObjectToTest)
+                        {
+                            continue; // don't check for collisions against ourselves
+                        }
+
                         if (ObjectToTest.AABB == null
                         || !ObjectToTest.PhysicsEnabled)
                         {
@@ -125,25 +130,33 @@ namespace Lightning.Core.API
                                     double ImpulseScalar = -(1 * MinimumElasticity) * NormalVelocity;
                                     ImpulseScalar /= (Object.InverseMass + ObjectToTest.InverseMass);
 
+                                    if (Double.IsNaN(ImpulseScalar) || ImpulseScalar == 0) // prevent going to infinity
+                                    {
+                                        ImpulseScalar = 1; 
+                                    }
+
                                     // Apply force in OPPOSITE directions to force apart
                                     Vector2 CollisionImpulse = CollisionNormal * ImpulseScalar;
 
-                                    Object.Velocity -= CollisionImpulse * Object.InverseMass;
-                                    ObjectToTest.Velocity += CollisionImpulse * Object.InverseMass;
+                                    
+                                    if (!Object.Anchored) Object.Velocity -= CollisionImpulse * Object.InverseMass;
 
+                                    if (!ObjectToTest.Anchored) ObjectToTest.Velocity += CollisionImpulse * Object.InverseMass;;
                                 }
+
+                                //PerformPositionalCorrection(CollisionResult.Manifold, PS);
                             }
                             else
                             {
                                 Vector2 AbsoluteTerminalVelocity = PS.TerminalVelocity.GetAbs();
 
-                                AbsoluteTerminalVelocity /= 10;
+                                AbsoluteTerminalVelocity /= 8;
 
                                 if (Object.Velocity < PS.TerminalVelocity.GetAbs()
                                 && !Object.Anchored) // falling to the ground
                                 {
-                                    Object.Velocity.X += PS.Gravity.X / 10;
-                                    Object.Velocity.Y -= PS.Gravity.Y / 10;
+                                    Object.Velocity.X += PS.Gravity.X / 8;
+                                    Object.Velocity.Y -= PS.Gravity.Y / 8;
                                     // TEMP testing - /10 MAY be moved to gamesettings.
                                 } 
                                 
@@ -186,15 +199,15 @@ namespace Lightning.Core.API
             AABB AABB_B = ObjB.AABB;
 
             // Calculate half
-            double HalfX_A = (AABB_A.Maximum.X - AABB_A.Position.X) / 2;
-            double HalfX_B = (AABB_B.Maximum.X - AABB_B.Position.X) / 2;
+            double HalfX_A = (AABB_A.Maximum.X - AABB_A.Minimum.X) / 2;
+            double HalfX_B = (AABB_B.Maximum.X - AABB_B.Minimum.X) / 2;
 
             double XOverlap = HalfX_B + HalfX_A - Math.Abs(AB.X);
             
             if (XOverlap > 0)
             {
-                double HalfY_A = (AABB_A.Maximum.Y - AABB_A.Position.Y) / 2;
-                double HalfY_B = (AABB_B.Maximum.Y - AABB_B.Position.Y) / 2;
+                double HalfY_A = (AABB_A.Maximum.Y - AABB_A.Minimum.Y) / 2;
+                double HalfY_B = (AABB_B.Maximum.Y - AABB_B.Minimum.Y) / 2;
 
                 double YOverlap = HalfY_B + HalfY_A - Math.Abs(AB.Y);
 
@@ -242,6 +255,14 @@ namespace Lightning.Core.API
                 return CR;
             }
         }
+
+        private void PerformPositionalCorrection(Manifold M, PhysicsState PS)
+        {
+            Vector2 Mx = M.NormalVector * Math.Max(M.PenetrationAmount - PS.PositionalCorrectionSlop, 0) / (M.PhysicalObjectA.InverseMass + M.PhysicalObjectB.InverseMass);
+            if (!M.PhysicalObjectA.Anchored) M.PhysicalObjectA.Position -= Mx * M.PhysicalObjectA.InverseMass;
+            if (!M.PhysicalObjectB.Anchored) M.PhysicalObjectB.Position += Mx * M.PhysicalObjectB.InverseMass;
+        }
+
         public override void OnCollisionStart()
         {
             return;

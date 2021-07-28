@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78daafbf0897a5a83fdd873dfb032ec695d3":[0,0,0,0,0,106,1],
+"namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ff":[0,0,0,0,0,108],
 "namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e":[0,0,0,0,0,108,3],
 "namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa47def3380de1d081c8d43ffe96bbbd0b":[0,0,0,0,0,108,0],
 "namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa5023442513412b39075bd52607b24fff":[0,0,0,0,0,108,8],
