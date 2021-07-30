@@ -7,7 +7,7 @@ namespace Lightning.Core
     /// <summary>
     /// LaunchArgs
     /// 
-    /// April 8, 2021 (modified May 16, 2021: Add AppName for Polaris)
+    /// April 8, 2021 (modified July 29, 2021: Add comments)
     /// 
     /// Defines launch arguments for the DataModel.
     /// </summary>
@@ -15,10 +15,18 @@ namespace Lightning.Core
     {
 
         /// <summary>
-        /// Application name used for 
+        /// Application name used for console logging.
         /// </summary>
         public string AppName { get; set; }
+
+        /// <summary>
+        /// The path to the GameXML to launch.
+        /// </summary>
         public string GameXMLPath { get; set; }
+
+        /// <summary>
+        /// Determines if services will be initialised.
+        /// </summary>
         public bool InitServices { get; set; }
 
         public static LaunchArgsResult HandleArgs(string[] Args)

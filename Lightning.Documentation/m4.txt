@@ -331,7 +331,7 @@ Render refactoring	40% (will be completed with Animation API)
 Animation API		0%
 Primitive API		Complete
 Removal of OUS		Complete
-DDMS refactor		25%
+DDMS refactor		35%
 Camera API		Complete except optimisation
 Functional Scripting API20%
 Removal of Error XML	Complete
