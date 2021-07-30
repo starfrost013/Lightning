@@ -19,8 +19,14 @@ namespace Lightning.Tools.AutomatedTestingManager
         /// </summary>
         public LaunchArgs LaunchArguments { get; set; }
 
-
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public string FailureReason { get; set; }
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public bool Successful { get; set; }
 
         public GetLaunchArgsResult()

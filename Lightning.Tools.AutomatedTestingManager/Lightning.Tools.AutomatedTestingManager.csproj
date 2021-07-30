@@ -3,10 +3,44 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyVersion>1.0.17.21211</AssemblyVersion>
+    <FileVersion>1.0.17.21211</FileVersion>
+    <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;WINDOWS</DefineConstants>
+    <OutputPath>C:\Users\FiercePC\Lightning\Lightning\Lightning\bin\Debug\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;WINDOWS,X64</DefineConstants>
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>C:\Users\FiercePC\Lightning\Lightning\Lightning\bin\Debug.Win64\</OutputPath>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <OutputPath>C:\Users\FiercePC\Lightning\Lightning\Lightning\bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <DefineConstants>TRACE;WINDOWS,X64</DefineConstants>
+    <OutputPath>C:\Users\FiercePC\Lightning\Lightning\Lightning\bin\Release.Win64\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

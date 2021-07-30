@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Lightning.Tools.AutomatedTestingManager": {
+      "commandName": "Project",
+      "commandLineArgs": "-recurse -processlifetime 14000"
+    }
+  }
+}
