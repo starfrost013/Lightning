@@ -142,7 +142,9 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "AttemptedToSetInvalidPropertyException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 123 });
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGradientStopsException", Description = "Failed to obtain list of GradientStops!", Severity = MessageSeverity.FatalError, Id = 124 }); // nonfatal?
          ErrorManager.RegisterError( new Error { Name = "GradientMustHaveAboveZeroStopsException", Description = "A Gradient must have above zero stomps!", Severity = MessageSeverity.Error, Id = 125 });
-            
+         ErrorManager.RegisterError( new Error { Name = "InvalidGradientException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 126 });
+         ErrorManager.RegisterError( new Error { Name = "GradientMustHaveGuiElementParentException", Description = "Gradients must have a GuiElement as their parent", Severity = MessageSeverity.Error, Id = 127 });
+         ErrorManager.RegisterError( new Error { Name = "GradientParentMustHavePositionException", Description = "Gradients require that their parent has a set position and size!", Severity = MessageSeverity.Error, Id = 127 });
      }
   }
 }

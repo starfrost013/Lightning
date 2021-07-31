@@ -246,5 +246,21 @@ namespace Lightning.Core.API
             B = CB;
         }
 
+        #region not really blending
+        public static Color4 operator +(Color4 A, Color4 B) => new Color4((byte)(A.A + B.A), (byte)(A.R + B.R), (byte)(A.G + B.G), (byte)(A.B + B.B));
+        public static Color4 operator +(double A, Color4 B) => new Color4((byte)(A + B.A), (byte)(A + B.R), (byte)(A + B.G), (byte)(A + B.B));
+        public static Color4 operator +(Color4 A, double B) => new Color4((byte)(A.A + B), (byte)(A.R + B), (byte)(A.G + B), (byte)(A.B + B));
+        public static Color4 operator -(Color4 A, Color4 B) => new Color4((byte)(A.A - B.A), (byte)(A.R - B.R), (byte)(A.G - B.G), (byte)(A.B - B.B));
+        public static Color4 operator -(double A, Color4 B) => new Color4((byte)(A - B.A), (byte)(A - B.R), (byte)(A - B.G), (byte)(A - B.B));
+        public static Color4 operator -(Color4 A, double B) => new Color4((byte)(A.A - B), (byte)(A.R - B), (byte)(A.G - B), (byte)(A.B - B));
+        public static Color4 operator *(Color4 A, Color4 B) => new Color4((byte)(A.A * B.A), (byte)(A.R * B.R), (byte)(A.G * B.G), (byte)(A.B * B.B));
+        public static Color4 operator *(double A, Color4 B) => new Color4((byte)(A * B.A), (byte)(A * B.R), (byte)(A * B.G), (byte)(A * B.B));
+        public static Color4 operator *(Color4 A, double B) => new Color4((byte)(A.A * B), (byte)(A.R * B), (byte)(A.G * B), (byte)(A.B * B));
+        public static Color4 operator /(Color4 A, Color4 B) => new Color4((byte)(A.A / B.A), (byte)(A.R / B.R), (byte)(A.G / B.G), (byte)(A.B / B.B));
+        public static Color4 operator /(double A, Color4 B) => new Color4((byte)(A / B.A), (byte)(A / B.R), (byte)(A / B.G), (byte)(A / B.B));
+        public static Color4 operator /(Color4 A, double B) => new Color4((byte)(A.A / B), (byte)(A.R / B), (byte)(A.G / B), (byte)(A.B / B));
+
+
+        #endregion
     }
 }
