@@ -139,7 +139,10 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "AttemptedToApplyInvalidImpulseException", Description = "Attempted to apply an invalid impulse to a PhysicalObject!", Severity = MessageSeverity.Error, Id = 120 });
          ErrorManager.RegisterError( new Error { Name = "PhysicsStatePositionalCorrectionPercentageMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 121 });
          ErrorManager.RegisterError( new Error { Name = "PhysicsStatePositionalCorrectionSlopMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 122 });
-            ErrorManager.RegisterError(new Error { Name = "AttemptedToSetInvalidPropertyException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 123 });       
+         ErrorManager.RegisterError( new Error { Name = "AttemptedToSetInvalidPropertyException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 123 });
+         ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGradientStopsException", Description = "Failed to obtain list of GradientStops!", Severity = MessageSeverity.FatalError, Id = 124 }); // nonfatal?
+         ErrorManager.RegisterError( new Error { Name = "GradientMustHaveAboveZeroStopsException", Description = "A Gradient must have above zero stomps!", Severity = MessageSeverity.Error, Id = 125 });
+            
      }
   }
 }
