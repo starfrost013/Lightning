@@ -14,7 +14,7 @@ namespace Lightning.Core.API
     /// Defines a UI gradient.
     /// </summary>
     [TypeConverter(typeof(GradientConverter))]
-    public class Gradient : GuiElement
+    public class Gradient : PhysicalObject
     {
         internal override string ClassName => "Gradient";
 
@@ -170,7 +170,7 @@ namespace Lightning.Core.API
 
                                 SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColourY.R, FinalColourY.G, FinalColourY.B, FinalColourY.A);
 
-                                double FinalY = CurPosition.Y + ((GStopPlusOnePos.Y - CurPosition.y) * Percentage);
+                                double FinalY = CurPosition.Y + ((GStopPlusOnePos.Y - CurPosition.Y) * Percentage);
 
                                 SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)CurPosition.X, (int)FinalY);
                             }

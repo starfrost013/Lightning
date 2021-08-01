@@ -43,11 +43,6 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Gets or sets the background colour of this GuiElement.
-        /// </summary>
-        public Color4 BackgroundColour { get; set; }
-
-        /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <param name="SDL_Renderer"></param>

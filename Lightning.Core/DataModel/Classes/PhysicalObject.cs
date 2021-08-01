@@ -66,6 +66,12 @@ namespace Lightning.Core.API
         /// Gets or sets the border fill state. If true, the border will be filled. If false, it will not.
         /// </summary>
         public bool BorderFill { get; set; }
+
+        /// <summary>
+        /// Gets or sets the background colour of this GuiElement.
+        /// </summary>
+        public Color4 BackgroundColour { get; set; }
+
         /// <summary>
         /// Ran on the spawning of an object, before it is rendered for the first time and after the initialisation of the renderer.
         /// </summary>
