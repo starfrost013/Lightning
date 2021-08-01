@@ -35,7 +35,7 @@ namespace Lightning.Core.API
 
         }
 
-        internal void Init() // called by button
+        private void Init() // called by button
         {
             ItemRectangle = new Rectangle(); // TODO: DATAMODEL (this works around a known bug, but is hacky)
 
@@ -58,7 +58,8 @@ namespace Lightning.Core.API
             ItemRectangle.BorderColour = BorderColour;
             ItemRectangle.Colour = BorderColour;
             ItemRectangle.BackgroundColour = BackgroundColour;
-         
+            ItemRectangle.Fill = Fill;
+
             Vector2 FontSize = null;
 
             if (ItemRectangle.Size == null)
@@ -134,7 +135,7 @@ namespace Lightning.Core.API
             TEXTBOX_INITIALISED = true;
         }
 
-        private void DoRender(Renderer SDL_Renderer, Texture Tx)
+        internal void DoRender(Renderer SDL_Renderer, Texture Tx)
         {
             ItemRectangle.Render(SDL_Renderer, Tx);
 
