@@ -19,7 +19,7 @@
         /// </summary>
         public GravityState GravityState { get; set; }
 
-        internal static readonly Vector2 GravityDefaultValue = new Vector2(0, -0.05);
+        internal static readonly Vector2 GravityDefaultValue = new Vector2(0, -0.01);
 
         /// <summary>
         /// The boundary under which any object will be destroyed by the PhysicsService.
@@ -33,7 +33,7 @@
         /// </summary>
         public Vector2 TerminalVelocity { get; set; }
 
-        internal static readonly Vector2 TerminalVelocityDefaultValue = new Vector2(25, -8);
+        internal static readonly Vector2 TerminalVelocityDefaultValue = new Vector2(5, -1.6);
 
         /// <summary>
         /// Percentage to use for positionally correcting in the physics engine.

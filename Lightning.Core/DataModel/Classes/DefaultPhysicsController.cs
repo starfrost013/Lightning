@@ -23,6 +23,7 @@ namespace Lightning.Core.API
 
         public override void OnTick(PhysicalObject Object, PhysicsState PS) // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
         {
+
             Workspace Ws = DataModel.GetWorkspace();
 
             GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
@@ -35,6 +36,10 @@ namespace Lightning.Core.API
             }
             else
             {
+
+                int ObjCollisionCount = 0;
+                int ObjToTestCollisionCount = 0;
+
                 GameSettings GS = (GameSettings)GIR.Instance;
 
                 AABB CAABB = Object.AABB;
@@ -54,6 +59,8 @@ namespace Lightning.Core.API
 
                     foreach (Instance Instance in ControllableObjectList)
                     {
+
+
                         PhysicalObject ObjectToTest = (PhysicalObject)Instance;
 
                         if (Object == ObjectToTest)
@@ -69,7 +76,7 @@ namespace Lightning.Core.API
                         else
                         {
                             AABB AABBToTestForCollision = ObjectToTest.AABB;
-                            
+
                             if (Object.Velocity > PS.TerminalVelocity.GetAbs())
                             {
                                 if (Object.Velocity.X < 0 && PS.TerminalVelocity.X < 0
@@ -90,6 +97,9 @@ namespace Lightning.Core.API
                             if (CollisionResult.Successful)
                             {
                                 // Probably NOT the way it's supposed to be done and a bit hacky, but meh
+
+                                ObjCollisionCount++;
+                                ObjToTestCollisionCount++;
 
                                 // Handles when an object is spawned within another object (i.e. no velocity to resolve an impulse).
                                 if (Object.Velocity == new Vector2(0, 0)
@@ -119,8 +129,6 @@ namespace Lightning.Core.API
                                         if (!ObjectToTest.Anchored) ObjectToTest.Position.Y += (CollisionManifold.PenetrationAmount / 2);
                                     }
                                     
-
-                                    continue; 
                                 }
                                 else
                                 {
@@ -163,17 +171,18 @@ namespace Lightning.Core.API
                             {
                                 Vector2 AbsoluteTerminalVelocity = PS.TerminalVelocity.GetAbs();
 
-                                AbsoluteTerminalVelocity /= 5;
-
                                 if (!Object.Anchored) // falling to the ground
                                 {
-                                    Object.Velocity.X += PS.Gravity.X / 5;
-                                    Object.Velocity.Y -= PS.Gravity.Y / 5;
+                                    Object.Velocity.X += PS.Gravity.X;
+                                    Object.Velocity.Y -= PS.Gravity.Y;
                                     // TEMP testing - /10 MAY be moved to gamesettings.
                                 } 
                                 
-                                continue; 
                             }
+
+                            Object.IsColliding = (ObjCollisionCount > 0);
+                            ObjectToTest.IsColliding = (ObjToTestCollisionCount > 0);
+
 
                         }
                     }

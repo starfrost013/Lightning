@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Humanoid
     /// 
-    /// May 24, 2021 (modified May 26, 2021)
+    /// May 24, 2021 (modified August 1, 2021)
     /// 
     /// Defines a Humanoid.
     /// </summary>
@@ -157,7 +157,7 @@ namespace Lightning.Core.API
             else if (KeyJump.Contains(KeyCode))
             {
                 // TODO: buffer stuff so holding it for longer is equal to a different jump height
-                if (!KeyArgs.Repeat) ApplyImpulse(new Vector2(0, -2)); // move to the left
+                if (!KeyArgs.Repeat && IsColliding) ApplyImpulse(new Vector2(0, -2)); // move to the left
             }
            
 

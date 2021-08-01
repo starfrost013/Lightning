@@ -54,7 +54,6 @@ namespace Lightning.Core.API
             }
 
             ItemRectangle.Position = Position;
-            ItemRectangle.Size = Size;
             ItemRectangle.BorderColour = BorderColour;
             ItemRectangle.Colour = BorderColour;
             ItemRectangle.BackgroundColour = BackgroundColour;

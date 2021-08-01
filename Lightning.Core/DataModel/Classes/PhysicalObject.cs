@@ -217,6 +217,11 @@ namespace Lightning.Core.API
         /// </summary>
         public PhysicsController PhysicsController { get; set; }
 
+        /// <summary>
+        /// Determines if this object is colliding with any objects at all..
+        /// </summary>
+        public bool IsColliding { get; set; }
+
         public override void OnCreate()
         {
             PhysicsController = new DefaultPhysicsController(); 
