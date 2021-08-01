@@ -1,6 +1,7 @@
 ﻿using Lightning.Core.SDL2; 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Lightning.Core.API
@@ -12,6 +13,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a UI gradient.
     /// </summary>
+    [TypeConverter(typeof(GradientConverter))]
     public class Gradient : GuiElement
     {
         internal override string ClassName => "Gradient";
@@ -156,6 +158,8 @@ namespace Lightning.Core.API
 
                             double FinalX = CurPosition.X + ((GStopPlusOnePos.X - CurPosition.X) * Percentage);
 
+                            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColour.R, FinalColour.G, FinalColour.B, FinalColour.A);
+
                             SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)FinalX, (int)CurPosition.Y);
 
                             for (double k = CurPosition.Y; k < GStopPlusOnePos.Y; k++)
@@ -164,6 +168,8 @@ namespace Lightning.Core.API
 
                                 Color4 FinalColourY = (CDiff * YPercentage);
 
+                                SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColourY.R, FinalColourY.G, FinalColourY.B, FinalColourY.A);
+
                                 double FinalY = CurPosition.Y + ((GStopPlusOnePos.Y - CurPosition.y) * Percentage);
 
                                 SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)CurPosition.X, (int)FinalY);
@@ -171,6 +177,8 @@ namespace Lightning.Core.API
 
 
                         }
+
+                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
                     }
 
                 }

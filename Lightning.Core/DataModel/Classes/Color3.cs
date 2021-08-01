@@ -222,5 +222,22 @@ namespace Lightning.Core.API
             B = CB;
         }
 
+        #region Not really blending
+
+        public static Color3 operator +(Color3 A, Color3 B) => new Color3((byte)(A.R + B.R), (byte)(A.G + B.G), (byte)(A.B + B.B));
+        public static Color3 operator +(double A, Color3 B) => new Color3((byte)(A + B.R), (byte)(A + B.G), (byte)(A + B.B));
+        public static Color3 operator +(Color3 A, double B) => new Color3((byte)(A.R + B), (byte)(A.G + B), (byte)(A.B + B));
+        public static Color3 operator -(Color3 A, Color3 B) => new Color3((byte)(A.R - B.R), (byte)(A.G - B.G), (byte)(A.B - B.B));
+        public static Color3 operator -(double A, Color3 B) => new Color3((byte)(A - B.R), (byte)(A - B.G), (byte)(A - B.B));
+        public static Color3 operator -(Color3 A, double B) => new Color3((byte)(A.R - B), (byte)(A.G - B), (byte)(A.B - B));
+        public static Color3 operator *(Color3 A, Color3 B) => new Color3((byte)(A.R * B.R), (byte)(A.G * B.G), (byte)(A.B * B.B));
+        public static Color3 operator *(double A, Color3 B) => new Color3((byte)(A * B.R), (byte)(A * B.G), (byte)(A * B.B));
+        public static Color3 operator *(Color3 A, double B) => new Color3((byte)(A.R * B), (byte)(A.G * B), (byte)(A.B * B));
+        public static Color3 operator /(Color3 A, Color3 B) => new Color3((byte)(A.R / B.R), (byte)(A.G / B.G), (byte)(A.B / B.B));
+        public static Color3 operator /(double A, Color3 B) => new Color3((byte)(A / B.R), (byte)(A / B.G), (byte)(A / B.B));
+        public static Color3 operator /(Color3 A, double B) => new Color3((byte)(A.R / B), (byte)(A.G / B), (byte)(A.B / B));
+
+        #endregion
+
     }
 }
