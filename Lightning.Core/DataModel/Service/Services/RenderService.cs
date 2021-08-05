@@ -537,6 +537,9 @@ namespace Lightning.Core.API
             {
                 switch (CurEvent.type)
                 {
+                    case SDL.SDL_EventType.SDL_KEYUP:
+                        HandleKeyUp(CurEvent);
+                        return; 
                     case SDL.SDL_EventType.SDL_KEYDOWN:
                         HandleKeyDown(CurEvent); 
                         return;
@@ -673,12 +676,7 @@ namespace Lightning.Core.API
             {
                 if (PO.OnKeyDownHandler != null)
                 {
-                    KeyEventArgs KEA = new KeyEventArgs();
-                    KEA.Key = new Control();
-                    KEA.Key.KeyCode = CurEvent.key.keysym;
-
-                    KEA.Repeat = (CurEvent.key.repeat > 0);
-                    KEA.RepeatCount = CurEvent.key.repeat;
+                    KeyEventArgs KEA = GetKeyEventArgs(CurEvent);
 
                     PO.OnKeyDownHandler(this, KEA);
                 }
@@ -778,21 +776,66 @@ namespace Lightning.Core.API
             }
         }
 
-        private void ThrowQuitEvent(SDL.SDL_Event CurEvent)
+        private void ThrowQuitEvent(SDL.SDL_Event CurEvent, bool Expected = false) // not good need to change asap
         {
             List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
 
+            ThrowQuitEvent_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects, Expected);
+
         }
 
-        private void ThrowQuitEvent_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        private void ThrowQuitEvent_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects, bool Expected = false)
         {
+            foreach (PhysicalObject PO in PhysicalObjects)
+            {
+                if (PO.OnShutdown != null)
+                {
+                    ShutdownEventArgs SEA = new ShutdownEventArgs();
 
+                    SEA.Expected = Expected;
+
+                    PO.OnShutdown(this, SEA);
+                }
+            }
         }
 
+        private void HandleKeyUp(SDL.SDL_Event CurEvent)
+        {
+            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+
+            HandleKeyUp_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
+        }
+
+        private void HandleKeyUp_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        {
+            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            {
+                if (PhysicalObject.KeyUp != null)
+                {
+                    KeyEventArgs KEA = GetKeyEventArgs(CurEvent);
+
+                    PhysicalObject.KeyUp(this, KEA);
+                }
+            }
+        }
+
+        private KeyEventArgs GetKeyEventArgs(SDL.SDL_Event CurEvent)
+        {
+            KeyEventArgs KEA = new KeyEventArgs();
+            KEA.Key = new Control();
+            KEA.Key.KeyCode = CurEvent.key.keysym;
+
+            KEA.Repeat = (CurEvent.key.repeat > 0);
+            KEA.RepeatCount = CurEvent.key.repeat;
+
+            return KEA;
+        }
 
         public override void OnDataSent(ServiceMessage Data)
         {
             return;
         }
+
+
     }
 }
