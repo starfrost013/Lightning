@@ -73,6 +73,11 @@ namespace Lightning.Core.API
         public Color4 BackgroundColour { get; set; }
 
         /// <summary>
+        /// The current <see cref="Brush"/> included in this PhysicalObject.
+        /// </summary>
+        public Brush Brush { get; set; }
+
+        /// <summary>
         /// Ran on the spawning of an object, before it is rendered for the first time and after the initialisation of the renderer.
         /// </summary>
         public virtual void OnSpawn()
@@ -291,6 +296,15 @@ namespace Lightning.Core.API
             {
                 Velocity += Impulse; 
             }
+        }
+
+        private void BrushSetup()
+        {
+            Brush.Position = Position;
+            Brush.Size = Size;
+            Brush.Colour = Colour;
+            Brush.BackgroundColour = BackgroundColour;
+            Brush.BorderColour = BorderColour;
         }
 
     }
