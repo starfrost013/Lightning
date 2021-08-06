@@ -73,11 +73,6 @@ namespace Lightning.Core.API
         public Color4 BackgroundColour { get; set; }
 
         /// <summary>
-        /// The current <see cref="Brush"/> included in this PhysicalObject.
-        /// </summary>
-        public Brush Brush { get; set; }
-
-        /// <summary>
         /// Ran on the spawning of an object, before it is rendered for the first time and after the initialisation of the renderer.
         /// </summary>
         public virtual void OnSpawn()
@@ -235,6 +230,11 @@ namespace Lightning.Core.API
         /// </summary>
         public bool IsColliding { get; set; }
 
+        /// <summary>
+        /// Defines the display viewport of this PhysicalObject. BRUSHES ONLY
+        /// </summary>
+        public Vector2 DisplayViewport { get; set; }
+
         public override void OnCreate()
         {
             PhysicsController = new DefaultPhysicsController(); 
@@ -250,6 +250,13 @@ namespace Lightning.Core.API
         /// </summary>
         public virtual void Render(Renderer SDL_Renderer, Texture Tx)
         {
+            Brush Brush = GetBrush(); 
+
+            if (Brush != null)
+            {
+                Brush.Render(SDL_Renderer, Tx); 
+            }
+           
 
             IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
             // requisite error checking already done
@@ -298,7 +305,26 @@ namespace Lightning.Core.API
             }
         }
 
-        private void BrushSetup()
+
+        private Brush GetBrush()
+        {
+            GetInstanceResult GIR = GetFirstChildOfType("Brush");
+
+            if (GIR.Instance == null
+            || !GIR.Successful)
+            {
+                return null; 
+            }
+            else
+            {
+                Brush Brush = (Brush)GIR.Instance;
+                GetBrush_BrushSetup(Brush);
+                return Brush; 
+            }
+            
+        }
+
+        private void GetBrush_BrushSetup(Brush Brush)
         {
             Brush.Position = Position;
             Brush.Size = Size;

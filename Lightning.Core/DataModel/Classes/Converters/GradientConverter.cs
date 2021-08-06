@@ -33,7 +33,7 @@ namespace Lightning.Core.API
             
         }
 
-        public new Gradient ConvertFromString(string String)
+        public new LinearGradientBrush ConvertFromString(string String)
         {
 
             if (String == null
@@ -45,7 +45,7 @@ namespace Lightning.Core.API
 
             string[] NewLines = String.Split("\r\n", StringSplitOptions.None);
 
-            Gradient Gradient = new Gradient();
+            LinearGradientBrush Gradient = new LinearGradientBrush();
 
             foreach (string NewLine in NewLines)
             {

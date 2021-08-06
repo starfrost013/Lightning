@@ -145,6 +145,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "InvalidGradientException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 126 });
          ErrorManager.RegisterError( new Error { Name = "GradientMustHaveGuiElementParentException", Description = "Gradients must have a GuiElement as their parent", Severity = MessageSeverity.Error, Id = 127 });
          ErrorManager.RegisterError( new Error { Name = "GradientParentMustHavePositionException", Description = "Gradients require that their parent has a set position and size!", Severity = MessageSeverity.Error, Id = 127 });
+         ErrorManager.RegisterError( new Error { Name = "ErrorTryingToGetBrushException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 128 });
      }
   }
 }

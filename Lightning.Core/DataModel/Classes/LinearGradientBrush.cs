@@ -14,9 +14,9 @@ namespace Lightning.Core.API
     /// Defines a UI gradient.
     /// </summary>
     [TypeConverter(typeof(GradientConverter))]
-    public class Gradient : PhysicalObject
+    public class LinearGradientBrush : Brush
     {
-        internal override string ClassName => "Gradient";
+        internal override string ClassName => "LinearGradientBrush";
 
        
         private bool GRADIENT_INITIALISED { get; set; }
@@ -27,25 +27,16 @@ namespace Lightning.Core.API
         {
             Type ParentType = Parent.GetType(); // parent cannot be null as parentcanbenull is not set
 
-            if (!ParentType.IsSubclassOf(typeof(GuiElement)))
-            {
-                ErrorManager.ThrowError(ClassName, "GradientMustHaveGuiElementParentException");
-                Parent.RemoveChild(this);
-                return; // hopefully not required
-            }
-            else
-            {
-                GuiElement ParentGE = (GuiElement)Parent;
+            GuiElement ParentGE = (GuiElement)Parent;
 
-                if (ParentGE.Position == null
-                || ParentGE.Size == null)
-                {
-                    ErrorManager.ThrowError(ClassName, "GradientParentMustHavePositionException");
-                    Parent.RemoveChild(this);
-                    return; 
-                }
-                
+            if (ParentGE.Position == null
+            || ParentGE.Size == null)
+            {
+                ErrorManager.ThrowError(ClassName, "GradientParentMustHavePositionException");
+                Parent.RemoveChild(this);
+                return;
             }
+
         }
 
         public override void Render(Renderer SDL_Renderer, Texture Tx)

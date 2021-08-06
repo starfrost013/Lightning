@@ -29,5 +29,15 @@ namespace Lightning.Core.API
         /// </summary>
         public InstanceAccessibility Accessibility { get; set; }
 
+        /// <summary>
+        /// Presently unimplemented: Determine if this property is deprecated.
+        /// </summary>
+        public bool Deprecated { get; set; }
+
+        /// <summary>
+        /// Presently unimplemented: Determine if this property is experimental.
+        /// </summary>
+        public bool Experimental { get; set; }
+
     }
 }
