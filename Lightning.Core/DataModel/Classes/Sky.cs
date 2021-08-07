@@ -23,7 +23,7 @@ namespace Lightning.Core.API
 
         private bool INITIALISED { get; set; }
 
-        public override void Render(Renderer Renderer, Texture Tx)
+        public override void Render(Renderer Renderer, ImageBrush Tx)
         {
             if (!INITIALISED)
             {

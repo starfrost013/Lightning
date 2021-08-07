@@ -78,7 +78,10 @@
     <Circle Colour="255,255,0,255" Fill="True" CanCollide="False" Position="320,40" Size="96,48" ZIndex="0" Name="Circle2" />
     <Rectangle Colour="140,70,20,140" Fill="False" CanCollide="False" Position="266,66" Size="40,40" ZIndex="0" Name="NonFilledRectangle" />
     <Rectangle Fill="True" CanCollide="False" Position="310,66" Size="40,40" ZIndex="0" Name="FilledRectangle">
-      <SolidColourBrush Colour="127,70,20,140" BorderColour="255,255,255,255"></SolidColourBrush>
+      <LinearGradientBrush>
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
     </Rectangle>
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     
@@ -86,7 +89,7 @@
       <Texture Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block1_Texture" />
     </PhysicalObject>
     <PhysicalObject CanCollide="False" Position="60,60" Size="200,150" ZIndex="0" Name="Block2" PhysicsEnabled="True" Mass="0">
-      <Texture Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
+      <ImageBrush Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
     </PhysicalObject>
     <Camera Active="True" CameraType="FollowObject" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" TargetName="Trincid2021TestOnly"/>
     <Script Content="print('i am die');&#xD;&#xA;ScriptingTest.ScTest();&#xD;&#xA;" Name="WsTestScript" />

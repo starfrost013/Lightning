@@ -41,6 +41,8 @@ namespace Lightning.Core.API
         /// <param name="FontFamily">The name of the font family to laod.</param>
         public void Load() // change to result class?
         {
+            base.Init(); 
+
             if (FontPath == null
                 || FontPath.Length == 0)
             {
@@ -74,7 +76,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             return; // prevent crash from calling the wrong method
         }

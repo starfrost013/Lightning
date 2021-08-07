@@ -137,9 +137,8 @@ namespace Lightning.Core.API
             if (HighHealthThreshold > MaxHealth) HighHealthThreshold = Health / 1.5;
 
             HUMANOID_INITIALISED = true;
-            base.Init(); 
-
             
+            base.Init(); 
         }
 
         public void OnKeyDown(object Sender, KeyEventArgs KeyArgs)
@@ -166,7 +165,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx = null)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx = null)
         {
             // Some rendering temp stuff for humanoids
 
@@ -183,7 +182,7 @@ namespace Lightning.Core.API
             
         }
 
-        private void DoRender(Renderer SDL_Renderer, Texture Tx = null)
+        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx = null)
         {
             if (!Invincible)
             {

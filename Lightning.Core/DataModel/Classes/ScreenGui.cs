@@ -16,7 +16,7 @@ namespace Lightning.Core.API
         internal override string ClassName => "ScreenGui";
 
         private bool SCREENGUI_INITIALISED { get; set; }
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (!SCREENGUI_INITIALISED)
             {

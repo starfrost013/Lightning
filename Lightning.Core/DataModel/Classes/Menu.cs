@@ -25,7 +25,7 @@ namespace Lightning.Core.API
         private Rectangle ItemRectangle { get; set; }
         
         private MenuState State { get; set; }
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (!MENU_INITIALISED)
             {
@@ -37,7 +37,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private void Menu_RenderMenu(Renderer SDL_Renderer, Texture Tx)
+        private void Menu_RenderMenu(Renderer SDL_Renderer, ImageBrush Tx)
         {
             ItemRectangle.Render(SDL_Renderer, Tx);
 

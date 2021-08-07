@@ -250,7 +250,7 @@ namespace Lightning.Core.API
         /// 
         /// It has already been loaded, so the object is not required to load textures or anything similar.
         /// </summary>
-        public virtual void Render(Renderer SDL_Renderer, Texture Tx)
+        public virtual void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (!PHYSICALOBJECT_INITIALISED)
             {
@@ -274,8 +274,14 @@ namespace Lightning.Core.API
             
         }
 
-        private void DoRender(Renderer SDL_Renderer, Texture Tx)
+       
+        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
+            return; 
+
+            /*
+             * 
+             * removed for brush system
             IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
             // requisite error checking already done
 
@@ -298,8 +304,10 @@ namespace Lightning.Core.API
             DestinationRect.h = (int)Size.Y;
 
             SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+            */ 
 
         }
+         
 
         public virtual void OnClick(object Sender, MouseEventArgs EventArgs)
         {
@@ -361,6 +369,7 @@ namespace Lightning.Core.API
             Brush.BackgroundColour = BackgroundColour;
             Brush.BorderColour = BorderColour;
             Brush.BorderThickness = BorderThickness;
+            Brush.BorderFill = BorderFill; 
             Brush.BRUSH_INITIALISED = true;
         }
 

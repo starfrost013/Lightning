@@ -20,7 +20,7 @@ namespace Lightning.Core.API
         private bool TEXTBOX_INITIALISATION_FAILED { get; set; }
         public Vector2 Padding { get; set; }
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (TEXTBOX_INITIALISATION_FAILED) return;
 
@@ -134,7 +134,7 @@ namespace Lightning.Core.API
             TEXTBOX_INITIALISED = true;
         }
 
-        internal void DoRender(Renderer SDL_Renderer, Texture Tx)
+        internal void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
             ItemRectangle.Render(SDL_Renderer, Tx);
 

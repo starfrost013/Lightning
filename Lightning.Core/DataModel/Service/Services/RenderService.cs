@@ -322,7 +322,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                Texture Tx = (Texture)GIR.Instance;
+                ImageBrush Tx = (ImageBrush)GIR.Instance;
 
                 Tx.Position = new Vector2(0, 0);
                 Tx.Size = Renderer.WindowSize;
@@ -402,7 +402,7 @@ namespace Lightning.Core.API
 
             Logging.Log("Built list of object textures to load. Loading object textures...", ClassName);
             // Load the object textures from the physicalobjects we have acquired. 
-            LoadObjectTextures(ObjectsToLoad);
+            //LoadObjectTextures(ObjectsToLoad);
         }
 
         private List<PhysicalObject> BuildListOfPhysicalObjects()
@@ -435,6 +435,9 @@ namespace Lightning.Core.API
 
         }
 
+        /*
+         * 
+         * As of August 7, 2021, textures now load themselves.
         private void LoadObjectTextures(List<PhysicalObject> ObjectsToLoad)
         {
             // The goal of this method is to load the textures for each object.
@@ -456,74 +459,82 @@ namespace Lightning.Core.API
 
                     Tx.Path = TexturePath;
 
-                    if (!File.Exists(Tx.Path))
-                    {
-                        ErrorManager.ThrowError(ClassName, "CannotLoadNonexistentTextureException", $"Attempted to load a Texture at {Tx.Path} that does not exist!");
-                        ServiceNotification SN2 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
-                        ServiceNotifier.NotifySCM(SN2);
+                    LoadTexture(PO, Tx);
+                    
+                }
+            }
+        }
+        */ 
 
+        private void LoadTexture(PhysicalObject PO, ImageBrush Tx)
+        {
+
+            if (!File.Exists(Tx.Path))
+            {
+                ErrorManager.ThrowError(ClassName, "CannotLoadNonexistentTextureException", $"Attempted to load a Texture at {Tx.Path} that does not exist!");
+                ServiceNotification SN2 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
+                ServiceNotifier.NotifySCM(SN2);
+
+            }
+            else
+            {
+                Logging.Log($"Loading texture at {Tx.Path}...", ClassName);
+                // Load an image to a surface and create a texture from it
+                IntPtr Surface = SDL_image.IMG_Load(Tx.Path);
+
+                if (Surface == IntPtr.Zero)
+                {
+                    ErrorManager.ThrowError(ClassName, "ErrorLoadingTextureException", $"An error occurred loading the Texture at {Tx.Path}: {SDL.SDL_GetError()}");
+                    ServiceNotification SN3 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
+                    ServiceNotifier.NotifySCM(SN3);
+                }
+
+                IntPtr Texture = SDL.SDL_CreateTextureFromSurface(Renderer.RendererPtr, Surface);
+
+                // Do we add this texture to the cache?
+                bool AddToCache = true;
+
+                List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects(); 
+
+                // Add a texture to the cache.
+                foreach (PhysicalObject PO2 in ObjectsToLoad)
+                {
+                    // don't check ourselves.
+                    if (PO2 == PO) continue;
+
+                    GetInstanceResult GIR2 = PO2.GetFirstChildOfType("Texture");
+
+                    if (!GIR2.Successful)
+                    {
+                        continue;
                     }
                     else
                     {
-                        Logging.Log($"Loading texture at {Tx.Path}...", ClassName);
-                        // Load an image to a surface and create a texture from it
-                        IntPtr Surface = SDL_image.IMG_Load(Tx.Path);
+                        ImageBrush TX2 = (ImageBrush)GIR2.Instance;
 
-                        if (Surface == IntPtr.Zero)
+                        foreach (ImageBrush CachedTx in Renderer.TextureCache)
                         {
-                            ErrorManager.ThrowError(ClassName, "ErrorLoadingTextureException", $"An error occurred loading the Texture at {Tx.Path}: {SDL.SDL_GetError()}");
-                            ServiceNotification SN3 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
-                            ServiceNotifier.NotifySCM(SN3);
-                        }
-
-                        IntPtr Texture = SDL.SDL_CreateTextureFromSurface(Renderer.RendererPtr, Surface);
-
-                        // Do we add this texture to the cache?
-                        bool AddToCache = true;
-
-                        // Add a texture to the cache.
-                        foreach (PhysicalObject PO2 in ObjectsToLoad)
-                        {
-                            // don't check ourselves.
-                            if (PO2 == PO) continue;
-
-                            GetInstanceResult GIR2 = PO2.GetFirstChildOfType("Texture");
-
-                            if (!GIR2.Successful)
+                            if (Tx.Path == TX2.Path)
                             {
-                                continue;
-                            }
-                            else
-                            {
-                                Texture TX2 = (Texture)GIR2.Instance;
-
-                                foreach (Texture CachedTx in Renderer.TextureCache)
-                                {
-                                    if (Tx.Path == TX2.Path)
-                                    {
-                                        AddToCache = false;
-                                    }
-                                }
-
+                                AddToCache = false;
                             }
                         }
 
-                        if (AddToCache)
-                        {
-                            Logging.Log($"Caching texture at {Tx.Path}...", ClassName);
-                            Tx.SDLTexturePtr = Texture; 
-                            Renderer.TextureCache.Add(Tx);
-                        }
-                        else
-                        {
-                            // destroy textures we don't want
-                            // saves memory 
-                            SDL.SDL_FreeSurface(Surface); 
-                            SDL.SDL_DestroyTexture(Texture);
-                        }
                     }
-                    
+                }
 
+                if (AddToCache)
+                {
+                    Logging.Log($"Caching texture at {Tx.Path}...", ClassName);
+                    Tx.SDLTexturePtr = Texture;
+                    Renderer.TextureCache.Add(Tx);
+                }
+                else
+                {
+                    // destroy textures we don't want
+                    // saves memory 
+                    SDL.SDL_FreeSurface(Surface);
+                    SDL.SDL_DestroyTexture(Texture);
                 }
             }
         }
@@ -624,20 +635,25 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    Texture Tx = (Texture)GIR.Instance;
+
+                    
+
+                    
+                    ImageBrush Tx = (ImageBrush)GIR.Instance;
                     
                     // Try to fix the weird position crashing issues
                     
 
                     // Set the tiling mode and then render the texture.
-                    foreach (Texture CachedTx in Renderer.TextureCache)
+                    foreach (ImageBrush CachedTx in Renderer.TextureCache)
                     {
                         if (CachedTx.Path == Tx.Path)
                         {
                             Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
-                            PO.Render(Renderer, Tx); 
+                            PO.Render(Renderer, Tx);
                         }
                     }
+                    
 
                 }
                     
@@ -833,6 +849,36 @@ namespace Lightning.Core.API
 
         public override void OnDataSent(ServiceMessage Data)
         {
+            switch (Data.Name)
+            {
+                case "LoadTexture":
+                    if (Data.Data.Count != 2)
+                    {
+                        ErrorManager.ThrowError(ClassName, "InvalidTextureLoadMessageException", "A texture load message must have two components!");
+                        return; 
+                    }
+                    else
+                    {
+                        try 
+                        {
+                            PhysicalObject PO = (PhysicalObject)Data.Data[0];
+                            ImageBrush Tx = (ImageBrush)Data.Data[1];
+
+                            LoadTexture(PO, Tx);
+                        }
+                        catch (Exception ex)
+                        {
+#if DEBUG
+                            ErrorManager.ThrowError(ClassName, "InvalidTextureLoadMessageException", $"An error occurred loading a texture: Invalid LoadTexture message sent!\n\nException: {ex}");
+#else
+                            ErrorManager.ThrowError(ClassName, "InvalidTextureLoadMessageException", $"An error occurred loading a texture: Invalid LoadTexture message sent");
+#endif
+                            return; 
+                        }
+                    }
+                    return; 
+            }
+
             return;
         }
 

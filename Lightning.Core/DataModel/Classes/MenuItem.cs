@@ -52,7 +52,7 @@ namespace Lightning.Core.API
         public bool Strikethrough { get; set; }
 
         public MenuState State { get; set; }
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             // rendered by menu
             if (!MENUITEM_INITIALISED)
@@ -134,7 +134,7 @@ namespace Lightning.Core.API
         }
 
 
-        private void RenderChildren(Renderer SDL_Renderer, Texture Tx)
+        private void RenderChildren(Renderer SDL_Renderer, ImageBrush Tx)
         { 
             // render second and lower level hierarchy
             foreach (Instance Ins in Children)

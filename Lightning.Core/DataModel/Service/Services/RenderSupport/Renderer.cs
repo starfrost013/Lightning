@@ -51,7 +51,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// A cache of textures.
         /// </summary>
-        public List<Texture> TextureCache { get; set; }
+        public List<ImageBrush> TextureCache { get; set; }
 
         /// <summary>
         /// The window size.
@@ -60,7 +60,7 @@ namespace Lightning.Core.API
 
         public Renderer()
         {
-            TextureCache = new List<Texture>();
+            TextureCache = new List<ImageBrush>();
             // not added to the datamodel
             CCameraPosition = new Vector2();
         }

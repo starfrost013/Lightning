@@ -15,7 +15,7 @@ namespace Lightning.Core.API
     {
         private bool WORLDGUI_INITIALISED { get; set; }
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (WORLDGUI_INITIALISED)
             {

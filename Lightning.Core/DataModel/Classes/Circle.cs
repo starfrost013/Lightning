@@ -17,7 +17,7 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "Circle";
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
 

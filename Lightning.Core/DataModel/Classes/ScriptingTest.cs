@@ -23,7 +23,7 @@ namespace Lightning.Core.API
         /// </summary>
         public static void ScTest()
         {
-            MessageBox.Show("I AM A SCRIPT PLEASE LISTEN TO ME");
+            MessageBox.Show("I AM A SCRIPT!\nPLEASE LISTEN TO ME");
         }
 
     }

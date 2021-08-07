@@ -15,11 +15,10 @@ namespace Lightning.Core.API
     public class Rectangle : Line
     {
         internal override string ClassName => "Rectangle";
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
-            Brush Brush = base.GetBrush();
+            Brush Brush = GetBrush();
 
-            
             if (Brush != null)
             {
                 
@@ -67,7 +66,7 @@ namespace Lightning.Core.API
             
         }
 
-        private void RenderBorder(Renderer SDL_Renderer, Texture Tx)
+        private void RenderBorder(Renderer SDL_Renderer, ImageBrush Tx)
         {
             Vector2 BorderSize = new Vector2(Size.X + (BorderThickness * 2), Size.Y + (BorderThickness * 2));
             SDL.SDL_Rect SR2 = new SDL.SDL_Rect();

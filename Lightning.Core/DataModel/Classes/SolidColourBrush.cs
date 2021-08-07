@@ -36,7 +36,7 @@ namespace Lightning.Core.API
             SOLIDCOLOURBRUSH_INITIALISED = true; 
         }
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (!SOLIDCOLOURBRUSH_INITIALISED)
             {
@@ -49,7 +49,7 @@ namespace Lightning.Core.API
            
         }
 
-        private void DoRender(Renderer SDL_Renderer, Texture Tx)
+        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
             SDL.SDL_Rect DstRect = new SDL.SDL_Rect();
             
@@ -94,7 +94,7 @@ namespace Lightning.Core.API
             SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
         }
 
-        private void RenderBorder(Renderer SDL_Renderer, Texture Tx)
+        private void RenderBorder(Renderer SDL_Renderer, ImageBrush Tx)
         {
             Vector2 BorderSize = new Vector2(Size.X + (BorderThickness * 2), Size.Y + (BorderThickness * 2));
             SDL.SDL_Rect SR2 = new SDL.SDL_Rect();

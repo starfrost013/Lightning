@@ -7,9 +7,9 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// Gradient
+    /// LinearGradientBrush (neé Gradient :P)
     /// 
-    /// July 30, 2021
+    /// July 30, 2021 (modified August 7, 2021: Now a brush)
     /// 
     /// Defines a UI gradient.
     /// </summary>
@@ -27,10 +27,18 @@ namespace Lightning.Core.API
         {
             Type ParentType = Parent.GetType(); // parent cannot be null as parentcanbenull is not set
 
-            GuiElement ParentGE = (GuiElement)Parent;
+            if (ParentType != typeof(PhysicalObject)
+            && !ParentType.IsSubclassOf(typeof(PhysicalObject)))
+            {
+                ErrorManager.ThrowError(ClassName, "BrushMustHavePhysicalObjectParentException");
+                Parent.RemoveChild(this);
+                return;
+            }
 
-            if (ParentGE.Position == null
-            || ParentGE.Size == null)
+            PhysicalObject ParentPE = (PhysicalObject)Parent;
+
+            if (ParentPE.Position == null
+            || ParentPE.Size == null)
             {
                 ErrorManager.ThrowError(ClassName, "GradientParentMustHavePositionException");
                 Parent.RemoveChild(this);
@@ -39,7 +47,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (!GRADIENT_INITIALISED)
             {
@@ -101,7 +109,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private void DoRender(Renderer SDL_Renderer, Texture Tx)
+        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
             GetMultiInstanceResult GMIR = GetAllChildrenOfType("GradientStop");
 
@@ -120,50 +128,48 @@ namespace Lightning.Core.API
 
                     GradientStop GradientStop = (GradientStop)GStop;
 
-                    GuiElement GEParent = (GuiElement)Parent;
+                    PhysicalObject PEParent = (PhysicalObject)Parent;
 
-                    Vector2 GEParentPosition = GEParent.Position;
+                    Vector2 PEParentPosition = PEParent.Position;
 
-                    Vector2 CurPosition = GEParentPosition * GradientStop.StopPoint;
+                    Vector2 CurPosition = PEParentPosition + (PEParent.Size * GradientStop.StopPoint);
 
-                    if (GStops.Count - i >= 1)
+                    if (GStops.Count - i > 1)
                     {
                         Instance GStopPlusOne = GStops[i + 1];
 
                         GradientStop GradientStopPlusOne = (GradientStop)GStopPlusOne;
 
-                        Vector2 GStopPlusOnePos = GEParentPosition * GradientStopPlusOne.StopPoint;
+                        Vector2 GStopPlusOnePos = PEParentPosition + (PEParent.Size * GradientStopPlusOne.StopPoint);
 
                         Vector2 Diff = GStopPlusOnePos - CurPosition;
 
+                        Color4 C4A = GradientStop.Colour;
+                        Color4 C4B = GradientStopPlusOne.Colour;
+
+                        Color4 CDiff = C4B - C4A;
+
                         for (double j = CurPosition.X; j < GStopPlusOnePos.X; j++)
                         {
-                            double Percentage = (j - CurPosition.X) * (j - GStopPlusOnePos.X);
-
-                            Color4 C4A = GradientStop.Colour;
-                            Color4 C4B = GradientStopPlusOne.Colour;
-
-                            Color4 CDiff = C4B - C4A;
+                            //double Percentage = (j - CurPosition.X) * (j - GStopPlusOnePos.X);
+                            double Percentage = (j - CurPosition.X) / Math.Abs(j - GStopPlusOnePos.X);
 
                             Color4 FinalColour = C4A + (CDiff * Percentage);
-
-                            double FinalX = CurPosition.X + ((GStopPlusOnePos.X - CurPosition.X) * Percentage);
-
                             SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColour.R, FinalColour.G, FinalColour.B, FinalColour.A);
 
-                            SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)FinalX, (int)CurPosition.Y);
+
+                            SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)j, (int)CurPosition.Y);
 
                             for (double k = CurPosition.Y; k < GStopPlusOnePos.Y; k++)
                             {
-                                double YPercentage = (k - CurPosition.Y) * (k - GStopPlusOnePos.Y);
-
-                                Color4 FinalColourY = (CDiff * YPercentage);
+                                //double YPercentage = (k - CurPosition.Y) * (k - GStopPlusOnePos.Y);
+                                double YPercentage = (k - CurPosition.Y) / Math.Abs(k - GStopPlusOnePos.Y);
+                                Color4 FinalColourY = C4A + (CDiff * YPercentage);
 
                                 SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColourY.R, FinalColourY.G, FinalColourY.B, FinalColourY.A);
 
-                                double FinalY = CurPosition.Y + ((GStopPlusOnePos.Y - CurPosition.Y) * Percentage);
 
-                                SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)CurPosition.X, (int)FinalY);
+                                SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)CurPosition.X, (int)k);
                             }
 
 

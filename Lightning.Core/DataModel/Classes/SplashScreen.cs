@@ -81,10 +81,11 @@ namespace Lightning.Core.API
             }
         }
 
-        public override void Render(Renderer SDL_Renderer, Texture Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (!SPLASHSCREEN_INITIALISED)
             {
+                base.Init(); 
                 Init(); 
             }
             else
