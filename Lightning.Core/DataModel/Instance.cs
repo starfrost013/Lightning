@@ -240,7 +240,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// <returns>A <see cref="GetInstanceResult"/> object. The Instance is <see cref="GetInstanceResult.Instance"/>.</returns>
 
-        public GetInstanceResult GetFirstChildOfTypeT(Type Typ, bool AcceptInheritance) => Children.GetFirstChildOfTypeT(Typ, AcceptInheritance);
+        public GetInstanceResult GetFirstChildOfTypeT(Type Typ, bool AcceptInheritance = true) => Children.GetFirstChildOfTypeT(Typ, AcceptInheritance);
 
         /// <summary>
         /// Gets the last child of this Instance with Class Name <see cref="ClassName"/>

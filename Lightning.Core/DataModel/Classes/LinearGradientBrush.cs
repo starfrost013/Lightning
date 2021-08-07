@@ -51,7 +51,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private void Init()
+        internal override void Init()
         {
             GetMultiInstanceResult GMIR = GetAllChildrenOfType("GradientStop");
             

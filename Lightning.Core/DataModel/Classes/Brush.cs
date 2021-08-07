@@ -18,6 +18,11 @@ namespace Lightning.Core.API
 
         internal override InstanceTags Attributes => base.Attributes | InstanceTags.ParentCanBeNull;
 
+        /// <summary>
+        /// Determines if the brush has been initialised.
+        /// </summary>
+        internal bool BRUSH_INITIALISED { get; set; }
+
 
     }
 }

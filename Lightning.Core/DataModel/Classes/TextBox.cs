@@ -35,7 +35,7 @@ namespace Lightning.Core.API
 
         }
 
-        private void Init() // called by button
+        internal override void Init() // called by button
         {
             ItemRectangle = new Rectangle(); // TODO: DATAMODEL (this works around a known bug, but is hacky)
 

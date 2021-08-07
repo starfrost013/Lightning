@@ -385,7 +385,7 @@ namespace Lightning.Core.API
                 }
             }
 
-            GIR.FailureReason = $"This instance does not have a child of ClassName {ClassName}!";
+            GIR.FailureReason = $"This instance does not have a child of Type {Typ}!";
 
             return GIR;
         }

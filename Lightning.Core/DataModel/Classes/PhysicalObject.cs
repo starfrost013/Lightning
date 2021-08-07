@@ -236,6 +236,7 @@ namespace Lightning.Core.API
         public Vector2 DisplayViewport { get; set; }
 
         private bool PHYSICALOBJECT_INITIALISED { get; set; }
+
         public override void OnCreate()
         {
             PhysicsController = new DefaultPhysicsController(); 
@@ -321,10 +322,11 @@ namespace Lightning.Core.API
             }
         }
 
-        internal void Init()
+        internal virtual void Init()
         {
             Brush CBrush = GetBrush();
-            Init_GetBrush_BrushSetup(CBrush);
+
+            PHYSICALOBJECT_INITIALISED = true; 
         }
 
         /// <summary>
@@ -333,7 +335,7 @@ namespace Lightning.Core.API
         /// <returns></returns>
         internal Brush GetBrush()
         {
-            GetInstanceResult GIR = GetFirstChildOfType("Brush");
+            GetInstanceResult GIR = GetFirstChildOfTypeT(typeof(Brush));
 
             if (GIR.Instance == null
             || !GIR.Successful)
@@ -342,8 +344,10 @@ namespace Lightning.Core.API
             }
             else
             {
+                // Todo: not get stuff every frame :D
                 Brush Brush = (Brush)GIR.Instance;
 
+                if (!Brush.BRUSH_INITIALISED) Init_GetBrush_BrushSetup(Brush);
                 return Brush; 
             }
             
@@ -356,7 +360,8 @@ namespace Lightning.Core.API
             Brush.Colour = Colour;
             Brush.BackgroundColour = BackgroundColour;
             Brush.BorderColour = BorderColour;
-            Brush.BorderThickness = BorderThickness; 
+            Brush.BorderThickness = BorderThickness;
+            Brush.BRUSH_INITIALISED = true;
         }
 
     }

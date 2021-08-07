@@ -118,7 +118,7 @@ namespace Lightning.Core.API
             OnKeyDownHandler += OnKeyDown;
         }
 
-        private void Init()
+        internal override void Init()
         {
             if (KeyLeft == null) KeyLeft = new ConvertableStringList { "LEFT", "A" };
             if (KeyRight == null) KeyRight = new ConvertableStringList { "RIGHT", "D" };
@@ -137,6 +137,9 @@ namespace Lightning.Core.API
             if (HighHealthThreshold > MaxHealth) HighHealthThreshold = Health / 1.5;
 
             HUMANOID_INITIALISED = true;
+            base.Init(); 
+
+            
         }
 
         public void OnKeyDown(object Sender, KeyEventArgs KeyArgs)

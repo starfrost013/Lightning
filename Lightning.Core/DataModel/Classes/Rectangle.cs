@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Rectangle
     /// 
-    /// April 12, 2021
+    /// April 12, 2021 (modified August 7, 2021: Brush)
     /// 
     /// Defines a rectangle.
     /// </summary>
@@ -19,8 +19,10 @@ namespace Lightning.Core.API
         {
             Brush Brush = base.GetBrush();
 
+            
             if (Brush != null)
             {
+                
                 Brush.Render(SDL_Renderer, Tx); 
             }
             else

@@ -18,15 +18,45 @@ namespace Lightning.Core.API
 
         public bool Fill { get; set; }
 
+
+        private bool SOLIDCOLOURBRUSH_INITIALISED { get; set; }
+        
+        internal override void Init()
+        {
+            if (Position == null) Position = new Vector2(0, 0);
+            if (Size == null)
+            {
+                ErrorManager.ThrowError(ClassName, "BrushMustHaveDefinedSizeException");
+                Parent.RemoveChild(this);
+                return; // will get gc'd
+            }
+
+            if (BackgroundColour == null) BackgroundColour = new Color4(255, 255, 255, 255);
+
+            SOLIDCOLOURBRUSH_INITIALISED = true; 
+        }
+
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
+            if (!SOLIDCOLOURBRUSH_INITIALISED)
+            {
+                Init();
+            }
+            else
+            {
+                DoRender(SDL_Renderer, Tx);
+            }
+           
+        }
 
+        private void DoRender(Renderer SDL_Renderer, Texture Tx)
+        {
             SDL.SDL_Rect DstRect = new SDL.SDL_Rect();
             DstRect.x = (int)Position.X;
             DstRect.y = (int)Position.Y;
 
 
-            if (DisplayViewport == null)
+            if (DisplayViewport != null)
             {
                 DstRect.w = (int)DisplayViewport.X;
                 DstRect.h = (int)DisplayViewport.Y;
@@ -49,10 +79,9 @@ namespace Lightning.Core.API
             {
                 SDL.SDL_RenderFillRect(SDL_Renderer.RendererPtr, ref DstRect);
             }
-            
+
 
             SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
-            base.Render(SDL_Renderer, Tx);
         }
 
         private void RenderBorder(Renderer SDL_Renderer, Texture Tx)
