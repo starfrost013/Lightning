@@ -52,8 +52,18 @@ namespace Lightning.Core.API
         private void DoRender(Renderer SDL_Renderer, Texture Tx)
         {
             SDL.SDL_Rect DstRect = new SDL.SDL_Rect();
-            DstRect.x = (int)Position.X;
-            DstRect.y = (int)Position.Y;
+            
+            if (SDL_Renderer.CCameraPosition == null)
+            {
+                DstRect.x = (int)Position.X;
+                DstRect.y = (int)Position.Y;
+            }
+            else
+            {
+                DstRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
+                DstRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+            }
+
 
 
             if (DisplayViewport != null)
