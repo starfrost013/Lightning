@@ -236,6 +236,13 @@ namespace Lightning.Core.API
         public GetInstanceResult GetFirstChildOfType(string ClassName) => Children.GetFirstChildOfType(ClassName);
 
         /// <summary>
+        /// Gets the first child of this Instance with type 
+        /// </summary>
+        /// <returns>A <see cref="GetInstanceResult"/> object. The Instance is <see cref="GetInstanceResult.Instance"/>.</returns>
+
+        public GetInstanceResult GetFirstChildOfTypeT(Type Typ, bool AcceptInheritance) => Children.GetFirstChildOfTypeT(Typ, AcceptInheritance);
+
+        /// <summary>
         /// Gets the last child of this Instance with Class Name <see cref="ClassName"/>
         /// </summary>
         /// <param name="ClassName"></param>

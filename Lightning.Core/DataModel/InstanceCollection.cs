@@ -368,6 +368,28 @@ namespace Lightning.Core.API
             return GIR;
         }
 
+        public GetInstanceResult GetFirstChildOfTypeT(Type Typ, bool AcceptInheritance = true)
+        {
+            GetInstanceResult GIR = new GetInstanceResult();
+
+            foreach (Instance Child in Instances)
+            {
+                Type ChType = Child.GetType();
+
+                if (ChType == Typ
+                || (AcceptInheritance && ChType.IsSubclassOf(Typ)))
+                {
+                    GIR.Instance = Child;
+                    GIR.Successful = true;
+                    return GIR;
+                }
+            }
+
+            GIR.FailureReason = $"This instance does not have a child of ClassName {ClassName}!";
+
+            return GIR;
+        }
+
         /// <summary>
         /// Gets the last chil of this Instance with Class Name <see cref="ClassName"/>
         /// </summary>

@@ -235,6 +235,7 @@ namespace Lightning.Core.API
         /// </summary>
         public Vector2 DisplayViewport { get; set; }
 
+        private bool PHYSICALOBJECT_INITIALISED { get; set; }
         public override void OnCreate()
         {
             PhysicsController = new DefaultPhysicsController(); 
@@ -250,41 +251,54 @@ namespace Lightning.Core.API
         /// </summary>
         public virtual void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            Brush Brush = GetBrush(); 
-
-            if (Brush != null)
+            if (!PHYSICALOBJECT_INITIALISED)
             {
-                Brush.Render(SDL_Renderer, Tx); 
+                Init();
             }
             else 
             {
-                IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
-                // requisite error checking already done
+                Brush CBrush = GetBrush();
 
-                // create the source rect
-                SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
-
-                // x,y = point on texture, w,h = size to copy
-                SourceRect.x = 0;
-                SourceRect.y = 0;
-
-                SourceRect.w = (int)Size.X;
-                SourceRect.h = (int)Size.Y;
-
-                SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
-
-                DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
-
-                DestinationRect.w = (int)Size.X;
-                DestinationRect.h = (int)Size.Y;
-
-                SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+                if (CBrush == null)
+                {
+                    DoRender(SDL_Renderer, Tx);
+                }
+                else
+                {
+                    CBrush.Render(SDL_Renderer, Tx); 
+                }
             }
+            
 
+            
         }
 
+        private void DoRender(Renderer SDL_Renderer, Texture Tx)
+        {
+            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+            // requisite error checking already done
 
+            // create the source rect
+            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
+
+            // x,y = point on texture, w,h = size to copy
+            SourceRect.x = 0;
+            SourceRect.y = 0;
+
+            SourceRect.w = (int)Size.X;
+            SourceRect.h = (int)Size.Y;
+
+            SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
+
+            DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
+            DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+
+            DestinationRect.w = (int)Size.X;
+            DestinationRect.h = (int)Size.Y;
+
+            SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+
+        }
 
         public virtual void OnClick(object Sender, MouseEventArgs EventArgs)
         {
@@ -307,6 +321,12 @@ namespace Lightning.Core.API
             }
         }
 
+        internal void Init()
+        {
+            Brush CBrush = GetBrush();
+            Init_GetBrush_BrushSetup(CBrush);
+        }
+
         /// <summary>
         /// INTERNAL: Gets the current brush.
         /// </summary>
@@ -323,13 +343,13 @@ namespace Lightning.Core.API
             else
             {
                 Brush Brush = (Brush)GIR.Instance;
-                GetBrush_BrushSetup(Brush);
+
                 return Brush; 
             }
             
         }
 
-        private void GetBrush_BrushSetup(Brush Brush)
+        private void Init_GetBrush_BrushSetup(Brush Brush)
         {
             Brush.Position = Position;
             Brush.Size = Size;
