@@ -15,55 +15,63 @@ namespace Lightning.Core.API
     public class Rectangle : Line
     {
         internal override string ClassName => "Rectangle";
-
-        
         public override void Render(Renderer SDL_Renderer, Texture Tx)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+            Brush Brush = base.GetBrush();
 
-            SDL_Renderer.SetCurBlendMode();
-
-            if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0); 
-
-            SDL.SDL_Rect SR1 = new SDL.SDL_Rect();
-
-            SR1.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-            SR1.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
-            SR1.w = (int)Size.X;
-            SR1.h = (int)Size.Y;
-
-            if (BorderWidth > 0) RenderBorder(SDL_Renderer, Tx);
-
-            if (Colour != null)
+            if (Brush != null)
             {
-                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, Colour.R, Colour.G, Colour.B, Colour.A);
+                Brush.Render(SDL_Renderer, Tx); 
             }
             else
             {
-                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
-            }
+                IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
 
-            if (!Fill)
-            {
-                SDL.SDL_RenderDrawRect(SDL_RendererPtr, ref SR1);
-            }
-            else
-            {
-                SDL.SDL_RenderFillRect(SDL_RendererPtr, ref SR1);
+                SDL_Renderer.SetCurBlendMode();
+
+                if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0);
+
+                SDL.SDL_Rect SR1 = new SDL.SDL_Rect();
+
+                SR1.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
+                SR1.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                SR1.w = (int)Size.X;
+                SR1.h = (int)Size.Y;
+
+                if (BorderThickness > 0) RenderBorder(SDL_Renderer, Tx);
+
+                if (Colour != null)
+                {
+                    SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, Colour.R, Colour.G, Colour.B, Colour.A);
+                }
+                else
+                {
+                    SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
+                }
+
+                if (!Fill)
+                {
+                    SDL.SDL_RenderDrawRect(SDL_RendererPtr, ref SR1);
+                }
+                else
+                {
+                    SDL.SDL_RenderFillRect(SDL_RendererPtr, ref SR1);
+                }
+
+
+
+                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 0, 0, 0, 0);
             }
             
-
-
-            SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 0, 0, 0, 0);
         }
 
         private void RenderBorder(Renderer SDL_Renderer, Texture Tx)
         {
-            Vector2 BorderSize = new Vector2(Size.X + (BorderWidth * 2), Size.Y + (BorderWidth * 2));
+            Vector2 BorderSize = new Vector2(Size.X + (BorderThickness * 2), Size.Y + (BorderThickness * 2));
             SDL.SDL_Rect SR2 = new SDL.SDL_Rect();
 
-            SR2.x = (int)(Position.X - BorderWidth); // todo: position => int?
-            SR2.y = (int)(Position.Y - BorderWidth); // todo: position => int?
+            SR2.x = (int)(Position.X - BorderThickness); // todo: position => int?
+            SR2.y = (int)(Position.Y - BorderThickness); // todo: position => int?
             SR2.w = (int)BorderSize.X;
             SR2.h = (int)BorderSize.Y;
 

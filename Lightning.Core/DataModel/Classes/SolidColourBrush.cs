@@ -39,7 +39,9 @@ namespace Lightning.Core.API
 
             SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, BackgroundColour.R, BackgroundColour.G, BackgroundColour.B, BackgroundColour.A);
 
-            if (!Fill)
+            if (BorderThickness > 0) RenderBorder(SDL_Renderer, Tx);
+
+            if (!Fill) // todo: shape system
             {
                 SDL.SDL_RenderDrawRect(SDL_Renderer.RendererPtr, ref DstRect);
             }
@@ -51,6 +53,43 @@ namespace Lightning.Core.API
 
             SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
             base.Render(SDL_Renderer, Tx);
+        }
+
+        private void RenderBorder(Renderer SDL_Renderer, Texture Tx)
+        {
+            Vector2 BorderSize = new Vector2(Size.X + (BorderThickness * 2), Size.Y + (BorderThickness * 2));
+            SDL.SDL_Rect SR2 = new SDL.SDL_Rect();
+
+            SR2.x = (int)(Position.X - BorderThickness); // todo: position => int?
+            SR2.y = (int)(Position.Y - BorderThickness); // todo: position => int?
+            SR2.w = (int)BorderSize.X;
+            SR2.h = (int)BorderSize.Y;
+
+            SR2.x -= (int)SDL_Renderer.CCameraPosition.X;
+            SR2.y -= (int)SDL_Renderer.CCameraPosition.Y;
+
+            BorderFill = true;
+
+            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, BorderColour.R, BorderColour.G, BorderColour.B, BorderColour.A);
+
+            int Result = 0;
+
+            if (!BorderFill)
+            {
+                Result = SDL.SDL_RenderDrawRect(SDL_Renderer.RendererPtr, ref SR2);
+            }
+            else
+            {
+                Result = SDL.SDL_RenderFillRect(SDL_Renderer.RendererPtr, ref SR2);
+            }
+
+            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
+
+
+#if DEBUG
+            if (Result < 0) Logging.Log(Result.ToString());
+#endif
+
         }
     }
 }

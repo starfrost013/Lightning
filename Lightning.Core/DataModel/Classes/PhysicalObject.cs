@@ -60,7 +60,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Gets or sets the border width of this GuiElement - if it is set to zero, border drawing will be skipped as there is nothing to draw.
         /// </summary>
-        public int BorderWidth { get; set; }
+        public int BorderThickness { get; set; }
 
         /// <summary>
         /// Gets or sets the border fill state. If true, the border will be filled. If false, it will not.
@@ -256,30 +256,32 @@ namespace Lightning.Core.API
             {
                 Brush.Render(SDL_Renderer, Tx); 
             }
-           
+            else 
+            {
+                IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+                // requisite error checking already done
 
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
-            // requisite error checking already done
+                // create the source rect
+                SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
 
-            // create the source rect
-            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
+                // x,y = point on texture, w,h = size to copy
+                SourceRect.x = 0;
+                SourceRect.y = 0;
 
-            // x,y = point on texture, w,h = size to copy
-            SourceRect.x = 0;
-            SourceRect.y = 0;
+                SourceRect.w = (int)Size.X;
+                SourceRect.h = (int)Size.Y;
 
-            SourceRect.w = (int)Size.X;
-            SourceRect.h = (int)Size.Y;
+                SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
 
-            SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
+                DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
+                DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
 
-            DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-            DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                DestinationRect.w = (int)Size.X;
+                DestinationRect.h = (int)Size.Y;
 
-            DestinationRect.w = (int)Size.X;
-            DestinationRect.h = (int)Size.Y;
+                SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+            }
 
-            SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
 
 
@@ -305,8 +307,11 @@ namespace Lightning.Core.API
             }
         }
 
-
-        private Brush GetBrush()
+        /// <summary>
+        /// INTERNAL: Gets the current brush.
+        /// </summary>
+        /// <returns></returns>
+        internal Brush GetBrush()
         {
             GetInstanceResult GIR = GetFirstChildOfType("Brush");
 
@@ -331,6 +336,7 @@ namespace Lightning.Core.API
             Brush.Colour = Colour;
             Brush.BackgroundColour = BackgroundColour;
             Brush.BorderColour = BorderColour;
+            Brush.BorderThickness = BorderThickness; 
         }
 
     }
