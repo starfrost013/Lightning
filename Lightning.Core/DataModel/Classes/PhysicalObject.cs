@@ -363,6 +363,7 @@ namespace Lightning.Core.API
 
         private void Init_GetBrush_BrushSetup(Brush Brush)
         {
+            
             Brush.Position = Position;
             Brush.Size = Size;
             Brush.Colour = Colour;

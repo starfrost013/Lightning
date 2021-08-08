@@ -148,6 +148,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "ErrorTryingToGetBrushException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 128 });
          ErrorManager.RegisterError( new Error { Name = "BrushMustHaveDefinedSizeException", Description = "Brushes must have a defined size! This object will not be rendered.", Severity = MessageSeverity.Error, Id = 129 });
          ErrorManager.RegisterError( new Error { Name = "InvalidTextureLoadMessageException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 130 });
+         ErrorManager.RegisterError( new Error { Name = "ServiceMessageMustHaveNameException", Description = "ServiceMessages must have a name! This ServiceMessage will not be delivered.", Severity = MessageSeverity.Error, Id = 131 }); // warning?       
      }
   }
 }

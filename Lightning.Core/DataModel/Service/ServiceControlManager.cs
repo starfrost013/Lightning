@@ -413,6 +413,19 @@ namespace Lightning.Core.API
                                 return;
                             case ServiceNotificationType.MessageSend:
 
+                                if (SvcNotification.Data.Name != null)
+                                {
+                                    Logging.Log($"Service message received for {SvcNotification.ServiceClassName} - name {SvcNotification.Data.Name}");
+
+                                    Service.OnDataSent(SvcNotification.Data);
+                                }
+                                else
+                                {
+                                    ErrorManager.ThrowError(ClassName, "ServiceMessageMustHaveNameException");
+                                    return;
+                                }
+
+
                                 return; 
                         }
                     }

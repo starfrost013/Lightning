@@ -23,17 +23,17 @@ namespace Lightning.Core.API
 
         private bool INITIALISED { get; set; }
 
-        public override void Render(Renderer Renderer, ImageBrush Tx)
+        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (!INITIALISED)
             {
                 // OnCreate not used as it is ran before the object is loaded - change this?
                 // do this later
-                if (Size == null) Size = Renderer.WindowSize;
+                if (Size == null) Size = SDL_Renderer.WindowSize;
                 if (Position == null) Position = new Vector2(0, 0);
                 if (ForceToBack) ZIndex = -2147483647; // low z-index = drawn earlier
 
-                GetInstanceResult GIR = GetFirstChildOfType("Texture");
+                GetInstanceResult GIR = GetFirstChildOfType("ImageBrush");
 
                 if (!GIR.Successful
                     || GIR.Instance == null)
@@ -44,13 +44,28 @@ namespace Lightning.Core.API
                 }
                 else
                 {
+                    Brush GBrush = (ImageBrush)GIR.Instance;
+                    GBrush.NotCameraAware = true; 
+
+                    // I ACTUALLY HAVE NO IDEA WHAT THE FUCK IS GOING ON HERE SO WE ARE DOING THIS STUPID SHIT INSTEAD
+                    GBrush.BRUSH_INITIALISED = false;
+                    // END I ACTUALLY HAVE NO IDEA WHAT THE FUCK IS GOING ON HERE SO WE ARE DOING THIS STUPID SHIT INSTEAD
+                    
+                    GetBrush(); 
                     // Texture verified
                     INITIALISED = true;
                     return;
                 }
+
+                
             }
             else
             {
+                Brush CurBrush = GetBrush();
+
+                CurBrush.Render(SDL_Renderer, Tx);
+
+                /*
                 // Does not move with camera pos
                 // create the source rect
                 SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
@@ -72,6 +87,7 @@ namespace Lightning.Core.API
 
                 // Do not move with camera
                 SDL.SDL_RenderCopy(Renderer.RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+                */ 
             }
             
         }

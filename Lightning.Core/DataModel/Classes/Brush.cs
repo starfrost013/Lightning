@@ -23,6 +23,9 @@ namespace Lightning.Core.API
         /// </summary>
         internal bool BRUSH_INITIALISED { get; set; }
 
-
+        /// <summary>
+        /// Determines if this ImageBrush is not camera-aware.
+        /// </summary>
+        public bool NotCameraAware { get; set; }
     }
 }

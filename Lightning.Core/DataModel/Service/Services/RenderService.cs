@@ -625,11 +625,12 @@ namespace Lightning.Core.API
             
             foreach (PhysicalObject PO in PhysicalObjects)
             {
-                GetInstanceResult GIR = PO.GetFirstChildOfType("Texture");
+                GetInstanceResult GIR = PO.GetFirstChildOfType("ImageBrush");
 
                 if (!GIR.Successful
                     && !PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)) // check for custom render path being used (i.e. render() is not being called by something else) 
                 {
+
                     PO.Render(Renderer, null);
                     continue; 
                 }
@@ -637,19 +638,29 @@ namespace Lightning.Core.API
                 {
 
                     
-
-                    
                     ImageBrush Tx = (ImageBrush)GIR.Instance;
-                    
-                    // Try to fix the weird position crashing issues
-                    
+
+                    // HACK: Until we actually have a proper loader.
+                    if (!Tx.TEXTURE_INITIALISED)
+                    {
+                        PO.GetBrush();
+                        Tx.Init();
+                        
+                    }
+
+                    // END VERY BAD HACK
 
                     // Set the tiling mode and then render the texture.
-                    foreach (ImageBrush CachedTx in Renderer.TextureCache)
+                    for (int i = 0; i < Renderer.TextureCache.Count; i++)
                     {
+                        ImageBrush CachedTx = Renderer.TextureCache[i];
+
                         if (CachedTx.Path == Tx.Path)
                         {
+                            IntPtr TexturePointer = CachedTx.SDLTexturePtr;
+
                             Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
+
                             PO.Render(Renderer, Tx);
                         }
                     }

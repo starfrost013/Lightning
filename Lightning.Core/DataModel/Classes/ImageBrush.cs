@@ -21,31 +21,14 @@ namespace Lightning.Core.API
 
         internal override InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable | InstanceTags.ParentCanBeNull); }
 
-        private string _path { get; set; }
+
+
+
         /// <summary>
         /// The path to the image of this non-animated texture.
         /// </summary>
-        public string Path 
-        {
-            get
-            {
-                return _path;
-            }
-            set
-            {
-                _path = value;
-
-                
-                ServiceNotification SN = new ServiceNotification();
-                SN.ServiceClassName = "RenderService";
-                SN.NotificationType = ServiceNotificationType.MessageSend;
-                SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
-                SN.Data.Data.Add(value);
-
-                ServiceNotifier.NotifySCM(SN); 
-                
-            }
-        }
+        public string Path { get; set; }
+ 
 
         /// <summary>
         /// The display mode of this texture - see <see cref="TextureDisplayMode"/>.
@@ -53,14 +36,14 @@ namespace Lightning.Core.API
         public TextureDisplayMode TextureDisplayMode { get; set; }
         
         /// <summary>
-        /// INTERNAL: A pointer to the SDL2 hardware-accelerated texture used by this object./>
+        /// INTERNAL: A pointer to the SDL2 hardware-accelerated texture used by this object.
         /// </summary>
         internal IntPtr SDLTexturePtr { get; set; }
 
         /// <summary>
         /// PRIVATE: Determines if this texture is initialised.
         /// </summary>
-        private bool TEXTURE_INITIALISED { get; set; }
+        internal bool TEXTURE_INITIALISED { get; set; }
 
         public override void OnCreate()
         {
@@ -91,12 +74,23 @@ namespace Lightning.Core.API
 
         internal override void Init()
         {
+            ServiceNotification SN = new ServiceNotification();
+            SN.ServiceClassName = "RenderService";
+            SN.NotificationType = ServiceNotificationType.MessageSend;
+            SN.Data.Name = "LoadTexture";
+            SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
+            SN.Data.Data.Add(this);
+
+            ServiceNotifier.NotifySCM(SN);
+
             TEXTURE_INITIALISED = true;
             return; 
         }
 
         private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
+            SnapToParent();
+
             IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
             // requisite error checking already done
 
@@ -112,7 +106,8 @@ namespace Lightning.Core.API
 
             SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
 
-            if (SDL_Renderer.CCameraPosition != null)
+            
+            if (SDL_Renderer.CCameraPosition != null && !NotCameraAware)
             {
                 DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
                 DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
@@ -127,12 +122,27 @@ namespace Lightning.Core.API
             {
                 DestinationRect.w = (int)Size.X;
                 DestinationRect.h = (int)Size.Y;
-
+            }
+            else
+            {
+                DestinationRect.w = (int)DisplayViewport.X;
+                DestinationRect.h = (int)DisplayViewport.Y;
             }
 
             SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
 
-        
+        private void SnapToParent()
+        {
+            // TEMP code
+            PhysicalObject PParent = (PhysicalObject)Parent;
+            Position = PParent.Position;
+            Size = PParent.Size;
+            BorderColour = PParent.BorderColour;
+            BackgroundColour = PParent.BackgroundColour;
+            DisplayViewport = PParent.DisplayViewport;
+            Colour = PParent.Colour;
+
+        }
     }
 }

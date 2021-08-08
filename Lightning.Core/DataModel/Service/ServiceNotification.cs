@@ -35,7 +35,7 @@ namespace Lightning.Core.API
 
         public ServiceNotification()
         {
-
+            Data = new ServiceMessage(); 
         }
 
         public ServiceNotification(ServiceNotificationType NotifType, string ClassName, string SReason)
@@ -43,6 +43,7 @@ namespace Lightning.Core.API
             NotificationType = NotifType;
             ServiceClassName = ClassName;
             Reason = SReason;
+            Data = new ServiceMessage();
         }
 
         public ServiceNotification(ServiceNotificationType NotifType, string ClassName, string SReason, ServiceMessage NotifData)
