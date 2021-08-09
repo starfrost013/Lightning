@@ -415,7 +415,7 @@ namespace Lightning.Core.API
 
                                 if (SvcNotification.Data.Name != null)
                                 {
-                                    Logging.Log($"Service message received for {SvcNotification.ServiceClassName} - name {SvcNotification.Data.Name}");
+                                    Logging.Log($"Service message received for the Service {SvcNotification.ServiceClassName} - name {SvcNotification.Data.Name}", ClassName);
 
                                     Service.OnDataSent(SvcNotification.Data);
                                 }

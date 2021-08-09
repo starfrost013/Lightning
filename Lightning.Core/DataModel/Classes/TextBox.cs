@@ -26,7 +26,7 @@ namespace Lightning.Core.API
 
             if (!TEXTBOX_INITIALISED)
             {
-                Init();
+                TB_Init();
             }
             else
             {
@@ -35,7 +35,7 @@ namespace Lightning.Core.API
 
         }
 
-        internal override void Init() // called by button
+        internal void TB_Init() // called by button
         {
             ItemRectangle = new Rectangle(); // TODO: DATAMODEL (this works around a known bug, but is hacky)
 
@@ -48,7 +48,7 @@ namespace Lightning.Core.API
             if (FontFamily == null
                 || FontFamily == "")
             {
-                ErrorManager.ThrowError(ClassName, "MustDefineFontForGuiElementException", "Buttons require their FontFamily property to be set.");
+                ErrorManager.ThrowError(ClassName, "MustDefineFontForGuiElementException", "TextBoxes, CheckBoxes, and Buttons require their FontFamily property to be set.");
 
                 return;
             }
@@ -58,6 +58,7 @@ namespace Lightning.Core.API
             ItemRectangle.Colour = BorderColour;
             ItemRectangle.BackgroundColour = BackgroundColour;
             ItemRectangle.Fill = Fill;
+            ItemRectangle.Size = Size;
 
             Vector2 FontSize = null;
 

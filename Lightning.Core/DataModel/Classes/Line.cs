@@ -15,6 +15,8 @@ namespace Lightning.Core.API
     public class Line : Primitive
     {
         internal override string ClassName => "Line";
+
+        internal override InstanceTags Attributes => base.Attributes; // TEMP
         public Vector2 Begin { get; set; }
         public Vector2 End { get; set; }
 

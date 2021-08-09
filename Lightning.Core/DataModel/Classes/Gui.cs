@@ -22,7 +22,7 @@ namespace Lightning.Core.API
             Click += OnClick; 
         }
 
-        public override void OnClick(object Sender, MouseEventArgs EventArgs)
+        public override void OnClick(object Sender, MouseEventArgs EventArgs) // probably needs to be refactored
         {
             foreach (Instance Ins in Children)
             {
@@ -33,7 +33,15 @@ namespace Lightning.Core.API
                 {
                     GuiElement GE = (GuiElement)Ins;
 
-                    GE.OnClick(Ins, EventArgs);
+                    if (GE.Click != null)
+                    {
+                        GE.Click(this, EventArgs); 
+                    }
+                    else
+                    {
+                        continue; 
+                    }
+                   
                 }
             }
         }

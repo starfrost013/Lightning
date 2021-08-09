@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// PhysicalObject
     /// 
-    /// April 9, 2021 (modified April 11, 2021)
+    /// April 9, 2021 (modified August 9, 2021)
     /// 
     /// Defines a physically rendered object in Lightning, with a Position, Size, and a Texture (stored as a logical child). Rendered every frame by RenderService.
     /// </summary>
@@ -236,6 +236,11 @@ namespace Lightning.Core.API
         public Vector2 DisplayViewport { get; set; }
 
         private bool PHYSICALOBJECT_INITIALISED { get; set; }
+
+        /// <summary>
+        /// Determines if this PhysicalObject is invisible.
+        /// </summary>
+        public bool Invisible { get; set; }
 
         public override void OnCreate()
         {

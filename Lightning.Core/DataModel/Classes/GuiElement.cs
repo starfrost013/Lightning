@@ -47,7 +47,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="SDL_Renderer"></param>
         /// <param name="Tx"></param>
-        public override void OnClick(object Sender, MouseEventArgs EventArgs)
+        public override void OnClick(object Sender, MouseEventArgs EventArgs) // may remove
         {
             return; 
         }
