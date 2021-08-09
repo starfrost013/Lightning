@@ -134,4 +134,24 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="TextBlock" x:Key="TextBlock_Header">
+        <Setter Property="FontSize" Value="60"></Setter>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="TextBlock_Header_Blue">
+        <Setter Property="FontSize" Value="60"></Setter>
+        <Setter Property="Foreground" Value="#0060A0"></Setter>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="TextBlock_Subheader">
+        <Setter Property="FontSize" Value="36"></Setter>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="TextBlock_Subheader_Blue">
+        <Setter Property="FontSize" Value="36"></Setter>
+        <Setter Property="Foreground" Value="#0060A0"></Setter>
+    </Style>
+
+
 </ResourceDictionary>

@@ -115,7 +115,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "AttemptedToConvertInvalidStringToStringListException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 97 } );
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAddANonTextChunkToATextChunkCollection", Description = "Attempted to add a non-TextChunk to a TextChunkCollection!", Severity = MessageSeverity.Error, Id = 98 } );
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAddATextChunkWithNoLengthToATextChunkCollection", Description = "Attempted to add a TextChunk with no length to a TextChunkCollection!", Severity = MessageSeverity.Error, Id = 99 } );
-         ErrorManager.RegisterError( new Error { Name = "AttemptedToPassInvalidW32PointToVector2FromNativePointException", Description = "[WINDOWS ONLY] Attempted to pass a null or invalid Win32Point to Vector2.FromNativePoint(); -- position will be set to (0,0).", Severity = MessageSeverity.Error, Id = 100 } );
+         ErrorManager.RegisterError( new Error { Name = "AttemptedToPassInvalidW32PointToVector2FromNativePointException", Description = "[WINDOWS ONLY] Attempted to pass a null or invalid Win32Point to Vector2.FromNativePoint(); -- position will be set to (0,0)!", Severity = MessageSeverity.Error, Id = 100 } );
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGuiRootsException", Description = "Failed to obtain list of GuiRoots - UIService will now crash!", Severity = MessageSeverity.Error, Id = 101 } );
          ErrorManager.RegisterError( new Error { Name = "FailedToInitialiseSDL2TtfException", Description = "Failed to initialise SDL2_ttf!", Severity = MessageSeverity.Error, Id = 102 } );
          ErrorManager.RegisterError( new Error { Name = "NullOrZeroLengthFileFontNameException", Description = "Failed to load font: Null or zero-length font file name specified! - font will not be loaded.", Severity = MessageSeverity.Error, Id = 103 } );
@@ -148,7 +148,8 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "ErrorTryingToGetBrushException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 128 });
          ErrorManager.RegisterError( new Error { Name = "BrushMustHaveDefinedSizeException", Description = "Brushes must have a defined size! This object will not be rendered.", Severity = MessageSeverity.Error, Id = 129 });
          ErrorManager.RegisterError( new Error { Name = "InvalidTextureLoadMessageException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 130 });
-         ErrorManager.RegisterError( new Error { Name = "ServiceMessageMustHaveNameException", Description = "ServiceMessages must have a name! This ServiceMessage will not be delivered.", Severity = MessageSeverity.Error, Id = 131 }); // warning?       
+         ErrorManager.RegisterError( new Error { Name = "ServiceMessageMustHaveNameException", Description = "ServiceMessages must have a name! This ServiceMessage will not be delivered.", Severity = MessageSeverity.Error, Id = 131 }); // warning?
+         ErrorManager.RegisterError( new Error { Name = "PhysicsStateEpsilonVelocityPercentageMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 132 });
      }
   }
 }

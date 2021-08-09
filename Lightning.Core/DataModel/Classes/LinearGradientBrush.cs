@@ -142,6 +142,12 @@ namespace Lightning.Core.API
 
                         Vector2 GStopPlusOnePos = PEParentPosition + (PEParent.Size * GradientStopPlusOne.StopPoint);
 
+                        if (!NotCameraAware)
+                        {
+                            CurPosition -= SDL_Renderer.CCameraPosition;
+                            GStopPlusOnePos -= SDL_Renderer.CCameraPosition;
+                        }
+
                         Vector2 Diff = GStopPlusOnePos - CurPosition;
 
                         Color4 C4A = GradientStop.Colour;

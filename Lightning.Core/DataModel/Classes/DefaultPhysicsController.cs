@@ -59,8 +59,6 @@ namespace Lightning.Core.API
 
                     foreach (Instance Instance in ControllableObjectList)
                     {
-
-
                         PhysicalObject ObjectToTest = (PhysicalObject)Instance;
 
                         if (Object == ObjectToTest)
@@ -90,8 +88,15 @@ namespace Lightning.Core.API
                                 || (Object.Velocity.Y > 0 && PS.TerminalVelocity.Y < 0)) Object.Velocity.Y = -PS.TerminalVelocity.Y;
                             }
 
-                            Object.Position += Object.Velocity;
+                            // hackish
+                            Object.Position.X += Object.Velocity.X;
 
+                            if (Math.Abs(Object.Velocity.Y) > Math.Abs(PS.EpsilonVelocity))
+                            {
+                                Object.Position.Y += Object.Velocity.Y;
+                            }
+                            
+                             
                             CollisionResult CollisionResult = AABBtoAABB(Object, ObjectToTest);
 
                             if (CollisionResult.Successful)
@@ -165,7 +170,7 @@ namespace Lightning.Core.API
                                     if (!ObjectToTest.Anchored) ObjectToTest.Velocity += CollisionImpulse * Object.InverseMass;;
                                 }
 
-                                //PerformPositionalCorrection(CollisionResult.Manifold, PS);
+                                PerformPositionalCorrection(CollisionResult.Manifold, PS);
                             }
                             else
                             {
@@ -182,6 +187,7 @@ namespace Lightning.Core.API
 
                             Object.IsColliding = (ObjCollisionCount > 0);
                             ObjectToTest.IsColliding = (ObjToTestCollisionCount > 0);
+
 
 
                         }
@@ -279,19 +285,24 @@ namespace Lightning.Core.API
 
         private void PerformPositionalCorrection(Manifold M, PhysicsState PS)
         {
-            Vector2 Mx = M.NormalVector * Math.Max(M.PenetrationAmount - PS.PositionalCorrectionSlop, 0) / (M.PhysicalObjectA.InverseMass + M.PhysicalObjectB.InverseMass);
-            if (!M.PhysicalObjectA.Anchored) M.PhysicalObjectA.Position -= Mx * M.PhysicalObjectA.InverseMass;
-            if (!M.PhysicalObjectB.Anchored) M.PhysicalObjectB.Position += Mx * M.PhysicalObjectB.InverseMass;
+            double PenetrationMultiplier = M.PenetrationAmount * PS.PositionalCorrectionPercentage;
+
+            double PosToCheckA = M.PhysicalObjectA.Position.Y - M.PhysicalObjectA.Size.Y;
+            double PosToCheckB = M.PhysicalObjectB.Position.Y - M.PhysicalObjectB.Size.Y;
+
+            if (PosToCheckA > PosToCheckB)
+            {
+                if (!M.PhysicalObjectA.Anchored) M.PhysicalObjectA.Velocity.Y -= PenetrationMultiplier;
+                if (!M.PhysicalObjectB.Anchored) M.PhysicalObjectB.Velocity.Y += PenetrationMultiplier;
+            }
+            else
+            {
+                if (!M.PhysicalObjectA.Anchored) M.PhysicalObjectA.Velocity.Y += PenetrationMultiplier;
+                if (!M.PhysicalObjectB.Anchored) M.PhysicalObjectB.Velocity.Y -= PenetrationMultiplier;
+            }
+                
+
         }
 
-        public override void OnCollisionStart()
-        {
-            return;
-        }
-
-        public override void OnCollisionEnd()
-        {
-            return;
-        }
     }
 }

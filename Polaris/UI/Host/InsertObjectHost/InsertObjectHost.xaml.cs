@@ -1,5 +1,4 @@
-﻿ 
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,19 +8,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Polaris.UI
+namespace Polaris
 {
     /// <summary>
-    /// Interaction logic for InsertObject.xaml
+    /// Interaction logic for InsertObjectHost.xaml
     /// </summary>
-    public partial class InsertObject : UserControl
+    public partial class InsertObjectHost : Window
     {
-        public EventHandler<ObjectInsertionEventArgs> OnObjectInserted { get; set; }
-
-        public InsertObject()
+        public InsertObjectHost()
         {
             InitializeComponent();
         }

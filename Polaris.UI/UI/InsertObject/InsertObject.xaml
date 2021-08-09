@@ -4,9 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Polaris.UI"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" Height="549" Width="665">
     <Grid>
-            
+        <TextBlock x:Name="InsertObject_Header" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Insert Object..." TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource TextBlock_Header_Blue}"/>
+        <ListView x:Name="InsertObject_ListView" Margin="10,98,10,41">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="InsertObject_ListView_IconColumn" Width="20"/>
+                    <GridViewColumn x:Name="InsertObject_ListView_ObjectName" Width="Auto" DisplayMemberBinding="{Binding Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="InsertObject_OK" Content="Insert" HorizontalAlignment="Left" Margin="591,513,0,0" VerticalAlignment="Top" Height="32" Width="64"/>
+
     </Grid>
 </UserControl>

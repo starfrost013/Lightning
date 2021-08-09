@@ -64,9 +64,9 @@ namespace Lightning.Core.API
                 GetGameSettingResult GGSR_TerminalVelocity = GS.GetSetting("TerminalVelocity");
                 GetGameSettingResult GGSR_PositionalCorrectionPercentage = GS.GetSetting("PositionalCorrectionPercentage");
                 GetGameSettingResult GGSR_PositionalCorrectionSlop = GS.GetSetting("PositionalCorrectionSlop");
+                GetGameSettingResult GGSR_EpsilonVelocity = GS.GetSetting("EpsilonVelocity");
 
-                if (!GGSR_GravityLevel.Successful
-                || GGSR_GravityLevel.Setting == null) 
+                if (!CheckSettingSuccessfullyLoaded(GGSR_GravityLevel)) 
                 {
                     PhysState.Gravity = PhysicsState.GravityDefaultValue; // todo: move to globalsettings?
                 }
@@ -74,27 +74,20 @@ namespace Lightning.Core.API
                 {
                     GameSetting GravityLevel_Setting = GGSR_GravityLevel.Setting;
 
-                    Vector2 Gravity = null; 
-
                     try
                     {
-                        Gravity = (Vector2)GravityLevel_Setting.SettingValue;
+                        PhysState.Gravity = (Vector2)GravityLevel_Setting.SettingValue;
                         
                     }
                     catch (Exception)
                     {
-                        Gravity = PhysicsState.GravityDefaultValue;
-                    }
-                    finally
-                    {
-                        PhysState.Gravity = Gravity;
+                        PhysState.Gravity = PhysicsState.GravityDefaultValue;
                     }
 
 
                 }
 
-                if (!GGSR_GravityState.Successful
-                || GGSR_GravityState.Setting == null)
+                if (!CheckSettingSuccessfullyLoaded(GGSR_GravityState))
                 {
                     PhysState.GravityState = GravityState.Normal;
                 }
@@ -112,8 +105,7 @@ namespace Lightning.Core.API
                     }
                 }
 
-                if (!GGSR_ObjectKillBoundary.Successful
-                || GGSR_ObjectKillBoundary.Setting == null)
+                if (!CheckSettingSuccessfullyLoaded(GGSR_ObjectKillBoundary))
                 {
                     PhysState.ObjectKillBoundary = PhysicsState.ObjectKillBoundaryDefaultValue;
                 }
@@ -132,8 +124,7 @@ namespace Lightning.Core.API
                     }
                 }
 
-                if (!GGSR_TerminalVelocity.Successful
-                || GGSR_TerminalVelocity.Setting == null)
+                if (!CheckSettingSuccessfullyLoaded(GGSR_TerminalVelocity))
                 {
                     PhysState.TerminalVelocity = PhysicsState.TerminalVelocityDefaultValue;
                 }
@@ -151,8 +142,7 @@ namespace Lightning.Core.API
                     }
                 }
 
-                if (!GGSR_PositionalCorrectionPercentage.Successful
-                || GGSR_PositionalCorrectionPercentage == null)
+                if (!CheckSettingSuccessfullyLoaded(GGSR_PositionalCorrectionPercentage))
                 {
                     PhysState.PositionalCorrectionPercentage = PhysicsState.PositionalCorrectionPercentageDefaultValue;
                 }
@@ -170,8 +160,7 @@ namespace Lightning.Core.API
                     }
                 }
 
-                if (!GGSR_PositionalCorrectionSlop.Successful
-                || GGSR_PositionalCorrectionSlop.Setting == null)
+                if (!CheckSettingSuccessfullyLoaded(GGSR_PositionalCorrectionSlop))
                 {
                     PhysState.PositionalCorrectionSlop = PhysicsState.PositionalCorrectionSlopDefaultValue;
                 }
@@ -188,8 +177,26 @@ namespace Lightning.Core.API
                         PhysState.PositionalCorrectionSlop = PhysicsState.PositionalCorrectionSlopDefaultValue;
                     }
                 }
+                
+                if (!CheckSettingSuccessfullyLoaded(GGSR_EpsilonVelocity))
+                {
+                    PhysState.EpsilonVelocity = PhysicsState.EpsilonVelocityDefaultValue;
+                }
+                else
+                {
+                    GameSetting EpsilonVelocity_Setting = GGSR_EpsilonVelocity.Setting;
 
-                if (PhysState.PositionalCorrectionPercentage <= 0)
+                    try
+                    {
+                        PhysState.EpsilonVelocity = (double)EpsilonVelocity_Setting.SettingValue;
+                    }
+                    catch (Exception)
+                    {
+                        PhysState.EpsilonVelocity = PhysicsState.EpsilonVelocityDefaultValue;
+                    }
+                }
+
+                if (PhysState.PositionalCorrectionPercentage <= 00)
                 {
                     ErrorManager.ThrowError(ClassName, "PhysicsStatePositionalCorrectionPercentageMustBeAboveZeroException", $"The PositionalCorrectionPercentage GameSetting must be set to a value above zero (it is currently set to {PhysState.PositionalCorrectionPercentage}). It has been reset to a higher value");
                     PhysState.PositionalCorrectionPercentage = PhysicsState.PositionalCorrectionPercentageDefaultValue;
@@ -201,14 +208,26 @@ namespace Lightning.Core.API
                         ErrorManager.ThrowError(ClassName, "PhysicsStatePositionalCorrectionSlopMustBeAboveZeroException", $"The PositionalCorrectionSlop GameSetting must be set to a value above zero (it is currently set to {PhysState.PositionalCorrectionPercentage}). It has been reset to a higher value");
                         PhysState.PositionalCorrectionSlop = PhysicsState.PositionalCorrectionSlopDefaultValue;
                     }
+                    else
+                    {
+                        if (PhysState.EpsilonVelocity <= 0)
+                        {
+                            ErrorManager.ThrowError(ClassName, "PhysicsStateEpsilonVelocityPercentageMustBeAboveZeroException", $"The EpsilonVelocity GameSetting must be set to a value above zero! It will be reset to a default value. (it is currently set to {PhysState.EpsilonVelocity}!)");
+                            PhysState.EpsilonVelocity = PhysicsState.EpsilonVelocityDefaultValue;
+                        }
+                    }
                 }
                 
+                
+
                 PHYSICSSERVICE_INITIALISED = true;
                 return; 
 
             }
 
         }
+
+        private bool CheckSettingSuccessfullyLoaded(GetGameSettingResult GGSR) => (GGSR.Successful && GGSR.Setting != null);
 
         private void UpdatePhysics()
         {

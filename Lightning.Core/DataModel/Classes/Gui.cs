@@ -35,7 +35,26 @@ namespace Lightning.Core.API
 
                     if (GE.Click != null)
                     {
-                        GE.Click(this, EventArgs); 
+                        if (GE.Position == null || GE.Size == null)
+                        {
+                            GE.Click(this, EventArgs);
+                        }
+                        else
+                        {
+                            if (EventArgs.RelativePosition.X > GE.AABB.Position.X
+                                && EventArgs.RelativePosition.X < GE.AABB.Maximum.X
+                                && EventArgs.RelativePosition.Y > GE.AABB.Position.Y
+                                && EventArgs.RelativePosition.Y < GE.AABB.Maximum.Y)
+                            {
+                                GE.Click(this, EventArgs);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                        
                     }
                     else
                     {

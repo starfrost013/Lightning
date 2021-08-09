@@ -73,6 +73,10 @@ namespace Lightning.Core.API
         public Color4 BackgroundColour { get; set; }
 
         /// <summary>
+        /// Is this object at rest?
+        /// </summary>
+        public bool AtRest { get; set; }
+        /// <summary>
         /// Ran on the spawning of an object, before it is rendered for the first time and after the initialisation of the renderer.
         /// </summary>
         public virtual void OnSpawn()
@@ -140,6 +144,20 @@ namespace Lightning.Core.API
         /// Called on engine shutdown.
         /// </summary>
         public ShutdownEvent OnShutdown { get; set; }
+
+        /// <summary>
+        /// Collision start event handler.
+        /// 
+        /// Called on collision beginning.
+        /// </summary>
+        public CollisionStartEvent OnCollisionStart { get; set; }
+
+        /// <summary>
+        /// Collision end event handler.
+        /// 
+        /// Called on collision ending.
+        /// </summary>
+        public CollisionEndEvent OnCollisionEnd { get; set; }
 
         public AABB AABB
         {
@@ -282,34 +300,7 @@ namespace Lightning.Core.API
        
         private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
-            return; 
-
-            /*
-             * 
-             * removed for brush system
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
-            // requisite error checking already done
-
-            // create the source rect
-            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
-
-            // x,y = point on texture, w,h = size to copy
-            SourceRect.x = 0;
-            SourceRect.y = 0;
-
-            SourceRect.w = (int)Size.X;
-            SourceRect.h = (int)Size.Y;
-
-            SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
-
-            DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-            DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
-
-            DestinationRect.w = (int)Size.X;
-            DestinationRect.h = (int)Size.Y;
-
-            SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
-            */ 
+            return;  
 
         }
          

@@ -26,14 +26,6 @@ namespace Lightning.Core.API
         /// Ran each frame.
         /// </summary>
         public abstract void OnTick(PhysicalObject Object, PhysicsState PS); // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
-        /// <summary>
-        /// Ran on the start of a collision.
-        /// </summary>
-        public abstract void OnCollisionStart();
 
-        /// <summary>
-        /// Ran on the end of a collision.
-        /// </summary>
-        public abstract void OnCollisionEnd(); 
     }
 }

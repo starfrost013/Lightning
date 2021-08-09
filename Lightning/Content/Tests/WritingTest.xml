@@ -96,7 +96,7 @@
     <Sound Is3D="True" TargetObject="Camera1" Path="Content\Sounds\test.mp3" Repeat="True" Volume="1" Radius="20" CanCollide="False" Position="-100,0" ZIndex="0" Name="Instance" />
     <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0" LoopCount="5"></Sound>
     <Humanoid Position="450,150" Size="42,68" CanCollide="True" Name="Trincid2021TestOnly" DisplayHealthBar="True" Health="95" MaxHealth="100" PhysicsEnabled="True" Mass="0">
-      <ImageBrush Path="Content\Textures\HumanoidTest\TrincidStandingL.png" Name="Trincid2021TestOnly_StandLeft"/>
+      <ImageBrush Path="Content\Textures\HumanoidTest\TrincidIdleL.png" Name="Trincid2021TestOnly_StandLeft"/>
     </Humanoid>
     <Sky Name="SkyBG" ForceToBack="True">
       <ImageBrush Path="Content\Textures\Clouds.png"></ImageBrush>

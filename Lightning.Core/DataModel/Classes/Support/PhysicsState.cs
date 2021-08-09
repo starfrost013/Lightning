@@ -40,13 +40,20 @@
         /// </summary>
         public double PositionalCorrectionPercentage { get; set; }
 
-        internal static readonly double PositionalCorrectionPercentageDefaultValue = 0.2;
+        internal static readonly double PositionalCorrectionPercentageDefaultValue = 0.0001;
 
         /// <summary>
         /// Slop to use for positionally corrcting in the physics engine.
         /// </summary>
         public double PositionalCorrectionSlop { get; set; }
 
-        internal static readonly double PositionalCorrectionSlopDefaultValue = 0.01; 
+        internal static readonly double PositionalCorrectionSlopDefaultValue = 0.01;
+        
+        /// <summary>
+        /// Minimum velocity usable for physics
+        /// </summary>
+        public double EpsilonVelocity { get; set; }
+
+        internal static readonly double EpsilonVelocityDefaultValue = 0.065;
     }
 }
