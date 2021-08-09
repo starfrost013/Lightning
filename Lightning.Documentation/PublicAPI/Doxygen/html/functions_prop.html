@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning Game Engine
-   &#160;<span id="projectnumber">Nightly 8/8 - v0.3.826 - Experimental SDK</span>
+   &#160;<span id="projectnumber">Nightly 8/9 - v0.3.854 - Experimental SDK</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -112,6 +112,9 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 <li>AntiAliasingDisabled
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a396d09181fa154a46aaec603aa3e2e24">Lightning.Core.API.Text</a>
 </li>
+<li>AtRest
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#abe8f53d6edcdfa61f536d54a233357ea">Lightning.Core.API.PhysicalObject</a>
+</li>
 <li>Author
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3">Lightning.Core.API.GameMetadata</a>
 </li>
@@ -162,6 +165,12 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 </li>
 <li>CharName
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a1dfa475bcb225075126258f022be8b4a">Lightning.Core.API.Humanoid</a>
+</li>
+<li>Checked
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_check_box.html#a4bb0e614ec30181622cb124d00cb8456">Lightning.Core.API.CheckBox</a>
+</li>
+<li>CheckedEventHandler
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_check_box.html#a6fee1f35aa8ad268ea097fae629b5ac7">Lightning.Core.API.CheckBox</a>
 </li>
 <li>Click
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#acf8887fe70c33afc9ec38eaebd103287">Lightning.Core.API.PhysicalObject</a>
@@ -221,6 +230,9 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 <h3><a id="index_e"></a>- e -</h3><ul>
 <li>Elasticity
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#afde82814a2a59f8b864ba814717d5d45">Lightning.Core.API.PhysicalObject</a>
+</li>
+<li>EpsilonVelocity
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html#a9a20f7dbe0355a47439248ac0419c01f">Lightning.Core.API.PhysicsState</a>
 </li>
 <li>ExecutionTime
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#aa1eeb51056c3f1082a195a306863c9c7">Lightning.Core.API.Script</a>
@@ -305,14 +317,23 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 
 
 <h3><a id="index_i"></a>- i -</h3><ul>
+<li>InnerEventArgs
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html#a9475428713f75934a8541ae8404a9c17">Lightning.Core.API.CheckedEventArgs</a>
+</li>
 <li>Instance
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html#ae48603c2605f1ebb8c7e441efad3d09e">Lightning.Core.API.GetInstanceResult</a>
 </li>
 <li>Invincible
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a68d1085bca524d3df70349ee193204c4">Lightning.Core.API.Humanoid</a>
 </li>
+<li>Invisible
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#ae8b85f404eceffaeb4b6dd9e1c0bd4c6">Lightning.Core.API.PhysicalObject</a>
+</li>
 <li>Is3D
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html#a9edd89ac6a01fcd55211281cc1374c8a">Lightning.Core.API.Sound</a>
+</li>
+<li>IsChecked
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html#a7adc0e0889deef59507f958721654585">Lightning.Core.API.CheckedEventArgs</a>
 </li>
 <li>IsColliding
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a05a0fefc620eea96ddc79b6cefa26d00">Lightning.Core.API.PhysicalObject</a>
@@ -418,6 +439,12 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 <h3><a id="index_o"></a>- o -</h3><ul>
 <li>ObjectKillBoundary
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html#ac504ae1520d594f49d7e51d986442809">Lightning.Core.API.PhysicsState</a>
+</li>
+<li>OnCollisionEnd
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a592c7713bb7f3b1b99b1668f8395270c">Lightning.Core.API.PhysicalObject</a>
+</li>
+<li>OnCollisionStart
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a66c142ed93ba32c5304d112254994d65">Lightning.Core.API.PhysicalObject</a>
 </li>
 <li>OnKeyDownHandler
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adc0b970ea1176eb3d8caeedbad23923d">Lightning.Core.API.PhysicalObject</a>

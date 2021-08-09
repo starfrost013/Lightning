@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.3.853.21221</AssemblyVersion>
-    <FileVersion>0.3.853.21221</FileVersion>
+    <AssemblyVersion>0.3.855.21221</AssemblyVersion>
+    <FileVersion>0.3.855.21221</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>Lightning Runtime</PackageId>
     <Description>Lightning Runtime</Description>
@@ -62,6 +62,8 @@
     <None Remove="Content\test_texture.png" />
     <None Remove="Content\test_texture_2.png" />
     <None Remove="Content\Textures\Clouds.png" />
+    <None Remove="Content\Textures\HumanoidTest\TrincidIdleL.png" />
+    <None Remove="Content\Textures\HumanoidTest\TrincidIdleR.png" />
     <None Remove="Content\Textures\HumanoidTest\TrincidStandingL.png" />
     <None Remove="libFLAC-8.dll" />
     <None Remove="libfreetype-6.dll" />
@@ -152,7 +154,10 @@
     <Content Include="Content\Textures\Clouds.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Textures\HumanoidTest\TrincidStandingL.png">
+    <Content Include="Content\Textures\HumanoidTest\TrincidIdleL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\HumanoidTest\TrincidIdleR.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="libFLAC-8.dll">

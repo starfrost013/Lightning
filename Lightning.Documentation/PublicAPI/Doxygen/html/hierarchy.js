@@ -3,6 +3,8 @@ var hierarchy =
     [ "Lightning.Core.API.AABB", "class_lightning_1_1_core_1_1_a_p_i_1_1_a_a_b_b.html", null ],
     [ "Lightning.Core.API.DataModel", "class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html", null ],
     [ "EventArgs", null, [
+      [ "Lightning.Core.API.CheckedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html", null ],
+      [ "Lightning.Core.API.CollisionEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_collision_event_args.html", null ],
       [ "Lightning.Core.API.MouseEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args.html", null ],
       [ "Lightning.Core.API.ShutdownEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html", null ]
     ] ],
@@ -43,13 +45,13 @@ var hierarchy =
               [ "Lightning.Core.API.WorldGui", "class_lightning_1_1_core_1_1_a_p_i_1_1_world_gui.html", null ]
             ] ],
             [ "Lightning.Core.API.GuiElement", "class_lightning_1_1_core_1_1_a_p_i_1_1_gui_element.html", [
-              [ "Lightning.Core.API.CheckBox", "class_lightning_1_1_core_1_1_a_p_i_1_1_check_box.html", null ],
               [ "Lightning.Core.API.GradientStop", "class_lightning_1_1_core_1_1_a_p_i_1_1_gradient_stop.html", null ],
               [ "Lightning.Core.API.Menu", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu.html", null ],
               [ "Lightning.Core.API.MenuItem", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_item.html", null ],
               [ "Lightning.Core.API.Text", "class_lightning_1_1_core_1_1_a_p_i_1_1_text.html", [
                 [ "Lightning.Core.API.TextBox", "class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html", [
-                  [ "Lightning.Core.API.Button", "class_lightning_1_1_core_1_1_a_p_i_1_1_button.html", null ]
+                  [ "Lightning.Core.API.Button", "class_lightning_1_1_core_1_1_a_p_i_1_1_button.html", null ],
+                  [ "Lightning.Core.API.CheckBox", "class_lightning_1_1_core_1_1_a_p_i_1_1_check_box.html", null ]
                 ] ]
               ] ]
             ] ]

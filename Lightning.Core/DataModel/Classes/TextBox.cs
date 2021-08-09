@@ -43,7 +43,6 @@ namespace Lightning.Core.API
             if (Colour == null) Colour = new Color4(255, 255, 255, 255);
             if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0); // do not draw by default
             if (BackgroundColour == null) BackgroundColour = new Color4(255, 0, 0, 0);
-            if (Size == null) Size = new Vector2(50, 25);
 
             if (FontFamily == null
                 || FontFamily == "")
@@ -58,7 +57,6 @@ namespace Lightning.Core.API
             ItemRectangle.Colour = BorderColour;
             ItemRectangle.BackgroundColour = BackgroundColour;
             ItemRectangle.Fill = Fill;
-            ItemRectangle.Size = Size;
 
             Vector2 FontSize = null;
 

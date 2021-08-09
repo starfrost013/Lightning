@@ -1,5 +1,6 @@
 var class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state =
 [
+    [ "EpsilonVelocity", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html#a9a20f7dbe0355a47439248ac0419c01f", null ],
     [ "Gravity", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html#ade314611c196376f039282feb39f0ca8", null ],
     [ "GravityState", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html#a38bff0e4034445d5622acce8a325f8c0", null ],
     [ "ObjectKillBoundary", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html#ac504ae1520d594f49d7e51d986442809", null ],

@@ -38,7 +38,7 @@ PROJECT_NAME           = "Lightning Game Engine"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Nightly 8/8 - v0.3.826 - Experimental SDK"
+PROJECT_NUMBER         = "Nightly 8/9 - v0.3.854 - Experimental SDK"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a

@@ -14,5 +14,6 @@ var searchData=
   ['antialiasingdisabled_11',['AntiAliasingDisabled',['../class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a396d09181fa154a46aaec603aa3e2e24',1,'Lightning::Core::API::Text']]],
   ['applyimpulse_12',['ApplyImpulse',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adfae95d8683554151e77b026c90391a4',1,'Lightning::Core::API::PhysicalObject']]],
   ['archivable_13',['Archivable',['../namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e',1,'Lightning::Core::API']]],
-  ['author_14',['Author',['../class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3',1,'Lightning::Core::API::GameMetadata']]]
+  ['atrest_14',['AtRest',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#abe8f53d6edcdfa61f536d54a233357ea',1,'Lightning::Core::API::PhysicalObject']]],
+  ['author_15',['Author',['../class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3',1,'Lightning::Core::API::GameMetadata']]]
 ];
