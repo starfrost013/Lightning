@@ -21,7 +21,7 @@ namespace Lightning.Core.API
 
         private bool SOLIDCOLOURBRUSH_INITIALISED { get; set; }
         
-        internal override void Init()
+        internal void Init()
         {
             if (Position == null) Position = new Vector2(0, 0);
             if (Size == null)

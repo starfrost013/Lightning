@@ -277,7 +277,7 @@ namespace Lightning.Core.API
         {
             if (!PHYSICALOBJECT_INITIALISED)
             {
-                Init();
+                PO_Init();
             }
             else 
             {
@@ -326,7 +326,7 @@ namespace Lightning.Core.API
             }
         }
 
-        internal virtual void Init()
+        internal void PO_Init()
         {
             Brush CBrush = GetBrush();
 

@@ -1,4 +1,5 @@
 ﻿using Lightning.Core.SDL2;
+using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,42 +9,32 @@ namespace Lightning.Core.API
     /// <summary>
     /// ImageBrush (Texture 2.0)
     /// 
-    /// August 7, 2021 (original: April 9, 2021)
+    /// August 7, 2021 (original: April 9, 2021, modified August 10, 2021)
     /// 
     /// Defines an image that can be displayed on the screen. Non-animated 
     /// </summary>
-    public class ImageBrush : Brush
+    public class AnimatedImageBrush : ImageBrush
     {
         /// <summary>
         /// <inheritdoc/> -- set to Texture.
         /// </summary>
-        internal override string ClassName => "ImageBrush";
+        internal override string ClassName => "AnimatedImageBrush";
 
         internal override InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable | InstanceTags.ParentCanBeNull); }
 
 
-
-
-        /// <summary>
-        /// The path to the image of this non-animated texture.
-        /// </summary>
-        public string Path { get; set; }
- 
+        private Animation CurrentAnimation { get; set; }
 
         /// <summary>
-        /// The display mode of this texture - see <see cref="TextureDisplayMode"/>.
+        /// Private: Current animation frame
         /// </summary>
-        public TextureDisplayMode TextureDisplayMode { get; set; }
-        
-        /// <summary>
-        /// INTERNAL: A pointer to the SDL2 hardware-accelerated texture used by this object.
-        /// </summary>
-        internal IntPtr SDLTexturePtr { get; set; }
+        private int CurrentAnimationFrame { get; set; }
 
         /// <summary>
-        /// PRIVATE: Determines if this texture is initialised.
+        /// The name of the current animation.
         /// </summary>
-        internal bool TEXTURE_INITIALISED { get; set; }
+        public string CurrentAnimationName { get; set; }
+
 
         public override void OnCreate()
         {
@@ -63,7 +54,7 @@ namespace Lightning.Core.API
 
             if (!TEXTURE_INITIALISED)
             {
-                Init();
+                Anim_Init();
             }
             else
             {
@@ -72,12 +63,12 @@ namespace Lightning.Core.API
 
         }
 
-        internal void Init()
+        internal void Anim_Init()
         {
             ServiceNotification SN = new ServiceNotification();
             SN.ServiceClassName = "RenderService";
             SN.NotificationType = ServiceNotificationType.MessageSend;
-            SN.Data.Name = "LoadTexture";
+            SN.Data.Name = "LoadAnimatedTexture";
             SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
             SN.Data.Data.Add(this);
 
@@ -89,47 +80,54 @@ namespace Lightning.Core.API
 
         private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
+            if (CurrentAnimation == null)
+            {
+                return; 
+            }
+            else
+            {
+                GetMultiInstanceResult GMIR = CurrentAnimation.GetAllChildrenOfType("AnimationFrame");
+
+                if (!GMIR.Successful)
+                {
+                    
+                }
+                else
+                {
+                    List<Instance> LI = GMIR.Instances;
+
+                    foreach (Instance Ins in LI)
+                    {
+                        AnimationFrame AF = (AnimationFrame)Ins;
+
+                        AF.Render(SDL_Renderer, Tx);
+                    }
+                }
+
+            }
+
             SnapToParent();
+        }
 
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
-            // requisite error checking already done
 
-            // create the source rect
-            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
-
-            // x,y = point on texture, w,h = size to copy
-            SourceRect.x = 0;
-            SourceRect.y = 0;
-
-            SourceRect.w = (int)Size.X;
-            SourceRect.h = (int)Size.Y;
-
-            SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
-
+        internal List<Animation> GetAnimations()
+        {
+            GetMultiInstanceResult GMIR = GetAllChildrenOfType("Animation");
             
-            if (SDL_Renderer.CCameraPosition != null && !NotCameraAware)
+            if (GMIR.Instances == null
+            || !GMIR.Successful)
             {
-                DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                ErrorManager.ThrowError(ClassName, "FailedToAcquireListOfAnimationsException");
+                return null; // will never run (probably even with voltage glitching considering il instructions don't get executed directly :D)
             }
             else
             {
-                DestinationRect.x = (int)Position.X;
-                DestinationRect.y = (int)Position.Y; 
+                List<Instance> InstanceList = (List<Instance>)GMIR.Instances;
+
+                List<Animation> AnimationList = ListTransfer<Instance, Animation>.TransferBetweenTypes(InstanceList); 
+                return AnimationList; 
             }
 
-            if (DisplayViewport == null)
-            {
-                DestinationRect.w = (int)Size.X;
-                DestinationRect.h = (int)Size.Y;
-            }
-            else
-            {
-                DestinationRect.w = (int)DisplayViewport.X;
-                DestinationRect.h = (int)DisplayViewport.Y;
-            }
-
-            SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
 
         private void SnapToParent()

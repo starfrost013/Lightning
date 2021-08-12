@@ -118,7 +118,7 @@ namespace Lightning.Core.API
             OnKeyDownHandler += OnKeyDown;
         }
 
-        internal override void Init()
+        internal void Init()
         {
             if (KeyLeft == null) KeyLeft = new ConvertableStringList { "LEFT", "A" };
             if (KeyRight == null) KeyRight = new ConvertableStringList { "RIGHT", "D" };
@@ -138,7 +138,7 @@ namespace Lightning.Core.API
 
             HUMANOID_INITIALISED = true;
             
-            base.Init(); 
+            base.PO_Init(); 
         }
 
         public void OnKeyDown(object Sender, KeyEventArgs KeyArgs)

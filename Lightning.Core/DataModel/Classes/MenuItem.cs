@@ -66,7 +66,7 @@ namespace Lightning.Core.API
             
         }
 
-        internal override void Init()
+        internal void Init()
         {
             if (Size == null)
             {

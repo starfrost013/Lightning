@@ -31,7 +31,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// 
         public CheckedEvent CheckedEventHandler { get; set; }
-        internal override void Init()
+        internal void Init()
         {
             if (Size == null) Size = new Vector2(50, 50);
             L1 = (Line)DataModel.CreateInstance("Line");
