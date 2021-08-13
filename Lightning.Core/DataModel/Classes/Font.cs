@@ -41,7 +41,7 @@ namespace Lightning.Core.API
         /// <param name="FontFamily">The name of the font family to laod.</param>
         public void Load() // change to result class?
         {
-            base.Init(); 
+            base.PO_Init(); 
 
             if (FontPath == null
                 || FontPath.Length == 0)

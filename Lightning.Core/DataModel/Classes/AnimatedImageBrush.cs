@@ -101,7 +101,7 @@ namespace Lightning.Core.API
 
                             if (!CurrentAnimation.AnimationTimer.IsRunning) CurrentAnimation.AnimationTimer.Start();
 
-                            if (CurrentAnimation.Frames.Count == 0) ereturn; 
+                            if (CurrentAnimation.Frames.Count == 0) return; 
 
                             int MaxFrameCount = CurrentAnimation.GetTotalLength();
 

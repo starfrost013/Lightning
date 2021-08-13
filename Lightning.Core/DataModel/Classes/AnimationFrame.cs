@@ -75,5 +75,4 @@ namespace Lightning.Core.API
             SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
     }
-    }
 }

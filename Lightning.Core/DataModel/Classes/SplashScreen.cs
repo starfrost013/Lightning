@@ -22,7 +22,7 @@ namespace Lightning.Core.API
         private bool SPLASHSCREEN_INITIALISATION_FAILED { get; set; }
 
         private string TexturePath { get; set; }
-        private new void Init()
+        private void Init()
         {
             Workspace Ws = DataModel.GetWorkspace();
 
@@ -85,7 +85,7 @@ namespace Lightning.Core.API
         {
             if (!SPLASHSCREEN_INITIALISED)
             {
-                base.Init(); 
+                base.PO_Init(); 
                 Init(); 
             }
             else
