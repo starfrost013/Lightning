@@ -2,6 +2,7 @@
 using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Lightning.Core.API
@@ -34,7 +35,6 @@ namespace Lightning.Core.API
         /// The name of the current animation.
         /// </summary>
         public string CurrentAnimationName { get; set; }
-
 
         public override void OnCreate()
         {
@@ -73,7 +73,6 @@ namespace Lightning.Core.API
             SN.Data.Data.Add(this);
 
             ServiceNotifier.NotifySCM(SN);
-
             TEXTURE_INITIALISED = true;
             return; 
         }
@@ -86,29 +85,52 @@ namespace Lightning.Core.API
             }
             else
             {
-                GetMultiInstanceResult GMIR = CurrentAnimation.GetAllChildrenOfType("AnimationFrame");
-
-                if (!GMIR.Successful)
+                switch (CurrentAnimation.Type)
                 {
-                    
-                }
-                else
-                {
-                    List<Instance> LI = GMIR.Instances;
+                    case AnimationType.Continuous:
+                        GetMultiInstanceResult GMIR = CurrentAnimation.GetAllChildrenOfType("AnimationFrame");
 
-                    foreach (Instance Ins in LI)
-                    {
-                        AnimationFrame AF = (AnimationFrame)Ins;
+                        if (!GMIR.Successful)
+                        {
+                            ErrorManager.ThrowError(ClassName, "FailedToAcquireListOfAnimationFramesException");
+                            return; //never runs
+                        }
+                        else
+                        {
+                            List<Instance> LI = GMIR.Instances;
 
-                        AF.Render(SDL_Renderer, Tx);
-                    }
+                            if (!CurrentAnimation.AnimationTimer.IsRunning) CurrentAnimation.AnimationTimer.Start();
+
+                            if (CurrentAnimation.Frames.Count == 0) ereturn; 
+
+                            int MaxFrameCount = CurrentAnimation.GetTotalLength();
+
+                            AnimationFrame AF = CurrentAnimation.GetCurrentFrame();
+
+                            if (AF == null)
+                            {
+                                CurrentAnimation.AnimationTimer.Restart();
+                                AF = CurrentAnimation.Frames[0];
+                            }
+
+                            AF.Render(SDL_Renderer, Tx);
+
+
+
+                        }
+                        return; 
+
                 }
+
 
             }
 
             SnapToParent();
         }
 
+        private void PlayAnimation(Renderer SDL_Renderer, ImageBrush Tx)
+        {
+        }
 
         internal List<Animation> GetAnimations()
         {

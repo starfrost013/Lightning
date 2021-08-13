@@ -25,7 +25,7 @@ namespace Lightning.Core.API
 
         public AnimationFrame this[int i] => AnimationFrames[i];
 
-
+        public int Count => AnimationFrames.Count;
     }
 
     public class AnimationFrameCollectionEnumerator : IEnumerator

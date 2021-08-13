@@ -151,7 +151,8 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "ServiceMessageMustHaveNameException", Description = "ServiceMessages must have a name! This ServiceMessage will not be delivered.", Severity = MessageSeverity.Error, Id = 131 }); // warning?
          ErrorManager.RegisterError( new Error { Name = "PhysicsStateEpsilonVelocityPercentageMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 132 });
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAcquireInvalidAnimationFrameException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 133 });
-         ErrorManager.RegisterError (new Error { Name = "FailedToAcquireListOfAnimationsException", Description = "Failed to acquire list of animations!", Severity = MessageSeverity.Error, Id = 134 });
+         ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationsException", Description = "Failed to acquire a list of animations!", Severity = MessageSeverity.FatalError, Id = 134 });
+         ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationFramesException", Description = "Failed to acquire a list of animation frames!", Severity = MessageSeverity.FatalError, Id = 135 }); ;
      }
   }
 }

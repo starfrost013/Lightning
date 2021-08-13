@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Core.SDL2; 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,8 +24,9 @@ namespace Lightning.Core.API
         /// <summary>
         /// Default time this animation will be played. CAN BE CHANGED BY SCRIPTING!
         /// </summary>
-        public double DefaultTiming { get; set; }
+        public int DefaultTiming { get; set; }
 
+        private bool NotCameraAware { get; set; }
         public void Load()
         {
 
