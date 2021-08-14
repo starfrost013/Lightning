@@ -134,14 +134,16 @@ namespace Lightning.Core.API
 
         private void SnapToParent()
         {
-            // TEMP code
+            // Very temporary code.
+            // In the future you will only set these on the brushes,
+            // this is temp until Aug 20 2021
             PhysicalObject PParent = (PhysicalObject)Parent;
-            Position = PParent.Position;
-            Size = PParent.Size;
-            BorderColour = PParent.BorderColour;
-            BackgroundColour = PParent.BackgroundColour;
-            DisplayViewport = PParent.DisplayViewport;
-            Colour = PParent.Colour;
+            if (PParent.Position != null) Position = PParent.Position;
+            if (PParent.Size != null) Size = PParent.Size;
+            if (PParent.BorderColour != null) BorderColour = PParent.BorderColour;
+            if (PParent.BackgroundColour != null) BackgroundColour = PParent.BackgroundColour;
+            if (PParent.DisplayViewport != null) DisplayViewport = PParent.DisplayViewport;
+            if (PParent.Colour != null) Colour = PParent.Colour;
 
         }
     }

@@ -23,9 +23,6 @@ namespace Lightning.Core.API
 
         internal override InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable | InstanceTags.ParentCanBeNull); }
 
-
-        private Animation CurrentAnimation { get; set; }
-
         /// <summary>
         /// Private: Current animation frame
         /// </summary>
@@ -68,17 +65,50 @@ namespace Lightning.Core.API
             ServiceNotification SN = new ServiceNotification();
             SN.ServiceClassName = "RenderService";
             SN.NotificationType = ServiceNotificationType.MessageSend;
-            SN.Data.Name = "LoadAnimatedTexture";
+            SN.Data.Name = "LoadAnimation";
             SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
             SN.Data.Data.Add(this);
-
+            
             ServiceNotifier.NotifySCM(SN);
             TEXTURE_INITIALISED = true;
             return; 
         }
 
+        /// <summary>
+        /// PRIVATE: Gets the active <see cref="Animation"/>.
+        /// </summary>
+        /// <returns>The currently active <see cref="Animation"/>.. If there are no <see cref="Animation"/>s active, it sets the first animation stored within this AnimatedImageBrush to active and returns that. Failing that, returns <c>null</c>.</returns>
+        private Animation GetActiveAnimation()
+        {
+            List<Animation> Animations = GetAnimations(); 
+
+            foreach (Animation Animation in Animations)
+            {
+                if (Animation.Active) // if this animation is set to active, return it
+                {
+                    return Animation;
+                }
+            }
+
+            // default to the first animation
+            if (Animations.Count > 0)
+            {
+                Animation FirstAnim = Animations[0];
+
+                FirstAnim.Active = true; 
+                return FirstAnim;
+            }
+            else // no animations
+            {
+                return null; 
+            }
+ 
+        }
+
         private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
+            Animation CurrentAnimation = GetActiveAnimation(); 
+
             if (CurrentAnimation == null)
             {
                 return; 
@@ -101,16 +131,16 @@ namespace Lightning.Core.API
 
                             if (!CurrentAnimation.AnimationTimer.IsRunning) CurrentAnimation.AnimationTimer.Start();
 
-                            if (CurrentAnimation.Frames.Count == 0) return; 
+                            List<AnimationFrame> Frames = CurrentAnimation.GetFrames();
 
-                            int MaxFrameCount = CurrentAnimation.GetTotalLength();
+                            if (Frames.Count == 0) return; 
 
                             AnimationFrame AF = CurrentAnimation.GetCurrentFrame();
 
-                            if (AF == null)
+                            if (AF == null) // animation ended
                             {
                                 CurrentAnimation.AnimationTimer.Restart();
-                                AF = CurrentAnimation.Frames[0];
+                                AF = Frames[0];
                             }
 
                             AF.Render(SDL_Renderer, Tx);

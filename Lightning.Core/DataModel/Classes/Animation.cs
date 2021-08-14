@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities; 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -16,10 +17,12 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "Animation";
 
-        public AnimationFrameCollection Frames { get; set; }
-
         public AnimationType Type { get; set; }
 
+        /// <summary>
+        /// Determines if this animation is active.
+        /// </summary>
+        public bool Active { get; set; }
         /// <summary>
         /// INTERNAL: Gets the total time (int)
         /// </summary>
@@ -28,6 +31,8 @@ namespace Lightning.Core.API
         {
             int CurTime = 0;
 
+            List<AnimationFrame> Frames = GetFrames(); 
+  
             foreach (AnimationFrame AnimFrame in Frames)
             {
                 CurTime += AnimFrame.DefaultTiming;
@@ -36,9 +41,30 @@ namespace Lightning.Core.API
             return CurTime;
         }
 
+        internal List<AnimationFrame> GetFrames()
+        {
+            GetMultiInstanceResult GMIR = GetAllChildrenOfType("AnimationFrame"); 
+
+            if (GMIR.Instances == null
+            || !GMIR.Successful)
+            {
+                ErrorManager.ThrowError(ClassName, "FailedToAcquireListOfAnimationFramesException");
+                return null; // will never run 
+            }
+            else
+            {
+                List<Instance> InstanceList = GMIR.Instances;
+                List<AnimationFrame> AnimationFrames = ListTransfer<Instance, AnimationFrame>.TransferBetweenTypes(InstanceList);
+
+                return AnimationFrames;
+            }
+        }
+
         internal AnimationFrame GetCurrentFrame()
         {
             int CurTime = 0;
+
+            List<AnimationFrame> Frames = GetFrames();
 
             for (int i = 0; i < Frames.Count; i++)
             {

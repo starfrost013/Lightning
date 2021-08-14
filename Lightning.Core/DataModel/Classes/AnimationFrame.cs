@@ -22,15 +22,11 @@ namespace Lightning.Core.API
         public string Path { get; set; }
 
         /// <summary>
-        /// Default time this animation will be played. CAN BE CHANGED BY SCRIPTING!
+        /// Default time this animation will be played (milliseconds). CAN BE CHANGED BY SCRIPTING!
         /// </summary>
         public int DefaultTiming { get; set; }
 
         private bool NotCameraAware { get; set; }
-        public void Load()
-        {
-
-        }
 
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {

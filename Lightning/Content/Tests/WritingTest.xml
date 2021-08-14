@@ -85,8 +85,8 @@
     </Rectangle>
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     
-    <PhysicalObject>
-      <ImageBrush Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" ZIndex="0" Name="Block1_Texture" Position="430,300" Size="200,150" CanCollide="False" PhysicsEnabled="True" Anchored="True" Mass="0"/>
+    <PhysicalObject Name="Block1" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0">
+      <ImageBrush Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" ZIndex="0" Name="Block1_Texture" Position="430,300" Size="200,150" />
     </PhysicalObject>
     <PhysicalObject CanCollide="False" Position="60,60" Size="200,150" ZIndex="0" Name="Block2" PhysicsEnabled="True" Mass="0">
       <ImageBrush Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
