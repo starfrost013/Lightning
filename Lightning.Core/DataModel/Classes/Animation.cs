@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Animation
     /// 
-    /// August 11, 2021 (modified August 13, 2021)
+    /// August 11, 2021 (modified August 15, 2021: FrameTimer)
     /// 
     /// Defines an animation.
     /// </summary>
@@ -29,11 +29,11 @@ namespace Lightning.Core.API
         /// <summary>
         /// INTERNAL: Timer used for animations.
         /// </summary>
-        internal Stopwatch AnimationTimer { get; set; }
+        internal FrameTimer AnimationTimer { get; set; }
 
         public override void OnCreate()
         {
-            AnimationTimer = new Stopwatch(); 
+            AnimationTimer = new FrameTimer(); 
         }
 
         /// <summary>
@@ -88,9 +88,9 @@ namespace Lightning.Core.API
 
                     AnimationFrame FramePlusOne = Frames[i + 1];
                     CurTime += Frame.DefaultTiming;
-                    int CurTimePlusOne = CurTime += FramePlusOne.DefaultTiming;
+                    int CurTimePlusOne = CurTime + FramePlusOne.DefaultTiming;
 
-                    if (AnimationTimer.ElapsedMilliseconds > CurTime && AnimationTimer.ElapsedMilliseconds < CurTimePlusOne)
+                    if (AnimationTimer.ElapsedFrames > CurTime && AnimationTimer.ElapsedFrames < CurTimePlusOne)
                     {
                         return Frame; 
                     }
@@ -99,7 +99,7 @@ namespace Lightning.Core.API
                 {
                     int TotalTime = GetTotalLength();
 
-                    if (TotalTime > AnimationTimer.ElapsedMilliseconds)
+                    if (TotalTime > AnimationTimer.ElapsedFrames)
                     {
                         return Frame;
                     }
@@ -107,7 +107,7 @@ namespace Lightning.Core.API
 
             }
 
-            return null; // yes
+            return null; // anim completed
         }
 
 

@@ -11,9 +11,10 @@ var searchData=
   ['fontsize_107',['FontSize',['../class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#a89205f3398d3dc38d4a9060497ff5585',1,'Lightning.Core.API.Font.FontSize()'],['../class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a30dca5ce2b992ae789fbec91aabb1754',1,'Lightning.Core.API.Text.FontSize()']]],
   ['forcetoback_108',['ForceToBack',['../class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html#a22fd71a85d45e54be694b76373bcb32f',1,'Lightning::Core::API::Sky']]],
   ['forcetotop_109',['ForceToTop',['../class_lightning_1_1_core_1_1_a_p_i_1_1_menu.html#a551af10e8f7a7babb39801085820fad3',1,'Lightning::Core::API::Menu']]],
-  ['free_110',['Free',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902dab24ce0cd392a5b0b8dedc66c25213594',1,'Lightning::Core::API']]],
-  ['frommethodinfo_111',['FromMethodInfo',['../class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info_method.html#a6ca4456e2a3f49e28d2f2da993343c33',1,'Lightning::Core::API::InstanceInfoMethod']]],
-  ['fromparameterinfo_112',['FromParameterInfo',['../class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info_method_parameter.html#a2f1f86458baa15a24ee767bf566742a0',1,'Lightning::Core::API::InstanceInfoMethodParameter']]],
-  ['fromrelative_113',['FromRelative',['../class_lightning_1_1_core_1_1_a_p_i_1_1_color3.html#a3b4f8311cbf19098a4360166f4a5c4d9',1,'Lightning.Core.API.Color3.FromRelative()'],['../class_lightning_1_1_core_1_1_a_p_i_1_1_color4.html#a67df64ee8cd42abbbfe754773925d845',1,'Lightning.Core.API.Color4.FromRelative()']]],
-  ['fromtype_114',['FromType',['../class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html#a6507c6519002e38827f545c279436a65',1,'Lightning::Core::API::InstanceInfo']]]
+  ['frametimer_110',['FrameTimer',['../class_lightning_1_1_core_1_1_a_p_i_1_1_frame_timer.html',1,'Lightning::Core::API']]],
+  ['free_111',['Free',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902dab24ce0cd392a5b0b8dedc66c25213594',1,'Lightning::Core::API']]],
+  ['frommethodinfo_112',['FromMethodInfo',['../class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info_method.html#a6ca4456e2a3f49e28d2f2da993343c33',1,'Lightning::Core::API::InstanceInfoMethod']]],
+  ['fromparameterinfo_113',['FromParameterInfo',['../class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info_method_parameter.html#a2f1f86458baa15a24ee767bf566742a0',1,'Lightning::Core::API::InstanceInfoMethodParameter']]],
+  ['fromrelative_114',['FromRelative',['../class_lightning_1_1_core_1_1_a_p_i_1_1_color3.html#a3b4f8311cbf19098a4360166f4a5c4d9',1,'Lightning.Core.API.Color3.FromRelative()'],['../class_lightning_1_1_core_1_1_a_p_i_1_1_color4.html#a67df64ee8cd42abbbfe754773925d845',1,'Lightning.Core.API.Color4.FromRelative()']]],
+  ['fromtype_115',['FromType',['../class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html#a6507c6519002e38827f545c279436a65',1,'Lightning::Core::API::InstanceInfo']]]
 ];

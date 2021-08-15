@@ -117,7 +117,9 @@ namespace Lightning.Core.API
                         {
                             List<Instance> LI = GMIR.Instances;
 
-                            if (!CurrentAnimation.AnimationTimer.IsRunning) CurrentAnimation.AnimationTimer.Start();
+                            if (!CurrentAnimation.AnimationTimer.Running) CurrentAnimation.AnimationTimer.Running = true;
+
+                            CurrentAnimation.AnimationTimer.Update(); 
 
                             List<AnimationFrame> Frames = CurrentAnimation.GetFrames();
 
@@ -127,7 +129,7 @@ namespace Lightning.Core.API
 
                             if (AF == null) // animation ended
                             {
-                                CurrentAnimation.AnimationTimer.Restart();
+                                CurrentAnimation.AnimationTimer.Reset(); 
                                 AF = Frames[0];
                             }
 

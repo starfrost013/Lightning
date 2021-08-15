@@ -17,7 +17,7 @@ namespace Lightning.Core.API
         internal override string ClassName => "AnimationFrame";
 
         /// <summary>
-        /// Default time this animation will be played (milliseconds). CAN BE CHANGED BY SCRIPTING!
+        /// Default time this animation will be played in frames. CAN BE CHANGED BY SCRIPTING AND THE MAXFPS <see cref="GameSetting"/>!
         /// </summary>
         public int DefaultTiming { get; set; }
 
@@ -62,6 +62,8 @@ namespace Lightning.Core.API
                     if (Position == null && AIB.Position != null) Position = AIB.Position;
                     if (Size == null && AIB.Size != null) Size = AIB.Size;
 
+                    TEXTURE_INITIALISED = true;
+                    
                     ANIMATIONFRAME_INITIALISED = true;
                     return;
                     

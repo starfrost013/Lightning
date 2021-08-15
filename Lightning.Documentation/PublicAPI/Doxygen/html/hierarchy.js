@@ -8,6 +8,7 @@ var hierarchy =
       [ "Lightning.Core.API.MouseEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args.html", null ],
       [ "Lightning.Core.API.ShutdownEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html", null ]
     ] ],
+    [ "Lightning.Core.API.FrameTimer", "class_lightning_1_1_core_1_1_a_p_i_1_1_frame_timer.html", null ],
     [ "IEnumerable", null, [
       [ "Lightning.Core.API.InstanceCollection", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html", null ]
     ] ],

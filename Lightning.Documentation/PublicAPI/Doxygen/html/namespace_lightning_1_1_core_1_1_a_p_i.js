@@ -63,6 +63,7 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "SplashScreen", "class_lightning_1_1_core_1_1_a_p_i_1_1_splash_screen.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_splash_screen" ],
     [ "CollisionResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_collision_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_collision_result" ],
     [ "FindFontResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_find_font_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_find_font_result" ],
+    [ "FrameTimer", "class_lightning_1_1_core_1_1_a_p_i_1_1_frame_timer.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_frame_timer" ],
     [ "GetTargetObjectResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_target_object_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_target_object_result" ],
     [ "Manifold", "class_lightning_1_1_core_1_1_a_p_i_1_1_manifold.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_manifold" ],
     [ "MenuState", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_state.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_state" ],

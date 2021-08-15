@@ -350,12 +350,13 @@ namespace Lightning.Core.API
             {
                 // Todo: not get stuff every frame :D
                 Brush Brush = (Brush)GIR.Instance;
-
+                
                 return Brush; 
             }
             
         }
 
+        
 
     }
 }

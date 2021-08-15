@@ -89,6 +89,8 @@ namespace Lightning.Core.API
                             }
 
                             // hackish
+                            Brush CurBrush = Object.GetBrush(); 
+                            
                             Object.Position.X += Object.Velocity.X;
 
                             if (Math.Abs(Object.Velocity.Y) > Math.Abs(PS.EpsilonVelocity))

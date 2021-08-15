@@ -3,8 +3,8 @@
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-08-09 20:39:30</LastModifiedDate>
-    <RevisionID>56</RevisionID>
+    <LastModifiedDate>2021-08-15 15:31:29</LastModifiedDate>
+    <RevisionID>70</RevisionID>
     <Version />
   </Metadata>
   <Settings>
@@ -85,8 +85,8 @@
     </Rectangle>
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     
-    <PhysicalObject Name="Block1" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0">
-      <ImageBrush Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" ZIndex="0" Name="Block1_Texture" Position="430,300" Size="200,150" />
+    <PhysicalObject Name="Block1" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0" Position="430,300" Size="200,150">
+      <ImageBrush Path="Content\Images\test_texture_small.png" TextureDisplayMode="Tile" ZIndex="0" Name="Block1_Texture" Position="60,60" Size="200,150"/>
     </PhysicalObject>
     <PhysicalObject CanCollide="False" Position="60,60" Size="200,150" ZIndex="0" Name="Block2" PhysicsEnabled="True" Mass="0">
       <ImageBrush Path="Content\Images\test_texture_small2.png" TextureDisplayMode="Tile" CanCollide="False" ZIndex="0" Name="Block2_Texture" />
@@ -95,9 +95,11 @@
     <Script Content="print('i am die');&#xD;&#xA;ScriptingTest.ScTest();&#xD;&#xA;" Name="WsTestScript" />
     <Sound Is3D="True" TargetObject="Camera1" Path="Content\Sounds\test.mp3" Repeat="True" Volume="1" Radius="20" CanCollide="False" Position="-100,0" ZIndex="0" Name="Instance" />
     <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0" LoopCount="5"></Sound>
+
     <Humanoid Position="450,150" Size="42,68" CanCollide="True" Name="Trincid2021TestOnly" DisplayHealthBar="True" Health="95" MaxHealth="100" PhysicsEnabled="True" Mass="0">
       <ImageBrush Path="Content\Textures\HumanoidTest\TrincidIdleL.png" Name="Trincid2021TestOnly_StandLeft"/>
     </Humanoid>
+
     <Sky Name="SkyBG" ForceToBack="True">
       <ImageBrush Path="Content\Textures\Clouds.png"></ImageBrush>
     </Sky>
@@ -122,7 +124,7 @@
             <MenuItem Position="0,460" Content="Test" BackgroundColour="255,255,0,0" Colour="255,0,0,0" Size="50,20" FontFamily="Arial.18pt" FontSize="18"></MenuItem>
           </MenuItem>
         </Menu>
-        <Button Content="I am an automatically resizing button using tnos of temporary code because I forgot about class hierarchy and did buttons before textboxes OOPS" Position="400,150" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" BorderColour="255,0,0,255" BorderWidth="3" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+        <Button Content="I am an automatically resizing button using tons of temporary code because I forgot about class hierarchy and did buttons before textboxes OOPS" Position="400,150" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" BorderColour="255,0,0,255" BorderWidth="3" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
         <Button Content="I am a button" Position="400,202" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Centre" VerticalAlignment="Top"></Button>
         <Button Content="I am a button" Position="400,254" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Right" VerticalAlignment="Top"></Button>
         <Button Content="I am a button" Position="400,306" Colour="255,255,255,255" BackgroundColour="255,255,0,0" Fill="True" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
@@ -133,10 +135,10 @@
     </GuiRoot>
 
     <PhysicalObject Name="AnimationTest" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0">
-      <AnimatedImageBrush Size="600,400" Position="850,0">
+      <AnimatedImageBrush Size="300,200" Position="700,0">
         <Animation Type="Continuous" Active="True">
-          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF0.png" DefaultTiming="500"></AnimationFrame>
-          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF1.png" DefaultTiming="500"></AnimationFrame>
+          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF0.png" DefaultTiming="32"></AnimationFrame>
+          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF1.png" DefaultTiming="32"></AnimationFrame>
         </Animation>
       </AnimatedImageBrush>
     </PhysicalObject>

@@ -65,19 +65,14 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        Brush GTORBrush = GTOR.TargetObject.GetBrush();
+                        
+                        if (GuiElement.Position == null
+                        || GuiElement.Size == null) continue;
 
-                        if (GTORBrush == null)
-                        {
-                            if (GuiElement.Position.X > GTOR.TargetObject.Position.X || GuiElement.Position.X < (GTOR.TargetObject.Position.X + GTOR.TargetObject.Size.X)) GuiElement.Position.X = GTOR.TargetObject.Position.X;
-                            if (GuiElement.Position.Y > GTOR.TargetObject.Position.Y || GuiElement.Position.Y < (GTOR.TargetObject.Position.Y + GTOR.TargetObject.Size.Y)) GuiElement.Position.Y = GTOR.TargetObject.Position.Y;
-                        }
-                        else
-                        {
-                            if (GuiElement.Position.X > GTORBrush.Position.X || GuiElement.Position.X < (GTORBrush.Position.X + GTORBrush.Size.X)) GuiElement.Position.X = GTORBrush.Position.X;
-                            if (GuiElement.Position.Y > GTORBrush.Position.Y || GuiElement.Position.Y < (GTORBrush.Position.Y + GTORBrush.Size.Y)) GuiElement.Position.Y = GTORBrush.Position.Y;
-                        }
+                        if (GuiElement.Position.X > GTOR.TargetObject.Position.X || GuiElement.Position.X < (GTOR.TargetObject.Position.X + GTOR.TargetObject.Size.X)) GuiElement.Position.X = GTOR.TargetObject.Position.X;
+                        if (GuiElement.Position.Y > GTOR.TargetObject.Position.Y || GuiElement.Position.Y < (GTOR.TargetObject.Position.Y + GTOR.TargetObject.Size.Y)) GuiElement.Position.Y = GTOR.TargetObject.Position.Y;
 
+                        
                         GTOR.Successful = true;
                         SURFACEGUI_INITIALISED = true;
                         return;
