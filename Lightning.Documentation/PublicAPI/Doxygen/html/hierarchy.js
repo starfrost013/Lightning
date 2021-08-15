@@ -27,8 +27,12 @@ var hierarchy =
           [ "Lightning.Core.API.GameSetting", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_setting.html", null ]
         ] ],
         [ "Lightning.Core.API.PhysicalObject", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html", [
+          [ "Lightning.Core.API.Animation", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation.html", null ],
           [ "Lightning.Core.API.Brush", "class_lightning_1_1_core_1_1_a_p_i_1_1_brush.html", [
-            [ "Lightning.Core.API.ImageBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush.html", null ],
+            [ "Lightning.Core.API.ImageBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush.html", [
+              [ "Lightning.Core.API.AnimatedImageBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush.html", null ],
+              [ "Lightning.Core.API.AnimationFrame", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame.html", null ]
+            ] ],
             [ "Lightning.Core.API.LinearGradientBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_linear_gradient_brush.html", null ],
             [ "Lightning.Core.API.SolidColourBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_solid_colour_brush.html", null ]
           ] ],

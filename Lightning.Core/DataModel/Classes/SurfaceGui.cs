@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// SurfaceGui
     /// 
-    /// July 5, 2021 00:06
+    /// July 5, 2021 00:06 (modified August 15, 2021)
     /// 
     /// Defines a GUI that is attached and displays on a specific object.
     /// </summary>

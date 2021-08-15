@@ -50,9 +50,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1f931b895045d6856316045a66963430",
-"class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a80746ad74c7357c399b788fbc975d939",
-"namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a1b83331ee5b0015c375e6542628088a8"
+"class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush.html",
+"class_lightning_1_1_core_1_1_a_p_i_1_1_s_d_l_initialisation_result.html#aae1b7e453328f0cfde9706980aceed97",
+"namespace_lightning.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

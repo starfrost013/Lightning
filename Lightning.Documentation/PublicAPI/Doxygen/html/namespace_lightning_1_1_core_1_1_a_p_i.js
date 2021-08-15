@@ -1,6 +1,9 @@
 var namespace_lightning_1_1_core_1_1_a_p_i =
 [
     [ "AABB", "class_lightning_1_1_core_1_1_a_p_i_1_1_a_a_b_b.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_a_a_b_b" ],
+    [ "AnimatedImageBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush" ],
+    [ "Animation", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation" ],
+    [ "AnimationFrame", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame" ],
     [ "Brush", "class_lightning_1_1_core_1_1_a_p_i_1_1_brush.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_brush" ],
     [ "Button", "class_lightning_1_1_core_1_1_a_p_i_1_1_button.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_button" ],
     [ "Camera", "class_lightning_1_1_core_1_1_a_p_i_1_1_camera.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_camera" ],
@@ -116,6 +119,11 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
       [ "Right", "namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a92b09c7c48c520c3c55e497875da437c", null ],
       [ "Bottom", "namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a2ad9d63b69c4a10a5cc9cad923133bc4", null ],
       [ "Justify", "namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a4b425d212a2e7b36c38703bfdcd57823", null ]
+    ] ],
+    [ "AnimationType", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143", [
+      [ "Continuous", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a535863a82f163709557e59e2eb8139a7", null ],
+      [ "OnTrigger", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a6028b26cf50f41160a1a76e506464f6f", null ],
+      [ "Custom", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a90589c47f06eb971d548591f23c285af", null ]
     ] ],
     [ "CameraType", "namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902d", [
       [ "Free", "namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902dab24ce0cd392a5b0b8dedc66c25213594", null ],

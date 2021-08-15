@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.306.21225</AssemblyVersion>
-    <FileVersion>1.0.306.21225</FileVersion>
+    <AssemblyVersion>0.3.864.21227</AssemblyVersion>
+    <FileVersion>0.3.864.21227</FileVersion>
     <PackageId>Lightning.Utilities</PackageId>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <Version>0.3.795</Version>
     <Description>Standard utility library for Lightning / NuRender / Sledgehammer</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

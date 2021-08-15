@@ -17,12 +17,25 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "Animation";
 
+        internal override InstanceTags Attributes => base.Attributes | InstanceTags.ParentCanBeNull;
+
         public AnimationType Type { get; set; }
 
         /// <summary>
         /// Determines if this animation is active.
         /// </summary>
         public bool Active { get; set; }
+
+        /// <summary>
+        /// INTERNAL: Timer used for animations.
+        /// </summary>
+        internal Stopwatch AnimationTimer { get; set; }
+
+        public override void OnCreate()
+        {
+            AnimationTimer = new Stopwatch(); 
+        }
+
         /// <summary>
         /// INTERNAL: Gets the total time (int)
         /// </summary>
@@ -97,6 +110,6 @@ namespace Lightning.Core.API
             return null; // yes
         }
 
-        internal Stopwatch AnimationTimer { get; set; }
+
     }
 }

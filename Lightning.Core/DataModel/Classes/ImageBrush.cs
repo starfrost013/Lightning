@@ -8,20 +8,18 @@ namespace Lightning.Core.API
     /// <summary>
     /// ImageBrush (Texture 2.0)
     /// 
-    /// August 7, 2021 (original: April 9, 2021)
+    /// August 7, 2021 (original: April 9, 2021, modified August 15, 2021)
     /// 
-    /// Defines an image that can be displayed on the screen. Non-animated 
+    /// Defines a brush used for non-animated images that can be displayed on the screen.
     /// </summary>
     public class ImageBrush : Brush
     {
         /// <summary>
-        /// <inheritdoc/> -- set to Texture.
+        /// <inheritdoc/> -- set to ImageBrush.
         /// </summary>
         internal override string ClassName => "ImageBrush";
 
         internal override InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable | InstanceTags.ParentCanBeNull); }
-
-
 
 
         /// <summary>
@@ -57,6 +55,7 @@ namespace Lightning.Core.API
             }
         }
 
+
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             base.PO_Init();
@@ -86,6 +85,7 @@ namespace Lightning.Core.API
             TEXTURE_INITIALISED = true;
             return; 
         }
+
 
         private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
@@ -132,11 +132,11 @@ namespace Lightning.Core.API
             SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
 
-        private void SnapToParent()
+        internal void SnapToParent()
         {
             // Very temporary code.
             // In the future you will only set these on the brushes,
-            // this is temp until Aug 20 2021
+            // this is temp until ~Aug 20 2021
             PhysicalObject PParent = (PhysicalObject)Parent;
             if (PParent.Position != null) Position = PParent.Position;
             if (PParent.Size != null) Size = PParent.Size;

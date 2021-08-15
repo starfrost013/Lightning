@@ -4,6 +4,9 @@ var annotated_dup =
       [ "Core", "namespace_lightning_1_1_core.html", [
         [ "API", "namespace_lightning_1_1_core_1_1_a_p_i.html", [
           [ "AABB", "class_lightning_1_1_core_1_1_a_p_i_1_1_a_a_b_b.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_a_a_b_b" ],
+          [ "AnimatedImageBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush" ],
+          [ "Animation", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation" ],
+          [ "AnimationFrame", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame" ],
           [ "Brush", "class_lightning_1_1_core_1_1_a_p_i_1_1_brush.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_brush" ],
           [ "Button", "class_lightning_1_1_core_1_1_a_p_i_1_1_button.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_button" ],
           [ "Camera", "class_lightning_1_1_core_1_1_a_p_i_1_1_camera.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_camera" ],

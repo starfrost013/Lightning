@@ -141,7 +141,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "PhysicsStatePositionalCorrectionSlopMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 122 });
          ErrorManager.RegisterError( new Error { Name = "AttemptedToSetInvalidPropertyException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 123 });
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGradientStopsException", Description = "Failed to obtain list of GradientStops!", Severity = MessageSeverity.FatalError, Id = 124 }); // nonfatal?
-         ErrorManager.RegisterError( new Error { Name = "GradientMustHaveAboveZeroStopsException", Description = "A Gradient must have above zero stomps!", Severity = MessageSeverity.Error, Id = 125 });
+         ErrorManager.RegisterError( new Error { Name = "GradientMustHaveAboveZeroStopsException", Description = "A Gradient must have above zero stops!", Severity = MessageSeverity.Error, Id = 125 });
          ErrorManager.RegisterError( new Error { Name = "InvalidGradientException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 126 });
          ErrorManager.RegisterError( new Error { Name = "BrushMustHavePhysicalObjectParentException", Description = "Brushes require a PhysicalObject as their parent!", Severity = MessageSeverity.Error, Id = 127 });
          ErrorManager.RegisterError( new Error { Name = "GradientParentMustHavePositionException", Description = "Gradients require that their parent has a set position and size!", Severity = MessageSeverity.Error, Id = 127 });
@@ -153,6 +153,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAcquireInvalidAnimationFrameException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 133 });
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationsException", Description = "Failed to acquire a list of animations!", Severity = MessageSeverity.FatalError, Id = 134 });
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationFramesException", Description = "Failed to acquire a list of animation frames!", Severity = MessageSeverity.FatalError, Id = 135 }); ;
+            ErrorManager.RegisterError(new Error { Name = "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException", Description = "AnimationFrames must be a child of an Animation which is a part of an AnimatedImageBrush! This AnimationFrame will be destroyed.", Severity = MessageSeverity.Warning, Id = 136 });
      }
   }
 }

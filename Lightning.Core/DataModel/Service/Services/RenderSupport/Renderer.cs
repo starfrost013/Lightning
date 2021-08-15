@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Renderer (Non-DataModel)
     /// 
-    /// April 9, 2021 (modified July 13, 2021: Add current blending mode)
+    /// April 9, 2021 (modified August 15, 2021: Implement animation cache)
     /// 
     /// Holds information about the renderer and SDL2. 
     /// </summary>
@@ -52,6 +52,7 @@ namespace Lightning.Core.API
         /// A cache of textures.
         /// </summary>
         public List<ImageBrush> TextureCache { get; set; }
+
 
         /// <summary>
         /// The window size.

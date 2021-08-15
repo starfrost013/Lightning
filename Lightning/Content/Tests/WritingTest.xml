@@ -131,7 +131,14 @@
         <CheckBox Content="I am a checkbox" Position="400,450" Colour="255,255,255,255" Checked="True" BackgroundColour="255,47,47,255" Fill="True" HorizontalAlignment="Left" VerticalAlignment="Centre" Size="100,100" FontFamily="Arial.18pt"></CheckBox>
       </SurfaceGui>
     </GuiRoot>
-    
-    
+
+    <PhysicalObject Name="AnimationTest" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0">
+      <AnimatedImageBrush Size="600,400" Position="850,0">
+        <Animation Type="Continuous" Active="True">
+          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF0.png" DefaultTiming="500"></AnimationFrame>
+          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF1.png" DefaultTiming="500"></AnimationFrame>
+        </Animation>
+      </AnimatedImageBrush>
+    </PhysicalObject>
   </Workspace>
 </Lightning>

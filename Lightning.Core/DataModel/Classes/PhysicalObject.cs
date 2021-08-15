@@ -351,24 +351,11 @@ namespace Lightning.Core.API
                 // Todo: not get stuff every frame :D
                 Brush Brush = (Brush)GIR.Instance;
 
-                if (!Brush.BRUSH_INITIALISED) Init_GetBrush_BrushSetup(Brush);
                 return Brush; 
             }
             
         }
 
-        private void Init_GetBrush_BrushSetup(Brush Brush)
-        {
-            
-            Brush.Position = Position;
-            Brush.Size = Size;
-            Brush.Colour = Colour;
-            Brush.BackgroundColour = BackgroundColour;
-            Brush.BorderColour = BorderColour;
-            Brush.BorderThickness = BorderThickness;
-            Brush.BorderFill = BorderFill; 
-            Brush.BRUSH_INITIALISED = true;
-        }
 
     }
 }

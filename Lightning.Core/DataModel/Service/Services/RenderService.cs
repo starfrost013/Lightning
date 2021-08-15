@@ -30,6 +30,7 @@ namespace Lightning.Core.API
     /// 2021-07-13: Add blend mode changing, various other stuff
     /// 2021-07-19: Implemented many events
     /// 2021-07-21: KeyDown now an event
+    /// 2021-08-15: Animation loading, even MORE events
     /// 
     /// </summary>
     public class RenderService : Service
@@ -96,6 +97,8 @@ namespace Lightning.Core.API
 
         private SDLInitialisationResult OnStart_InitSDLWindow()
         {
+            Logging.Log(ClassName, "Preparing to create SDL window...");
+
             SDLInitialisationResult SDIR = new SDLInitialisationResult();
 
             Workspace Ws = DataModel.GetWorkspace();
@@ -157,7 +160,8 @@ namespace Lightning.Core.API
                         Fullscreen = (bool)GGSR_FullScreen.Setting.SettingValue;
                     }
 
-                    Logging.Log("Initialising SDL Window...");
+                    Logging.Log(ClassName, "Initialising renderer...");
+
                     SDIR.Renderer = new Renderer();
 
                     if (WindowWidth == 0 || WindowHeight == 0)
@@ -168,7 +172,8 @@ namespace Lightning.Core.API
                     {
                         SDIR.Renderer.WindowSize = new Vector2(WindowWidth, WindowHeight);
                     }
-                    
+
+                    Logging.Log(ClassName, "Calling SDL_CreateWindow to initialise window...");
 
                     // Create a fullscreen window if fullscreen is false.
                     if (Fullscreen)
@@ -188,6 +193,8 @@ namespace Lightning.Core.API
                     }
                     else
                     {
+                        Logging.Log(ClassName, "Successfully created window! Calling SDL_CreateRenderer to initialise renderer...");
+
                         SDIR.Renderer.RendererPtr = SDL.SDL_CreateRenderer(SDIR.Renderer.Window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
 
                         if (SDIR.Renderer.RendererPtr == IntPtr.Zero)
@@ -434,37 +441,6 @@ namespace Lightning.Core.API
             return ObjectsToLoad;
 
         }
-
-        /*
-         * 
-         * As of August 7, 2021, textures now load themselves.
-        private void LoadObjectTextures(List<PhysicalObject> ObjectsToLoad)
-        {
-            // The goal of this method is to load the textures for each object.
-            // Additionally, the goal is to only load each texture once. 
-            foreach (PhysicalObject PO in ObjectsToLoad)
-            {
-                GetInstanceResult GIR = PO.GetFirstChildOfType("Texture");
-
-                if (!GIR.Successful)
-                {
-                    // these don't have a texture *as a child* (physicalobject contains texture)
-                    continue;
-                }
-                else
-                {
-                    Texture Tx = (Texture)GIR.Instance;
-
-                    string TexturePath = PathUtil.GetXmlPath(DataModelDeserialiser.LASTXML_PATH, Tx.Path);
-
-                    Tx.Path = TexturePath;
-
-                    LoadTexture(PO, Tx);
-                    
-                }
-            }
-        }
-        */ 
 
         private void LoadTexture(PhysicalObject PO, ImageBrush Tx)
         {

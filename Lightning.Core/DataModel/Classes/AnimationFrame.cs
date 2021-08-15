@@ -8,67 +8,65 @@ namespace Lightning.Core.API
     /// <summary>
     /// AnimationFrame
     /// 
-    /// August 10, 2021
+    /// August 10, 2021 (modified August 15, 2021: sets position to parent)
     /// 
     /// Defines an animation frame
     /// </summary>
-    public class AnimationFrame : PhysicalObject // may change
+    public class AnimationFrame : ImageBrush
     {
         internal override string ClassName => "AnimationFrame";
-
-        /// <summary>
-        /// Path to the animation.
-        /// </summary>
-        public string Path { get; set; }
 
         /// <summary>
         /// Default time this animation will be played (milliseconds). CAN BE CHANGED BY SCRIPTING!
         /// </summary>
         public int DefaultTiming { get; set; }
 
-        private bool NotCameraAware { get; set; }
-
+        private bool ANIMATIONFRAME_INITIALISED { get; set; }
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
-            // requisite error checking already done
-
-            // create the source rect
-            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
-
-            // x,y = point on texture, w,h = size to copy
-            SourceRect.x = 0;
-            SourceRect.y = 0;
-
-            SourceRect.w = (int)Size.X;
-            SourceRect.h = (int)Size.Y;
-
-            SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
-
-
-            if (SDL_Renderer.CCameraPosition != null && !NotCameraAware)
+            if (!ANIMATIONFRAME_INITIALISED)
             {
-                DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                AnimFrame_Init();
             }
             else
             {
-                DestinationRect.x = (int)Position.X;
-                DestinationRect.y = (int)Position.Y;
+                base.Render(SDL_Renderer, Tx); // call base imagebrush renderer
             }
+        }
 
-            if (DisplayViewport == null)
+        private void AnimFrame_Init()
+        {
+            // kind of hacky i guess?
+            Instance ParentOfParent = Parent.Parent;
+
+            if (ParentOfParent == null)
             {
-                DestinationRect.w = (int)Size.X;
-                DestinationRect.h = (int)Size.Y;
+                ErrorManager.ThrowError(ClassName, "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException");
+                Parent.RemoveChild(this); // destroy this object
+                return;
             }
             else
             {
-                DestinationRect.w = (int)DisplayViewport.X;
-                DestinationRect.h = (int)DisplayViewport.Y;
-            }
+                Type POPType = ParentOfParent.GetType();
 
-            SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
+                if (POPType != typeof(AnimatedImageBrush))
+                {
+                    ErrorManager.ThrowError(ClassName, "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException");
+                    Parent.RemoveChild(this);
+                    return; 
+                }
+                else
+                {
+                    AnimatedImageBrush AIB = (AnimatedImageBrush)ParentOfParent;
+
+                    if (Position == null && AIB.Position != null) Position = AIB.Position;
+                    if (Size == null && AIB.Size != null) Size = AIB.Size;
+
+                    ANIMATIONFRAME_INITIALISED = true;
+                    return;
+                    
+                }
+            }
         }
     }
 }

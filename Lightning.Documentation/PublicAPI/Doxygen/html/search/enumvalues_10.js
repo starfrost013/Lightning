@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['workspace_596',['Workspace',['../namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72ca03a21915504df93cf5dba0636080f62e',1,'Lightning::Core::API']]]
+  ['unrecoverablecrash_610',['UnrecoverableCrash',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eab1dd91df5973f5e94f54a7ba9ddbe314',1,'Lightning::Core::API']]],
+  ['usescustomrenderpath_611',['UsesCustomRenderPath',['../namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa5023442513412b39075bd52607b24fff',1,'Lightning::Core::API']]]
 ];

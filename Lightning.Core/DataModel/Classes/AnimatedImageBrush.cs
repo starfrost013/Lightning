@@ -8,25 +8,20 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// ImageBrush (Texture 2.0)
+    /// AnimatedImageBrush
     /// 
-    /// August 7, 2021 (original: April 9, 2021, modified August 10, 2021)
+    /// August 10, 2021 (modified August 15, 2021)
     /// 
-    /// Defines an image that can be displayed on the screen. Non-animated 
+    /// Defines a brush used for animated images. Contains a list of <see cref="Animation"/>s.
     /// </summary>
     public class AnimatedImageBrush : ImageBrush
     {
         /// <summary>
-        /// <inheritdoc/> -- set to Texture.
+        /// <inheritdoc/> -- set to AnimatedImageBrush.
         /// </summary>
         internal override string ClassName => "AnimatedImageBrush";
 
         internal override InstanceTags Attributes { get => (InstanceTags.Instantiable | InstanceTags.Archivable | InstanceTags.Serialisable | InstanceTags.ShownInIDE | InstanceTags.Destroyable | InstanceTags.ParentCanBeNull); }
-
-        /// <summary>
-        /// Private: Current animation frame
-        /// </summary>
-        private int CurrentAnimationFrame { get; set; }
 
         /// <summary>
         /// The name of the current animation.
@@ -62,14 +57,7 @@ namespace Lightning.Core.API
 
         internal void Anim_Init()
         {
-            ServiceNotification SN = new ServiceNotification();
-            SN.ServiceClassName = "RenderService";
-            SN.NotificationType = ServiceNotificationType.MessageSend;
-            SN.Data.Name = "LoadAnimation";
-            SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
-            SN.Data.Data.Add(this);
-            
-            ServiceNotifier.NotifySCM(SN);
+            LoadAllAnimations();
             TEXTURE_INITIALISED = true;
             return; 
         }
@@ -143,7 +131,8 @@ namespace Lightning.Core.API
                                 AF = Frames[0];
                             }
 
-                            AF.Render(SDL_Renderer, Tx);
+                            // temporary hack code until render refactoring done
+                            AF.Render(SDL_Renderer, AF);
 
 
 
@@ -158,8 +147,31 @@ namespace Lightning.Core.API
             SnapToParent();
         }
 
-        private void PlayAnimation(Renderer SDL_Renderer, ImageBrush Tx)
+        /// <summary>
+        /// Loads all animations for this AnimatedImageBrush.
+        /// </summary>
+        /// <param name="ImgBrush"></param>
+        private void LoadAllAnimations()
         {
+            List<Animation> Animations = GetAnimations();
+
+            foreach (Animation Animation in Animations)
+            {
+                List<AnimationFrame> Frames = Animation.GetFrames();
+
+                foreach (AnimationFrame Frame in Frames)
+                {
+                    // Load each texture
+                    ServiceNotification SN = new ServiceNotification();
+                    SN.ServiceClassName = "RenderService";
+                    SN.NotificationType = ServiceNotificationType.MessageSend;
+                    SN.Data.Name = "LoadTexture";
+                    SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
+                    SN.Data.Data.Add(Frame);
+
+                    ServiceNotifier.NotifySCM(SN);
+                }
+            }
         }
 
         internal List<Animation> GetAnimations()
@@ -182,17 +194,5 @@ namespace Lightning.Core.API
 
         }
 
-        private void SnapToParent()
-        {
-            // TEMP code
-            PhysicalObject PParent = (PhysicalObject)Parent;
-            Position = PParent.Position;
-            Size = PParent.Size;
-            BorderColour = PParent.BorderColour;
-            BackgroundColour = PParent.BackgroundColour;
-            DisplayViewport = PParent.DisplayViewport;
-            Colour = PParent.Colour;
-
-        }
     }
 }
