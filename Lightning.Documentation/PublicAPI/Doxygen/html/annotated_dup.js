@@ -33,6 +33,7 @@ var annotated_dup =
           [ "KeyEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args" ],
           [ "MouseEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args" ],
           [ "CheckedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args" ],
+          [ "RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args" ],
           [ "ShutdownEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args" ],
           [ "Font", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_font" ],
           [ "GameMetadata", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata" ],

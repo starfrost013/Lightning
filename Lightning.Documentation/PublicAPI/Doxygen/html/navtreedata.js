@@ -51,8 +51,8 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a8feeacd18e07f67714d04036a3f08231",
-"class_lightning_1_1_core_1_1_a_p_i_1_1_renderer.html#abaa5cf70fcbaa7010ea4c0637c8b8c25",
-"functions_u.html"
+"class_lightning_1_1_core_1_1_a_p_i_1_1_renderer.html",
+"functions_prop.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

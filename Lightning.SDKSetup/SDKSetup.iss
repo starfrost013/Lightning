@@ -17,7 +17,7 @@
 
 
 ; Comment out this line to build a runtime installer (TODO: User-selectable components)
-;#define INSTALLPACKAGE_INSTALL_SDK
+#define INSTALLPACKAGE_INSTALL_SDK
 
 ; Basic definitions
 #ifdef INSTALLPACKAGE_INSTALL_SDK
@@ -27,7 +27,7 @@
 #define MyAppName "Lightning Runtime"
 #define PolarisAppName "THIS SHOULD NOT HAVE BEEN INSTALLED - THERE IS A BUG WITH THE INSTALLER"
 #endif
-#define MyAppVersion "0.3.878.Debug.Win64.20210815-1552" ; set to version when a version is there
+#define MyAppVersion "0.3.885.Debug.Win64.20210817-1611" ; set to version when a version is there
 #define MyAppPublisher "starfrost/Lightning Dev Team"
 #define MyAppExeName "Lightning.exe"
 #define PolarisAppExeName "Polaris.exe"

@@ -127,6 +127,7 @@ var hierarchy =
     [ "Lightning.Core.API.MenuState", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_state.html", null ],
     [ "Lightning.Core.API.PhysicsState", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html", null ],
     [ "Lightning.Core.API.Renderer", "class_lightning_1_1_core_1_1_a_p_i_1_1_renderer.html", null ],
+    [ "Lightning.Core.API.RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", null ],
     [ "Lightning.Core.API.ScriptInterpreterState", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter_state.html", null ],
     [ "Lightning.Core.API.ScriptMethod", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method.html", null ],
     [ "Lightning.Core.API.ScriptMethodParameter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method_parameter.html", null ],

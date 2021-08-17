@@ -32,6 +32,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object =
     [ "OnMouseEnter", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a25f8e0facb17a8dae8288a44a5681705", null ],
     [ "OnMouseLeave", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a171bfcb303905b9ead21589622e0dbbb", null ],
     [ "OnMouseUp", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a4096772773a643abfd23a0401686a1cf", null ],
+    [ "OnRender", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a371f4a51e691d5d2f9b6c19ff64648cb", null ],
     [ "OnShutdown", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a021e203e6cd9e7051cf795c74e79f6d1", null ],
     [ "PHYSICALOBJECT_INITIALISED", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#ad18d16c6faba00683af0dc56d1bfa432", null ],
     [ "PhysicsController", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a15fe1d1745f072c2bb8886a05a3b234d", null ],

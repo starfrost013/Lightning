@@ -181,13 +181,17 @@ namespace Lightning.Core.API
                 // DRAW IT
                 for (int i = 0; i < TileCount.X; i++)
                 {
-                    DstRect.x += (int)(Size.X / TileCount.X) * i + 1;
+                    DstRect.x = (int)Position.X + (int)(Size.X / TileCount.X) * (i + 1);
+
+                    if (!NotCameraAware) DstRect.x -= (int)SDL_Renderer.CCameraPosition.X;
 
                     SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
-                    
+
                     for (int j = 0; j < TileCount.Y; j++)
                     {
-                        DstRect.x += (int)(Size.Y / TileCount.Y) * j + 1;
+                        DstRect.y = (int)Position.Y + (int)(Size.Y / TileCount.Y) * j + 1;
+
+                        if (!NotCameraAware) DstRect.y -= (int)SDL_Renderer.CCameraPosition.Y;
 
                         SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
                     }

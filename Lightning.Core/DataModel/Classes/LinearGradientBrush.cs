@@ -155,29 +155,33 @@ namespace Lightning.Core.API
 
                         Color4 CDiff = C4B - C4A;
 
-                        for (double j = CurPosition.X; j < GStopPlusOnePos.X; j++)
+                        double j = CurPosition.X;
+                        double k = CurPosition.Y;
+
+                        for (j = CurPosition.X; j <= GStopPlusOnePos.X; j++)
                         {
-                            //double Percentage = (j - CurPosition.X) * (j - GStopPlusOnePos.X);
-                            double Percentage = (j - CurPosition.X) / Math.Abs(j - GStopPlusOnePos.X);
+
+                            double Percentage = (j - CurPosition.X) / Math.Abs(GStopPlusOnePos.X - CurPosition.X);
+
+                            if (Percentage > 1) break; 
 
                             Color4 FinalColour = C4A + (CDiff * Percentage);
                             SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColour.R, FinalColour.G, FinalColour.B, FinalColour.A);
 
-
-                            SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)j, (int)CurPosition.Y);
-
-                            for (double k = CurPosition.Y; k < GStopPlusOnePos.Y; k++)
+                            for (k = CurPosition.Y; k <= GStopPlusOnePos.Y; k++)
                             {
-                                //double YPercentage = (k - CurPosition.Y) * (k - GStopPlusOnePos.Y);
-                                double YPercentage = (k - CurPosition.Y) / Math.Abs(k - GStopPlusOnePos.Y);
+
+                                double YPercentage = (k - CurPosition.Y) / Math.Abs(GStopPlusOnePos.Y - CurPosition.Y);
+
+                                if (YPercentage > 1) break;
+
                                 Color4 FinalColourY = C4A + (CDiff * YPercentage);
 
                                 SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColourY.R, FinalColourY.G, FinalColourY.B, FinalColourY.A);
 
 
-                                SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)CurPosition.X, (int)k);
+                                SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)j, (int)k);
                             }
-
 
                         }
 

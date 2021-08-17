@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning Game Engine
-   &#160;<span id="projectnumber">Nightly 8/15 - 0.3.878 - Experimental SDK</span>
+   &#160;<span id="projectnumber">Nightly 8/17 - 0.3.885 - Experimental SDK</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -193,6 +193,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html">CheckedEventArgs</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html" title="CheckedEventArgs">CheckedEventArgs</a>  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html">RenderEventArgs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html" title="RenderEventArgs">RenderEventArgs</a>  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html">ShutdownEventArgs</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html" title="ShutdownEventArgs">ShutdownEventArgs</a>  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -274,7 +277,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_physics_controller_result.html" title="GetPhysicsControllerResult">GetPhysicsControllerResult</a>  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_physics_controller_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html">Sky</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html" title="Sky">Sky</a>  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html" title="Sky (needs to be rewritten)">Sky</a> (needs to be rewritten)  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_solid_colour_brush.html">SolidColourBrush</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_solid_colour_brush.html" title="SolidColourBrush">SolidColourBrush</a>  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_solid_colour_brush.html#details">More...</a><br /></td></tr>
@@ -438,108 +441,163 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ad72aa347d6c82d082cc84442de5ad72c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72c">DDMSComponents</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72cace21470ab49d1d1976bc3dc72438c183">Metadata</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72caf4f70727dc34561dfde1a3c529b6205c">Settings</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72ca03a21915504df93cf5dba0636080f62e">Workspace</a> = 2
+<tr class="memitem:ad72aa347d6c82d082cc84442de5ad72c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72c">DDMSComponents</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72cace21470ab49d1d1976bc3dc72438c183">Metadata</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72caf4f70727dc34561dfde1a3c529b6205c">Settings</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72ca03a21915504df93cf5dba0636080f62e">Workspace</a> = 2
+<br />
  }</td></tr>
 <tr class="memdesc:ad72aa347d6c82d082cc84442de5ad72c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic Datamodel Serialiser (DDMS)  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72c">More...</a><br /></td></tr>
 <tr class="separator:ad72aa347d6c82d082cc84442de5ad72c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e93cb03995573e974e673bfe9977d84"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84">Alignment</a> { <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a6adf97f83acf6453d4a6a4b1070f3754">None</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a945d5e233cf7d6240f6b783b36a374ff">Left</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84aa4ffdcf0dc1f31b9acaf295d75b51d00">Top</a> = Left
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a1b83331ee5b0015c375e6542628088a8">Centre</a> = 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a945d5e233cf7d6240f6b783b36a374ff">Left</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84aa4ffdcf0dc1f31b9acaf295d75b51d00">Top</a> = Left
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a1b83331ee5b0015c375e6542628088a8">Centre</a> = 2
 , <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a92b09c7c48c520c3c55e497875da437c">Right</a> = 3
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a2ad9d63b69c4a10a5cc9cad923133bc4">Bottom</a> = Right
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a4b425d212a2e7b36c38703bfdcd57823">Justify</a> = 4
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a2ad9d63b69c4a10a5cc9cad923133bc4">Bottom</a> = Right
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84a4b425d212a2e7b36c38703bfdcd57823">Justify</a> = 4
 <br />
  }</td></tr>
 <tr class="memdesc:a5e93cb03995573e974e673bfe9977d84"><td class="mdescLeft">&#160;</td><td class="mdescRight">TextAlignment  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84">More...</a><br /></td></tr>
 <tr class="separator:a5e93cb03995573e974e673bfe9977d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a101f3f2d2125bfeb12d81066dce03143"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143">AnimationType</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a535863a82f163709557e59e2eb8139a7">Continuous</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a6028b26cf50f41160a1a76e506464f6f">OnTrigger</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a90589c47f06eb971d548591f23c285af">Custom</a> = 2
+<tr class="memitem:a101f3f2d2125bfeb12d81066dce03143"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143">AnimationType</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a535863a82f163709557e59e2eb8139a7">Continuous</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a6028b26cf50f41160a1a76e506464f6f">OnTrigger</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a90589c47f06eb971d548591f23c285af">Custom</a> = 2
+<br />
  }</td></tr>
 <tr class="memdesc:a101f3f2d2125bfeb12d81066dce03143"><td class="mdescLeft">&#160;</td><td class="mdescRight">AnimationType  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143">More...</a><br /></td></tr>
 <tr class="separator:a101f3f2d2125bfeb12d81066dce03143"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a681460ce263c5627f07bad469710902d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902d">CameraType</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902dab24ce0cd392a5b0b8dedc66c25213594">Free</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902da681f034493b4030141c824aae39a4b15">FollowObject</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902dabdd2fe13f9e67f04774fb53ea3924446">ChaseObject</a> = 2
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902da4457d440870ad6d42bab9082d9bf9b61">Fixed</a> = 3
+<tr class="memitem:a681460ce263c5627f07bad469710902d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902d">CameraType</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902dab24ce0cd392a5b0b8dedc66c25213594">Free</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902da681f034493b4030141c824aae39a4b15">FollowObject</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902dabdd2fe13f9e67f04774fb53ea3924446">ChaseObject</a> = 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902da4457d440870ad6d42bab9082d9bf9b61">Fixed</a> = 3
+<br />
  }</td></tr>
 <tr class="memdesc:a681460ce263c5627f07bad469710902d"><td class="mdescLeft">&#160;</td><td class="mdescRight">CameraType  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902d">More...</a><br /></td></tr>
 <tr class="separator:a681460ce263c5627f07bad469710902d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2636231c97c833e78b10d232325cf06e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06e">GravityState</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06ea960b44c579bc2f6818d2daaf9e4c16f0">Normal</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06ea030aa94015bd11d183b897ddb541e4e3">Reversed</a> = 1
+<tr class="memitem:a2636231c97c833e78b10d232325cf06e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06e">GravityState</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06ea960b44c579bc2f6818d2daaf9e4c16f0">Normal</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06ea030aa94015bd11d183b897ddb541e4e3">Reversed</a> = 1
+<br />
  }</td></tr>
 <tr class="memdesc:a2636231c97c833e78b10d232325cf06e"><td class="mdescLeft">&#160;</td><td class="mdescRight">GravityState  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06e">More...</a><br /></td></tr>
 <tr class="separator:a2636231c97c833e78b10d232325cf06e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81f9d1923363754ef8e36ee6f2cd6273"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273">RenderingBlendMode</a> { <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a6adf97f83acf6453d4a6a4b1070f3754">None</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a8bb7dc17a08b6afa19cc4c18c6334eee">AlphaBlending</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a55b2009972903a90babbfccd52ab1ad8">AdditiveBlending</a> = 2
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a98d91530c4418cdc348b47437ffb6125">ColourModulation</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a8bb7dc17a08b6afa19cc4c18c6334eee">AlphaBlending</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a55b2009972903a90babbfccd52ab1ad8">AdditiveBlending</a> = 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a98d91530c4418cdc348b47437ffb6125">ColourModulation</a> = 3
 , <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a867a0910ace18e04cc11e0779b85aafe">ColourMultiplication</a> = 4
 <br />
  }</td></tr>
 <tr class="memdesc:a81f9d1923363754ef8e36ee6f2cd6273"><td class="mdescLeft">&#160;</td><td class="mdescRight">RenderingBlendMode  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273">More...</a><br /></td></tr>
 <tr class="separator:a81f9d1923363754ef8e36ee6f2cd6273"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab57909cc7e907e2246688f3fa6dac195"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195">TextureDisplayMode</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195ac5457c5f3cfb4da8638ce7190f8e5152">Tile</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195afbb09a82eafab60150d0996e8fe46560">Stretch</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca">DisplayAsIs</a> = 2
+<tr class="memitem:ab57909cc7e907e2246688f3fa6dac195"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195">TextureDisplayMode</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca">DisplayAsIs</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195afbb09a82eafab60150d0996e8fe46560">Stretch</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195ac5457c5f3cfb4da8638ce7190f8e5152">Tile</a> = 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a3452c82c7aab95f6ecf260b19985caf7">Blended</a> = 3
+<br />
  }</td></tr>
 <tr class="memdesc:ab57909cc7e907e2246688f3fa6dac195"><td class="mdescLeft">&#160;</td><td class="mdescRight">TextureDisplayMode  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195">More...</a><br /></td></tr>
 <tr class="separator:ab57909cc7e907e2246688f3fa6dac195"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e9644a76f43fdee96912fab8bdbe78d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78d">InstanceAccessibility</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78da3d067bedfe2f4677470dd6ccf64d05ed">Public</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78daafbf0897a5a83fdd873dfb032ec695d3">Internal</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78da47f9082fc380ca62d531096aa1d110f1">Private</a> = 2
+<tr class="memitem:a9e9644a76f43fdee96912fab8bdbe78d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78d">InstanceAccessibility</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78da3d067bedfe2f4677470dd6ccf64d05ed">Public</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78daafbf0897a5a83fdd873dfb032ec695d3">Internal</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78da47f9082fc380ca62d531096aa1d110f1">Private</a> = 2
+<br />
  }</td></tr>
 <tr class="memdesc:a9e9644a76f43fdee96912fab8bdbe78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">InstanceAccessibility  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78d">More...</a><br /></td></tr>
 <tr class="separator:a9e9644a76f43fdee96912fab8bdbe78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac19ce7e16b6c9510a12819a3ded22f78"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78">InstanceSecurity</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a3d067bedfe2f4677470dd6ccf64d05ed">Public</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a47f9082fc380ca62d531096aa1d110f1">Private</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a37275dca18acef0938b667c120b31688">LightningLocked</a> = 2
+<tr class="memitem:ac19ce7e16b6c9510a12819a3ded22f78"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78">InstanceSecurity</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a3d067bedfe2f4677470dd6ccf64d05ed">Public</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a47f9082fc380ca62d531096aa1d110f1">Private</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a37275dca18acef0938b667c120b31688">LightningLocked</a> = 2
+<br />
  }</td></tr>
 <tr class="memdesc:ac19ce7e16b6c9510a12819a3ded22f78"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_lightning_1_1_core.html">Lightning.Core</a>  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78">More...</a><br /></td></tr>
 <tr class="separator:ac19ce7e16b6c9510a12819a3ded22f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacab1f9bc59b558673892ef8cd3be4ff"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ff">InstanceTags</a> { <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa47def3380de1d081c8d43ffe96bbbd0b">Instantiable</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffaca2abf15382522498f20cca25289bbc4">ShownInIDE</a> = 2
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa99006a5589d990f09f0e00cd30d57466">Serialisable</a> = 4
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e">Archivable</a> = 8
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffaca2abf15382522498f20cca25289bbc4">ShownInIDE</a> = 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa99006a5589d990f09f0e00cd30d57466">Serialisable</a> = 4
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e">Archivable</a> = 8
 , <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffafd251a49b915be09a8df9759e537bd14">Destroyable</a> = 16
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa63c98c8c94cac4ba2ac8245f0583903d">ShownInProperties</a> = 32
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffaf3339cac63808ba135d33161124591ff">ParentLocked</a> = 64
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa59923b993f91567ad2ee1da0bc838929">ParentCanBeNull</a> = 128
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa63c98c8c94cac4ba2ac8245f0583903d">ShownInProperties</a> = 32
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffaf3339cac63808ba135d33161124591ff">ParentLocked</a> = 64
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa59923b993f91567ad2ee1da0bc838929">ParentCanBeNull</a> = 128
 , <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa5023442513412b39075bd52607b24fff">UsesCustomRenderPath</a> = 256
 <br />
  }</td></tr>
 <tr class="memdesc:aacab1f9bc59b558673892ef8cd3be4ff"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_lightning.html">Lightning</a> Core  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ff">More...</a><br /></td></tr>
 <tr class="separator:aacab1f9bc59b558673892ef8cd3be4ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab860b694e2abc2f9c63d3e07b36aa841"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab860b694e2abc2f9c63d3e07b36aa841">ServiceImportance</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab860b694e2abc2f9c63d3e07b36aa841a28d0edd045e05cf5af64e35ae0c4c6ef">Low</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab860b694e2abc2f9c63d3e07b36aa841a655d20c1ca69519ca647684edbb2db35">High</a> = 1
+<tr class="memitem:ab860b694e2abc2f9c63d3e07b36aa841"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab860b694e2abc2f9c63d3e07b36aa841">ServiceImportance</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab860b694e2abc2f9c63d3e07b36aa841a28d0edd045e05cf5af64e35ae0c4c6ef">Low</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab860b694e2abc2f9c63d3e07b36aa841a655d20c1ca69519ca647684edbb2db35">High</a> = 1
+<br />
  }</td></tr>
 <tr class="memdesc:ab860b694e2abc2f9c63d3e07b36aa841"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-DataModel  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#ab860b694e2abc2f9c63d3e07b36aa841">More...</a><br /></td></tr>
 <tr class="separator:ab860b694e2abc2f9c63d3e07b36aa841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2da0f4475f18cc5b24fa7ca6154cfc2e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2e">ServiceNotificationType</a> { <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2ea1a4ebb180ba59b067782515ffee6e975">Shutdown</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eaca82c4e999f19fe4dde2bcac82d46ff2">Shutdown_ShutDownEngine</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2ea275c74140224026380b29b2412d25121">Crash</a> = 2
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eab1dd91df5973f5e94f54a7ba9ddbe314">UnrecoverableCrash</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eaca82c4e999f19fe4dde2bcac82d46ff2">Shutdown_ShutDownEngine</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2ea275c74140224026380b29b2412d25121">Crash</a> = 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eab1dd91df5973f5e94f54a7ba9ddbe314">UnrecoverableCrash</a> = 3
 , <br />
 &#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eab14dad4ce56876fc73b7a47e9ee999b3">MessageSend</a> = 4
 <br />
  }</td></tr>
 <tr class="memdesc:a2da0f4475f18cc5b24fa7ca6154cfc2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ServiceNotificationType  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2e">More...</a><br /></td></tr>
 <tr class="separator:a2da0f4475f18cc5b24fa7ca6154cfc2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6256d58202a491698370d3531739f4f0"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0">VariableTypes</a> { <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a1686a6c336b71b36d77354cea19a8b52">Int</a> = 0
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0ad909d38d705ce75386dd86e611a82f5b">Double</a> = 1
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a27118326006d3829667a400ad23d5d98">String</a> = 2
-, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a27226c864bac7454a8504f8edb15d95b">Boolean</a> = 3
+<tr class="memitem:a6256d58202a491698370d3531739f4f0"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0">VariableTypes</a> { <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a1686a6c336b71b36d77354cea19a8b52">Int</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0ad909d38d705ce75386dd86e611a82f5b">Double</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a27118326006d3829667a400ad23d5d98">String</a> = 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a27226c864bac7454a8504f8edb15d95b">Boolean</a> = 3
+<br />
  }</td></tr>
 <tr class="memdesc:a6256d58202a491698370d3531739f4f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">VariableTypes  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0">More...</a><br /></td></tr>
 <tr class="separator:a6256d58202a491698370d3531739f4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -573,6 +631,9 @@ delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>MouseUpEvent
 <tr class="memitem:ac7dc3266146ddb0706a5956cbeff7292"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac7dc3266146ddb0706a5956cbeff7292">CheckedEvent</a> (object Sender, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html">CheckedEventArgs</a> EventArgs)</td></tr>
 <tr class="memdesc:ac7dc3266146ddb0706a5956cbeff7292"><td class="mdescLeft">&#160;</td><td class="mdescRight">CheckedEvent  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#ac7dc3266146ddb0706a5956cbeff7292">More...</a><br /></td></tr>
 <tr class="separator:ac7dc3266146ddb0706a5956cbeff7292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a703b9c558fb5a5bf179011798fe80c68"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a703b9c558fb5a5bf179011798fe80c68">RenderEvent</a> (object Sender, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html">RenderEventArgs</a> EventArgs)</td></tr>
+<tr class="memdesc:a703b9c558fb5a5bf179011798fe80c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">RenderEvent  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a703b9c558fb5a5bf179011798fe80c68">More...</a><br /></td></tr>
+<tr class="separator:a703b9c558fb5a5bf179011798fe80c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a932ec9e67a166bea0982fceae25002d3"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a932ec9e67a166bea0982fceae25002d3">ShutdownEvent</a> (object Sender, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html">ShutdownEventArgs</a> EventArgs)</td></tr>
 <tr class="memdesc:a932ec9e67a166bea0982fceae25002d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">ShutdownEvent  <a href="namespace_lightning_1_1_core_1_1_a_p_i.html#a932ec9e67a166bea0982fceae25002d3">More...</a><br /></td></tr>
 <tr class="separator:a932ec9e67a166bea0982fceae25002d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1017,14 +1078,16 @@ delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>MouseUpEvent
 </div><div class="memdoc">
 
 <p>TextureDisplayMode </p>
-<p>April 10, 2021</p>
-<p>Defines display modes for Textures.</p>
+<p>April 10, 2021 (modified August 15, 2021)</p>
+<p>Defines display modes for ImageBrushes.</p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab57909cc7e907e2246688f3fa6dac195ac5457c5f3cfb4da8638ce7190f8e5152"></a>Tile&#160;</td><td class="fielddoc"><p>The texture will tile to its defined size from the size of its image. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca"></a>DisplayAsIs&#160;</td><td class="fielddoc"><p>The texture will tile to its defined size from the size of its image. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ab57909cc7e907e2246688f3fa6dac195afbb09a82eafab60150d0996e8fe46560"></a>Stretch&#160;</td><td class="fielddoc"><p>The texture will stretch to its defined size. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca"></a>DisplayAsIs&#160;</td><td class="fielddoc"><p>The texture will be displayed as is. </p>
+<tr><td class="fieldname"><a id="ab57909cc7e907e2246688f3fa6dac195ac5457c5f3cfb4da8638ce7190f8e5152"></a>Tile&#160;</td><td class="fielddoc"><p>The texture will be displayed as is. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab57909cc7e907e2246688f3fa6dac195a3452c82c7aab95f6ecf260b19985caf7"></a>Blended&#160;</td><td class="fielddoc"><p>The texture will be blended. </p>
 </td></tr>
 </table>
 
@@ -1307,6 +1370,38 @@ delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>MouseUpEvent
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a703b9c558fb5a5bf179011798fe80c68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a703b9c558fb5a5bf179011798fe80c68">&#9670;&nbsp;</a></span>RenderEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">delegate void Lightning.Core.API.RenderEvent </td>
+          <td>(</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>Sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html">RenderEventArgs</a>&#160;</td>
+          <td class="paramname"><em>EventArgs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RenderEvent </p>
+<p>August 16, 2021</p>
+<p>Defines an event fired on the rendering of a <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html" title="PhysicalObject">PhysicalObject</a>.</p>
 
 </div>
 </div>

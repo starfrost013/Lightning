@@ -30,6 +30,7 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "KeyEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args" ],
     [ "MouseEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args" ],
     [ "CheckedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args" ],
+    [ "RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args" ],
     [ "ShutdownEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args" ],
     [ "Font", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_font" ],
     [ "GameMetadata", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata" ],
@@ -181,9 +182,10 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
       [ "MessageSend", "namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eab14dad4ce56876fc73b7a47e9ee999b3", null ]
     ] ],
     [ "TextureDisplayMode", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195", [
-      [ "Tile", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195ac5457c5f3cfb4da8638ce7190f8e5152", null ],
+      [ "DisplayAsIs", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca", null ],
       [ "Stretch", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195afbb09a82eafab60150d0996e8fe46560", null ],
-      [ "DisplayAsIs", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca", null ]
+      [ "Tile", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195ac5457c5f3cfb4da8638ce7190f8e5152", null ],
+      [ "Blended", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a3452c82c7aab95f6ecf260b19985caf7", null ]
     ] ],
     [ "VariableTypes", "namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0", [
       [ "Int", "namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a1686a6c336b71b36d77354cea19a8b52", null ],
@@ -200,5 +202,6 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "MouseEnterEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#adb251b84f70e3996239d61ea3ac2a7e0", null ],
     [ "MouseLeaveEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a686aedc789645428faa3e54361e002b2", null ],
     [ "MouseUpEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#adfad16e66c908a8d5689477c462952d4", null ],
+    [ "RenderEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a703b9c558fb5a5bf179011798fe80c68", null ],
     [ "ShutdownEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a932ec9e67a166bea0982fceae25002d3", null ]
 ];
