@@ -34,7 +34,10 @@ namespace Lightning.Core.API
             {
                 Brush CurBrush = GetBrush();
 
-                CurBrush.Render(SDL_Renderer, Tx);
+                ImageBrush IBrush = (ImageBrush)CurBrush;
+
+                IBrush.SnapToParent(); 
+                IBrush.Render(SDL_Renderer, Tx);
 
               
             }
@@ -66,6 +69,11 @@ namespace Lightning.Core.API
                 // I ACTUALLY HAVE NO IDEA WHAT THE FUCK IS GOING ON HERE SO WE ARE DOING THIS STUPID SHIT INSTEAD
                 GBrush.BRUSH_INITIALISED = false;
                 // END I ACTUALLY HAVE NO IDEA WHAT THE FUCK IS GOING ON HERE SO WE ARE DOING THIS STUPID SHIT INSTEAD
+
+
+                if (GBrush.Position == null) GBrush.Position = Position;
+                if (GBrush.Size == null) GBrush.Size = Size;
+                GBrush.ZIndex = ZIndex;
 
                 GetBrush();
                 // Texture verified
