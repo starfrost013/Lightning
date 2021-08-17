@@ -87,26 +87,40 @@ namespace Lightning.Core.API
         }
 
 
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
+        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx) //todo: remove second parameter
         {
             SnapToParent();
+
+            switch (TextureDisplayMode)
+            {
+                case TextureDisplayMode.DisplayAsIs:
+                    RenderUntiledTexture(SDL_Renderer, Tx);
+                    return;
+                case TextureDisplayMode.Tile:
+                    RenderTiledTexture(SDL_Renderer, Tx);
+                    return;
+            }
+        }
+
+        private void RenderUntiledTexture(Renderer SDL_Renderer, ImageBrush Tx)
+        {
 
             IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
             // requisite error checking already done
 
             // create the source rect
-            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect();
-
+            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect
             // x,y = point on texture, w,h = size to copy
-            SourceRect.x = 0;
-            SourceRect.y = 0;
-
-            SourceRect.w = (int)Size.X;
-            SourceRect.h = (int)Size.Y;
+            {
+                x = 0,
+                y = 0,
+                w = (int)Size.X,
+                h = (int)Size.Y
+            };
 
             SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
 
-            
+
             if (SDL_Renderer.CCameraPosition != null && !NotCameraAware)
             {
                 DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
@@ -115,7 +129,7 @@ namespace Lightning.Core.API
             else
             {
                 DestinationRect.x = (int)Position.X;
-                DestinationRect.y = (int)Position.Y; 
+                DestinationRect.y = (int)Position.Y;
             }
 
             if (DisplayViewport == null)
@@ -132,6 +146,53 @@ namespace Lightning.Core.API
             SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
 
+        private void RenderTiledTexture(Renderer SDL_Renderer, ImageBrush Tx)
+        {
+            Vector2 TileCount = DisplayViewport / Size;
+
+            if (TileCount.X < 1 || TileCount.Y < 1)
+            {
+                ErrorManager.ThrowError(ClassName, "DisplayViewportMustBeLargerThanSizeForTilingException");
+                Parent.RemoveChild(this); // DO NOT RENDER
+                return;
+            }
+            else
+            {
+                // point in original texture
+                SDL.SDL_Rect SrcRect = new SDL.SDL_Rect
+                {
+                    x = 0,
+                    y = 0,
+                    w = (int)Size.X,
+                    h = (int)Size.Y
+                };
+
+                SDL.SDL_Rect DstRect = new SDL.SDL_Rect
+                {
+                    x = (int)Position.X,
+                    y = (int)Position.Y,
+                    w = (int)Size.X / (int)TileCount.X,
+                    h = (int)Size.Y / (int)TileCount.Y
+                };
+
+
+                // DRAW IT
+                for (int i = 0; i < TileCount.X; i++)
+                {
+                    DstRect.x += (int)(Size.X / TileCount.X) * i + 1;
+
+                    SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
+                    
+                    for (int j = 0; j < TileCount.Y; j++)
+                    {
+                        DstRect.x += (int)(Size.Y / TileCount.Y) * j + 1;
+
+                        SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
+                    }
+                }
+            }
+        }
+
         internal void SnapToParent()
         {
             // Very temporary code.
@@ -144,7 +205,6 @@ namespace Lightning.Core.API
             if (PParent.BackgroundColour != null) BackgroundColour = PParent.BackgroundColour;
             if (PParent.DisplayViewport != null) DisplayViewport = PParent.DisplayViewport;
             if (PParent.Colour != null) Colour = PParent.Colour;
-
         }
     }
 }

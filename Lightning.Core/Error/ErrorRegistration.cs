@@ -153,7 +153,8 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAcquireInvalidAnimationFrameException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 133 });
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationsException", Description = "Failed to acquire a list of animations!", Severity = MessageSeverity.FatalError, Id = 134 });
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationFramesException", Description = "Failed to acquire a list of animation frames!", Severity = MessageSeverity.FatalError, Id = 135 }); ;
-            ErrorManager.RegisterError(new Error { Name = "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException", Description = "AnimationFrames must be a child of an Animation which is a part of an AnimatedImageBrush! This AnimationFrame will be destroyed.", Severity = MessageSeverity.Warning, Id = 136 });
+         ErrorManager.RegisterError( new Error { Name = "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException", Description = "AnimationFrames must be a child of an Animation which is a part of an AnimatedImageBrush! This AnimationFrame will be destroyed.", Severity = MessageSeverity.Warning, Id = 136 });
+         ErrorManager.RegisterError( new Error { Name = "DisplayViewportMustBeLargerThanSizeForTilingException", Description = "To display an ImageBrush or AnimationFrame with TextureDisplayMode set to Tile, its DisplayViewport must be set and be set to a larger value than its Size value.", Severity = MessageSeverity.Warning, Id = 137 });
      }
   }
 }

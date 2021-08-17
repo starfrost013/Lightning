@@ -159,6 +159,14 @@ namespace Lightning.Core.API
         /// </summary>
         public CollisionEndEvent OnCollisionEnd { get; set; }
 
+        /// <summary>
+        /// Render event handler.
+        /// 
+        /// Called on render if set to a valid method.
+        /// </summary>
+        public RenderEvent OnRender { get; set; }
+
+
         public AABB AABB
         {
             get

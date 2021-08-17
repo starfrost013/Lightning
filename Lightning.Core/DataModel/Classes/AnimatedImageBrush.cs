@@ -139,8 +139,9 @@ namespace Lightning.Core.API
 
 
                         }
+                        return;
+                    case AnimationType.OnTrigger:
                         return; 
-
                 }
 
 

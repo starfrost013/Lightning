@@ -598,18 +598,32 @@ namespace Lightning.Core.API
         private void Rendering_DoRenderPhysicalObjects(List<PhysicalObject> PhysicalObjects)
         {
             PhysicalObjects = PhysicalObjects.OrderBy(PO => PO.ZIndex).ToList();
-            
+
+
+
             foreach (PhysicalObject PO in PhysicalObjects)
             {
                 GetInstanceResult GIR = PO.GetFirstChildOfType("ImageBrush");
+                
+                if (PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)) continue;
 
                 if (!GIR.Successful
-                    && !PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)
                     && !PO.Invisible) // check for custom render path being used (i.e. render() is not being called by something else) 
                 {
+                    if (PO.OnRender == null)
+                    {
+                        RenderEventArgs REA = new RenderEventArgs();
+                        REA.SDL_Renderer = Renderer;
 
-                    PO.Render(Renderer, null);
-                    continue; 
+                        PO.Render(Renderer, null);
+                        continue;
+                    }
+                    else
+                    {
+                        
+                        PO.OnRender(this, REA);
+                    }
+
                 }
                 else
                 {
@@ -639,7 +653,19 @@ namespace Lightning.Core.API
 
                             Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
 
-                            PO.Render(Renderer, Tx);
+                            if (PO.OnRender == null)
+                            {
+                                PO.Render(Renderer, Tx);
+                            }
+                            else
+                            {
+                                RenderEventArgs REA = new RenderEventArgs();
+                                REA.SDL_Renderer = Renderer;
+                                REA.Tx = Tx;
+                                PO.OnRender(this, REA);
+                            }
+
+                            
                         }
                     }
                     

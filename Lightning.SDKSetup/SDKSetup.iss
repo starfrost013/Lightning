@@ -1,6 +1,7 @@
-; Lightning SDK Setup ver 0.3.006.00013
+; Lightning SDK Setup ver 0.3.006.00014
 ; August 15, 2021
 
+; v0.3.006.00014  Aug 15, 2021  Minor rearrangement of output file name
 ; v0.3.006.00013  Aug 15, 2021  Split SDK/runtime based on INSTALLPACKAGE_INSTALL_SDK, define output filename based on appname, setupversion, and if SDK/Runtime
 ; v0.3.005.00012  Aug 15, 2021  Add Lua files, remove PDBs, add documentation, add platform defines, increment version to 0.3 
 ; v0.2.004.00011  May 24, 2021  Added Polaris files so that it actually works properly
@@ -15,8 +16,8 @@
 ; v0.2.000.00002  May 4, 2021   First functional version
 
 
-; Comment out this line to build a runtime installer (TODO: User-selectable omponents)
-#define INSTALLPACKAGE_INSTALL_SDK
+; Comment out this line to build a runtime installer (TODO: User-selectable components)
+;#define INSTALLPACKAGE_INSTALL_SDK
 
 ; Basic definitions
 #ifdef INSTALLPACKAGE_INSTALL_SDK
@@ -26,7 +27,7 @@
 #define MyAppName "Lightning Runtime"
 #define PolarisAppName "THIS SHOULD NOT HAVE BEEN INSTALLED - THERE IS A BUG WITH THE INSTALLER"
 #endif
-#define MyAppVersion "0.3.XXX.XXXXX" ; set to version when a version is there
+#define MyAppVersion "0.3.878.Debug.Win64.20210815-1552" ; set to version when a version is there
 #define MyAppPublisher "starfrost/Lightning Dev Team"
 #define MyAppExeName "Lightning.exe"
 #define PolarisAppExeName "Polaris.exe"
@@ -45,7 +46,7 @@
 ;#define LIGHTNING_LINUX64
 
 ; Setup version define
-#define SETUP_VERSION "0.3.006.00013"
+#define SETUP_VERSION "0.3.006.00014"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -65,9 +66,9 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 #ifdef INSTALLPACKAGE_INSTALL_SDK
-OutputBaseFilename=Lightning_Setup_{#SETUP_VERSION}_{#MyAppVersion}_SDK
+OutputBaseFilename=Lightning_Setup_{#MyAppVersion}_{#SETUP_VERSION}_SDK
 #else
-OutputBaseFilename=Lightning_Setup_{#SETUP_VERSION}_{#MyAppVersion}_Runtime
+OutputBaseFilename=Lightning_Setup_{#MyAppVersion}_{#SETUP_VERSION}_Runtime
 #endif
 Compression=lzma
 SolidCompression=yes
