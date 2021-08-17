@@ -94,11 +94,13 @@ namespace Lightning.Core.API
             switch (TextureDisplayMode)
             {
                 case TextureDisplayMode.DisplayAsIs:
+                case TextureDisplayMode.Stretch:
                     RenderUntiledTexture(SDL_Renderer, Tx);
                     return;
                 case TextureDisplayMode.Tile:
                     RenderTiledTexture(SDL_Renderer, Tx);
                     return;
+                 
             }
         }
 

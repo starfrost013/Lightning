@@ -620,7 +620,8 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        
+                        RenderEventArgs REA = new RenderEventArgs();
+                        REA.SDL_Renderer = Renderer;
                         PO.OnRender(this, REA);
                     }
 
