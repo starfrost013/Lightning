@@ -83,6 +83,56 @@
         <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
       </LinearGradientBrush>
     </Rectangle>
+
+    <Rectangle Fill="True" CanCollide="False" Position="310,108" Size="40,40" ZIndex="0" Name="FilledRectangle2">
+      <LinearGradientBrush Direction="Right">
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
+    </Rectangle>
+
+    <Rectangle Fill="True" CanCollide="False" Position="310,150" Size="40,40" ZIndex="0" Name="FilledRectangle3">
+      <LinearGradientBrush Direction="Up">
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
+    </Rectangle>
+
+    <Rectangle Fill="True" CanCollide="False" Position="310,192" Size="40,40" ZIndex="0" Name="FilledRectangle4">
+      <LinearGradientBrush Direction="Down">
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
+    </Rectangle>
+
+    <Rectangle Fill="True" CanCollide="False" Position="310,234" Size="40,40" ZIndex="0" Name="FilledRectangle5">
+      <LinearGradientBrush Direction="TopLeft">
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
+    </Rectangle>
+
+    <Rectangle Fill="True" CanCollide="False" Position="310,276" Size="40,40" ZIndex="0" Name="FilledRectangle6">
+      <LinearGradientBrush Direction="TopRight">
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
+    </Rectangle>
+
+    <Rectangle Fill="True" CanCollide="False" Position="310,318" Size="40,40" ZIndex="0" Name="FilledRectangle7">
+      <LinearGradientBrush Direction="BottomLeft">
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
+    </Rectangle>
+
+    <Rectangle Fill="True" CanCollide="False" Position="310,360" Size="40,40" ZIndex="0" Name="FilledRectangle8">
+      <LinearGradientBrush Direction="BottomRight">
+        <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
+        <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
+      </LinearGradientBrush>
+    </Rectangle>
+
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     
     <PhysicalObject Name="Block1" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0" Position="430,300" Size="200,150">

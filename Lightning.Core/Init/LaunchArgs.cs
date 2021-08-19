@@ -36,7 +36,11 @@ namespace Lightning.Core
             switch (Args.Length)
             {
                 case 0:
-                    MessageBox.Show("Lightning [GameXML]\nGameXML: path to the LGX (Lightning Game XML) file you wish to load.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (!LAR.Arguments.AppName.Contains("Polaris")
+                    && !LAR.Arguments.AppName.Contains("LightningSDK"))
+                    {
+                        MessageBox.Show("Lightning [GameXML]\nGameXML: path to the LGX (Lightning Game XML) file you wish to load.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
 
                     LAR.Action = LaunchArgsAction.DoNothing;
 

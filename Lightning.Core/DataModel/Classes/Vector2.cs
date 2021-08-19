@@ -265,9 +265,47 @@ namespace Lightning.Core.API
         }
 #endif
 
+        #region Math operations
         public static double GetDotProduct(Vector2 A, Vector2 B) => ((A.X * B.X) + (B.Y * B.Y));
 
         public Vector2 GetAbs() => new Vector2(Math.Abs(X), Math.Abs(Y));
 
+        /// <summary>
+        /// Gets the smallest <see cref="Vector2"/> out of two.
+        /// </summary>
+        /// <param name="A">The first Vector2 you wish to compare.</param>
+        /// <param name="B">The second Vector2 you wish to compare.</param>
+        /// <returns>The smallest Vector2 out of <paramref name="A"/> and <paramref name="B"/>.</returns>
+        public static Vector2 Min(Vector2 A, Vector2 B)
+        {
+            if (A < B)
+            {
+                return A; 
+            }
+            else
+            {
+                return B;
+            }
+        }
+
+        /// <summary>
+        /// Gets the largest <see cref="Vector2"/> out of two.
+        /// </summary>
+        /// <param name="A">The first Vector2 you wish to compare.</param>
+        /// <param name="B">The second Vector2 you wish to compare.</param>
+        /// <returns>The largest Vector2 out of <paramref name="A"/> and <paramref name="B"/>.</returns>
+        public static Vector2 Max(Vector2 A, Vector2 B)
+        {
+            if (A > B)
+            {
+                return A;
+            }
+            else
+            {
+                return B; 
+            }
+        }
+
+        #endregion
     }
 }

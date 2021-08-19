@@ -16,6 +16,7 @@ namespace Lightning.Core
     /// <param name="err"></param>
     /// <returns></returns>
     public delegate void CustomErrorHandler(Error err);
+
     /// <summary>
     /// Lightning
     /// 
@@ -23,25 +24,42 @@ namespace Lightning.Core
     /// 
     /// Non-instanceable object (not part of the DataModel)
     /// </summary>
-    [XmlRoot("Error")]
+
     public class Error
     {
-        [XmlIgnore]
+        /// <summary>
+        /// A base .NET exception, if it exists
+        /// </summary>
         public Exception BaseException { get; set; } // putting this back in. 
 
-        [XmlIgnore]
+        /// <summary>
+        /// An optional custom error handler to run on this error being thrown.
+        /// </summary>
         public CustomErrorHandler CustomErrHandler { get; set; }
 
-        [XmlElement("Description")]
+        /// <summary>
+        /// An optional detailed description of the error message.
+        /// </summary>
         public string Description { get; set; }
 
-        [XmlElement("Id")]
+        /// <summary>
+        /// A numerical ID used to uniquely identify this error message.
+        /// </summary>
         public uint Id { get; set; }
 
-        [XmlElement("Name")]
+        /// <summary>
+        /// A name describing the basic issue that this error message defines.
+        /// </summary>
         public string Name { get; set; }
 
-        [XmlElement("Severity")]
+        /// <summary>
+        /// Determines if this error is a NuRender internal error. If so, an extra prompt will be displayed.
+        /// </summary>
+        public bool NuRenderInternal { get; set; }
+
+        /// <summary>
+        /// The severity of this error - see <see cref="MessageSeverity"/>.
+        /// </summary>
         public MessageSeverity Severity { get; set; }
 
     }

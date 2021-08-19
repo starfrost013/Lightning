@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// LinearGradientBrush (neé Gradient :P)
     /// 
-    /// July 30, 2021 (modified August 7, 2021: Now a brush)
+    /// July 30, 2021 (modified August 17, 2021: Made it work, added direction)
     /// 
     /// Defines a UI gradient.
     /// </summary>
@@ -22,6 +22,11 @@ namespace Lightning.Core.API
         private bool GRADIENT_INITIALISED { get; set; }
 
         internal override InstanceTags Attributes => base.Attributes;
+
+        /// <summary>
+        /// The direction of this gradient - see <see cref="GradientDirection"/>.
+        /// </summary>
+        public GradientDirection Direction { get; set; }
 
         public override void OnCreate()
         {
@@ -148,6 +153,8 @@ namespace Lightning.Core.API
                             GStopPlusOnePos -= SDL_Renderer.CCameraPosition;
                         }
 
+                        SetUpGradientDirection(CurPosition, GStopPlusOnePos);
+
                         Vector2 Diff = GStopPlusOnePos - CurPosition;
 
                         Color4 C4A = GradientStop.Colour;
@@ -190,6 +197,90 @@ namespace Lightning.Core.API
 
                 }
             }
+
+        }
+
+        private void SetUpGradientDirection(Vector2 Pos1, Vector2 Pos2)
+        {
+            switch (Direction)
+            {
+                case GradientDirection.Left:
+                    return;
+                case GradientDirection.Right:
+                    Pos2.X = Pos1.X;
+                    Pos1.X = Pos2.X;
+                    return;
+                case GradientDirection.Up:
+                    if (Pos1.Y < Pos2.Y)
+                    {
+                        Pos2.Y = Pos1.Y; // GO UP
+                    }
+                    return;
+                case GradientDirection.Down:
+                    if (Pos1.Y > Pos2.Y)
+                    {
+                        Pos2.Y = Pos1.Y;
+                    }
+                    return;
+                case GradientDirection.TopLeft: // should work - pos1/2 will always become smaller
+                    Vector2 Smallest = Vector2.Min(Pos1, Pos2);
+
+                    Vector2 LargestTL = new Vector2();
+                    
+                    if (Smallest == Pos1)
+                    {
+                        Pos1 = Smallest;
+
+                    }
+                    else
+                    {
+                        LargestTL = Pos1;
+                        Pos2 = LargestTL;
+                        Pos1 = Smallest;
+                    }
+
+                    return;
+                case GradientDirection.TopRight:
+                    Vector2 LargestTR = Vector2.Max(Pos1, Pos2);
+
+                    if (LargestTR == Pos2)
+                    {
+                        Vector2 NPos1 = Pos1;
+                        Pos1 = LargestTR;
+                        Pos2 = NPos1;
+                    }
+
+                    return;
+                case GradientDirection.BottomLeft:
+                    Vector2 LargestBL = new Vector2();
+
+                    if (Pos2.X > Pos1.X)
+                    {
+                        LargestBL = Pos2;
+                        Pos1.X = Pos2.X;
+                        Pos2.X = LargestBL.X;
+                    }
+
+                    return;
+                case GradientDirection.BottomRight:
+                    if (Pos2.X > Pos1.X)
+                    {
+                        LargestBL = Pos2;
+                        Pos1.X = Pos2.X;
+                        Pos2.X = LargestBL.X;
+                    }
+
+                    if (Pos2.Y > Pos1.Y)
+                    {
+                        LargestBL = Pos2;
+                        Pos2 = Pos1;
+                        Pos1 = LargestBL;
+                    }
+
+                    return; 
+            }
+
+
         }
     }
 }

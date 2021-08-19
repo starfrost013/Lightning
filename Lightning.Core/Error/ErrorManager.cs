@@ -351,13 +351,22 @@ namespace Lightning.Core
                 switch (Err.Severity)
                 {
                     case MessageSeverity.Message:
-                        MessageBox.Show($"{Err.Description}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        if (Err.NuRenderInternal)
+                        {
+                            MessageBox.Show($"NuRender: {Err.Description}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{Err.Description}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+
                         return;
                     case MessageSeverity.Warning:
 
-                        if (Err.Id >= 1000) // append LS for script errors
+                        if (Err.NuRenderInternal) // append LS for script errors
                         {
-                            MessageBox.Show($"Warning (LS{Err.Id}; {Err.Name}): {Err.Description}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show($"NuRender internal warning {Err.Id} ({Err.Name}): {Err.Description}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                         else
                         {
@@ -366,9 +375,9 @@ namespace Lightning.Core
 
                         return;
                     case MessageSeverity.Error:
-                        if (Err.Id >= 1000) // append LS for script errors
+                        if (Err.NuRenderInternal) // append LS for script errors
                         {
-                            MessageBox.Show($"Error (LS{Err.Id}; {Err.Name}): {Err.Description}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show($"NuRender internal error {Err.Id} ({Err.Name}): {Err.Description}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                         else
                         {
@@ -376,11 +385,21 @@ namespace Lightning.Core
                         }
                         return;
                     case MessageSeverity.FatalError:
+                        string ErrorString = null;
+
+                        if (!Err.NuRenderInternal)
+                        {
+                            ErrorString = $"Guru Meditation {Err.Id}\n\n{Err.Name}: {Err.Description}\n\nThe game must exit. Sorry!\nYou may wish to file a bug report with the game's developers.";
+                        }
+                        else
+                        {
+                            ErrorString = $"NuRender failure (Guru Meditation {Err.Id}\n\n{Err.Name}): {Err.Description}\n\nThe game must exit. Sorry!\nYou may wish to file a bug report with the game's developers.";
+                        }
+
+                        string VeryBadString = $"Something very bad has happened (or we are early in init) and the SCM cannot be called to shutdown cleanly.\nError Information: ID {Err.Id}, Name: {Err.Name}, Description {Err.Description}, Severity: {Err.Severity} - exiting...";
 
                         // Temporary - we don't have a clean shutdown method yet
-                        MessageBox.Show($"Guru Meditation {Err.Id}\n\n{Err.Name}: {Err.Description}\n\nLightning must exit. Sorry!\nYou may wish to file a bug report with the game's developers.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                        string VeryBadString = "Something very bad has happened (or we are early in init) and the SCM cannot be called to shutdown cleanly. Exiting...";
+                        MessageBox.Show(ErrorString, "Lightning Game Engine - Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                         if (DataModel.GetState() == null || DataModel.GetState().Count == 0)
                         {
@@ -392,6 +411,7 @@ namespace Lightning.Core
                         Workspace Ws = DataModel.GetWorkspace();
 
                         GetInstanceResult GIR = Ws.GetFirstChildOfType("ServiceControlManager");
+
 
                         if (!GIR.Successful)
                         {
