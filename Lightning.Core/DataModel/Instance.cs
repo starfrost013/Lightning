@@ -1,6 +1,7 @@
 ﻿using Lightning.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Reflection; 
 using System.Text;
 
 namespace Lightning.Core.API
@@ -8,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning DataModel
     /// 
-    /// DataModel/Instance Ver0.12.1
+    /// DataModel/Instance Ver0.21.0
     /// 
     /// Provides the root for all objects provided in Lightning.
     /// 
@@ -309,42 +310,15 @@ namespace Lightning.Core.API
 
         public GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => Children.GetAllChildrenOfType(ClassName);
 
-        /*
-        public GetMultiInstanceResult GetAllChildrenOfType(string ClassName)
-        {
-            List<Instance> NewLI = new List<Instance>();
-
-            return GetAllChildrenOfType_DoGetChildren(this, NewLI, ClassName);
-
-        }
-
-        private GetMultiInstanceResult GetAllChildrenOfType_DoGetChildren(Instance Parent, List<Instance> InstanceList, string ClassName)
-        {
-            GetMultiInstanceResult GIR = new GetMultiInstanceResult();
-
-            foreach (Instance ThisChild in Parent.Children)
-            {
-                Type ParentType = Type.GetType($"{DataModel.DATAMODEL_NAMESPACE_PATH}.{ClassName}");
-                Type ChildType = ThisChild.GetType();
-
-                if (ThisChild.ClassName == ClassName
-                    || ChildType.IsSubclassOf(ParentType))
-                {
-                    InstanceList.Add(ThisChild);
-                }
-            }
-
-            GIR.Successful = true;
-            GIR.Instances = InstanceList;
-            return GIR; 
-        }
-        */
-
         public virtual void OnCreate()
         {
             return; 
         }
 
+        /// <summary>
+        /// Acquires the logical children of this object
+        /// </summary>
+        /// <returns></returns>
         public GetMultiInstanceResult GetChildren()
         {
             GetMultiInstanceResult GMIR = new GetMultiInstanceResult();
@@ -356,6 +330,33 @@ namespace Lightning.Core.API
 
             GMIR.Successful = true; 
             return GMIR;
+        }
+
+        /// <summary>
+        /// Acquires a list of instance information structures containing all of the objects that can be children of this Instance.
+        /// </summary>
+        /// <returns></returns>
+        internal List<InstanceInfo> GetInheritableClasses()
+        {
+            List<InstanceInfo> InstanceInformationList = new List<InstanceInfo>(); 
+
+            Assembly This = Assembly.GetExecutingAssembly();
+
+            Type[] LTypes = This.GetTypes();
+
+            foreach (Type LType in LTypes)
+            {
+                if (LType.IsSubclassOf(typeof(Instance)))
+                {
+                    Instance NewInstance = (Instance)Activator.CreateInstance(typeof(Instance));
+
+                    NewInstance.GenerateInstanceInfo();
+
+                    InstanceInformationList.Add(NewInstance.Info);
+                }
+            }
+
+            return InstanceInformationList;
         }
 
     }

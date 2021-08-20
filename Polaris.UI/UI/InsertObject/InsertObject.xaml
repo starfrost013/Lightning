@@ -6,11 +6,20 @@
              xmlns:local="clr-namespace:Polaris.UI"
              mc:Ignorable="d" Height="549" Width="665">
     <Grid>
-        <TextBlock x:Name="InsertObject_Header" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Insert Object..." TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource TextBlock_Header_Blue}"/>
+        <TextBlock x:Name="InsertObject_Header" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Insert Object" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource TextBlock_Header_Blue}"/>
         <ListView x:Name="InsertObject_ListView" Margin="10,98,10,41">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="InsertObject_ListView_IconColumn" Width="20"/>
+                    <GridViewColumn x:Name="InsertObject_ListView_IconColumn" Width="32">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="32" Source="{Binding ImagePath}"></Image>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    
+                    </GridViewColumn>
                     <GridViewColumn x:Name="InsertObject_ListView_ObjectName" Width="Auto" DisplayMemberBinding="{Binding Name}"/>
                 </GridView>
             </ListView.View>

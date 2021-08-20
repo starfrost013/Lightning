@@ -435,7 +435,7 @@ DDMS Saving		Complete
 Sound API		Complete*
 Humanoid		85%
 Sky			Complete
-UI			85% (line wrapping pushed back to NuRender/M5/0.4)
+UI			75% (line wrapping pushed back to NuRender/M5/0.4)
 SCM init refactoring	15%
 Events			90% (most events still unimplemented but actual event system is complete)
 Documentation		35% 
