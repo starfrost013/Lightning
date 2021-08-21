@@ -93,6 +93,38 @@ namespace Lightning.Core.API
  
         }
 
+        private void SetActiveAnimation(string AnimationName)
+        {
+            List<Animation> Animations = GetAnimations();
+
+            foreach (Animation Animation in Animations)
+            {
+                if (Animation.Active) Animation.Active = false;
+
+                if (Animation.Name == AnimationName)
+                {
+                    Animation.Active = true;
+                    break;
+                }
+            }
+        }
+
+        private void SetActiveAnimationA(Animation Anim)
+        {
+            List<Animation> Animations = GetAnimations();
+
+            foreach (Animation Animation in Animations)
+            {
+                if (Animation.Active) Animation.Active = false;
+
+                if (Animation == Anim)
+                {
+                    Animation.Active = true;
+                    break;
+                }
+            }
+        }
+
         private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
         {
             Animation CurrentAnimation = GetActiveAnimation(); 
@@ -103,46 +135,65 @@ namespace Lightning.Core.API
             }
             else
             {
-                switch (CurrentAnimation.Type)
+                GetMultiInstanceResult GMIR = CurrentAnimation.GetAllChildrenOfType("AnimationFrame");
+
+                if (!GMIR.Successful)
                 {
-                    case AnimationType.Continuous:
-                        GetMultiInstanceResult GMIR = CurrentAnimation.GetAllChildrenOfType("AnimationFrame");
-
-                        if (!GMIR.Successful)
-                        {
-                            ErrorManager.ThrowError(ClassName, "FailedToAcquireListOfAnimationFramesException");
-                            return; //never runs
-                        }
-                        else
-                        {
-                            List<Instance> LI = GMIR.Instances;
-
-                            if (!CurrentAnimation.AnimationTimer.Running) CurrentAnimation.AnimationTimer.Running = true;
-
-                            CurrentAnimation.AnimationTimer.Update(); 
-
-                            List<AnimationFrame> Frames = CurrentAnimation.GetFrames();
-
-                            if (Frames.Count == 0) return; 
-
-                            AnimationFrame AF = CurrentAnimation.GetCurrentFrame();
-
-                            if (AF == null) // animation ended
-                            {
-                                CurrentAnimation.AnimationTimer.Reset(); 
-                                AF = Frames[0];
-                            }
-
-                            // temporary hack code until render refactoring done
-                            AF.Render(SDL_Renderer, AF);
-
-
-
-                        }
-                        return;
-                    case AnimationType.OnTrigger:
-                        return; 
+                    ErrorManager.ThrowError(ClassName, "FailedToAcquireListOfAnimationFramesException");
+                    return; //never runs
                 }
+                else
+                {
+
+
+                    List<Instance> LI = GMIR.Instances;
+
+                    List<AnimationFrame> Frames = CurrentAnimation.GetFrames();
+
+                    if (Frames.Count == 0) return;
+
+                    AnimationFrame AF = CurrentAnimation.GetCurrentFrame();
+
+                    if (!CurrentAnimation.AnimationTimer.Running) CurrentAnimation.AnimationTimer.Running = true;
+
+                    CurrentAnimation.AnimationTimer.Update();
+
+                    if (CurrentAnimation.Type == AnimationType.Custom)
+                    {
+                        if (CurrentAnimation.OnAnimationUpdated != null)
+                        {
+                            AnimationUpdatedEventArgs AUEA = new AnimationUpdatedEventArgs();
+                            AUEA.CurrentFrame = AF;
+                            CurrentAnimation.OnAnimationUpdated(this, AUEA);
+                            return;
+                        }
+                    }
+
+                    
+
+                    if (AF == null) // animation ended
+                    {
+                        CurrentAnimation.AnimationTimer.Reset();
+                        CurrentAnimation.NumberOfRepeats++;
+
+
+                        if (CurrentAnimation.NumberOfRepeats > CurrentAnimation.MaxRepeats
+                        && CurrentAnimation.Type != AnimationType.Continuous)
+                        {
+                            CurrentAnimation.Active = false;
+                            CurrentAnimation.NumberOfRepeats = 0; 
+                        }
+
+                        AF = Frames[0];
+                    }
+
+                    // temporary hack code until render refactoring done
+                    AF.Render(SDL_Renderer, AF);
+
+
+
+                }
+
 
 
             }
@@ -177,6 +228,16 @@ namespace Lightning.Core.API
                     ServiceNotifier.NotifySCM(SN);
                 }
             }
+        }
+
+        public void PlayAnimation(string AnimationName, AnimationType AnimType = AnimationType.FromScript, int Repeats = 0)
+        {
+            SetActiveAnimation(AnimationName);
+            Animation TheAnim = GetActiveAnimation(); // get the animation we just set
+
+            if (TheAnim.MaxRepeats != Repeats) TheAnim.MaxRepeats = Repeats;
+            TheAnim.Type = AnimType;
+            return;
         }
 
         internal List<Animation> GetAnimations()

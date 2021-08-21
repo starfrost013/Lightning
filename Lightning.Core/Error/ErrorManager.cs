@@ -74,7 +74,7 @@ namespace Lightning.Core
             if (Errors.Count == 0
                 || Errors == null)
             {
-                HandleError("Error Manager", new Error { Id = 0xDEA7BABE, Name = "AttemptingToThrowErrorBeforeErrorManagerInitialisedException", Description = "Attempted to throw an error when the error manager has not been initialised!", Severity = MessageSeverity.FatalError});
+                HandleError("Error Manager", new Error { Id = 0xDEEFBABE, Name = "AttemptingToThrowErrorBeforeErrorManagerInitialisedException", Description = "Attempted to throw an error when the error manager has not been initialised!", Severity = MessageSeverity.FatalError});
                 return null; 
             }
             else
@@ -172,7 +172,7 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA6BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
                 }
 
                
@@ -200,7 +200,7 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA5BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
                 }
 
 
@@ -222,7 +222,7 @@ namespace Lightning.Core
                 {
                     if (BaseException == null)
                     {
-                        ThrowError("Error Handler - InnerException", new Error { Id = 0x4747BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonExistentBaseExceptionException", Description = "Attempted to override the BaseException of an error with the BaseException overrides of ErrorManager.ThrowError(), but the Exception is null." });
+                        ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA4BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonExistentBaseExceptionException", Description = "Attempted to override the BaseException of an error with the BaseException overrides of ErrorManager.ThrowError(), but the Exception is null." });
                         return;
                     }
                     else
@@ -236,7 +236,7 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorException", Description = "Cannot override an error's description with null!" });
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA3BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorException", Description = "Cannot override an error's description with null!" });
                     return;
                 }
 
@@ -280,7 +280,7 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA2BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
                     return;
                 }
                 
@@ -306,7 +306,7 @@ namespace Lightning.Core
 
                     if (BaseException == null)
                     {
-                        ThrowError("Error Handler - InnerException", new Error { Id = 0x4848BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonExistentBaseExceptionException", Description = "Attempted to override the BaseException of an error with the BaseException overrides of ErrorManager.ThrowError(), but the Exception is null." });
+                        ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA1BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonExistentBaseExceptionException", Description = "Attempted to override the BaseException of an error with the BaseException overrides of ErrorManager.ThrowError(), but the Exception is null." });
                     }
                     else
                     {
@@ -318,7 +318,7 @@ namespace Lightning.Core
                 }
                 else
                 {
-                    ThrowError("Error Handler - InnerException", new Error { Id = 0x2222BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
+                    ThrowError("Error Handler - InnerException", new Error { Id = 0xDEA0BABE, Severity = MessageSeverity.FatalError, Name = "CannotOverrideNonexistentErrorDescriptionException", Description = "Cannot override an error's description with null or an empty string!" });
                     return;
                 }
 

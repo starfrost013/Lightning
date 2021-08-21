@@ -319,6 +319,11 @@ namespace Lightning.Core.API
                 }
                 
             }
+            catch (AmbiguousMatchException err)
+            {
+                ErrorManager.ThrowError(ClassName, "ArchitecturalIncapablityAmbiguousMatchException", err);
+                return null; 
+            }
             catch (IndexOutOfRangeException err)
             {
                 ErrorManager.ThrowError(ClassName, "InternalInstanceAdditionErrorException", err);

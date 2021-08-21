@@ -15,9 +15,23 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "MainDebugPage";
 
+
+        private bool MAINDEBUGPAGE_INITIALISED { get; set; }
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
-            Rectangle Rect = (Rectangle)DataModel.CreateInstance("Rectangle", this);
+            if (!DEBUGPAGE_INITIALISED)
+            {
+                DP_Init(); 
+            }
+            else
+            {
+
+                return; 
+            }
+
         }
+
+
+        
     }
 }

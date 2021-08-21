@@ -93,19 +93,33 @@ namespace Lightning.Core.API
 
             // setup font (Aug 20 2021: not be retarded by loading it in the debug text method??????)
 
+            Logging.Log("Searching for debugging font...", ClassName);
+
             Font DebugFnt = (Font)DataModel.CreateInstance("Font");
 
             GlobalSettings GS = DataModel.GetGlobalSettings();
 
             if (GS.DebugDefaultFontPath == null)
             {
+                Logging.Log("Debug font not found, not loading it...", ClassName);
                 return;
             }
             else
             {
+                Logging.Log($"Loading debugging font from {GS.DebugDefaultFontPath}...", ClassName);
+          
                 DebugFnt.FontPath = GS.DebugDefaultFontPath;
                 DebugFnt.FontSize = 14;
-                DebugFnt.Name = "Arial.14pt for DEBUG";
+
+                if (GS.DebugDefaultFontName == null) // Aug 21 2021
+                {
+                    DebugFnt.Name = "Arial.14pt for DEBUG"; // TODO: debugfontname globalsetting
+                }
+                else
+                {
+                    DebugFnt.Name = GS.DebugDefaultFontName;
+                }
+                
                 DebugFnt.Load();
                 return; // font will be loaded setc
             }

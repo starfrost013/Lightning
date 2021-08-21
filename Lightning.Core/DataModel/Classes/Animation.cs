@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Animation
     /// 
-    /// August 11, 2021 (modified August 15, 2021: FrameTimer)
+    /// August 11, 2021 (modified August 21, 2021: NumberOfRepeats)
     /// 
     /// Defines an animation.
     /// </summary>
@@ -31,6 +31,24 @@ namespace Lightning.Core.API
         /// </summary>
         internal FrameTimer AnimationTimer { get; set; }
 
+        /// <summary>
+        /// Number of repeats of this animation
+        /// </summary>
+        internal int NumberOfRepeats { get; set; }
+
+        /// <summary>
+        /// The maximum repeats of this animation. 
+        /// </summary>
+        public int MaxRepeats { get; set; }
+
+        /// <summary>
+        /// Event handler for the <see cref="AnimationUpdated"/> event.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function. 
+        /// </summary>
+        public AnimationUpdated OnAnimationUpdated { get; set; }
         public override void OnCreate()
         {
             AnimationTimer = new FrameTimer(); 

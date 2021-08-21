@@ -19,13 +19,18 @@ namespace Lightning.Core.API
         Continuous = 0,
 
         /// <summary>
-        /// Animations played on a specific trigger method being called
+        /// Animation that plays from a script with an optional repeat
         /// </summary>
-        OnTrigger = 1,
+        FromScript = 1,
+
+        /// <summary>
+        /// Animations played on a specific event being called to their parent object
+        /// </summary>
+        OnEvent = 2,
 
         /// <summary>
         /// Completely custom behaviour - defined in Lua
         /// </summary>
-        Custom = 2
+        Custom = 3
     }
 }

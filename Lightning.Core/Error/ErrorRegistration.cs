@@ -156,6 +156,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException", Description = "AnimationFrames must be a child of an Animation which is a part of an AnimatedImageBrush! This AnimationFrame will be destroyed.", Severity = MessageSeverity.Warning, Id = 136 });
          ErrorManager.RegisterError( new Error { Name = "DisplayViewportMustBeLargerThanSizeForTilingException", Description = "To display an ImageBrush or AnimationFrame with TextureDisplayMode set to Tile, its DisplayViewport must be set and be set to a larger value than its Size value.", Severity = MessageSeverity.Warning, Id = 137 });
          /* Error ID 138 - 199: NuRender reserved */
+         ErrorManager.RegisterError( new Error { Name = "ArchitecturalIncapablityAmbiguousMatchException", Description = "ENGINE BUG!\nLightning is presently architecturally incapable of using overloads in any class that is DDMS enabled. This will somehow be fixed at some point but currently this is an engine bug.\n\nREPORT THIS ASAP!", Severity = MessageSeverity.Error, Id = 200 });
 
      }
   }

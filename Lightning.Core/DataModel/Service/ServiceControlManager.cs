@@ -389,7 +389,7 @@ namespace Lightning.Core.API
                                     Logging.Log($"The service provided the following reason: {SvcNotification.Reason}", ClassName);
                                 }
 
-                                KillService(ClassName);
+                                KillService(SvcNotification.ServiceClassName);
                                 return;
                             case ServiceNotificationType.Shutdown_ShutDownEngine:
                                 Logging.Log($"The {SvcNotification.ServiceClassName} has notified the Service Control Manager that it is shutting down as the user has requested an engine shutdown. Shutting down...", ClassName);

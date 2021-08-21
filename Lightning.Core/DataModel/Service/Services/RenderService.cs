@@ -97,7 +97,7 @@ namespace Lightning.Core.API
 
         private SDLInitialisationResult OnStart_InitSDLWindow()
         {
-            Logging.Log(ClassName, "Preparing to create SDL window...");
+            Logging.Log("Preparing to create SDL window...", ClassName);
 
             SDLInitialisationResult SDIR = new SDLInitialisationResult();
 
@@ -160,7 +160,7 @@ namespace Lightning.Core.API
                         Fullscreen = (bool)GGSR_FullScreen.Setting.SettingValue;
                     }
 
-                    Logging.Log(ClassName, "Initialising renderer...");
+                    Logging.Log("Initialising renderer...", ClassName);
 
                     SDIR.Renderer = new Renderer();
 
@@ -173,7 +173,7 @@ namespace Lightning.Core.API
                         SDIR.Renderer.WindowSize = new Vector2(WindowWidth, WindowHeight);
                     }
 
-                    Logging.Log(ClassName, "Calling SDL_CreateWindow to initialise window...");
+                    Logging.Log("Calling SDL_CreateWindow to initialise window...", ClassName);
 
                     // Create a fullscreen window if fullscreen is false.
                     if (Fullscreen)

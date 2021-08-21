@@ -67,9 +67,9 @@ namespace Lightning.Core
         public int MaxLuaScriptExecutionTime { get; set; }
 
         /// <summary>
-        /// Use the AST Tokeniser.
+        /// The default font name for the debugging font.
         /// </summary>
-        public bool UseASTTokeniser { get; set; }
+        public string DebugDefaultFontName { get; set; }
 
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 

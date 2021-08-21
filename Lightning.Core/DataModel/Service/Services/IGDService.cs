@@ -33,8 +33,12 @@ namespace Lightning.Core.API
 
         private void OnStart_ShutdownDebugNotEnabled()
         {
+            string ReasonText = "DebugMode GameSetting turned off - shutting down IGDService as in-game debugging services are disabled...";
+
+            Logging.Log(ReasonText, ClassName); 
+
             ServiceNotification SN = new ServiceNotification();
-            SN.Reason = "DebugMode GameSetting turned off - shutting down IGDService as in-game debugging services are disabled...";
+            SN.Reason = ReasonText;
 
             SN.ServiceClassName = ClassName;
             SN.NotificationType = ServiceNotificationType.Shutdown;
