@@ -3,14 +3,14 @@
 <!--
 Lightning Game Engine Global Settings
 
-Do not modify unless you know what you are doing.
+Do not modify this file unless you know what you are doing.
 -->
 <GlobalSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <!-- 
-  ESPECIALLY DO NOT MODIFY THIS PART UNLESS YOU ABSOLUTELY 100% KNOW WHAT YOU ARE DOING
-  YOUR INSTALLATION MAY NOT EVEN START IF YOU SCREW THIS PART UP.
-  YOU HAVE BEEN WARNED. IF YOU MODIFY THIS AND YOUR SDK/ENGINE/RUNTIME/WHATEVER INSTALL FAILS TO START PROPERLY, IT'S YOUR OWN FAULT. 
+  ESPECIALLY DO NOT MODIFY THIS PART UNLESS YOU **ABSOLUTELY 100%** KNOW WHAT YOU ARE DOING
+  YOUR RUNTIME OR SDK INSTALLATION MAY NOT EVEN START IF YOU SCREW THIS PART UP.
+  YOU HAVE BEEN WARNED. IF YOU MODIFY THIS AND YOUR SDK/RUNTIME INSTALL FAILS TO START PROPERLY, IT'S YOUR OWN FAULT. 
   -->
   <ServiceStartupCommands>
 
@@ -38,6 +38,11 @@ Do not modify unless you know what you are doing.
       <ServiceName>UIService</ServiceName>
       <StartOrder>4</StartOrder>
     </ServiceStartupCommand>
+
+    <ServiceStartupCommand>
+      <ServiceName>IGDService</ServiceName>
+      <StartOrder>5</StartOrder>
+    </ServiceStartupCommand>
   </ServiceStartupCommands>
 
   <!-- Stuff after here is slightly more safe to modify -->
@@ -47,6 +52,4 @@ Do not modify unless you know what you are doing.
   <UseASTTokeniser>true</UseASTTokeniser>
   <MaxLuaScriptExecutionTime>300</MaxLuaScriptExecutionTime>
 
-
-  
 </GlobalSettings>

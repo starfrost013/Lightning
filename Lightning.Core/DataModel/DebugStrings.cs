@@ -30,9 +30,10 @@ namespace Lightning.Core.API
             Strings.Add("Probably not faster than Unity yet, but we'll get there!");
             Strings.Add("Certified 100% managed code");
             Strings.Add("This is happenin!");
-            Strings.Add("8/13/21");
-            Strings.Add("Guaranteed to not be an Unreal Licensed Product™!");
-            Strings.Add("kek");
+            Strings.Add("8/30/21");
+            Strings.Add("Guaranteed not an Unreal Licensed Product™!");
+            Strings.Add("kek!");
+            Strings.Add("Lightning - it's tiny and that's how it should be!");
 
             DEBUGSTRINGS_INITIALISED = true; 
         }

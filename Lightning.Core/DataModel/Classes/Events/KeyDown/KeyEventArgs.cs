@@ -7,11 +7,11 @@ namespace Lightning.Core.API
     /// <summary>
     /// KeyEventArgs
     /// 
-    /// July 21, 2021
+    /// July 21, 2021 (modified August 20, 2021: Inherit from EventArgs)
     /// 
     /// Defines event arguments for the <see cref="KeyDownEvent"/>.
     /// </summary>
-    public class KeyEventArgs
+    public class KeyEventArgs : EventArgs
     {
         /// <summary>
         /// Defines the pressed key - see <see cref="Control"/>.

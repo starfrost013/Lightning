@@ -84,22 +84,6 @@ namespace Lightning.Core.API
             return; 
         }
 
-        /// <summary>
-        /// Key up event handler.
-        /// 
-        /// Default event handler may be implemented by any Lightning class.
-        /// 
-        /// Scripts may 
-        public KeyUpEvent KeyUp { get; set; }
-
-        /// <summary>
-        /// Key down event handler.
-        /// 
-        /// Default event handler may be implemented by any Lightning class.
-        /// 
-        /// Scripts may modify the event handler function. 
-        /// </summary>
-        public KeyDownEvent OnKeyDownHandler { get; set; }
 
         /// <summary>
         /// Click event handler.

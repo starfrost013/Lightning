@@ -676,11 +676,19 @@ namespace Lightning.Core.API
             }
         }
 
+        private InstanceCollection BuildListOfAllObjects()
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            return Ws.Children;
+        }
+
         private void HandleKeyDown(SDL.SDL_Event CurEvent)
         {
-            List<PhysicalObject> ControllableObjects = BuildListOfPhysicalObjects();
+            
+            InstanceCollection AllObjects = BuildListOfAllObjects();
 
-            HandleKeyDown_NotifyAllPhysicalObjects(ControllableObjects, CurEvent);
+            HandleKeyDown_NotifyAllPhysicalObjects(AllObjects, CurEvent);
         }
 
         private List<ControllableObject> BuildListOfControllableObjects()
@@ -702,9 +710,9 @@ namespace Lightning.Core.API
             return ControllableObjects;
         }
 
-        private void HandleKeyDown_NotifyAllPhysicalObjects(List<PhysicalObject> ControllableObjects, SDL.SDL_Event CurEvent)
+        private void HandleKeyDown_NotifyAllPhysicalObjects(InstanceCollection AllObjects, SDL.SDL_Event CurEvent)
         {
-            foreach (PhysicalObject PO in ControllableObjects)
+            foreach (Instance PO in AllObjects)
             {
                 if (PO.OnKeyDownHandler != null)
                 {
@@ -833,14 +841,14 @@ namespace Lightning.Core.API
 
         private void HandleKeyUp(SDL.SDL_Event CurEvent)
         {
-            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+            InstanceCollection AllObjects = BuildListOfAllObjects();
 
-            HandleKeyUp_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
+            HandleKeyUp_NotifyAllPhysicalObjects(CurEvent, AllObjects);
         }
 
-        private void HandleKeyUp_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        private void HandleKeyUp_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, InstanceCollection PhysicalObjects)
         {
-            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            foreach (Instance PhysicalObject in PhysicalObjects)
             {
                 if (PhysicalObject.KeyUp != null)
                 {

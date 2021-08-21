@@ -45,7 +45,7 @@ namespace Lightning.Core.API
         /// April 6, 2021
         /// </summary>
         /// <param name="Obj"></param>
-        public void Add(object Obj, Instance Parent = null)
+        public void Add(object Obj, Instance Parent = null, ObjectCreated OCHandler = null)
         {
             // Get the types of the object and its parent.
             Type ObjType = Obj.GetType();
@@ -167,7 +167,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="Obj"></param>
         /// <param name="Parent"></param>
-        private void Add_PerformAdd(object Obj, Instance Parent = null)
+        private void Add_PerformAdd(object Obj, Instance Parent = null, ObjectCreated OCHandler = null)
         {
             // polymorphism mandates this being the instance we want.
             
@@ -183,6 +183,13 @@ namespace Lightning.Core.API
                 Instance InstanceObj = NewInstance;
                 InstanceObj.Parent = Parent; 
                 Parent.Children.Instances.Add(NewInstance);
+            }
+    
+            // todo: oncreate AND PASSING THIS TO DATAMODEL.CREATEINSTANCE!
+
+            if (OCHandler != null)
+            {
+                OCHandler(this); 
             }
 
             NewInstance.OnCreate(); 
@@ -234,6 +241,11 @@ namespace Lightning.Core.API
                 }
                 else
                 {
+                    if (TestInstance.OnDestroyed != null)
+                    {
+                        TestInstance.OnDestroyed(this);
+                    }
+
                     if (Parent == null) // If there is no parent, check ParentCanBeNull to see if it is inserted at the DataModel root or the Workspace.
                     {
                         if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))

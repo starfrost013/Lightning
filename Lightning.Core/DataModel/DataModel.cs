@@ -227,7 +227,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="ClassName"></param>
         /// <returns></returns>
-        public static object CreateInstance(string ClassName, Instance Parent = null)
+        public static object CreateInstance(string ClassName, Instance Parent = null, ObjectCreated OCHandler = null)
         {
             try
             {

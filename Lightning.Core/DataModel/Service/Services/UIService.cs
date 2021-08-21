@@ -89,6 +89,25 @@ namespace Lightning.Core.API
                     }
 
                 }
+           }
+
+            // setup font (Aug 20 2021: not be retarded by loading it in the debug text method??????)
+
+            Font DebugFnt = (Font)DataModel.CreateInstance("Font");
+
+            GlobalSettings GS = DataModel.GetGlobalSettings();
+
+            if (GS.DebugDefaultFontPath == null)
+            {
+                return;
+            }
+            else
+            {
+                DebugFnt.FontPath = GS.DebugDefaultFontPath;
+                DebugFnt.FontSize = 14;
+                DebugFnt.Name = "Arial.14pt for DEBUG";
+                DebugFnt.Load();
+                return; // font will be loaded setc
             }
         }
 
@@ -123,14 +142,7 @@ namespace Lightning.Core.API
 
         private void Init()
         {
-#if DEBUG
-
-            FunnyHahaDebugString = DebugStrings.GetDebugString();
-            RenderDebugText(); // call before font loading so we don't have to load the font again
-#endif
-
             LoadAllFonts();
-
 
             UISERVICE_INITIALISED = true; 
         }
@@ -169,80 +181,7 @@ namespace Lightning.Core.API
             return; 
         }
 
-        /// <summary>
-        /// DEBUG ONLY: Renders engine debugging information.
-        /// </summary>
-        private void RenderDebugText()
-        {
-#if DEBUG
-            // Because Text by definition must be within a GUI,
-            // we can't just add text.
-            //
-            // As this is a debug feature, we are just going to create a new screengui object
-            // and put it in the workspace.
-            // 
-            // This is better than adding tons of (redundant...) code in order to write a debug feature.
-
-            GuiRoot GR = (GuiRoot)DataModel.CreateInstance("GuiRoot"); // will enter workspace
-
-            ScreenGui SG = (ScreenGui)DataModel.CreateInstance("ScreenGui", GR);
-
-            // create 3 lines of text (todo: multiline text)
-            Text DebugTextLine1 = (Text)DataModel.CreateInstance("Text", SG);
-            Text DebugTextLine2 = (Text)DataModel.CreateInstance("Text", SG);
-            Text DebugTextLine3 = (Text)DataModel.CreateInstance("Text", SG);
-            
-            string DoNotUse = "Debug GUI Component - Do not use!";
-
-            GR.Name = DoNotUse;
-            SG.Name = DoNotUse;
-            DebugTextLine1.Name = DoNotUse;
-            DebugTextLine2.Name = DoNotUse;
-            DebugTextLine3.Name = DoNotUse;
-
-            DebugTextLine1.Content = $"Lightning for {Platform.PlatformName} version {LVersion.GetVersionString()} (Debug)";
-            DebugTextLine2.Content = $"DataModel version {DataModel.DATAMODEL_API_VERSION_MAJOR}.{DataModel.DATAMODEL_API_VERSION_MINOR}.{DataModel.DATAMODEL_API_VERSION_REVISION}";
-            DebugTextLine3.Content = FunnyHahaDebugString;
-            
-            // TODO: default positioning stuff so we don't have to do this
-            
-            Vector2 Position = new Vector2(0, 0);
-
-            // TEMP for DEBUG only
-            GR.Position = Position;
-            SG.Position = Position;
-            DebugTextLine1.Position = Position;
-            DebugTextLine2.Position = new Vector2(Position.X, Position.Y + 18);
-            DebugTextLine3.Position = new Vector2(Position.X, Position.Y + 36);
-
-            string FontName = "Arial.14pt for DEBUG";
-            DebugTextLine1.FontFamily = FontName;
-            DebugTextLine2.FontFamily = DebugTextLine1.FontFamily;
-            DebugTextLine3.FontFamily = DebugTextLine2.FontFamily;
-
-            // setup font
-
-            Font Fnt = (Font)DataModel.CreateInstance("Font");
-
-            GlobalSettings GS = DataModel.GetGlobalSettings();
-
-            if (GS.DebugDefaultFontPath == null)
-            {
-                // destroy everything
-                DataModel.RemoveInstance(GR);
-                return; 
-            }
-            else
-            {
-                Fnt.FontPath = GS.DebugDefaultFontPath;
-                Fnt.FontSize = 14;
-                Fnt.Name = FontName;
-                return; // font will be loaded setc
-            }
-#else
-            throw new Exception("Do not call on Release builds ever!");
-#endif
-        }
+       
 
 
         public override void OnDataSent(ServiceMessage Data)

@@ -42,7 +42,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "InternalSerialisationErrorException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 23 } );
          ErrorManager.RegisterError( new Error { Name = "CannotFindLgxFileException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 24 } );
          ErrorManager.RegisterError( new Error { Name = "CannotAcquireUnloadedGlobalSettingsException", Description = "Cannot acquire GlobalSettings when it is not yet loaded!", Severity = MessageSeverity.Error, Id = 25 } );
-         ErrorManager.RegisterError( new Error { Name = "GameSettingsFailedToLoadException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 26 } );
+         ErrorManager.RegisterError( new Error { Name = "GameSettingsFailedToLoadException", Description = "Game settings failed to load!", Severity = MessageSeverity.FatalError, Id = 26 } );
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainGameSettingException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 27 } );
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainCriticalGameSettingException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 28 } );
          ErrorManager.RegisterError( new Error { Name = "CannotDestroyNonDestroyableInstanceException", Description = "!!this should be overidden in code!!", Severity = MessageSeverity.Error, Id = 29 } );
@@ -155,6 +155,8 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationFramesException", Description = "Failed to acquire a list of animation frames!", Severity = MessageSeverity.FatalError, Id = 135 }); ;
          ErrorManager.RegisterError( new Error { Name = "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException", Description = "AnimationFrames must be a child of an Animation which is a part of an AnimatedImageBrush! This AnimationFrame will be destroyed.", Severity = MessageSeverity.Warning, Id = 136 });
          ErrorManager.RegisterError( new Error { Name = "DisplayViewportMustBeLargerThanSizeForTilingException", Description = "To display an ImageBrush or AnimationFrame with TextureDisplayMode set to Tile, its DisplayViewport must be set and be set to a larger value than its Size value.", Severity = MessageSeverity.Warning, Id = 137 });
+         /* Error ID 138 - 199: NuRender reserved */
+
      }
   }
 }

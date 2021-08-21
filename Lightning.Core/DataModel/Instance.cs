@@ -274,6 +274,41 @@ namespace Lightning.Core.API
         /// <param name="Ins">The Instance you wish to add to the children of this Instance.</param>
         public void AddChildI(Instance Ins) => Children.Add(Ins, this);
 
+        /// <summary>
+        /// Event handler for the <see cref="ObjectCreated"/> event.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function.
+        /// </summary>
+        public ObjectCreated OnCreated { get; set; }
+
+        /// <summary>
+        /// Event handler for the <see cref="ObjectDestroyed"/> event.
+        ///
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function.
+        /// </summary>
+        public ObjectDestroyed OnDestroyed { get; set; }
+
+        /// <summary>
+        /// Key up event handler.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function.
+        public KeyUpEvent KeyUp { get; set; }
+
+        /// <summary>
+        /// Key down event handler.
+        /// 
+        /// Default event handler may be implemented by any Lightning class.
+        /// 
+        /// Scripts may modify the event handler function. 
+        /// </summary>
+
+        public KeyDownEvent OnKeyDownHandler { get; set; }
         public GenericResult RemoveChild(Instance Chl)
         {
             GenericResult GR = new GenericResult();
