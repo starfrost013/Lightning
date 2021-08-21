@@ -217,13 +217,9 @@ namespace Lightning.Core.API
             {
                 Instance TestInstance = (Instance)Obj;
 
-                // Services are removed by the SCM.
-                if (ObjType.IsSubclassOf(typeof(Service))) return;
-
                 // Save the parent of this instance.
                 Instance InstanceParent;
 
-                // If parent isn't specified, try to find a parent. If
                 if (Parent == null)
                 {
                     InstanceParent = TestInstance.Parent;
@@ -232,6 +228,7 @@ namespace Lightning.Core.API
                 {
                     InstanceParent = Parent; 
                 }
+                
 
                 // Check that the instance is destroyable. 
                 if (!TestInstance.Attributes.HasFlag(InstanceTags.Destroyable))
@@ -246,7 +243,7 @@ namespace Lightning.Core.API
                         TestInstance.OnDestroyed(this);
                     }
 
-                    if (Parent == null) // If there is no parent, check ParentCanBeNull to see if it is inserted at the DataModel root or the Workspace.
+                    if (InstanceParent == null) // If there is no parent, check ParentCanBeNull to see if it is inserted at the DataModel root or the Workspace.
                     {
                         if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
                         {
@@ -280,7 +277,7 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        if (Parent.Children.Contains(TestInstance))
+                        if (InstanceParent.Children.Contains(TestInstance))
                         {
                             Remove_PerformRemove(TestInstance, Parent);
                         }

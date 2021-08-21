@@ -84,6 +84,7 @@ namespace Lightning.Core.API
                 if (!GGSR_DebugMode.Successful)
                 {
                     OnStart_ShutdownDebugNotEnabled();
+                    return; 
                 }
                 else
                 {
@@ -91,7 +92,13 @@ namespace Lightning.Core.API
 
                     bool IsThisService = (bool)DebugMode_Setting.SettingValue;
 
-                    if (!IsThisService) OnStart_ShutdownDebugNotEnabled();
+                    if (!IsThisService)
+                    {
+                        OnStart_ShutdownDebugNotEnabled();
+                        return; 
+                    }
+
+                    
                 }
             }
 
