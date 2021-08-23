@@ -157,7 +157,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "DisplayViewportMustBeLargerThanSizeForTilingException", Description = "To display an ImageBrush or AnimationFrame with TextureDisplayMode set to Tile, its DisplayViewport must be set and be set to a larger value than its Size value.", Severity = MessageSeverity.Warning, Id = 137 });
          /* Error ID 138 - 199: NuRender reserved */
          ErrorManager.RegisterError( new Error { Name = "ArchitecturalIncapablityAmbiguousMatchException", Description = "ENGINE BUG!\nLightning is presently architecturally incapable of using overloads in any class that is DDMS enabled. This will somehow be fixed at some point but currently this is an engine bug.\n\nREPORT THIS ASAP!", Severity = MessageSeverity.Error, Id = 200 });
-
+            ErrorManager.RegisterError(new Error { Name = "UnableToAcquireDebugGuiException", Description = "Failed to create Debug GUI [currently using a shit temp hacky way]", Severity = MessageSeverity.Error, Id = 201 });
      }
   }
 }

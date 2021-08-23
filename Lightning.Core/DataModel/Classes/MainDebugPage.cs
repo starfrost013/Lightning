@@ -31,6 +31,13 @@ namespace Lightning.Core.API
 
         }
 
+        private void MDP_Render(Renderer SDL_Renderer, ImageBrush Tx)
+        {
+            ScreenGui DebugGui = GetDebugGui(); 
+            Text Txt = (Text)DataModel.CreateInstance("Text", DebugGui);
+
+            Txt.Content = "Instances: ";
+        }
 
         
     }

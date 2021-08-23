@@ -57,11 +57,19 @@ namespace Lightning.Core.API
             }
             else
             {
+                if (!DebugPagesEnabled)
+                {
+                    return;
+                }
+                else
+                {
 
+                }
             }
             return;
         }
 
+        
         private void IGD_Init()
         {
 
@@ -110,6 +118,8 @@ namespace Lightning.Core.API
             IGDSERVICE_INITIALISED = true;
 
         }
+
+
 
         /// <summary>
         /// DEBUG ONLY: Renders engine debugging information.

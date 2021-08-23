@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,8 +24,7 @@ namespace Lightning.Core.API
 
         internal bool DEBUGPAGE_INITIALISED { get; set; }
 
-        private ScreenGui DebugGui { get; set; } // this is shit
-
+        private string DebugGuiName => "DebugGui";
         internal void DP_Init()
         {
 
@@ -87,7 +87,50 @@ namespace Lightning.Core.API
 
         private void DP_Init_CreateDebugPage(Vector2 DbgPageBegin, Vector2 DbgPageEnd)
         {
+            Workspace Ws = DataModel.GetWorkspace();
 
+            // TEMP code until nested rendering
+            ScreenGui SGUI = (ScreenGui)DataModel.CreateInstance("ScreenGui", Ws);
+
+            SGUI.Name = DebugGuiName;
+
+            TextBox Main = (TextBox)SGUI.AddChild("TextBox");
+
+            Main.Position = DbgPageBegin;
+            Main.Size = DbgPageEnd - DbgPageBegin;
+            Main.BackgroundColour = new Color4(127, 0, 0, 0);
+            Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
+
+        }
+
+        internal ScreenGui GetDebugGui()
+        {
+            // TEMP CODE UNTIL WE CAN FIX THIS SHIT 
+            GetMultiInstanceResult GMIR = GetAllChildrenOfType("ScreenGui");
+
+            if (!GMIR.Successful
+            || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "UnableToAcquireDebugGuiException");
+                return null; 
+            }
+            else
+            {
+                List<Instance> InstanceList = (List<Instance>)GMIR.Instances;
+                List<ScreenGui> ScGuiList = ListTransfer<Instance, ScreenGui>.TransferBetweenTypes(InstanceList);
+
+                // todo: when we actually have nested rendering fix this bullshit
+                foreach (ScreenGui SGui in ScGuiList)
+                {
+                    if (SGui.Name == DebugGuiName)
+                    {
+                        return SGui;
+                    }
+                }
+
+                return null;
+                
+            }
         }
     }
 }
