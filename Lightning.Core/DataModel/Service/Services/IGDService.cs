@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// IGDService (In-Game Debugging Service)
     /// 
-    /// August 20, 2021
+    /// August 20, 2021 (modified August 23, 2021)
     /// 
     /// Provides in-game debugging services for Lightning.
     /// </summary>
@@ -21,6 +21,8 @@ namespace Lightning.Core.API
         private string CurrentDebugString { get; set; }
 
         private bool DebugPagesEnabled { get; set; }
+        private string DebugGuiName => "DebugGui";
+
         public override ServiceStartResult OnStart() 
         {
             Logging.Log("IGDService Init", ClassName);
@@ -110,6 +112,8 @@ namespace Lightning.Core.API
                 }
             }
 
+            Init_CreateDebugPage(); 
+
 #if DEBUG
 
             CurrentDebugString = DebugStrings.GetDebugString();
@@ -137,7 +141,7 @@ namespace Lightning.Core.API
 
             GuiRoot GR = (GuiRoot)DataModel.CreateInstance("GuiRoot"); // will enter workspace
 
-            ScreenGui SG = (ScreenGui)DataModel.CreateInstance("ScreenGui", GR);
+            DebugGui SG = (DebugGui)DataModel.CreateInstance("DebugGui", GR);
 
             // create 3 lines of text (todo: multiline text)
             Text DebugTextLine1 = (Text)DataModel.CreateInstance("Text", SG);
@@ -179,6 +183,23 @@ namespace Lightning.Core.API
         }
 
 
+        private void Init_CreateDebugPage(Vector2 DbgPageBegin, Vector2 DbgPageEnd)
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            // TEMP code until nested rendering
+            DebugGui SGUI = (DebugGui)DataModel.CreateInstance("DebugGui", Ws);
+
+            SGUI.Name = DebugGuiName;
+
+            TextBox Main = (TextBox)SGUI.AddChild("TextBox");
+
+            Main.Position = DbgPageBegin;
+            Main.Size = DbgPageEnd - DbgPageBegin;
+            Main.BackgroundColour = new Color4(127, 0, 0, 0);
+            Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
+
+        }
 
         public override void OnDataSent(ServiceMessage Data)
         {

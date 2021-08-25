@@ -529,6 +529,40 @@ namespace Lightning.Core.API
         /// <returns></returns>
         internal static InstanceCollection GetState() => State;
 
-        public static GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => State.GetAllChildrenOfType(ClassName); 
+        public static GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => State.GetAllChildrenOfType(ClassName);
+
+#if DEBUG
+        #region DEBUG only
+
+        public static int CountInstances() => DoCountInstances(); 
+
+
+        private static int DoCountInstances()
+        {
+            int InstanceCount = 0;
+
+            
+            return InstanceCount; // temp
+        }
+
+        private static int DoCountInstances_CountChildren(Instance Ins, int InstanceCount)
+        {
+            InstanceCount = 0;
+
+            foreach (Instance Child in Ins.Children)
+            {
+                InstanceCount++;
+                
+                if (Child.Children.Count > 0)
+                {
+                    DoCountInstances_CountChildren(Child, InstanceCount);
+                }
+            }
+
+            return InstanceCount;
+        }
+
+        #endregion
+#endif
     }
 }
