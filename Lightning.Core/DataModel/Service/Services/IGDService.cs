@@ -279,6 +279,7 @@ namespace Lightning.Core.API
             DebugGui SGUI = (DebugGui)DataModel.CreateInstance("DebugGui", Ws);
 
             SGUI.Name = DebugGuiName;
+            SGUI.Position = DbgPageBegin;
 
             TextBox Main = (TextBox)SGUI.AddChild("TextBox");
 
@@ -286,6 +287,8 @@ namespace Lightning.Core.API
             Main.Size = DbgPageEnd - DbgPageBegin;
             Main.BackgroundColour = new Color4(127, 0, 0, 0);
             Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
+
+           
 
             MainDebugPage MDP = (MainDebugPage)DataModel.CreateInstance("MainDebugPage", SGUI);
             MDP.IsOpen = true;

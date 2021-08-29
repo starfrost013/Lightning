@@ -39,7 +39,7 @@ namespace Lightning.Core.API
             Text Txt = (Text)DataModel.CreateInstance("Text", DGUI);
 
             Txt.Content = $"Instances: {DataModel.CountInstances()}";
-            Txt.Position = Position + new Vector2(5, 20);
+            Txt.Position = DGUI.Position + new Vector2(5, 20);
             Txt.Colour = new Color4(255, 255, 255, 255);
 
 

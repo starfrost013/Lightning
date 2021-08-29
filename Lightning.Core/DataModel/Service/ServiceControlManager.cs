@@ -451,8 +451,9 @@ namespace Lightning.Core.API
             Logging.Log("The engine is shutting down...", ClassName);
             // Shuts down the engine by first killing all services, then clearing the DataModel
             // and finally exiting the process.
-            KillAllServices();
+           
             DataModel.Shutdown();
+            KillAllServices();
 
             Logging.Log("The engine has shut down. Exiting.");
             Environment.Exit(0);

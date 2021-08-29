@@ -16,7 +16,7 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "DebugGui";
 
-        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable;
+        internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable | InstanceTags.ParentCanBeNull;
         /// <summary>
         /// The header of this debug page.
         /// </summary>
