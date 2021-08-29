@@ -322,7 +322,7 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Checks if the srevce
+        /// Checks if the service <see cref="Service"/>
         /// </summary>
         /// <param name="ClassName"></param>
         /// <returns></returns>

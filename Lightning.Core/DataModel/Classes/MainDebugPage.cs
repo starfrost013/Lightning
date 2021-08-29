@@ -8,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// MainDebugPage
     /// 
-    /// August 20, 2021 (modified August 24, 2021)
+    /// August 20, 2021 (modified August 27, 2021)
     /// 
     /// Defines the main debugging page.
     /// </summary>
@@ -16,6 +16,7 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "MainDebugPage";
 
+        public bool Active { get; set; }
         private bool MAINDEBUGPAGE_INITIALISED { get; set; }
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
@@ -33,12 +34,22 @@ namespace Lightning.Core.API
 
         private void MDP_Build()
         {
-            Text Txt = (Text)DataModel.CreateInstance("Text", this);
+            DebugGui DGUI = GetDebugGui();
+
+            Text Txt = (Text)DataModel.CreateInstance("Text", DGUI);
 
             Txt.Content = $"Instances: {DataModel.CountInstances()}";
             Txt.Position = Position + new Vector2(5, 20);
             Txt.Colour = new Color4(255, 255, 255, 255);
 
+
+            MDP_SetTextFontFamilyForDebug(Txt);
+            
+            
+        }
+
+        private void MDP_SetTextFontFamilyForDebug(Text Txt)
+        {
             GlobalSettings GS = DataModel.GetGlobalSettings();
 
             if (GS.DebugDefaultFontName != null)
@@ -49,8 +60,6 @@ namespace Lightning.Core.API
             {
                 Txt.FontFamily = "Arial.14pt for DEBUG";
             }
-            
-            
         }
 
         private DebugGui GetDebugGui()
@@ -70,6 +79,8 @@ namespace Lightning.Core.API
 
                 return DGUI; 
             }
+
+            return null; 
         }
         
     }

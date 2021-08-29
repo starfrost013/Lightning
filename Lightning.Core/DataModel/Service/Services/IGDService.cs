@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// IGDService (In-Game Debugging Service)
     /// 
-    /// August 20, 2021 (modified August 23, 2021)
+    /// August 20, 2021 (modified August 29, 2021)
     /// 
     /// Provides in-game debugging services for Lightning.
     /// </summary>
@@ -21,6 +21,45 @@ namespace Lightning.Core.API
         private string CurrentDebugString { get; set; }
 
         private bool DebugPagesEnabled { get; set; }
+
+        private int _windowwidth { get; set; }
+
+        /// <summary>
+        /// The current window width.
+        /// </summary>
+        private int WindowWidth 
+        {
+            get
+            {
+                return _windowwidth; 
+            }
+            set
+            {
+                _windowwidth = value;
+
+                if (WindowHeight > 0) WindowSize = new Vector2(WindowWidth, WindowHeight); 
+            }
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="WindowHeight"/>.
+        /// </summary>
+        private int _windowheight { get; set; }
+        private int WindowHeight 
+        {
+            get
+            {
+                return _windowheight;
+            }
+            set
+            {
+                _windowheight = value;
+                
+                if (WindowWidth > 0) WindowSize = new Vector2(WindowWidth, WindowHeight);
+            }
+        }
+
+        private Vector2 WindowSize { get; set; }
         private string DebugGuiName => "DebugGui";
 
         public override ServiceStartResult OnStart() 
@@ -57,17 +96,7 @@ namespace Lightning.Core.API
             {
                 IGD_Init();
             }
-            else
-            {
-                if (!DebugPagesEnabled)
-                {
-                    return;
-                }
-                else
-                {
 
-                }
-            }
             return;
         }
 
@@ -112,18 +141,66 @@ namespace Lightning.Core.API
                 }
             }
 
-            Init_CreateDebugPage(); 
-
 #if DEBUG
 
             CurrentDebugString = DebugStrings.GetDebugString();
             CreateDebugText(); // call before font loading so we don't have to load the font again
+            Init_CreateDebugGui();
 #endif
             IGDSERVICE_INITIALISED = true;
 
         }
 
 
+        private void Init_GetWindowWidthAndHeight()
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
+
+            if (!GIR.Successful
+            || GIR.Instance == null)
+            {
+                ErrorManager.ThrowError(ClassName, "GameSettingsFailedToLoadException");
+            }
+            else
+            {
+                GameSettings GS = (GameSettings)GIR.Instance;
+
+                GetGameSettingResult GGSR_INeedToFixThisSystem = GS.GetSetting("WindowWidth");
+                GetGameSettingResult GGSR_WindowHeight = GS.GetSetting("WindowHeight");
+
+                if (!GGSR_INeedToFixThisSystem.Successful
+                || !GGSR_WindowHeight.Successful
+                || GGSR_INeedToFixThisSystem.Setting == null
+                || GGSR_WindowHeight.Setting == null)
+                {
+                    ErrorManager.ThrowError(ClassName, "FailedToObtainCriticalGameSettingException", "Failed to obtain WindowWidth or WindowHeight game setting!");
+                    return; 
+                }
+                else
+                {
+                    GameSetting WindowWidth_Setting = GGSR_INeedToFixThisSystem.Setting;
+                    GameSetting WindowHeight_Setting = GGSR_WindowHeight.Setting;
+
+                    try
+                    {
+                        WindowHeight = (int)WindowWidth_Setting.SettingValue;
+                        WindowWidth = (int)WindowHeight_Setting.SettingValue;
+                        
+                    }
+                    catch (Exception err)
+                    {
+#if DEBUG 
+                        ErrorManager.ThrowError(ClassName, "FailedToObtainCriticalGameSettingException", $"Failed to obtain WindowWidth or WindowHeight game setting!\n\n{err}");
+#else
+                        ErrorManager.ThrowError(ClassName, "FailedToObtainCriticalGameSettingException", "Failed to obtain WindowWidth or WindowHeight game setting!");
+#endif
+                    }
+                }
+
+            }
+        }
 
         /// <summary>
         /// DEBUG ONLY: Renders engine debugging information.
@@ -141,7 +218,7 @@ namespace Lightning.Core.API
 
             GuiRoot GR = (GuiRoot)DataModel.CreateInstance("GuiRoot"); // will enter workspace
 
-            DebugGui SG = (DebugGui)DataModel.CreateInstance("DebugGui", GR);
+            ScreenGui SG = (ScreenGui)DataModel.CreateInstance("ScreenGui", GR);
 
             // create 3 lines of text (todo: multiline text)
             Text DebugTextLine1 = (Text)DataModel.CreateInstance("Text", SG);
@@ -183,6 +260,17 @@ namespace Lightning.Core.API
         }
 
 
+        private void Init_CreateDebugGui()
+        {
+            Init_GetWindowWidthAndHeight();
+
+
+            Vector2 DbgPageBegin = WindowSize * new Vector2(0.2, 0.2);
+            Vector2 DbgPageEnd = WindowSize * new Vector2(0.8, 0.8);
+
+            Init_CreateDebugPage(DbgPageBegin, DbgPageEnd);
+        }
+
         private void Init_CreateDebugPage(Vector2 DbgPageBegin, Vector2 DbgPageEnd)
         {
             Workspace Ws = DataModel.GetWorkspace();
@@ -199,8 +287,12 @@ namespace Lightning.Core.API
             Main.BackgroundColour = new Color4(127, 0, 0, 0);
             Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
 
+            MainDebugPage MDP = (MainDebugPage)DataModel.CreateInstance("MainDebugPage", SGUI);
+            MDP.IsOpen = true;
+            
         }
 
+        
         public override void OnDataSent(ServiceMessage Data)
         {
             return; 

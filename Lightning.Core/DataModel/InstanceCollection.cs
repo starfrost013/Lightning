@@ -279,7 +279,7 @@ namespace Lightning.Core.API
                     {
                         if (InstanceParent.Children.Contains(TestInstance))
                         {
-                            Remove_PerformRemove(TestInstance, Parent);
+                            Remove_PerformRemove(TestInstance, InstanceParent);
                         }
                         else
                         {

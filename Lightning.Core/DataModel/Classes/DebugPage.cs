@@ -14,5 +14,9 @@ namespace Lightning.Core.API
     public class DebugPage : GuiElement
     {
         internal override string ClassName => "DebugPage";
+
+        internal bool IsOpen { get; set; }
+
+        
     }
 }

@@ -14,6 +14,7 @@ namespace Lightning.Core.API
     /// 
     /// Modified 2021-03-06 to facilitate attributing.
     /// Modified 2021-03-07 for result classes.
+    /// Modified 2021-08-29 to check that the type being checked actually exists.
     /// </summary>
     public static class Instancer //SHOULD BE GENERIC TYPE PARAMETER!!!
     {
@@ -28,39 +29,47 @@ namespace Lightning.Core.API
         {
             InstantiationResult IR = new InstantiationResult(); 
 
-
-            if (!CreateInstance_CheckIfInstanceTypeIsInDataModel(Typ))
+            if (Typ == null)
             {
-                //todo: throw errpr
-
-                IR.FailureReason = "DataModel: Error instancing Instance: Class is not in the DataModel!";
-                return IR;
- 
+                IR.FailureReason = "Invalid type supplied!";
+                return IR; // Aug 29, 2021
             }
             else
             {
-
-                if (!CreateInstance_CheckIfClassIsInstantiable(Typ))
+                if (!CreateInstance_CheckIfInstanceTypeIsInDataModel(Typ))
                 {
+                    //todo: throw errpr
 
-                    IR.FailureReason = "DataModel: Class is not instantiable!";
-                    return IR; 
+                    IR.FailureReason = "DataModel: Error instancing Instance: Class is not in the DataModel!";
+                    return IR;
+
                 }
                 else
                 {
 
-                    Logging.Log($"Instantiating Instance with type: {Typ}", "Instancer");
+                    if (!CreateInstance_CheckIfClassIsInstantiable(Typ))
+                    {
 
-                    // may need more code here
-                    object NewT = Activator.CreateInstance(Typ);
-                    
-                    // by default it's set to false, which is why we are doing it
-                    IR.Successful = true;
-                    IR.Instance = NewT;
-                    return IR;
+                        IR.FailureReason = "DataModel: Class is not instantiable!";
+                        return IR;
+                    }
+                    else
+                    {
+
+                        Logging.Log($"Instantiating Instance with type: {Typ}", "Instancer");
+
+                        // may need more code here
+                        object NewT = Activator.CreateInstance(Typ);
+
+                        // by default it's set to false, which is why we are doing it
+                        IR.Successful = true;
+                        IR.Instance = NewT;
+                        return IR;
+                    }
+
                 }
-
             }
+            
 
         } // END SHOULD BE GENERIC TYPE PARAMETER
 

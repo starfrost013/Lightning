@@ -63,7 +63,11 @@
       <Type>System.Int32</Type>
       <Value>13</Value>
     </Setting>
-    
+    <Settings>
+      <Name>DebugMode</Name>
+      <Type>System.Boolean</Type>
+      <Value>True</Value>
+    </Settings>
   </Settings>
   <Workspace>
     <Font FontPath="Content\Fonts\Arial.ttf" Name="Arial.18pt" FontSize="18"></Font>

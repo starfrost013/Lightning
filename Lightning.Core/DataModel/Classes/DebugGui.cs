@@ -89,8 +89,27 @@ namespace Lightning.Core.API
         {
             if (!DEBUGPAGE_INITIALISED)
             {
-
+                DP_Init();
             }
+            else
+            {
+                DoRender(SDL_Renderer, Tx);
+            }
+        }
+
+
+        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
+        {
+            List<DebugPage> DebugPages = GetDebugPages();
+
+            foreach (DebugPage DP in DebugPages)
+            {
+                if (DP.IsOpen)
+                {
+                    DP.Render(SDL_Renderer, Tx);
+                    break; // only render one page.
+                }
+           }
         }
 
         internal List<DebugPage> GetDebugPages()
