@@ -22,7 +22,21 @@ namespace Lightning.Core.API
         /// </summary>
         public string Header { get; set; }
 
+        /// <summary>
+        /// Internal: determines if the debug page is initialised
+        /// </summary>
         internal bool DEBUGPAGE_INITIALISED { get; set; }
+
+        /// <summary>
+        /// Determines if this debug page is active.
+        /// </summary>
+        private bool Active { get; set; }
+
+        public override void OnCreate()
+        {
+            // TODO: List building methods in RenderService, etc, need to be recursive
+            OnKeyDownHandler += OnKeyDown;
+        }
 
         internal void DP_Init()
         {
@@ -61,10 +75,11 @@ namespace Lightning.Core.API
                         int WindowWidth = (int)WindowWidth_Setting.SettingValue;
                         int WindowHeight = (int)WindowHeight_Setting.SettingValue;
 
-                        Vector2 DbgPageBegin = new Vector2(WindowWidth * 0.2, WindowHeight * 0.2); // todo: gamesetting for this
+                        Vector2 DbgPageBegin = new Vector2(WindowWidth * 0.4, WindowHeight * 0.4); // todo: gamesetting for this
                         Vector2 DbgPageEnd = new Vector2(WindowWidth * 0.8, WindowHeight * 0.8);
 
-                        //DP_Init_CreateDebugPage(DbgPageBegin, DbgPageEnd);
+                        Init_ForceToScreen();
+                        
                         
                     }
                     catch (Exception err)
@@ -78,12 +93,38 @@ namespace Lightning.Core.API
                     }
 
                     DEBUGPAGE_INITIALISED = true;
+
+                    // by this point we have already verified that debug is enable
+                    Active = true; 
                     return;
 
                 }
             }
         }
 
+        private void Init_ForceToScreen()
+        {
+            GetMultiInstanceResult GMIR = GetAllChildrenOfType("GuiElement");
+
+            if (!GMIR.Successful
+            || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfGuiElementsException");
+                return; 
+            }
+            else
+            {
+                List<Instance> Instances = (List<Instance>)GMIR.Instances;
+
+                foreach (Instance Instance in Instances)
+                {
+                    GuiElement GR = (GuiElement)Instance;
+
+                    GR.ForceToScreen = true; 
+                }
+            }
+
+        }
 
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
@@ -93,7 +134,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                DoRender(SDL_Renderer, Tx);
+                if (Active) DoRender(SDL_Renderer, Tx);
             }
         }
 
@@ -107,6 +148,7 @@ namespace Lightning.Core.API
                 if (DP.IsOpen)
                 {
                     DP.Render(SDL_Renderer, Tx);
+                    base.Render(SDL_Renderer, Tx); // render all elements
                     break; // only render one page.
                 }
            }
@@ -128,9 +170,18 @@ namespace Lightning.Core.API
                 List<Instance> Instances = GMIR.Instances;
                 List<DebugPage> DebugPages = ListTransfer<Instance, DebugPage>.TransferBetweenTypes(Instances);
 
+                
                 return DebugPages; 
                 
             }
+        }
+
+        private void OnKeyDown(object Sender, KeyEventArgs EventArgs)
+        {
+            string TheKey = EventArgs.Key.KeyCode.ToString();
+
+            if (TheKey == "ESCAPE") Active = !Active;
+
         }
     }
 }

@@ -536,8 +536,9 @@ namespace Lightning.Core.API
         {
             int InstanceCount = 0;
 
-            
-            return InstanceCount; // temp
+            Workspace Ws = GetWorkspace();
+
+            return DoCountInstances_CountChildren(Ws, InstanceCount); // temp
         }
 
         private static int DoCountInstances_CountChildren(Instance Ins, int InstanceCount)

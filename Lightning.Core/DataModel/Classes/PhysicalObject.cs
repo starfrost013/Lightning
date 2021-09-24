@@ -76,6 +76,13 @@ namespace Lightning.Core.API
         /// Is this object at rest?
         /// </summary>
         public bool AtRest { get; set; }
+
+
+        /// <summary>
+        /// This is completely fucking bullshit but is required for screengui and it makes me sad
+        /// </summary>
+        internal bool ForceToScreen { get; set; }
+
         /// <summary>
         /// Ran on the spawning of an object, before it is rendered for the first time and after the initialisation of the renderer.
         /// </summary>

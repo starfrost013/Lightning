@@ -28,7 +28,6 @@ namespace Lightning.Core.API
         /// </summary>
         public List<Script> RunningScripts { get; set; } // potentially move to children
 
-        public ScriptInterpreterState State { get; set; }
 
         /// <summary>
         /// The Lua sandbox.
@@ -40,7 +39,6 @@ namespace Lightning.Core.API
         {   
             ExposedMethods = new List<ScriptMethod>();
             RunningScripts = new List<Script>();
-            State = new ScriptInterpreterState();
             // Pretty temporary code lol
             Sandbox = new LuaSandbox();
             LoadScript(Sandbox);

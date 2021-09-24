@@ -88,6 +88,7 @@
       </LinearGradientBrush>
     </Rectangle>
 
+    <!--
     <Rectangle Fill="True" CanCollide="False" Position="310,108" Size="40,40" ZIndex="0" Name="FilledRectangle2">
       <LinearGradientBrush Direction="Right">
         <GradientStop StopPoint="0.0" Colour="255,0,0,0"></GradientStop>
@@ -136,6 +137,7 @@
         <GradientStop StopPoint="1.0" Colour="255,255,255,255"></GradientStop>
       </LinearGradientBrush>
     </Rectangle>
+    -->
 
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     

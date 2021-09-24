@@ -248,10 +248,9 @@ namespace Lightning.Core.API
             DebugTextLine2.Position = new Vector2(Position.X, Position.Y + 18);
             DebugTextLine3.Position = new Vector2(Position.X, Position.Y + 36);
 
-            string FontName = "Arial.14pt for DEBUG";
-            DebugTextLine1.FontFamily = FontName;
-            DebugTextLine2.FontFamily = DebugTextLine1.FontFamily;
-            DebugTextLine3.FontFamily = DebugTextLine2.FontFamily;
+            DebugTextLine1.FontFamily = GetDebugFontName();
+            DebugTextLine2.FontFamily = GetDebugFontName();
+            DebugTextLine3.FontFamily = GetDebugFontName();
 
 
 #else
@@ -259,6 +258,19 @@ namespace Lightning.Core.API
 #endif
         }
 
+        private string GetDebugFontName()
+        {
+            GlobalSettings GS = DataModel.GetGlobalSettings();
+
+            if (GS.DebugDefaultFontName == null)
+            {
+                return GS.DebugDefaultFontName;
+            }
+            else
+            {
+                return "Arial.14pt for DEBUG";
+            }
+        }
 
         private void Init_CreateDebugGui()
         {
@@ -284,15 +296,16 @@ namespace Lightning.Core.API
             TextBox Main = (TextBox)SGUI.AddChild("TextBox");
 
             Main.Position = DbgPageBegin;
-            Main.Size = DbgPageEnd - DbgPageBegin;
+            Main.Size = WindowSize - DbgPageBegin;
             Main.BackgroundColour = new Color4(127, 0, 0, 0);
             Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
-
-           
+            Main.FontFamily = GetDebugFontName();
+            Main.DoNotAutoResize = true;
+            Main.Fill = true;
 
             MainDebugPage MDP = (MainDebugPage)DataModel.CreateInstance("MainDebugPage", SGUI);
             MDP.IsOpen = true;
-            
+            MDP.MDP_Build(); 
         }
 
         

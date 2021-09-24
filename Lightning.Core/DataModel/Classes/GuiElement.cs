@@ -27,10 +27,6 @@ namespace Lightning.Core.API
         /// </summary>
         public Alignment VerticalAlignment { get; set; }
 
-        /// <summary>
-        /// This is completely fucking bullshit but is required for screengui and it makes me sad
-        /// </summary>
-        internal bool ForceToScreen { get; set; }
 
         /// <summary>
         /// <inheritdoc/>

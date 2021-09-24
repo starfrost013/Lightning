@@ -20,6 +20,7 @@ namespace Lightning.Core.API
         private bool TEXTBOX_INITIALISATION_FAILED { get; set; }
         public Vector2 Padding { get; set; }
 
+        public bool DoNotAutoResize { get; set; }
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
             if (TEXTBOX_INITIALISATION_FAILED) return;
@@ -57,6 +58,9 @@ namespace Lightning.Core.API
             ItemRectangle.Colour = BorderColour;
             ItemRectangle.BackgroundColour = BackgroundColour;
             ItemRectangle.Fill = Fill;
+            ItemRectangle.ForceToScreen = ForceToScreen;
+
+            if (DoNotAutoResize) ItemRectangle.Size = Size; 
 
             Vector2 FontSize = null;
 
@@ -129,6 +133,7 @@ namespace Lightning.Core.API
             {
                 Position.Y = ItemRectangle.Position.Y + ItemRectangle.Size.Y;
             }
+            
 
             TEXTBOX_INITIALISED = true;
         }

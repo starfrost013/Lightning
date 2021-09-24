@@ -34,8 +34,17 @@ namespace Lightning.Core.API
 
                 SDL.SDL_Rect SR1 = new SDL.SDL_Rect();
 
-                SR1.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                SR1.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                if (!ForceToScreen)
+                {
+                    SR1.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
+                    SR1.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                }
+                else
+                {
+                    SR1.x = (int)Position.X;
+                    SR1.y = (int)Position.Y;
+                }
+
                 SR1.w = (int)Size.X;
                 SR1.h = (int)Size.Y;
 
@@ -76,8 +85,12 @@ namespace Lightning.Core.API
             SR2.w = (int)BorderSize.X;
             SR2.h = (int)BorderSize.Y;
 
-            SR2.x -= (int)SDL_Renderer.CCameraPosition.X;
-            SR2.y -= (int)SDL_Renderer.CCameraPosition.Y;
+            if (!ForceToScreen)
+            {
+                SR2.x -= (int)SDL_Renderer.CCameraPosition.X;
+                SR2.y -= (int)SDL_Renderer.CCameraPosition.Y;
+            }
+
 
             BorderFill = true; 
 
