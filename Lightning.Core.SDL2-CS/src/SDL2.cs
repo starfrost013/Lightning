@@ -1,12 +1,14 @@
 #region License
 /* Lightning SDL2 Wrapper
  * 
- * 2021-04-03
+ * Version 2.0.19 (NuRender/Lightning) 
+ * Copyright © 2021 starfrost
+ * September 29, 2021
  * 
  * This software is based on the open-source SDL2# - C# Wrapper for SDL2 library.
  *
- * Copyright (c) 2013-2021 Ethan Lee.
  * Copyright © 2021 starfrost.
+ * Copyright (c) 2013-2021 Ethan Lee.
  * 
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from
@@ -38,7 +40,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 #endregion
 
-namespace Lightning.Core.SDL2
+namespace NuRender.SDL2
 {
 	public static class SDL
 	{
@@ -46,11 +48,18 @@ namespace Lightning.Core.SDL2
 
 		// This has been reverted,
 		// as it turns out that SDL2_image etc 
-		// HARD look for the DLL labelled SDL2.dll
-		// therefore we can't rename it. Using .csproj trickery to get around this
+		// have a hard import for the DLL labelled SDL2.dll
+		// therefore we can't rename it. Using .csproj trickery to get around this>
 		private const string nativeLibName = "SDL2";
 
-		private const string SDL2_LIGHTNING_VERSION = "SDL2-CS for Lightning version 0.2+ © 2021 starfrost / © 2013-2021 Ethan Lee";
+		/// <summary>
+		/// The version of SDL2-CS for Lightning
+		/// </summary>
+		private static string SDL2CS_VERSION = $"SDL2-CS version {SDL2CS_VERSION_MAJOR}.{SDL2CS_VERSION_MINOR}.{SDL2CS_VERSION_REVISION} for Lightning & NuRender\n©2021 starfrost\n©2013-2021 Ethan Lee"; // cannot be const
+
+		private const int SDL2CS_VERSION_MAJOR = 2;
+		private const int SDL2CS_VERSION_MINOR = 0;
+		private const int SDL2CS_VERSION_REVISION = 19;
 		#endregion
 
 		#region UTF8 Marshaling
@@ -3839,15 +3848,22 @@ namespace Lightning.Core.SDL2
 			IntPtr palette
 		);
 
-#endregion
+		#endregion
 
-#region SDL_rect.h
+		#region SDL_rect.h
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Point
 		{
 			public int x;
 			public int y;
+
+
+			public SDL_Point(int XPos, int YPos) // NuRender 2021-09-29
+			{
+				x = XPos;
+				y = YPos;
+			}
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -3857,6 +3873,14 @@ namespace Lightning.Core.SDL2
 			public int y;
 			public int w;
 			public int h;
+
+			public SDL_Rect(int XPos, int YPos, int Width, int Height) // NuRender 2021-09-29
+			{
+				x = XPos;
+				y = YPos;
+				w = Width;
+				h = Height;
+			}
 		}
 
 		/* Only available in 2.0.10 or higher. */
@@ -3865,6 +3889,12 @@ namespace Lightning.Core.SDL2
 		{
 			public float x;
 			public float y;
+
+			public SDL_FPoint(float XPos, float YPos) // NuRender 2021-09-29
+			{
+				x = XPos;
+				y = YPos;
+			}
 		}
 
 		/* Only available in 2.0.10 or higher. */
@@ -3875,6 +3905,14 @@ namespace Lightning.Core.SDL2
 			public float y;
 			public float w;
 			public float h;
+
+			public SDL_FRect(float XPos, float YPos, float Width, float Height) // NuRender 2021-09-29
+			{
+				x = XPos;
+				y = YPos;
+				w = Width;
+				h = Height;
+			}
 		}
 
 		/* Only available in 2.0.4 or higher. */
