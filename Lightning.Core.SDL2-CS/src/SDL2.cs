@@ -40,7 +40,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 #endregion
 
-namespace NuRender.SDL2
+namespace Lightning.SDL2
 {
 	public static class SDL
 	{
