@@ -8,6 +8,5 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter =
     [ "ExposedMethods", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html#a18cae525ec69133139f79ffc6fdde5de", null ],
     [ "LuaState", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html#acd8c111c6ef12f6549182c4bba95790c", null ],
     [ "RunningScripts", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html#aa3b6fdbbba36dab94ff328b3bfd66ffc", null ],
-    [ "Sandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html#a8e6d84be5a1c96ec1443d6c64303f896", null ],
-    [ "State", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html#aec4984274e3765182fa3315e4c551ed1", null ]
+    [ "Sandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html#a8e6d84be5a1c96ec1443d6c64303f896", null ]
 ];

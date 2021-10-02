@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning Game Engine
-   &#160;<span id="projectnumber">Nightly 8/17 - 0.3.885 - Experimental SDK</span>
+   &#160;<span id="projectnumber">10/2 - 0.3.939 - SDK</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -119,9 +119,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0574463d4e681f51fabc0dcc4744164e"><td class="memItemLeft" align="right" valign="top"><a id="a0574463d4e681f51fabc0dcc4744164e"></a>
 <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection_enumerator.html">InstanceCollectionEnumerator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetEnumerator</b> ()</td></tr>
 <tr class="separator:a0574463d4e681f51fabc0dcc4744164e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad870b0c20348305a17acea1d44c3a3f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#ad870b0c20348305a17acea1d44c3a3f5">Add</a> (object Obj, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html">Instance</a> Parent=null)</td></tr>
-<tr class="memdesc:ad870b0c20348305a17acea1d44c3a3f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the object <em>Obj</em>  to the children of this Object.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#ad870b0c20348305a17acea1d44c3a3f5">More...</a><br /></td></tr>
-<tr class="separator:ad870b0c20348305a17acea1d44c3a3f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed90f288fb60d2a60bb491c039d292be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be">Add</a> (object Obj, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html">Instance</a> Parent=null, <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aad0b7289cddf2906b5c81d45ae98c3ef">ObjectCreated</a> OCHandler=null)</td></tr>
+<tr class="memdesc:aed90f288fb60d2a60bb491c039d292be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the object <em>Obj</em>  to the children of this Object.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be">More...</a><br /></td></tr>
+<tr class="separator:aed90f288fb60d2a60bb491c039d292be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ad49f375b0e1cc991f7e322d80044eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a8ad49f375b0e1cc991f7e322d80044eb">Remove</a> (object Obj, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html">Instance</a> Parent=null)</td></tr>
 <tr class="memdesc:a8ad49f375b0e1cc991f7e322d80044eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an Object from the <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html">InstanceCollection</a>.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a8ad49f375b0e1cc991f7e322d80044eb">More...</a><br /></td></tr>
 <tr class="separator:a8ad49f375b0e1cc991f7e322d80044eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,8 +160,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Count</b><code> [get]<
 <tr class="separator:a5b20de5e0dcdaa7b81f665a647032931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad870b0c20348305a17acea1d44c3a3f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad870b0c20348305a17acea1d44c3a3f5">&#9670;&nbsp;</a></span>Add()</h2>
+<a id="aed90f288fb60d2a60bb491c039d292be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed90f288fb60d2a60bb491c039d292be">&#9670;&nbsp;</a></span>Add()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +176,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Count</b><code> [get]<
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html">Instance</a>&#160;</td>
-          <td class="paramname"><em>Parent</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>Parent</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aad0b7289cddf2906b5c81d45ae98c3ef">ObjectCreated</a>&#160;</td>
+          <td class="paramname"><em>OCHandler</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

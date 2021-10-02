@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning Game Engine
-   &#160;<span id="projectnumber">Nightly 8/17 - 0.3.885 - Experimental SDK</span>
+   &#160;<span id="projectnumber">10/2 - 0.3.939 - SDK</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -193,6 +193,9 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 <li>CurrentAnimationName
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush.html#a096f571084d8211305d0b12c9b971389">Lightning.Core.API.AnimatedImageBrush</a>
 </li>
+<li>CurrentFrame
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animation_updated_event_args.html#ac827435a528b8d48e55ff73cd8af368b">Lightning.Core.API.AnimationUpdatedEventArgs</a>
+</li>
 <li>CurrentScriptRunningStopwatch
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a106165c6789fdc9a6e160595ece68646">Lightning.Core.API.Script</a>
 </li>
@@ -218,6 +221,9 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 </li>
 <li>Description
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a6ea4e21dc200c2176e536dc068a9b1a3">Lightning.Core.API.GameMetadata</a>
+</li>
+<li>Direction
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_linear_gradient_brush.html#aec1e111b83c56e22312812edf9997a20">Lightning.Core.API.LinearGradientBrush</a>
 </li>
 <li>DisplayHealthBar
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a375df81e1e8f5d04c4a4f219972363c8">Lightning.Core.API.Humanoid</a>
@@ -302,6 +308,9 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 
 
 <h3><a id="index_h"></a>- h -</h3><ul>
+<li>Header
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_debug_gui.html#af998ee5a5c1a4336b1fbe2477d417c39">Lightning.Core.API.DebugGui</a>
+</li>
 <li>Health
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#aaa8343a04fb90d345b5181dec15c9a58">Lightning.Core.API.Humanoid</a>
 </li>
@@ -345,9 +354,6 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 <li>IsColliding
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a05a0fefc620eea96ddc79b6cefa26d00">Lightning.Core.API.PhysicalObject</a>
 </li>
-<li>IsDebuggable
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_variable.html#a14a0944010eb2fc8c8a91b671a4510a8">Lightning.Core.API.Variable</a>
-</li>
 <li>IsPaused
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a6b9c91c0cdf79dde14ee6751fd5752eb">Lightning.Core.API.Script</a>
 </li>
@@ -372,7 +378,7 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a628f5cd51084823d0d2664b20184e230">Lightning.Core.API.Humanoid</a>
 </li>
 <li>KeyUp
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#aaeff0d25600509c4e27ad449b658793e">Lightning.Core.API.PhysicalObject</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a715d89000dc0f3d24339f201823e8858">Lightning.Core.API.Instance</a>
 </li>
 <li>KillPlane
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a2748da22eae0c25f13917e802ba7290f">Lightning.Core.API.Humanoid</a>
@@ -401,7 +407,8 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 
 <h3><a id="index_m"></a>- m -</h3><ul>
 <li>Manifold
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_collision_result.html#a2e7b4e0fcc08fdbc07c3455677c77135">Lightning.Core.API.CollisionResult</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_collision_event_args.html#af9cc823add9a5df8d9ca730bc9860c37">Lightning.Core.API.CollisionEventArgs</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_collision_result.html#a2e7b4e0fcc08fdbc07c3455677c77135">Lightning.Core.API.CollisionResult</a>
 </li>
 <li>Mass
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a104a36ab56e976484318f4e6d6ddc60c">Lightning.Core.API.PhysicalObject</a>
@@ -414,6 +421,9 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 </li>
 <li>MaximumForce
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#ac9de2cc211b0dda6a81d6d71023298de">Lightning.Core.API.PhysicalObject</a>
+</li>
+<li>MaxRepeats
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animation.html#af44949790dafacd427b8cbe093a740c6">Lightning.Core.API.Animation</a>
 </li>
 <li>MediumHealthColour
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#ae7f6eb5aa609451d36a7869971c040fe">Lightning.Core.API.Humanoid</a>
@@ -429,7 +439,6 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#aeea4402c64e40e9cfe8b7043306a438a">Lightning.Core.API.Instance</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info_property.html#aa809e401aaaf85acf890c7d510fb83a2">Lightning.Core.API.InstanceInfoProperty</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script_method.html#ac26af205d9c21abdbb0b4a551c4a8ac1">Lightning.Core.API.ScriptMethod</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_variable.html#a92f0ae2411d1959848f7fdd12ec6aa9b">Lightning.Core.API.Variable</a>
 </li>
 <li>NormalVector
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_manifold.html#ad98abef1d62c38fe4a95ed39f084407c">Lightning.Core.API.Manifold</a>
@@ -447,14 +456,23 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 <li>ObjectKillBoundary
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html#ac504ae1520d594f49d7e51d986442809">Lightning.Core.API.PhysicsState</a>
 </li>
+<li>OnAnimationUpdated
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animation.html#a3e78f3bb48c604343c05e11aad37ca71">Lightning.Core.API.Animation</a>
+</li>
 <li>OnCollisionEnd
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a592c7713bb7f3b1b99b1668f8395270c">Lightning.Core.API.PhysicalObject</a>
 </li>
 <li>OnCollisionStart
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a66c142ed93ba32c5304d112254994d65">Lightning.Core.API.PhysicalObject</a>
 </li>
+<li>OnCreated
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a4839e2c87a9b3424939a281d4b712a2c">Lightning.Core.API.Instance</a>
+</li>
+<li>OnDestroyed
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1cd19aacb14511e1e046782e95f67fab">Lightning.Core.API.Instance</a>
+</li>
 <li>OnKeyDownHandler
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adc0b970ea1176eb3d8caeedbad23923d">Lightning.Core.API.PhysicalObject</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7e54b72bb2c8e5c9c09cfebb38796387">Lightning.Core.API.Instance</a>
 </li>
 <li>OnMouseEnter
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a25f8e0facb17a8dae8288a44a5681705">Lightning.Core.API.PhysicalObject</a>
@@ -643,12 +661,6 @@ $(document).ready(function(){initNavTree('functions_prop.html',''); initResizabl
 
 
 <h3><a id="index_v"></a>- v -</h3><ul>
-<li>Value
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_variable.html#a5a8aa8d546b29a2ab0062589c60d8ab1">Lightning.Core.API.Variable</a>
-</li>
-<li>Variables
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter_state.html#abd9088e4cd21a533e6e2d061356409cc">Lightning.Core.API.ScriptInterpreterState</a>
-</li>
 <li>Version
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a2876eebfa0f8279174ed8951b0888181">Lightning.Core.API.GameMetadata</a>
 </li>

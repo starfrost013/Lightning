@@ -2,7 +2,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection =
 [
     [ "InstanceCollection", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a220ad61fa2953422284f5ad55529e23c", null ],
     [ "InstanceCollection", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a5093379493ff6ee248a80f1fc85dcfe5", null ],
-    [ "Add", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#ad870b0c20348305a17acea1d44c3a3f5", null ],
+    [ "Add", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be", null ],
     [ "Clear", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a2d289c7b7508fbde57586a3bb9cdadb3", null ],
     [ "Contains", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a20bf91d241de0aa7d07433ec29c235e3", null ],
     [ "GetAllChildrenOfType", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a90c8bda36a380936d6d0cff4cd96495a", null ],

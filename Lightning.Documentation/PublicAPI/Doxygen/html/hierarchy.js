@@ -3,8 +3,10 @@ var hierarchy =
     [ "Lightning.Core.API.AABB", "class_lightning_1_1_core_1_1_a_p_i_1_1_a_a_b_b.html", null ],
     [ "Lightning.Core.API.DataModel", "class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html", null ],
     [ "EventArgs", null, [
+      [ "Lightning.Core.API.AnimationUpdatedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_updated_event_args.html", null ],
       [ "Lightning.Core.API.CheckedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html", null ],
       [ "Lightning.Core.API.CollisionEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_collision_event_args.html", null ],
+      [ "Lightning.Core.API.KeyEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args.html", null ],
       [ "Lightning.Core.API.MouseEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args.html", null ],
       [ "Lightning.Core.API.ShutdownEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html", null ]
     ] ],
@@ -45,11 +47,13 @@ var hierarchy =
           [ "Lightning.Core.API.Font", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html", null ],
           [ "Lightning.Core.API.GuiRoot", "class_lightning_1_1_core_1_1_a_p_i_1_1_gui_root.html", [
             [ "Lightning.Core.API.Gui", "class_lightning_1_1_core_1_1_a_p_i_1_1_gui.html", [
+              [ "Lightning.Core.API.DebugGui", "class_lightning_1_1_core_1_1_a_p_i_1_1_debug_gui.html", null ],
               [ "Lightning.Core.API.ScreenGui", "class_lightning_1_1_core_1_1_a_p_i_1_1_screen_gui.html", null ],
               [ "Lightning.Core.API.SurfaceGui", "class_lightning_1_1_core_1_1_a_p_i_1_1_surface_gui.html", null ],
               [ "Lightning.Core.API.WorldGui", "class_lightning_1_1_core_1_1_a_p_i_1_1_world_gui.html", null ]
             ] ],
             [ "Lightning.Core.API.GuiElement", "class_lightning_1_1_core_1_1_a_p_i_1_1_gui_element.html", [
+              [ "Lightning.Core.API.DebugPage", "class_lightning_1_1_core_1_1_a_p_i_1_1_debug_page.html", null ],
               [ "Lightning.Core.API.GradientStop", "class_lightning_1_1_core_1_1_a_p_i_1_1_gradient_stop.html", null ],
               [ "Lightning.Core.API.Menu", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu.html", null ],
               [ "Lightning.Core.API.MenuItem", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_item.html", null ],
@@ -83,6 +87,7 @@ var hierarchy =
         [ "Lightning.Core.API.Workspace", "class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html", null ]
       ] ],
       [ "Lightning.Core.API.Service", "class_lightning_1_1_core_1_1_a_p_i_1_1_service.html", [
+        [ "Lightning.Core.API.IGDService", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html", null ],
         [ "Lightning.Core.API.PhysicsService", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html", null ],
         [ "Lightning.Core.API.RenderService", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html", null ],
         [ "Lightning.Core.API.ScriptingService", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html", null ],
@@ -118,7 +123,6 @@ var hierarchy =
       [ "Lightning.Core.API.ServiceStartResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_start_result.html", null ],
       [ "Lightning.Core.API.XmlSchemaResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_xml_schema_result.html", null ]
     ] ],
-    [ "Lightning.Core.API.KeyEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args.html", null ],
     [ "Lightning.Core.API.LightningXMLSchema", "class_lightning_1_1_core_1_1_a_p_i_1_1_lightning_x_m_l_schema.html", null ],
     [ "List", null, [
       [ "Lightning.Core.API.ConvertableStringList", "class_lightning_1_1_core_1_1_a_p_i_1_1_convertable_string_list.html", null ]
@@ -128,7 +132,6 @@ var hierarchy =
     [ "Lightning.Core.API.PhysicsState", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html", null ],
     [ "Lightning.Core.API.Renderer", "class_lightning_1_1_core_1_1_a_p_i_1_1_renderer.html", null ],
     [ "Lightning.Core.API.RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", null ],
-    [ "Lightning.Core.API.ScriptInterpreterState", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter_state.html", null ],
     [ "Lightning.Core.API.ScriptMethod", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method.html", null ],
     [ "Lightning.Core.API.ScriptMethodParameter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method_parameter.html", null ],
     [ "Lightning.Core.API.ServiceGlobalData", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_global_data.html", null ],
@@ -141,6 +144,5 @@ var hierarchy =
       [ "Lightning.Core.API.StringListConverter", "class_lightning_1_1_core_1_1_a_p_i_1_1_string_list_converter.html", null ],
       [ "Lightning.Core.API.Vector2Converter", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2_converter.html", null ]
     ] ],
-    [ "Lightning.Core.API.Variable", "class_lightning_1_1_core_1_1_a_p_i_1_1_variable.html", null ],
     [ "Lightning.Core.API.XmlSchemaData", "class_lightning_1_1_core_1_1_a_p_i_1_1_xml_schema_data.html", null ]
 ];

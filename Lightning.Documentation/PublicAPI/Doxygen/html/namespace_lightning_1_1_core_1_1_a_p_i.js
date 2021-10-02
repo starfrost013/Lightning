@@ -25,11 +25,14 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "DDMSDeserialisationResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_d_d_m_s_deserialisation_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_d_d_m_s_deserialisation_result" ],
     [ "DDMSNodeSerialisationResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_d_d_m_s_node_serialisation_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_d_d_m_s_node_serialisation_result" ],
     [ "DDMSValidateResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_d_d_m_s_validate_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_d_d_m_s_validate_result" ],
+    [ "DebugGui", "class_lightning_1_1_core_1_1_a_p_i_1_1_debug_gui.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_debug_gui" ],
+    [ "DebugPage", "class_lightning_1_1_core_1_1_a_p_i_1_1_debug_page.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_debug_page" ],
     [ "DefaultPhysicsController", "class_lightning_1_1_core_1_1_a_p_i_1_1_default_physics_controller.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_default_physics_controller" ],
+    [ "AnimationUpdatedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_updated_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation_updated_event_args" ],
+    [ "CheckedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args" ],
     [ "CollisionEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_collision_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_collision_event_args" ],
     [ "KeyEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_key_event_args" ],
     [ "MouseEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_mouse_event_args" ],
-    [ "CheckedEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_checked_event_args" ],
     [ "RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args" ],
     [ "ShutdownEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_shutdown_event_args" ],
     [ "Font", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_font" ],
@@ -96,6 +99,7 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "ServiceGlobalData", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_global_data.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_global_data" ],
     [ "ServiceMessage", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_message.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_message" ],
     [ "ServiceNotification", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_notification.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_notification" ],
+    [ "IGDService", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service" ],
     [ "PhysicsService", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service" ],
     [ "RenderService", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service" ],
     [ "Renderer", "class_lightning_1_1_core_1_1_a_p_i_1_1_renderer.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_renderer" ],
@@ -105,8 +109,6 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "CoreScript", "class_lightning_1_1_core_1_1_a_p_i_1_1_core_script.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_core_script" ],
     [ "LuaSandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox" ],
     [ "ScriptInterpreter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter" ],
-    [ "ScriptInterpreterState", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter_state.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter_state" ],
-    [ "Variable", "class_lightning_1_1_core_1_1_a_p_i_1_1_variable.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_variable" ],
     [ "GetScriptMethodResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_script_method_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_script_method_result" ],
     [ "LoadScriptResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_load_script_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_load_script_result" ],
     [ "SoundService", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service" ],
@@ -124,7 +126,8 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     ] ],
     [ "AnimationType", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143", [
       [ "Continuous", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a535863a82f163709557e59e2eb8139a7", null ],
-      [ "OnTrigger", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a6028b26cf50f41160a1a76e506464f6f", null ],
+      [ "FromScript", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a4e912ad1ee0d0d8955a98ad6612f0d8e", null ],
+      [ "OnEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a2c47bd0a4185c2e5a187d4642ed0a2d4", null ],
       [ "Custom", "namespace_lightning_1_1_core_1_1_a_p_i.html#a101f3f2d2125bfeb12d81066dce03143a90589c47f06eb971d548591f23c285af", null ]
     ] ],
     [ "CameraType", "namespace_lightning_1_1_core_1_1_a_p_i.html#a681460ce263c5627f07bad469710902d", [
@@ -137,6 +140,16 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
       [ "Metadata", "namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72cace21470ab49d1d1976bc3dc72438c183", null ],
       [ "Settings", "namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72caf4f70727dc34561dfde1a3c529b6205c", null ],
       [ "Workspace", "namespace_lightning_1_1_core_1_1_a_p_i.html#ad72aa347d6c82d082cc84442de5ad72ca03a21915504df93cf5dba0636080f62e", null ]
+    ] ],
+    [ "GradientDirection", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165", [
+      [ "Left", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a945d5e233cf7d6240f6b783b36a374ff", null ],
+      [ "Right", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a92b09c7c48c520c3c55e497875da437c", null ],
+      [ "Up", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a258f49887ef8d14ac268c92b02503aaa", null ],
+      [ "Down", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a08a38277b0309070706f6652eeae9a53", null ],
+      [ "TopLeft", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165ab32beb056fbfe36afbabc6c88c81ab36", null ],
+      [ "TopRight", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a1d85a557894c340c318493f33bfa8efb", null ],
+      [ "BottomLeft", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a98e5a1c44509157ebcaf46c515c78875", null ],
+      [ "BottomRight", "namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a9146bfc669fddc88db2c4d89297d0e9a", null ]
     ] ],
     [ "GravityState", "namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06e", [
       [ "Normal", "namespace_lightning_1_1_core_1_1_a_p_i.html#a2636231c97c833e78b10d232325cf06ea960b44c579bc2f6818d2daaf9e4c16f0", null ],
@@ -187,12 +200,7 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
       [ "Tile", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195ac5457c5f3cfb4da8638ce7190f8e5152", null ],
       [ "Blended", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a3452c82c7aab95f6ecf260b19985caf7", null ]
     ] ],
-    [ "VariableTypes", "namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0", [
-      [ "Int", "namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a1686a6c336b71b36d77354cea19a8b52", null ],
-      [ "Double", "namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0ad909d38d705ce75386dd86e611a82f5b", null ],
-      [ "String", "namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a27118326006d3829667a400ad23d5d98", null ],
-      [ "Boolean", "namespace_lightning_1_1_core_1_1_a_p_i.html#a6256d58202a491698370d3531739f4f0a27226c864bac7454a8504f8edb15d95b", null ]
-    ] ],
+    [ "AnimationUpdated", "namespace_lightning_1_1_core_1_1_a_p_i.html#a58615b00744407a2440ff304ccc5d47e", null ],
     [ "CheckedEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#ac7dc3266146ddb0706a5956cbeff7292", null ],
     [ "CollisionEndEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#aa53fc9f53f5d251ab62cbd7571cdf795", null ],
     [ "CollisionStartEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a7ff0fac27ec58a51fb5b9e69ab89cf06", null ],
@@ -202,6 +210,8 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "MouseEnterEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#adb251b84f70e3996239d61ea3ac2a7e0", null ],
     [ "MouseLeaveEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a686aedc789645428faa3e54361e002b2", null ],
     [ "MouseUpEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#adfad16e66c908a8d5689477c462952d4", null ],
+    [ "ObjectCreated", "namespace_lightning_1_1_core_1_1_a_p_i.html#aad0b7289cddf2906b5c81d45ae98c3ef", null ],
+    [ "ObjectDestroyed", "namespace_lightning_1_1_core_1_1_a_p_i.html#a2be9b89d366139c3d56bb36af1e3220d", null ],
     [ "RenderEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a703b9c558fb5a5bf179011798fe80c68", null ],
     [ "ShutdownEvent", "namespace_lightning_1_1_core_1_1_a_p_i.html#a932ec9e67a166bea0982fceae25002d3", null ]
 ];

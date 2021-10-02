@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning Game Engine
-   &#160;<span id="projectnumber">Nightly 8/17 - 0.3.885 - Experimental SDK</span>
+   &#160;<span id="projectnumber">10/2 - 0.3.939 - SDK</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -128,11 +128,12 @@ $(document).ready(function(){initNavTree('class_lightning_1_1_core_1_1_a_p_i_1_1
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html" title="Script" alt="Lightning.Core.API.Script" shape="rect" coords="1076,448,1335,472"/>
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html" title="Vector2" alt="Lightning.Core.API.Vector2" shape="rect" coords="1076,504,1335,528"/>
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html" title="Workspace" alt="Lightning.Core.API.Workspace" shape="rect" coords="1076,560,1335,584"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html" title="PhysicsService" alt="Lightning.Core.API.PhysicsService" shape="rect" coords="1614,112,1873,136"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html" title="RenderService" alt="Lightning.Core.API.RenderService" shape="rect" coords="1614,168,1873,192"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html" title="LuaGlobalMethods (ScriptingService)" alt="Lightning.Core.API.ScriptingService" shape="rect" coords="1614,224,1873,248"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html" alt="Lightning.Core.API.SoundService" shape="rect" coords="1614,280,1873,304"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_u_i_service.html" title="UIService" alt="Lightning.Core.API.UIService" shape="rect" coords="1614,336,1873,360"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html" title="IGDService (In-Game Debugging Service)" alt="Lightning.Core.API.IGDService" shape="rect" coords="1614,112,1873,136"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html" title="PhysicsService" alt="Lightning.Core.API.PhysicsService" shape="rect" coords="1614,168,1873,192"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html" title="RenderService" alt="Lightning.Core.API.RenderService" shape="rect" coords="1614,224,1873,248"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html" title="LuaGlobalMethods (ScriptingService)" alt="Lightning.Core.API.ScriptingService" shape="rect" coords="1614,280,1873,304"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html" alt="Lightning.Core.API.SoundService" shape="rect" coords="1614,336,1873,360"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_u_i_service.html" title="UIService" alt="Lightning.Core.API.UIService" shape="rect" coords="1614,392,1873,416"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -186,8 +187,8 @@ GenericResult&#160;</td><td class="memItemRight" valign="bottom"><b>RemoveChildA
 <tr class="memitem:a19ca7953a7138276d6b90afd6fce3af1"><td class="memItemLeft" align="right" valign="top"><a id="a19ca7953a7138276d6b90afd6fce3af1"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnCreate</b> ()</td></tr>
 <tr class="separator:a19ca7953a7138276d6b90afd6fce3af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1f0fcdecfeba9e5e03e01f5cd3d7b97"><td class="memItemLeft" align="right" valign="top"><a id="ab1f0fcdecfeba9e5e03e01f5cd3d7b97"></a>
-<a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetChildren</b> ()</td></tr>
+<tr class="memitem:ab1f0fcdecfeba9e5e03e01f5cd3d7b97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#ab1f0fcdecfeba9e5e03e01f5cd3d7b97">GetChildren</a> ()</td></tr>
+<tr class="memdesc:ab1f0fcdecfeba9e5e03e01f5cd3d7b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquires the logical children of this object  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#ab1f0fcdecfeba9e5e03e01f5cd3d7b97">More...</a><br /></td></tr>
 <tr class="separator:ab1f0fcdecfeba9e5e03e01f5cd3d7b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -195,12 +196,24 @@ Properties</h2></td></tr>
 <tr class="memitem:aeea4402c64e40e9cfe8b7043306a438a"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#aeea4402c64e40e9cfe8b7043306a438a">Name</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:aeea4402c64e40e9cfe8b7043306a438a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The user-friendly name of this object. OPTIONAL OVERRIDE  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#aeea4402c64e40e9cfe8b7043306a438a">More...</a><br /></td></tr>
 <tr class="separator:aeea4402c64e40e9cfe8b7043306a438a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4839e2c87a9b3424939a281d4b712a2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aad0b7289cddf2906b5c81d45ae98c3ef">ObjectCreated</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a4839e2c87a9b3424939a281d4b712a2c">OnCreated</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a4839e2c87a9b3424939a281d4b712a2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event handler for the <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aad0b7289cddf2906b5c81d45ae98c3ef" title="OnObjectCreated">ObjectCreated</a> event.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a4839e2c87a9b3424939a281d4b712a2c">More...</a><br /></td></tr>
+<tr class="separator:a4839e2c87a9b3424939a281d4b712a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cd19aacb14511e1e046782e95f67fab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2be9b89d366139c3d56bb36af1e3220d">ObjectDestroyed</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1cd19aacb14511e1e046782e95f67fab">OnDestroyed</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a1cd19aacb14511e1e046782e95f67fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event handler for the <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2be9b89d366139c3d56bb36af1e3220d" title="ObjectDestroyed">ObjectDestroyed</a> event.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1cd19aacb14511e1e046782e95f67fab">More...</a><br /></td></tr>
+<tr class="separator:a1cd19aacb14511e1e046782e95f67fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a715d89000dc0f3d24339f201823e8858"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2861efc39cc54f6a1d677e62d020b71e">KeyUpEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a715d89000dc0f3d24339f201823e8858">KeyUp</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a715d89000dc0f3d24339f201823e8858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key up event handler.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a715d89000dc0f3d24339f201823e8858">More...</a><br /></td></tr>
+<tr class="separator:a715d89000dc0f3d24339f201823e8858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e54b72bb2c8e5c9c09cfebb38796387"><td class="memItemLeft" align="right" valign="top">KeyDownEvent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7e54b72bb2c8e5c9c09cfebb38796387">OnKeyDownHandler</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a7e54b72bb2c8e5c9c09cfebb38796387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key down event handler.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7e54b72bb2c8e5c9c09cfebb38796387">More...</a><br /></td></tr>
+<tr class="separator:a7e54b72bb2c8e5c9c09cfebb38796387"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_lightning.html">Lightning</a> <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html" title="Lightning">DataModel</a> </p>
-<p>DataModel/Instance Ver0.12.1</p>
+<p>DataModel/Instance Ver0.21.0</p>
 <p>Provides the root for all objects provided in <a class="el" href="namespace_lightning.html">Lightning</a>.</p>
-<p>2020-03-04 Created 2020-03-06 Refactored: renamed InstanceTag to attributes, made ClassName virtual and read-only. 2020-03-09 Added <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a>. Possibly merge InstanceTag and <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a>? 2020-03-11 Made InstanceTag an enum - InstanceTags 2020-03-12 Made <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a> 2020-03-18 DataModel.State only contains first-level instances; Instances store parent and child 2020-03-23 (need to move this comment block to DataModel.cs): worked on Standard <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> Library 2020-03-26 Added the ability to set an instance's parent at instantiation time. 2020-04-02 Error handling, implemented <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#ad870b0c20348305a17acea1d44c3a3f5" title="Adds the object Obj  to the children of this Object.">InstanceCollection.Add()</a>; 2020-04-05 Actually implemented <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#ad870b0c20348305a17acea1d44c3a3f5" title="Adds the object Obj  to the children of this Object.">InstanceCollection.Add()</a>; and <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a2d289c7b7508fbde57586a3bb9cdadb3" title="Clear the InstanceCollection.">InstanceCollection.Clear()</a>; - <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html" title="Lightning">DataModel</a> class itself now stores GlobalSettings. 2020-04-06 Added <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html" title="Workspace">Workspace</a>; made parent/child addition actually work... 2020-04-08 Modified <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7fe781c2a4ffc02e17f36eea6971b287" title="Adds a child of type ClassName to this Instance.">Instance.AddChild()</a>; to make it non-redundant (continues...)</p>
+<p>2020-03-04 Created 2020-03-06 Refactored: renamed InstanceTag to attributes, made ClassName virtual and read-only. 2020-03-09 Added <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a>. Possibly merge InstanceTag and <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a>? 2020-03-11 Made InstanceTag an enum - InstanceTags 2020-03-12 Made <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a> 2020-03-18 DataModel.State only contains first-level instances; Instances store parent and child 2020-03-23 (need to move this comment block to DataModel.cs): worked on Standard <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> Library 2020-03-26 Added the ability to set an instance's parent at instantiation time. 2020-04-02 Error handling, implemented <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be" title="Adds the object Obj  to the children of this Object.">InstanceCollection.Add()</a>; 2020-04-05 Actually implemented <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be" title="Adds the object Obj  to the children of this Object.">InstanceCollection.Add()</a>; and <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a2d289c7b7508fbde57586a3bb9cdadb3" title="Clear the InstanceCollection.">InstanceCollection.Clear()</a>; - <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html" title="Lightning">DataModel</a> class itself now stores GlobalSettings. 2020-04-06 Added <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html" title="Workspace">Workspace</a>; made parent/child addition actually work... 2020-04-08 Modified <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7fe781c2a4ffc02e17f36eea6971b287" title="Adds a child of type ClassName to this Instance.">Instance.AddChild()</a>; to make it non-redundant (continues...)</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7fe781c2a4ffc02e17f36eea6971b287"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7fe781c2a4ffc02e17f36eea6971b287">&#9670;&nbsp;</a></span>AddChild()</h2>
@@ -308,6 +321,26 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ab1f0fcdecfeba9e5e03e01f5cd3d7b97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1f0fcdecfeba9e5e03e01f5cd3d7b97">&#9670;&nbsp;</a></span>GetChildren()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a> Lightning.Core.API.Instance.GetChildren </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Acquires the logical children of this object </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
@@ -473,6 +506,32 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="a715d89000dc0f3d24339f201823e8858"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a715d89000dc0f3d24339f201823e8858">&#9670;&nbsp;</a></span>KeyUp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2861efc39cc54f6a1d677e62d020b71e">KeyUpEvent</a> Lightning.Core.API.Instance.KeyUp</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Key up event handler. </p>
+<p>Default event handler may be implemented by any <a class="el" href="namespace_lightning.html">Lightning</a> class.</p>
+<p>Scripts may modify the event handler function. </p>
+
+</div>
+</div>
 <a id="aeea4402c64e40e9cfe8b7043306a438a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aeea4402c64e40e9cfe8b7043306a438a">&#9670;&nbsp;</a></span>Name</h2>
 
@@ -494,6 +553,84 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The user-friendly name of this object. OPTIONAL OVERRIDE </p>
+
+</div>
+</div>
+<a id="a4839e2c87a9b3424939a281d4b712a2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4839e2c87a9b3424939a281d4b712a2c">&#9670;&nbsp;</a></span>OnCreated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aad0b7289cddf2906b5c81d45ae98c3ef">ObjectCreated</a> Lightning.Core.API.Instance.OnCreated</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Event handler for the <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#aad0b7289cddf2906b5c81d45ae98c3ef" title="OnObjectCreated">ObjectCreated</a> event. </p>
+<p>Default event handler may be implemented by any <a class="el" href="namespace_lightning.html">Lightning</a> class.</p>
+<p>Scripts may modify the event handler function.</p>
+
+</div>
+</div>
+<a id="a1cd19aacb14511e1e046782e95f67fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cd19aacb14511e1e046782e95f67fab">&#9670;&nbsp;</a></span>OnDestroyed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2be9b89d366139c3d56bb36af1e3220d">ObjectDestroyed</a> Lightning.Core.API.Instance.OnDestroyed</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Event handler for the <a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html#a2be9b89d366139c3d56bb36af1e3220d" title="ObjectDestroyed">ObjectDestroyed</a> event. </p>
+<p>Default event handler may be implemented by any <a class="el" href="namespace_lightning.html">Lightning</a> class.</p>
+<p>Scripts may modify the event handler function.</p>
+
+</div>
+</div>
+<a id="a7e54b72bb2c8e5c9c09cfebb38796387"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e54b72bb2c8e5c9c09cfebb38796387">&#9670;&nbsp;</a></span>OnKeyDownHandler</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">KeyDownEvent Lightning.Core.API.Instance.OnKeyDownHandler</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Key down event handler. </p>
+<p>Default event handler may be implemented by any <a class="el" href="namespace_lightning.html">Lightning</a> class.</p>
+<p>Scripts may modify the event handler function.</p>
 
 </div>
 </div>

@@ -1,6 +1,7 @@
 var class_lightning_1_1_core_1_1_a_p_i_1_1_text_box =
 [
     [ "Render", "class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#acb5001ed4b9a5c0e75d65d400d555f15", null ],
+    [ "DoNotAutoResize", "class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#ac0729d37d2d8936559b982751ad85107", null ],
     [ "Fill", "class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#a63415e12a1c551b68b37bb1c13ab526b", null ],
     [ "ItemRectangle", "class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#a48276e40fb5fffa067b2c74ac092c89e", null ],
     [ "Padding", "class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#a24522d45fe32ca92860e950e50cd87b6", null ],

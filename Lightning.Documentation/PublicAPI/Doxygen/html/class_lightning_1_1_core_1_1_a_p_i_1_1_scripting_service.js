@@ -9,6 +9,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service =
     [ "OnStart_SetLuaDebugHook", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a18b2f695e52220641cf68c809f76bb0c", null ],
     [ "Poll", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#adb9a908a5c55946b03b29df9a496b0d3", null ],
     [ "RegisterAPI", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a391abe2aa3bcd0ac12808f3de47fbb70", null ],
+    [ "RegisterClass", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#afe53363414a238541c518a24cef4000f", null ],
     [ "SerialiseAll", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#ac8595e126a07008d94dca2ec845eeed6", null ],
     [ "ClassName", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a8b64d4b6b21a7fda9b413be37b3c7fa1", null ],
     [ "Importance", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a7bd8494c437515857ffde57fd2356356", null ],

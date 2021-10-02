@@ -1,6 +1,7 @@
-; Lightning SDK Setup ver 0.3.006.00014
-; August 15, 2021
+; Lightning SDK Setup ver 0.3.006.00015
+; October 2, 2021
 
+; v0.3.006.00015  Oct 2, 2021   Rename Lightning Game Project to Lightning Project
 ; v0.3.006.00014  Aug 15, 2021  Minor rearrangement of output file name
 ; v0.3.006.00013  Aug 15, 2021  Split SDK/runtime based on INSTALLPACKAGE_INSTALL_SDK, define output filename based on appname, setupversion, and if SDK/Runtime
 ; v0.3.005.00012  Aug 15, 2021  Add Lua files, remove PDBs, add documentation, add platform defines, increment version to 0.3 
@@ -15,7 +16,6 @@
 ; v0.2.000.00003  May 16, 2021  Added INSTALLPACKAGE_INSTALL_SDK ifdef for Polaris
 ; v0.2.000.00002  May 4, 2021   First functional version
 
-
 ; Comment out this line to build a runtime installer (TODO: User-selectable components)
 #define INSTALLPACKAGE_INSTALL_SDK
 
@@ -27,13 +27,14 @@
 #define MyAppName "Lightning Runtime"
 #define PolarisAppName "THIS SHOULD NOT HAVE BEEN INSTALLED - THERE IS A BUG WITH THE INSTALLER"
 #endif
-#define MyAppVersion "0.3.885.Debug.Win64.20210817-1611" ; set to version when a version is there
+#define MyAppVersion "0.3.939.Debug.Win64.20211002-1405" ; set to version when a version is there
 #define MyAppPublisher "starfrost/Lightning Dev Team"
 #define MyAppExeName "Lightning.exe"
 #define PolarisAppExeName "Polaris.exe"
-#define MyAppAssocName "Lightning Game Project"
+#define MyAppAssocName "Lightning Project"
 #define MyAppAssocExt ".lgx"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
+  
 
 
 ; Platform definitions
@@ -46,7 +47,7 @@
 ;#define LIGHTNING_LINUX64
 
 ; Setup version define
-#define SETUP_VERSION "0.3.006.00014"
+#define SETUP_VERSION "0.3.006.00015"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
