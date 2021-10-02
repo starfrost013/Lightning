@@ -16,17 +16,27 @@ namespace Lightning.Core.API
 
         public void RegisterAPI()
         {
+            RegisterGlobals();
+            RegisterClasses(); 
+        }
 
-            Logging.Log("Registering methods for Lua scripting...", ClassName);
-            
+        private void RegisterGlobals()
+        {
+            Logging.Log("Registering global methods for Lua scripting...", ClassName);
+
 #if DEBUG
             // Test method registration
             //RegisterMethod("Lightning.Core.API;ScriptingTest;ScTest");
 #endif
             //RegisterMethod("Lightning.Core.API;Instance;AddChild");
-
         }
 
-        
+        private void RegisterClasses()
+        {
+            Logging.Log("Registering classes for Lua scripting...", ClassName); 
+            RegisterClass("Lightning.Core.API.ScriptingTest");
+        }
+
+
     }
 }

@@ -39,7 +39,6 @@ namespace Lightning.Core.API
         "rawset = rawset, " + 
         #if DEBUG
             "debug = debug, " +
-            "ScriptingTest = ScriptingTest, " + //TODO: RegisterClass() for Lua
         #endif
         "__SCRIPTCONTENT = __SCRIPTCONTENT";
 
@@ -55,13 +54,6 @@ namespace Lightning.Core.API
         /// Uses load(); 
         /// </summary>
         internal override string ProtectedContent =>
-#if DEBUG
-            "ScriptingTest = luanet.import_type(\"Lightning.Core.API.ScriptingTest\")" + // TEMP
-            "print(ScriptingTest)" +
-            "for i, v in pairs(_ENV) do\n" +
-            "   print(\"Presandbox Environment: \" .. i);\n" +
-            "end\n" +
-#endif
             $"NEW_ENV = {{{Environment}}};\n" +
             "_ENV = NEW_ENV;\n" +
 #if DEBUG 

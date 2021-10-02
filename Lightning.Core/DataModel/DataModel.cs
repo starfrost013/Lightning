@@ -355,7 +355,7 @@ namespace Lightning.Core.API
         }
         public static void Shutdown()
         {
-            Logging.Log("The DataModel is shutting down. Clearing it...");
+            Logging.Log("The DataModel is shutting down. Clearing it...", "DataModel");
             State.Clear();
         }
         

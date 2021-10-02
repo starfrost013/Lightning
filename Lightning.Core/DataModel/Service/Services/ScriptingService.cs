@@ -10,9 +10,9 @@ namespace Lightning.Core.API
     /// <summary>
     /// ScriptingService.
     /// 
-    /// April 13, 2021 (modified May 3, 2021)
+    /// April 13, 2021 (modified October 1, 2021)
     /// 
-    /// Provides scripting services. Manages LightningScript scripts.
+    /// Provides Lua scripting services for Lightning.
     /// </summary>
     public partial class ScriptingService : Service
     {
@@ -58,7 +58,7 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Registers a global method for the usage of scripts.
+        /// Registers a global method (e.g. wait) for the usage of scripts.
         /// 
         /// ONLY THROW FATAL ERRORS!!!!!
         /// </summary>
@@ -121,38 +121,82 @@ namespace Lightning.Core.API
 
                 Type MType = Type.GetType($"{MethodNamespace}.{MethodClass}");
 
-                if (!MType.IsSubclassOf(typeof(Instance)))
+                if (MType == null)
                 {
-                    GSMR.FailureReason = $"{MType} is not in the DataModel and therefore cannot be exposed to scripts!";
+                    GSMR.FailureReason = $"The class {MethodNamespace}.{MethodClass} does not exist!";
                     return GSMR; 
                 }
                 else
                 {
-                    // Create a test instance
-                    if (!MType.IsAbstract)
+                    if (!MType.IsSubclassOf(typeof(Instance)))
                     {
-                        Instance TestIns = (Instance)Activator.CreateInstance(MType); // no point running tons of extra code to add and then remove from the DataModel.
-
-                        // we have to manually generate instanceinfo here as we don't want to add it to the datamodel
-                        TestIns.GenerateInstanceInfo();
-
-                        InstanceInfoMethod CIIM = TestIns.Info.GetMethod(Method);
-
-                        ScriptGlobals.Sandbox.AddToSandbox(CIIM.MethodName);
-                        ScriptGlobals.LuaState.RegisterFunction(CIIM.MethodName, MType.GetMethod(CIIM.MethodName));
-
-                        GSMR.Successful = true;
-                        GSMR.Method = new ScriptMethod(); // will be changed to genericresult in future
+                        GSMR.FailureReason = $"{MType} is not in the DataModel and therefore cannot be exposed to scripts!";
                         return GSMR;
                     }
-                    
-                }
+                    else
+                    {
+                        // Create a test instance
+                        if (!MType.IsAbstract)
+                        {
+                            Instance TestIns = (Instance)Activator.CreateInstance(MType); // no point running tons of extra code to add and then remove from the DataModel.
 
-                GSMR.Successful = true;
-                GSMR.Method = SM;
-                return GSMR; 
+                            // we have to manually generate instanceinfo here as we don't want to add it to the datamodel
+                            TestIns.GenerateInstanceInfo();
+
+                            InstanceInfoMethod CIIM = TestIns.Info.GetMethod(Method);
+
+                            ScriptGlobals.Sandbox.AddToSandbox(CIIM.MethodName);
+                            ScriptGlobals.LuaState.RegisterFunction(CIIM.MethodName, MType.GetMethod(CIIM.MethodName));
+
+                            GSMR.Successful = true;
+                            GSMR.Method = new ScriptMethod(); // will be changed to genericresult in future
+                            return GSMR;
+                        }
+
+                    }
+
+                    GSMR.Successful = true;
+                    GSMR.Method = SM;
+                    return GSMR;
+                }
+               
             }
 
+        }
+        
+        /// <summary>
+        /// Registers a .NET class to Lua. The class must be in the Lightning.Core namespace.
+        /// </summary>
+        public void RegisterClass(string LClassName)
+        {
+            if (!XmlUtil.CheckIfValidTypeForInstantiation(LClassName))
+            {
+                ErrorManager.ThrowError(LClassName, "CannotRegisterNonLightningClassException", $"Error: The class {ClassName} is not within the System or Lightning.* namespaces and therefore cannot be registered for use with Lua scripts!");
+            }
+            else
+            {
+                string[] NamespaceAndClass = LClassName.Split('.');
+
+                string Class = NamespaceAndClass[NamespaceAndClass.Length - 1];
+
+                Type Typ = Type.GetType(LClassName);
+
+                if (Typ == null)
+                {
+                    ErrorManager.ThrowError(LClassName, "CannotRegisterInvalidClassException", $"Attempted to register for Lua the invalid class {ClassName}!");
+                    return; 
+                }
+                else
+                {   
+                    
+                    Logging.Log($"Registering {LClassName} to Lua...", ClassName);
+
+                    ScriptGlobals.LuaState.DoString($"{Class} = luanet.import_type(\"{LClassName}\");");
+
+                    ScriptGlobals.Sandbox.AddToSandbox(Class); 
+                }
+
+            }
         }
 
         public override void Poll()
