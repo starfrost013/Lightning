@@ -28,38 +28,10 @@ namespace Lightning.Core.API
         public int ExecutionTime { get; set; }
 
         /// <summary>
-        /// Backing field for <see cref="_state"/>.
-        /// </summary>
-        private ScriptState _state { get; set; }
-
-        /// <summary>
         /// The current state of the Lua script.
         /// </summary>
-        public ScriptState State
-        {
-            get
-            {
-                return _state;
-            }
-            set
-            {
-                _state = value;
+        public ScriptState State { get; set; }
 
-                switch (value)
-                {
-                    case ScriptState.Running:
-                        Start();
-                        return;
-                    case ScriptState.Paused:
-                        Pause();
-                        return;
-                    case ScriptState.Completed:
-                        Stop();
-                        return; 
-
-                }
-            }
-        }
         /// <summary>
         /// Stopwatch for the current script.
         /// 
@@ -151,22 +123,39 @@ namespace Lightning.Core.API
         /// <summary>
         /// Pauses or unpauses the script.
         /// </summary>
-        public void Pause() => State = ScriptState.Paused;
+        public void Pause()
+        {
+            State = ScriptState.Paused;
+            Timer.Pause(); 
+        }
 
         /// <summary>
         /// Stops the script.
         /// </summary>
-        public void Stop() => State = ScriptState.Completed;
+        public void Stop()
+        {
+            State = ScriptState.Completed;
+            Timer.Stop(); 
+        }
 
         /// <summary>
         /// Starts the script.
         /// </summary>
-        public void Start() => State = ScriptState.Running;
+        public void Start()
+        {
+            State = ScriptState.Running;
+            Timer.Start();
+        }
 
         /// <summary>
         /// Ticks the script. 
         /// </summary>
         public void Tick() => Timer.Tick(); 
+
+        public Script()
+        {
+            Timer = new ScriptTimer(); 
+        }
 
     }
 }

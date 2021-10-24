@@ -39,6 +39,7 @@ namespace Lightning.Core.API
         "rawlen = rawlen, " +
         "rawset = rawset, " + 
         "rawequal = rawequal, " +
+        "coroutine = coroutine, " +
         #if DEBUG
             "debug = debug, " +
         #endif

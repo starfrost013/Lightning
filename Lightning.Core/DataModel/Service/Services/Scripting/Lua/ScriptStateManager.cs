@@ -125,7 +125,7 @@ namespace Lightning.Core.API
 
                     // this is probably dumb
                     // we should load these normally?
-                    LuaState.DoString(NewTrustedScript.Content);
+                    LuaState.DoString(NewTrustedScript.ProtectedContent);
                 }
             }
             catch (LuaScriptException err)
@@ -167,11 +167,11 @@ namespace Lightning.Core.API
                                     || Sc.Content.Length == 0)
                                     {
                                         ErrorManager.ThrowError(ClassName, "AttemptedToRunLuaScriptWithNoContentException", "The currently running script has null or empty Content! The script has been terminated.");
-                                        Sc.State = ScriptState.Terminated;
+
                                     }
                                     else
                                     {
-                                        if (LuaState["__SCRIPTCONTENT"].ToString() != Sc.Content) LuaState["__SCRIPTCONTENT"] = Sc.Content; // temp?
+                                        LuaState["__SCRIPTCONTENT"] = Sc.Content; // temp?
                                     }
 
                                     Lua_RunScriptUsingSandbox(Sc);
@@ -181,11 +181,11 @@ namespace Lightning.Core.API
 
                                     return; 
                                 case ScriptState.Paused:
-                                    Sc.Timer.Tick();
+                                    Sc.Timer.Tick(); // script is yielded out
                                     return; 
                                 case ScriptState.Completed:
                                 case ScriptState.Terminated:
-                                    Sc.Stop();
+                                    KillScript(Sc);
                                     RunningScripts.Remove(Sc);
                                     return; 
                             }
@@ -214,12 +214,12 @@ namespace Lightning.Core.API
 
         }
 
-        private void Lua_PauseCurrentScript() //REDESIGN TO HAVE SCRIPTTIMER
+        private void KillScript(Script Sc)
         {
-            CurrentScript.State = ScriptState.Paused;
-            CurScriptPausing = true;
-            return;
+            Sc.Stop(); 
+            LuaState.DoString("coroutine.yield({ScToPause.CoroutineName});");
         }
+
 
     }
 }

@@ -32,9 +32,6 @@ namespace Lightning.Core.API
             {
                 Type ScType = Sc.GetType();
 
-                bool IsCoreScript = (ScType == typeof(TrustedScript)
-                || ScType.IsSubclassOf(typeof(TrustedScript)));
-
                 if (Sc.State != ScriptState.Paused)
                 {
                     RunningScript = Sc;
@@ -51,11 +48,6 @@ namespace Lightning.Core.API
             }
             else
             {
-                if (ScriptGlobals.CurScriptPausing)
-                {
-                    // todo: pause coroutine
-                }
-
                 // todo: refactor to only get it once
                 GlobalSettings GS = DataModel.GetGlobalSettings();
 
