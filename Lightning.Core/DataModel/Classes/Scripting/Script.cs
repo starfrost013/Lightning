@@ -28,19 +28,57 @@ namespace Lightning.Core.API
         public int ExecutionTime { get; set; }
 
         /// <summary>
-        /// Is this Lua script running?
+        /// Backing field for <see cref="_state"/>.
         /// </summary>
-        public bool IsPaused { get; set; }
+        private ScriptState _state { get; set; }
 
         /// <summary>
+        /// The current state of the Lua script.
+        /// </summary>
+        public ScriptState State
+        {
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                _state = value;
+
+                switch (value)
+                {
+                    case ScriptState.Running:
+                        Start();
+                        return;
+                    case ScriptState.Paused:
+                        Pause();
+                        return;
+                    case ScriptState.Completed:
+                        Stop();
+                        return; 
+
+                }
+            }
+        }
+        /// <summary>
         /// Stopwatch for the current script.
+        /// 
+        /// [DEPRECATED - Oct 7, 2021] 
         /// </summary>
         public Stopwatch CurrentScriptRunningStopwatch { get; set; }
 
         /// <summary>
         /// Stopwatch used for wait time.
+        /// 
+        /// [DEPRECATED - Oct 7, 2021]
         /// </summary>
         public Stopwatch WaitCountdownStopwatch { get; set; }
+
+
+        /// <summary>
+        /// The timer that manages the script running.
+        /// </summary>
+        public ScriptTimer Timer { get; set; }
 
         /// <summary>
         /// Is this script the Lua Sandbox?
@@ -72,22 +110,26 @@ namespace Lightning.Core.API
                 {
                     if (Name != null)
                     {
-                        ErrorManager.ThrowError(ClassName, "ErrorAcquiredInvalidLineException", $"Attempted to acquire invalid line {value} for the script with name {Name}!");
+                        ErrorManager.ThrowError(ClassName, "ErrorAcquiredInvalidLineException", $"Attempted to set current script line to invalid line {value} for the script with name {Name}!");
                     }
                     else
                     {
-                        ErrorManager.ThrowError(ClassName, "ErrorAcquiredInvalidLineException", $"Attempted to acquire invalid line {value} for a script!");
+                        ErrorManager.ThrowError(ClassName, "ErrorAcquiredInvalidLineException", $"Attempted to set current script line to invalid line {value} for a script!");
                     }
                 }
             }
 
         }
 
+        /// <summary>
+        /// Backing field for <see cref="_content"></see>
+        /// </summary>
         private string _content { get; set; }
+
         /// <summary>
         /// Used for seamless DataModel serialisation. 
         /// </summary>
-        public string Content
+        public virtual string Content
         {
             get
             {
@@ -100,6 +142,31 @@ namespace Lightning.Core.API
                 _content = value; 
             }
         }
+
+        /// <summary>
+        /// Coroutine name. Set by ScriptingService.
+        /// </summary>
+        internal string CoroutineName { get; set; }
+
+        /// <summary>
+        /// Pauses or unpauses the script.
+        /// </summary>
+        public void Pause() => State = ScriptState.Paused;
+
+        /// <summary>
+        /// Stops the script.
+        /// </summary>
+        public void Stop() => State = ScriptState.Completed;
+
+        /// <summary>
+        /// Starts the script.
+        /// </summary>
+        public void Start() => State = ScriptState.Running;
+
+        /// <summary>
+        /// Ticks the script. 
+        /// </summary>
+        public void Tick() => Timer.Tick(); 
 
     }
 }

@@ -21,7 +21,7 @@ namespace Lightning.Core.API
             ScriptGlobals.LuaState.DebugHook += LuaDebugHook;
 
             // fix my retardation
-            ScriptGlobals.LuaState.SetDebugHook(LuaHookMask.Line | LuaHookMask.Return, 0);
+            ScriptGlobals.LuaState.SetDebugHook(LuaHookMask.Call | LuaHookMask.Line | LuaHookMask.Return, 0);
         }
 
         public void LuaDebugHook(object sender, DebugHookEventArgs e)
@@ -32,10 +32,10 @@ namespace Lightning.Core.API
             {
                 Type ScType = Sc.GetType();
 
-                bool IsCoreScript = (ScType == typeof(CoreScript)
-            || ScType.IsSubclassOf(typeof(CoreScript)));
+                bool IsCoreScript = (ScType == typeof(TrustedScript)
+                || ScType.IsSubclassOf(typeof(TrustedScript)));
 
-                if (!Sc.IsPaused)
+                if (Sc.State != ScriptState.Paused)
                 {
                     RunningScript = Sc;
                 }
@@ -51,10 +51,16 @@ namespace Lightning.Core.API
             }
             else
             {
+                if (ScriptGlobals.CurScriptPausing)
+                {
+                    // todo: pause coroutine
+                }
+
                 // todo: refactor to only get it once
                 GlobalSettings GS = DataModel.GetGlobalSettings();
 
                 Logging.Log($"Lua script {RunningScript.Name} currently has run for: {RunningScript.CurrentScriptRunningStopwatch.ElapsedMilliseconds}ms", ClassName); 
+
                 if (RunningScript.CurrentScriptRunningStopwatch.ElapsedMilliseconds > GS.MaxLuaScriptExecutionTime)
                 {
 
@@ -63,29 +69,37 @@ namespace Lightning.Core.API
                     if (RunningScript.Name != null)
                     {
                         Logging.Log($"The Lua script {RunningScript.Name} was stopped due to reaching the global execution time limit ({GS.MaxLuaScriptExecutionTime}ms)", ClassName, MessageSeverity.Error);
-                        RunningScript.CurrentlyExecutingLine = 0;
-                        return; 
                     }
                     else
                     {
                         Logging.Log($"The currently executing Lua script was stopped due to reaching the global execution time limit ({GS.MaxLuaScriptExecutionTime}ms)", ClassName, MessageSeverity.Error);
-                        RunningScript.CurrentlyExecutingLine = 0;
-                        return;
                     }
+
+                    RunningScript.CurrentlyExecutingLine = 0; // old way of stopping script
+                    RunningScript.Stop(); // new way of stopping script
+
+                    return;
                 }
 
                 switch (e.LuaDebug.Event)
                 {
+                    case LuaHookEvent.Call:
+                        Logging.Log($"Lua function call", LuaClassName);
+                        return; 
                     case LuaHookEvent.Line:
                         RunningScript.CurrentlyExecutingLine++;
-                        Logging.Log($"Current line: {RunningScript.CurrentlyExecutingLine}", ClassName);
+                        Logging.Log($"Executing {RunningScript.Name}, line {RunningScript.CurrentlyExecutingLine}", LuaClassName);
+                        // 
                         return;
                     case LuaHookEvent.Return:
                         RunningScript.CurrentlyExecutingLine = 0;
+                        RunningScript.Stop(); // script complete
                         return; 
                         
                 }
             }
         }
+
+        
     }
 }

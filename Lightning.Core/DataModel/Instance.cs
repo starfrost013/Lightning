@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning DataModel
     /// 
-    /// DataModel/Instance Ver0.21.0
+    /// DataModel/Instance Ver0.23.0
     /// 
     /// Provides the root for all objects provided in Lightning.
     /// 
@@ -86,12 +86,12 @@ namespace Lightning.Core.API
         /// <summary>
         /// This Instance is deprecated and will be removed in a future release of the engine. Using this in new projects is not recommended.
         /// </summary>
-        internal bool Deprecated { get; set; }
+        internal virtual bool Deprecated { get; set; }
 
         /// <summary>
         /// This Instance is experimental and may be changed or removed at any time in a future release of the engine. Using this in projects you intend to release is not recommended.
         /// </summary>
-        internal bool Experimental { get; set; }
+        internal virtual bool Experimental { get; set; }
 
         public Instance()
         {

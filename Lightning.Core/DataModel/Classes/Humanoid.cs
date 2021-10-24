@@ -148,6 +148,10 @@ namespace Lightning.Core.API
 
             string KeyCode = KeyArgs.Key.KeyCode.ToString();
 
+            if (KeyLeft == null
+            || KeyRight == null
+            || KeyJump == null) return; // prevent crash while starting 
+
             if (KeyLeft.Contains(KeyCode))
             {
                 ApplyImpulse(new Vector2(-2, 0)); // move to the left

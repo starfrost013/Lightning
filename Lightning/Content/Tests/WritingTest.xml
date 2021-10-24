@@ -150,7 +150,7 @@
     </PhysicalObject>
 
     <Camera Active="True" CameraType="FollowObject" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" TargetName="Trincid2021TestOnly"/>
-    <Script Content="print('i am die');&#xD;&#xA;ScriptingTest.ScTest();&#xD;&#xA;" Name="WsTestScript" />
+    <Script Content="print('i am die');&#xD;&#xA;ScriptingTest.ScTest();&#xD;&#xA;local test = DataModel.GetWorkspace();" Name="WsTestScript" />
     <Sound Is3D="True" TargetObject="Camera1" Path="Content\Sounds\test.mp3" Repeat="True" Volume="1" Radius="20" CanCollide="False" Position="-100,0" ZIndex="0" Name="Instance" />
     <Sound Path="Content\Sounds\BREAKING_NEWS.mp3" Repeat="False" Volume="1.0" LoopCount="5"></Sound>
 

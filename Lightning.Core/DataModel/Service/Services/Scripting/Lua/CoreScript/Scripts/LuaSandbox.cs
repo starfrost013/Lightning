@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lightning.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics; 
 using System.Text;
@@ -8,11 +9,11 @@ namespace Lightning.Core.API
     /// <summary>
     /// ImportOverrideCoreScript
     /// 
-    /// June 6, 2021 (modified September 24, 2021)
+    /// June 6, 2021 (modified October 21, 2021)
     /// 
     /// Defines a corescript that overrides the Lua import function to prevent importation of non-trusted assemblies.
     /// </summary>
-    public class LuaSandbox : CoreScript 
+    public class LuaSandbox : Script 
     {
         internal override string ClassName => "SandboxCoreScript";
 
@@ -24,7 +25,7 @@ namespace Lightning.Core.API
         "luanet = luanet, " +
         "pairs = pairs, " +
         "ipairs = ipairs, " +
-        "load = load, " +
+        "load = load, " + // automatically killed before script is run
         "pcall = pcall, " +
         "type = type, " +
         "math = math, " +
@@ -37,11 +38,12 @@ namespace Lightning.Core.API
         "string = string, " +
         "rawlen = rawlen, " +
         "rawset = rawset, " + 
+        "rawequal = rawequal, " +
         #if DEBUG
             "debug = debug, " +
         #endif
         "__SCRIPTCONTENT = __SCRIPTCONTENT";
-
+        
         internal bool LUASANDBOX_INITIALISED { get; set; }
 
         internal override bool IsSandbox => true;
@@ -53,7 +55,7 @@ namespace Lightning.Core.API
         /// 
         /// Uses load(); 
         /// </summary>
-        internal override string ProtectedContent =>
+        public override string Content =>
             $"NEW_ENV = {{{Environment}}};\n" +
             "_ENV = NEW_ENV;\n" +
 #if DEBUG 
@@ -61,8 +63,13 @@ namespace Lightning.Core.API
             "   print(i);\n" +
             "end\n" +
 #endif
+            $"" +
             "local called_chunk = load(__SCRIPTCONTENT, \"CHUNK\", \"t\", _ENV)" +
-            "pcall(called_chunk)";
+            $"{CoroutineName} = coroutine.create(function ()" + // todo: this is dumb 
+            "pcall(called_chunk) end) "; // todo: call after all trustedscripts have been run
+            // also todo loop through all classes that inherit from trustedscript and execute their ProtectedContents
+
+        public string Content_PerformRun => $"coroutine.resume({CoroutineName})";
 
         /// <summary>
         /// Constructor for the SandboxCoreScript class. Instantiated as this class is not actually added to the DataModel and therefore its oncreate() is never run

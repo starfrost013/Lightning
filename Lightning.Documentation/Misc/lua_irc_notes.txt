@@ -1,0 +1,9 @@
+RhodiumToad
+23:25:52
+if you give each script its own sandbox environment and call them as coroutines, with the debug hook there to forcibly yield out after some amount of time, it could work reasonably well
+
+some notes I have are: there's no point not including rawequal, since it's trivially emulated with tables;
+if you exclude rawget() you should also probably exclude next(), and vice versa
+if you include getmetatable(), then you have to protect the string metatable against access, e.g. by storing a __metatable key in it
+
+also, what I do is copy the content of library tables rather than storing references to the tables themselves, to prevent the sandbox from replacing the functions

@@ -10,21 +10,30 @@ namespace Lightning.Core.API
     /// <summary>
     /// ScriptingService.
     /// 
-    /// April 13, 2021 (modified October 1, 2021)
+    /// April 13, 2021 (modified October 10, 2021)
     /// 
     /// Provides Lua scripting services for Lightning.
     /// </summary>
     public partial class ScriptingService : Service
     {
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         internal override string ClassName => "ScriptingService";
+
+        /// <summary>
+        /// Internal class name used for certain logging coming from Lua itself.
+        /// </summary>
+        private string LuaClassName => "Lua";
+
         internal override ServiceImportance Importance => ServiceImportance.High; // may be rebootable?
-        internal ScriptInterpreter ScriptGlobals { get; set; }
+        internal ScriptStateManager ScriptGlobals { get; set; }
         private bool SCRIPTS_LOADED { get; set; }
 
 
         public ScriptingService()
         {
-            ScriptGlobals = new ScriptInterpreter();
+            ScriptGlobals = new ScriptStateManager();
 
         }
 
@@ -41,6 +50,7 @@ namespace Lightning.Core.API
             // Register the Scripting API.
             RegisterAPI();
 
+            // Set up the Lua Debugging Hook. 
             OnStart_SetLuaDebugHook();
 
 
@@ -53,6 +63,7 @@ namespace Lightning.Core.API
         public override ServiceShutdownResult OnShutdown()
         {
             Logging.Log("ScriptingService Shutdown", ClassName);
+           
             ServiceShutdownResult SSR = new ServiceShutdownResult { Successful = true };
             return SSR; 
         }
@@ -166,6 +177,8 @@ namespace Lightning.Core.API
         
         /// <summary>
         /// Registers a .NET class to Lua. The class must be in the Lightning.Core namespace.
+        /// 
+        /// TODO: ALLOW TYPES TO BE PASSED
         /// </summary>
         public void RegisterClass(string LClassName)
         {
@@ -208,7 +221,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                ScriptGlobals.Interpret(ScriptGlobals.LuaState);
+                ScriptGlobals.Lua_RunLuaScripts(ScriptGlobals.LuaState);
 
                 return;
             }
@@ -235,6 +248,9 @@ namespace Lightning.Core.API
 
                 foreach (Script Sc in ScriptList)
                 {
+                    string RandomString = new RandomString(8, RandomStringFlags.AlphaLowercase | RandomStringFlags.AlphaUppercase).GenerateString();
+                    Sc.CoroutineName = $"lightningtask_{RandomString}";
+
                     ScriptGlobals.RunningScripts.Add(Sc);
                 }
 

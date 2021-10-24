@@ -160,6 +160,7 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "UnableToAcquireDebugGuiException", Description = "Failed to create Debug GUI [currently using a shit temp hacky way]", Severity = MessageSeverity.Error, Id = 201 });
          ErrorManager.RegisterError( new Error { Name = "CannotRegisterNonLightningClassException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 202 }); // MAYBE nonfatal
          ErrorManager.RegisterError( new Error { Name = "CannotRegisterInvalidClassException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 203 }); // MAYBE nonfatal
-        }
+         ErrorManager.RegisterError( new Error { Name = "FatalErrorExecutingTrustedScriptException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 204 });
+     }
   }
 }
