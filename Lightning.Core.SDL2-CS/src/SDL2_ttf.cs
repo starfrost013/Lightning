@@ -31,14 +31,24 @@ using System;
 using System.Runtime.InteropServices;
 #endregion
 
-namespace NuRender.SDL2
+namespace Lightning.Core.SDL2
 {
 	public static class SDL_ttf
 	{
 		#region SDL2# Variables
 
 		/* Used by DllImport to load the native library. */
-		private const string nativeLibName = "SDL2_ttf";
+#if X64 // Lightning Win64 / Mac64 / Linux64
+		private const string nativeLibName = "SDL2_ttf-v2.0.15-x64";
+
+#else // Lightning Win32 / Linux32 
+#if ARM32 // Lightning LinuxARM32
+		private const string nativeLibName = "SDL2_ttf-v2.0.15-ARM32";
+#elif ARM64 // Lightning LinuxARM64 / MacARM64e (11.0+) (open question: what do we do about Xtajit64 (ARM64X - Windows 10 Cobalt 21277+) - does Lightning compiled for x64 run well using ARM64X on Cobalt? Need to acquire ARM device for testing.)
+		private const string nativeLibName = "SDL2_ttf-v2.0.15-ARM64";
+#endif
+		private const string nativeLibName = "SDL2_ttf-v2.0.15-x86"; 
+#endif
 
 		#endregion
 

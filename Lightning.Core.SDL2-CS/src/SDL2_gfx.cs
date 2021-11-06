@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Core.SDL2.src
+/// <summary>
+/// Lightning SDL2 
+/// </summary>
+namespace Lightning.Core.SDL2
 {
-    class SDL2_gfx
+    public class SDL2_gfx
     {
     }
 }

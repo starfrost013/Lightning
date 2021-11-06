@@ -3,18 +3,18 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.3.965.21302</AssemblyVersion>
-    <FileVersion>0.3.965.21302</FileVersion>
+    <AssemblyVersion>0.3.971.21310</AssemblyVersion>
+    <FileVersion>0.3.971.21310</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>Lightning Runtime</PackageId>
     <Description>Lightning Runtime</Description>
 
-    <!-- Windows only --> 
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest> 
-    <ApplicationIcon>Lightning.ico</ApplicationIcon> 
-    <Company>Lightning Dev Team</Company> 
-    <Authors>Lightning Dev Team</Authors> 
-    <Product>Lightning</Product> 
+    <!-- Windows only -->
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <ApplicationIcon>Lightning.ico</ApplicationIcon>
+    <Company>Lightning Dev Team</Company>
+    <Authors>Lightning Dev Team</Authors>
+    <Product>Lightning</Product>
     <Version>0.3.0</Version>
   </PropertyGroup>
 
@@ -200,95 +200,93 @@
     <Content Include="libwebp-7.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-
-    <!-- SDL2 x86 Debug-->
-    <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2 x86 Release-->
-    <Content Include="SDL2-v2.0.14-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>SDL2.dll</Link>
-    </Content>
-
-    <!-- SDL2 x64 Debug-->
-    <Content Include="SDL2-v2.0.14-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>SDL2.dll</Link>
-    </Content>
-
-    <!-- SDL2 x64 Release-->
-    <Content Include="SDL2-v2.0.14-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>SDL2.dll</Link>
-    </Content>
-    
-    <!-- SDL2_image x86 Debug-->
-    <Content Include="SDL2_image-v2.0.5-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Release-->
-    <Content Include="SDL2_image-v2.0.5-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Debug-->
-    <Content Include="SDL2_image-v2.0.5-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Release-->
-    <Content Include="SDL2_image-v2.0.5-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Debug-->
-    <Content Include="SDL2_mixer-v2.0.4-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Release-->
-    <Content Include="SDL2_mixer-v2.0.4-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Debug-->
-    <Content Include="SDL2_mixer-v2.0.4-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Release-->
-    <Content Include="SDL2_mixer-v2.0.4-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-
-    <!-- SDL2_image x86 Debug-->
-    <Content Include="SDL2_ttf-v2.0.15-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Release-->
-    <Content Include="SDL2_ttf-v2.0.15-x86.dll" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Debug-->
-    <Content Include="SDL2_ttf-v2.0.15-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-
-    <!-- SDL2_image x86 Release-->
-    <Content Include="SDL2_ttf-v2.0.15-x64.dll" Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    
     <Content Include="zlib1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+
   </ItemGroup>
+
+  <!-- SDL2 + SDL2_gfx, Win32 Debug -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Content Include="SDL2-v2.0.14-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>SDL2.dll</Link>
+    </Content>
+    <Content Include="SDL2_ttf-v2.0.15-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_mixer-v2.0.4-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_image-v2.0.5-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_gfx-v1.0.5-debug.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- SDL2 + SDL2_gfx, Win32 Release -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Content Include="SDL2-v2.0.14-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>SDL2.dll</Link>
+    </Content>
+    <Content Include="SDL2_ttf-v2.0.15-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_mixer-v2.0.4-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_image-v2.0.5-x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_gfx-v1.0.5.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- SDL2 + SDL2_gfx, Win64 Debug -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug.Win64|AnyCPU'">
+    <Content Include="SDL2-v2.0.16-x64-debug.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>SDL2.dll</Link>
+    </Content>
+    <Content Include="SDL2_ttf-v2.0.15-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_mixer-v2.0.4-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_image-v2.0.5-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_gfx-v1.0.5-debug.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- SDL2 + SDL2_gfx, Win64 Release -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release.Win64|AnyCPU'">
+    <Content Include="SDL2-v2.0.16-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>SDL2.dll</Link>
+    </Content>
+    <Content Include="SDL2_ttf-v2.0.15-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_mixer-v2.0.4-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_image-v2.0.5-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_gfx-v1.0.5.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
 
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core.NativeInterop\Lightning.Core.NativeInterop.csproj" />

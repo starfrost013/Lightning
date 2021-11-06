@@ -31,14 +31,24 @@ using System;
 using System.Runtime.InteropServices;
 #endregion
 
-namespace SDL2
+namespace Lightning.Core.SDL2
 {
 	public static class SDL_mixer
 	{
 		#region SDL2# Variables
 
 		/* Used by DllImport to load the native library. */
-		private const string nativeLibName = "SDL2_mixer";
+#if X64 // Lightning Win64 / Mac64 / Linux64
+		private const string nativeLibName = "SDL2_mixer-v2.0.4-x64";
+
+#else // Lightning Win32 / Linux32 
+#if ARM32 // Lightning LinuxARM32
+		private const string nativeLibName = "SDL2_mixer-v2.0.4-ARM32";
+#elif ARM64 // Lightning LinuxARM64 / MacARM64e (11.0+) (open question: what do we do about Xtajit64 (ARM64X - Windows 10 Cobalt 21277+) - does Lightning compiled for x64 run well using ARM64X on Cobalt? Need to acquire ARM device for testing.)
+		private const string nativeLibName = "SDL2_mixer-v2.0.4-ARM64";
+#endif
+		private const string nativeLibName = "SDL2_mixer-v2.0.4-x86"; 
+#endif
 
 		#endregion
 
@@ -158,19 +168,54 @@ namespace SDL2
 			return result;
 		}
 
+		/// <summary>
+		/// Audio formats
+		/// 
+		/// May 4, 2021 for Lightning
+		/// 
+		/// TODO: Move all existing code to use this?
+		/// </summary>
+		public enum Mix_AudioFormat
+		{
+			UDIO_U8 = 0x0008,
+			AUDIO_S8 = 0x8008,
+			AUDIO_U16LSB = 0x0010,
+			AUDIO_S16LSB = 0x8010,
+			AUDIO_U16MSB = 0x1010,
+			AUDIO_S16MSB = 0x9010,
+			AUDIO_U16 = AUDIO_U16LSB,
+			AUDIO_S16 = AUDIO_S16LSB,
+			AUDIO_S32LSB = 0x8020,
+			AUDIO_S32MSB = 0x9020,
+			AUDIO_S32 = AUDIO_S32LSB,
+			AUDIO_F32LSB = 0x8120,
+			AUDIO_F32MSB = 0x9120,
+			AUDIO_F32 = AUDIO_F32LSB,
+
+			AUDIO_U16SYS = AUDIO_U16LSB,
+			AUDIO_S16SYS = AUDIO_S16LSB,
+			AUDIO_S32SYS = AUDIO_S16LSB,
+			AUDIO_F32SYS = AUDIO_F32LSB,
+
+			MIX_DEFAULT_FORMAT = AUDIO_S16SYS
+		}
+
+
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int Mix_Init(MIX_InitFlags flags);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Mix_Quit();
 
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int Mix_OpenAudio(
+		[DllImport(nativeLibName, EntryPoint = "Mix_OpenAudio", CallingConvention = CallingConvention.Cdecl)]
+		public static extern int INTERNAL__Mix_OpenAudio(
 			int frequency,
 			ushort format,
 			int channels,
 			int chunksize
 		);
+
+		public static int Mix_OpenAudio(int Frequency, Mix_AudioFormat Format, int channels, int chunksize) => INTERNAL__Mix_OpenAudio(Frequency, (ushort)Format, channels, chunksize);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int Mix_AllocateChannels(int numchans);

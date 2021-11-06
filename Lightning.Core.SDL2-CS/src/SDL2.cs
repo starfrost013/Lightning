@@ -1,9 +1,9 @@
 #region License
 /* Lightning SDL2 Wrapper
  * 
- * Version 2.0.19 (NuRender/Lightning) 
+ * Version 3.0 (NuRender/Lightning) + SDL2_gfx
  * Copyright © 2021 starfrost
- * September 29, 2021
+ * November 6, 2021
  * 
  * This software is based on the open-source SDL2# - C# Wrapper for SDL2 library.
  *
@@ -40,7 +40,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 #endregion
 
-namespace NuRender.SDL2
+namespace Lightning.Core.SDL2
 {
 	public static class SDL
 	{
@@ -57,37 +57,27 @@ namespace NuRender.SDL2
 		/// </summary>
 		private static string SDL2CS_VERSION = $"SDL2-CS version {SDL2CS_VERSION_MAJOR}.{SDL2CS_VERSION_MINOR}.{SDL2CS_VERSION_REVISION} for Lightning & NuRender\n©2021 starfrost\n©2013-2021 Ethan Lee"; // cannot be const
 
-		private const int SDL2CS_VERSION_MAJOR = 2;
+		private const int SDL2CS_VERSION_MAJOR = 3;
 		private const int SDL2CS_VERSION_MINOR = 0;
-		private const int SDL2CS_VERSION_REVISION = 19;
-#endregion
+		private const int SDL2CS_VERSION_REVISION = 0;
+		#endregion
 
-#region UTF8 Marshaling
+		#region UTF8 Marshaling
 
 		/* Used for stack allocated string marshaling. */
 		internal static int Utf8Size(string str)
 		{
-			Debug.Assert(str != null);
+			if (str == null)
+			{
+				return 0;
+			}
 			return (str.Length * 4) + 1;
-		}
-		internal static int Utf8SizeNullable(string str)
-		{
-			return str != null ? (str.Length * 4) + 1 : 0;
 		}
 		internal static unsafe byte* Utf8Encode(string str, byte* buffer, int bufferSize)
 		{
-			Debug.Assert(str != null);
-			fixed (char* strPtr = str)
-			{
-				Encoding.UTF8.GetBytes(strPtr, str.Length + 1, buffer, bufferSize);
-			}
-			return buffer;
-		}
-		internal static unsafe byte* Utf8EncodeNullable(string str, byte* buffer, int bufferSize)
-		{
 			if (str == null)
 			{
-				return (byte*) 0;
+				return (byte*)0;
 			}
 			fixed (char* strPtr = str)
 			{
@@ -99,11 +89,15 @@ namespace NuRender.SDL2
 		/* Used for heap allocated string marshaling.
 		 * Returned byte* must be free'd with FreeHGlobal.
 		 */
-		internal static unsafe byte* Utf8Encode(string str)
+		internal static unsafe byte* Utf8EncodeHeap(string str)
 		{
-			Debug.Assert(str != null);
+			if (str == null)
+			{
+				return (byte*)0;
+			}
+
 			int bufferSize = Utf8Size(str);
-			byte* buffer = (byte*) Marshal.AllocHGlobal(bufferSize);
+			byte* buffer = (byte*)Marshal.AllocHGlobal(bufferSize);
 			fixed (char* strPtr = str)
 			{
 				Encoding.UTF8.GetBytes(strPtr, str.Length + 1, buffer, bufferSize);
@@ -120,7 +114,7 @@ namespace NuRender.SDL2
 			}
 
 			/* We get to do strlen ourselves! */
-			byte* ptr = (byte*) s;
+			byte* ptr = (byte*)s;
 			while (*ptr != 0)
 			{
 				ptr++;
@@ -147,13 +141,13 @@ namespace NuRender.SDL2
 			);
 #else
 			/* Old C# requires an extra memcpy, bleh! */
-			int len = (int) (ptr - (byte*) s);
+			int len = (int)(ptr - (byte*)s);
 			if (len == 0)
 			{
 				return string.Empty;
 			}
 			char* chars = stackalloc char[len];
-			int strLen = System.Text.Encoding.UTF8.GetChars((byte*) s, len, chars, len);
+			int strLen = System.Text.Encoding.UTF8.GetChars((byte*)s, len, chars, len);
 			string result = new string(chars, 0, strLen);
 #endif
 
@@ -165,13 +159,13 @@ namespace NuRender.SDL2
 			return result;
 		}
 
-#endregion
+		#endregion
 
-#region SDL_stdinc.h
+		#region SDL_stdinc.h
 
 		public static uint SDL_FOURCC(byte A, byte B, byte C, byte D)
 		{
-			return (uint) (A | (B << 8) | (C << 16) | (D << 24));
+			return (uint)(A | (B << 8) | (C << 16) | (D << 24));
 		}
 
 		public enum SDL_bool
@@ -196,19 +190,19 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_memcpy(IntPtr dst, IntPtr src, IntPtr len);
 
-#endregion
+		#endregion
 
-#region SDL_rwops.h
+		#region SDL_rwops.h
 
 		public const int RW_SEEK_SET = 0;
 		public const int RW_SEEK_CUR = 1;
 		public const int RW_SEEK_END = 2;
 
-		public const UInt32 SDL_RWOPS_UNKNOWN	= 0; /* Unknown stream type */
-		public const UInt32 SDL_RWOPS_WINFILE	= 1; /* Win32 file */
-		public const UInt32 SDL_RWOPS_STDFILE	= 2; /* Stdio file */
-		public const UInt32 SDL_RWOPS_JNIFILE	= 3; /* Android asset */
-		public const UInt32 SDL_RWOPS_MEMORY	= 4; /* Memory stream */
+		public const UInt32 SDL_RWOPS_UNKNOWN = 0; /* Unknown stream type */
+		public const UInt32 SDL_RWOPS_WINFILE = 1; /* Win32 file */
+		public const UInt32 SDL_RWOPS_STDFILE = 2; /* Stdio file */
+		public const UInt32 SDL_RWOPS_JNIFILE = 3; /* Android asset */
+		public const UInt32 SDL_RWOPS_MEMORY = 4; /* Memory stream */
 		public const UInt32 SDL_RWOPS_MEMORY_RO = 5; /* Read-Only memory stream */
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -269,15 +263,16 @@ namespace NuRender.SDL2
 		public static unsafe IntPtr SDL_RWFromFile(
 			string file,
 			string mode
-		) {
-			byte* utf8File = Utf8Encode(file);
-			byte* utf8Mode = Utf8Encode(mode);
+		)
+		{
+			byte* utf8File = Utf8EncodeHeap(file);
+			byte* utf8Mode = Utf8EncodeHeap(mode);
 			IntPtr rwOps = INTERNAL_SDL_RWFromFile(
 				utf8File,
 				utf8Mode
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8Mode);
-			Marshal.FreeHGlobal((IntPtr) utf8File);
+			Marshal.FreeHGlobal((IntPtr)utf8Mode);
+			Marshal.FreeHGlobal((IntPtr)utf8File);
 			return rwOps;
 		}
 
@@ -405,15 +400,15 @@ namespace NuRender.SDL2
 		private static extern unsafe IntPtr INTERNAL_SDL_LoadFile(byte* file, out IntPtr datasize);
 		public static unsafe IntPtr SDL_LoadFile(string file, out IntPtr datasize)
 		{
-			byte* utf8File = Utf8Encode(file);
+			byte* utf8File = Utf8EncodeHeap(file);
 			IntPtr result = INTERNAL_SDL_LoadFile(utf8File, out datasize);
-			Marshal.FreeHGlobal((IntPtr) utf8File);
+			Marshal.FreeHGlobal((IntPtr)utf8File);
 			return result;
 		}
 
-#endregion
+		#endregion
 
-#region SDL_main.h
+		#region SDL_main.h
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_SetMainReady();
@@ -438,19 +433,19 @@ namespace NuRender.SDL2
 			SDL_main_func mainFunction
 		);
 
-#endregion
+		#endregion
 
-#region SDL.h
+		#region SDL.h
 
-		public const uint SDL_INIT_TIMER =		0x00000001;
-		public const uint SDL_INIT_AUDIO =		0x00000010;
-		public const uint SDL_INIT_VIDEO =		0x00000020;
-		public const uint SDL_INIT_JOYSTICK =		0x00000200;
-		public const uint SDL_INIT_HAPTIC =		0x00001000;
-		public const uint SDL_INIT_GAMECONTROLLER =	0x00002000;
-		public const uint SDL_INIT_EVENTS =		0x00004000;
-		public const uint SDL_INIT_SENSOR =		0x00008000;
-		public const uint SDL_INIT_NOPARACHUTE =	0x00100000;
+		public const uint SDL_INIT_TIMER = 0x00000001;
+		public const uint SDL_INIT_AUDIO = 0x00000010;
+		public const uint SDL_INIT_VIDEO = 0x00000020;
+		public const uint SDL_INIT_JOYSTICK = 0x00000200;
+		public const uint SDL_INIT_HAPTIC = 0x00001000;
+		public const uint SDL_INIT_GAMECONTROLLER = 0x00002000;
+		public const uint SDL_INIT_EVENTS = 0x00004000;
+		public const uint SDL_INIT_SENSOR = 0x00008000;
+		public const uint SDL_INIT_NOPARACHUTE = 0x00100000;
 		public const uint SDL_INIT_EVERYTHING = (
 			SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO |
 			SDL_INIT_EVENTS | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC |
@@ -472,9 +467,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint SDL_WasInit(uint flags);
 
-#endregion
+		#endregion
 
-#region SDL_platform.h
+		#region SDL_platform.h
 
 		[DllImport(nativeLibName, EntryPoint = "SDL_GetPlatform", CallingConvention = CallingConvention.Cdecl)]
 		private static extern IntPtr INTERNAL_SDL_GetPlatform();
@@ -483,9 +478,9 @@ namespace NuRender.SDL2
 			return UTF8_ToManaged(INTERNAL_SDL_GetPlatform());
 		}
 
-#endregion
+		#endregion
 
-#region SDL_hints.h
+		#region SDL_hints.h
 
 		public const string SDL_HINT_FRAMEBUFFER_ACCELERATION =
 			"SDL_FRAMEBUFFER_ACCELERATION";
@@ -672,7 +667,7 @@ namespace NuRender.SDL2
 
 		/* Only available in 2.0.14 or higher. */
 		public const string SDL_HINT_JOYSTICK_HIDAPI_CORRELATE_XINPUT =
-			"SDL_JOYSTICK_HIDAPI_CORRELATE_XINPUT";
+			"SDL_JOYSTICK_HIDAPI_CORRELATE_XINPUT"; /* NOTE: This was removed in 2.0.16. */
 		public const string SDL_HINT_JOYSTICK_RAWINPUT =
 			"SDL_JOYSTICK_RAWINPUT";
 		public const string SDL_HINT_AUDIO_DEVICE_APP_NAME =
@@ -703,6 +698,38 @@ namespace NuRender.SDL2
 			"SDL_MOUSE_RELATIVE_SCALING";
 		public const string SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE =
 			"SDL_JOYSTICK_HIDAPI_PS5_RUMBLE";
+
+		/* Only available in 2.0.16 or higher. */
+		public const string SDL_HINT_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS =
+			"SDL_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS";
+		public const string SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL =
+			"SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL";
+		public const string SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED =
+			"SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED";
+		public const string SDL_HINT_WINDOWS_USE_D3D9EX =
+			"SDL_WINDOWS_USE_D3D9EX";
+		public const string SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS =
+			"SDL_JOYSTICK_HIDAPI_JOY_CONS";
+		public const string SDL_HINT_JOYSTICK_HIDAPI_STADIA =
+			"SDL_JOYSTICK_HIDAPI_STADIA";
+		public const string SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED =
+			"SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED";
+		public const string SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED =
+			"SDL_ALLOW_ALT_TAB_WHILE_GRABBED";
+		public const string SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER =
+			"SDL_KMSDRM_REQUIRE_DRM_MASTER";
+		public const string SDL_HINT_AUDIO_DEVICE_STREAM_ROLE =
+			"SDL_AUDIO_DEVICE_STREAM_ROLE";
+		public const string SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT =
+			"SDL_X11_FORCE_OVERRIDE_REDIRECT";
+		public const string SDL_HINT_JOYSTICK_HIDAPI_LUNA =
+			"SDL_JOYSTICK_HIDAPI_LUNA";
+		public const string SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT =
+			"SDL_JOYSTICK_RAWINPUT_CORRELATE_XINPUT";
+		public const string SDL_HINT_AUDIO_INCLUDE_MONITORS =
+			"SDL_AUDIO_INCLUDE_MONITORS";
+		public const string SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR =
+			"SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR";
 
 		public enum SDL_HintPriority
 		{
@@ -756,7 +783,8 @@ namespace NuRender.SDL2
 			string name,
 			string value,
 			SDL_HintPriority priority
-		) {
+		)
+		{
 			int utf8NameBufSize = Utf8Size(name);
 			byte* utf8Name = stackalloc byte[utf8NameBufSize];
 
@@ -779,7 +807,8 @@ namespace NuRender.SDL2
 		public static unsafe SDL_bool SDL_GetHintBoolean(
 			string name,
 			SDL_bool default_value
-		) {
+		)
+		{
 			int utf8NameBufSize = Utf8Size(name);
 			byte* utf8Name = stackalloc byte[utf8NameBufSize];
 			return INTERNAL_SDL_GetHintBoolean(
@@ -788,9 +817,9 @@ namespace NuRender.SDL2
 			);
 		}
 
-#endregion
+		#endregion
 
-#region SDL_error.h
+		#region SDL_error.h
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_ClearError();
@@ -807,7 +836,6 @@ namespace NuRender.SDL2
 		private static extern unsafe void INTERNAL_SDL_SetError(byte* fmtAndArglist);
 		public static unsafe void SDL_SetError(string fmtAndArglist)
 		{
-			Debug.WriteLine($"NuRender SDL2: An error occurred! {fmtAndArglist}");
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_SetError(
@@ -821,9 +849,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_GetErrorMsg(IntPtr errstr, int maxlength);
 
-#endregion
+		#endregion
 
-#region SDL_log.h
+		#region SDL_log.h
 
 		public enum SDL_LogCategory
 		{
@@ -901,7 +929,8 @@ namespace NuRender.SDL2
 		public static unsafe void SDL_LogVerbose(
 			int category,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogVerbose(
@@ -919,7 +948,8 @@ namespace NuRender.SDL2
 		public static unsafe void SDL_LogDebug(
 			int category,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogDebug(
@@ -937,7 +967,8 @@ namespace NuRender.SDL2
 		public static unsafe void SDL_LogInfo(
 			int category,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogInfo(
@@ -955,7 +986,8 @@ namespace NuRender.SDL2
 		public static unsafe void SDL_LogWarn(
 			int category,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogWarn(
@@ -973,7 +1005,8 @@ namespace NuRender.SDL2
 		public static unsafe void SDL_LogError(
 			int category,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogError(
@@ -991,7 +1024,8 @@ namespace NuRender.SDL2
 		public static unsafe void SDL_LogCritical(
 			int category,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogCritical(
@@ -1011,7 +1045,8 @@ namespace NuRender.SDL2
 			int category,
 			SDL_LogPriority priority,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogMessage(
@@ -1032,7 +1067,8 @@ namespace NuRender.SDL2
 			int category,
 			SDL_LogPriority priority,
 			string fmtAndArglist
-		) {
+		)
+		{
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_LogMessageV(
@@ -1070,7 +1106,8 @@ namespace NuRender.SDL2
 		public static void SDL_LogGetOutputFunction(
 			out SDL_LogOutputFunction callback,
 			out IntPtr userdata
-		) {
+		)
+		{
 			IntPtr result = IntPtr.Zero;
 			SDL_LogGetOutputFunction(
 				out result,
@@ -1078,7 +1115,7 @@ namespace NuRender.SDL2
 			);
 			if (result != IntPtr.Zero)
 			{
-				callback = (SDL_LogOutputFunction) Marshal.GetDelegateForFunctionPointer(
+				callback = (SDL_LogOutputFunction)Marshal.GetDelegateForFunctionPointer(
 					result,
 					typeof(SDL_LogOutputFunction)
 				);
@@ -1096,16 +1133,16 @@ namespace NuRender.SDL2
 			IntPtr userdata
 		);
 
-#endregion
+		#endregion
 
-#region SDL_messagebox.h
+		#region SDL_messagebox.h
 
 		[Flags]
 		public enum SDL_MessageBoxFlags : uint
 		{
-			SDL_MESSAGEBOX_ERROR =		0x00000010,
-			SDL_MESSAGEBOX_WARNING =	0x00000020,
-			SDL_MESSAGEBOX_INFORMATION =	0x00000040
+			SDL_MESSAGEBOX_ERROR = 0x00000010,
+			SDL_MESSAGEBOX_WARNING = 0x00000020,
+			SDL_MESSAGEBOX_INFORMATION = 0x00000040
 		}
 
 		[Flags]
@@ -1151,31 +1188,31 @@ namespace NuRender.SDL2
 		public struct SDL_MessageBoxColorScheme
 		{
 			[MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = (int)SDL_MessageBoxColorType.SDL_MESSAGEBOX_COLOR_MAX)]
-				public SDL_MessageBoxColor[] colors;
+			public SDL_MessageBoxColor[] colors;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
 		private struct INTERNAL_SDL_MessageBoxData
 		{
 			public SDL_MessageBoxFlags flags;
-			public IntPtr window;				/* Parent window, can be NULL */
-			public IntPtr title;				/* UTF-8 title */
-			public IntPtr message;				/* UTF-8 message text */
+			public IntPtr window;               /* Parent window, can be NULL */
+			public IntPtr title;                /* UTF-8 title */
+			public IntPtr message;              /* UTF-8 message text */
 			public int numbuttons;
 			public IntPtr buttons;
-			public IntPtr colorScheme;			/* Can be NULL to use system settings */
+			public IntPtr colorScheme;          /* Can be NULL to use system settings */
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_MessageBoxData
 		{
 			public SDL_MessageBoxFlags flags;
-			public IntPtr window;				/* Parent window, can be NULL */
-			public string title;				/* UTF-8 title */
-			public string message;				/* UTF-8 message text */
+			public IntPtr window;               /* Parent window, can be NULL */
+			public string title;                /* UTF-8 title */
+			public string message;              /* UTF-8 message text */
 			public int numbuttons;
 			public SDL_MessageBoxButtonData[] buttons;
-			public SDL_MessageBoxColorScheme? colorScheme;	/* Can be NULL to use system settings */
+			public SDL_MessageBoxColorScheme? colorScheme;  /* Can be NULL to use system settings */
 		}
 
 		[DllImport(nativeLibName, EntryPoint = "SDL_ShowMessageBox", CallingConvention = CallingConvention.Cdecl)]
@@ -1189,7 +1226,7 @@ namespace NuRender.SDL2
 				return IntPtr.Zero;
 			}
 			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(str + '\0');
-			IntPtr mem = SDL.SDL_malloc((IntPtr) bytes.Length);
+			IntPtr mem = SDL.SDL_malloc((IntPtr)bytes.Length);
 			Marshal.Copy(bytes, 0, mem, bytes.Length);
 			return mem;
 		}
@@ -1253,32 +1290,33 @@ namespace NuRender.SDL2
 			string title,
 			string message,
 			IntPtr window
-		) {
-			int utf8TitleBufSize = Utf8SizeNullable(title);
+		)
+		{
+			int utf8TitleBufSize = Utf8Size(title);
 			byte* utf8Title = stackalloc byte[utf8TitleBufSize];
 
-			int utf8MessageBufSize = Utf8SizeNullable(message);
+			int utf8MessageBufSize = Utf8Size(message);
 			byte* utf8Message = stackalloc byte[utf8MessageBufSize];
 
 			return INTERNAL_SDL_ShowSimpleMessageBox(
 				flags,
-				Utf8EncodeNullable(title, utf8Title, utf8TitleBufSize),
-				Utf8EncodeNullable(message, utf8Message, utf8MessageBufSize),
+				Utf8Encode(title, utf8Title, utf8TitleBufSize),
+				Utf8Encode(message, utf8Message, utf8MessageBufSize),
 				window
 			);
 		}
 
-#endregion
+		#endregion
 
-#region SDL_version.h, SDL_revision.h
+		#region SDL_version.h, SDL_revision.h
 
 		/* Similar to the headers, this is the version we're expecting to be
 		 * running with. You will likely want to check this somewhere in your
 		 * program!
 		 */
-		public const int SDL_MAJOR_VERSION =	2;
-		public const int SDL_MINOR_VERSION =	0;
-		public const int SDL_PATCHLEVEL =	14;
+		public const int SDL_MAJOR_VERSION = 2;
+		public const int SDL_MINOR_VERSION = 0;
+		public const int SDL_PATCHLEVEL = 16;
 
 		public static readonly int SDL_COMPILEDVERSION = SDL_VERSIONNUM(
 			SDL_MAJOR_VERSION,
@@ -1324,9 +1362,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_GetRevisionNumber();
 
-#endregion
+		#endregion
 
-#region SDL_video.h
+		#region SDL_video.h
 
 		public enum SDL_GLattr
 		{
@@ -1355,25 +1393,25 @@ namespace NuRender.SDL2
 			SDL_GL_SHARE_WITH_CURRENT_CONTEXT,
 			SDL_GL_FRAMEBUFFER_SRGB_CAPABLE,
 			SDL_GL_CONTEXT_RELEASE_BEHAVIOR,
-			SDL_GL_CONTEXT_RESET_NOTIFICATION,	/* Requires >= 2.0.6 */
-			SDL_GL_CONTEXT_NO_ERROR,		/* Requires >= 2.0.6 */
+			SDL_GL_CONTEXT_RESET_NOTIFICATION,  /* Requires >= 2.0.6 */
+			SDL_GL_CONTEXT_NO_ERROR,        /* Requires >= 2.0.6 */
 		}
 
 		[Flags]
 		public enum SDL_GLprofile
 		{
-			SDL_GL_CONTEXT_PROFILE_CORE				= 0x0001,
-			SDL_GL_CONTEXT_PROFILE_COMPATIBILITY	= 0x0002,
-			SDL_GL_CONTEXT_PROFILE_ES				= 0x0004
+			SDL_GL_CONTEXT_PROFILE_CORE = 0x0001,
+			SDL_GL_CONTEXT_PROFILE_COMPATIBILITY = 0x0002,
+			SDL_GL_CONTEXT_PROFILE_ES = 0x0004
 		}
 
 		[Flags]
 		public enum SDL_GLcontext
 		{
-			SDL_GL_CONTEXT_DEBUG_FLAG				= 0x0001,
-			SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG	= 0x0002,
-			SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG		= 0x0004,
-			SDL_GL_CONTEXT_RESET_ISOLATION_FLAG		= 0x0008
+			SDL_GL_CONTEXT_DEBUG_FLAG = 0x0001,
+			SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG = 0x0002,
+			SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG = 0x0004,
+			SDL_GL_CONTEXT_RESET_ISOLATION_FLAG = 0x0008
 		}
 
 		public enum SDL_WindowEventID : byte
@@ -1402,8 +1440,8 @@ namespace NuRender.SDL2
 		{
 			SDL_DISPLAYEVENT_NONE,
 			SDL_DISPLAYEVENT_ORIENTATION,
-			SDL_DISPLAYEVENT_CONNECTED,	/* Requires >= 2.0.14 */
-			SDL_DISPLAYEVENT_DISCONNECTED	/* Requires >= 2.0.14 */
+			SDL_DISPLAYEVENT_CONNECTED, /* Requires >= 2.0.14 */
+			SDL_DISPLAYEVENT_DISCONNECTED   /* Requires >= 2.0.14 */
 		}
 
 		public enum SDL_DisplayOrientation
@@ -1415,39 +1453,51 @@ namespace NuRender.SDL2
 			SDL_ORIENTATION_PORTRAIT_FLIPPED
 		}
 
+		/* Only available in 2.0.16 or higher. */
+		public enum SDL_FlashOperation
+		{
+			SDL_FLASH_CANCEL,
+			SDL_FLASH_BRIEFLY,
+			SDL_FLASH_UNTIL_FOCUSED
+		}
+
 		[Flags]
 		public enum SDL_WindowFlags : uint
 		{
-			SDL_WINDOW_FULLSCREEN =		0x00000001,
-			SDL_WINDOW_OPENGL =		0x00000002,
-			SDL_WINDOW_SHOWN =		0x00000004,
-			SDL_WINDOW_HIDDEN =		0x00000008,
-			SDL_WINDOW_BORDERLESS =		0x00000010,
-			SDL_WINDOW_RESIZABLE =		0x00000020,
-			SDL_WINDOW_MINIMIZED =		0x00000040,
-			SDL_WINDOW_MAXIMIZED =		0x00000080,
-			SDL_WINDOW_INPUT_GRABBED =	0x00000100,
-			SDL_WINDOW_INPUT_FOCUS =	0x00000200,
-			SDL_WINDOW_MOUSE_FOCUS =	0x00000400,
+			SDL_WINDOW_FULLSCREEN = 0x00000001,
+			SDL_WINDOW_OPENGL = 0x00000002,
+			SDL_WINDOW_SHOWN = 0x00000004,
+			SDL_WINDOW_HIDDEN = 0x00000008,
+			SDL_WINDOW_BORDERLESS = 0x00000010,
+			SDL_WINDOW_RESIZABLE = 0x00000020,
+			SDL_WINDOW_MINIMIZED = 0x00000040,
+			SDL_WINDOW_MAXIMIZED = 0x00000080,
+			SDL_WINDOW_MOUSE_GRABBED = 0x00000100,
+			SDL_WINDOW_INPUT_FOCUS = 0x00000200,
+			SDL_WINDOW_MOUSE_FOCUS = 0x00000400,
 			SDL_WINDOW_FULLSCREEN_DESKTOP =
 				(SDL_WINDOW_FULLSCREEN | 0x00001000),
-			SDL_WINDOW_FOREIGN =		0x00000800,
-			SDL_WINDOW_ALLOW_HIGHDPI =	0x00002000,	/* Requires >= 2.0.1 */
-			SDL_WINDOW_MOUSE_CAPTURE =	0x00004000,	/* Requires >= 2.0.4 */
-			SDL_WINDOW_ALWAYS_ON_TOP =	0x00008000,	/* Requires >= 2.0.5 */
-			SDL_WINDOW_SKIP_TASKBAR =	0x00010000,	/* Requires >= 2.0.5 */
-			SDL_WINDOW_UTILITY =		0x00020000,	/* Requires >= 2.0.5 */
-			SDL_WINDOW_TOOLTIP =		0x00040000,	/* Requires >= 2.0.5 */
-			SDL_WINDOW_POPUP_MENU =		0x00080000,	/* Requires >= 2.0.5 */
-			SDL_WINDOW_VULKAN =		0x10000000,	/* Requires >= 2.0.6 */
-			SDL_WINDOW_METAL =		0x2000000,	/* Requires >= 2.0.14 */
+			SDL_WINDOW_FOREIGN = 0x00000800,
+			SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000,  /* Requires >= 2.0.1 */
+			SDL_WINDOW_MOUSE_CAPTURE = 0x00004000,  /* Requires >= 2.0.4 */
+			SDL_WINDOW_ALWAYS_ON_TOP = 0x00008000,  /* Requires >= 2.0.5 */
+			SDL_WINDOW_SKIP_TASKBAR = 0x00010000,   /* Requires >= 2.0.5 */
+			SDL_WINDOW_UTILITY = 0x00020000,    /* Requires >= 2.0.5 */
+			SDL_WINDOW_TOOLTIP = 0x00040000,    /* Requires >= 2.0.5 */
+			SDL_WINDOW_POPUP_MENU = 0x00080000, /* Requires >= 2.0.5 */
+			SDL_WINDOW_KEYBOARD_GRABBED = 0x00100000,   /* Requires >= 2.0.16 */
+			SDL_WINDOW_VULKAN = 0x10000000, /* Requires >= 2.0.6 */
+			SDL_WINDOW_METAL = 0x2000000,   /* Requires >= 2.0.14 */
+
+			SDL_WINDOW_INPUT_GRABBED =
+				SDL_WINDOW_MOUSE_GRABBED,
 		}
 
 		/* Only available in 2.0.4 or higher. */
 		public enum SDL_HitTestResult
 		{
-			SDL_HITTEST_NORMAL,		/* Region is normal. No special properties. */
-			SDL_HITTEST_DRAGGABLE,		/* Region can drag entire window. */
+			SDL_HITTEST_NORMAL,     /* Region is normal. No special properties. */
+			SDL_HITTEST_DRAGGABLE,      /* Region can drag entire window. */
 			SDL_HITTEST_RESIZE_TOPLEFT,
 			SDL_HITTEST_RESIZE_TOP,
 			SDL_HITTEST_RESIZE_TOPRIGHT,
@@ -1458,10 +1508,10 @@ namespace NuRender.SDL2
 			SDL_HITTEST_RESIZE_LEFT
 		}
 
-		public const int SDL_WINDOWPOS_UNDEFINED_MASK =	0x1FFF0000;
-		public const int SDL_WINDOWPOS_CENTERED_MASK =	0x2FFF0000;
-		public const int SDL_WINDOWPOS_UNDEFINED =	0x1FFF0000;
-		public const int SDL_WINDOWPOS_CENTERED =	0x2FFF0000;
+		public const int SDL_WINDOWPOS_UNDEFINED_MASK = 0x1FFF0000;
+		public const int SDL_WINDOWPOS_CENTERED_MASK = 0x2FFF0000;
+		public const int SDL_WINDOWPOS_UNDEFINED = 0x1FFF0000;
+		public const int SDL_WINDOWPOS_CENTERED = 0x2FFF0000;
 
 		public static int SDL_WINDOWPOS_UNDEFINED_DISPLAY(int X)
 		{
@@ -1516,11 +1566,12 @@ namespace NuRender.SDL2
 			int w,
 			int h,
 			SDL_WindowFlags flags
-		) {
-			int utf8TitleBufSize = Utf8SizeNullable(title);
+		)
+		{
+			int utf8TitleBufSize = Utf8Size(title);
 			byte* utf8Title = stackalloc byte[utf8TitleBufSize];
 			return INTERNAL_SDL_CreateWindow(
-				Utf8EncodeNullable(title, utf8Title, utf8TitleBufSize),
+				Utf8Encode(title, utf8Title, utf8TitleBufSize),
 				x, y, w, h,
 				flags
 			);
@@ -1687,7 +1738,8 @@ namespace NuRender.SDL2
 		public static unsafe IntPtr SDL_GetWindowData(
 			IntPtr window,
 			string name
-		) {
+		)
+		{
 			int utf8NameBufSize = Utf8Size(name);
 			byte* utf8Name = stackalloc byte[utf8NameBufSize];
 			return INTERNAL_SDL_GetWindowData(
@@ -1732,6 +1784,18 @@ namespace NuRender.SDL2
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_GetWindowGrab(IntPtr window);
+
+		/* window refers to an SDL_Window*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern SDL_bool SDL_GetWindowKeyboardGrab(IntPtr window);
+
+		/* window refers to an SDL_Window*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern SDL_bool SDL_GetWindowMouseGrab(IntPtr window);
 
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -1811,11 +1875,11 @@ namespace NuRender.SDL2
 		private static extern unsafe int INTERNAL_SDL_GL_LoadLibrary(byte* path);
 		public static unsafe int SDL_GL_LoadLibrary(string path)
 		{
-			byte* utf8Path = Utf8Encode(path);
+			byte* utf8Path = Utf8EncodeHeap(path);
 			int result = INTERNAL_SDL_GL_LoadLibrary(
 				utf8Path
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8Path);
+			Marshal.FreeHGlobal((IntPtr)utf8Path);
 			return result;
 		}
 
@@ -1829,7 +1893,7 @@ namespace NuRender.SDL2
 			int utf8ProcBufSize = Utf8Size(proc);
 			byte* utf8Proc = stackalloc byte[utf8ProcBufSize];
 			return SDL_GL_GetProcAddress(
-				(IntPtr) Utf8Encode(proc, utf8Proc, utf8ProcBufSize)
+				(IntPtr)Utf8Encode(proc, utf8Proc, utf8ProcBufSize)
 			);
 		}
 
@@ -1842,7 +1906,7 @@ namespace NuRender.SDL2
 		);
 		public static unsafe SDL_bool SDL_GL_ExtensionSupported(string extension)
 		{
-			int utf8ExtensionBufSize = Utf8SizeNullable(extension);
+			int utf8ExtensionBufSize = Utf8Size(extension);
 			byte* utf8Extension = stackalloc byte[utf8ExtensionBufSize];
 			return INTERNAL_SDL_GL_ExtensionSupported(
 				Utf8Encode(extension, utf8Extension, utf8ExtensionBufSize)
@@ -1896,7 +1960,8 @@ namespace NuRender.SDL2
 		public static int SDL_GL_SetAttribute(
 			SDL_GLattr attr,
 			SDL_GLprofile profile
-		) {
+		)
+		{
 			return SDL_GL_SetAttribute(attr, (int)profile);
 		}
 
@@ -1952,7 +2017,8 @@ namespace NuRender.SDL2
 			IntPtr window,
 			string name,
 			IntPtr userdata
-		) {
+		)
+		{
 			int utf8NameBufSize = Utf8Size(name);
 			byte* utf8Name = stackalloc byte[utf8NameBufSize];
 			return INTERNAL_SDL_SetWindowData(
@@ -1967,6 +2033,14 @@ namespace NuRender.SDL2
 		public static extern int SDL_SetWindowDisplayMode(
 			IntPtr window,
 			ref SDL_DisplayMode mode
+		);
+
+		/* window refers to an SDL_Window* */
+		/* NULL overload - use the window's dimensions and the desktop's format and refresh rate */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SDL_SetWindowDisplayMode(
+			IntPtr window,
+			IntPtr mode
 		);
 
 		/* window refers to an SDL_Window* */
@@ -1994,6 +2068,25 @@ namespace NuRender.SDL2
 			IntPtr window,
 			SDL_bool grabbed
 		);
+
+		/* window refers to an SDL_Window*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void SDL_SetWindowKeyboardGrab(
+			IntPtr window,
+			SDL_bool grabbed
+		);
+
+		/* window refers to an SDL_Window*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void SDL_SetWindowMouseGrab(
+			IntPtr window,
+			SDL_bool grabbed
+		);
+
 
 		/* window refers to an SDL_Window*, icon to an SDL_Surface* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -2060,6 +2153,15 @@ namespace NuRender.SDL2
 			SDL_bool resizable
 		);
 
+		/* window refers to an SDL_Window*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void SDL_SetWindowAlwaysOnTop(
+			IntPtr window,
+			SDL_bool on_top
+		);
+
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, EntryPoint = "SDL_SetWindowTitle", CallingConvention = CallingConvention.Cdecl)]
 		private static extern unsafe void INTERNAL_SDL_SetWindowTitle(
@@ -2069,7 +2171,8 @@ namespace NuRender.SDL2
 		public static unsafe void SDL_SetWindowTitle(
 			IntPtr window,
 			string title
-		) {
+		)
+		{
 			int utf8TitleBufSize = Utf8Size(title);
 			byte* utf8Title = stackalloc byte[utf8TitleBufSize];
 			INTERNAL_SDL_SetWindowTitle(
@@ -2126,42 +2229,51 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_GetGrabbedWindow();
 
-#endregion
+		/* window refers to an SDL_Window*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SDL_FlashWindow(
+			IntPtr window,
+			SDL_FlashOperation operation
+		);
 
-#region SDL_blendmode.h
+		#endregion
+
+		#region SDL_blendmode.h
 
 		[Flags]
 		public enum SDL_BlendMode
 		{
-			SDL_BLENDMODE_NONE =	0x00000000,
-			SDL_BLENDMODE_BLEND =	0x00000001,
-			SDL_BLENDMODE_ADD =	0x00000002,
-			SDL_BLENDMODE_MOD =	0x00000004,
-			SDL_BLENDMODE_MUL =	0x00000008,	/* >= 2.0.11 */
-			SDL_BLENDMODE_INVALID =	0x7FFFFFFF
+			SDL_BLENDMODE_NONE = 0x00000000,
+			SDL_BLENDMODE_BLEND = 0x00000001,
+			SDL_BLENDMODE_ADD = 0x00000002,
+			SDL_BLENDMODE_MOD = 0x00000004,
+			SDL_BLENDMODE_MUL = 0x00000008, /* >= 2.0.11 */
+			SDL_BLENDMODE_INVALID = 0x7FFFFFFF
 		}
 
 		public enum SDL_BlendOperation
 		{
-			SDL_BLENDOPERATION_ADD		= 0x1,
-			SDL_BLENDOPERATION_SUBTRACT	= 0x2,
-			SDL_BLENDOPERATION_REV_SUBTRACT	= 0x3,
-			SDL_BLENDOPERATION_MINIMUM	= 0x4,
-			SDL_BLENDOPERATION_MAXIMUM	= 0x5
+			SDL_BLENDOPERATION_ADD = 0x1,
+			SDL_BLENDOPERATION_SUBTRACT = 0x2,
+			SDL_BLENDOPERATION_REV_SUBTRACT = 0x3,
+			SDL_BLENDOPERATION_MINIMUM = 0x4,
+			SDL_BLENDOPERATION_MAXIMUM = 0x5
 		}
 
 		public enum SDL_BlendFactor
 		{
-			SDL_BLENDFACTOR_ZERO			= 0x1,
-			SDL_BLENDFACTOR_ONE			= 0x2,
-			SDL_BLENDFACTOR_SRC_COLOR		= 0x3,
-			SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR	= 0x4,
-			SDL_BLENDFACTOR_SRC_ALPHA		= 0x5,
-			SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA	= 0x6,
-			SDL_BLENDFACTOR_DST_COLOR		= 0x7,
-			SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR	= 0x8,
-			SDL_BLENDFACTOR_DST_ALPHA		= 0x9,
-			SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA	= 0xA
+			SDL_BLENDFACTOR_ZERO = 0x1,
+			SDL_BLENDFACTOR_ONE = 0x2,
+			SDL_BLENDFACTOR_SRC_COLOR = 0x3,
+			SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR = 0x4,
+			SDL_BLENDFACTOR_SRC_ALPHA = 0x5,
+			SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA = 0x6,
+			SDL_BLENDFACTOR_DST_COLOR = 0x7,
+			SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR = 0x8,
+			SDL_BLENDFACTOR_DST_ALPHA = 0x9,
+			SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA = 0xA
 		}
 
 		/* Only available in 2.0.6 or higher. */
@@ -2175,9 +2287,9 @@ namespace NuRender.SDL2
 			SDL_BlendOperation alphaOperation
 		);
 
-#endregion
+		#endregion
 
-#region SDL_vulkan.h
+		#region SDL_vulkan.h
 
 		/* Only available in 2.0.6 or higher. */
 		[DllImport(nativeLibName, EntryPoint = "SDL_Vulkan_LoadLibrary", CallingConvention = CallingConvention.Cdecl)]
@@ -2186,11 +2298,11 @@ namespace NuRender.SDL2
 		);
 		public static unsafe int SDL_Vulkan_LoadLibrary(string path)
 		{
-			byte* utf8Path = Utf8Encode(path);
+			byte* utf8Path = Utf8EncodeHeap(path);
 			int result = INTERNAL_SDL_Vulkan_LoadLibrary(
 				utf8Path
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8Path);
+			Marshal.FreeHGlobal((IntPtr)utf8Path);
 			return result;
 		}
 
@@ -2201,6 +2313,17 @@ namespace NuRender.SDL2
 		/* Only available in 2.0.6 or higher. */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_Vulkan_UnloadLibrary();
+
+		/* window refers to an SDL_Window*, pNames to a const char**.
+		 * Only available in 2.0.6 or higher.
+		 * This overload allows for IntPtr.Zero (null) to be passed for pNames.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern SDL_bool SDL_Vulkan_GetInstanceExtensions(
+			IntPtr window,
+			out uint pCount,
+			IntPtr pNames
+		);
 
 		/* window refers to an SDL_Window*, pNames to a const char**.
 		 * Only available in 2.0.6 or higher.
@@ -2234,9 +2357,9 @@ namespace NuRender.SDL2
 			out int h
 		);
 
-#endregion
+		#endregion
 
-#region SDL_metal.h
+		#region SDL_metal.h
 
 		/* Only available in 2.0.11 or higher. */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -2267,25 +2390,25 @@ namespace NuRender.SDL2
 			out int h
 		);
 
-#endregion
+		#endregion
 
-#region SDL_render.h
+		#region SDL_render.h
 
 		[Flags]
 		public enum SDL_RendererFlags : uint
 		{
-			SDL_RENDERER_SOFTWARE =		0x00000001,
-			SDL_RENDERER_ACCELERATED =	0x00000002,
-			SDL_RENDERER_PRESENTVSYNC =	0x00000004,
-			SDL_RENDERER_TARGETTEXTURE =	0x00000008
+			SDL_RENDERER_SOFTWARE = 0x00000001,
+			SDL_RENDERER_ACCELERATED = 0x00000002,
+			SDL_RENDERER_PRESENTVSYNC = 0x00000004,
+			SDL_RENDERER_TARGETTEXTURE = 0x00000008
 		}
 
 		[Flags]
 		public enum SDL_RendererFlip
 		{
-			SDL_FLIP_NONE =		0x00000000,
-			SDL_FLIP_HORIZONTAL =	0x00000001,
-			SDL_FLIP_VERTICAL =	0x00000002
+			SDL_FLIP_NONE = 0x00000000,
+			SDL_FLIP_HORIZONTAL = 0x00000001,
+			SDL_FLIP_VERTICAL = 0x00000002
 		}
 
 		public enum SDL_TextureAccess
@@ -2298,9 +2421,9 @@ namespace NuRender.SDL2
 		[Flags]
 		public enum SDL_TextureModulate
 		{
-			SDL_TEXTUREMODULATE_NONE =		0x00000000,
-			SDL_TEXTUREMODULATE_HORIZONTAL =	0x00000001,
-			SDL_TEXTUREMODULATE_VERTICAL =		0x00000002
+			SDL_TEXTUREMODULATE_NONE = 0x00000000,
+			SDL_TEXTUREMODULATE_HORIZONTAL = 0x00000001,
+			SDL_TEXTUREMODULATE_VERTICAL = 0x00000002
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -2765,7 +2888,7 @@ namespace NuRender.SDL2
 			int count
 		);
 
-#region Floating Point Render Functions
+		#region Floating Point Render Functions
 
 		/* This region only available in SDL 2.0.10 or higher. */
 
@@ -3027,7 +3150,7 @@ namespace NuRender.SDL2
 			int count
 		);
 
-#endregion
+		#endregion
 
 		/* renderer refers to an SDL_Renderer* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -3205,6 +3328,20 @@ namespace NuRender.SDL2
 			int vPitch
 		);
 
+		/* texture refers to an SDL_Texture*.
+		 * yPlane and uvPlane refer to const Uint*.
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SDL_UpdateNVTexture(
+			IntPtr texture,
+			ref SDL_Rect rect,
+			IntPtr yPlane,
+			int yPitch,
+			IntPtr uvPlane,
+			int uvPitch
+		);
+
 		/* renderer refers to an SDL_Renderer* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_RenderTargetSupported(
@@ -3243,9 +3380,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_RenderFlush(IntPtr renderer);
 
-#endregion
+		#endregion
 
-#region SDL_pixels.h
+		#region SDL_pixels.h
 
 		public static uint SDL_DEFINE_PIXELFOURCC(byte A, byte B, byte C, byte D)
 		{
@@ -3258,12 +3395,13 @@ namespace NuRender.SDL2
 			SDL_PackedLayout layout,
 			byte bits,
 			byte bytes
-		) {
-			return (uint) (
+		)
+		{
+			return (uint)(
 				(1 << 28) |
-				(((byte) type) << 24) |
-				(((byte) order) << 20) |
-				(((byte) layout) << 16) |
+				(((byte)type) << 24) |
+				(((byte)order) << 20) |
+				(((byte)layout) << 16) |
 				(bits << 8) |
 				(bytes)
 			);
@@ -3271,42 +3409,42 @@ namespace NuRender.SDL2
 
 		public static byte SDL_PIXELFLAG(uint X)
 		{
-			return (byte) ((X >> 28) & 0x0F);
+			return (byte)((X >> 28) & 0x0F);
 		}
 
 		public static byte SDL_PIXELTYPE(uint X)
 		{
-			return (byte) ((X >> 24) & 0x0F);
+			return (byte)((X >> 24) & 0x0F);
 		}
 
 		public static byte SDL_PIXELORDER(uint X)
 		{
-			return (byte) ((X >> 20) & 0x0F);
+			return (byte)((X >> 20) & 0x0F);
 		}
 
 		public static byte SDL_PIXELLAYOUT(uint X)
 		{
-			return (byte) ((X >> 16) & 0x0F);
+			return (byte)((X >> 16) & 0x0F);
 		}
 
 		public static byte SDL_BITSPERPIXEL(uint X)
 		{
-			return (byte) ((X >> 8) & 0xFF);
+			return (byte)((X >> 8) & 0xFF);
 		}
 
 		public static byte SDL_BYTESPERPIXEL(uint X)
 		{
 			if (SDL_ISPIXELFORMAT_FOURCC(X))
 			{
-				if (	(X == SDL_PIXELFORMAT_YUY2) ||
+				if ((X == SDL_PIXELFORMAT_YUY2) ||
 						(X == SDL_PIXELFORMAT_UYVY) ||
-						(X == SDL_PIXELFORMAT_YVYU)	)
+						(X == SDL_PIXELFORMAT_YVYU))
 				{
 					return 2;
 				}
 				return 1;
 			}
-			return (byte) (X & 0xFF);
+			return (byte)(X & 0xFF);
 		}
 
 		public static bool SDL_ISPIXELFORMAT_INDEXED(uint format)
@@ -3316,7 +3454,7 @@ namespace NuRender.SDL2
 				return false;
 			}
 			SDL_PixelType pType =
-				(SDL_PixelType) SDL_PIXELTYPE(format);
+				(SDL_PixelType)SDL_PIXELTYPE(format);
 			return (
 				pType == SDL_PixelType.SDL_PIXELTYPE_INDEX1 ||
 				pType == SDL_PixelType.SDL_PIXELTYPE_INDEX4 ||
@@ -3331,7 +3469,7 @@ namespace NuRender.SDL2
 				return false;
 			}
 			SDL_PixelType pType =
-				(SDL_PixelType) SDL_PIXELTYPE(format);
+				(SDL_PixelType)SDL_PIXELTYPE(format);
 			return (
 				pType == SDL_PixelType.SDL_PIXELTYPE_PACKED8 ||
 				pType == SDL_PixelType.SDL_PIXELTYPE_PACKED16 ||
@@ -3346,7 +3484,7 @@ namespace NuRender.SDL2
 				return false;
 			}
 			SDL_PixelType pType =
-				(SDL_PixelType) SDL_PIXELTYPE(format);
+				(SDL_PixelType)SDL_PIXELTYPE(format);
 			return (
 				pType == SDL_PixelType.SDL_PIXELTYPE_ARRAYU8 ||
 				pType == SDL_PixelType.SDL_PIXELTYPE_ARRAYU16 ||
@@ -3361,7 +3499,7 @@ namespace NuRender.SDL2
 			if (SDL_ISPIXELFORMAT_PACKED(format))
 			{
 				SDL_PackedOrder pOrder =
-					(SDL_PackedOrder) SDL_PIXELORDER(format);
+					(SDL_PackedOrder)SDL_PIXELORDER(format);
 				return (
 					pOrder == SDL_PackedOrder.SDL_PACKEDORDER_ARGB ||
 					pOrder == SDL_PackedOrder.SDL_PACKEDORDER_RGBA ||
@@ -3372,7 +3510,7 @@ namespace NuRender.SDL2
 			else if (SDL_ISPIXELFORMAT_ARRAY(format))
 			{
 				SDL_ArrayOrder aOrder =
-					(SDL_ArrayOrder) SDL_PIXELORDER(format);
+					(SDL_ArrayOrder)SDL_PIXELORDER(format);
 				return (
 					aOrder == SDL_ArrayOrder.SDL_ARRAYORDER_ARGB ||
 					aOrder == SDL_ArrayOrder.SDL_ARRAYORDER_RGBA ||
@@ -3452,28 +3590,28 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_INDEX1LSB =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_INDEX1,
-				(uint) SDL_BitmapOrder.SDL_BITMAPORDER_4321,
+				(uint)SDL_BitmapOrder.SDL_BITMAPORDER_4321,
 				0,
 				1, 0
 			);
 		public static readonly uint SDL_PIXELFORMAT_INDEX1MSB =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_INDEX1,
-				(uint) SDL_BitmapOrder.SDL_BITMAPORDER_1234,
+				(uint)SDL_BitmapOrder.SDL_BITMAPORDER_1234,
 				0,
 				1, 0
 			);
 		public static readonly uint SDL_PIXELFORMAT_INDEX4LSB =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_INDEX4,
-				(uint) SDL_BitmapOrder.SDL_BITMAPORDER_4321,
+				(uint)SDL_BitmapOrder.SDL_BITMAPORDER_4321,
 				0,
 				4, 0
 			);
 		public static readonly uint SDL_PIXELFORMAT_INDEX4MSB =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_INDEX4,
-				(uint) SDL_BitmapOrder.SDL_BITMAPORDER_1234,
+				(uint)SDL_BitmapOrder.SDL_BITMAPORDER_1234,
 				0,
 				4, 0
 			);
@@ -3487,14 +3625,14 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_RGB332 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED8,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_332,
 				8, 1
 			);
 		public static readonly uint SDL_PIXELFORMAT_XRGB444 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_4444,
 				12, 2
 			);
@@ -3503,7 +3641,7 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_XBGR444 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XBGR,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XBGR,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_4444,
 				12, 2
 			);
@@ -3512,7 +3650,7 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_XRGB1555 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_1555,
 				15, 2
 			);
@@ -3521,7 +3659,7 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_XBGR1555 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_INDEX1,
-				(uint) SDL_BitmapOrder.SDL_BITMAPORDER_4321,
+				(uint)SDL_BitmapOrder.SDL_BITMAPORDER_4321,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_1555,
 				15, 2
 			);
@@ -3530,91 +3668,91 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_ARGB4444 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_4444,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_RGBA4444 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_RGBA,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_RGBA,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_4444,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_ABGR4444 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_ABGR,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_ABGR,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_4444,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_BGRA4444 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_BGRA,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_BGRA,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_4444,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_ARGB1555 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_1555,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_RGBA5551 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_RGBA,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_RGBA,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_5551,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_ABGR1555 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_ABGR,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_ABGR,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_1555,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_BGRA5551 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_BGRA,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_BGRA,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_5551,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_RGB565 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_565,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_BGR565 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED16,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XBGR,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XBGR,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_565,
 				16, 2
 			);
 		public static readonly uint SDL_PIXELFORMAT_RGB24 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_ARRAYU8,
-				(uint) SDL_ArrayOrder.SDL_ARRAYORDER_RGB,
+				(uint)SDL_ArrayOrder.SDL_ARRAYORDER_RGB,
 				0,
 				24, 3
 			);
 		public static readonly uint SDL_PIXELFORMAT_BGR24 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_ARRAYU8,
-				(uint) SDL_ArrayOrder.SDL_ARRAYORDER_BGR,
+				(uint)SDL_ArrayOrder.SDL_ARRAYORDER_BGR,
 				0,
 				24, 3
 			);
 		public static readonly uint SDL_PIXELFORMAT_XRGB888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XRGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				24, 4
 			);
@@ -3623,14 +3761,14 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_RGBX8888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_RGBX,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_RGBX,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				24, 4
 			);
 		public static readonly uint SDL_PIXELFORMAT_XBGR888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_XBGR,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_XBGR,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				24, 4
 			);
@@ -3639,64 +3777,64 @@ namespace NuRender.SDL2
 		public static readonly uint SDL_PIXELFORMAT_BGRX8888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_BGRX,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_BGRX,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				24, 4
 			);
 		public static readonly uint SDL_PIXELFORMAT_ARGB8888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				32, 4
 			);
 		public static readonly uint SDL_PIXELFORMAT_RGBA8888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_RGBA,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_RGBA,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				32, 4
 			);
 		public static readonly uint SDL_PIXELFORMAT_ABGR8888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_ABGR,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_ABGR,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				32, 4
 			);
 		public static readonly uint SDL_PIXELFORMAT_BGRA8888 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_BGRA,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_BGRA,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_8888,
 				32, 4
 			);
 		public static readonly uint SDL_PIXELFORMAT_ARGB2101010 =
 			SDL_DEFINE_PIXELFORMAT(
 				SDL_PixelType.SDL_PIXELTYPE_PACKED32,
-				(uint) SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
+				(uint)SDL_PackedOrder.SDL_PACKEDORDER_ARGB,
 				SDL_PackedLayout.SDL_PACKEDLAYOUT_2101010,
 				32, 4
 			);
 		public static readonly uint SDL_PIXELFORMAT_YV12 =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'Y', (byte) 'V', (byte) '1', (byte) '2'
+				(byte)'Y', (byte)'V', (byte)'1', (byte)'2'
 			);
 		public static readonly uint SDL_PIXELFORMAT_IYUV =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'I', (byte) 'Y', (byte) 'U', (byte) 'V'
+				(byte)'I', (byte)'Y', (byte)'U', (byte)'V'
 			);
 		public static readonly uint SDL_PIXELFORMAT_YUY2 =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'Y', (byte) 'U', (byte) 'Y', (byte) '2'
+				(byte)'Y', (byte)'U', (byte)'Y', (byte)'2'
 			);
 		public static readonly uint SDL_PIXELFORMAT_UYVY =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'U', (byte) 'Y', (byte) 'V', (byte) 'Y'
+				(byte)'U', (byte)'Y', (byte)'V', (byte)'Y'
 			);
 		public static readonly uint SDL_PIXELFORMAT_YVYU =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'Y', (byte) 'V', (byte) 'Y', (byte) 'U'
+				(byte)'Y', (byte)'V', (byte)'Y', (byte)'U'
 			);
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -3849,22 +3987,15 @@ namespace NuRender.SDL2
 			IntPtr palette
 		);
 
-#endregion
+		#endregion
 
-#region SDL_rect.h
+		#region SDL_rect.h
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Point
 		{
 			public int x;
 			public int y;
-
-
-			public SDL_Point(int XPos, int YPos) // NuRender 2021-09-29
-			{
-				x = XPos;
-				y = YPos;
-            }
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -3874,14 +4005,6 @@ namespace NuRender.SDL2
 			public int y;
 			public int w;
 			public int h;
-
-			public SDL_Rect(int XPos, int YPos, int Width, int Height) // NuRender 2021-09-29
-			{
-				x = XPos;
-				y = YPos;
-				w = Width;
-				h = Height; 
-            }
 		}
 
 		/* Only available in 2.0.10 or higher. */
@@ -3890,12 +4013,6 @@ namespace NuRender.SDL2
 		{
 			public float x;
 			public float y;
-
-			public SDL_FPoint(float XPos, float YPos) // NuRender 2021-09-29
-			{
-				x = XPos;
-				y = YPos;
-			}
 		}
 
 		/* Only available in 2.0.10 or higher. */
@@ -3906,23 +4023,15 @@ namespace NuRender.SDL2
 			public float y;
 			public float w;
 			public float h;
-
-			public SDL_FRect(float XPos, float YPos, float Width, float Height) // NuRender 2021-09-29
-			{
-				x = XPos;
-				y = YPos;
-				w = Width;
-				h = Height;
-			}
 		}
 
 		/* Only available in 2.0.4 or higher. */
 		public static SDL_bool SDL_PointInRect(ref SDL_Point p, ref SDL_Rect r)
 		{
-			return (	(p.x >= r.x) &&
+			return ((p.x >= r.x) &&
 					(p.x < (r.x + r.w)) &&
 					(p.y >= r.y) &&
-					(p.y < (r.y + r.h))	) ?
+					(p.y < (r.y + r.h))) ?
 				SDL_bool.SDL_TRUE :
 				SDL_bool.SDL_FALSE;
 		}
@@ -3967,11 +4076,12 @@ namespace NuRender.SDL2
 		public static SDL_bool SDL_RectEquals(
 			ref SDL_Rect a,
 			ref SDL_Rect b
-		) {
-			return (	(a.x == b.x) &&
+		)
+		{
+			return ((a.x == b.x) &&
 					(a.y == b.y) &&
 					(a.w == b.w) &&
-					(a.h == b.h)	) ?
+					(a.h == b.h)) ?
 				SDL_bool.SDL_TRUE :
 				SDL_bool.SDL_FALSE;
 		}
@@ -3983,14 +4093,14 @@ namespace NuRender.SDL2
 			out SDL_Rect result
 		);
 
-#endregion
+		#endregion
 
-#region SDL_surface.h
+		#region SDL_surface.h
 
-		public const uint SDL_SWSURFACE =	0x00000000;
-		public const uint SDL_PREALLOC =	0x00000001;
-		public const uint SDL_RLEACCEL =	0x00000002;
-		public const uint SDL_DONTFREE =	0x00000004;
+		public const uint SDL_SWSURFACE = 0x00000000;
+		public const uint SDL_PREALLOC = 0x00000001;
+		public const uint SDL_RLEACCEL = 0x00000002;
+		public const uint SDL_DONTFREE = 0x00000004;
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Surface
@@ -4013,7 +4123,7 @@ namespace NuRender.SDL2
 		public static bool SDL_MUSTLOCK(IntPtr surface)
 		{
 			SDL_Surface sur;
-			sur = (SDL_Surface) Marshal.PtrToStructure(
+			sur = (SDL_Surface)Marshal.PtrToStructure(
 				surface,
 				typeof(SDL_Surface)
 			);
@@ -4394,6 +4504,17 @@ namespace NuRender.SDL2
 			ref SDL_Rect dstrect
 		);
 
+		/* src and dst refer to an SDL_Surface*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SDL_SoftStretchLinear(
+			IntPtr src,
+			ref SDL_Rect srcrect,
+			IntPtr dst,
+			ref SDL_Rect dstrect
+		);
+
 		/* surface refers to an SDL_Surface* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_UnlockSurface(IntPtr surface);
@@ -4420,9 +4541,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_DuplicateSurface(IntPtr surface);
 
-#endregion
+		#endregion
 
-#region SDL_clipboard.h
+		#region SDL_clipboard.h
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_HasClipboardText();
@@ -4440,22 +4561,23 @@ namespace NuRender.SDL2
 		);
 		public static unsafe int SDL_SetClipboardText(
 			string text
-		) {
-			byte* utf8Text = Utf8Encode(text);
+		)
+		{
+			byte* utf8Text = Utf8EncodeHeap(text);
 			int result = INTERNAL_SDL_SetClipboardText(
 				utf8Text
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8Text);
+			Marshal.FreeHGlobal((IntPtr)utf8Text);
 			return result;
 		}
 
-#endregion
+		#endregion
 
-#region SDL_events.h
+		#region SDL_events.h
 
 		/* General keyboard/mouse state definitions. */
-		public const byte SDL_PRESSED =		1;
-		public const byte SDL_RELEASED =	0;
+		public const byte SDL_PRESSED = 1;
+		public const byte SDL_RELEASED = 0;
 
 		/* Default size is according to SDL2 default. */
 		public const int SDL_TEXTEDITINGEVENT_TEXT_SIZE = 32;
@@ -4464,10 +4586,10 @@ namespace NuRender.SDL2
 		/* The types of events that can be delivered. */
 		public enum SDL_EventType : uint
 		{
-			SDL_FIRSTEVENT =		0,
+			SDL_FIRSTEVENT = 0,
 
 			/* Application events */
-			SDL_QUIT = 			0x100,
+			SDL_QUIT = 0x100,
 
 			/* iOS/Android/WinRT app events */
 			SDL_APP_TERMINATING,
@@ -4482,27 +4604,27 @@ namespace NuRender.SDL2
 
 			/* Display events */
 			/* Only available in SDL 2.0.9 or higher. */
-			SDL_DISPLAYEVENT =		0x150,
+			SDL_DISPLAYEVENT = 0x150,
 
 			/* Window events */
-			SDL_WINDOWEVENT = 		0x200,
+			SDL_WINDOWEVENT = 0x200,
 			SDL_SYSWMEVENT,
 
 			/* Keyboard events */
-			SDL_KEYDOWN = 			0x300,
+			SDL_KEYDOWN = 0x300,
 			SDL_KEYUP,
 			SDL_TEXTEDITING,
 			SDL_TEXTINPUT,
 			SDL_KEYMAPCHANGED,
 
 			/* Mouse events */
-			SDL_MOUSEMOTION = 		0x400,
+			SDL_MOUSEMOTION = 0x400,
 			SDL_MOUSEBUTTONDOWN,
 			SDL_MOUSEBUTTONUP,
 			SDL_MOUSEWHEEL,
 
 			/* Joystick events */
-			SDL_JOYAXISMOTION =		0x600,
+			SDL_JOYAXISMOTION = 0x600,
 			SDL_JOYBALLMOTION,
 			SDL_JOYHATMOTION,
 			SDL_JOYBUTTONDOWN,
@@ -4511,32 +4633,32 @@ namespace NuRender.SDL2
 			SDL_JOYDEVICEREMOVED,
 
 			/* Game controller events */
-			SDL_CONTROLLERAXISMOTION = 	0x650,
+			SDL_CONTROLLERAXISMOTION = 0x650,
 			SDL_CONTROLLERBUTTONDOWN,
 			SDL_CONTROLLERBUTTONUP,
 			SDL_CONTROLLERDEVICEADDED,
 			SDL_CONTROLLERDEVICEREMOVED,
 			SDL_CONTROLLERDEVICEREMAPPED,
-			SDL_CONTROLLERTOUCHPADDOWN,	/* Requires >= 2.0.14 */
-			SDL_CONTROLLERTOUCHPADMOTION,	/* Requires >= 2.0.14 */
-			SDL_CONTROLLERTOUCHPADUP,	/* Requires >= 2.0.14 */
-			SDL_CONTROLLERSENSORUPDATE,	/* Requires >= 2.0.14 */
+			SDL_CONTROLLERTOUCHPADDOWN, /* Requires >= 2.0.14 */
+			SDL_CONTROLLERTOUCHPADMOTION,   /* Requires >= 2.0.14 */
+			SDL_CONTROLLERTOUCHPADUP,   /* Requires >= 2.0.14 */
+			SDL_CONTROLLERSENSORUPDATE, /* Requires >= 2.0.14 */
 
 			/* Touch events */
-			SDL_FINGERDOWN = 		0x700,
+			SDL_FINGERDOWN = 0x700,
 			SDL_FINGERUP,
 			SDL_FINGERMOTION,
 
 			/* Gesture events */
-			SDL_DOLLARGESTURE =		0x800,
+			SDL_DOLLARGESTURE = 0x800,
 			SDL_DOLLARRECORD,
 			SDL_MULTIGESTURE,
 
 			/* Clipboard events */
-			SDL_CLIPBOARDUPDATE =		0x900,
+			SDL_CLIPBOARDUPDATE = 0x900,
 
 			/* Drag and drop events */
-			SDL_DROPFILE =			0x1000,
+			SDL_DROPFILE = 0x1000,
 			/* Only available in 2.0.4 or higher. */
 			SDL_DROPTEXT,
 			SDL_DROPBEGIN,
@@ -4544,16 +4666,16 @@ namespace NuRender.SDL2
 
 			/* Audio hotplug events */
 			/* Only available in SDL 2.0.4 or higher. */
-			SDL_AUDIODEVICEADDED =		0x1100,
+			SDL_AUDIODEVICEADDED = 0x1100,
 			SDL_AUDIODEVICEREMOVED,
 
 			/* Sensor events */
 			/* Only available in SDL 2.0.9 or higher. */
-			SDL_SENSORUPDATE =		0x1200,
+			SDL_SENSORUPDATE = 0x1200,
 
 			/* Render events */
 			/* Only available in SDL 2.0.2 or higher. */
-			SDL_RENDER_TARGETS_RESET =	0x2000,
+			SDL_RENDER_TARGETS_RESET = 0x2000,
 			/* Only available in SDL 2.0.4 or higher. */
 			SDL_RENDER_DEVICE_RESET,
 
@@ -4561,10 +4683,10 @@ namespace NuRender.SDL2
 			 * your use, and should be allocated with
 			 * SDL_RegisterEvents()
 			 */
-			SDL_USEREVENT =			0x8000,
+			SDL_USEREVENT = 0x8000,
 
 			/* The last event, used for bouding arrays. */
-			SDL_LASTEVENT =			0xFFFF
+			SDL_LASTEVENT = 0xFFFF
 		}
 
 		/* Only available in 2.0.4 or higher. */
@@ -4582,7 +4704,7 @@ namespace NuRender.SDL2
 			public UInt32 timestamp;
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_DisplayEvent
@@ -4598,7 +4720,7 @@ namespace NuRender.SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Window state change event data (event.window.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4616,7 +4738,7 @@ namespace NuRender.SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Keyboard button event structure (event.key.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4653,7 +4775,7 @@ namespace NuRender.SDL2
 			public fixed byte text[SDL_TEXTINPUTEVENT_TEXT_SIZE];
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Mouse motion event structure (event.motion.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4674,7 +4796,7 @@ namespace NuRender.SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Mouse button event structure (event.button.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4690,8 +4812,7 @@ namespace NuRender.SDL2
 			private byte padding1;
 			public Int32 x;
 			public Int32 y;
-
-        }
+		}
 #pragma warning restore 0169
 
 		/* Mouse wheel event structure (event.wheel.*) */
@@ -4707,7 +4828,7 @@ namespace NuRender.SDL2
 			public UInt32 direction; /* Set to one of the SDL_MOUSEWHEEL_* defines */
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick axis motion event structure (event.jaxis.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4725,7 +4846,7 @@ namespace NuRender.SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick trackball motion event structure (event.jball.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4743,7 +4864,7 @@ namespace NuRender.SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick hat position change event struct (event.jhat.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4759,7 +4880,7 @@ namespace NuRender.SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick button event structure (event.jbutton.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4784,7 +4905,7 @@ namespace NuRender.SDL2
 			public Int32 which; /* SDL_JoystickID */
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Game controller axis motion event (event.caxis.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4802,7 +4923,7 @@ namespace NuRender.SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Game controller button event (event.cbutton.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -4824,7 +4945,7 @@ namespace NuRender.SDL2
 		{
 			public SDL_EventType type;
 			public UInt32 timestamp;
-			public Int32 which;	/* joystick id for ADDED,
+			public Int32 which; /* joystick id for ADDED,
 						 * else instance id
 						 */
 		}
@@ -4856,7 +4977,7 @@ namespace NuRender.SDL2
 			public float data3;
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Audio device event (event.adevice.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -5011,9 +5132,9 @@ namespace NuRender.SDL2
 			[FieldOffset(0)]
 			public SDL_ControllerDeviceEvent cdevice;
 			[FieldOffset(0)]
-			public SDL_ControllerDeviceEvent ctouchpad;
+			public SDL_ControllerTouchpadEvent ctouchpad;
 			[FieldOffset(0)]
-			public SDL_ControllerDeviceEvent csensor;
+			public SDL_ControllerSensorEvent csensor;
 			[FieldOffset(0)]
 			public SDL_AudioDeviceEvent adevice;
 			[FieldOffset(0)]
@@ -5115,12 +5236,13 @@ namespace NuRender.SDL2
 		public static SDL_bool SDL_GetEventFilter(
 			out SDL_EventFilter filter,
 			out IntPtr userdata
-		) {
+		)
+		{
 			IntPtr result = IntPtr.Zero;
 			SDL_bool retval = SDL_GetEventFilter(out result, out userdata);
 			if (result != IntPtr.Zero)
 			{
-				filter = (SDL_EventFilter) Marshal.GetDelegateForFunctionPointer(
+				filter = (SDL_EventFilter)Marshal.GetDelegateForFunctionPointer(
 					result,
 					typeof(SDL_EventFilter)
 				);
@@ -5154,10 +5276,10 @@ namespace NuRender.SDL2
 		);
 
 		/* These are for SDL_EventState() */
-		public const int SDL_QUERY = 		-1;
-		public const int SDL_IGNORE = 		0;
-		public const int SDL_DISABLE =		0;
-		public const int SDL_ENABLE = 		1;
+		public const int SDL_QUERY = -1;
+		public const int SDL_IGNORE = 0;
+		public const int SDL_DISABLE = 0;
+		public const int SDL_ENABLE = 1;
 
 		/* This function allows you to enable/disable certain events */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -5172,9 +5294,8 @@ namespace NuRender.SDL2
 		/* Allocate a set of user-defined events */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern UInt32 SDL_RegisterEvents(int numevents);
-#endregion
-
-#region SDL_scancode.h
+		#endregion
+		#region SDL_scancode.h
 
 		/* Scancodes based off USB keyboard page (0x07) */
 		public enum SDL_Scancode
@@ -5889,9 +6010,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_IsScreenKeyboardShown(IntPtr window);
 
-#endregion
+		#endregion
 
-#region SDL_mouse.c
+		#region SDL_mouse.c
 
 		/* Note: SDL_Cursor is a typedef normally. We'll treat it as
 		 * an IntPtr, because C# doesn't do typedefs. Yay!
@@ -5900,18 +6021,18 @@ namespace NuRender.SDL2
 		/* System cursor types */
 		public enum SDL_SystemCursor
 		{
-			SDL_SYSTEM_CURSOR_ARROW,	// Arrow
-			SDL_SYSTEM_CURSOR_IBEAM,	// I-beam
-			SDL_SYSTEM_CURSOR_WAIT,		// Wait
-			SDL_SYSTEM_CURSOR_CROSSHAIR,	// Crosshair
-			SDL_SYSTEM_CURSOR_WAITARROW,	// Small wait cursor (or Wait if not available)
-			SDL_SYSTEM_CURSOR_SIZENWSE,	// Double arrow pointing northwest and southeast
-			SDL_SYSTEM_CURSOR_SIZENESW,	// Double arrow pointing northeast and southwest
-			SDL_SYSTEM_CURSOR_SIZEWE,	// Double arrow pointing west and east
-			SDL_SYSTEM_CURSOR_SIZENS,	// Double arrow pointing north and south
-			SDL_SYSTEM_CURSOR_SIZEALL,	// Four pointed arrow pointing north, south, east, and west
-			SDL_SYSTEM_CURSOR_NO,		// Slashed circle or crossbones
-			SDL_SYSTEM_CURSOR_HAND,		// Hand
+			SDL_SYSTEM_CURSOR_ARROW,    // Arrow
+			SDL_SYSTEM_CURSOR_IBEAM,    // I-beam
+			SDL_SYSTEM_CURSOR_WAIT,     // Wait
+			SDL_SYSTEM_CURSOR_CROSSHAIR,    // Crosshair
+			SDL_SYSTEM_CURSOR_WAITARROW,    // Small wait cursor (or Wait if not available)
+			SDL_SYSTEM_CURSOR_SIZENWSE, // Double arrow pointing northwest and southeast
+			SDL_SYSTEM_CURSOR_SIZENESW, // Double arrow pointing northeast and southwest
+			SDL_SYSTEM_CURSOR_SIZEWE,   // Double arrow pointing west and east
+			SDL_SYSTEM_CURSOR_SIZENS,   // Double arrow pointing north and south
+			SDL_SYSTEM_CURSOR_SIZEALL,  // Four pointed arrow pointing north, south, east, and west
+			SDL_SYSTEM_CURSOR_NO,       // Slashed circle or crossbones
+			SDL_SYSTEM_CURSOR_HAND,     // Hand
 			SDL_NUM_SYSTEM_CURSORS
 		}
 
@@ -6050,23 +6171,23 @@ namespace NuRender.SDL2
 		public static uint SDL_BUTTON(uint X)
 		{
 			// If only there were a better way of doing this in C#
-			return (uint) (1 << ((int) X - 1));
+			return (uint)(1 << ((int)X - 1));
 		}
 
-		public const uint SDL_BUTTON_LEFT =	1;
-		public const uint SDL_BUTTON_MIDDLE =	2;
-		public const uint SDL_BUTTON_RIGHT =	3;
-		public const uint SDL_BUTTON_X1 =	4;
-		public const uint SDL_BUTTON_X2 =	5;
-		public static readonly UInt32 SDL_BUTTON_LMASK =	SDL_BUTTON(SDL_BUTTON_LEFT);
-		public static readonly UInt32 SDL_BUTTON_MMASK =	SDL_BUTTON(SDL_BUTTON_MIDDLE);
-		public static readonly UInt32 SDL_BUTTON_RMASK =	SDL_BUTTON(SDL_BUTTON_RIGHT);
-		public static readonly UInt32 SDL_BUTTON_X1MASK =	SDL_BUTTON(SDL_BUTTON_X1);
-		public static readonly UInt32 SDL_BUTTON_X2MASK =	SDL_BUTTON(SDL_BUTTON_X2);
+		public const uint SDL_BUTTON_LEFT = 1;
+		public const uint SDL_BUTTON_MIDDLE = 2;
+		public const uint SDL_BUTTON_RIGHT = 3;
+		public const uint SDL_BUTTON_X1 = 4;
+		public const uint SDL_BUTTON_X2 = 5;
+		public static readonly UInt32 SDL_BUTTON_LMASK = SDL_BUTTON(SDL_BUTTON_LEFT);
+		public static readonly UInt32 SDL_BUTTON_MMASK = SDL_BUTTON(SDL_BUTTON_MIDDLE);
+		public static readonly UInt32 SDL_BUTTON_RMASK = SDL_BUTTON(SDL_BUTTON_RIGHT);
+		public static readonly UInt32 SDL_BUTTON_X1MASK = SDL_BUTTON(SDL_BUTTON_X1);
+		public static readonly UInt32 SDL_BUTTON_X2MASK = SDL_BUTTON(SDL_BUTTON_X2);
 
-#endregion
+		#endregion
 
-#region SDL_touch.h
+		#region SDL_touch.h
 
 		public const uint SDL_TOUCH_MOUSEID = uint.MaxValue;
 
@@ -6116,19 +6237,19 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_TouchDeviceType SDL_GetTouchDeviceType(Int64 touchID);
 
-#endregion
+		#endregion
 
-#region SDL_joystick.h
+		#region SDL_joystick.h
 
-		public const byte SDL_HAT_CENTERED =	0x00;
-		public const byte SDL_HAT_UP =		0x01;
-		public const byte SDL_HAT_RIGHT =	0x02;
-		public const byte SDL_HAT_DOWN =	0x04;
-		public const byte SDL_HAT_LEFT =	0x08;
-		public const byte SDL_HAT_RIGHTUP =	SDL_HAT_RIGHT | SDL_HAT_UP;
-		public const byte SDL_HAT_RIGHTDOWN =	SDL_HAT_RIGHT | SDL_HAT_DOWN;
-		public const byte SDL_HAT_LEFTUP =	SDL_HAT_LEFT | SDL_HAT_UP;
-		public const byte SDL_HAT_LEFTDOWN =	SDL_HAT_LEFT | SDL_HAT_DOWN;
+		public const byte SDL_HAT_CENTERED = 0x00;
+		public const byte SDL_HAT_UP = 0x01;
+		public const byte SDL_HAT_RIGHT = 0x02;
+		public const byte SDL_HAT_DOWN = 0x04;
+		public const byte SDL_HAT_LEFT = 0x08;
+		public const byte SDL_HAT_RIGHTUP = SDL_HAT_RIGHT | SDL_HAT_UP;
+		public const byte SDL_HAT_RIGHTDOWN = SDL_HAT_RIGHT | SDL_HAT_DOWN;
+		public const byte SDL_HAT_LEFTUP = SDL_HAT_LEFT | SDL_HAT_UP;
+		public const byte SDL_HAT_LEFTDOWN = SDL_HAT_LEFT | SDL_HAT_DOWN;
 
 		public enum SDL_JoystickPowerLevel
 		{
@@ -6357,7 +6478,8 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_JoystickGetSerial(
 			IntPtr joystick
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_JoystickGetSerial(joystick)
 			);
@@ -6480,9 +6602,20 @@ namespace NuRender.SDL2
 			byte blue
 		);
 
-#endregion
+		/* joystick refers to an SDL_Joystick*.
+		 * data refers to a const void*.
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SDL_JoystickSendEffect(
+			IntPtr joystick,
+			IntPtr data,
+			int size
+		);
 
-#region SDL_gamecontroller.h
+		#endregion
+
+		#region SDL_gamecontroller.h
 
 		public enum SDL_GameControllerBindType
 		{
@@ -6539,8 +6672,10 @@ namespace NuRender.SDL2
 			SDL_CONTROLLER_TYPE_PS3,
 			SDL_CONTROLLER_TYPE_PS4,
 			SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO,
-			SDL_CONTROLLER_TYPE_VIRTUAL,	/* Requires >= 2.0.14 */
-			SDL_CONTROLLER_TYPE_PS5,	/* Requires >= 2.0.14 */
+			SDL_CONTROLLER_TYPE_VIRTUAL,        /* Requires >= 2.0.14 */
+			SDL_CONTROLLER_TYPE_PS5,        /* Requires >= 2.0.14 */
+			SDL_CONTROLLER_TYPE_AMAZON_LUNA,    /* Requires >= 2.0.16 */
+			SDL_CONTROLLER_TYPE_GOOGLE_STADIA   /* Requires >= 2.0.16 */
 		}
 
 		// FIXME: I'd rather this somehow be private...
@@ -6586,12 +6721,13 @@ namespace NuRender.SDL2
 		);
 		public static unsafe int SDL_GameControllerAddMapping(
 			string mappingString
-		) {
-			byte* utf8MappingString = Utf8Encode(mappingString);
+		)
+		{
+			byte* utf8MappingString = Utf8EncodeHeap(mappingString);
 			int result = INTERNAL_SDL_GameControllerAddMapping(
 				utf8MappingString
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8MappingString);
+			Marshal.FreeHGlobal((IntPtr)utf8MappingString);
 			return result;
 		}
 
@@ -6607,7 +6743,8 @@ namespace NuRender.SDL2
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GameControllerMappingForIndex(
 					mapping_index
-				)
+				),
+				true
 			);
 		}
 
@@ -6630,7 +6767,8 @@ namespace NuRender.SDL2
 		public static string SDL_GameControllerMappingForGUID(Guid guid)
 		{
 			return UTF8_ToManaged(
-				INTERNAL_SDL_GameControllerMappingForGUID(guid)
+				INTERNAL_SDL_GameControllerMappingForGUID(guid),
+				true
 			);
 		}
 
@@ -6641,11 +6779,13 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_GameControllerMapping(
 			IntPtr gamecontroller
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GameControllerMapping(
 					gamecontroller
-				)
+				),
+				true
 			);
 		}
 
@@ -6658,7 +6798,8 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_GameControllerNameForIndex(
 			int joystick_index
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GameControllerNameForIndex(joystick_index)
 			);
@@ -6671,9 +6812,11 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_GameControllerMappingForDeviceIndex(
 			int joystick_index
-		) {
+		)
+		{
 			return UTF8_ToManaged(
-				INTERNAL_SDL_GameControllerMappingForDeviceIndex(joystick_index)
+				INTERNAL_SDL_GameControllerMappingForDeviceIndex(joystick_index),
+				true
 			);
 		}
 
@@ -6688,7 +6831,8 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_GameControllerName(
 			IntPtr gamecontroller
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GameControllerName(gamecontroller)
 			);
@@ -6727,7 +6871,8 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_GameControllerGetSerial(
 			IntPtr gamecontroller
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GameControllerGetSerial(gamecontroller)
 			);
@@ -6759,7 +6904,8 @@ namespace NuRender.SDL2
 		);
 		public static unsafe SDL_GameControllerAxis SDL_GameControllerGetAxisFromString(
 			string pchString
-		) {
+		)
+		{
 			int utf8PchStringBufSize = Utf8Size(pchString);
 			byte* utf8PchString = stackalloc byte[utf8PchStringBufSize];
 			return INTERNAL_SDL_GameControllerGetAxisFromString(
@@ -6773,7 +6919,8 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_GameControllerGetStringForAxis(
 			SDL_GameControllerAxis axis
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GameControllerGetStringForAxis(
 					axis
@@ -6790,14 +6937,15 @@ namespace NuRender.SDL2
 		public static SDL_GameControllerButtonBind SDL_GameControllerGetBindForAxis(
 			IntPtr gamecontroller,
 			SDL_GameControllerAxis axis
-		) {
+		)
+		{
 			// This is guaranteed to never be null
 			INTERNAL_SDL_GameControllerButtonBind dumb = INTERNAL_SDL_GameControllerGetBindForAxis(
 				gamecontroller,
 				axis
 			);
 			SDL_GameControllerButtonBind result = new SDL_GameControllerButtonBind();
-			result.bindType = (SDL_GameControllerBindType) dumb.bindType;
+			result.bindType = (SDL_GameControllerBindType)dumb.bindType;
 			result.value.hat.hat = dumb.unionVal0;
 			result.value.hat.hat_mask = dumb.unionVal1;
 			return result;
@@ -6816,7 +6964,8 @@ namespace NuRender.SDL2
 		);
 		public static unsafe SDL_GameControllerButton SDL_GameControllerGetButtonFromString(
 			string pchString
-		) {
+		)
+		{
 			int utf8PchStringBufSize = Utf8Size(pchString);
 			byte* utf8PchString = stackalloc byte[utf8PchStringBufSize];
 			return INTERNAL_SDL_GameControllerGetButtonFromString(
@@ -6830,7 +6979,8 @@ namespace NuRender.SDL2
 		);
 		public static string SDL_GameControllerGetStringForButton(
 			SDL_GameControllerButton button
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GameControllerGetStringForButton(button)
 			);
@@ -6845,14 +6995,15 @@ namespace NuRender.SDL2
 		public static SDL_GameControllerButtonBind SDL_GameControllerGetBindForButton(
 			IntPtr gamecontroller,
 			SDL_GameControllerButton button
-		) {
+		)
+		{
 			// This is guaranteed to never be null
 			INTERNAL_SDL_GameControllerButtonBind dumb = INTERNAL_SDL_GameControllerGetBindForButton(
 				gamecontroller,
 				button
 			);
 			SDL_GameControllerButtonBind result = new SDL_GameControllerButtonBind();
-			result.bindType = (SDL_GameControllerBindType) dumb.bindType;
+			result.bindType = (SDL_GameControllerBindType)dumb.bindType;
 			result.value.hat.hat = dumb.unionVal0;
 			result.value.hat.hat_mask = dumb.unionVal1;
 			return result;
@@ -7038,32 +7189,52 @@ namespace NuRender.SDL2
 			int num_values
 		);
 
-#endregion
+		/* gamecontroller refers to an SDL_GameController*.
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern float SDL_GameControllerGetSensorDataRate(
+			IntPtr gamecontroller,
+			SDL_SensorType type
+		);
 
-#region SDL_haptic.h
+		/* gamecontroller refers to an SDL_GameController*.
+		 * data refers to a const void*.
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SDL_GameControllerSendEffect(
+			IntPtr gamecontroller,
+			IntPtr data,
+			int size
+		);
+
+		#endregion
+
+		#region SDL_haptic.h
 
 		/* SDL_HapticEffect type */
-		public const ushort SDL_HAPTIC_CONSTANT =	(1 << 0);
-		public const ushort SDL_HAPTIC_SINE =		(1 << 1);
-		public const ushort SDL_HAPTIC_LEFTRIGHT =	(1 << 2);
-		public const ushort SDL_HAPTIC_TRIANGLE =	(1 << 3);
-		public const ushort SDL_HAPTIC_SAWTOOTHUP =	(1 << 4);
-		public const ushort SDL_HAPTIC_SAWTOOTHDOWN =	(1 << 5);
-		public const ushort SDL_HAPTIC_SPRING =		(1 << 7);
-		public const ushort SDL_HAPTIC_DAMPER =		(1 << 8);
-		public const ushort SDL_HAPTIC_INERTIA =	(1 << 9);
-		public const ushort SDL_HAPTIC_FRICTION =	(1 << 10);
-		public const ushort SDL_HAPTIC_CUSTOM =		(1 << 11);
-		public const ushort SDL_HAPTIC_GAIN =		(1 << 12);
-		public const ushort SDL_HAPTIC_AUTOCENTER =	(1 << 13);
-		public const ushort SDL_HAPTIC_STATUS =		(1 << 14);
-		public const ushort SDL_HAPTIC_PAUSE =		(1 << 15);
+		public const ushort SDL_HAPTIC_CONSTANT = (1 << 0);
+		public const ushort SDL_HAPTIC_SINE = (1 << 1);
+		public const ushort SDL_HAPTIC_LEFTRIGHT = (1 << 2);
+		public const ushort SDL_HAPTIC_TRIANGLE = (1 << 3);
+		public const ushort SDL_HAPTIC_SAWTOOTHUP = (1 << 4);
+		public const ushort SDL_HAPTIC_SAWTOOTHDOWN = (1 << 5);
+		public const ushort SDL_HAPTIC_SPRING = (1 << 7);
+		public const ushort SDL_HAPTIC_DAMPER = (1 << 8);
+		public const ushort SDL_HAPTIC_INERTIA = (1 << 9);
+		public const ushort SDL_HAPTIC_FRICTION = (1 << 10);
+		public const ushort SDL_HAPTIC_CUSTOM = (1 << 11);
+		public const ushort SDL_HAPTIC_GAIN = (1 << 12);
+		public const ushort SDL_HAPTIC_AUTOCENTER = (1 << 13);
+		public const ushort SDL_HAPTIC_STATUS = (1 << 14);
+		public const ushort SDL_HAPTIC_PAUSE = (1 << 15);
 
 		/* SDL_HapticDirection type */
-		public const byte SDL_HAPTIC_POLAR =		0;
-		public const byte SDL_HAPTIC_CARTESIAN =	1;
-		public const byte SDL_HAPTIC_SPHERICAL =	2;
-		public const byte SDL_HAPTIC_STEERING_AXIS =	3; /* Requires >= 2.0.14 */
+		public const byte SDL_HAPTIC_POLAR = 0;
+		public const byte SDL_HAPTIC_CARTESIAN = 1;
+		public const byte SDL_HAPTIC_SPHERICAL = 2;
+		public const byte SDL_HAPTIC_STEERING_AXIS = 3; /* Requires >= 2.0.14 */
 
 		/* SDL_HapticRunEffect */
 		public const uint SDL_HAPTIC_INFINITY = 4294967295U;
@@ -7192,7 +7363,7 @@ namespace NuRender.SDL2
 			public ushort period;
 			public ushort samples;
 			public IntPtr data; // Uint16*
-			// Envelope
+								// Envelope
 			public ushort attack_length;
 			public ushort attack_level;
 			public ushort fade_length;
@@ -7374,9 +7545,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_NumHaptics();
 
-#endregion
+		#endregion
 
-#region SDL_sensor.h
+		#region SDL_sensor.h
 
 		/* This region is only available in 2.0.9 or higher. */
 
@@ -7462,18 +7633,18 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_UnlockSensors();
 
-#endregion
+		#endregion
 
-#region SDL_audio.h
+		#region SDL_audio.h
 
-		public const ushort SDL_AUDIO_MASK_BITSIZE =	0xFF;
-		public const ushort SDL_AUDIO_MASK_DATATYPE =	(1 << 8);
-		public const ushort SDL_AUDIO_MASK_ENDIAN =	(1 << 12);
-		public const ushort SDL_AUDIO_MASK_SIGNED =	(1 << 15);
+		public const ushort SDL_AUDIO_MASK_BITSIZE = 0xFF;
+		public const ushort SDL_AUDIO_MASK_DATATYPE = (1 << 8);
+		public const ushort SDL_AUDIO_MASK_ENDIAN = (1 << 12);
+		public const ushort SDL_AUDIO_MASK_SIGNED = (1 << 15);
 
 		public static ushort SDL_AUDIO_BITSIZE(ushort x)
 		{
-			return (ushort) (x & SDL_AUDIO_MASK_BITSIZE);
+			return (ushort)(x & SDL_AUDIO_MASK_BITSIZE);
 		}
 
 		public static bool SDL_AUDIO_ISFLOAT(ushort x)
@@ -7506,20 +7677,20 @@ namespace NuRender.SDL2
 			return (x & SDL_AUDIO_MASK_SIGNED) == 0;
 		}
 
-		public const ushort AUDIO_U8 =		0x0008;
-		public const ushort AUDIO_S8 =		0x8008;
-		public const ushort AUDIO_U16LSB =	0x0010;
-		public const ushort AUDIO_S16LSB =	0x8010;
-		public const ushort AUDIO_U16MSB =	0x1010;
-		public const ushort AUDIO_S16MSB =	0x9010;
-		public const ushort AUDIO_U16 =		AUDIO_U16LSB;
-		public const ushort AUDIO_S16 =		AUDIO_S16LSB;
-		public const ushort AUDIO_S32LSB =	0x8020;
-		public const ushort AUDIO_S32MSB =	0x9020;
-		public const ushort AUDIO_S32 =		AUDIO_S32LSB;
-		public const ushort AUDIO_F32LSB =	0x8120;
-		public const ushort AUDIO_F32MSB =	0x9120;
-		public const ushort AUDIO_F32 =		AUDIO_F32LSB;
+		public const ushort AUDIO_U8 = 0x0008;
+		public const ushort AUDIO_S8 = 0x8008;
+		public const ushort AUDIO_U16LSB = 0x0010;
+		public const ushort AUDIO_S16LSB = 0x8010;
+		public const ushort AUDIO_U16MSB = 0x1010;
+		public const ushort AUDIO_S16MSB = 0x9010;
+		public const ushort AUDIO_U16 = AUDIO_U16LSB;
+		public const ushort AUDIO_S16 = AUDIO_S16LSB;
+		public const ushort AUDIO_S32LSB = 0x8020;
+		public const ushort AUDIO_S32MSB = 0x9020;
+		public const ushort AUDIO_S32 = AUDIO_S32LSB;
+		public const ushort AUDIO_F32LSB = 0x8120;
+		public const ushort AUDIO_F32MSB = 0x9120;
+		public const ushort AUDIO_F32 = AUDIO_F32LSB;
 
 		public static readonly ushort AUDIO_U16SYS =
 			BitConverter.IsLittleEndian ? AUDIO_U16LSB : AUDIO_U16MSB;
@@ -7530,10 +7701,10 @@ namespace NuRender.SDL2
 		public static readonly ushort AUDIO_F32SYS =
 			BitConverter.IsLittleEndian ? AUDIO_F32LSB : AUDIO_F32MSB;
 
-		public const uint SDL_AUDIO_ALLOW_FREQUENCY_CHANGE =	0x00000001;
-		public const uint SDL_AUDIO_ALLOW_FORMAT_CHANGE =	0x00000002;
-		public const uint SDL_AUDIO_ALLOW_CHANNELS_CHANGE =	0x00000004;
-		public const uint SDL_AUDIO_ALLOW_SAMPLES_CHANGE =	0x00000008;
+		public const uint SDL_AUDIO_ALLOW_FREQUENCY_CHANGE = 0x00000001;
+		public const uint SDL_AUDIO_ALLOW_FORMAT_CHANGE = 0x00000002;
+		public const uint SDL_AUDIO_ALLOW_CHANNELS_CHANGE = 0x00000004;
+		public const uint SDL_AUDIO_ALLOW_SAMPLES_CHANGE = 0x00000008;
 		public const uint SDL_AUDIO_ALLOW_ANY_CHANGE = (
 			SDL_AUDIO_ALLOW_FREQUENCY_CHANGE |
 			SDL_AUDIO_ALLOW_FORMAT_CHANGE |
@@ -7606,7 +7777,8 @@ namespace NuRender.SDL2
 		public static string SDL_GetAudioDeviceName(
 			int index,
 			int iscapture
-		) {
+		)
+		{
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GetAudioDeviceName(index, iscapture)
 			);
@@ -7658,7 +7830,8 @@ namespace NuRender.SDL2
 			out SDL_AudioSpec spec,
 			out IntPtr audio_buf,
 			out uint audio_len
-		) {
+		)
+		{
 			IntPtr rwops = SDL_RWFromFile(file, "rb");
 			return INTERNAL_SDL_LoadWAV_RW(
 				rwops,
@@ -7682,6 +7855,17 @@ namespace NuRender.SDL2
 				byte[] dst,
 			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 2)]
 				byte[] src,
+			uint len,
+			int volume
+		);
+
+		/* format refers to an SDL_AudioFormat */
+		/* This overload allows raw pointers to be passed for dst and src. */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void SDL_MixAudioFormat(
+			IntPtr dst,
+			IntPtr src,
+			ushort format,
 			uint len,
 			int volume
 		);
@@ -7711,6 +7895,17 @@ namespace NuRender.SDL2
 		);
 
 		/* uint refers to an SDL_AudioDeviceID */
+		/* This overload allows for IntPtr.Zero (null) to be passed for device. */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern unsafe uint SDL_OpenAudioDevice(
+			IntPtr device,
+			int iscapture,
+			ref SDL_AudioSpec desired,
+			out SDL_AudioSpec obtained,
+			int allowed_changes
+		);
+
+		/* uint refers to an SDL_AudioDeviceID */
 		[DllImport(nativeLibName, EntryPoint = "SDL_OpenAudioDevice", CallingConvention = CallingConvention.Cdecl)]
 		private static extern unsafe uint INTERNAL_SDL_OpenAudioDevice(
 			byte* device,
@@ -7725,7 +7920,8 @@ namespace NuRender.SDL2
 			ref SDL_AudioSpec desired,
 			out SDL_AudioSpec obtained,
 			int allowed_changes
-		) {
+		)
+		{
 			int utf8DeviceBufSize = Utf8Size(device);
 			byte* utf8Device = stackalloc byte[utf8DeviceBufSize];
 			return INTERNAL_SDL_OpenAudioDevice(
@@ -7838,9 +8034,17 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_FreeAudioStream(IntPtr stream);
 
-#endregion
+		/* Only available in 2.0.16 or higher. */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SDL_GetAudioDeviceSpec(
+			int index,
+			int iscapture,
+			out SDL_AudioSpec spec
+		);
 
-#region SDL_timer.h
+		#endregion
+
+		#region SDL_timer.h
 
 		/* System timers rely on different OS mechanisms depending on
 		 * which operating system SDL2 is compiled against.
@@ -7886,9 +8090,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_RemoveTimer(int id);
 
-#endregion
+		#endregion
 
-#region SDL_system.h
+		#region SDL_system.h
 
 		/* Windows */
 
@@ -7906,6 +8110,20 @@ namespace NuRender.SDL2
 			SDL_WindowsMessageHook callback,
 			IntPtr userdata
 		);
+
+		/* renderer refers to an SDL_Renderer*
+		 * IntPtr refers to an IDirect3DDevice9*
+		 * Only available in 2.0.1 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern IntPtr SDL_RenderGetD3D9Device(IntPtr renderer);
+
+		/* renderer refers to an SDL_Renderer*
+		 * IntPtr refers to an ID3D11Device*
+		 * Only available in 2.0.16 or higher.
+		 */
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern IntPtr SDL_RenderGetD3D11Device(IntPtr renderer);
 
 		/* iOS */
 
@@ -7976,17 +8194,47 @@ namespace NuRender.SDL2
 
 		/* Only available in 2.0.14 or higher. */
 		[DllImport(nativeLibName, EntryPoint = "SDL_AndroidRequestPermission", CallingConvention = CallingConvention.Cdecl)]
-		public static unsafe extern SDL_bool INTERNAL_SDL_AndroidRequestPermission(
+		private static unsafe extern SDL_bool INTERNAL_SDL_AndroidRequestPermission(
 			byte* permission
 		);
 		public static unsafe SDL_bool SDL_AndroidRequestPermission(
 			string permission
-		) {
-			byte* permissionPtr = Utf8Encode(permission);
+		)
+		{
+			byte* permissionPtr = Utf8EncodeHeap(permission);
 			SDL_bool result = INTERNAL_SDL_AndroidRequestPermission(
 				permissionPtr
 			);
-			Marshal.FreeHGlobal((IntPtr) permissionPtr);
+			Marshal.FreeHGlobal((IntPtr)permissionPtr);
+			return result;
+		}
+
+		/* Only available in 2.0.16 or higher. */
+		[DllImport(nativeLibName, EntryPoint = "SDL_AndroidShowToast", CallingConvention = CallingConvention.Cdecl)]
+		private static unsafe extern int INTERNAL_SDL_AndroidShowToast(
+			byte* message,
+			int duration,
+			int gravity,
+			int xOffset,
+			int yOffset
+		);
+		public static unsafe int SDL_AndroidShowToast(
+			string message,
+			int duration,
+			int gravity,
+			int xOffset,
+			int yOffset
+		)
+		{
+			byte* messagePtr = Utf8EncodeHeap(message);
+			int result = INTERNAL_SDL_AndroidShowToast(
+				messagePtr,
+				duration,
+				gravity,
+				xOffset,
+				yOffset
+			);
+			Marshal.FreeHGlobal((IntPtr)messagePtr);
 			return result;
 		}
 
@@ -8006,9 +8254,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_IsTablet();
 
-#endregion
+		#endregion
 
-#region SDL_syswm.h
+		#region SDL_syswm.h
 
 		public enum SDL_SYSWM_TYPE
 		{
@@ -8024,7 +8272,8 @@ namespace NuRender.SDL2
 			SDL_SYSWM_ANDROID,
 			SDL_SYSWM_VIVANTE,
 			SDL_SYSWM_OS2,
-			SDL_SYSWM_HAIKU
+			SDL_SYSWM_HAIKU,
+			SDL_SYSWM_KMSDRM /* requires >= 2.0.16 */
 		}
 
 		// FIXME: I wish these weren't public...
@@ -8078,6 +8327,8 @@ namespace NuRender.SDL2
 			public IntPtr display; // Refers to a wl_display*
 			public IntPtr surface; // Refers to a wl_surface*
 			public IntPtr shell_surface; // Refers to a wl_shell_surface*
+			public IntPtr egl_window; // Refers to an egl_window*, requires >= 2.0.16
+			public IntPtr xdg_surface; // Refers to an xdg_surface*, requires >= 2.0.16
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -8105,8 +8356,17 @@ namespace NuRender.SDL2
 		[StructLayout(LayoutKind.Sequential)]
 		public struct INTERNAL_os2_wminfo
 		{
-			public IntPtr hwnd; /* Refers to an HWND */
-			public IntPtr hwndFrame; /* Refers to an HWND */
+			public IntPtr hwnd; // Refers to an HWND
+			public IntPtr hwndFrame; // Refers to an HWND
+		}
+
+		/* Only available in 2.0.16 or higher. */
+		[StructLayout(LayoutKind.Sequential)]
+		public struct INTERNAL_kmsdrm_wminfo
+		{
+			int dev_index;
+			int drm_fd;
+			IntPtr gbm_dev; // Refers to a gbm_device*
 		}
 
 		[StructLayout(LayoutKind.Explicit)]
@@ -8131,9 +8391,11 @@ namespace NuRender.SDL2
 			[FieldOffset(0)]
 			public INTERNAL_android_wminfo android;
 			[FieldOffset(0)]
+			public INTERNAL_os2_wminfo os2;
+			[FieldOffset(0)]
 			public INTERNAL_vivante_wminfo vivante;
 			[FieldOffset(0)]
-			public INTERNAL_os2_wminfo os2;
+			public INTERNAL_kmsdrm_wminfo ksmdrm;
 			// private int dummy;
 		}
 
@@ -8152,9 +8414,9 @@ namespace NuRender.SDL2
 			ref SDL_SysWMinfo info
 		);
 
-#endregion
+		#endregion
 
-#region SDL_filesystem.h
+		#region SDL_filesystem.h
 
 		/* Only available in 2.0.1 or higher. */
 		[DllImport(nativeLibName, EntryPoint = "SDL_GetBasePath", CallingConvention = CallingConvention.Cdecl)]
@@ -8172,24 +8434,24 @@ namespace NuRender.SDL2
 		);
 		public static unsafe string SDL_GetPrefPath(string org, string app)
 		{
-			int utf8OrgBufSize = Utf8SizeNullable(org);
+			int utf8OrgBufSize = Utf8Size(org);
 			byte* utf8Org = stackalloc byte[utf8OrgBufSize];
 
-			int utf8AppBufSize = Utf8SizeNullable(app);
+			int utf8AppBufSize = Utf8Size(app);
 			byte* utf8App = stackalloc byte[utf8AppBufSize];
 
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GetPrefPath(
-					Utf8EncodeNullable(org, utf8Org, utf8OrgBufSize),
-					Utf8EncodeNullable(app, utf8App, utf8AppBufSize)
+					Utf8Encode(org, utf8Org, utf8OrgBufSize),
+					Utf8Encode(app, utf8App, utf8AppBufSize)
 				),
 				true
 			);
 		}
 
-#endregion
+		#endregion
 
-#region SDL_power.h
+		#region SDL_power.h
 
 		public enum SDL_PowerState
 		{
@@ -8206,9 +8468,9 @@ namespace NuRender.SDL2
 			out int pct
 		);
 
-#endregion
+		#endregion
 
-#region SDL_cpuinfo.h
+		#region SDL_cpuinfo.h
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_GetCPUCount();
@@ -8279,9 +8541,9 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_HasARMSIMD();
 
-#endregion
+		#endregion
 
-#region SDL_locale.h
+		#region SDL_locale.h
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Locale
@@ -8296,21 +8558,21 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_GetPreferredLocales();
 
-#endregion
+		#endregion
 
-#region SDL_misc.h
+		#region SDL_misc.h
 
 		/* Only available in 2.0.14 or higher. */
 		[DllImport(nativeLibName, EntryPoint = "SDL_OpenURL", CallingConvention = CallingConvention.Cdecl)]
 		private static unsafe extern int INTERNAL_SDL_OpenURL(byte* url);
 		public static unsafe int SDL_OpenURL(string url)
 		{
-			byte* urlPtr = Utf8Encode(url);
+			byte* urlPtr = Utf8EncodeHeap(url);
 			int result = INTERNAL_SDL_OpenURL(urlPtr);
-			Marshal.FreeHGlobal((IntPtr) urlPtr);
+			Marshal.FreeHGlobal((IntPtr)urlPtr);
 			return result;
 		}
 
-#endregion
+		#endregion
 	}
 }
