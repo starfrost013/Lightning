@@ -155,28 +155,28 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationFramesException", Description = "Failed to acquire a list of animation frames!", Severity = MessageSeverity.FatalError, Id = 135 }); ;
          ErrorManager.RegisterError( new Error { Name = "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException", Description = "AnimationFrames must be a child of an Animation which is a part of an AnimatedImageBrush! This AnimationFrame will be destroyed.", Severity = MessageSeverity.Warning, Id = 136 });
          ErrorManager.RegisterError( new Error { Name = "DisplayViewportMustBeLargerThanSizeForTilingException", Description = "To display an ImageBrush or AnimationFrame with TextureDisplayMode set to Tile, its DisplayViewport must be set and be set to a larger value than its Size value.", Severity = MessageSeverity.Warning, Id = 137 });
-            #region NuRender Errors
+#region NuRender Errors
 
-            ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2Exception", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 138 });
-            ErrorManager.RegisterError(new Error { Name = "NRInvalidWindowSettingsException", Description = "NuRender: Window.Settings is null and shouldn't be.", Severity = MessageSeverity.Error, Id = 139 });
-            ErrorManager.RegisterError(new Error { Name = "NRErrorCreatingNRWindowException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 139 });
-            ErrorManager.RegisterError(new Error { Name = "NRErrorCreatingNRRendererException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 140 });
-            ErrorManager.RegisterError(new Error { Name = "NRCannotCreateObjectWithInvalidTypeException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 141 });
-            ErrorManager.RegisterError(new Error { Name = "NRCannotCreateNonNRObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 142 });
-            ErrorManager.RegisterError(new Error { Name = "NRUnknownErrorCreatingNRObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 143 });
+         ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2Exception", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 138 });
+         ErrorManager.RegisterError(new Error { Name = "NRInvalidWindowSettingsException", Description = "NuRender: Window.Settings is null and shouldn't be.", Severity = MessageSeverity.Error, Id = 139 });
+         ErrorManager.RegisterError(new Error { Name = "NRErrorCreatingNRWindowException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 139 });
+         ErrorManager.RegisterError(new Error { Name = "NRErrorCreatingNRRendererException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 140 });
+         ErrorManager.RegisterError(new Error { Name = "NRCannotCreateObjectWithInvalidTypeException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 141 });
+         ErrorManager.RegisterError(new Error { Name = "NRCannotCreateNonNRObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 142 });
+         ErrorManager.RegisterError(new Error { Name = "NRUnknownErrorCreatingNRObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 143 });
 
 #if !WINDOWS
          ErrorManager.RegisterError( new Error { Name = "NROnlyImplementedInWindowsException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 144 });
 #endif
 
-            ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2ImageException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 144 });
-            ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2MixerException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 145 });
-            ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2TtfException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 146 });
-            ErrorManager.RegisterError(new Error { Name = "NRCannotLoadFontException", Description = "!!this should be overridden in code!", Severity = MessageSeverity.Error, Id = 147 });
-            ErrorManager.RegisterError(new Error { Name = "NRAttemptedToAccessNonexistentWindowException", Description = "!!this should be overridden in code!", Severity = MessageSeverity.FatalError, Id = 148 });
+         ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2ImageException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 144 });
+         ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2MixerException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 145 });
+         ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2TtfException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 146 });
+         ErrorManager.RegisterError(new Error { Name = "NRCannotLoadFontException", Description = "!!this should be overridden in code!", Severity = MessageSeverity.Error, Id = 147 });
+         ErrorManager.RegisterError(new Error { Name = "NRAttemptedToAccessNonexistentWindowException", Description = "!!this should be overridden in code!", Severity = MessageSeverity.FatalError, Id = 148 });
 
 
-            #endregion
+#endregion
         }
     }
 }
