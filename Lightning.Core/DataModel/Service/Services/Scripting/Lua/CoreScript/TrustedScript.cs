@@ -16,7 +16,7 @@ namespace Lightning.Core.API
         internal override string ClassName => "TrustedScript";
         internal override InstanceTags Attributes => InstanceTags.Instantiable | InstanceTags.Destroyable;
 
-        internal virtual string ProtectedContent => $"print('Attempted to call TrustedScript {ClassName} that has not been overridden!')";
+        internal virtual string ProtectedContent => $"print('Attempted to call the TrustedScript {ClassName} that has not been overridden!')";
 
          
     }

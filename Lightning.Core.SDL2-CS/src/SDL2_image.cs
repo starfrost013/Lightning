@@ -31,26 +31,16 @@ using System;
 using System.Runtime.InteropServices;
 #endregion
 
-namespace Lightning.Core.SDL2
+namespace SDL2
 {
 	public static class SDL_image
 	{
 		#region SDL2# Variables
 
 		/* Used by DllImport to load the native library. */
-#if X64 // Lightning Win64 / Mac64 / Linux64
-		private const string nativeLibName = "SDL2_image-v2.0.5-x64";
+		private const string nativeLibName = "SDL2_image";
 
-#else // Lightning Win32 / Linux32 
-#if ARM32 // Lightning LinuxARM32
-		private const string nativeLibName = "SDL2_image-v2.0.5-ARM32";
-#elif ARM64 // Lightning LinuxARM64 / MacARM64e (11.0+) (open question: what do we do about Xtajit64 (ARM64X - Windows 10 Cobalt 21277+) - does Lightning compiled for x64 run well using ARM64X on Cobalt? Need to acquire ARM device for testing.)
-		private const string nativeLibName = "SDL2_image-v2.0.5-ARM64";
-#endif
-		private const string nativeLibName = "SDL2_image-v2.0.5-x86"; 
-#endif
 		#endregion
-
 
 		#region SDL_image.h
 
@@ -58,17 +48,17 @@ namespace Lightning.Core.SDL2
 		 * running with. You will likely want to check this somewhere in your
 		 * program!
 		 */
-		public const int SDL_IMAGE_MAJOR_VERSION =	2;
-		public const int SDL_IMAGE_MINOR_VERSION =	0;
-		public const int SDL_IMAGE_PATCHLEVEL =		6; // Does 2.0.6 even exist? 2021-04-06
+		public const int SDL_IMAGE_MAJOR_VERSION = 2;
+		public const int SDL_IMAGE_MINOR_VERSION = 0;
+		public const int SDL_IMAGE_PATCHLEVEL = 6;
 
 		[Flags]
 		public enum IMG_InitFlags
 		{
-			IMG_INIT_JPG =	0x00000001,
-			IMG_INIT_PNG =	0x00000002,
-			IMG_INIT_TIF =	0x00000004,
-			IMG_INIT_WEBP =	0x00000008
+			IMG_INIT_JPG = 0x00000001,
+			IMG_INIT_PNG = 0x00000002,
+			IMG_INIT_TIF = 0x00000004,
+			IMG_INIT_WEBP = 0x00000008
 		}
 
 		public static void SDL_IMAGE_VERSION(out SDL.SDL_version X)
@@ -84,7 +74,7 @@ namespace Lightning.Core.SDL2
 		{
 			SDL.SDL_version result;
 			IntPtr result_ptr = INTERNAL_IMG_Linked_Version();
-			result = (SDL.SDL_version) Marshal.PtrToStructure(
+			result = (SDL.SDL_version)Marshal.PtrToStructure(
 				result_ptr,
 				typeof(SDL.SDL_version)
 			);
@@ -104,11 +94,11 @@ namespace Lightning.Core.SDL2
 		);
 		public static unsafe IntPtr IMG_Load(string file)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			IntPtr handle = INTERNAL_IMG_Load(
 				utf8File
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8File);
+			Marshal.FreeHGlobal((IntPtr)utf8File);
 			return handle;
 		}
 
@@ -132,7 +122,8 @@ namespace Lightning.Core.SDL2
 			IntPtr src,
 			int freesrc,
 			string type
-		) {
+		)
+		{
 			int utf8TypeBufSize = SDL.Utf8Size(type);
 			byte* utf8Type = stackalloc byte[utf8TypeBufSize];
 			return INTERNAL_IMG_LoadTyped_RW(
@@ -151,13 +142,14 @@ namespace Lightning.Core.SDL2
 		public static unsafe IntPtr IMG_LoadTexture(
 			IntPtr renderer,
 			string file
-		) {
-			byte* utf8File = SDL.Utf8Encode(file);
+		)
+		{
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			IntPtr handle = INTERNAL_IMG_LoadTexture(
 				renderer,
 				utf8File
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8File);
+			Marshal.FreeHGlobal((IntPtr)utf8File);
 			return handle;
 		}
 
@@ -190,15 +182,16 @@ namespace Lightning.Core.SDL2
 			IntPtr src,
 			int freesrc,
 			string type
-		) {
-			byte* utf8Type = SDL.Utf8Encode(type);
+		)
+		{
+			byte* utf8Type = SDL.Utf8EncodeHeap(type);
 			IntPtr handle = INTERNAL_IMG_LoadTextureTyped_RW(
 				renderer,
 				src,
 				freesrc,
 				utf8Type
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8Type);
+			Marshal.FreeHGlobal((IntPtr)utf8Type);
 			return handle;
 		}
 
@@ -217,12 +210,12 @@ namespace Lightning.Core.SDL2
 		);
 		public static unsafe int IMG_SavePNG(IntPtr surface, string file)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			int result = INTERNAL_IMG_SavePNG(
 				surface,
 				utf8File
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8File);
+			Marshal.FreeHGlobal((IntPtr)utf8File);
 			return result;
 		}
 
@@ -244,13 +237,13 @@ namespace Lightning.Core.SDL2
 		);
 		public static unsafe int IMG_SaveJPG(IntPtr surface, string file, int quality)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			int result = INTERNAL_IMG_SaveJPG(
 				surface,
 				utf8File,
 				quality
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8File);
+			Marshal.FreeHGlobal((IntPtr)utf8File);
 			return result;
 		}
 

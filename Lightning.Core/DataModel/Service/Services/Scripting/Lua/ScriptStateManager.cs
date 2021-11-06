@@ -174,6 +174,7 @@ namespace Lightning.Core.API
                                         LuaState["__SCRIPTCONTENT"] = Sc.Content; // temp?
                                     }
 
+                                    Sc.Start();
                                     Lua_RunScriptUsingSandbox(Sc);
                                     return; 
 
@@ -185,7 +186,7 @@ namespace Lightning.Core.API
                                     return; 
                                 case ScriptState.Completed:
                                 case ScriptState.Terminated:
-                                    KillScript(Sc);
+                                    PauseScript(Sc);
                                     RunningScripts.Remove(Sc);
                                     return; 
                             }
@@ -214,10 +215,10 @@ namespace Lightning.Core.API
 
         }
 
-        private void KillScript(Script Sc)
+        internal void PauseScript(Script Sc)
         {
             Sc.Stop(); 
-            LuaState.DoString("coroutine.yield({ScToPause.CoroutineName});");
+            LuaState.DoString($"coroutine.yield({Sc.CoroutineName});");
         }
 
 

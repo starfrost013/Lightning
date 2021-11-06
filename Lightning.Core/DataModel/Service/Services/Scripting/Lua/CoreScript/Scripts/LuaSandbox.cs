@@ -64,10 +64,10 @@ namespace Lightning.Core.API
             "   print(i);\n" +
             "end\n" +
 #endif
-            $"" +
             "local called_chunk = load(__SCRIPTCONTENT, \"CHUNK\", \"t\", _ENV)" +
             $"{CoroutineName} = coroutine.create(function ()" + // todo: this is dumb 
-            "pcall(called_chunk) end) "; // todo: call after all trustedscripts have been run
+            "pcall(called_chunk)" +
+            $"coroutine.yield({CoroutineName}) end);"; // todo: call after all trustedscripts have been run
             // also todo loop through all classes that inherit from trustedscript and execute their ProtectedContents
 
         public string Content_PerformRun => $"coroutine.resume({CoroutineName})";
@@ -78,8 +78,6 @@ namespace Lightning.Core.API
         /// </summary>
         public LuaSandbox()
         {
-            CurrentScriptRunningStopwatch = new Stopwatch();
-            WaitCountdownStopwatch = new Stopwatch();
             LUASANDBOX_INITIALISED = true; 
         }
 

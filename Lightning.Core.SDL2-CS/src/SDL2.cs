@@ -7,8 +7,8 @@
  * 
  * This software is based on the open-source SDL2# - C# Wrapper for SDL2 library.
  *
- * Copyright © 2021 starfrost.
  * Copyright (c) 2013-2021 Ethan Lee.
+ * Copyright © 2021 starfrost.
  * 
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from
@@ -40,11 +40,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 #endregion
 
-namespace Lightning.Core.SDL2
+namespace NuRender.SDL2
 {
 	public static class SDL
 	{
-		#region SDL2# Variables
+#region SDL2# Variables
 
 		// This has been reverted,
 		// as it turns out that SDL2_image etc 
@@ -60,9 +60,9 @@ namespace Lightning.Core.SDL2
 		private const int SDL2CS_VERSION_MAJOR = 2;
 		private const int SDL2CS_VERSION_MINOR = 0;
 		private const int SDL2CS_VERSION_REVISION = 19;
-		#endregion
+#endregion
 
-		#region UTF8 Marshaling
+#region UTF8 Marshaling
 
 		/* Used for stack allocated string marshaling. */
 		internal static int Utf8Size(string str)
@@ -807,6 +807,7 @@ namespace Lightning.Core.SDL2
 		private static extern unsafe void INTERNAL_SDL_SetError(byte* fmtAndArglist);
 		public static unsafe void SDL_SetError(string fmtAndArglist)
 		{
+			Debug.WriteLine($"NuRender SDL2: An error occurred! {fmtAndArglist}");
 			int utf8FmtAndArglistBufSize = Utf8Size(fmtAndArglist);
 			byte* utf8FmtAndArglist = stackalloc byte[utf8FmtAndArglistBufSize];
 			INTERNAL_SDL_SetError(
@@ -3848,9 +3849,9 @@ namespace Lightning.Core.SDL2
 			IntPtr palette
 		);
 
-		#endregion
+#endregion
 
-		#region SDL_rect.h
+#region SDL_rect.h
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Point
@@ -3863,7 +3864,7 @@ namespace Lightning.Core.SDL2
 			{
 				x = XPos;
 				y = YPos;
-			}
+            }
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -3879,8 +3880,8 @@ namespace Lightning.Core.SDL2
 				x = XPos;
 				y = YPos;
 				w = Width;
-				h = Height;
-			}
+				h = Height; 
+            }
 		}
 
 		/* Only available in 2.0.10 or higher. */

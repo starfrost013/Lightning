@@ -40,14 +40,6 @@ namespace Lightning.Core.API
         public Stopwatch CurrentScriptRunningStopwatch { get; set; }
 
         /// <summary>
-        /// Stopwatch used for wait time.
-        /// 
-        /// [DEPRECATED - Oct 7, 2021]
-        /// </summary>
-        public Stopwatch WaitCountdownStopwatch { get; set; }
-
-
-        /// <summary>
         /// The timer that manages the script running.
         /// </summary>
         public ScriptTimer Timer { get; set; }
@@ -60,7 +52,6 @@ namespace Lightning.Core.API
         public override void OnCreate()
         {
             CurrentScriptRunningStopwatch = new Stopwatch();
-            WaitCountdownStopwatch = new Stopwatch(); 
         }
 
         /// <summary>

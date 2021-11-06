@@ -1,5 +1,6 @@
 ﻿using KeraLua; 
-using NLua.Event; 
+using NLua.Event;
+using Lightning.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,8 +15,10 @@ using System.Text;
 /// </summary>
 namespace Lightning.Core.API 
 {
-    public partial class ScriptingService
+    // TODO: MOVE TO SCRIPTSTATEMANAGER
+    public partial class ScriptingService 
     {
+    // END TODO: MOVE TO SCRIPTSTATEMANAGER
         public void OnStart_SetLuaDebugHook()
         {
             ScriptGlobals.LuaState.DebugHook += LuaDebugHook;
@@ -51,11 +54,10 @@ namespace Lightning.Core.API
                 // todo: refactor to only get it once
                 GlobalSettings GS = DataModel.GetGlobalSettings();
 
-                Logging.Log($"Lua script {RunningScript.Name} currently has run for: {RunningScript.CurrentScriptRunningStopwatch.ElapsedMilliseconds}ms", ClassName); 
+                Logging.Log($"Lua script {RunningScript.Name} has run for: {RunningScript.Timer.ElapsedMilliseconds}ms", ClassName); 
 
-                if (RunningScript.CurrentScriptRunningStopwatch.ElapsedMilliseconds > GS.MaxLuaScriptExecutionTime)
+                if (RunningScript.Timer.ElapsedMilliseconds > GS.MaxLuaScriptExecutionTime)
                 {
-
                     ScriptGlobals.RunningScripts.Remove(RunningScript);
 
                     if (RunningScript.Name != null)
@@ -69,7 +71,7 @@ namespace Lightning.Core.API
 
                     RunningScript.CurrentlyExecutingLine = 0; // old way of stopping script
                     RunningScript.Stop(); // new way of stopping script
-
+                    ScriptGlobals.PauseScript(RunningScript);
                     return;
                 }
 
@@ -81,7 +83,7 @@ namespace Lightning.Core.API
                     case LuaHookEvent.Line:
                         RunningScript.CurrentlyExecutingLine++;
                         Logging.Log($"Executing {RunningScript.Name}, line {RunningScript.CurrentlyExecutingLine}", LuaClassName);
-                        // 
+
                         return;
                     case LuaHookEvent.Return:
                         RunningScript.CurrentlyExecutingLine = 0;

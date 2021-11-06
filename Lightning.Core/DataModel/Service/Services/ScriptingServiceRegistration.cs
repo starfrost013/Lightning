@@ -24,11 +24,7 @@ namespace Lightning.Core.API
         {
             Logging.Log("Registering global methods for Lua scripting...", ClassName);
 
-#if DEBUG
-            // Test method registration
-            //RegisterMethod("Lightning.Core.API;ScriptingTest;ScTest");
-#endif
-            //RegisterMethod("Lightning.Core.API;Instance;AddChild");
+            RegisterMethod("Lightning.Core.API;ScriptingService;Wait");
         }
 
         /// <summary>

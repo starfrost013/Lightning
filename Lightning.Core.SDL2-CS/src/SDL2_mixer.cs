@@ -2,8 +2,7 @@
 /* SDL2# - C# Wrapper for SDL2
  *
  * Copyright (c) 2013-2021 Ethan Lee.
- * Copyright © 2021 starfrost/Lightning Dev Team. Modified from the original software by starfrost
- * 
+ *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from
  * the use of this software.
@@ -32,24 +31,14 @@ using System;
 using System.Runtime.InteropServices;
 #endregion
 
-namespace Lightning.Core.SDL2
+namespace SDL2
 {
 	public static class SDL_mixer
 	{
 		#region SDL2# Variables
 
 		/* Used by DllImport to load the native library. */
-#if X64 // Lightning Win64 / Mac64 / Linux64
-		private const string nativeLibName = "SDL2_mixer-v2.0.4-x64";
-
-#else // Lightning Win32 / Linux32 
-#if ARM32 // Lightning LinuxARM32
-		private const string nativeLibName = "SDL2_mixer-v2.0.4-ARM32";
-#elif ARM64 // Lightning LinuxARM64 / MacARM64e (11.0+) (open question: what do we do about Xtajit64 (ARM64X - Windows 10 Cobalt 21277+) - does Lightning compiled for x64 run well using ARM64X on Cobalt? Need to acquire ARM device for testing.)
-		private const string nativeLibName = "SDL2_mixer-v2.0.4-ARM64";
-#endif
-		private const string nativeLibName = "SDL2_mixer-v2.0.4-x86"; 
-#endif
+		private const string nativeLibName = "SDL2_mixer";
 
 		#endregion
 
@@ -59,9 +48,9 @@ namespace Lightning.Core.SDL2
 		 * running with. You will likely want to check this somewhere in your
 		 * program!
 		 */
-		public const int SDL_MIXER_MAJOR_VERSION =	2;
-		public const int SDL_MIXER_MINOR_VERSION =	0;
-		public const int SDL_MIXER_PATCHLEVEL =		5;
+		public const int SDL_MIXER_MAJOR_VERSION = 2;
+		public const int SDL_MIXER_MINOR_VERSION = 0;
+		public const int SDL_MIXER_PATCHLEVEL = 5;
 
 		/* In C, you can redefine this value before including SDL_mixer.h.
 		 * We're not going to allow this in SDL2#, since the value of this
@@ -78,12 +67,12 @@ namespace Lightning.Core.SDL2
 		[Flags]
 		public enum MIX_InitFlags
 		{
-			MIX_INIT_FLAC =		0x00000001,
-			MIX_INIT_MOD =		0x00000002,
-			MIX_INIT_MP3 =		0x00000008,
-			MIX_INIT_OGG =		0x00000010,
-			MIX_INIT_MID =		0x00000020,
-			MIX_INIT_OPUS =		0x00000040
+			MIX_INIT_FLAC = 0x00000001,
+			MIX_INIT_MOD = 0x00000002,
+			MIX_INIT_MP3 = 0x00000008,
+			MIX_INIT_OGG = 0x00000010,
+			MIX_INIT_MID = 0x00000020,
+			MIX_INIT_OPUS = 0x00000040
 		}
 
 		public struct MIX_Chunk
@@ -114,38 +103,6 @@ namespace Lightning.Core.SDL2
 			MUS_FLAC,
 			MUS_MODPLUG_UNUSED,
 			MUS_OPUS
-		}
-		
-		/// <summary>
-		/// Audio formats
-		/// 
-		/// May 4, 2021 for Lightning
-		/// 
-		/// TODO: Move all existing code to use this?
-		/// </summary>
-		public enum Mix_AudioFormat
-        {
-			UDIO_U8 = 0x0008,
-			AUDIO_S8 = 0x8008,
-			AUDIO_U16LSB = 0x0010,
-			AUDIO_S16LSB = 0x8010,
-			AUDIO_U16MSB = 0x1010,
-			AUDIO_S16MSB = 0x9010,
-			AUDIO_U16 = AUDIO_U16LSB,
-			AUDIO_S16 = AUDIO_S16LSB,
-			AUDIO_S32LSB = 0x8020,
-			AUDIO_S32MSB = 0x9020,
-			AUDIO_S32 = AUDIO_S32LSB,
-			AUDIO_F32LSB = 0x8120,
-			AUDIO_F32MSB = 0x9120,
-			AUDIO_F32 = AUDIO_F32LSB,
-
-			AUDIO_U16SYS = AUDIO_U16LSB,
-			AUDIO_S16SYS = AUDIO_S16LSB,
-			AUDIO_S32SYS = AUDIO_S16LSB,
-			AUDIO_F32SYS = AUDIO_F32LSB,
-
-			MIX_DEFAULT_FORMAT = AUDIO_S16SYS
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -194,7 +151,7 @@ namespace Lightning.Core.SDL2
 		{
 			SDL.SDL_version result;
 			IntPtr result_ptr = INTERNAL_MIX_Linked_Version();
-			result = (SDL.SDL_version) Marshal.PtrToStructure(
+			result = (SDL.SDL_version)Marshal.PtrToStructure(
 				result_ptr,
 				typeof(SDL.SDL_version)
 			);
@@ -207,15 +164,13 @@ namespace Lightning.Core.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Mix_Quit();
 
-		[DllImport(nativeLibName, EntryPoint = "Mix_OpenAudio",  CallingConvention = CallingConvention.Cdecl)]
-		public static extern int INTERNAL__Mix_OpenAudio(
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int Mix_OpenAudio(
 			int frequency,
 			ushort format,
 			int channels,
 			int chunksize
 		);
-
-		public static int Mix_OpenAudio(int Frequency, Mix_AudioFormat Format, int channels, int chunksize) => INTERNAL__Mix_OpenAudio(Frequency, (ushort)Format, channels, chunksize); 
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int Mix_AllocateChannels(int numchans);
@@ -234,7 +189,7 @@ namespace Lightning.Core.SDL2
 			IntPtr src,
 			int freesrc
 		);
-		
+
 		/* IntPtr refers to a Mix_Chunk* */
 		/* This is an RWops macro in the C header. */
 		public static IntPtr Mix_LoadWAV(string file)
@@ -250,11 +205,11 @@ namespace Lightning.Core.SDL2
 		);
 		public static unsafe IntPtr Mix_LoadMUS(string file)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			IntPtr handle = INTERNAL_Mix_LoadMUS(
 				utf8File
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8File);
+			Marshal.FreeHGlobal((IntPtr)utf8File);
 			return handle;
 		}
 
@@ -458,7 +413,8 @@ namespace Lightning.Core.SDL2
 			int channel,
 			IntPtr chunk,
 			int loops
-		) {
+		)
+		{
 			return Mix_PlayChannelTimed(channel, chunk, loops, -1);
 		}
 
@@ -498,7 +454,8 @@ namespace Lightning.Core.SDL2
 			IntPtr chunk,
 			int loops,
 			int ms
-		) {
+		)
+		{
 			return Mix_FadeInChannelTimed(channel, chunk, loops, ms, -1);
 		}
 
@@ -624,11 +581,11 @@ namespace Lightning.Core.SDL2
 		);
 		public static unsafe int Mix_SetMusicCMD(string command)
 		{
-			byte* utf8Cmd = SDL.Utf8Encode(command);
+			byte* utf8Cmd = SDL.Utf8EncodeHeap(command);
 			int result = INTERNAL_Mix_SetMusicCMD(
 				utf8Cmd
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8Cmd);
+			Marshal.FreeHGlobal((IntPtr)utf8Cmd);
 			return result;
 		}
 
@@ -644,11 +601,11 @@ namespace Lightning.Core.SDL2
 		);
 		public static unsafe int Mix_SetSoundFonts(string paths)
 		{
-			byte* utf8Paths = SDL.Utf8Encode(paths);
+			byte* utf8Paths = SDL.Utf8EncodeHeap(paths);
 			int result = INTERNAL_Mix_SetSoundFonts(
 				utf8Paths
 			);
-			Marshal.FreeHGlobal((IntPtr) utf8Paths);
+			Marshal.FreeHGlobal((IntPtr)utf8Paths);
 			return result;
 		}
 
