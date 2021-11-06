@@ -45,27 +45,27 @@ namespace Lightning.Core
         MacOS64 = 4,
 
         /// <summary>
-        /// ARM64 macOS 11.0+ (futureproofing)
+        /// ARM64e (Apple Silicon) macOS 11.0+ (futureproofing)
         /// </summary>
         MacOSARM64 = 5,
 
         /// <summary>
-        /// Linux x86-32 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15+ / SLES 12 SP2 or later)
+        /// Linux x86-32 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15.1 / SLES 12 SP2 or later)
         /// </summary>
         Linux32 = 6,
 
         /// <summary>
-        /// Linux x86-64 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15+ / SLES 12 SP2 or later)
+        /// Linux x86-64 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15.1 / SLES 12 SP2 or later)
         /// </summary>
         Linux64 = 7,
 
         /// <summary>
-        /// Linux ARMv7 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15+ / SLES 12 SP2 or later)
+        /// Linux ARMv7 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15.1 / SLES 12 SP2 or later)
         /// </summary>
         LinuxARM32 = 8,
 
         /// <summary>
-        /// Linux ARMv8 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15+ / SLES 12 SP2 or later)
+        /// Linux ARMv8 (Kernel version 4.14 or later - Alpine 3.10 / Debian 9 / Ubuntu 16.04 / Fedora 29 / CentOS 7 / RHEL 6 / openSUSE 15.1 / SLES 12 SP2 or later)
         /// </summary>
         LinuxARM64 = 9
     }

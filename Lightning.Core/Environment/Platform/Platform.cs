@@ -13,7 +13,7 @@ namespace Lightning.Core
     /// March 2, 2021 (possibly from Emerald) (modified June 26, 2021: major update to add platform versions)
     /// 
     /// Defines the current platform Lightning is running on. A platform may be anything supported by .NET Core 3.1 / .NET 5.0,
-    /// so various Linuxes, Windows 7, 8.1, 10 1607+, or 11, and MacOS 10.13+ for x86-64.
+    /// so various Linuxes, Windows 7, 8.1, 10 1607+, or 11, and MacOS 10.13+ for x86-64 (and OS11+ for ARM64)
     /// </summary>
     public static partial class Platform
     {

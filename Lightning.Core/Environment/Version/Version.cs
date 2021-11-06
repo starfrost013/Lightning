@@ -36,22 +36,41 @@ namespace Lightning.Core
         /// The Git commit hash of this build.
         /// </summary>
         public static string GCHash { get; set; }
+
+        /// <summary>
+        /// The major version of this build.
+        /// </summary>
         public static int Major { get; set; }
+
+        /// <summary>
+        /// The minor version of this build.
+        /// </summary>
         public static int Minor { get; set; }
+
+        /// <summary>
+        /// The build number of this build.
+        /// </summary>
         public static int Build { get; set; }
+
+        /// <summary>
+        /// The revision number of this build - use only if a release or build was bungled, and a quick fix required
+        /// </summary>
         public static int Revision { get; set; }
 
-        public static bool IsLoaded { get; set; }
+        /// <summary>
+        /// Internally used to determine if the version information is loaded.
+        /// </summary>
+        private static bool IsLoaded { get; set; }
 
         /// <summary>
         /// 2020-03-08
         /// </summary>
         public static void LoadVersion()
         {
-            Assembly CurAssembly = Assembly.GetExecutingAssembly();
+            Assembly CurAssembly = Assembly.GetEntryAssembly();
             string CurAsmLocation = CurAssembly.Location;
 
-            FileVersionInfo FVI = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location);
+            FileVersionInfo FVI = FileVersionInfo.GetVersionInfo(CurAsmLocation);
 
             string ProductVersion = FVI.FileVersion;
 
@@ -61,6 +80,7 @@ namespace Lightning.Core
 
             if (Version.Length != 4)
             {
+                Console.WriteLine($"Invalid version information (not 4 components!)");
                 //ERRORMANAGER needs to be no longer dependent on datamodel before this error can exist
                 //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionException");
                 return; 
@@ -76,6 +96,7 @@ namespace Lightning.Core
                 }
                 catch (FormatException)
                 {
+                    Console.WriteLine($"Invalid version information (all components must be numbers!)");
                     //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionInformationException");
                     return; 
                 }
