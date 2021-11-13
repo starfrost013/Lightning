@@ -195,13 +195,17 @@ namespace Lightning.Core.API
             // Check for a failure
             if (DM == null)
             {
+                RemoveInstance(DMS); // clean up when done
                 return false; 
             }
             else
             {
                 // Enter the main loop.
+                RemoveInstance(DMS); // clean up when done: todo?
                 return true;
             }
+
+            
         }
 
         private static bool Init_VerifyCompatibleSystem() => Environment.ProcessorCount > 1;

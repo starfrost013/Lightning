@@ -277,8 +277,8 @@ namespace Lightning.Core.API
             Init_GetWindowWidthAndHeight();
 
 
-            Vector2 DbgPageBegin = WindowSize * new Vector2(0.2, 0.2);
-            Vector2 DbgPageEnd = WindowSize * new Vector2(0.8, 0.8);
+            Vector2 DbgPageBegin = new Vector2(0.2, 0.2);
+            Vector2 DbgPageEnd = new Vector2(0.8, 0.8);
 
             Init_CreateDebugPage(DbgPageBegin, DbgPageEnd);
         }
@@ -291,12 +291,12 @@ namespace Lightning.Core.API
             DebugGui SGUI = (DebugGui)DataModel.CreateInstance("DebugGui", Ws);
 
             SGUI.Name = DebugGuiName;
-            SGUI.Position = DbgPageBegin;
+            SGUI.Position = (WindowSize * DbgPageBegin);
 
             TextBox Main = (TextBox)SGUI.AddChild("TextBox");
 
-            Main.Position = DbgPageBegin;
-            Main.Size = WindowSize - DbgPageBegin;
+            Main.Position = (WindowSize * DbgPageBegin);
+            Main.Size = (WindowSize * DbgPageEnd);
             Main.BackgroundColour = new Color4(127, 0, 0, 0);
             Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
             Main.FontFamily = GetDebugFontName();

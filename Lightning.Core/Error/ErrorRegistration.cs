@@ -155,9 +155,10 @@ namespace Lightning.Core
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfAnimationFramesException", Description = "Failed to acquire a list of animation frames!", Severity = MessageSeverity.FatalError, Id = 135 }); ;
          ErrorManager.RegisterError( new Error { Name = "AnimationFrameMustBeChildOfChildOfAnimatedImageBrushException", Description = "AnimationFrames must be a child of an Animation which is a part of an AnimatedImageBrush! This AnimationFrame will be destroyed.", Severity = MessageSeverity.Warning, Id = 136 });
          ErrorManager.RegisterError( new Error { Name = "DisplayViewportMustBeLargerThanSizeForTilingException", Description = "To display an ImageBrush or AnimationFrame with TextureDisplayMode set to Tile, its DisplayViewport must be set and be set to a larger value than its Size value.", Severity = MessageSeverity.Warning, Id = 137 });
-#region NuRender Errors
+         
+            #region NuRender Errors
 
-         ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2Exception", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 138 });
+            ErrorManager.RegisterError(new Error { Name = "NRCannotInitialiseSDL2Exception", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 138 });
          ErrorManager.RegisterError(new Error { Name = "NRInvalidWindowSettingsException", Description = "NuRender: Window.Settings is null and shouldn't be.", Severity = MessageSeverity.Error, Id = 139 });
          ErrorManager.RegisterError(new Error { Name = "NRErrorCreatingNRWindowException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 139 });
          ErrorManager.RegisterError(new Error { Name = "NRErrorCreatingNRRendererException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 140 });
@@ -176,7 +177,8 @@ namespace Lightning.Core
          ErrorManager.RegisterError(new Error { Name = "NRAttemptedToAccessNonexistentWindowException", Description = "!!this should be overridden in code!", Severity = MessageSeverity.FatalError, Id = 148 });
 
 
-#endregion
+            #endregion
+         ErrorManager.RegisterError(new Error { Name = "CannotSaveWhenNoFileSpecifiedException", Description = "Cannot save when no file is specified and a file is not open!", Severity = MessageSeverity.Error, Id = 200 });
         }
     }
 }
