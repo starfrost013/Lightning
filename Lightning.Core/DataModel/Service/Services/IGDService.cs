@@ -18,57 +18,20 @@ namespace Lightning.Core.API
 
         private bool IGDSERVICE_INITIALISED { get; set; }
 
-        private string CurrentDebugString { get; set; }
+        public DebugSettings Settings { get; set; }
 
-        private bool DebugPagesEnabled { get; set; }
-
-        private int _windowwidth { get; set; }
-
-        /// <summary>
-        /// The current window width.
-        /// </summary>
-        private int WindowWidth 
-        {
-            get
-            {
-                return _windowwidth; 
-            }
-            set
-            {
-                _windowwidth = value;
-
-                if (WindowHeight > 0) WindowSize = new Vector2(WindowWidth, WindowHeight); 
-            }
-        }
-
-        /// <summary>
-        /// Backing field for <see cref="WindowHeight"/>.
-        /// </summary>
-        private int _windowheight { get; set; }
-        private int WindowHeight 
-        {
-            get
-            {
-                return _windowheight;
-            }
-            set
-            {
-                _windowheight = value;
-                
-                if (WindowWidth > 0) WindowSize = new Vector2(WindowWidth, WindowHeight);
-            }
-        }
-
-        private Vector2 WindowSize { get; set; }
         private string DebugGuiName => "DebugGui";
 
         public override ServiceStartResult OnStart() 
         {
             Logging.Log("IGDService Init", ClassName);
 
+            Settings = new DebugSettings();
+
             ServiceStartResult SSR = new ServiceStartResult();
 
             SSR.Successful = true; 
+            
             return SSR;
         }
 
@@ -143,7 +106,7 @@ namespace Lightning.Core.API
 
 #if DEBUG
 
-            CurrentDebugString = DebugStrings.GetDebugString();
+            Settings.CurrentDebugString = DebugStrings.GetDebugString();
             CreateDebugText(); // call before font loading so we don't have to load the font again
             Init_CreateDebugGui();
 #endif
@@ -185,8 +148,8 @@ namespace Lightning.Core.API
 
                     try
                     {
-                        WindowHeight = (int)WindowWidth_Setting.SettingValue;
-                        WindowWidth = (int)WindowHeight_Setting.SettingValue;
+                        Settings.WindowHeight = (int)WindowWidth_Setting.SettingValue;
+                        Settings.WindowWidth = (int)WindowHeight_Setting.SettingValue;
                         
                     }
                     catch (Exception err)
@@ -235,7 +198,7 @@ namespace Lightning.Core.API
 
             DebugTextLine1.Content = $"Lightning for {Platform.PlatformName} version {LVersion.GetVersionString()} (Debug)";
             DebugTextLine2.Content = $"DataModel version {DataModel.DATAMODEL_API_VERSION_MAJOR}.{DataModel.DATAMODEL_API_VERSION_MINOR}.{DataModel.DATAMODEL_API_VERSION_REVISION}";
-            DebugTextLine3.Content = CurrentDebugString;
+            DebugTextLine3.Content = Settings.CurrentDebugString;
 
             // TODO: default positioning stuff so we don't have to do this
 
@@ -288,22 +251,22 @@ namespace Lightning.Core.API
             Workspace Ws = DataModel.GetWorkspace();
 
             // TEMP code until nested rendering
-            DebugGui SGUI = (DebugGui)DataModel.CreateInstance("DebugGui", Ws);
+            DebugGui DGUI = (DebugGui)DataModel.CreateInstance("DebugGui", Ws);
 
-            SGUI.Name = DebugGuiName;
-            SGUI.Position = (WindowSize * DbgPageBegin);
+            DGUI.Name = DebugGuiName;
+            DGUI.Position = (Settings.WindowSize * DbgPageBegin);
 
-            TextBox Main = (TextBox)SGUI.AddChild("TextBox");
+            TextBox Main = (TextBox)DGUI.AddChild("TextBox");
 
-            Main.Position = (WindowSize * DbgPageBegin);
-            Main.Size = (WindowSize * DbgPageEnd);
+            Main.Position = (Settings.WindowSize * DbgPageBegin);
+            Main.Size = (Settings.WindowSize * DbgPageEnd);
             Main.BackgroundColour = new Color4(127, 0, 0, 0);
             Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
             Main.FontFamily = GetDebugFontName();
             Main.DoNotAutoResize = true;
             Main.Fill = true;
 
-            MainDebugPage MDP = (MainDebugPage)DataModel.CreateInstance("MainDebugPage", SGUI);
+            MainDebugPage MDP = (MainDebugPage)DataModel.CreateInstance("MainDebugPage", DGUI);
             MDP.IsOpen = true;
             MDP.MDP_Build(); 
         }

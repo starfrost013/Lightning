@@ -27,8 +27,6 @@ namespace Lightning.Core.SDL2
         public static extern int pixelRGBA(IntPtr Renderer, int X, int Y, byte R, byte G, byte B, byte A);
 
         #region TODO - DOCUMENTATION
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int pixelRGBAWeight(IntPtr Renderer, int X, int Y, byte R, byte G, byte B, byte A, int Weight);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int hlineRGBA(IntPtr Renderer, int X1, int X2, int Y1, int Y2, byte R, byte G, byte B, byte A);
@@ -43,10 +41,10 @@ namespace Lightning.Core.SDL2
         public static extern int roundedRectangleRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, int Radius, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int roundedBoxRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, int Radius, byte R, byte G, byte B, byte A);
+        public static extern int boxRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int boxRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, int Radius, byte R, byte G, byte B, byte A);
+        public static extern int roundedBoxRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, int Radius, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int lineRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, byte R, byte G, byte B, byte A);
@@ -62,7 +60,7 @@ namespace Lightning.Core.SDL2
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int aaellipseRGBA(IntPtr Renderer, int X, int Y, int RadX, int RadY, byte R, byte G, byte B, byte A);
-        
+
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int filledEllipseRGBA(IntPtr Renderer, int X, int Y, int RX, int RY, byte R, byte G, byte B, byte A);
 
@@ -70,7 +68,7 @@ namespace Lightning.Core.SDL2
         public static extern int pieRGBA(IntPtr Renderer, int X, int Y, int Radius, int Start, int End, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int filledpieRGBA(IntPtr Renderer, int X, int Y, int Radius, int Start, int End, byte R, byte G, byte B, byte A);
+        public static extern int filledPieRGBA(IntPtr Renderer, int X, int Y, int Radius, int Start, int End, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int trigonRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, int X3, int Y3, byte R, byte G, byte B, byte A);
@@ -81,8 +79,7 @@ namespace Lightning.Core.SDL2
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int filledTrigonRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, int X3, int Y3, byte R, byte G, byte B, byte A);
 
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int aafilledTrigonRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, int X3, int Y3, byte R, byte G, byte B, byte A);
+        //todo: aafilledTrigonRGBA
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int polygonRGBA(IntPtr Renderer,
@@ -133,8 +130,8 @@ namespace Lightning.Core.SDL2
         bool PolyAllocated = false);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int texturedPolygon(IntPtr Renderer, 
-        [In] int[] VX, 
+        public static extern int texturedPolygon(IntPtr Renderer,
+        [In] int[] VX,
         [In] int[] VY, int N, IntPtr Surface, int TextureDX, int TextureDY, byte R, byte G, byte B, byte A);
 
         #region GFX Primitives Core 
