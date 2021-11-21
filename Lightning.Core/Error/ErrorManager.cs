@@ -40,14 +40,16 @@ namespace Lightning.Core
             //pre-globalsettings
 
             ErrorRegistration.RegisterErrors();
-#if DEBUG
-            ATest_CheckErrorSerialisedCorrectly();
-#endif
+            
+            
             ERRORMANAGER_LOADED = true; 
         }
 
         private static bool DoesErrorExist(Error Err) => Errors.ErrorList.Contains(Err);
 #if DEBUG
+        /// <summary>
+        /// No longer used as of 2021-11-20 (NuRender Integration)
+        /// </summary>
         private static void ATest_CheckErrorSerialisedCorrectly()
         {
             foreach (Error Err in Errors.ErrorList)

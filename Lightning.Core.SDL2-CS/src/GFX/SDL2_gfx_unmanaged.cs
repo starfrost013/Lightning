@@ -35,6 +35,16 @@ namespace Lightning.Core.SDL2
         public static extern int vlineRGBA(IntPtr Renderer, int X1, int X2, int Y1, int Y2, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int bezierRGBA(IntPtr Renderer,
+        [In] int[] VX,
+        [In] int[] VY,
+        int N, int S, byte R, byte G, byte B, byte A);
+
+
+        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int thicklineRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, byte Width, byte R, byte G, byte B, byte A);
+
+        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int rectangleRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -81,31 +91,20 @@ namespace Lightning.Core.SDL2
 
         //todo: aafilledTrigonRGBA
 
+        //todo: aafilledTrigonRGBA
+
+
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int polygonRGBA(IntPtr Renderer,
-        [In] int[] VX,
-        [In] int[] VY,
+        ref int[] VX,
+        ref int[] VY,
         int N, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int aapolygonRGBA(IntPtr Renderer,
-        [In] int[] VX,
-        [In] int[] VY,
+        ref int[] VX,
+        ref int[] VY,
         int N, byte R, byte G, byte B, byte A);
-
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int filledPolygonRGBAMT(IntPtr Renderer,
-        [In] int[] VX,
-        [In] int[] VY,
-        int N,
-        int R,
-        int G,
-        int B,
-        int A,
-        [In] int[] PolyInts = null,
-        [In]
-        [MarshalAs(UnmanagedType.U4)]
-        bool PolyAllocated = false);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int filledPolygonRGBA(IntPtr Renderer,
@@ -113,21 +112,6 @@ namespace Lightning.Core.SDL2
         [In] int[] VY,
         int N, byte R, byte G, byte B, byte A);
 
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int texturedPolygonMT(IntPtr Renderer,
-        [In] int[] VX,
-        [In] int[] VY,
-        int N,
-        IntPtr Surface,
-        int TextureDX,
-        int TextureDY,
-        int R,
-        int G,
-        int B,
-        int A,
-        [In] int[] PolyInts = null,
-        [In]
-        bool PolyAllocated = false);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int texturedPolygon(IntPtr Renderer,
@@ -148,15 +132,7 @@ namespace Lightning.Core.SDL2
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int stringRGBA(IntPtr Renderer, byte X, byte Y, string C, byte R, byte G, byte B, byte A);
 
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int bezierRGBA(IntPtr Renderer,
-        [In] int[] VX,
-        [In] int[] VY,
-        int N, int S, byte R, byte G, byte B, byte A);
 
-
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int thicklineRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, byte Width, byte R, byte G, byte B, byte A);
         #endregion
 
         #endregion

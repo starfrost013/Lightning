@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.3.978.21317</AssemblyVersion>
-    <FileVersion>0.3.978.21317</FileVersion>
+    <AssemblyVersion>0.3.981.21325</AssemblyVersion>
+    <FileVersion>0.3.981.21325</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>Lightning Runtime</PackageId>
     <Description>Lightning Runtime</Description>

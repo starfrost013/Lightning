@@ -42,14 +42,29 @@ namespace Lightning
                 case LaunchArgsAction.LaunchGameXML:
                     // Write some basic information to the screen
                     // Set the colour to blue temporarily
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("Light");
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Write("ning ");
+
+                    string InitString = "Lightning";
+
+                    for (int i = 0; i < InitString.Length; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                        }
+
+                        Console.Write(InitString[i]);
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.White; 
+                    Console.Write(" (NR Integration Build)\n\n");
                     Console.ForegroundColor = ConsoleColor.Gray;
 
-                    Console.WriteLine("Pre-Alpha SDK release");
-                    Console.WriteLine($"© 2021 starfrost/Lightning Dev Team. All rights reserved");
+                    Console.WriteLine("Pre-αlpha SDK (December 2021)");
+                    Console.WriteLine($"© 2021-2022 starfrost/Lightning Dev Team. All rights reserved.\n");
 
                     // Load version information
                     LVersion.LoadVersion();

@@ -17,7 +17,7 @@ namespace Lightning.Core.API
     public class DataModel
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 0;
-        public static int DATAMODEL_API_VERSION_MINOR = 23;
+        public static int DATAMODEL_API_VERSION_MINOR = 24;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
