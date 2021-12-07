@@ -1,17 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.3.911.21341</AssemblyVersion>
-    <FileVersion>0.3.911.21341</FileVersion>
-    <PackageId>NuRender.Utilities</PackageId>
+    <AssemblyVersion>1.0.104.21341</AssemblyVersion>
+    <FileVersion>1.0.104.21341</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <Version>2.0.0</Version>
-    <Description>NuCore standard utility library</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <RootNamespace>NuCore.Utilities</RootNamespace>
-    <AssemblyName>NuCore.Utilities</AssemblyName>
+    <PackageId>NuRender.Test</PackageId>
+    <Product>NuRender Testing Framework</Product>
+    <Description>Framework for testing NR.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NuCore.Test\NuCore.Test.csproj" />
+    <ProjectReference Include="..\NuRender\NuRender.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
@@ -33,8 +41,5 @@
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Lightning.Core.NativeInterop\NuCore.NativeInterop.csproj" />
-  </ItemGroup>
 
 </Project>

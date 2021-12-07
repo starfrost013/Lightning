@@ -36,11 +36,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NuCore.Utilities\NuCore.Utilities.csproj" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\Lightning.Utilities\NuCore.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
