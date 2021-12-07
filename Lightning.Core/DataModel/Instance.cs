@@ -85,13 +85,15 @@ namespace Lightning.Core.API
 
         /// <summary>
         /// This Instance is deprecated and will be removed in a future release of the engine. Using this in new projects is not recommended.
+        /// Read Only since December 7, 2021
         /// </summary>
-        internal virtual bool Deprecated { get; set; }
+        internal virtual bool Deprecated { get; }
 
         /// <summary>
         /// This Instance is experimental and may be changed or removed at any time in a future release of the engine. Using this in projects you intend to release is not recommended.
+        /// Read Only since December 7, 2021
         /// </summary>
-        internal virtual bool Experimental { get; set; }
+        internal virtual bool Experimental { get; }
 
         public Instance()
         {

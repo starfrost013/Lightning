@@ -63,7 +63,7 @@ namespace Lightning
                     Console.Write(" (NR Integration Build)\n\n");
                     Console.ForegroundColor = ConsoleColor.Gray;
 
-                    Console.WriteLine("Pre-αlpha SDK (December 2021)");
+                    Console.WriteLine("Software Development Kit (pre-release, December 2021)");
                     Console.WriteLine($"© 2021-2022 starfrost/Lightning Dev Team. All rights reserved.\n");
 
                     // Load version information

@@ -22,6 +22,9 @@ namespace Lightning.Core.API
         private bool SPLASHSCREEN_INITIALISATION_FAILED { get; set; }
 
         private string TexturePath { get; set; }
+
+        internal override bool Deprecated => true;
+
         private void Init()
         {
             Workspace Ws = DataModel.GetWorkspace();
