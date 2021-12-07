@@ -1,12 +1,11 @@
 ﻿#if WINDOWS
-using Lightning.Core.NativeInterop.Win32;
+using NuCore.NativeInterop.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-// in lightning.core to allow more convenience for non-interop code
-namespace Lightning.Core
+namespace NuCore.NativeInterop.Win32
 {
     /// <summary>
     /// A Win32 messagebox API. Uses P/Invoke.

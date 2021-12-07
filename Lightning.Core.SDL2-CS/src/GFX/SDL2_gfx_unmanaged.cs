@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Lightning.Core.SDL2
+namespace NuRender.SDL2
 {
     /// <summary>
     /// P/Invoke definitions for SDL2_gfx 
@@ -36,10 +36,9 @@ namespace Lightning.Core.SDL2
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int bezierRGBA(IntPtr Renderer,
-        [In] int[] VX,
-        [In] int[] VY,
+        ref int[] VX,
+        ref int[] VY,
         int N, int S, byte R, byte G, byte B, byte A);
-
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int thicklineRGBA(IntPtr Renderer, int X1, int Y1, int X2, int Y2, byte Width, byte R, byte G, byte B, byte A);
@@ -70,7 +69,7 @@ namespace Lightning.Core.SDL2
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int aaellipseRGBA(IntPtr Renderer, int X, int Y, int RadX, int RadY, byte R, byte G, byte B, byte A);
-
+        
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int filledEllipseRGBA(IntPtr Renderer, int X, int Y, int RX, int RY, byte R, byte G, byte B, byte A);
 
@@ -91,31 +90,27 @@ namespace Lightning.Core.SDL2
 
         //todo: aafilledTrigonRGBA
 
-        //todo: aafilledTrigonRGBA
+        //[DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        //public static extern int polygonRGBA(IntPtr Renderer,
+        //ref int[] VX,
+        //ref int[] VY,
+        //int N, byte R, byte G, byte B, byte A);
 
+        //[DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        //public static extern int aapolygonRGBA(IntPtr Renderer,
+        //ref int[] VX,
+        //ref int[] VY,
+        //int N, byte R, byte G, byte B, byte A);
 
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int polygonRGBA(IntPtr Renderer,
-        ref int[] VX,
-        ref int[] VY,
-        int N, byte R, byte G, byte B, byte A);
-
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int aapolygonRGBA(IntPtr Renderer,
-        ref int[] VX,
-        ref int[] VY,
-        int N, byte R, byte G, byte B, byte A);
-
-        [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int filledPolygonRGBA(IntPtr Renderer,
-        [In] int[] VX,
-        [In] int[] VY,
-        int N, byte R, byte G, byte B, byte A);
-
+        //[DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        //public static extern int filledPolygonRGBA(IntPtr Renderer,
+        //ref int[] VX,
+        //ref int[] VY,
+        //int N, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int texturedPolygon(IntPtr Renderer,
-        [In] int[] VX,
+        public static extern int texturedPolygon(IntPtr Renderer, 
+        [In] int[] VX, 
         [In] int[] VY, int N, IntPtr Surface, int TextureDX, int TextureDY, byte R, byte G, byte B, byte A);
 
         #region GFX Primitives Core 
@@ -127,10 +122,10 @@ namespace Lightning.Core.SDL2
         public static extern int gfxPrimitivesSetFontRotation(uint Rotation);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int characterRGBA(IntPtr Renderer, byte X, byte Y, char C, byte R, byte G, byte B, byte A);
+        public static extern int characterRGBA(IntPtr Renderer, int X, int Y, char C, byte R, byte G, byte B, byte A);
 
         [DllImport(NativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int stringRGBA(IntPtr Renderer, byte X, byte Y, string C, byte R, byte G, byte B, byte A);
+        public static extern int stringRGBA(IntPtr Renderer, int X, int Y, string C, byte R, byte G, byte B, byte A);
 
 
         #endregion

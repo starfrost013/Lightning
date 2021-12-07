@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Core.NativeInterop
+namespace NuCore.NativeInterop
 {
     /// <summary>
     /// PlatformVersion

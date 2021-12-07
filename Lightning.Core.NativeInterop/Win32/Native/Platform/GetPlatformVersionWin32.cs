@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO; 
 using System.Text;
 
-namespace Lightning.Core.NativeInterop
+namespace NuCore.NativeInterop
 {
     /// <summary>
     /// GetPlatformVersion
@@ -101,19 +101,19 @@ namespace Lightning.Core.NativeInterop
                                     else if (WindowsBuildNumber >= 21990 && WindowsBuildNumber <= 22000)
                                     {
                                         Version.OSBrandName = "Windows 11";
-                                        Version.OSUpdateVersion = "Cobalt Wave 1 or 2 (22000.xxx+)";
+                                        Version.OSUpdateVersion = "Cobalt Wave 1";
                                         return Version;
                                     }
-                                    else if (WindowsBuildNumber >= 22114 && WindowsBuildNumber < 22350)
+                                    else if (WindowsBuildNumber >= 22114 && WindowsBuildNumber <= 22350)
                                     {
                                         Version.OSBrandName = "Windows 11";
-                                        Version.OSUpdateVersion = "co_refresh Wave 2";
+                                        Version.OSUpdateVersion = "Cobalt Wave 2";
                                         return Version;
                                     }
                                     else
                                     {
                                         Version.OSBrandName = "Windows 11";
-                                        Version.OSUpdateVersion = "Nickel (22H2)";
+                                        Version.OSUpdateVersion = "Nickel (22H2?)";
                                         return Version;
                                     }
                                 }

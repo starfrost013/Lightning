@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace Lightning.Core.NativeInterop.Win32
+namespace NuCore.NativeInterop.Win32
 {
     /// <summary>
     /// OpenFileDialog

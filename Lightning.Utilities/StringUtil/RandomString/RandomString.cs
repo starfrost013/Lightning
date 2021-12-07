@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace NuCore.Utilities
 {
     /// <summary>
-    /// RandomString [Lightning.Utilities]
+    /// RandomString [NuCore.Utilities]
     /// 
     /// October 19, 2021
     /// 

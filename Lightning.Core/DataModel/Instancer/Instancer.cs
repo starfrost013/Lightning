@@ -74,7 +74,7 @@ namespace Lightning.Core.API
         } // END SHOULD BE GENERIC TYPE PARAMETER
 
         /// <summary>
-        /// pre-result class; will write result classes in Lightning.Utilities tomorrow
+        /// pre-result class; will write result classes in NuCore.Utilities tomorrow
         /// </summary>
         private static bool CreateInstance_CheckIfClassIsInstantiable(Type Typ)
         {

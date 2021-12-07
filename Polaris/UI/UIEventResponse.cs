@@ -1,7 +1,7 @@
 ﻿using Lightning.Core;
 using Lightning.Core.API;
 #if WINDOWS // probably not the best lol
-using Lightning.Core.NativeInterop.Win32; 
+using NuCore.NativeInterop.Win32; 
 #endif
 using Polaris.Core;
 using Polaris.UI; 

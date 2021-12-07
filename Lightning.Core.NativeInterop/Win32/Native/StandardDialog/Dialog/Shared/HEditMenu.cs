@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using HMenu = System.IntPtr;
 
-namespace Lightning.Core.NativeInterop.Win32
+namespace NuCore.NativeInterop.Win32
 {
     /// <summary>
     /// HEditMenu

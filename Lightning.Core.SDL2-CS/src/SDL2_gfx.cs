@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -36,7 +37,7 @@ using System.Text;
  *
  */
 #endregion
-namespace Lightning.Core.SDL2
+namespace NuRender.SDL2
 {
     public static partial class SDL_gfx
     {
@@ -113,6 +114,39 @@ namespace Lightning.Core.SDL2
         /// <returns></returns>
         public static int pixel(IntPtr Renderer, int X, int Y) => SDL.SDL_RenderDrawPoint(Renderer, X, Y); //short?
 
+        public static void polygonRGBA(IntPtr Renderer, int[] VX, int[] VY, byte R, byte G, byte B, byte A)
+        {
+            SDL.SDL_SetRenderDrawColor(Renderer, R, G, B, A);
+
+            if (VX.Length != VY.Length)
+            {
+                throw new InvalidOperationException("VX and VY parameters to SDL2_gfx.polygonRGBA in NuRender.Core.SDL2-CS must be same length!");
+            }
+
+            int N = VX.Length;
+
+            for (int i = 0; i < N - 1; i++)
+            {
+                SDL.SDL_RenderDrawLine(Renderer, VX[i], VY[i], VX[i + 1], VY[i + 1]);
+            }
+        }
+
+        public static void aaPolygonRGBA(IntPtr Renderer, int[] VX, int[] VY, byte R, byte G, byte B, byte A)
+        {
+            SDL.SDL_SetRenderDrawColor(Renderer, R, G, B, A);
+
+            if (VX.Length != VY.Length)
+            {
+                throw new InvalidOperationException("VX and VY parameters to SDL2_gfx.aaPolygonRGBA NuRender.Core.SDL2-CS must be same length!");
+            }
+
+            int N = VX.Length;
+
+            for (int i = 0; i < N - 1; i++)
+            {
+                aalineRGBA(Renderer, VX[i], VY[i], VX[i + 1], VY[i + 1], R, G, B, A);
+            }
+        }
         #endregion
     }
 }

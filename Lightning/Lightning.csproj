@@ -297,9 +297,9 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Lightning.Core.NativeInterop\Lightning.Core.NativeInterop.csproj" />
+    <ProjectReference Include="..\NuCore.NativeInterop\NuCore.NativeInterop.csproj" />
     <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />
-    <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
+    <ProjectReference Include="..\NuCore.Utilities\NuCore.Utilities.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

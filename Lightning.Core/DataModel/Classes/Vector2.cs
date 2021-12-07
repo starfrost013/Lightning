@@ -1,5 +1,5 @@
 ﻿#if WINDOWS
-using Lightning.Core.NativeInterop.Win32;
+using NuCore.NativeInterop.Win32;
 #endif
 using System;
 using System.Collections.Generic;

@@ -31,7 +31,7 @@ using System;
 using System.Runtime.InteropServices;
 #endregion
 
-namespace Lightning.Core.SDL2
+namespace NuRender.SDL2
 {
 	public static class SDL_ttf
 	{

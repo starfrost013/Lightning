@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using HRESULT = System.UInt32;
 
-namespace Lightning.Core.NativeInterop.Win32
+namespace NuCore.NativeInterop.Win32
 {
     [ComImport(),
         Guid(COMIIDs.COM_IID_IFileDialog),

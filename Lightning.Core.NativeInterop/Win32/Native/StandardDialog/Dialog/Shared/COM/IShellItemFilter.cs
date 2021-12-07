@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Lightning.Core.NativeInterop.Win32
+namespace NuCore.NativeInterop.Win32
 {
 
     /// <summary>
