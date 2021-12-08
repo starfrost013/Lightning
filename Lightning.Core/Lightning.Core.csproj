@@ -47,6 +47,7 @@
     <ProjectReference Include="..\Lightning.Core.NativeInterop\NuCore.NativeInterop.csproj" />
     <ProjectReference Include="..\Lightning.Core.SDL2-CS\NuRender.SDL2-CS.csproj" />
     <ProjectReference Include="..\Lightning.Utilities\NuCore.Utilities.csproj" />
+    <ProjectReference Include="..\NuRender\NuRender.csproj" />
   </ItemGroup>
 
   <ItemGroup>
