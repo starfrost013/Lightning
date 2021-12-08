@@ -174,17 +174,17 @@ namespace NuRender.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Mix_Quit();
 
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int Mix_OpenAudio__INTERNAL(
+		[DllImport(nativeLibName, EntryPoint = "Mix_OpenAudio", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int INTERNAL_Mix_OpenAudio(
 			int frequency,
 			ushort format,
 			int channels,
 			int chunksize
 		);
 
-		public static int Mix_OpenAudio(int Frequency, Mix_AudioFormat Format, int Channels, int ChunkSize) => Mix_OpenAudio__INTERNAL(Frequency, (ushort)Format, Channels, ChunkSize);
+		public static int Mix_OpenAudio(int Frequency, Mix_AudioFormat Format, int Channels, int ChunkSize) => INTERNAL_Mix_OpenAudio(Frequency, (ushort)Format, Channels, ChunkSize);
 
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(nativeLibName,  CallingConvention = CallingConvention.Cdecl)]
 		public static extern int Mix_AllocateChannels(int numchans);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
