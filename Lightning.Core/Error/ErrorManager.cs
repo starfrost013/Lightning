@@ -1,4 +1,5 @@
 ﻿using Lightning.Core.API;
+using NuCore.NativeInterop.Win32;
 using NuCore.Utilities;
 using System;
 using System.Collections.Generic;

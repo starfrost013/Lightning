@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuCore.NativeInterop.Win32;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace Lightning.Core
     /// <summary>
     /// LaunchArgs
     /// 
-    /// April 8, 2021 (modified July 29, 2021: Add comments)
+    /// April 8, 2021 (modified December 8, 2021: Use NuCore)
     /// 
     /// Defines launch arguments for the DataModel.
     /// </summary>
