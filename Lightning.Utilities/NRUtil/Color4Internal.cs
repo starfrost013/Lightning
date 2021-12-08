@@ -15,7 +15,7 @@ namespace NuRender
     /// NuRender temp version of Color4 for bringup and early dev. DataModel stuff cut
     /// </summary>
     /// 
-    public class Color4
+    public class Color4Internal
     {
         /// <summary>
         /// The alpha component of this colour.
@@ -45,7 +45,7 @@ namespace NuRender
         /// <param name="Colour"></param>
         /// <param name="AddToDataModel">If false, simply creates an object and returns. If true, adds to the DataModel</param>
         /// <returns></returns>
-        public static Color4 FromRelative(string Colour, bool AddToDataModel = true)
+        public static Color4Internal FromRelative(string Colour, bool AddToDataModel = true)
         {
             string[] Spx = Colour.Split(',');
 
@@ -73,7 +73,7 @@ namespace NuRender
                         return null; //result class?
                     }
 
-                    Color4 C4 = new Color4();
+                    Color4Internal C4 = new Color4Internal();
 
                     C4.A = Convert.ToByte(R00 * 255);
                     C4.R = Convert.ToByte(R01 * 255);
@@ -97,7 +97,7 @@ namespace NuRender
             }
         }
 
-        public static Color4 FromHex(string Colour, bool AddToDataModel = true)
+        public static Color4Internal FromHex(string Colour, bool AddToDataModel = true)
         {
             // Remove the # that is sometimes used. 
             if (Colour.Contains("#"))
@@ -125,7 +125,7 @@ namespace NuRender
                     byte FG = byte.Parse(G, NumberStyles.HexNumber);
                     byte FB = byte.Parse(B, NumberStyles.HexNumber);
 
-                    Color4 C4 = new Color4();
+                    Color4Internal C4 = new Color4Internal();
 
                     C4.A = FA;
                     C4.R = FR;
@@ -148,7 +148,7 @@ namespace NuRender
         }
 
 
-        public static Color4 FromString(string Str, bool AddToDataModel = true)
+        public static Color4Internal FromString(string Str, bool AddToDataModel = true)
         {
             string[] Str_Components = Str.Split(',');
 
@@ -162,7 +162,7 @@ namespace NuRender
                 try
                 {
 
-                    Color4 C4 = new Color4();
+                    Color4Internal C4 = new Color4Internal();
 
                     string A = Str_Components[0];
                     string R = Str_Components[1];
@@ -202,12 +202,12 @@ namespace NuRender
             }
         }
 
-        public Color4() // old code compat (July 12, 2021)
+        public Color4Internal() // old code compat (July 12, 2021)
         {
 
         }
 
-        public Color4(byte CA, byte CR, byte CG, byte CB)
+        public Color4Internal(byte CA, byte CR, byte CG, byte CB)
         {
             // use for non-DataModel ONLY
             A = CA;
@@ -217,18 +217,18 @@ namespace NuRender
         }
 
         #region Not really colour blending
-        public static Color4 operator +(Color4 A, Color4 B) => new Color4((byte)(A.A + B.A), (byte)(A.R + B.R), (byte)(A.G + B.G), (byte)(A.B + B.B));
-        public static Color4 operator +(double A, Color4 B) => new Color4((byte)(A + B.A), (byte)(A + B.R), (byte)(A + B.G), (byte)(A + B.B));
-        public static Color4 operator +(Color4 A, double B) => new Color4((byte)(A.A + B), (byte)(A.R + B), (byte)(A.G + B), (byte)(A.B + B));
-        public static Color4 operator -(Color4 A, Color4 B) => new Color4((byte)(A.A - B.A), (byte)(A.R - B.R), (byte)(A.G - B.G), (byte)(A.B - B.B));
-        public static Color4 operator -(double A, Color4 B) => new Color4((byte)(A - B.A), (byte)(A - B.R), (byte)(A - B.G), (byte)(A - B.B));
-        public static Color4 operator -(Color4 A, double B) => new Color4((byte)(A.A - B), (byte)(A.R - B), (byte)(A.G - B), (byte)(A.B - B));
-        public static Color4 operator *(Color4 A, Color4 B) => new Color4((byte)(A.A * B.A), (byte)(A.R * B.R), (byte)(A.G * B.G), (byte)(A.B * B.B));
-        public static Color4 operator *(double A, Color4 B) => new Color4((byte)(A * B.A), (byte)(A * B.R), (byte)(A * B.G), (byte)(A * B.B));
-        public static Color4 operator *(Color4 A, double B) => new Color4((byte)(A.A * B), (byte)(A.R * B), (byte)(A.G * B), (byte)(A.B * B));
-        public static Color4 operator /(Color4 A, Color4 B) => new Color4((byte)(A.A / B.A), (byte)(A.R / B.R), (byte)(A.G / B.G), (byte)(A.B / B.B));
-        public static Color4 operator /(double A, Color4 B) => new Color4((byte)(A / B.A), (byte)(A / B.R), (byte)(A / B.G), (byte)(A / B.B));
-        public static Color4 operator /(Color4 A, double B) => new Color4((byte)(A.A / B), (byte)(A.R / B), (byte)(A.G / B), (byte)(A.B / B));
+        public static Color4Internal operator +(Color4Internal A, Color4Internal B) => new Color4Internal((byte)(A.A + B.A), (byte)(A.R + B.R), (byte)(A.G + B.G), (byte)(A.B + B.B));
+        public static Color4Internal operator +(double A, Color4Internal B) => new Color4Internal((byte)(A + B.A), (byte)(A + B.R), (byte)(A + B.G), (byte)(A + B.B));
+        public static Color4Internal operator +(Color4Internal A, double B) => new Color4Internal((byte)(A.A + B), (byte)(A.R + B), (byte)(A.G + B), (byte)(A.B + B));
+        public static Color4Internal operator -(Color4Internal A, Color4Internal B) => new Color4Internal((byte)(A.A - B.A), (byte)(A.R - B.R), (byte)(A.G - B.G), (byte)(A.B - B.B));
+        public static Color4Internal operator -(double A, Color4Internal B) => new Color4Internal((byte)(A - B.A), (byte)(A - B.R), (byte)(A - B.G), (byte)(A - B.B));
+        public static Color4Internal operator -(Color4Internal A, double B) => new Color4Internal((byte)(A.A - B), (byte)(A.R - B), (byte)(A.G - B), (byte)(A.B - B));
+        public static Color4Internal operator *(Color4Internal A, Color4Internal B) => new Color4Internal((byte)(A.A * B.A), (byte)(A.R * B.R), (byte)(A.G * B.G), (byte)(A.B * B.B));
+        public static Color4Internal operator *(double A, Color4Internal B) => new Color4Internal((byte)(A * B.A), (byte)(A * B.R), (byte)(A * B.G), (byte)(A * B.B));
+        public static Color4Internal operator *(Color4Internal A, double B) => new Color4Internal((byte)(A.A * B), (byte)(A.R * B), (byte)(A.G * B), (byte)(A.B * B));
+        public static Color4Internal operator /(Color4Internal A, Color4Internal B) => new Color4Internal((byte)(A.A / B.A), (byte)(A.R / B.R), (byte)(A.G / B.G), (byte)(A.B / B.B));
+        public static Color4Internal operator /(double A, Color4Internal B) => new Color4Internal((byte)(A / B.A), (byte)(A / B.R), (byte)(A / B.G), (byte)(A / B.B));
+        public static Color4Internal operator /(Color4Internal A, double B) => new Color4Internal((byte)(A.A / B), (byte)(A.R / B), (byte)(A.G / B), (byte)(A.B / B));
 
 
         #endregion

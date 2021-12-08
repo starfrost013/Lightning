@@ -184,6 +184,10 @@ namespace NuCore.Utilities
 
 
             #endregion
+
+         ErrorManager.RegisterError(new Error { Name = "CannotSaveWhenNoFileSpecifiedException", Description = "Cannot save when no file is specified and a file is not open!", Severity = MessageSeverity.Error, Id = 200 });
+
+         // todo: external-internal
         }
     }
 }

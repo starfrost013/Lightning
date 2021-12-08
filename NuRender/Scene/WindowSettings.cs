@@ -28,17 +28,17 @@ namespace NuRender
         /// <summary>
         /// The default position that this window is
         /// </summary>
-        public Vector2 WindowPosition { get; set; }
+        public Vector2Internal WindowPosition { get; set; }
 
         /// <summary>
         /// The window size of the current scene
         /// </summary>
-        public Vector2 WindowSize { get; set; }
+        public Vector2Internal WindowSize { get; set; }
 
         /// <summary>
         /// The size of the current screen's viewport
         /// </summary>
-        public Vector2 Viewport { get; set; }
+        public Vector2Internal Viewport { get; set; }
 
         /// <summary>
         /// The window flags of this window - see <see cref="SDL.SDL_WindowFlags"/.>. Optional.
@@ -57,8 +57,8 @@ namespace NuRender
 
         public WindowSettings()
         {
-            WindowPosition = new Vector2(200, 200);
-            WindowSize = new Vector2(960, 640); // set to default
+            WindowPosition = new Vector2Internal(200, 200);
+            WindowSize = new Vector2Internal(960, 640); // set to default
             Viewport = WindowSize; // set default
             ApplicationName = "NuRender Window";
             RenderingInformation = new WindowRenderingInformation();

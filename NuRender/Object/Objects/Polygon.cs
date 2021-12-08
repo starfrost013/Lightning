@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,13 +16,13 @@ namespace NuRender.Object
     public class Polygon : Primitive
     {
         /// <summary>
-        /// A list of <see cref="Vector2"/>s containing the points for this polygon. 
+        /// A list of <see cref="Vector2Internal"/>s containing the points for this polygon. 
         /// </summary>
-        public List<Vector2> Points { get; set; }
+        public List<Vector2Internal> Points { get; set; }
 
         public Polygon()
         {
-            Points = new List<Vector2>();
+            Points = new List<Vector2Internal>();
         }
 
         public override void Start(WindowRenderingInformation RenderInfo)
@@ -34,7 +35,7 @@ namespace NuRender.Object
             List<int> X = new List<int>();
             List<int> Y = new List<int>();
 
-            foreach (Vector2 Point in Points)
+            foreach (Vector2Internal Point in Points)
             {
                 X.Add((int)Point.X);
                 Y.Add((int)Point.Y);

@@ -13,12 +13,12 @@ namespace NuRender
         /// <summary>
         /// The border size of this rectangle (relative to the <see cref="Size"/> property)
         /// </summary>
-        public Vector2 BorderSize { get; set; }
+        public Vector2Internal BorderSize { get; set; }
 
         /// <summary>
         /// The size of this rectangle.
         /// </summary>
-        public Vector2 Size { get; set; }
+        public Vector2Internal Size { get; set; }
 
         /// <summary>
         /// <inheritdoc/>
@@ -34,7 +34,7 @@ namespace NuRender
             DrawEllipse(Size, RenderInfo);
         }
 
-        private void DrawEllipse(Vector2 RSize, WindowRenderingInformation RenderInfo)
+        private void DrawEllipse(Vector2Internal RSize, WindowRenderingInformation RenderInfo)
         {
             SDL.SDL_FRect Rectangle = new SDL.SDL_FRect
             {

@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -68,7 +69,7 @@ namespace NuRender
         /// DIf <see cref="RenderingMode"/> is set to <see cref="TextRenderingMode.Shaded"/>, the background colour of the text. If it is not, ignored. If it is null and the <see cref="RenderingMode"/>
         /// is <see cref="TextRenderingMode.Shaded"/>, it will be treated as if <see cref="RenderingMode"/> was set to <see cref="TextRenderingMode.Normal"/>.
         /// </summary>
-        public Color4 BackgroundColour { get; set; }
+        public Color4Internal BackgroundColour { get; set; }
 
         public override void Start(WindowRenderingInformation RenderingInformation)
         {
@@ -171,7 +172,7 @@ namespace NuRender
                 //todo: delete self
             }
 
-            Vector2 Position = new Vector2(FontX, FontY);
+            Vector2Internal Position = new Vector2Internal(FontX, FontY);
 
             if (WordWrap)
             {

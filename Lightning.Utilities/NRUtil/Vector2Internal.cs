@@ -16,7 +16,7 @@ namespace NuRender
     /// 
     /// Temporary version of Vector2 for bringup and early dev of NuRender. All DM stuff removed.
     /// </summary>
-    public class Vector2
+    public class Vector2Internal
     {
 
         /// <summary>
@@ -29,31 +29,31 @@ namespace NuRender
         /// </summary>
         public double Y { get; set; }
 
-        public Vector2()
+        public Vector2Internal()
         {
 
         }
 
-        public Vector2(double NX, double NY)
+        public Vector2Internal(double NX, double NY)
         {
             X = NX;
             Y = NY;
         }
 
         // July 25, 2021: These were totally busted, so I had to fix them. 
-        public static Vector2 operator +(Vector2 A, Vector2 B) => new Vector2(A.X + B.X, A.Y + B.Y);
-        public static Vector2 operator +(Vector2 A, double B) => new Vector2(A.X + B, A.Y + B);
-        public static Vector2 operator -(Vector2 A, Vector2 B) => new Vector2(A.X - B.X, A.Y - B.Y);
-        public static Vector2 operator -(Vector2 A, double B) => new Vector2(A.X - B, A.Y - B);
-        public static Vector2 operator -(double A, Vector2 B) => new Vector2(A - B.X, A - B.Y);
-        public static Vector2 operator *(Vector2 A, Vector2 B) => new Vector2(A.X * B.X, A.Y * B.Y);
-        public static Vector2 operator *(Vector2 A, double B) => new Vector2(A.X * B, A.Y * B);
+        public static Vector2Internal operator +(Vector2Internal A, Vector2Internal B) => new Vector2Internal(A.X + B.X, A.Y + B.Y);
+        public static Vector2Internal operator +(Vector2Internal A, double B) => new Vector2Internal(A.X + B, A.Y + B);
+        public static Vector2Internal operator -(Vector2Internal A, Vector2Internal B) => new Vector2Internal(A.X - B.X, A.Y - B.Y);
+        public static Vector2Internal operator -(Vector2Internal A, double B) => new Vector2Internal(A.X - B, A.Y - B);
+        public static Vector2Internal operator -(double A, Vector2Internal B) => new Vector2Internal(A - B.X, A - B.Y);
+        public static Vector2Internal operator *(Vector2Internal A, Vector2Internal B) => new Vector2Internal(A.X * B.X, A.Y * B.Y);
+        public static Vector2Internal operator *(Vector2Internal A, double B) => new Vector2Internal(A.X * B, A.Y * B);
         
-        public static Vector2 operator /(Vector2 A, Vector2 B) => new Vector2(A.X / B.X, A.Y / B.Y);
-        public static Vector2 operator /(Vector2 A, double B) => new Vector2(A.X / B, A.Y / B);
-        public static Vector2 operator /(double A, Vector2 B) => new Vector2(A / B.X, A / B.Y);
+        public static Vector2Internal operator /(Vector2Internal A, Vector2Internal B) => new Vector2Internal(A.X / B.X, A.Y / B.Y);
+        public static Vector2Internal operator /(Vector2Internal A, double B) => new Vector2Internal(A.X / B, A.Y / B);
+        public static Vector2Internal operator /(double A, Vector2Internal B) => new Vector2Internal(A / B.X, A / B.Y);
 
-        public static bool operator ==(Vector2 A, Vector2 B)
+        public static bool operator ==(Vector2Internal A, Vector2Internal B)
         {
             // Prevent a stack overflow by upcasting
             object OA = (object)A;
@@ -84,7 +84,7 @@ namespace NuRender
             }
         }
 
-        public static bool operator !=(Vector2 A, Vector2 B)
+        public static bool operator !=(Vector2Internal A, Vector2Internal B)
         {
             // Prevent a stack overflow by upcasting
             object OA = (object)A;
@@ -116,7 +116,7 @@ namespace NuRender
 
         }
 
-        public static bool operator <(Vector2 A, Vector2 B) 
+        public static bool operator <(Vector2Internal A, Vector2Internal B) 
         {
             if (A == null || B == null)
             {
@@ -135,7 +135,7 @@ namespace NuRender
             }
         }
 
-        public static bool operator >(Vector2 A, Vector2 B)
+        public static bool operator >(Vector2Internal A, Vector2Internal B)
         {
             if (A == null || B == null)
             {
@@ -158,28 +158,28 @@ namespace NuRender
         {
             Type ObjType = obj.GetType();
 
-            if (typeof(Vector2) != ObjType)
+            if (typeof(Vector2Internal) != ObjType)
             {
                 return false;
             }
             else
             {
-                return (this == (Vector2)obj);
+                return (this == (Vector2Internal)obj);
             }
             
         }
 
         public override int GetHashCode() => base.GetHashCode();
 
-        public static Vector2 FromString(string Str)
+        public static Vector2Internal FromString(string Str)
         {
             // We do not add this to the DataModel, as it is an attribute
 
             // Do not change, as useless objects will pollute the workspace if we add it
 
-            Vector2 V2;
+            Vector2Internal V2;
 
-            V2 = new Vector2();
+            V2 = new Vector2Internal();
 
             string[] Str_Split = Str.Split(',');
 
@@ -226,11 +226,11 @@ namespace NuRender
         /// [WIN32-ONLY] Gets a Native Point.
         /// </summary>
         /// <returns></returns>
-        public static Vector2 FromNativePoint(Win32Point PointW32)
+        public static Vector2Internal FromNativePoint(Win32Point PointW32)
         {
-            Vector2 V2 = null; // SHOULD NEVER STAY NULL
+            Vector2Internal V2 = null; // SHOULD NEVER STAY NULL
 
-            V2 = new Vector2();
+            V2 = new Vector2Internal();
             
             if (PointW32 == null)
             {
@@ -248,9 +248,9 @@ namespace NuRender
         }
 #endif
 
-        public static double GetDotProduct(Vector2 A, Vector2 B) => ((A.X * B.X) + (B.Y * B.Y));
+        public static double GetDotProduct(Vector2Internal A, Vector2Internal B) => ((A.X * B.X) + (B.Y * B.Y));
 
-        public Vector2 GetAbs() => new Vector2(Math.Abs(X), Math.Abs(Y));
+        public Vector2Internal GetAbs() => new Vector2Internal(Math.Abs(X), Math.Abs(Y));
 
     }
 }

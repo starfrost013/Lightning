@@ -20,12 +20,12 @@ namespace NuRender
         /// <summary>
         /// Defines the start of this line - see <see cref="LineStart"/>.
         /// </summary>
-        public Vector2 LineStart { get; set; }
+        public Vector2Internal LineStart { get; set; }
 
         /// <summary>
         /// Defines the end of this line - see <see cref="LineStart"/>.
         /// </summary>
-        public Vector2 LineEnd { get; set; }
+        public Vector2Internal LineEnd { get; set; }
 
         /// <summary>
         /// Backing field for <see cref="Thickness"/>
@@ -77,8 +77,8 @@ namespace NuRender
             {
 
                 // force a new object to be created (HACK)
-                Vector2 CurLineStart = new Vector2(LineStart.X, LineStart.Y);
-                Vector2 CurLineEnd = new Vector2(LineEnd.X, LineEnd.Y);
+                Vector2Internal CurLineStart = new Vector2Internal(LineStart.X, LineStart.Y);
+                Vector2Internal CurLineEnd = new Vector2Internal(LineEnd.X, LineEnd.Y);
 
                 for (int i = 0; i < Thickness; i++)
                 {

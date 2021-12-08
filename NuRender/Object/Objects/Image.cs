@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2;
+﻿using NuCore.Utilities;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,21 +23,21 @@ namespace NuRender
         public string Path { get; set; }
 
         /// <summary>
-        /// A <see cref="Vector2"/> holding the size of this Image.
+        /// A <see cref="Vector2Internal"/> holding the size of this Image.
         /// </summary>
-        public Vector2 Size { get; set; }
+        public Vector2Internal Size { get; set; }
 
         /// <summary>
-        /// A <see cref="Vector2"/> holding the viewport of this image. 
+        /// A <see cref="Vector2Internal"/> holding the viewport of this image. 
         /// </summary>
-        public Vector2 Viewport { get; set; }
+        public Vector2Internal Viewport { get; set; }
 
         /// <summary>
-        /// A <see cref="Vector2"/> holding the viewport anchor of this image.
+        /// A <see cref="Vector2Internal"/> holding the viewport anchor of this image.
         /// 
         /// A viewport anchor is where the viewport for this image starts. Default is (0,0). 
         /// </summary>
-        public Vector2 ViewportAnchor { get; set; }
+        public Vector2Internal ViewportAnchor { get; set; }
 
         /// <summary>
         /// Information about this texture - see <see cref="TextureInfo"/>.
@@ -92,7 +93,7 @@ namespace NuRender
             }
         }
 
-        private void Render_Normal(WindowRenderingInformation RenderInfo, Vector2 OverridePosition = null)
+        private void Render_Normal(WindowRenderingInformation RenderInfo, Vector2Internal OverridePosition = null)
         {
 
 
@@ -145,7 +146,7 @@ namespace NuRender
 
             if (TileCountX < 1 || TileCountY < 1) return; 
 
-            Vector2 TilePosition = Position;
+            Vector2Internal TilePosition = Position;
 
             int IncrementX = (int)Viewport.X / TileCountX;
             int IncrementY = (int)Viewport.Y / TileCountY; 

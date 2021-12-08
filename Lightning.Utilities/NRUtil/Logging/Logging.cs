@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NuRender
+namespace NuCore.Utilities
 {
     public static class Logging
     {

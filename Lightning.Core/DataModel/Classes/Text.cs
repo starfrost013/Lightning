@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Text
     /// 
-    /// June 30, 2021 (modified July 17, 2021: refactoring, anti-aliasing)
+    /// June 30, 2021 (modified December 8, 2021: NuRender integration, phase 2)
     /// 
     /// Defines text. :O
     /// </summary>

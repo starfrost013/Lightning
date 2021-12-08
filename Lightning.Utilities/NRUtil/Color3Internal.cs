@@ -14,7 +14,7 @@ namespace NuRender
     /// 
     /// Defines an RGB colour.
     /// </summary>
-    public class Color3
+    public class Color3Internal
     {
         public byte R { get; set; }
         public byte G { get; set; }
@@ -28,7 +28,7 @@ namespace NuRender
         /// <param name="Colour"></param>
         /// <param name="AddToDataModel">If false, simply creates an object and returns. If true, adds to the DataModel</param>
         /// <returns></returns>
-        public static Color3 FromRelative(string Colour, bool AddToDataModel = true)
+        public static Color3Internal FromRelative(string Colour, bool AddToDataModel = true)
         {
             string[] Spx = Colour.Split(',');
 
@@ -54,7 +54,7 @@ namespace NuRender
                         return null; //result class?
                     }
 
-                    Color3 C3 = new Color3();
+                    Color3Internal C3 = new Color3Internal();
 
                     C3.R = Convert.ToByte(R00 * 255);
                     C3.G = Convert.ToByte(R01 * 255);
@@ -77,7 +77,7 @@ namespace NuRender
             }
         }
 
-        public static Color3 FromHex(string Colour)
+        public static Color3Internal FromHex(string Colour)
         {
             // Remove the # that is sometimes used. 
             if (Colour.Contains("#"))
@@ -102,7 +102,7 @@ namespace NuRender
                     byte FG = byte.Parse(G, NumberStyles.HexNumber);
                     byte FB = byte.Parse(B, NumberStyles.HexNumber);
 
-                    Color3 C3 = new Color3();  
+                    Color3Internal C3 = new Color3Internal();  
                     
                     C3.R = FR;
                     C3.G = FG;
@@ -127,7 +127,7 @@ namespace NuRender
         }
 
 
-        public static Color3 FromString(string Str)
+        public static Color3Internal FromString(string Str)
         {
             string[] Str_Components = Str.Split(',');
 
@@ -141,9 +141,9 @@ namespace NuRender
                 try
                 {
                     // not sure if we should add to the datamodel here?
-                    Color3 C3;
+                    Color3Internal C3;
 
-                    C3 = new Color3();
+                    C3 = new Color3Internal();
 
                     string R = Str_Components[0];
                     string G = Str_Components[1];
@@ -180,12 +180,12 @@ namespace NuRender
             }
         }
 
-        public Color3() // old code compat (July 12, 2021)
+        public Color3Internal() // old code compat (July 12, 2021)
         {
 
         }
 
-        public Color3(byte CR, byte CG, byte CB)
+        public Color3Internal(byte CR, byte CG, byte CB)
         {
             // use for non-DataModel ONLY
             R = CR;
@@ -195,18 +195,18 @@ namespace NuRender
 
         #region Not really colour blending
 
-        public static Color3 operator +(Color3 A, Color3 B) => new Color3((byte)(A.R + B.R), (byte)(A.G + B.G), (byte)(A.B + B.B));
-        public static Color3 operator +(double A, Color3 B) => new Color3((byte)(A + B.R), (byte)(A + B.G), (byte)(A + B.B));
-        public static Color3 operator +(Color3 A, double B) => new Color3((byte)(A.R + B), (byte)(A.G + B), (byte)(A.B + B));
-        public static Color3 operator -(Color3 A, Color3 B) => new Color3((byte)(A.R - B.R), (byte)(A.G - B.G), (byte)(A.B - B.B));
-        public static Color3 operator -(double A, Color3 B) => new Color3((byte)(A - B.R), (byte)(A - B.G), (byte)(A - B.B));
-        public static Color3 operator -(Color3 A, double B) => new Color3((byte)(A.R - B), (byte)(A.G - B), (byte)(A.B - B));
-        public static Color3 operator *(Color3 A, Color3 B) => new Color3((byte)(A.R * B.R), (byte)(A.G * B.G), (byte)(A.B * B.B));
-        public static Color3 operator *(double A, Color3 B) => new Color3((byte)(A * B.R), (byte)(A * B.G), (byte)(A * B.B));
-        public static Color3 operator *(Color3 A, double B) => new Color3((byte)(A.R * B), (byte)(A.G * B), (byte)(A.B * B));
-        public static Color3 operator /(Color3 A, Color3 B) => new Color3((byte)(A.R / B.R), (byte)(A.G / B.G), (byte)(A.B / B.B));
-        public static Color3 operator /(double A, Color3 B) => new Color3((byte)(A / B.R), (byte)(A / B.G), (byte)(A / B.B));
-        public static Color3 operator /(Color3 A, double B) => new Color3((byte)(A.R / B), (byte)(A.G / B), (byte)(A.B / B));
+        public static Color3Internal operator +(Color3Internal A, Color3Internal B) => new Color3Internal((byte)(A.R + B.R), (byte)(A.G + B.G), (byte)(A.B + B.B));
+        public static Color3Internal operator +(double A, Color3Internal B) => new Color3Internal((byte)(A + B.R), (byte)(A + B.G), (byte)(A + B.B));
+        public static Color3Internal operator +(Color3Internal A, double B) => new Color3Internal((byte)(A.R + B), (byte)(A.G + B), (byte)(A.B + B));
+        public static Color3Internal operator -(Color3Internal A, Color3Internal B) => new Color3Internal((byte)(A.R - B.R), (byte)(A.G - B.G), (byte)(A.B - B.B));
+        public static Color3Internal operator -(double A, Color3Internal B) => new Color3Internal((byte)(A - B.R), (byte)(A - B.G), (byte)(A - B.B));
+        public static Color3Internal operator -(Color3Internal A, double B) => new Color3Internal((byte)(A.R - B), (byte)(A.G - B), (byte)(A.B - B));
+        public static Color3Internal operator *(Color3Internal A, Color3Internal B) => new Color3Internal((byte)(A.R * B.R), (byte)(A.G * B.G), (byte)(A.B * B.B));
+        public static Color3Internal operator *(double A, Color3Internal B) => new Color3Internal((byte)(A * B.R), (byte)(A * B.G), (byte)(A * B.B));
+        public static Color3Internal operator *(Color3Internal A, double B) => new Color3Internal((byte)(A.R * B), (byte)(A.G * B), (byte)(A.B * B));
+        public static Color3Internal operator /(Color3Internal A, Color3Internal B) => new Color3Internal((byte)(A.R / B.R), (byte)(A.G / B.G), (byte)(A.B / B.B));
+        public static Color3Internal operator /(double A, Color3Internal B) => new Color3Internal((byte)(A / B.R), (byte)(A / B.G), (byte)(A / B.B));
+        public static Color3Internal operator /(Color3Internal A, double B) => new Color3Internal((byte)(A.R / B), (byte)(A.G / B), (byte)(A.B / B));
 
         #endregion
 

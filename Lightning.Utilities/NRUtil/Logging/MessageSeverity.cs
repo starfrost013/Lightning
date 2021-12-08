@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NuRender
+namespace NuCore.Utilities
 {
     /// <summary>
     /// Lightning / NuRender

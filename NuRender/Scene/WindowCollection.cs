@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -61,8 +62,8 @@ namespace NuRender
         {
             if (Window.Settings.ApplicationName == null) Window.Settings.ApplicationName = "NuRender Window";
 
-            if (Window.Settings.WindowSize == null) Window.Settings.WindowSize = new Vector2(1152, 864);
-            if (Window.Settings.Viewport == null) Window.Settings.Viewport = new Vector2(1152, 864);
+            if (Window.Settings.WindowSize == null) Window.Settings.WindowSize = new Vector2Internal(1152, 864);
+            if (Window.Settings.Viewport == null) Window.Settings.Viewport = new Vector2Internal(1152, 864);
 
 
         }

@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2;
+﻿using NuCore.Utilities;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.IO; 

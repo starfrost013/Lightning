@@ -1,4 +1,5 @@
-﻿using NuCore.NativeInterop.Win32;
+﻿using NuCore.Utilities;
+using NuCore.NativeInterop.Win32;
 using System;
 using System.Collections.Generic;
 using System.Text;

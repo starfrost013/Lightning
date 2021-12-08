@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Reflection; 
 using System.Text;
@@ -15,6 +16,8 @@ namespace Lightning.Core.API
     /// Modified 2021-03-06 to facilitate attributing.
     /// Modified 2021-03-07 for result classes.
     /// Modified 2021-08-29 to check that the type being checked actually exists.
+    /// Modified 2021-12-08 for NuRender integration (Phase 2)
+    ///
     /// </summary>
     public static class Instancer //SHOULD BE GENERIC TYPE PARAMETER!!!
     {

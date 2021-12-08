@@ -51,6 +51,6 @@ namespace NuRender
         /// <summary>
         /// The default ASIC draw colour for SDL.
         /// </summary>
-        public static Color4 NURENDER_DEFAULT_SDL_DRAW_COLOUR = new Color4(255, 0, 0, 0);
+        public static Color4Internal NURENDER_DEFAULT_SDL_DRAW_COLOUR = new Color4Internal(255, 0, 0, 0);
     }
 }

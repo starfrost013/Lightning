@@ -31,12 +31,12 @@ namespace NuRender
         /// <summary>
         /// The colour of this NuRender object. May not be used.
         /// </summary>
-        public Color4 Colour { get; set; }
+        public Color4Internal Colour { get; set; }
 
         /// <summary>
         /// The position of this NuRender object. 
         /// </summary>
-        public Vector2 Position { get; set; }
+        public Vector2Internal Position { get; set; }
 
         /// <summary>
         /// Ran on the creation of this NuRender object.

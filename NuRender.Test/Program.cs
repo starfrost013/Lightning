@@ -42,9 +42,9 @@ namespace NuRender.Test
             // TEMP 
             Line Li = (Line)Sc.Windows[0].AddObject("Line");
             Li.Thickness = 35;
-            Li.LineStart = new Vector2(0, 0);
-            Li.LineEnd = new Vector2(500, 500);
-            Li.Colour = new Color4(255, 255, 255, 255);
+            Li.LineStart = new Vector2Internal(0, 0);
+            Li.LineEnd = new Vector2Internal(500, 500);
+            Li.Colour = new Color4Internal(255, 255, 255, 255);
 
             // END TEMP - WILL BE REMOVED
             RegisterTests();
