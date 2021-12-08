@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace NuRender
+namespace NuCore.Utilities
 {
     /// <summary>
     /// Global error manager for Lightning.
