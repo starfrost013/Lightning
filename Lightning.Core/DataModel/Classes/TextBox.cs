@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,13 +14,23 @@ namespace Lightning.Core.API
     /// </summary>
     public class TextBox : Text
     {
-        public Rectangle ItemRectangle { get; set; }
+        private Rectangle ItemRectangle { get; set; }
 
+        /// <summary>
+        /// Determines if this TextBox is filled.
+        /// </summary>
         public bool Fill { get; set; }
         private bool TEXTBOX_INITIALISED { get; set; }
         private bool TEXTBOX_INITIALISATION_FAILED { get; set; }
+
+        /// <summary>
+        /// Padding used for the text of this textbox.
+        /// </summary>
         public Vector2 Padding { get; set; }
 
+        /// <summary>
+        /// Determines if this text box will automatically resize to the size of its text.
+        /// </summary>
         public bool DoNotAutoResize { get; set; }
         public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
         {
