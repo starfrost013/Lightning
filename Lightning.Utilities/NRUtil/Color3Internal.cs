@@ -28,7 +28,7 @@ namespace NuRender
         /// <param name="Colour"></param>
         /// <param name="AddToDataModel">If false, simply creates an object and returns. If true, adds to the DataModel</param>
         /// <returns></returns>
-        public static Color3Internal FromRelative(string Colour, bool AddToDataModel = true)
+        public static Color3Internal FromRelative(string Colour)
         {
             string[] Spx = Colour.Split(',');
 
