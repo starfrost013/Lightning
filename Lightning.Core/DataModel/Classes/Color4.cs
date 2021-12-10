@@ -73,7 +73,7 @@ namespace Lightning.Core.API
 
             if (!AddToDataModel)
             {
-                return new Color4(C4I.A, C4I.R, C4I.G, C4sI.B);
+                return new Color4(C4I.A, C4I.R, C4I.G, C4I.B);
             }
             else
             {
@@ -123,7 +123,7 @@ namespace Lightning.Core.API
         public static Color4 FromString(string Str, bool AddToDataModel = true, Instance Parent = null)
         {
             // December 9, 2021 (NuRender integration)
-            Color4Internal C4I = Color4Internal.FromHex(Str);
+            Color4Internal C4I = Color4Internal.FromString(Str);
 
             if (!AddToDataModel)
             {

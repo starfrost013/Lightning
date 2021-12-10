@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.96.21343</AssemblyVersion>
-    <FileVersion>1.0.96.21343</FileVersion>
+    <AssemblyVersion>1.0.99.21344</AssemblyVersion>
+    <FileVersion>1.0.99.21344</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <Description>Lightning Rendering Services</Description>
     <PackageId>NuRender</PackageId>
