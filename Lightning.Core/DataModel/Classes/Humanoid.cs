@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2; 
+﻿using NuRender; 
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -169,7 +170,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx = null)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx = null)
         {
             // Some rendering temp stuff for humanoids
 
@@ -186,8 +187,10 @@ namespace Lightning.Core.API
             
         }
 
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx = null)
+        private void DoRender(Scene SDL_Renderer, ImageBrush Tx = null)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow(); 
+
             if (!Invincible)
             {
                 if (MaxHealth == 0) MaxHealth = 100;
@@ -224,26 +227,26 @@ namespace Lightning.Core.API
                 // but it is required :(
                 if (Health <= LowHealthThreshold)
                 {
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, LowHealthColour.R, LowHealthColour.G, LowHealthColour.B, 255);
+                    SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, LowHealthColour.R, LowHealthColour.G, LowHealthColour.B, 255);
                 }
                 else if (Health > LowHealthThreshold
                     && Health <= MediumHealthThreshold)
                 {
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, MediumHealthColour.R, MediumHealthColour.G, MediumHealthColour.B, 255);
+                    SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, MediumHealthColour.R, MediumHealthColour.G, MediumHealthColour.B, 255);
                 }
                 else
                 {
-                    SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HighHealthColour.R, HighHealthColour.G, HighHealthColour.B, 255);
+                    SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, HighHealthColour.R, HighHealthColour.G, HighHealthColour.B, 255);
                 }
 
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HBPositionX - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine1EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(MainWindow.Settings.RenderingInformation.RendererPtr, (float)HBPositionX - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)HBPositionY - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y, HealthBarLine1EndXPos - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)HBPositionY - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
 
-                SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, HealthBarColour2.R, HealthBarColour2.G, HealthBarColour2.B, 255);
+                SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, HealthBarColour2.R, HealthBarColour2.G, HealthBarColour2.B, 255);
 
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, (float)HealthBarLine2StartXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y, HealthBarLine2EndXPos - (float)SDL_Renderer.CCameraPosition.X, (float)HBPositionY - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(MainWindow.Settings.RenderingInformation.RendererPtr, (float)HealthBarLine2StartXPos - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)HBPositionY - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y, HealthBarLine2EndXPos - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)HBPositionY - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
 
                 // Reset draw colour. 
-                SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 255);
+                SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, 0, 0, 0, 255);
             }
 
             base.Render(SDL_Renderer, Tx);

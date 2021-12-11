@@ -2,6 +2,7 @@
 using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace NuRender
@@ -9,15 +10,13 @@ namespace NuRender
     /// <summary>
     /// Texture
     /// 
-    /// December 3, 2021 (modified December 5, 2021)
+    /// December 3, 2021 (modified December 11, 2021: Implement file not found check and add constructor to initialise TextureInfo at instantiation)
     /// 
     /// Defines a texture.
     /// </summary>
     public class Image : NRObject
     {
         public override string ClassName => "Texture";
-
-
 
         /// <summary>
         /// A <see cref="Vector2Internal"/> holding the size of this Image.
@@ -46,8 +45,18 @@ namespace NuRender
         /// </summary>
         public TextureRenderingMode RenderMode { get; set; }
 
+        public Image()
+        {
+            TextureInfo = new TextureInformation(); 
+        }
+
         public bool Load(WindowRenderingInformation WRI)
         {
+            if (!File.Exists(TextureInfo.Path))
+            {
+                ErrorManager.ThrowError(ClassName, "NRFailedToLoadTextureException", $"Error loading texture: The file {TextureInfo.Path} does not exist!");
+                return false;
+            }
 
             // Ccahe this texture       
             foreach (Image Img in WRI.ImageCache)
@@ -68,15 +77,17 @@ namespace NuRender
                 return false;
             }
 
-
             TextureInfo.TexPtr = SDL.SDL_CreateTextureFromSurface(WRI.RendererPtr, Surface);
-
 
             if (TextureInfo.TexPtr == IntPtr.Zero)
             {
                 ErrorManager.ThrowError(ClassName, "NRFailedToLoadTextureException", $"Error loading texture (error converting SDL_Surface to SDL_Texture): {SDL.SDL_GetError()}");
                 return false;
             }
+
+            // prevent memory leaks
+
+            SDL.SDL_FreeSurface(Surface);
 
             return true; 
 
@@ -90,6 +101,8 @@ namespace NuRender
 
         public override void Render(WindowRenderingInformation RenderInfo)
         {
+            SDL.SDL_SetTextureBlendMode(RenderInfo.RendererPtr, RenderInfo.BlendingMode);
+            
             switch (RenderMode)
             {
                 case TextureRenderingMode.NotRendered:

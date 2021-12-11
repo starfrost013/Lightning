@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender;
 using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             return; // prevent crash from calling the wrong method
         }

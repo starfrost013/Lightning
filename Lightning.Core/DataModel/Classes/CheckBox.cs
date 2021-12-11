@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuRender;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// CheckBox
     /// 
-    /// August 7, 2021 (modified August 9, 2021: Add checkbox event, render correctly)
+    /// August 7, 2021 (modified December 11, 2021: Initial NR port)
     /// 
     /// Defines a check box. 
     /// </summary>
@@ -46,7 +47,7 @@ namespace Lightning.Core.API
             CHECKBOX_INITIALISED = true; 
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!CHECKBOX_INITIALISED)
             {
@@ -60,7 +61,7 @@ namespace Lightning.Core.API
 
         }
 
-        private void PerformRender(Renderer SDL_Renderer, ImageBrush Tx)
+        private void PerformRender(Scene SDL_Renderer, ImageBrush Tx)
         {
             base.Render(SDL_Renderer, Tx);
             L1.Invisible = !Checked;

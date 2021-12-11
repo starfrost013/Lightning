@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender;
 using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
@@ -57,7 +58,7 @@ namespace Lightning.Core.API
         }
 
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             base.PO_Init();
 
@@ -88,7 +89,7 @@ namespace Lightning.Core.API
         }
 
 
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx) //todo: remove second parameter
+        private void DoRender(Scene SDL_Renderer, ImageBrush Tx) //todo: remove second parameter
         {
             SnapToParent();
 
@@ -105,10 +106,12 @@ namespace Lightning.Core.API
             }
         }
 
-        private void RenderUntiledTexture(Renderer SDL_Renderer, ImageBrush Tx)
+        private void RenderUntiledTexture(Scene SDL_Renderer, ImageBrush Tx)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
 
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+            IntPtr SDL_RendererPtr = MainWindow.Settings.RenderingInformation.RendererPtr;
+
             // requisite error checking already done
 
             // create the source rect
@@ -124,10 +127,10 @@ namespace Lightning.Core.API
             SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
 
 
-            if (SDL_Renderer.CCameraPosition != null && !NotCameraAware)
+            if (MainWindow.Settings.RenderingInformation.CCameraPosition != null && !NotCameraAware)
             {
-                DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                DestinationRect.x = (int)Position.X - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
+                DestinationRect.y = (int)Position.Y - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
             }
             else
             {
@@ -149,8 +152,10 @@ namespace Lightning.Core.API
             SDL.SDL_RenderCopy(SDL_RendererPtr, Tx.SDLTexturePtr, ref SourceRect, ref DestinationRect);
         }
 
-        private void RenderTiledTexture(Renderer SDL_Renderer, ImageBrush Tx)
+        private void RenderTiledTexture(Scene SDL_Renderer, ImageBrush Tx)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             Vector2 TileCount = DisplayViewport / Size;
 
             if (TileCount.X < 1 || TileCount.Y < 1)
@@ -184,17 +189,18 @@ namespace Lightning.Core.API
                 {
                     DstRect.x = (int)Position.X + (int)(Size.X / TileCount.X) * (i + 1);
 
-                    if (!NotCameraAware) DstRect.x -= (int)SDL_Renderer.CCameraPosition.X;
+                    if (!NotCameraAware) DstRect.x -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
 
-                    SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
+                    // obsolete code
+                    SDL.SDL_RenderCopy(MainWindow.Settings.RenderingInformation.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
 
                     for (int j = 0; j < TileCount.Y; j++)
                     {
                         DstRect.y = (int)Position.Y + (int)(Size.Y / TileCount.Y) * j + 1;
 
-                        if (!NotCameraAware) DstRect.y -= (int)SDL_Renderer.CCameraPosition.Y;
+                        if (!NotCameraAware) DstRect.y -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
 
-                        SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
+                        SDL.SDL_RenderCopy(MainWindow.Settings.RenderingInformation.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
                     }
                 }
             }

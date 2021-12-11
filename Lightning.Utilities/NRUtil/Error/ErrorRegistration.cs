@@ -185,8 +185,8 @@ namespace NuCore.Utilities
 #endregion
 
          ErrorManager.RegisterError(new Error { Name = "CannotSaveWhenNoFileSpecifiedException", Description = "Cannot save when no file is specified and a file is not open!", Severity = MessageSeverity.Error, Id = 200 });
-         ErrorManager.RegisterError(new Error { Name = "InstanceDeprecatedException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 201 });
-         ErrorManager.RegisterError(new Error { Name = "InstanceExperimentalException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 202});
+         ErrorManager.RegisterError(new Error { Name = "InstanceDeprecatedException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 201 });
+         ErrorManager.RegisterError(new Error { Name = "InstanceExperimentalException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 202});
 
             // todo: external-internal
         }

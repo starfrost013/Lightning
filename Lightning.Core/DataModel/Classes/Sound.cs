@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender;
 using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ namespace Lightning.Core.API
     /// <summary>
     /// Sound
     /// 
-    /// May 5, 2021 (modified May 9, 2021)
+    /// May 5, 2021 (modified December 11, 2021)
     /// 
-    /// A sound. 
+    /// Defines a sound that can be played.
     /// </summary>
     public class Sound : PhysicalObject
     {
@@ -80,7 +81,7 @@ namespace Lightning.Core.API
             MFDelegate += OnSoundFinished; 
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             
 
@@ -192,8 +193,7 @@ namespace Lightning.Core.API
                 double MX = NewPO.Position.X - Position.X;
                 double MY = NewPO.Position.Y - Position.Y;
 
-                // We can use trigonometry for this,
-                // but as we only have one unknown it's easier to use Pythagoras' theorem (a^2 + b^2 = c^2)
+                // Use Pythagoras' theorem to determine the radius
 
                 // Pixels
                 double DiagDistance = Math.Pow(MX, 2) * Math.Pow(MY, 2);
@@ -203,28 +203,25 @@ namespace Lightning.Core.API
 
                 if (DiagDistance > 0)
                 {
-                    NewVolume = (int)(NewVolume / (DiagDistance / 15));
+                    NewVolume = (int)(NewVolume / (DiagDistance / 10)); // increase by (15/10)x (Dec 11, 2021)
                 }
                 else
                 {
                     // either MX or MY is 0
                     if (MX != 0)
                     {
-                        NewVolume = (int)(NewVolume / (Math.Abs(MX) / 15));
+                        NewVolume = (int)(NewVolume / (Math.Abs(MX) / 10));// increase by (15/10)x (Dec 11, 2021)
                     }
                     else if (MY != 0)
                     {
-                        NewVolume = (int)(NewVolume / (Math.Abs(MY) / 15));
+                        NewVolume = (int)(NewVolume / (Math.Abs(MY) / 10));// increase by (15/10)x (Dec 11, 2021)
                     }
                 }
 
-                // Shouldn't happen but just in case... 
+                // clamp to 0 from 4
                 if (NewVolume > 128) NewVolume = 128;
-                if (NewVolume < 4) NewVolume /= 5; 
-                if (NewVolume < 0) NewVolume = 0;
+                if (NewVolume < 4) NewVolume = 0; 
 
-                //commented out for fps test build 
-                //Logging.Log($"Setting 3D sound volume to {NewVolume}...", ClassName);
                 SDL_mixer.Mix_Volume(Channel, NewVolume);
             }
             else

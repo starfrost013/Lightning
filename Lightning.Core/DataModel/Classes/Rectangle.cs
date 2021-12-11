@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender;
 using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ namespace Lightning.Core.API
     /// <summary>
     /// Rectangle
     /// 
-    /// April 12, 2021 (modified August 7, 2021: Brush)
+    /// April 12, 2021 (modified December 11, 2021: Initial NR port)
     /// 
     /// Defines a rectangle.
     /// </summary>
     public class Rectangle : Line
     {
         internal override string ClassName => "Rectangle";
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             Brush Brush = GetBrush();
 
@@ -27,9 +28,9 @@ namespace Lightning.Core.API
             }
             else
             {
-                IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+                Window MainWindow = SDL_Renderer.GetMainWindow();
 
-                SDL_Renderer.SetCurBlendMode();
+                IntPtr SDL_RendererPtr = MainWindow.Settings.RenderingInformation.RendererPtr;
 
                 if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0);
 
@@ -37,8 +38,8 @@ namespace Lightning.Core.API
 
                 if (!ForceToScreen)
                 {
-                    SR1.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                    SR1.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                    SR1.x = (int)Position.X - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
+                    SR1.y = (int)Position.Y - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
                 }
                 else
                 {
@@ -76,8 +77,17 @@ namespace Lightning.Core.API
             
         }
 
-        private void RenderBorder(Renderer SDL_Renderer, ImageBrush Tx)
+        /// <summary>
+        /// Renders the border of this Rectangle.
+        /// </summary>
+        /// <param name="SDL_Renderer"><inheritdoc/></param>
+        /// <param name="Tx"><inheritdoc/></param>
+        private void RenderBorder(Scene SDL_Renderer, ImageBrush Tx)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
+            IntPtr SDL_RendererPtr = MainWindow.Settings.RenderingInformation.RendererPtr;
+
             Vector2 BorderSize = new Vector2(Size.X + (BorderThickness * 2), Size.Y + (BorderThickness * 2));
             SDL.SDL_Rect SR2 = new SDL.SDL_Rect();
 
@@ -88,27 +98,27 @@ namespace Lightning.Core.API
 
             if (!ForceToScreen)
             {
-                SR2.x -= (int)SDL_Renderer.CCameraPosition.X;
-                SR2.y -= (int)SDL_Renderer.CCameraPosition.Y;
+                SR2.x -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
+                SR2.y -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
             }
 
 
             BorderFill = true; 
 
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, BorderColour.R, BorderColour.G, BorderColour.B, BorderColour.A);
+            SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, BorderColour.R, BorderColour.G, BorderColour.B, BorderColour.A);
 
             int Result = 0;
 
             if (!BorderFill)
             {
-                Result = SDL.SDL_RenderDrawRect(SDL_Renderer.RendererPtr, ref SR2);
+                Result = SDL.SDL_RenderDrawRect(SDL_RendererPtr, ref SR2);
             }
             else
             {
-                Result = SDL.SDL_RenderFillRect(SDL_Renderer.RendererPtr, ref SR2);
+                Result = SDL.SDL_RenderFillRect(SDL_RendererPtr, ref SR2);
             }
 
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
+            SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 0, 0, 0, 0);
 
 
 #if DEBUG

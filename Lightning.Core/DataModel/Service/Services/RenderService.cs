@@ -32,7 +32,8 @@ namespace Lightning.Core.API
     /// 2021-07-19: Implemented many events
     /// 2021-07-21: KeyDown now an event
     /// 2021-08-15: Animation loading, even MORE events
-    /// 2021-12-10: Rweritten for NuRender
+    /// 2021-12-10: Rewritten for NuRender
+    /// 2021-12-11: LoadTexture stuff rewritten for NuRender.
     /// 
     /// </summary>
     public class RenderService : Service
@@ -183,6 +184,9 @@ namespace Lightning.Core.API
                         WS.WindowMode = WindowMode.Windowed;
                     }
 
+                    // Make sure this is the main window.
+                    WS.IsMainWindow = true; 
+
                     MainScene.AddWindow(WS);
 
                     SDIR.Successful = true;
@@ -292,12 +296,17 @@ namespace Lightning.Core.API
 
 
         }
-
+        
+        /// <summary>
+        /// Displays splash screen [DEPRECATED] 
+        /// </summary>
         private void InitRendering_DisplaySplash()
         {
             SplashScreen SS = (SplashScreen)DataModel.CreateInstance("SplashScreen");
 
             GetInstanceResult GIR = SS.GetFirstChildOfType("Texture");
+
+            Window MainWindow = MainScene.GetMainWindow();
 
             if (!GIR.Successful
                 || GIR.Instance == null)
@@ -313,9 +322,9 @@ namespace Lightning.Core.API
 
                 Tx.SDLTexturePtr = SDL_image.IMG_Load(Tx.Path);
 
-                SS.Render(Renderer, Tx);
+                SS.Render(MainScene, Tx);
 
-                SDL.SDL_RenderPresent(Renderer.RendererPtr); 
+                SDL.SDL_RenderPresent(MainWindow.Settings.RenderingInformation.RendererPtr); 
             }
 
             
@@ -330,6 +339,8 @@ namespace Lightning.Core.API
 
             GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
 
+            Window MainWindow = MainScene.GetMainWindow();
+
             if (!GIR.Successful
                 || GIR.Instance == null)
             {
@@ -343,7 +354,7 @@ namespace Lightning.Core.API
                 
                 if (!GGSR.Successful) // set a default if we do not work
                 {
-                    Renderer.BlendMode = RenderingBlendMode.None;
+                    MainWindow.Settings.RenderingInformation.BlendingMode = SDL.SDL_BlendMode.SDL_BLENDMODE_NONE;
                     return; 
                 }
                 else
@@ -351,14 +362,14 @@ namespace Lightning.Core.API
                     // if it has been successfully loaded...
                     GameSetting BlendModeSetting = GGSR.Setting;
 
-                    if (BlendModeSetting.SettingValue != null) // check for a valid logo
+                    if (BlendModeSetting.SettingValue != null) // check for a valid blending mode
                     {
-                        Renderer.BlendMode = (RenderingBlendMode)BlendModeSetting.SettingValue;
+                        MainWindow.Settings.RenderingInformation.BlendingMode = (SDL.SDL_BlendMode)BlendModeSetting.SettingValue;
                     }
                     else
                     {
                         // set a default and return if invalid value
-                        Renderer.BlendMode = RenderingBlendMode.None; // .default? 
+                        MainWindow.Settings.RenderingInformation.BlendingMode = SDL.SDL_BlendMode.SDL_BLENDMODE_NONE; // .default? 
                     }
 
                     return;
@@ -421,6 +432,7 @@ namespace Lightning.Core.API
 
         private void LoadTexture(PhysicalObject PO, ImageBrush Tx)
         {
+            Window MainWindow = MainScene.GetMainWindow();
 
             if (!File.Exists(Tx.Path))
             {
@@ -431,64 +443,17 @@ namespace Lightning.Core.API
             }
             else
             {
-                Logging.Log($"Loading texture at {Tx.Path}...", ClassName);
-                // Load an image to a surface and create a texture from it
-                IntPtr Surface = SDL_image.IMG_Load(Tx.Path);
+                // this bit rewritten for nurender
+                // as nurender has its own texture cache
 
-                if (Surface == IntPtr.Zero)
-                {
-                    ErrorManager.ThrowError(ClassName, "ErrorLoadingTextureException", $"An error occurred loading the Texture at {Tx.Path}: {SDL.SDL_GetError()}");
-                    ServiceNotification SN3 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
-                    ServiceNotifier.NotifySCM(SN3);
-                }
+                Image Image = new Image();
 
-                IntPtr Texture = SDL.SDL_CreateTextureFromSurface(Renderer.RendererPtr, Surface);
+                Image.TextureInfo.Path = Tx.Path;
 
-                // Do we add this texture to the cache?
-                bool AddToCache = true;
+                // set imagebrush stuff for compat
+                Image.Load(MainWindow.Settings.RenderingInformation);
 
-                List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects(); 
-
-                // Add a texture to the cache.
-                foreach (PhysicalObject PO2 in ObjectsToLoad)
-                {
-                    // don't check ourselves.
-                    if (PO2 == PO) continue;
-
-                    GetInstanceResult GIR2 = PO2.GetFirstChildOfType("Texture");
-
-                    if (!GIR2.Successful)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        ImageBrush TX2 = (ImageBrush)GIR2.Instance;
-
-                        foreach (ImageBrush CachedTx in Renderer.TextureCache)
-                        {
-                            if (Tx.Path == TX2.Path)
-                            {
-                                AddToCache = false;
-                            }
-                        }
-
-                    }
-                }
-
-                if (AddToCache)
-                {
-                    Logging.Log($"Caching texture at {Tx.Path}...", ClassName);
-                    Tx.SDLTexturePtr = Texture;
-                    Renderer.TextureCache.Add(Tx);
-                }
-                else
-                {
-                    // destroy textures we don't want
-                    // saves memory 
-                    SDL.SDL_FreeSurface(Surface);
-                    SDL.SDL_DestroyTexture(Texture);
-                }
+                Tx.SDLTexturePtr = Image.TextureInfo.TexPtr;
             }
         }
 
@@ -544,8 +509,9 @@ namespace Lightning.Core.API
 
         private void Rendering_RenderPhysicalObjects()
         {
-            // Clear the renderer
-            SDL.SDL_RenderClear(Renderer.RendererPtr);
+            Window MainWindow = MainScene.GetMainWindow();
+
+            SDL.SDL_RenderClear(MainWindow.Settings.RenderingInformation.RendererPtr);
 
             // Get the workspace.
             Workspace Ws = DataModel.GetWorkspace();
@@ -560,7 +526,10 @@ namespace Lightning.Core.API
                 // Render each object.
                 Rendering_DoRenderPhysicalObjects(ObjectsToRender);
 
-                SDL.SDL_RenderPresent(Renderer.RendererPtr);
+                // call nurender to do the legwork of scene rendering
+
+                MainScene.Render(false); // render nurender.
+
             }
             else
             {
@@ -576,13 +545,14 @@ namespace Lightning.Core.API
         {
             PhysicalObjects = PhysicalObjects.OrderBy(PO => PO.ZIndex).ToList();
 
+            Window MainWindow = MainScene.GetMainWindow();
 
-
+            
             foreach (PhysicalObject PO in PhysicalObjects)
             {
                 GetInstanceResult GIR = PO.GetFirstChildOfType("ImageBrush");
                 
-                if (PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)) continue;
+                if (PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)) continue; // object uses custom render path? (do we need this for NR?)
 
                 if (!GIR.Successful
                     && !PO.Invisible) // check for custom render path being used (i.e. render() is not being called by something else) 
@@ -611,41 +581,26 @@ namespace Lightning.Core.API
                     ImageBrush Tx = (ImageBrush)GIR.Instance;
 
                     // HACK: Until we actually have a proper loader.
+                    // might need to get rid of this one
                     if (!Tx.TEXTURE_INITIALISED)
                     {
                         PO.GetBrush();
                         Tx.Init();
-                        
                     }
 
-                    // END VERY BAD HACK
-
-                    // Set the tiling mode and then render the texture.
-                    for (int i = 0; i < Renderer.TextureCache.Count; i++)
+                    // Made this code a bit less hackish (December 11, 2021):
+                    if (PO.OnRender == null)
                     {
-                        ImageBrush CachedTx = Renderer.TextureCache[i];
-
-                        if (CachedTx.Path == Tx.Path)
-                        {
-                            IntPtr TexturePointer = CachedTx.SDLTexturePtr;
-
-                            Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
-
-                            if (PO.OnRender == null)
-                            {
-                                PO.Render(Renderer, Tx);
-                            }
-                            else
-                            {
-                                RenderEventArgs REA = new RenderEventArgs();
-                                REA.SDL_Renderer = Renderer;
-                                REA.Tx = Tx;
-                                PO.OnRender(this, REA);
-                            }
-
-                            
-                        }
+                        PO.Render(MainScene, Tx);
                     }
+                    else
+                    {
+                        RenderEventArgs REA = new RenderEventArgs();
+                        REA.SDL_Renderer = MainScene;
+                        REA.Tx = Tx;
+                        PO.OnRender(MainScene, REA);
+                    }
+
                     
 
                 }

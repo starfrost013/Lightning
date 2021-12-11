@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender;
 using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace Lightning.Core.API
         {
             Position = new Vector2();
         }
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (Content == null) Content = "";
 
@@ -78,6 +79,8 @@ namespace Lightning.Core.API
             }
             else
             {
+                Window MainWindow = SDL_Renderer.GetMainWindow();
+
                 Font TextFont = FFR.Font;
 
                 // Set font style flags
@@ -130,7 +133,7 @@ namespace Lightning.Core.API
                 }
 
                 // Convert to texture for hardware rendering
-                IntPtr TextTexture = SDL.SDL_CreateTextureFromSurface(SDL_Renderer.RendererPtr, SurfaceSDL);
+                IntPtr TextTexture = SDL.SDL_CreateTextureFromSurface(MainWindow.Settings.RenderingInformation.RendererPtr, SurfaceSDL);
 
                 // corre
                 SDL.SDL_Rect SourceRect = new SDL.SDL_Rect
@@ -153,14 +156,14 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                    DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                    DestinationRect.x = (int)Position.X - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
+                    DestinationRect.y = (int)Position.Y - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
                     DestinationRect.w = FontWidth;
                     DestinationRect.h = FontHeight;
                 }
 
 
-                SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, TextTexture, ref SourceRect, ref DestinationRect);
+                SDL.SDL_RenderCopy(MainWindow.Settings.RenderingInformation.RendererPtr, TextTexture, ref SourceRect, ref DestinationRect);
 
                 SDL.SDL_FreeSurface(SurfaceSDL);
                 SDL.SDL_DestroyTexture(TextTexture);

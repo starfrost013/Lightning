@@ -362,6 +362,8 @@ namespace NuCore.Utilities
                         }
 
                         return;
+                    case MessageSeverity.Warning_NoPrompt: // no prompt warnings do not notify the user (they just print to the log)
+                        return; 
                     case MessageSeverity.Warning:
 
                         if (Err.NuRenderInternal) // append LS for script errors

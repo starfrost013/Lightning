@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender;
 using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!GRADIENT_INITIALISED)
             {
@@ -115,9 +116,11 @@ namespace Lightning.Core.API
             }
         }
 
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
+        private void DoRender(Scene SDL_Renderer, ImageBrush Tx)
         {
             GetMultiInstanceResult GMIR = GetAllChildrenOfType("GradientStop");
+
+            Window MainWindow = SDL_Renderer.GetMainWindow(); 
 
             if (!GMIR.Successful
             || GMIR.Instances == null)
@@ -150,8 +153,9 @@ namespace Lightning.Core.API
 
                         if (!NotCameraAware)
                         {
-                            CurPosition -= SDL_Renderer.CCameraPosition;
-                            GStopPlusOnePos -= SDL_Renderer.CCameraPosition;
+                            // temp until converter
+                            CurPosition -= new Vector2(MainWindow.Settings.RenderingInformation.CCameraPosition.X, MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
+                            GStopPlusOnePos -= new Vector2(MainWindow.Settings.RenderingInformation.CCameraPosition.X, MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
                         }
 
                         SetUpGradientDirection(CurPosition, GStopPlusOnePos);
@@ -174,7 +178,7 @@ namespace Lightning.Core.API
                             if (Percentage > 1) break; 
 
                             Color4 FinalColour = C4A + (CDiff * Percentage);
-                            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColour.R, FinalColour.G, FinalColour.B, FinalColour.A);
+                            SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, FinalColour.R, FinalColour.G, FinalColour.B, FinalColour.A);
 
                             for (k = CurPosition.Y; k <= GStopPlusOnePos.Y; k++)
                             {
@@ -185,15 +189,15 @@ namespace Lightning.Core.API
 
                                 Color4 FinalColourY = C4A + (CDiff * YPercentage);
 
-                                SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, FinalColourY.R, FinalColourY.G, FinalColourY.B, FinalColourY.A);
+                                SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, FinalColourY.R, FinalColourY.G, FinalColourY.B, FinalColourY.A);
 
 
-                                SDL.SDL_RenderDrawPoint(SDL_Renderer.RendererPtr, (int)j, (int)k);
+                                SDL.SDL_RenderDrawPoint(MainWindow.Settings.RenderingInformation.RendererPtr, (int)j, (int)k);
                             }
 
                         }
 
-                        SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
+                        SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, 0, 0, 0, 0);
                     }
 
                 }

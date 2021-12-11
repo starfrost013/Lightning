@@ -36,9 +36,9 @@ namespace NuRender
         /// 
         /// CURRENTLY HAS TO BE PUBLICLY CALLED
         /// </summary>
-        public void Render()
+        public void Render(bool Clear = true)
         {
-            foreach (Window Win in Windows) Win.Main();
+            foreach (Window Win in Windows) Win.Main(Clear);
         }
        
         

@@ -1,5 +1,6 @@
-﻿using NuRender.SDL2;
-using NuCore.Utilities; 
+﻿using NuCore.Utilities;
+using NuRender; 
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +41,7 @@ namespace Lightning.Core.API
             }
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             base.PO_Init();
 
@@ -125,7 +126,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
+        private void DoRender(Scene SDL_Renderer, ImageBrush Tx)
         {
             Animation CurrentAnimation = GetActiveAnimation(); 
 

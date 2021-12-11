@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// DebugPage (Lightning IGD Services)
     /// 
-    /// August 20, 2021 (modified August 21, 2021)
+    /// August 20, 2021 (modified December 11, 2021)
     /// 
     /// Defines a special type of GUI used for debugging.
     /// </summary>
@@ -126,7 +127,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!DEBUGPAGE_INITIALISED)
             {
@@ -139,7 +140,7 @@ namespace Lightning.Core.API
         }
 
 
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
+        private void DoRender(Scene SDL_Renderer, ImageBrush Tx)
         {
             List<DebugPage> DebugPages = GetDebugPages();
 

@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender; 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +10,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Camera
     /// 
-    /// April 13, 2021
+    /// April 13, 2021 (modified December 11, 2021: initial NR port)
     /// 
     /// Defines a Camera. A Camera is the viewport of a Lightning level. 
     /// </summary>
@@ -134,8 +135,10 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="SDL_Renderer"></param>
         /// <param name="Tx"></param>
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             switch (CameraType)
             {
 
@@ -150,7 +153,7 @@ namespace Lightning.Core.API
                 default:
                     if (Active)
                     {
-                        SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
+                        MainWindow.Settings.RenderingInformation.CCameraPosition = new Vector2Internal(Position.X, Position.Y);
                     }
                     else
                     {
@@ -286,8 +289,10 @@ namespace Lightning.Core.API
         /// Renders the follow-object camera type. The follow-object camera always tries to put an object in the middle of the screen.
         /// </summary>
         /// <param name="SDL_Renderer"></param>
-        private void RenderFollowObjectCamera(Renderer SDL_Renderer)
+        private void RenderFollowObjectCamera(Scene SDL_Renderer)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             if (Target == null)
             {
                 return; 
@@ -326,7 +331,7 @@ namespace Lightning.Core.API
                     Position.X = (Target.Position.X - (WindowWidth / 2) + (Target.Size.X / 2));
                     Position.Y = (Target.Position.Y - (WindowHeight / 2) + (Target.Size.Y / 2));
 
-                    SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
+                    MainWindow.Settings.RenderingInformation.CCameraPosition = new Vector2Internal(Position.X, Position.Y);
                     // removed redundant physicalobject checks
                 }
 
@@ -334,8 +339,10 @@ namespace Lightning.Core.API
             }
         }
 
-        private void RenderChaseObjectCamera(Renderer SDL_Renderer)
+        private void RenderChaseObjectCamera(Scene SDL_Renderer)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             if (Target == null)
             {
                 return;
@@ -428,7 +435,7 @@ namespace Lightning.Core.API
                                 Position.Y = Target.Position.Y + (WindowHeight / ChaseCameraAboveOrBelowObjectFactor);
                             }
 
-                            SDL_Renderer.CCameraPosition = new Vector2(Position.X, Position.Y);
+                            MainWindow.Settings.RenderingInformation.CCameraPosition = new Vector2Internal(Position.X, Position.Y);
 
                         }
                     }

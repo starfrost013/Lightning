@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2;
+﻿using NuRender;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,9 +26,11 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="SDL_Render"></param>
         /// <param name="Tx"></param>
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+            Window MainWindow = SDL_Renderer.GetMainWindow(); 
+
+            IntPtr SDL_RendererPtr = MainWindow.Settings.RenderingInformation.RendererPtr;
 
             // todo: FX api 
             SDL.SDL_SetRenderDrawBlendMode(SDL_RendererPtr, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);
@@ -35,13 +38,13 @@ namespace Lightning.Core.API
             if (Colour != null)
             {
                 SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, Colour.R, Colour.G, Colour.B, Colour.A);
-                SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)Begin.X - (float)SDL_Renderer.CCameraPosition.X, (float)Begin.Y - (float)SDL_Renderer.CCameraPosition.Y, (float)End.X - (float)SDL_Renderer.CCameraPosition.X, (float)End.Y - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)Begin.X - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)Begin.Y - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y, (float)End.X - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)End.Y - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
                 SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 0, 0, 0, 0);
             }
             else
             {
                 SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
-                SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)Begin.X - (float)SDL_Renderer.CCameraPosition.X, (float)Begin.Y - (float)SDL_Renderer.CCameraPosition.Y, (float)End.X - (float)SDL_Renderer.CCameraPosition.X, (float)End.Y - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(SDL_RendererPtr, (float)Begin.X - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)Begin.Y - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y, (float)End.X - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, (float)End.Y - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
                 SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 0, 0, 0, 0);
             }
 

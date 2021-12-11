@@ -1,5 +1,6 @@
-﻿using NuRender.SDL2;
-using NuCore.Utilities;
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Circle
     /// 
-    /// April 12, 2021
+    /// April 12, 2021 (modified December 11, 2021: Initial NR port)
     /// 
     /// Renders a circle.
     /// </summary>
@@ -17,9 +18,11 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "Circle";
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+            Window MainWindow = SDL_Renderer.GetMainWindow(); 
+
+            IntPtr SDL_RendererPtr = MainWindow.Settings.RenderingInformation.RendererPtr;
 
             SDL.SDL_SetRenderDrawBlendMode(SDL_RendererPtr, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);
 
@@ -36,7 +39,7 @@ namespace Lightning.Core.API
             // Midpoint ellipse algorithm
             // June 5, 2021
             // Old algo worked but was thousands of times (multiple orders of magnitude) slower
-
+            
             double StartX = 0;
             double StartY = Position.Y;
 
@@ -106,8 +109,11 @@ namespace Lightning.Core.API
         /// <param name="SDL_Renderer"></param>
         /// <param name="StartX">X position to start drawing for each regio.n</param>
         /// <param name="StartY">Y position to start drawing for each region.</param>
-        private void Render_PlotPoints(Renderer SDL_Renderer, double StartX, double StartY)
+        private void Render_PlotPoints(Scene SDL_Renderer, double StartX, double StartY)
         {
+
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             // draw the points
             if (!Fill)
             {
@@ -116,32 +122,40 @@ namespace Lightning.Core.API
                 {
                         new SDL.SDL_FPoint
                         {
-                            x = ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                            x = ((float)StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                            y = ((float)StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y,
                         },
                         new SDL.SDL_FPoint
                         {
-                            x = ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                            x = ((float)-StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                            y = ((float)StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y,
                         },
                         new SDL.SDL_FPoint
                         {
-                            x = ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                            x = ((float)StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                            y = ((float)-StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y,
                         },
                         new SDL.SDL_FPoint
                         {
-                            x = ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
+                            x = ((float)-StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                            y = ((float)-StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y,
                         },
                 };
 
-                SDL.SDL_RenderDrawPointsF(SDL_Renderer.RendererPtr, FPointSet, 4);
+                SDL.SDL_RenderDrawPointsF(MainWindow.Settings.RenderingInformation.RendererPtr, FPointSet, 4);
             }
             else
             {
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(MainWindow.Settings.RenderingInformation.RendererPtr, 
+                ((float)StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, 
+                ((float)StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y, 
+                ((float)-StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, 
+                ((float)-StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
+                SDL.SDL_RenderDrawLineF(MainWindow.Settings.RenderingInformation.RendererPtr, 
+                ((float)-StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X, 
+                ((float)StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y, 
+                ((float)StartX + (float)Position.X) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                ((float)-StartY + (float)Position.Y) - (float)MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
             }
 
         }

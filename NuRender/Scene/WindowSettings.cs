@@ -7,23 +7,23 @@ using System.Text;
 namespace NuRender
 {
     /// <summary>
-    /// SceneSettings
+    /// WindowSettings
     /// 
-    /// August 17, 2021
+    /// August 17, 2021 (modified December 11, 2021)
     /// 
     /// Define scene settings.
     /// </summary>
     public class WindowSettings
     {
         /// <summary>
-        /// Internal: The Window ID of this scene.
-        /// </summary>
-        internal long WindowID { get; set; }
-
-        /// <summary>
         /// The name of this NuRender application. Will be used as the window title! 
         /// </summary>
         public string ApplicationName { get; set; }
+
+        /// <summary>
+        /// Internal: The Window ID of this scene.
+        /// </summary>
+        internal long WindowID { get; set; }
 
         /// <summary>
         /// The default position that this window is
@@ -54,6 +54,7 @@ namespace NuRender
         /// The rendering information for this window.
         /// </summary>
         public WindowRenderingInformation RenderingInformation { get; set; }
+
 
         /// <summary>
         /// Determines if this window is the primary rendering window.

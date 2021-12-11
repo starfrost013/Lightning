@@ -73,9 +73,14 @@ namespace NuRender
           
         }
 
-        internal void Main()
+        /// <summary>
+        /// Main window method
+        /// </summary>
+        /// <param name="Present">If false, the rendering will not be cleared. Use this if you need to do other rendering work. YOU MUST CALL SDL.SDL_RENDERCLEAR BEFORE YOUR RENDERING WORK IS DONE!</param>
+        internal void Main(bool Clear = true)
         {
             SDL.SDL_Event IncomingEvent = new SDL.SDL_Event();
+
             int IsEventIncoming = SDL.SDL_PollEvent(out IncomingEvent);
 
             if (IsEventIncoming != 0)
@@ -93,7 +98,7 @@ namespace NuRender
             }
             else
             {
-                Render(Settings.RenderingInformation); 
+                Render(Settings.RenderingInformation, Clear) ; 
                 return; 
             }
 
@@ -126,11 +131,13 @@ namespace NuRender
         }
 
 
-        internal void Render(WindowRenderingInformation RenderInfo)
+        internal void Render(WindowRenderingInformation RenderInfo, bool Clear = true)
         {
-            SDL.SDL_RenderClear(RenderInfo.RendererPtr); 
 
-            
+            if (Clear) SDL.SDL_RenderClear(RenderInfo.RendererPtr);
+
+            SDL.SDL_SetRenderDrawBlendMode(RenderInfo.RendererPtr, RenderInfo.BlendingMode); 
+
             foreach (NRObject NRO in NRObjects)
             {
                 if (NRO.Colour != null) SDL.SDL_SetRenderDrawColor(RenderInfo.RendererPtr, NRO.Colour.R, NRO.Colour.G, NRO.Colour.B, NRO.Colour.A);
