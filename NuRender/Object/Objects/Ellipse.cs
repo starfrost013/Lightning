@@ -20,6 +20,12 @@ namespace NuRender
         /// </summary>
         public Vector2Internal Size { get; set; }
 
+        public Ellipse()
+        {
+            BorderSize = new Vector2Internal();
+            Size = new Vector2Internal();
+        }
+
         /// <summary>
         /// <inheritdoc/>
         /// </summary>

@@ -47,7 +47,9 @@ namespace NuCore.Utilities
                 return true;
             }
             else if (TypeName.Contains("Lightning")
-                || TypeName.Contains("Polaris")) // If it's in the Lightning or Polaris namespaces...
+                || TypeName.Contains("Polaris")
+                || TypeName.Contains("NuCore") // "Nu" might be too generic and allow other namespaces (2021/12/11) 
+                || TypeName.Contains("NuRender")) // If it's in the Lightning, Polaris, NuCore or NuRender namespaces...
             {
                 return true; // allow it
             }

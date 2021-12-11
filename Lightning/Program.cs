@@ -34,7 +34,7 @@ namespace Lightning
             // Handle command-line arguments.
             LaunchArgsResult LAR = LaunchArgs.HandleArgs(Args);
 
-            // Based on the action LaunchArgs(
+            // Based on the action LaunchArgs
             switch (LAR.Action)
             {
                 case LaunchArgsAction.DoNothing:
