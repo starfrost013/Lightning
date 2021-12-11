@@ -17,10 +17,7 @@ namespace NuRender
     {
         public override string ClassName => "Texture";
 
-        /// <summary>
-        /// The path to this file.
-        /// </summary>
-        public string Path { get; set; }
+
 
         /// <summary>
         /// A <see cref="Vector2Internal"/> holding the size of this Image.
@@ -51,7 +48,19 @@ namespace NuRender
 
         public bool Load(WindowRenderingInformation WRI)
         {
-            IntPtr Surface = SDL_image.IMG_Load(Path);
+
+            // Ccahe this texture       
+            foreach (Image Img in WRI.ImageCache)
+            {
+                if (Img.TextureInfo.Path == TextureInfo.Path)
+                {
+                    // cache texture and return
+                    TextureInfo.TexPtr = Img.TextureInfo.TexPtr;
+                    return true;
+                }
+            }
+
+            IntPtr Surface = SDL_image.IMG_Load(TextureInfo.Path);
 
             if (Surface == IntPtr.Zero) 
             {
@@ -59,7 +68,9 @@ namespace NuRender
                 return false;
             }
 
+
             TextureInfo.TexPtr = SDL.SDL_CreateTextureFromSurface(WRI.RendererPtr, Surface);
+
 
             if (TextureInfo.TexPtr == IntPtr.Zero)
             {
@@ -73,7 +84,7 @@ namespace NuRender
 
         public override void Start(WindowRenderingInformation RenderingInformation)
         {
-            if (Path != null) Load(RenderingInformation); 
+            if (TextureInfo.Path != null) Load(RenderingInformation); 
             return; 
         }
 

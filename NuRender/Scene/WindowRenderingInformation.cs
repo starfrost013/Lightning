@@ -24,9 +24,14 @@ namespace NuRender
         public IntPtr RendererPtr { get; internal set; }
 
         /// <summary>
-        /// The fonts
+        /// Fonts that have been loaded.
         /// </summary>
         public List<Font> Fonts { get; set; } //TEMP; TODO: FONTCOLLECTION
+
+        /// <summary>
+        /// Cache used for loading images and rendering them faster.
+        /// </summary>
+        public List<Image> ImageCache { get; set; } 
 
         #region temp - until fontcollection
 

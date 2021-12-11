@@ -590,15 +590,15 @@ namespace Lightning.Core.API
                     if (PO.OnRender == null)
                     {
                         RenderEventArgs REA = new RenderEventArgs();
-                        REA.SDL_Renderer = Renderer;
+                        REA.SDL_Renderer = MainScene;
 
-                        PO.Render(Renderer, null);
+                        PO.Render(MainScene, null);
                         continue;
                     }
                     else
                     {
                         RenderEventArgs REA = new RenderEventArgs();
-                        REA.SDL_Renderer = Renderer;
+                        REA.SDL_Renderer = MainScene;
                         PO.OnRender(this, REA);
                     }
 

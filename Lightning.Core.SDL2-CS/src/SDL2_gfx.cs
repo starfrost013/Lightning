@@ -103,17 +103,6 @@ namespace NuRender.SDL2
 
         //references to render etc usually DON'T have out keyword.
 
-        /// <summary>
-        /// Draw pixel in the currently set renderer color.
-        /// 
-        /// This is implemented in C# as it is a trivial function. 
-        /// </summary>
-        /// <param name="Renderer"> The renderer to draw the pixel to.</param>
-        /// <param name="X">X (horizontal) coordinate of the pixel.</param>
-        /// <param name="Y">Y (vertical) coordinate of the pixel.</param>
-        /// <returns></returns>
-        public static int pixel(IntPtr Renderer, int X, int Y) => SDL.SDL_RenderDrawPoint(Renderer, X, Y); //short?
-
         public static void polygonRGBA(IntPtr Renderer, int[] VX, int[] VY, byte R, byte G, byte B, byte A)
         {
             SDL.SDL_SetRenderDrawColor(Renderer, R, G, B, A);
