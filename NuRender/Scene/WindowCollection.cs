@@ -44,7 +44,7 @@ namespace NuRender
 
             if (Settings == null)
             {
-                ErrorManager.ThrowError("WindowCollection.Add()", "NRInvalidWindowSettingsException");
+                ErrorManager.ThrowError("WindowCollection.Add() - Settings parameter was null!", "NRInvalidWindowSettingsException");
                 return; 
             }
             else
@@ -56,6 +56,16 @@ namespace NuRender
                 return;
             }
 
+        }
+
+        public Window GetMainWindow()
+        {
+            foreach (Window Window in Windows)
+            {
+                if (Window.Settings.IsMainWindow) return Window;
+            }
+
+            return null; 
         }
 
         private void Add_CheckForDefaultSettings(Window Window)
@@ -70,8 +80,14 @@ namespace NuRender
 
         private void Add_PerformAdd(Window Window)
         {
+            Window.Settings.WindowID = Windows.Count; // support up to 4 windows (December 10, 2021) 
             Windows.Add(Window);
-            Window.Init(); // initialise the window.
+            
+            if (!Window.Init())
+            {
+                Windows.Remove(Window); // remove the window if it failed to init (this shouldn't run due to fatal errors but it's a failsafe)
+                Window.Settings.WindowID = Windows.Count;
+            }
         }
 
         public Window this[int i] => Windows[i];

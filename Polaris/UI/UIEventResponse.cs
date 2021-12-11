@@ -1,8 +1,9 @@
 ﻿using Lightning.Core;
 using Lightning.Core.API;
 #if WINDOWS // probably not the best lol
-using NuCore.NativeInterop.Win32; 
+using NuCore.NativeInterop.Win32;
 #endif
+using NuCore.Utilities;
 using Polaris.Core;
 using Polaris.UI; 
 using System;

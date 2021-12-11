@@ -1,5 +1,6 @@
-﻿using NuRender.SDL2;
-using NuCore.Utilities; 
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,9 +11,9 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// RenderService
+    /// RenderService (NuRender version)
     /// 
-    /// Handles rendering of all PhysicalInstances for Lightning using SDL2. 
+    /// Handles the render loop using the NuRender API.
     ///
     /// 2021-03-14: Created
     /// 2021-04-07: Added first functionality
@@ -31,23 +32,28 @@ namespace Lightning.Core.API
     /// 2021-07-19: Implemented many events
     /// 2021-07-21: KeyDown now an event
     /// 2021-08-15: Animation loading, even MORE events
+    /// 2021-12-10: Rweritten for NuRender
     /// 
     /// </summary>
     public class RenderService : Service
     {
         internal override string ClassName => "RenderService";
         internal override ServiceImportance Importance => ServiceImportance.High;
-        internal Renderer Renderer { get; set; }
         private static bool RENDERER_INITIALISED { get; set; }
+
+        /// <summary>
+        /// The NuRender scene. 
+        /// </summary>
+        internal Scene MainScene { get; set; }
 
         public override ServiceStartResult OnStart()
         {
             // TEST code
             ServiceStartResult SSR = new ServiceStartResult();
 
-            Logging.Log("RenderService Init", ClassName);
+            Logging.Log("Initialising RenderService...", ClassName);
 
-            OnStart_InitSDL();
+            OnStart_InitNR();
 
             SSR.Successful = true;
             return SSR; 
@@ -58,46 +64,30 @@ namespace Lightning.Core.API
         /// Initialises the Lightning SDL2 renderer.
         /// </summary>
         /// <returns></returns>
-        private SDLInitialisationResult OnStart_InitSDL()
+        private SDLInitialisationResult OnStart_InitNR()
         {
             SDLInitialisationResult SDIR = new SDLInitialisationResult();
 
             // Initialises SDL.
-            Logging.Log("Initialising SDL2 Video, Audio, and Events subsystems...", ClassName);
-            int SDLErr = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_EVENTS);
+            Logging.Log("Initialising NuRender...", ClassName);
+
+            if (!NuRender.NuRender.NuRender_Init())
+            {
+                SDIR.FailureReason = "NuRender initialisation failed";
+                return SDIR;
+            }
+
+            // if NuRender_Init returned true, initialise scene 
+            MainScene = new Scene();
+            SDIR.Successful = true;
+            return SDIR;
 
             
-            if (SDLErr < 0)
-            {
-                SDIR.FailureReason = $"Failed to initialise an SDL subsystem: {SDL.SDL_GetError()}";
-                return SDIR; 
-            }
-            else
-            {
-
-                Logging.Log("Initialising SDL2_image...", ClassName);
-
-                int SDL_ImageErr = SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_PNG);
-
-                if (SDL_ImageErr < 0)
-                {
-                    SDIR.FailureReason = $"Failed to initialise SDL2_image: {SDL.SDL_GetError()}";
-                    return SDIR; 
-                }
-                else
-                {
-
-                    SDIR.Successful = true;
-                    return SDIR;
-                }
-                
-
-            }
         }
 
-        private SDLInitialisationResult OnStart_InitSDLWindow()
+        private SDLInitialisationResult OnStart_InitNRWindow()
         {
-            Logging.Log("Preparing to create SDL window...", ClassName);
+            Logging.Log("Preparing to create NuRender window...", ClassName);
 
             SDLInitialisationResult SDIR = new SDLInitialisationResult();
 
@@ -155,59 +145,48 @@ namespace Lightning.Core.API
                     int DefaultWindowY = (int)DefaultWindowY_Setting.SettingValue;
                     bool Fullscreen = false;
 
+                    // TODO: REPLACE WITH WINDOWMODE SETTING
                     if (Fullscreen_Setting != null)
                     {
                         Fullscreen = (bool)GGSR_FullScreen.Setting.SettingValue;
                     }
+                    // TODO: REPLACE WITH WINDOWMODE SETTING
 
                     Logging.Log("Initialising renderer...", ClassName);
 
-                    SDIR.Renderer = new Renderer();
+                    // initialise the NuRender window settings.
+                    WindowSettings WS = new WindowSettings();
 
                     if (WindowWidth == 0 || WindowHeight == 0)
                     {
-                        SDIR.Renderer.WindowSize = new Vector2(DefaultWindowX, DefaultWindowY);
+                        //todo: convert from vector2 to vector2internal
+                        WS.WindowSize = new Vector2Internal(DefaultWindowX, DefaultWindowY);
                     }
                     else
                     {
-                        SDIR.Renderer.WindowSize = new Vector2(WindowWidth, WindowHeight);
+                        WS.WindowSize = new Vector2Internal(WindowWidth, WindowHeight);
                     }
+
+                    WS.ApplicationName = WindowTitle;
+                    WS.WindowPosition = new Vector2Internal(DefaultWindowX, DefaultWindowY);
 
                     Logging.Log("Calling SDL_CreateWindow to initialise window...", ClassName);
 
                     // Create a fullscreen window if fullscreen is false.
                     if (Fullscreen)
                     {
-                        SDIR.Renderer.Window = SDL.SDL_CreateWindow(WindowTitle, DefaultWindowX, DefaultWindowY, WindowWidth, WindowHeight, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN | SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                        WS.WindowMode = WindowMode.Fullscreen;
+ 
                     }
                     else
                     {
-                        SDIR.Renderer.Window = SDL.SDL_CreateWindow(WindowTitle, DefaultWindowX, DefaultWindowY, WindowWidth, WindowHeight, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+                        WS.WindowMode = WindowMode.Windowed;
                     }
 
-                    if (SDIR.Renderer.Window == IntPtr.Zero)
-                    {
-                        SDIR.FailureReason = $"Failed to initialise window: {SDL.SDL_GetError()}";
-                        return SDIR;
+                    MainScene.AddWindow(WS);
 
-                    }
-                    else
-                    {
-                        Logging.Log(ClassName, "Successfully created window! Calling SDL_CreateRenderer to initialise renderer...");
-
-                        SDIR.Renderer.RendererPtr = SDL.SDL_CreateRenderer(SDIR.Renderer.Window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
-
-                        if (SDIR.Renderer.RendererPtr == IntPtr.Zero)
-                        {
-                            SDIR.FailureReason = $"Failed to initialise renderer: {SDL.SDL_GetError()}";
-                            return SDIR;
-                        }
-                        else
-                        {
-                            SDIR.Successful = true;
-                            return SDIR;
-                        }
-                    }
+                    SDIR.Successful = true;
+                    return SDIR;
                 }
             }
         }
@@ -274,7 +253,7 @@ namespace Lightning.Core.API
 
             try
             {
-                SDLInitialisationResult SDIR = OnStart_InitSDLWindow();
+                SDLInitialisationResult SDIR = OnStart_InitNRWindow();
 
                 if (!SDIR.Successful)
                 {
@@ -289,8 +268,6 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    Renderer = SDIR.Renderer;
-
                     InitRendering_DisplaySplash();
 
                     InitRendering_GetBlendMode();
@@ -332,7 +309,7 @@ namespace Lightning.Core.API
                 ImageBrush Tx = (ImageBrush)GIR.Instance;
 
                 Tx.Position = new Vector2(0, 0);
-                Tx.Size = Renderer.WindowSize;
+                Tx.Size = new Vector2(MainScene.GetMainWindow().Settings.WindowSize.X, MainScene.GetMainWindow().Settings.WindowSize.Y);
 
                 Tx.SDLTexturePtr = SDL_image.IMG_Load(Tx.Path);
 

@@ -15,9 +15,6 @@ namespace Lightning.Core.API
         /// <inheritdoc/>
         /// </summary>
         public string FailureReason { get; set; }
-        public Renderer Renderer { get; set; }
-
-        public int SDLErrorCode { get; set; }
 
         /// <summary>
         /// <inheritdoc/>

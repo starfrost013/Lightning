@@ -8,7 +8,7 @@ namespace NuRender
     /// <summary>
     /// Scene
     /// 
-    /// August 6, 2021 (modified November 7, 2021)
+    /// August 6, 2021 (modified December 10, 2021)
     /// 
     /// Defines a NuRender scene.
     /// </summary>
@@ -19,7 +19,6 @@ namespace NuRender
         /// </summary>
         public WindowCollection Windows { get; set; } 
         
-
         /// <summary>
         /// Scene constructor.
         /// </summary>
@@ -30,13 +29,14 @@ namespace NuRender
 
         public void AddWindow(WindowSettings WS) => Windows.Add(WS);
 
+        public Window GetMainWindow() => Windows.GetMainWindow();
 
         /// <summary>
         /// NuRender (single-threaded) MAIN method. 
         /// 
         /// CURRENTLY HAS TO BE PUBLICLY CALLED
         /// </summary>
-        public void Main()
+        public void Render()
         {
             foreach (Window Win in Windows) Win.Main();
         }

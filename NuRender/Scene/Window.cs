@@ -40,7 +40,7 @@ namespace NuRender
         /// <summary>
         /// Initialises this window.
         /// </summary>
-        internal void Init()
+        internal bool Init()
         {
             Logging.Log($"Creating SDL window with title {Settings.ApplicationName}, ID {Settings.WindowID}...", ClassName);
 
@@ -54,20 +54,23 @@ namespace NuRender
             if (Settings.RenderingInformation.WindowPtr == IntPtr.Zero)
             {
                 ErrorManager.ThrowError(ClassName, "NRErrorCreatingNRWindowException", $"Error creating NuRender Window {Settings.WindowID}, title {Settings.ApplicationName}: {SDL.SDL_GetError()}");
-                return; 
+                return false; 
             }
             else
             {
-                Logging.Log($"Creating SDL renderer with title {Settings.ApplicationName}, ID {Settings.WindowID}...", ClassName);
+                Logging.Log($"Creating SDL renderer for window with title {Settings.ApplicationName}, ID {Settings.WindowID}...", ClassName);
 
                 Settings.RenderingInformation.RendererPtr = SDL.SDL_CreateRenderer(Settings.RenderingInformation.WindowPtr, (int)Settings.WindowID, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
                 
                 if (Settings.RenderingInformation.RendererPtr == IntPtr.Zero)
                 {
                     ErrorManager.ThrowError(ClassName, "NRErrorCreatingNRRendererException", $"Error creating NuRender Renderer for Window {Settings.WindowID}, title {Settings.ApplicationName}: {SDL.SDL_GetError()}");
-                    return;     
+                    return false;     
                 }
+
+                return true;
             }
+          
         }
 
         internal void Main()
@@ -80,7 +83,7 @@ namespace NuRender
                 switch (IncomingEvent.type)
                 {
                     case SDL.SDL_EventType.SDL_QUIT:
-                        Logging.Log("Quitting...", ClassName);
+                        Logging.Log($"Window {Settings.WindowID}, title {Settings.ApplicationName} is exiting (user requested quit)...", ClassName);
 
                         RaiseOnExitEventToAllObjects(new NREventArgs()); 
                         // todo: raise event

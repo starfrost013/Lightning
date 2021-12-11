@@ -182,12 +182,13 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "NRFailedToSizeTTFTextException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 153 });
          ErrorManager.RegisterError( new Error { Name = "NRFailedToLoadTextureException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 152 });
 
-
-            #endregion
+#endregion
 
          ErrorManager.RegisterError(new Error { Name = "CannotSaveWhenNoFileSpecifiedException", Description = "Cannot save when no file is specified and a file is not open!", Severity = MessageSeverity.Error, Id = 200 });
+         ErrorManager.RegisterError(new Error { Name = "InstanceDeprecatedException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 201 });
+         ErrorManager.RegisterError(new Error { Name = "InstanceExperimentalException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 202});
 
-         // todo: external-internal
+            // todo: external-internal
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NuCore.Utilities;
+using NuRender; 
 using System;
 using System.Collections.Generic;
 using System.IO; 
@@ -85,7 +86,7 @@ namespace Lightning.Core.API
             }
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!SPLASHSCREEN_INITIALISED)
             {

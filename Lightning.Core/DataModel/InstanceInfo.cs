@@ -11,7 +11,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// InstanceInfo class.
     /// 
-    /// Holds information about an instance - its methods, properties, and their metadata. Used for the IDE. ReflectionMetadata?
+    /// Holds metadata about an instance - its methods, properties, and their metadata. Used for the IDE. May be expanded to a ReflectionMetadata.xml
     /// 
     /// Converted from System.Reflection types at boot.
     /// 
@@ -21,7 +21,14 @@ namespace Lightning.Core.API
     /// </summary>
     public class InstanceInfo
     {
+        /// <summary>
+        /// The list of methods within the instance.
+        /// </summary>
         public List<InstanceInfoMethod> Methods { get; set; }
+
+        /// <summary>
+        /// The list of properties within this instance.
+        /// </summary>
         public List<InstanceInfoProperty> Properties { get; set; }
 
         /// <summary>

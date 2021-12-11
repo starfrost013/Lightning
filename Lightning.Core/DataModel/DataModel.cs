@@ -242,6 +242,17 @@ namespace Lightning.Core.API
 
                     NewInstance.GenerateInstanceInfo();
 
+                    // Trigger warnings on deprecated and experimental classes
+                    if (NewInstance.Deprecated)
+                    {
+                        ErrorManager.ThrowError(ClassName, "InstanceDeprecatedException", $"The {NewInstance.ClassName} class (an instance of which is presently being instantiated) is deprecated and will be removed soon - do not use it in new projects!");
+                    }
+
+                    if (NewInstance.Experimental)
+                    {
+                        ErrorManager.ThrowError(ClassName, "InstanceExperimentalException", $"The {NewInstance.ClassName} class (an instance of which is presently being instantiated) is experimental - using this in projects is not recommended as the API could change at any time.");
+                    }
+
                     // Return the object in the parent tree if not null 
                     if (Parent == null)
                     {

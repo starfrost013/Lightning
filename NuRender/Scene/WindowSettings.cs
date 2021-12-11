@@ -55,6 +55,11 @@ namespace NuRender
         /// </summary>
         public WindowRenderingInformation RenderingInformation { get; set; }
 
+        /// <summary>
+        /// Determines if this window is the primary rendering window.
+        /// </summary>
+        public bool IsMainWindow { get; set; }
+
         public WindowSettings()
         {
             WindowPosition = new Vector2Internal(200, 200);
@@ -63,8 +68,6 @@ namespace NuRender
             ApplicationName = "NuRender Window";
             RenderingInformation = new WindowRenderingInformation();
             WindowFlags = SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN;
-
-            
             WindowID = 0; 
 
         }
