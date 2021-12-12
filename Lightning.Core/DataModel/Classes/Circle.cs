@@ -46,26 +46,37 @@ namespace Lightning.Core.API
         {
             Window MainWindow = SDL_Renderer.GetMainWindow();
 
+            Brush CBrush = GetBrush(); 
+
             if (!Circle_Initialised)
             {
                 Circle_Init(SDL_Renderer);
             }
             else
             {
-                if (Position != null)
+                if (CBrush != null)
                 {
-                    if (ForceToScreen)
+                    CBrush.Render(SDL_Renderer, Tx);
+                }
+                else
+                {
+                    if (Position != null)
                     {
-                        NREllipse.Position = new Vector2Internal(Position.X, Position.Y);
+                        if (ForceToScreen)
+                        {
+                            NREllipse.Position = new Vector2Internal(Position.X, Position.Y);
+                        }
+                        else
+                        {
+                            NREllipse.Position = new Vector2Internal(Position.X - MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                            Position.Y - MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
+                        }
+
                     }
-                    else
-                    {
-                        NREllipse.Position = new Vector2Internal(Position.X - MainWindow.Settings.RenderingInformation.CCameraPosition.X,
-                        Position.Y - MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
-                    }
+                    return;
 
                 }
-                return;    
+  
             }
         }
     }

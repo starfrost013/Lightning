@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Lightning": {
-      "commandName": "Project",
-      "commandLineArgs": "Content\\Tests\\WritingTest.xml"
+      "commandName": "Project"
     }
   }
 }
