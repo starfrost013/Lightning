@@ -21,7 +21,7 @@ namespace NuRender
         public Vector2Internal Size { get; set; }
 
         /// <summary>
-        /// Radius of the border of this rectangle. If above 0, this rectangle will be rendered as a rounded rectangle. 
+        /// The radius of the border of this rectangle. If above 0, this rectangle will be rendered as a rounded rectangle. 
         /// </summary>
         public int BorderRadius { get; set; }
 

@@ -22,6 +22,10 @@ namespace Lightning.Core.API
 
         private bool Rectangle_Initialised { get; set; }
 
+        /// <summary>
+        /// The radius of the border of this rectangle. If above 0, this rectangle will be rendered as a rounded rectangle. 
+        /// </summary>
+        public int BorderRadius { get; set; }
         private void Rectangle_Init(Scene SDL_Renderer)
         {
             Window MainWindow = SDL_Renderer.GetMainWindow();
@@ -33,6 +37,7 @@ namespace Lightning.Core.API
             NRRectangle.Bordered = Bordered;
             // todo: nr bordercolour
             if (BorderSize != null) NRRectangle.BorderSize = new Vector2Internal(BorderSize.X, BorderSize.Y);
+            NRRectangle.BorderRadius = BorderRadius;
             NRRectangle.Filled = Fill;
 
             Rectangle_Initialised = true; 
