@@ -9,7 +9,6 @@ namespace NuRender
     {
         public override string ClassName => "Rectangle";
 
-
         /// <summary>
         /// The border size of this rectangle (relative to the <see cref="Size"/> property)
         /// </summary>

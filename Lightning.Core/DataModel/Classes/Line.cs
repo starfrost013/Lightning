@@ -63,15 +63,19 @@ namespace Lightning.Core.API
             }
             else
             {
-                if (ForceToScreen)
+                if (!ForceToScreen)
                 {
                     // force down
-                    NRLine.Position = new Vector2Internal(Position.X - MainWindow.Settings.RenderingInformation.CCameraPosition.X
-                    , Position.Y - MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
+                    NRLine.LineStart = new Vector2Internal(Begin.X - MainWindow.Settings.RenderingInformation.CCameraPosition.X
+                    ,Begin.Y - MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
+
+                    NRLine.LineEnd = new Vector2Internal(End.X - MainWindow.Settings.RenderingInformation.CCameraPosition.X
+, End.Y - MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
                 }
                 else
                 {
-                    NRLine.Position = new Vector2Internal(Position.X, Position.Y);
+                    NRLine.LineStart = new Vector2Internal(Begin.X, Begin.Y);
+                    NRLine.LineEnd = new Vector2Internal(End.X, End.Y);
                 }
             }
         }

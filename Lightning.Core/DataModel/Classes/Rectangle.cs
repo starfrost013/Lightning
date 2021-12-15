@@ -49,9 +49,9 @@ namespace Lightning.Core.API
 
             Window MainWindow = SDL_Renderer.GetMainWindow();
 
-            if (Brush != null)
+            if (!Rectangle_Initialised)
             {
-                Brush.Render(SDL_Renderer, Tx); 
+                Rectangle_Init(SDL_Renderer);
             }
             else
             {
@@ -78,9 +78,6 @@ namespace Lightning.Core.API
 
                 }
             }
-            
         }
-
-     
     }
 }

@@ -263,5 +263,16 @@ namespace Lightning.Core.API
         }
 
         #endregion
+
+        #region NuRender conversions 
+
+        // New: Dec 15, 2021
+
+        public static explicit operator Vector2(Vector2Internal V2I) => new Vector2(V2I.X, V2I.Y);
+
+        public static explicit operator Vector2Internal(Vector2 V2) => new Vector2Internal(V2.X, V2.Y);
+
+        #endregion
+
     }
 }

@@ -63,10 +63,24 @@ namespace Lightning.Core.API
         /// </summary>
         public int OutlinePixels { get; set; }
 
+        private NuRender.Text NRText { get; set; }
+
+        public bool DisableTTF { get; set; }
+
         public Text()
         {
             Position = new Vector2();
         }
+
+        private void Text_Init(Scene SDL_Renderer)
+        {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+            NRText = (NuRender.Text)MainWindow.AddObject("Text");
+            if (Colour != null) NRText.Colour = new Color4Internal(Colour.A, Colour.R, Colour.G, Colour.B);
+            if (BackgroundColour != null) NRText.BackgroundColour = new Color4Internal(BackgroundColour.A, BackgroundColour.R, BackgroundColour.G, BackgroundColour.B);
+            if (Position != null) NRText.Position = (Vector2Internal)Position; 
+        } 
+
         public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (Content == null) Content = "";

@@ -141,5 +141,15 @@ namespace Lightning.Core.API
 
         #endregion
 
+        #region NuRender conversions 
+
+        // New: Dec 15, 2021
+
+        public static explicit operator Color3(Color3Internal C3I) => new Color3(C3I.R, C3I.G, C3I.B);
+
+        public static explicit operator Color3Internal(Color3 C3) => new Color3Internal(C3.R, C3.G, C3.B);
+
+        #endregion
+
     }
 }

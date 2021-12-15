@@ -49,6 +49,11 @@ namespace NuRender
         /// <param name="RenderInfo"></param>
         public abstract void Render(WindowRenderingInformation RenderInfo);
 
-        
+        public NRObject() 
+        {
+            Colour = new Color4Internal();
+            Position = new Vector2Internal();
+
+        }
     }
 }
