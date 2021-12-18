@@ -69,7 +69,7 @@ namespace Lightning.Core.API
         /// </summary>
         public void Unload()
         {
-            NRFont.Unload
+            NRFont.Unload();
         }
     }
 }
