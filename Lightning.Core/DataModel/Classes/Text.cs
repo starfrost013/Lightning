@@ -65,8 +65,10 @@ namespace Lightning.Core.API
 
         private NuRender.Text NRText { get; set; }
 
+
         public bool DisableTTF { get; set; }
 
+        public bool WordWrap { get; set; }
         public Text()
         {
             Position = new Vector2();
@@ -78,11 +80,32 @@ namespace Lightning.Core.API
             NRText = (NuRender.Text)MainWindow.AddObject("Text");
             if (Colour != null) NRText.Colour = new Color4Internal(Colour.A, Colour.R, Colour.G, Colour.B);
             if (BackgroundColour != null) NRText.BackgroundColour = new Color4Internal(BackgroundColour.A, BackgroundColour.R, BackgroundColour.G, BackgroundColour.B);
-            if (Position != null) NRText.Position = (Vector2Internal)Position; 
+            if (Position != null) NRText.Position = (Vector2Internal)Position;
+
+            if (Bold) NRText.Style += (int)TextStyle.Bold;
+            if (Italic) NRText.Style += (int)TextStyle.Italic;
+            if (Underline) NRText.Style += (int)TextStyle.Underline;
+            if (Strikethrough) NRText.Style += (int)TextStyle.Strikethrough;
+
+            NRText.WordWrap = WordWrap;
+
+            FindFontResult FFR = FindFont();
+
+            if (FFR.Successful)
+            {
+                NRText.Font = FFR.Font.Name; 
+            }
+            else
+            {
+                ErrorManager.ThrowError(ClassName, "NRCannotFindFontException", $"Failed to find font {NRText.Font}! Fonts must be loaded before text containing them is used.");
+                // delete this text
+                Parent.RemoveChild(this);
+            }
         } 
 
         public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
+            //todo: rewrite
             if (Content == null) Content = "";
 
             FindFontResult FFR = FindFont();

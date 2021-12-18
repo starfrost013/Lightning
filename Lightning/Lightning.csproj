@@ -15,7 +15,8 @@
     <Company>Lightning Dev Team</Company>
     <Authors>Lightning Dev Team</Authors>
     <Product>Lightning</Product>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
+    <Copyright>© 2021-2022 Lightning Dev Team</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

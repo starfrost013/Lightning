@@ -66,6 +66,11 @@ namespace NuRender
         public int LineSpacing { get; set; }
 
         /// <summary>
+        /// The style of this text. Has no effect if <see cref="DisableTTF"/> is set.
+        /// </summary>
+        public TextStyle Style { get; set; }
+
+        /// <summary>
         /// DIf <see cref="RenderingMode"/> is set to <see cref="TextRenderingMode.Shaded"/>, the background colour of the text. If it is not, ignored. If it is null and the <see cref="RenderingMode"/>
         /// is <see cref="TextRenderingMode.Shaded"/>, it will be treated as if <see cref="RenderingMode"/> was set to <see cref="TextRenderingMode.Normal"/>.
         /// </summary>
@@ -87,7 +92,7 @@ namespace NuRender
             
             foreach (Font Fnt in RenderingInformation.Fonts)
             {
-                if (Fnt.FontName == Font)
+                if (Fnt.Name == Font)
                 {
                     return false;
                 }
@@ -102,7 +107,7 @@ namespace NuRender
 
             foreach (Font Fnt in RenderingInformation.Fonts)
             {
-                if (Fnt.FontName == Font)
+                if (Fnt.Name == Font)
                 {
                     return Fnt; 
                 }
@@ -245,7 +250,3 @@ namespace NuRender
 
     }
 }
-
-
-
-

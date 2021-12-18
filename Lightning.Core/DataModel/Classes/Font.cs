@@ -34,48 +34,29 @@ namespace Lightning.Core.API
         /// </summary>
         internal IntPtr FontPointer { get; set; }
 
-
         internal bool FONT_LOADED { get; set; }
+
+        private NuRender.Font NRFont { get; set; }
 
         /// <summary>
         /// Loads this font.
         /// </summary>
         /// <param name="FontFamily">The name of the font family to laod.</param>
-        public void Load() // change to result class?
+        public void Load(Scene SDL_Renderer) // change to result class?
         {
-            base.PO_Init(); 
+            base.PO_Init();
 
-            if (FontPath == null
-                || FontPath.Length == 0)
-            {
-                ErrorManager.ThrowError(ClassName, "NullOrZeroLengthFileFontNameException");
-                return; 
-            }
-            else
-            {
-                if (FontSize == 0)
-                {
-                    ErrorManager.ThrowError(ClassName, "InvalidFontSizeException");
-                    return;
-                }
-                else
-                {
-                    FontPointer = SDL_ttf.TTF_OpenFont($"{FontPath}", FontSize);
+            Window MainWindow = SDL_Renderer.GetMainWindow();
 
-                    if (FontPointer == IntPtr.Zero)
-                    {
-                        ErrorManager.ThrowError(ClassName, "FailedToLoadFontException", $"Failed to load font: {SDL.SDL_GetError()}");
-                        return;
-                    }
-                    else
-                    {
-                        FONT_LOADED = true;
-                        return; 
-                    }
-                }
-            }
+            // fonts are special, you see
+            NRFont = new NuRender.Font();
 
+            NRFont.Name = Name;
+            NRFont.FontPath = FontPath;
+            NRFont.Size = FontSize;
+            NRFont.Load();
 
+            MainWindow.Settings.RenderingInformation.Fonts.Add(NRFont);
         }
 
         public override void Render(Scene SDL_Renderer, ImageBrush Tx)
@@ -88,11 +69,7 @@ namespace Lightning.Core.API
         /// </summary>
         public void Unload()
         {
-            if (FontPointer != IntPtr.Zero)
-            {
-                SDL_ttf.TTF_CloseFont(FontPointer);
-            }
-           
+            NRFont.Unload
         }
     }
 }

@@ -8,10 +8,7 @@ namespace NuRender
 {
     public class Font : NRObject
     {
-        /// <summary>
-        /// Font name to use.
-        /// </summary>
-        public string FontName { get; set; }
+
 
         /// <summary>
         /// Font path to load the font from. Default = C:\Windows\Fonts
@@ -70,14 +67,14 @@ namespace NuRender
             {
                 if (FontPath != null)
                 {
-                    return $@"{FontPath}\{FontName}.ttf";
+                    return $@"{FontPath}\{Name}.ttf";
                 }
                 else
                 {
 #if WINDOWS
                     string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
 
-                    return $"{SysRoot}\\Fonts\\{FontName}.ttf";
+                    return $"{SysRoot}\\Fonts\\{Name}.ttf";
 #else
                     ErrorManager.Throw(ClassName, "NROnlyImplementedInWindowsException", "System font loading is presently only implemented in Windows builds of Lightning/NuRender!");
 
@@ -96,7 +93,14 @@ namespace NuRender
         {
             Logging.Log("Loading font...", ClassName);
 
-            Pointer = SDL_ttf.TTF_OpenFont(FullFontPath, 18);
+            if (Size == 0) // Dec 18, 2021 (default size 18)
+            {
+                Pointer = SDL_ttf.TTF_OpenFont(FullFontPath, 18);
+            }
+            else
+            {
+                Pointer = SDL_ttf.TTF_OpenFont(FullFontPath, Size);
+            }
 
             if (Pointer == null)
             {
@@ -104,8 +108,12 @@ namespace NuRender
                 return; 
             }
 
-
             Loaded = true; 
+        }
+
+        public void Unload()
+        {
+            if (Pointer != null) SDL_ttf.TTF_CloseFont(Pointer);
         }
 
         public override void Render(WindowRenderingInformation RenderingInformation) 

@@ -166,11 +166,12 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "NRCannotCreateNonNRObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 142 });
          ErrorManager.RegisterError( new Error { Name = "NRUnknownErrorCreatingNRObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 143 });
 
+
 #if !WINDOWS
          ErrorManager.RegisterError( new Error { Name = "NROnlyImplementedInWindowsException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 144 });
 #endif
 
-         ErrorManager.RegisterError( new Error { Name = "NRCannotInitialiseSDL2ImageException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 144 });
+            ErrorManager.RegisterError( new Error { Name = "NRCannotInitialiseSDL2ImageException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 144 });
          ErrorManager.RegisterError( new Error { Name = "NRCannotInitialiseSDL2MixerException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 145 });
          ErrorManager.RegisterError( new Error { Name = "NRCannotInitialiseSDL2TTFException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 146 });
          ErrorManager.RegisterError( new Error { Name = "NRCannotLoadFontException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 147 });
@@ -180,13 +181,14 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "NRUnimplementedFeatureException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 151 });
          ErrorManager.RegisterError( new Error { Name = "NRFailedToLoadTextureException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 152 });
          ErrorManager.RegisterError( new Error { Name = "NRFailedToSizeTTFTextException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 153 });
-         ErrorManager.RegisterError( new Error { Name = "NRFailedToLoadTextureException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 152 });
+         ErrorManager.RegisterError( new Error { Name = "NRFailedToLoadTextureException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 154 });
+         ErrorManager.RegisterError( new Error { Name = "NRCannotFindFontException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 155 });
 
 #endregion
 
          ErrorManager.RegisterError(new Error { Name = "CannotSaveWhenNoFileSpecifiedException", Description = "Cannot save when no file is specified and a file is not open!", Severity = MessageSeverity.Error, Id = 200 });
          ErrorManager.RegisterError(new Error { Name = "InstanceDeprecatedException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 201 });
-         ErrorManager.RegisterError(new Error { Name = "InstanceExperimentalException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 202});
+         ErrorManager.RegisterError(new Error { Name = "InstanceExperimentalException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 202 });
 
             // todo: external-internal
         }
