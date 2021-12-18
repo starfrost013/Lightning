@@ -56,17 +56,17 @@ namespace NuRender
         public TextRenderingMode RenderingMode { get; set; }
 
         /// <summary>
-        /// Determines if word wrapping is enabled for this text.
-        /// </summary>
-        public bool WordWrap { get; set;  }
-
-        /// <summary>
         /// Determines the line spacing for this text. If 0, default line spacing is used.
         /// </summary>
         public int LineSpacing { get; set; }
 
         /// <summary>
-        /// The style of this text. Has no effect if <see cref="DisableTTF"/> is set.
+        /// Determines if word wrapping is enabled for this text.
+        /// </summary>
+        public bool WordWrap { get; set; }
+
+        /// <summary>
+        /// The style of this text. Has no effect if <see cref="DisableTTF"/> is true.
         /// </summary>
         public TextStyle Style { get; set; }
 

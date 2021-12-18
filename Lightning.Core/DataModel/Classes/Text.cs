@@ -63,12 +63,19 @@ namespace Lightning.Core.API
         /// </summary>
         public int OutlinePixels { get; set; }
 
-        private NuRender.Text NRText { get; set; }
-
-
+        /// <summary>
+        /// If true, SDL2_ttf fonts will not be used - instead the basic text rendering of SDL2_gfx will be used.
+        /// </summary>
         public bool DisableTTF { get; set; }
 
+        /// <summary>
+        /// Toggles word-wrapping.
+        /// </summary>
         public bool WordWrap { get; set; }
+
+        private NuRender.Text NRText { get; set; }
+
+        private bool Text_Initialised { get; set; }
         public Text()
         {
             Position = new Vector2();
@@ -89,6 +96,17 @@ namespace Lightning.Core.API
 
             NRText.WordWrap = WordWrap;
 
+            // TEMP
+            
+            if (AntiAliasingDisabled)
+            {
+                NRText.RenderingMode = TextRenderingMode.NoAntialias;
+            }
+            else
+            {
+                NRText.RenderingMode = TextRenderingMode.Normal; 
+            }
+
             FindFontResult FFR = FindFont();
 
             if (FFR.Successful)
@@ -101,109 +119,28 @@ namespace Lightning.Core.API
                 // delete this text
                 Parent.RemoveChild(this);
             }
-        } 
+
+            Text_Initialised = true; 
+        }
 
         public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
-            //todo: rewrite
-            if (Content == null) Content = "";
-
-            FindFontResult FFR = FindFont();
-
-            if (!FFR.Successful)
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+            
+            if (!Text_Initialised)
             {
-                return; 
+                Text_Init(SDL_Renderer);
             }
             else
             {
-                Window MainWindow = SDL_Renderer.GetMainWindow();
-
-                Font TextFont = FFR.Font;
-
-                // Set font style flags
-                int FontStyleFlags = 0;
-                
-                if (Bold) FontStyleFlags += 1;
-                if (Italic) FontStyleFlags += 2;
-                if (Underline) FontStyleFlags += 4;
-                if (Strikethrough) FontStyleFlags += 8;
-
-                // Style the font if bold/italic/underline/strikethrough are set
-
-                if (FontStyleFlags > 0) SDL_ttf.TTF_SetFontStyle(TextFont.FontPointer, FontStyleFlags);
-
-                // Init surface to be used
-                IntPtr SurfaceSDL = IntPtr.Zero;
-
-                Vector2 FontSize = GetApproximateFontSize(TextFont);
-
-                int FontWidth = (int)FontSize.X;
-                int FontHeight = (int)FontSize.Y;
-
-                SDL.SDL_Color SDLC = new SDL.SDL_Color();
-
-                if (Colour != null)
+                if (ForceToScreen)
                 {
-                    SDLC.r = Colour.R;
-                    SDLC.g = Colour.G;
-                    SDLC.b = Colour.B;
-                    SDLC.a = Colour.A;
-
-                    // Perform text rendering
-
+                    NRText.Position = (Vector2Internal)Position;
                 }
                 else
                 {
-                    SDLC.r = 255;
-                    SDLC.g = 255;
-                    SDLC.b = 255;
-                    SDLC.a = 255;
+                    NRText.Position = (Vector2Internal)Position - MainWindow.Settings.RenderingInformation.CCameraPosition;
                 }
-
-                if (AntiAliasingDisabled)
-                {
-                    SurfaceSDL = SDL_ttf.TTF_RenderText_Solid(TextFont.FontPointer, Content, SDLC);
-                }
-                else
-                {
-                    SurfaceSDL = SDL_ttf.TTF_RenderText_Blended(TextFont.FontPointer, Content, SDLC);
-                }
-
-                // Convert to texture for hardware rendering
-                IntPtr TextTexture = SDL.SDL_CreateTextureFromSurface(MainWindow.Settings.RenderingInformation.RendererPtr, SurfaceSDL);
-
-                // corre
-                SDL.SDL_Rect SourceRect = new SDL.SDL_Rect
-                {
-                    x = 0,
-                    y = 0,
-                    w = FontWidth,
-                    h = FontHeight,
-
-                };
-
-                SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
-
-                if (ForceToScreen) // dumb hack that is BAD and NOT RECOMMENDED!
-                {
-                    DestinationRect.x = (int)Position.X;
-                    DestinationRect.y = (int)Position.Y;
-                    DestinationRect.w = FontWidth;
-                    DestinationRect.h = FontHeight;
-                }
-                else
-                {
-                    DestinationRect.x = (int)Position.X - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
-                    DestinationRect.y = (int)Position.Y - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
-                    DestinationRect.w = FontWidth;
-                    DestinationRect.h = FontHeight;
-                }
-
-
-                SDL.SDL_RenderCopy(MainWindow.Settings.RenderingInformation.RendererPtr, TextTexture, ref SourceRect, ref DestinationRect);
-
-                SDL.SDL_FreeSurface(SurfaceSDL);
-                SDL.SDL_DestroyTexture(TextTexture);
             }
 
         }
@@ -257,6 +194,11 @@ namespace Lightning.Core.API
             return FFR; 
         }
 
+        /// <summary>
+        /// Deprecated - NR 
+        /// </summary>
+        /// <param name="Fnt"></param>
+        /// <returns></returns>
         internal Vector2 GetApproximateFontSize(Font Fnt)
         {
 
