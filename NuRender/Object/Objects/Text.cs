@@ -216,7 +216,6 @@ namespace NuRender
 
         private void Render_TTF_DoRender(Font Fnt, string Text, Vector2Internal Size, WindowRenderingInformation RenderInfo)
         {
-
             SDL.SDL_Color RenderColour = new SDL.SDL_Color // set up render colour
             {
                 r = Colour.R,
@@ -245,13 +244,14 @@ namespace NuRender
             switch (RenderingMode)
             {
                 case TextRenderingMode.NoAntialias: // non-antialiased text specified
-                    IntPtr Texture = SDL_ttf.TTF_RenderText_Solid(Fnt.Pointer, Text, RenderColour);
+                    IntPtr Surface = SDL_ttf.TTF_RenderText_Solid(Fnt.Pointer, Text, RenderColour);
+                    IntPtr Texture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, Surface);
 
                     SDL.SDL_RenderCopy(RenderInfo.RendererPtr, Texture, ref SourceRect, ref DestinationRect);
-
                     return; 
                 case TextRenderingMode.Normal: // blended text specified
-                    IntPtr NTexture = SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour);
+                    IntPtr NSurface = SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour);
+                    IntPtr NTexture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, NSurface);
 
                     SDL.SDL_RenderCopy(RenderInfo.RendererPtr, NTexture, ref SourceRect, ref DestinationRect);
                     return; 
@@ -266,14 +266,16 @@ namespace NuRender
                             a = BackgroundColour.A
                         };
 
-                        IntPtr STexture = SDL_ttf.TTF_RenderText_Shaded(Fnt.Pointer, Text, RenderColour, BGColour);
+                        IntPtr SSurface = SDL_ttf.TTF_RenderText_Shaded(Fnt.Pointer, Text, RenderColour, BGColour);
+                        IntPtr STexture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, SSurface);
 
                         SDL.SDL_RenderCopy(RenderInfo.RendererPtr, STexture, ref SourceRect, ref DestinationRect);
                         return; 
                     }
                     else
                     {
-                        IntPtr BTexture = SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour); // treat as if blended as its null
+                        IntPtr BSurface = SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour); // treat as if blended as its null
+                        IntPtr BTexture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, BSurface);
 
                         SDL.SDL_RenderCopy(RenderInfo.RendererPtr, BTexture, ref SourceRect, ref DestinationRect);
                         return;
