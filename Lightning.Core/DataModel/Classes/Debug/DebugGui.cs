@@ -76,8 +76,8 @@ namespace Lightning.Core.API
                         int WindowWidth = (int)WindowWidth_Setting.SettingValue;
                         int WindowHeight = (int)WindowHeight_Setting.SettingValue;
 
-                        Vector2 DbgPageBegin = new Vector2(WindowWidth * 0.4, WindowHeight * 0.4); // todo: gamesetting for this
-                        Vector2 DbgPageEnd = new Vector2(WindowWidth * 0.8, WindowHeight * 0.8);
+                        Vector2 DbgPageBegin = new Vector2(WindowWidth * 0.3, WindowHeight * 0.3); // todo: gamesetting for this
+                        Vector2 DbgPageEnd = new Vector2(WindowWidth * 0.7, WindowHeight * 0.7);
 
                         Init_ForceToScreen();
                         

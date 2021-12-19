@@ -188,6 +188,8 @@ namespace Lightning.Core.API
             Text DebugTextLine1 = (Text)DataModel.CreateInstance("Text", SG);
             Text DebugTextLine2 = (Text)DataModel.CreateInstance("Text", SG);
             Text DebugTextLine3 = (Text)DataModel.CreateInstance("Text", SG);
+            
+            Color4 DebugTextColour = new Color4(255, 255, 255, 255);
 
             string DoNotUse = "Debug GUI Component - Do not use!";
 
@@ -197,7 +199,7 @@ namespace Lightning.Core.API
             DebugTextLine2.Name = DoNotUse;
             DebugTextLine3.Name = DoNotUse;
 
-            DebugTextLine1.Content = $"Lightning for {Platform.PlatformName} version {LVersion.GetVersionString()} (Debug)";
+            DebugTextLine1.Content = $"Lightning for {Platform.PlatformName} {LVersion.GetShortenedVersionString()} (Debug)";
             DebugTextLine2.Content = $"DataModel version {DataModel.DATAMODEL_API_VERSION_MAJOR}.{DataModel.DATAMODEL_API_VERSION_MINOR}.{DataModel.DATAMODEL_API_VERSION_REVISION}";
             DebugTextLine3.Content = Settings.CurrentDebugString;
 
@@ -209,37 +211,24 @@ namespace Lightning.Core.API
             GR.Position = Position;
             SG.Position = Position;
             DebugTextLine1.Position = Position;
-            DebugTextLine2.Position = new Vector2(Position.X, Position.Y + 18);
-            DebugTextLine3.Position = new Vector2(Position.X, Position.Y + 36);
+            DebugTextLine2.Position = new Vector2(Position.X, Position.Y + 16);
+            DebugTextLine3.Position = new Vector2(Position.X, Position.Y + 32);
 
-            DebugTextLine1.FontFamily = GetDebugFontName();
-            DebugTextLine2.FontFamily = GetDebugFontName();
-            DebugTextLine3.FontFamily = GetDebugFontName();
+            DebugTextLine1.DisableTTF = true;
+            DebugTextLine2.DisableTTF = true;
+            DebugTextLine3.DisableTTF = true;
 
-
+            DebugTextLine1.Colour = DebugTextColour;
+            DebugTextLine2.Colour = DebugTextColour;
+            DebugTextLine3.Colour = DebugTextColour;
 #else
             throw new Exception("Do not call on Release builds ever!");
 #endif
         }
 
-        private string GetDebugFontName()
-        {
-            GlobalSettings GS = DataModel.GetGlobalSettings();
-
-            if (GS.DebugDefaultFontName == null)
-            {
-                return GS.DebugDefaultFontName;
-            }
-            else
-            {
-                return "Arial.14pt for DEBUG";
-            }
-        }
-
         private void Init_CreateDebugGui()
         {
             Init_GetWindowWidthAndHeight();
-
 
             Vector2 DbgPageBegin = new Vector2(0.2, 0.2);
             Vector2 DbgPageEnd = new Vector2(0.8, 0.8);
@@ -263,7 +252,7 @@ namespace Lightning.Core.API
             Main.Size = (Settings.WindowSize * DbgPageEnd);
             Main.BackgroundColour = new Color4(127, 0, 0, 0);
             Main.Content = $"Lightning Debug Menu - Lightning {LVersion.GetVersionString()} - {LVersion.BuildDate}";
-            Main.FontFamily = GetDebugFontName();
+            Main.DisableTTF = true;
             Main.DoNotAutoResize = true;
             Main.Fill = true;
 

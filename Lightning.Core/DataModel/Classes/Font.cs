@@ -32,7 +32,17 @@ namespace Lightning.Core.API
         /// <summary>
         /// Unmanaged ptr to SDL2_ttf font structure
         /// </summary>
-        internal IntPtr FontPointer { get; set; }
+        internal IntPtr FontPointer
+        {
+            get
+            {
+                return NRFont.Pointer;
+            }
+            set
+            {
+                throw new InvalidOperationException("Legacy font loading not supported");
+            }
+        }
 
         internal bool FONT_LOADED { get; set; }
 
@@ -41,12 +51,10 @@ namespace Lightning.Core.API
         /// <summary>
         /// Loads this font.
         /// </summary>
-        /// <param name="FontFamily">The name of the font family to laod.</param>
-        public void Load(Scene SDL_Renderer) // change to result class?
+        /// <param name="FontFamily">The name of the font family to load.</param>
+        public void Load(WindowRenderingInformation RenderInfo) // change to result class?
         {
             base.PO_Init();
-
-            Window MainWindow = SDL_Renderer.GetMainWindow();
 
             // fonts are special, you see
             NRFont = new NuRender.Font();
@@ -54,9 +62,12 @@ namespace Lightning.Core.API
             NRFont.Name = Name;
             NRFont.FontPath = FontPath;
             NRFont.Size = FontSize;
-            NRFont.Load();
+            NRFont.Load(RenderInfo);
+        }
 
-            MainWindow.Settings.RenderingInformation.Fonts.Add(NRFont);
+        public Vector2 GetFontSize(string Content)
+        {
+            return (Vector2)NRFont.GetFontSize(Content);
         }
 
         public override void Render(Scene SDL_Renderer, ImageBrush Tx)

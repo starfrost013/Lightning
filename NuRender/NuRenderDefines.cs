@@ -8,7 +8,7 @@ namespace NuRender
     /// <summary>
     /// NuRender [NuRenderDefines]
     /// 
-    /// August 17, 2021 (modified December 11, 2021: v0.4.0 -> v0.4.1 - Add file not found check for texture loading)
+    /// August 17, 2021 (modified December 18, 2021: v0.4.2: font/text improvements)
     /// 
     /// Defines global defines for the NuRender API.
     /// </summary>
@@ -16,7 +16,7 @@ namespace NuRender
     {
         public static int NURENDER_API_VERSION_MAJOR = 0;
         public static int NURENDER_API_VERSION_MINOR = 4;
-        public static int NURENDER_API_VERSION_REVISION = 1;
+        public static int NURENDER_API_VERSION_REVISION = 2;
 
         public static int NURENDER_SDL_API_VERSION_MAJOR = SDL.SDL_MAJOR_VERSION;
         public static int NURENDER_SDL_API_VERSION_MINOR = SDL.SDL_MINOR_VERSION;

@@ -8,8 +8,6 @@ namespace NuRender
 {
     public class Font : NRObject
     {
-
-
         /// <summary>
         /// Font path to load the font from. Default = C:\Windows\Fonts
         /// </summary>
@@ -17,8 +15,10 @@ namespace NuRender
 
         /// <summary>
         /// Pointer to unmanaged SDL_Font structure
+        /// 
+        /// Public for Lightning old code
         /// </summary>
-        internal IntPtr Pointer { get; private set; }
+        public IntPtr Pointer { get; private set; }
 
         /// <summary>
         /// Determines if this font is loaded.
@@ -67,7 +67,7 @@ namespace NuRender
             {
                 if (FontPath != null)
                 {
-                    return $@"{FontPath}\{Name}.ttf";
+                    return FontPath;
                 }
                 else
                 {
@@ -86,12 +86,12 @@ namespace NuRender
 
         public override void Start(WindowRenderingInformation RenderingInformation)
         {
-            if (!Loaded) Load(); 
+            if (!Loaded) Load(RenderingInformation); 
         }
 
-        public void Load()
+        public void Load(WindowRenderingInformation RenderingInformation)
         {
-            Logging.Log("Loading font...", ClassName);
+            Logging.Log($"Loading font {Name}...", ClassName);
 
             if (Size == 0) // Dec 18, 2021 (default size 18)
             {
@@ -102,18 +102,29 @@ namespace NuRender
                 Pointer = SDL_ttf.TTF_OpenFont(FullFontPath, Size);
             }
 
-            if (Pointer == null)
+            if (Pointer == IntPtr.Zero)
             {
                 ErrorManager.ThrowError(ClassName, "NRCannotLoadFontException", $"Fatal error occurred loading font: {SDL.SDL_GetError()}");
                 return; 
             }
 
+            RenderingInformation.Fonts.Add(this);
             Loaded = true; 
         }
 
         public void Unload()
         {
             if (Pointer != null) SDL_ttf.TTF_CloseFont(Pointer);
+        }
+
+        public Vector2Internal GetFontSize(string Content)
+        {
+            int SizeX = 0;
+            int SizeY = 0;
+
+            SDL_ttf.TTF_SizeText(Pointer, Content, out SizeX, out SizeY);
+
+            return new Vector2Internal(SizeX, SizeY);
         }
 
         public override void Render(WindowRenderingInformation RenderingInformation) 

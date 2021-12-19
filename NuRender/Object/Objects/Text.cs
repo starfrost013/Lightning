@@ -163,6 +163,12 @@ namespace NuRender
 
         private void Render_TTF(WindowRenderingInformation RenderingInformation)
         {
+            if (Content == null
+            || Content.Length == 0)
+            {
+                return;
+            }
+
             int FontX = 0; // cannot use a property for out/ref
             int FontY = 0; 
 
@@ -177,7 +183,9 @@ namespace NuRender
                 //todo: delete self
             }
 
-            Vector2Internal Position = new Vector2Internal(FontX, FontY);
+            Vector2Internal Size = new Vector2Internal(FontX, FontY);
+
+            if (Style > 0) SDL_ttf.TTF_SetFontStyle(Fnt.Pointer, (int)Style); // Dec 19, 2021
 
             if (WordWrap)
             {
@@ -185,7 +193,7 @@ namespace NuRender
                 
                 foreach (string Line in InternalContent)
                 {
-                    Render_TTF_DoRender(Fnt, Line); 
+                    Render_TTF_DoRender(Fnt, Line, Size, RenderingInformation); 
 
                     // implement custom line spacing
                     if (LineSpacing != 0)
@@ -201,12 +209,12 @@ namespace NuRender
             }
             else
             {
-                Render_TTF_DoRender(Fnt, Content); // no word wrap
+                Render_TTF_DoRender(Fnt, Content, Size, RenderingInformation); // no word wrap
             }   
             
         }
 
-        private void Render_TTF_DoRender(Font Fnt, string Text)
+        private void Render_TTF_DoRender(Font Fnt, string Text, Vector2Internal Size, WindowRenderingInformation RenderInfo)
         {
 
             SDL.SDL_Color RenderColour = new SDL.SDL_Color // set up render colour
@@ -217,13 +225,35 @@ namespace NuRender
                 a = Colour.A
             };
 
+            SDL.SDL_Rect SourceRect = new SDL.SDL_Rect
+            {
+                x = 0,
+                y = 0,
+                w = (int)Size.X,
+                h = (int)Size.Y
+            };
+
+
+            SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect
+            {
+                x = (int)Position.X,
+                y = (int)Position.Y,
+                w = (int)Size.X,
+                h = (int)Size.Y
+            };
+
             switch (RenderingMode)
             {
                 case TextRenderingMode.NoAntialias: // non-antialiased text specified
-                    SDL_ttf.TTF_RenderText_Solid(Fnt.Pointer, Text, RenderColour);
+                    IntPtr Texture = SDL_ttf.TTF_RenderText_Solid(Fnt.Pointer, Text, RenderColour);
+
+                    SDL.SDL_RenderCopy(RenderInfo.RendererPtr, Texture, ref SourceRect, ref DestinationRect);
+
                     return; 
                 case TextRenderingMode.Normal: // blended text specified
-                    SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour);
+                    IntPtr NTexture = SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour);
+
+                    SDL.SDL_RenderCopy(RenderInfo.RendererPtr, NTexture, ref SourceRect, ref DestinationRect);
                     return; 
                 case TextRenderingMode.Shaded: // shaded text specified 
                     if (BackgroundColour != null)
@@ -236,12 +266,16 @@ namespace NuRender
                             a = BackgroundColour.A
                         };
 
-                        SDL_ttf.TTF_RenderText_Shaded(Fnt.Pointer, Text, RenderColour, BGColour);
+                        IntPtr STexture = SDL_ttf.TTF_RenderText_Shaded(Fnt.Pointer, Text, RenderColour, BGColour);
+
+                        SDL.SDL_RenderCopy(RenderInfo.RendererPtr, STexture, ref SourceRect, ref DestinationRect);
                         return; 
                     }
                     else
                     {
-                        SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour); // treat as if blended as its null
+                        IntPtr BTexture = SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour); // treat as if blended as its null
+
+                        SDL.SDL_RenderCopy(RenderInfo.RendererPtr, BTexture, ref SourceRect, ref DestinationRect);
                         return;
                     }
 

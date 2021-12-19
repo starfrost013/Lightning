@@ -45,24 +45,9 @@ namespace Lightning.Core.API
             Txt.Position = DGUI.Position + new Vector2(0, 20);
             Txt.Colour = new Color4(255, 255, 255, 255);
             Txt.ForceToScreen = true; //TEMPHACK
-
-            MDP_SetTextFontFamilyForDebug(Txt);
+            Txt.DisableTTF = true;
 
             MAINDEBUGPAGE_INITIALISED = true; 
-        }
-
-        private void MDP_SetTextFontFamilyForDebug(Text Txt)
-        {
-            GlobalSettings GS = DataModel.GetGlobalSettings();
-
-            if (GS.DebugDefaultFontName != null)
-            {
-                Txt.FontFamily = GS.DebugDefaultFontName;
-            }
-            else
-            {
-                Txt.FontFamily = "Arial.14pt for DEBUG";
-            }
         }
 
         private DebugGui GetDebugGui()

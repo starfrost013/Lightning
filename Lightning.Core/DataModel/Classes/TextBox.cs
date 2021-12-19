@@ -39,7 +39,7 @@ namespace Lightning.Core.API
 
             if (!TEXTBOX_INITIALISED)
             {
-                TB_Init();
+                TB_Init(SDL_Renderer);
             }
             else
             {
@@ -48,17 +48,21 @@ namespace Lightning.Core.API
 
         }
 
-        internal void TB_Init() // called by button
+        internal void TB_Init(Scene SDL_Renderer) // called by button
         {
             ItemRectangle = new Rectangle(); // TODO: DATAMODEL (this works around a known bug, but is hacky)
+
+            // hack for NR not crashing
+            base.Text_Init(SDL_Renderer);
+            // end hack for NR not crashing 
 
             if (Position == null) Position = new Vector2(0, 0);
             if (Colour == null) Colour = new Color4(255, 255, 255, 255);
             if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0); // do not draw by default
             if (BackgroundColour == null) BackgroundColour = new Color4(255, 0, 0, 0);
 
-            if (FontFamily == null
-                || FontFamily == "")
+            if (!DisableTTF && (FontFamily == null
+                || FontFamily == ""))
             {
                 ErrorManager.ThrowError(ClassName, "MustDefineFontForGuiElementException", "TextBoxes, CheckBoxes, and Buttons require their FontFamily property to be set.");
 
@@ -76,40 +80,49 @@ namespace Lightning.Core.API
 
             Vector2 FontSize = null;
 
-            if (ItemRectangle.Size == null)
+            if (DisableTTF)
             {
-                FindFontResult FFR = FindFont();
-
-                if (!FFR.Successful
-                    || FFR.Font == null)
+                ItemRectangle.Size = new Vector2(6 * Content.Length, 12); // works well enough i think
+            }
+            else
+            {
+                if (ItemRectangle.Size == null)
                 {
-                    TEXTBOX_INITIALISATION_FAILED = true;
-                    return;
-                }
-                else
-                {
-                    Font FontOfText = FFR.Font;
-                    FontSize = GetApproximateFontSize(FontOfText);
+                    FindFontResult FFR = FindFont();
 
-                    if (FontSize == null)
+                    if (!FFR.Successful
+                        || FFR.Font == null)
                     {
-                        ItemRectangle.Size = Size;
+                        TEXTBOX_INITIALISATION_FAILED = true;
+                        return;
                     }
                     else
                     {
-                        if (Padding == null)
+                        Font FontOfText = FFR.Font;
+                        FontSize = GetApproximateFontSize(FontOfText);
+
+                        if (FontSize == null)
                         {
-                            ItemRectangle.Size = FontSize + new Vector2(10, 10);
+                            ItemRectangle.Size = Size;
                         }
                         else
                         {
-                            ItemRectangle.Size = FontSize + Padding;
-                        }
+                            if (Padding == null)
+                            {
+                                ItemRectangle.Size = FontSize + new Vector2(10, 10);
+                            }
+                            else
+                            {
+                                ItemRectangle.Size = FontSize + Padding;
+                            }
 
+                        }
                     }
+
                 }
 
             }
+
 
             if (HorizontalAlignment == Alignment.Centre)
             {

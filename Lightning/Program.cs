@@ -73,7 +73,7 @@ namespace Lightning
                     Platform.PopulatePlatformInformation();
 
                     Console.WriteLine($"Running on {Platform.PlatformName}"); // 2021-06-26
-                    Console.WriteLine($"Platform version {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})");
+                    Console.WriteLine($"Platform version {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})\n");
                     // Display version information
                     string LVersionString = LVersion.GetVersionString();
                     Console.WriteLine($"Engine version {LVersionString}");

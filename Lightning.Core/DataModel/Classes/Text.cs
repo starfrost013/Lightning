@@ -81,12 +81,21 @@ namespace Lightning.Core.API
             Position = new Vector2();
         }
 
-        private void Text_Init(Scene SDL_Renderer)
+        internal void Text_Init(Scene SDL_Renderer)
         {
             Window MainWindow = SDL_Renderer.GetMainWindow();
             NRText = (NuRender.Text)MainWindow.AddObject("Text");
-            if (Colour != null) NRText.Colour = new Color4Internal(Colour.A, Colour.R, Colour.G, Colour.B);
-            if (BackgroundColour != null) NRText.BackgroundColour = new Color4Internal(BackgroundColour.A, BackgroundColour.R, BackgroundColour.G, BackgroundColour.B);
+
+            if (Colour != null)
+            {
+                NRText.Colour = (Color4Internal)Colour;
+            }
+            else
+            {
+                NRText.Colour = NuRender.NuRender.NURENDER_DEFAULT_SDL_DRAW_COLOUR;
+            }
+            
+            if (BackgroundColour != null) NRText.BackgroundColour = (Color4Internal)BackgroundColour;
             if (Position != null) NRText.Position = (Vector2Internal)Position;
 
             if (Bold) NRText.Style += (int)TextStyle.Bold;
@@ -95,7 +104,9 @@ namespace Lightning.Core.API
             if (Strikethrough) NRText.Style += (int)TextStyle.Strikethrough;
 
             NRText.WordWrap = WordWrap;
-
+            NRText.DisableTTF = DisableTTF;
+            NRText.Content = Content;
+            
             // TEMP
             
             if (AntiAliasingDisabled)
@@ -107,20 +118,31 @@ namespace Lightning.Core.API
                 NRText.RenderingMode = TextRenderingMode.Normal; 
             }
 
-            FindFontResult FFR = FindFont();
-
-            if (FFR.Successful)
+            if (!DisableTTF)
             {
-                NRText.Font = FFR.Font.Name; 
+                FindFontResult FFR = FindFont();
+
+                if (FFR.Successful)
+                {
+                    NRText.Font = FFR.Font.Name;
+                }
+                else
+                {
+                    ErrorManager.ThrowError(ClassName, "NRCannotFindFontException", $"Failed to find font {NRText.Font}! Fonts must be loaded before text containing them is used.");
+                    // delete this text
+                    Parent.RemoveChild(this);
+                }
+
+                Text_Initialised = true;
             }
             else
             {
-                ErrorManager.ThrowError(ClassName, "NRCannotFindFontException", $"Failed to find font {NRText.Font}! Fonts must be loaded before text containing them is used.");
-                // delete this text
-                Parent.RemoveChild(this);
+                Text_Initialised = true;
+                return; 
             }
 
-            Text_Initialised = true; 
+
+
         }
 
         public override void Render(Scene SDL_Renderer, ImageBrush Tx)
@@ -201,27 +223,22 @@ namespace Lightning.Core.API
         /// <returns></returns>
         internal Vector2 GetApproximateFontSize(Font Fnt)
         {
+            // temporary workaround until TextBox ported to NR
+            if (!Fnt.FONT_LOADED) return new Vector2(10, 10);
 
-            Font FX = Fnt;
+            Vector2 FontSize = Fnt.GetFontSize(Content);
 
-            int FontWidth = 0;
-            int FontHeight = 0;
-
-            if (SDL_ttf.TTF_SizeText(FX.FontPointer, Content, out FontWidth, out FontHeight) < 0)
+            if (FontSize.X == 0
+            || FontSize.Y == 0) 
             {
                 ErrorManager.ThrowError(ClassName, "FailedToRenderTextException", $"Failed to render text: Error sizing text: {SDL.SDL_GetError()}");
                 return null;
             }
             else
             {
-                Vector2 FinalVec2 = new Vector2();
-                FinalVec2.X = FontWidth;
-                FinalVec2.Y = FontHeight;
-
-                return FinalVec2;
+                return FontSize;
             }
 
         }
-        
     }
 }

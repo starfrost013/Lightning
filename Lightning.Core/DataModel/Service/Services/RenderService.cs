@@ -34,6 +34,7 @@ namespace Lightning.Core.API
     /// 2021-08-15: Animation loading, even MORE events
     /// 2021-12-10: Rewritten for NuRender
     /// 2021-12-11: LoadTexture stuff rewritten for NuRender.
+    /// 2021-12-18: Moved font loading and unloading to here from UIService
     /// 
     /// </summary>
     public class RenderService : Service
@@ -171,7 +172,7 @@ namespace Lightning.Core.API
                     WS.ApplicationName = WindowTitle;
                     WS.WindowPosition = new Vector2Internal(DefaultWindowX, DefaultWindowY);
 
-                    Logging.Log("Calling SDL_CreateWindow to initialise window...", ClassName);
+                    Logging.Log("Initialising window...", ClassName);
 
                     // Create a fullscreen window if fullscreen is false.
                     if (Fullscreen)
@@ -195,33 +196,12 @@ namespace Lightning.Core.API
             }
         }
 
-#if DEBUG
-        public void ATest_RenderServiceQuerySettings()
-        {
-            Logging.Log("Query GameSettings Test:", "Automated Testing");
-
-            Workspace Wks = DataModel.GetWorkspace();
-           
-            GetInstanceResult GS = Wks.GetFirstChildOfType("GameSettings");
-
-            // It should always be loaded at this point.
-            Debug.Assert(GS.Successful && GS.Instance != null);
-
-            GameSettings Settings = (GameSettings)GS.Instance;
-
-            GetGameSettingResult GGSR = Settings.GetSetting("MaxFPS");
-
-            // assert - this means the setting failed to load previously.
-            Debug.Assert(GGSR.Successful && GGSR.Setting != null);
-
-            GameSetting Setting = GGSR.Setting;
-
-            Logging.Log($"MaxFPS: {Setting.SettingValue}");
-
-        }
-#endif
         public override ServiceShutdownResult OnShutdown()
         {
+            Logging.Log("Unloading fonts...");
+
+            UnloadAllFonts();
+
             Logging.Log("Shutting down SDL...", ClassName);
 
             SDL.SDL_Quit();
@@ -277,6 +257,10 @@ namespace Lightning.Core.API
                     InitRendering_GetBlendMode();
 
                     InitRendering_LoadAndCacheTextures();
+
+                    Window MainWindow = MainScene.GetMainWindow();
+
+                    LoadAllFonts(MainWindow.Settings.RenderingInformation);
 
                     TriggerOnSpawn();
 
@@ -837,6 +821,80 @@ namespace Lightning.Core.API
 
             return;
         }
+
+        private void LoadAllFonts(WindowRenderingInformation RenderInfo)
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("Font");
+
+            Logging.Log("Loading fonts...", ClassName);
+
+            if (!GMIR.Successful
+                || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfFontsException");
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < GMIR.Instances.Count; i++)// collection is being modified
+                {
+                    Instance Instance = GMIR.Instances[i];
+
+                    Font Fnt = (Font)Instance;
+
+                    if (Fnt.Name != null)
+                    {
+                        Logging.Log($"Loading the font {Fnt.Name}...", ClassName);
+
+                        Fnt.Load(RenderInfo);
+
+                        if (!Fnt.FONT_LOADED)
+                        {
+                            // font failed to load
+                            GMIR.Instances.Remove(Instance);
+                        }
+                    }
+                    else
+                    {
+                        ErrorManager.ThrowError(ClassName, "FontMustDeclareNameException");
+                        GMIR.Instances.Remove(Instance);
+                    }
+
+                }
+            }
+
+        }
+
+        private void UnloadAllFonts()
+        {
+
+            Logging.Log($"Unloading all fonts...", ClassName);
+
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("Font");
+
+            if (!GMIR.Successful
+                || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfFontsException");
+                return;
+            }
+            else
+            {
+                foreach (Instance Ins in GMIR.Instances)
+                {
+                    Font Fnt = (Font)Ins;
+
+                    Logging.Log($"Unloading the font {Fnt.Name}...", ClassName);
+                    Fnt.Unload();
+                }
+            }
+        }
+
+
 
 
     }

@@ -113,7 +113,7 @@ namespace NuCore.NativeInterop
                                     else
                                     {
                                         Version.OSBrandName = "Windows 11";
-                                        Version.OSUpdateVersion = "Nickel (22H2?)";
+                                        Version.OSUpdateVersion = "Nickel/22H2?";
                                         return Version;
                                     }
                                 }
