@@ -13,6 +13,13 @@ namespace NuRender
     /// </summary>
     public abstract class NRObject
     {
+
+        /// <summary>
+        /// The colour of this NuRender object. May not be used.
+        /// </summary>
+        public Color4Internal Colour { get; set; }
+
+
         /// <summary>
         /// Fake ClassName for code style compatibility and logging
         /// </summary>
@@ -24,19 +31,21 @@ namespace NuRender
         public string Name { get; set; }
 
         /// <summary>
+        /// The position of this NuRender object. 
+        /// </summary>
+        public Vector2Internal Position { get; set; }
+
+        /// <summary>
         /// Event handler for the <see cref="NRSDLExitEvent"/> event.
         /// </summary>
         public NRSDLExitEvent OnExit { get; set; }
 
         /// <summary>
-        /// The colour of this NuRender object. May not be used.
+        /// Determines render priority order.
+        /// 
+        /// December 20, 2021
         /// </summary>
-        public Color4Internal Colour { get; set; }
-
-        /// <summary>
-        /// The position of this NuRender object. 
-        /// </summary>
-        public Vector2Internal Position { get; set; }
+        public int ZIndex { get; set; }
 
         /// <summary>
         /// Ran on the creation of this NuRender object.

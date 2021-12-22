@@ -2,6 +2,7 @@
 using NuCore.Utilities; 
 using System;
 using System.Collections.Generic;
+using System.Linq; 
 using System.Text;
 
 namespace NuRender
@@ -136,9 +137,11 @@ namespace NuRender
 
             if (Clear) SDL.SDL_RenderClear(RenderInfo.RendererPtr);
 
-            SDL.SDL_SetRenderDrawBlendMode(RenderInfo.RendererPtr, RenderInfo.BlendingMode); 
+            SDL.SDL_SetRenderDrawBlendMode(RenderInfo.RendererPtr, RenderInfo.BlendingMode);
 
-            foreach (NRObject NRO in NRObjects)
+            List<NRObject> ObjList = NRObjects.OrderBy(Obj => Obj.ZIndex).ToList();
+
+            foreach (NRObject NRO in ObjList)
             {
                 if (NRO.Colour != null) SDL.SDL_SetRenderDrawColor(RenderInfo.RendererPtr, NRO.Colour.R, NRO.Colour.G, NRO.Colour.B, NRO.Colour.A);
 

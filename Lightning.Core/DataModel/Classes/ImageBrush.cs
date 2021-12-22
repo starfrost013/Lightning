@@ -45,6 +45,8 @@ namespace Lightning.Core.API
         /// </summary>
         internal bool TEXTURE_INITIALISED { get; set; }
 
+        private Image NRImage { get; set; }
+
         public override void OnCreate()
         {
             Type ParentType = Parent.GetType();
@@ -64,7 +66,7 @@ namespace Lightning.Core.API
 
             if (!TEXTURE_INITIALISED)
             {
-                Init();
+                Init(SDL_Renderer);
             }
             else
             {
@@ -73,8 +75,10 @@ namespace Lightning.Core.API
 
         }
 
-        internal void Init()
+        internal void Init(Scene SDL_Renderer)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             ServiceNotification SN = new ServiceNotification();
             SN.ServiceClassName = "RenderService";
             SN.NotificationType = ServiceNotificationType.MessageSend;
@@ -127,7 +131,7 @@ namespace Lightning.Core.API
             SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
 
 
-            if (MainWindow.Settings.RenderingInformation.CCameraPosition != null && !NotCameraAware)
+            if (MainWindow.Settings.RenderingInformation.CCameraPosition != null && !ForceToScreen)
             {
                 DestinationRect.x = (int)Position.X - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
                 DestinationRect.y = (int)Position.Y - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
@@ -189,7 +193,7 @@ namespace Lightning.Core.API
                 {
                     DstRect.x = (int)Position.X + (int)(Size.X / TileCount.X) * (i + 1);
 
-                    if (!NotCameraAware) DstRect.x -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
+                    if (!ForceToScreen) DstRect.x -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
 
                     // obsolete code
                     SDL.SDL_RenderCopy(MainWindow.Settings.RenderingInformation.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
@@ -198,7 +202,7 @@ namespace Lightning.Core.API
                     {
                         DstRect.y = (int)Position.Y + (int)(Size.Y / TileCount.Y) * j + 1;
 
-                        if (!NotCameraAware) DstRect.y -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
+                        if (!ForceToScreen) DstRect.y -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
 
                         SDL.SDL_RenderCopy(MainWindow.Settings.RenderingInformation.RendererPtr, Tx.SDLTexturePtr, ref SrcRect, ref DstRect);
                     }
