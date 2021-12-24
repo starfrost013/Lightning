@@ -15,6 +15,6 @@ namespace Lightning.Core.Packaging
     {
         Catalog = 0x01,
 
-        CompressedData = 0xCC,
+        CompressedData = 0xCC
     }
 }

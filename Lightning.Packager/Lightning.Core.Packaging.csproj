@@ -28,5 +28,9 @@
     <DefineConstants>TRACE;WINDOWS,X64</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lightning.Utilities\NuCore.Utilities.csproj" />
+  </ItemGroup>
+
 
 </Project>
