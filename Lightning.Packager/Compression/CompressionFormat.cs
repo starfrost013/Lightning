@@ -12,7 +12,7 @@ namespace Lightning.Core.Packaging
             throw new NotImplementedException();
         }
 
-        public virtual byte[] CompressFile(string FileName)
+        public virtual byte[] CompressFile(string FileNameIn, string FileNameOut = null)
         {
             throw new NotImplementedException(); 
         }

@@ -159,7 +159,7 @@ namespace NuCore.Utilities
 #region NuRender Errors
 
          ErrorManager.RegisterError( new Error { Name = "NRCannotInitialiseSDL2Exception", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 138 });
-         ErrorManager.RegisterError( new Error { Name = "NRInvalidWindowSettingsException", Description = "NuRender: Window.Settings is null and shouldn't be.", Severity = MessageSeverity.Error, Id = 139 });
+         ErrorManager.RegisterError( new Error { Name = "NRInvalidWindowSettingsException", Description = "NuRender: Window.Settings is null and shouldn't be!", Severity = MessageSeverity.Error, Id = 139 });
          ErrorManager.RegisterError( new Error { Name = "NRErrorCreatingNRWindowException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 139 });
          ErrorManager.RegisterError( new Error { Name = "NRErrorCreatingNRRendererException", Description = "!!this should be overridden in code!!.", Severity = MessageSeverity.Error, Id = 140 });
          ErrorManager.RegisterError( new Error { Name = "NRCannotCreateObjectWithInvalidTypeException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 141 });
@@ -189,8 +189,10 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError(new Error { Name = "CannotSaveWhenNoFileSpecifiedException", Description = "Cannot save when no file is specified and a file is not open!", Severity = MessageSeverity.Error, Id = 200 });
          ErrorManager.RegisterError(new Error { Name = "InstanceDeprecatedException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 201 });
          ErrorManager.RegisterError(new Error { Name = "InstanceExperimentalException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 202 });
-
-            // todo: external-internal
+         ErrorManager.RegisterError(new Error { Name = "6BitCompressionFileNotFoundException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 203 });
+         ErrorManager.RegisterError(new Error { Name = "6BitCompressionErrorException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 204 });
+            
+         // todo: external-internal
         }
     }
 }
