@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Lightning.Core.Packaging
@@ -12,11 +13,11 @@ namespace Lightning.Core.Packaging
             {
                 if (FileName == null)
                 {
-                    return 12;
+                    return 25;
                 }
                 else
                 {
-                    return 12 + FileName.Length;
+                    return 25 + FileName.Length;
                 }
             }
             set
@@ -35,11 +36,29 @@ namespace Lightning.Core.Packaging
         /// </summary>
         public ulong FilePointer { get; set; }
 
+        /// <summary>
+        /// Timestamp of this LWPak file. (time_t 64bit)
+        /// </summary>
+        public DateTime Timestamp { get; set; }
+
+        /// <summary>
+        /// The compression mode of this file - see <see cref="PackageFileCompressionMode"/>.
+        /// </summary>
         public PackageFileCompressionMode FileCompressionMode { get; set; }
 
         /// <summary>
         /// Size of this file.
         /// </summary>
         public ulong FileSize { get; set; }
+
+        public void WriteEntry(BinaryWriter BW)
+        {
+            BW.Write(FileName); // should never be null
+            BW.Write(FilePointer);
+            DateTimeOffset Offset = (DateTimeOffset)Timestamp;
+            BW.Write(Offset.ToUnixTimeSeconds());
+            BW.Write((uint)FileCompressionMode);
+        }
+
     }
 }

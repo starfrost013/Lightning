@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Lightning.Core.Packaging
@@ -29,6 +30,11 @@ namespace Lightning.Core.Packaging
         public const int VersionMinor = 0; 
         
         /// <summary>
+        /// Timestamp of this LWPak file. (time_t 64bit)
+        /// </summary>
+        public DateTime Timestamp { get; set; }
+
+        /// <summary>
         /// The number of files in this LWPAK.
         /// </summary>
         public int NumberOfEntries { get; set; }
@@ -43,6 +49,18 @@ namespace Lightning.Core.Packaging
         /// </summary>
         public ulong DataPointer { get; set; }
 
+        public void WriteHeader(BinaryWriter Stream)
+        {
+            Stream.Seek(0, SeekOrigin.Begin);
 
+            Stream.Write(Magic);
+            Stream.Write(VersionMajor);
+            Stream.Write(VersionMinor);
+
+            DateTimeOffset Offset = (DateTimeOffset)Timestamp;
+            Stream.Write(Offset.ToUnixTimeSeconds());
+            Stream.Write(NumberOfEntries);
+            Stream.Write(CatalogPointer);
+        }
     }
 }

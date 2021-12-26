@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO; 
 using System.Text;
 
 namespace Lightning.Core.Packaging
@@ -21,6 +22,16 @@ namespace Lightning.Core.Packaging
         public PackageFileCatalog()
         {
             Entries = new List<PackageFileCatalogEntry>();
+        }
+
+        public void WriteSection(BinaryWriter BW)
+        {
+            BW.Write(SectionMarker);
+        }
+
+        public void WriteEntry(PackageFileCatalogEntry Entry)
+        {
+            Entries.Add(Entry);
         }
     }
 }

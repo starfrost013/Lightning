@@ -128,5 +128,21 @@ namespace Lightning.Core.Packaging
                 return null;
             }
         }
+
+        public override byte[] Decompress(byte[] Bytes)
+        {
+            for (int i = 0; i < Bytes.Length; i++)
+            {
+                byte CurByte = Bytes[i];
+
+                if (Bytes.Length - i > 1)
+                {
+                    byte NextByte = Bytes[i + 1];
+
+                    bool Bit6 = CurByte.GetBit(6);
+                    bool Bit7 = CurByte.GetBit(7);
+                }
+            }
+        }
     }
 }

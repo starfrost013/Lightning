@@ -18,5 +18,18 @@ namespace Lightning.Core.Packaging
         }
 
         public virtual byte[] Compress(byte[] Bytes) => Compress(Bytes.ToList());
+
+        public virtual byte[] Decompress(List<byte> Bytes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual byte[] DecompressFile(string FileNameIn, string FileNameOut = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual byte[] Decompress(byte[] Bytes) => Compress(Bytes.ToList());
+
     }
 }
