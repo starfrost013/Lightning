@@ -21,7 +21,8 @@ namespace Lightning.Core.Packaging
 
                 if (Byte == 0x20)
                 {
-                    TByteList.Add(0x00);
+                    TByteList.Add(0x3E);
+                    TByteList.Add(0x3E);
                 }
                 else
                 {
@@ -92,7 +93,7 @@ namespace Lightning.Core.Packaging
                 byte[] OldFileBytes = File.ReadAllBytes(FileNameIn);
 
                 // we already know it exists
-                File.Delete(FileNameIn);
+                if (FileNameOut == null) File.Delete(FileNameIn);
 
                 byte[] FileBytes = Compress(OldFileBytes);
 
@@ -119,29 +120,76 @@ namespace Lightning.Core.Packaging
             }
             catch (FileNotFoundException)
             {
-                ErrorManager.ThrowError(FileNameIn, "6BitCompressionFileNotFoundException", $"Six Bit compression error: File at {FileName} was not found.");
+                ErrorManager.ThrowError(FileNameIn, "6BitCompressionFileNotFoundException", $"Six Bit compression error: File at {FileNameIn} was not found.");
                 return null; 
             }
             catch (Exception ex)
             {
-                ErrorManager.ThrowError(FileNameIn, "6BitCompressionErrorException", $"Six Bit compression error: Error compressing {FileName}\n\n{ex}");
+                ErrorManager.ThrowError(FileNameIn, "6BitCompressionErrorException", $"Six Bit compression error: Error compressing {FileNameIn}\n\n{ex}");
                 return null;
             }
         }
 
         public override byte[] Decompress(byte[] Bytes)
         {
+            List<byte> DecompressedBytes = new List<byte>();
+
             for (int i = 0; i < Bytes.Length; i++)
             {
+                // no idea if this works
                 byte CurByte = Bytes[i];
 
-                if (Bytes.Length - i > 1)
-                {
-                    byte NextByte = Bytes[i + 1];
+                byte NextByte = Bytes[i + 1];
 
-                    bool Bit6 = CurByte.GetBit(6);
-                    bool Bit7 = CurByte.GetBit(7);
+                bool Bit6 = CurByte.GetBit(6);
+                bool Bit7 = CurByte.GetBit(7);
+
+                byte D0 = 0;
+
+                if (!Bit6 && Bit7) D0 = 1;
+                if (Bit6 && !Bit7) D0 = 2;
+                if (Bit6 && Bit7) D0 = 3;
+
+                byte FinalByte = (byte)(CurByte - D0);
+
+                FinalByte = (byte)(FinalByte >> 2);
+
+                DecompressedBytes.Add(FinalByte);
+            }
+
+            return DecompressedBytes.ToArray();
+        }
+
+        public override byte[] DecompressFile(string FileNameIn, string FileNameOut = null)
+        {
+            try
+            {
+                byte[] CompressedInfo = File.ReadAllBytes(FileNameIn);
+
+                if (FileNameOut == null) File.Delete(FileNameIn);
+
+                byte[] DecompressedInfo = Decompress(CompressedInfo);
+
+                if (FileNameOut == null)
+                {
+                    File.WriteAllBytes(FileNameIn, DecompressedInfo);
                 }
+                else
+                {
+                    File.WriteAllBytes(FileNameOut, DecompressedInfo);
+                }
+
+                return DecompressedInfo; 
+            }
+            catch (FileNotFoundException)
+            {
+                ErrorManager.ThrowError(FileNameIn, "6BitCompressionFileNotFoundException", $"Six Bit decompression error: File at {FileNameIn} was not found.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ThrowError(FileNameIn, "6BitCompressionErrorException", $"Six Bit decompression error: Error compressing {FileNameIn}\n\n{ex}");
+                return null;
             }
         }
     }

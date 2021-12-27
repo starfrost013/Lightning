@@ -12,7 +12,6 @@ namespace Lightning.Core.Packaging
         public override byte[] Compress(byte[] Bytes)
         {
             throw new NotImplementedException("Not supported by current implementation of 7zip API/LZMA SDK");
-
         }
 
         public override byte[] CompressFile(string FileNameIn, string FileNameOut = null)
@@ -21,15 +20,43 @@ namespace Lightning.Core.Packaging
 
             using (FileStream In = new FileStream(FileNameIn, FileMode.Open))
             {
-                using (FileStream Out = new FileStream(FileNameOut, FileMode.Open))
+                FileStream Out = null;
+
+                if (FileNameOut == null)
                 {
-                    LZMAEncoder.Code(In, Out, -1, -1, null);
+                    Out = new FileStream(FileNameIn, FileMode.Open);
                 }
+                else
+                {
+                    Out = new FileStream(FileNameOut, FileMode.Open);
+
+
+                }
+
+                LZMAEncoder.WriteCoderProperties(Out);
+                LZMAEncoder.Code(In, Out, -1, -1, null);
             }
 
             return File.ReadAllBytes(FileNameOut);
         }
 
-        
+        public override byte[] Decompress(byte[] Bytes)
+        {
+            throw new NotImplementedException("Not supported by current implementation of 7zip API/LZMA SDK");
+        }
+
+        public override byte[] DecompressFile(string FileNameIn, string FileNameOut = null)
+        {
+            SevenZip.Compression.LZMA.Decoder LZMADecoder = new SevenZip.Compression.LZMA.Decoder();
+
+            using (FileStream In = new FileStream(FileNameIn, FileMode.Open))
+            {
+                using (FileStream Out = new FileStream(FileNameOut, FileMode.Open))
+                {
+
+                }
+            }
+        }
+
     }
 }
