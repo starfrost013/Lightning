@@ -4,8 +4,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.4.1059.21362</AssemblyVersion>
-    <FileVersion>0.4.1059.21362</FileVersion>
+    <AssemblyVersion>0.4.1062.21362</AssemblyVersion>
+    <FileVersion>0.4.1062.21362</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <Nullable>annotations</Nullable>
   </PropertyGroup>
@@ -46,6 +46,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core.NativeInterop\NuCore.NativeInterop.csproj" />
     <ProjectReference Include="..\Lightning.Core.SDL2-CS\NuRender.SDL2-CS.csproj" />
+    <ProjectReference Include="..\Lightning.Packager\Lightning.Core.Packaging.csproj" />
     <ProjectReference Include="..\Lightning.Utilities\NuCore.Utilities.csproj" />
     <ProjectReference Include="..\NuRender\NuRender.csproj" />
   </ItemGroup>
