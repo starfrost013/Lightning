@@ -224,7 +224,7 @@ namespace Lightning.Core.API
                     SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
                     SN.Data.Data.Add(Frame);
 
-                    Frame.NotCameraAware = NotCameraAware;
+                    Frame.ForceToScreen = ForceToScreen;
 
                     ServiceNotifier.NotifySCM(SN);
                 }

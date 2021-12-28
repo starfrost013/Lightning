@@ -569,7 +569,7 @@ namespace Lightning.Core.API
                     if (!Tx.TEXTURE_INITIALISED)
                     {
                         PO.GetBrush();
-                        Tx.Init();
+                        Tx.Init(MainScene);
                     }
 
                     // Made this code a bit less hackish (December 11, 2021):

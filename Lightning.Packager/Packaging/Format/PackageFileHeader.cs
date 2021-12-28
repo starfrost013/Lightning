@@ -22,12 +22,12 @@ namespace Lightning.Core.Packaging
         /// <summary>
         /// Major component of LWPak file format version.
         /// </summary>
-        public const int VersionMajor = 1;
+        public const byte VersionMajor = 1;
 
         /// <summary>
         /// Minor component of LWPak file format version.
         /// </summary>
-        public const int VersionMinor = 0; 
+        public const byte VersionMinor = 0; 
         
         /// <summary>
         /// Timestamp of this LWPak file. (time_t 64bit)
@@ -49,6 +49,7 @@ namespace Lightning.Core.Packaging
         /// </summary>
         public ulong DataPointer { get; set; }
 
+        internal const int HeaderSize = 36; 
         public void WriteHeader(BinaryWriter Stream)
         {
             Stream.Seek(0, SeekOrigin.Begin);
@@ -61,6 +62,7 @@ namespace Lightning.Core.Packaging
             Stream.Write(Offset.ToUnixTimeSeconds());
             Stream.Write(NumberOfEntries);
             Stream.Write(CatalogPointer);
+            Stream.Write(DataPointer);
         }
     }
 }

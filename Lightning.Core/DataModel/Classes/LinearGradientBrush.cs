@@ -151,7 +151,7 @@ namespace Lightning.Core.API
 
                         Vector2 GStopPlusOnePos = PEParentPosition + (PEParent.Size * GradientStopPlusOne.StopPoint);
 
-                        if (!NotCameraAware)
+                        if (!ForceToScreen)
                         {
                             // temp until converter
                             CurPosition -= new Vector2(MainWindow.Settings.RenderingInformation.CCameraPosition.X, MainWindow.Settings.RenderingInformation.CCameraPosition.Y);

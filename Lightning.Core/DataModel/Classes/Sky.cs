@@ -69,7 +69,7 @@ namespace Lightning.Core.API
             else
             {
                 Brush GBrush = (ImageBrush)GIR.Instance;
-                GBrush.NotCameraAware = true;
+                GBrush.ForceToScreen = true;
 
                 // I ACTUALLY HAVE NO IDEA WHAT THE FUCK IS GOING ON HERE SO WE ARE DOING THIS STUPID SHIT INSTEAD
                 GBrush.BRUSH_INITIALISED = false;

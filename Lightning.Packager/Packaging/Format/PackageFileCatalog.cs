@@ -29,7 +29,7 @@ namespace Lightning.Core.Packaging
             BW.Write(SectionMarker);
         }
 
-        public void WriteEntry(PackageFileCatalogEntry Entry)
+        public void AddEntry(PackageFileCatalogEntry Entry)
         {
             Entries.Add(Entry);
         }

@@ -47,7 +47,10 @@ namespace Lightning.Core.Packaging
         public PackageFileCompressionMode FileCompressionMode { get; set; }
 
         /// <summary>
-        /// Size of this file.
+        /// Size of this file. 
+        /// 
+        /// DO NOT REARRANGE THIS UNLESS YOU ALSO CHANGE THE CODE IN
+        /// <see cref="PackageFile"/>.
         /// </summary>
         public ulong FileSize { get; set; }
 
@@ -58,6 +61,7 @@ namespace Lightning.Core.Packaging
             DateTimeOffset Offset = (DateTimeOffset)Timestamp;
             BW.Write(Offset.ToUnixTimeSeconds());
             BW.Write((uint)FileCompressionMode);
+            BW.Write(FileSize); // See warning on property 
         }
 
     }
