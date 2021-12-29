@@ -47,7 +47,7 @@ namespace Lightning
 
                     for (int i = 0; i < InitString.Length; i++)
                     {
-                        if (i % 2 == 0)
+                        if (i % 3 == 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Yellow;
                         }
@@ -63,7 +63,7 @@ namespace Lightning
                     Console.Write(" (NR Integration Build)\n\n");
                     Console.ForegroundColor = ConsoleColor.Gray;
 
-                    Console.WriteLine("Software Development Kit (pre-release, December 2021)");
+                    Console.WriteLine("Software Development Kit (pre-release, January 2022)");
                     Console.WriteLine($"© 2021-2022 starfrost/Lightning Dev Team. All rights reserved.\n");
 
                     // Load version information

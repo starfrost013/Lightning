@@ -1,0 +1,651 @@
+﻿<!-- Lightning Error XML
+Do not change if you are not a dev 
+© 2021 starfrost/Lightning Dev Team (just me atm lol)
+-->
+
+<Errors>
+  <Error>
+    <Description>Test Error from XML</Description>
+    <Name>TestErrorException</Name>
+    <Id>0</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+  
+  <!-- Implemented 2021-04-02 -->
+  <Error>
+    <Description>InstanceCollection: Attempted to acquire invalid Instance!</Description>
+    <Name>AttemptedToAcquireInvalidInstanceException</Name>
+    <Id>1</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+  
+  <Error>
+    <Description>Versioning: Acquired invalid version - must have 4 components (delimiter is .)</Description>
+    <Name>InvalidVersionException</Name>
+    <Id>2</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <Description>Versioning: Acquired invalid version - invalid owner or build date!</Description>
+    <Name>InvalidVersionAuxillaryInformationException</Name>
+    <Id>3</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <Description>Versioning: Acquired invalid version - major, minor, revision, or private/compressed build date</Description>
+    <Name>InvalidVersionInformationException</Name>
+    <Id>4</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToAddNonErrorToErrorsException</Name>
+    <Id>5</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <!-- Probably obsolete -->
+    <Description>EnumValue: Attempted to add EnumValue with zero-length or null to EnumInstance!</Description>
+    <Name>AttemptedToAddInvalidEnumNameException</Name>
+    <Id>6</Id>
+    <Severity>FatalError</Severity>
+    <!-- End probably obsolete -->
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DataModelInstanceCreationFailedException</Name>
+    <Id>7</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <Description>An unknown exception occurred during the creation of an Instance and its addition to the DataModel.</Description>
+    <Name>DataModelInstanceCreationUnknownErrorException</Name>
+    <Id>8</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InstanceInfoGenerationFailedException</Name>
+    <Id>9</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InstanceCannotBeParentException</Name>
+    <Id>10</Id>
+    <Severity>Error</Severity>
+  </Error>
+  
+  <Error>
+    <Description>Attempted to acquire a null parent for an Instance that does not have InstanceTags.CanHaveParentNull!</Description>
+    <Name>CannotAcquireNullParentException</Name>
+    <Id>11</Id>
+    <Severity>Error</Severity> <!-- change to fatal? -->
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSSchemaValidationWarningException</Name>
+    <Id>12</Id>
+    <Severity>Warning</Severity>
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSSchemaValidationErrorException</Name>
+    <Id>13</Id>
+    <Severity>Error</Severity> <!-- change to fatal? -->
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSMetadataValidationError</Name>
+    <Id>14</Id>
+    <Severity>Error</Severity>
+    <!-- change to fatal? -->
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>DDMSDataModelSerialisationErrorException</Name>
+    <Id>15</Id>
+    <Severity>Error</Severity>
+    <!-- change to fatal? -->
+  </Error>
+  <!-- End 2021-04-02 -->
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>GlobalSettingsValidationFailureException</Name>
+    <Id>16</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>GlobalSettingsValidationWarningException</Name>
+    <Id>17</Id>
+    <Severity>Warning</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotAddThatInstanceAsChildException</Name>
+    <Id>18</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToSerialiseGlobalSettingsException</Name>
+    <Id>19</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ThatIsNotAnInstancePleaseDoNotTryToAddItToTheDataModelException</Name>
+    <Id>20</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>The Workspace has been destroyed and is no longer in the DataModel.</Description>
+    <Name>TheWorkspaceHasBeenDestroyedException</Name>
+    <Id>21</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to add an object that is not a ServiceStartupCommand to a ServiceStartupCommandCollection</Description>
+    <Name>AttemptedToAddNonServiceStartupCommandToServiceStartupCommandCollectionException</Name>
+    <Id>22</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InternalSerialisationErrorException</Name>
+    <Id>23</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotFindLgxFileException</Name>
+    <Id>24</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot acquire GlobalSettings when it is not yet loaded!</Description>
+    <Name>CannotAcquireUnloadedGlobalSettingsException</Name>
+    <Id>25</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>GameSettingsFailedToLoadException</Name>
+    <Id>26</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToObtainGameSettingException</Name>
+    <Id>27</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <!-- Used for game settings that are required for the game to start -->
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToObtainCriticalGameSettingException</Name>
+    <Id>28</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overidden in code!!</Description>
+    <Name>CannotDestroyNonDestroyableInstanceException</Name>
+    <Id>29</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ThatIsNotAnInstancePleaseDoNotTryToRemoveItFromTheDataModelException</Name>
+    <Id>30</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to remove an Instance that is not in the DataModel or Workspace.</Description>
+    <Name>AttemptedToRemoveInstanceThatIsNotPartOfDataModelException</Name>
+    <Id>31</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to remove an Instance from a Parent that it is not a child of.</Description>
+    <Name>AttemptedToRemoveInstanceThatIsNotAChildOfItsParentException</Name>
+    <Id>32</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>The Service Control Manager has failed.</Description>
+    <Name>ServiceControlManagerFailureException</Name>
+    <Id>33</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>RenderServiceInitialisationFailedException</Name>
+    <Id>34</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CriticalServiceFailureException</Name>
+    <Id>35</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to pass an invalid ServiceNotification to the Service Control Manager.</Description>
+    <Name>AttemptedToPassInvalidServiceNotificationException</Name>
+    <Id>36</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToHandleServiceNotificationAboutANonServiceException</Name>
+    <Id>37</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotFindXmlFileOrSchemaException</Name>
+    <Id>38</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorValidatingLGXFileException</Name>
+    <Id>39</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot convert a string without a comma or with more than one comma to a Vector2!</Description>
+    <Name>Vector2ConversionInvalidNumberOfComponentsException</Name>
+    <Id>40</Id>
+    <Severity>Error</Severity> 
+  </Error>
+
+  <Error>
+    <Description>Attempted to convert an invalid string or an object that is not a string! to a Vector2!</Description>
+    <Name>Vector2InvalidConversionException</Name>
+    <Id>41</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to render an invalid texture!</Description>
+    <Name>AttemptedToRenderInvalidTextureException</Name>
+    <Id>42</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>CannotLoadNonexistentTextureException</Name>
+    <Id>43</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorLoadingTextureException</Name>
+    <Id>44</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorLoadingSDL2DllException</Name>
+    <Id>45</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to convert an invalid length hexadecimal colour string to a Color3!</Description>
+    <Name>ErrorConvertingHexadecimalColourException</Name>
+    <Id>46</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorConvertingHexadecimalColourFormatException</Name>
+    <Id>47</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to convert an invalid length relative colour string to a Color3!</Description>
+    <Name>ErrorConvertingRelativeColourException</Name>
+    <Id>46</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorConvertingRelativeColourFormatException</Name>
+    <Id>47</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+
+  <Error>
+    <Description>Attempted to convert an invalid length colour string to a Color3!</Description>
+    <Name>ErrorConvertingCommaColourException</Name>
+    <Id>48</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorConvertingCommaColourFormatException</Name>
+    <Id>49</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to load a RelativeColour where one or more of the components was outside of the range [0,1]!</Description>
+    <Name>RelativeColourOutOfRangeException</Name>
+    <Id>49</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Failed to open the specified game. Currently this is just an error message - in the future we will have some nice UI.</Description>
+    <Name>FailedToOpenLgxException</Name>
+    <Id>50</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>FailedToSaveLgxException</Name>
+    <Id>51</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>InvalidDataModelCannotSaveLgxException</Name>
+    <Id>52</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToAcquireInvalidPropertyInfoException</Name>
+    <Id>53</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>AttemptedToAcquireInvalidCameraTargetException</Name>
+    <Id>54</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>TokenisationCannotConvertTypeInternalException</Name>
+    <Id>55</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorExposingMethodToScriptingException</Name>
+    <Id>56</Id>
+    <Severity>Error</Severity> <!-- may be non-fatal: reboot possible? -->
+  </Error>
+
+  <Error>
+    <Description>Cannot run a script with an invalid name!</Description>
+    <Name>CannotRunScriptWithInvalidNameException</Name>
+    <Id>57</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorLoadingOrTokenisingScriptException</Name>
+    <Id>58</Id>
+    <Severity>Warning</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorLoadingSoundChunkException</Name>
+    <Id>59</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>An error occurred obtaining a list of sounds to play!</Description>
+    <Name>ErrorAcquiringSoundListException</Name>
+    <Id>60</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>To use 3D sound, a Sound must have a Position and Radius!</Description>
+    <Name>Err3DSoundRequiresSoundPositionAndRadiusException</Name>
+    <Id>61</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>To use 3D sound, a Sound must have a target object!</Description>
+    <Name>Err3DSoundRequiresTargetObjectException</Name> <!-- have a target position? -->
+    <Id>62</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>Err3DSoundTargetObjectDoesNotExistException</Name>
+    <Id>63</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalObjectException</Name>
+    <Id>63</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorObtainingListOfPhysicalObjectsToRenderException</Name>
+    <Id>64</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisTabCollectionEnumeratorOverflowException</Name>
+    <Id>65</Id>
+    <Severity>FatalError</Severity> <!-- fatal for now -->
+  </Error>
+
+  <Error>
+    <Description>--overrideappid was specified without an appname to override, ignoring</Description>
+    <Name>OverrideAppIdSpecifiedWithNoAppId</Name>
+    <Id>66</Id>
+    <Severity>Warning</Severity>
+  </Error>
+
+  <Error>
+    <Description>Please provide a Game XML file to load!</Description>
+    <Name>GameXmlFileRequiredException</Name>
+    <Id>67</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+  
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisNoDataModelLoadedException</Name>
+    <Id>68</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot add a non-Tab to a TabCollection!</Description>
+    <Name>PolarisCannotAddNonTabToTabCollectionException</Name>
+    <Id>69</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Attempted to populate TabUI when Tabs have not been loaded!</Description>
+    <Name>PolarisCannotPopulateTabUIWithNoTabsException</Name>
+    <Id>70</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisCannotLoadNonexistentUserControlForTabUseException</Name>
+    <Id>71</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>PolarisCannotLoadNonUserControlForTabUseException</Name>
+    <Id>72</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot add a null message to the Polaris Output tab!</Description>
+    <Name>PolarisCannotAddNullMessageToPolarisOutputTab</Name>
+    <Id>73</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>An error occurred removing ambiguous matches for generation of instance information.</Description>
+    <Name>InstanceInfoErrorRemovingAmbiguousMatchesException</Name>
+    <Id>75</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>An error occurred acquiring the list of physical objects to render.</Description>
+    <Name>ErrorOccurredAcquiringPhysicalObjectListException</Name>
+    <Id>76</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>A Sky object must have a Texture!</Description>
+    <Name>SkyObjectMustHaveTextureException</Name>
+    <Id>77</Id>
+    <Severity>FatalError</Severity> <!-- fatal for now -->
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>TokenCollectionIndexOutOfRangeException</Name>
+    <Id>78</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot add a non-Token to a TokenCollection!</Description>
+    <Name>CannotAddNonTokenToTokenCollectionException</Name>
+    <Id>79</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot add a Token with a Parent that is not in the TokenCollection to a TokenCollection!</Description>
+    <Name>CannotAddTokenWithParentThatIsNotInTokenCollectionException</Name>
+    <Id>80</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>The old Tokeniser has been removed as of June 1, 2021. Please use the AST Tokeniser instead!</Description>
+    <Name>OldTokeniserRemovedException</Name>
+    <Id>81</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Cannot add an Instance to a Parent that is not in the InstanceCollection you are attempting to add it to!</Description>
+    <Name>CannotAddNonexistentInstanceToInstanceCollectionException</Name>
+    <Id>82</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>An ASTPattern must have at least three elements - cannot access its index 2 or below!</Description>
+    <Name>AstPatternMustHaveAtLeast3Elements</Name>
+    <Id>83</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>SyntaxErrorException</Name>  
+    <Id>84</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>ErrorAcquiredInvalidLineException</Name>
+    <Id>85</Id>
+    <Severity>FatalError</Severity>
+  </Error>
+
+  <Error>
+    <Description>!!this should be overridden in code!!</Description>
+    <Name>LuaScriptCrashedException</Name>
+    <Id>86</Id>
+    <Severity>Error</Severity>
+  </Error>
+
+  <Error>
+    <Description>Lua state invalid or trying to parse a script before ScriptingService has started.</Description>
+    <Name>LuaStateFailureException</Name>
+    <Id>87</Id>
+    <Severity>Error</Severity>
+  </Error>
+</Errors>

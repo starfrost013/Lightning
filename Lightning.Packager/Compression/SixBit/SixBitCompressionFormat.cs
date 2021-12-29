@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq; 
 using System.IO; 
 using System.Text;
 
@@ -95,10 +96,21 @@ namespace Lightning.Core.Packaging
                 // we already know it exists
                 if (FileNameOut == null) File.Delete(FileNameIn);
 
-                byte[] FileBytes = Compress(OldFileBytes);
+                List<byte> FileBytesT = new List<byte>();
 
+                // weird little workaround for this
+                if (PathUtil.IsTextFile(FileNameIn))
+                {
+                    FileBytesT = Compress(OldFileBytes).ToList();
+                }
+                else
+                {
+                    FileBytesT = OldFileBytes.ToList();
+                }
+
+                byte[] FileBytes = FileBytesT.ToArray();
 #if DEBUG
-
+                
                 int OldFileByteLength = OldFileBytes.Length;
                 int NewFileByteLength = FileBytes.Length;
 
