@@ -16,7 +16,7 @@ namespace Lightning.Core.API
     public class SurfaceGui : Gui
     {
         /// <summary>
-        /// The target object name
+        /// The name of the object that this SurfaceGui will snap to.
         /// </summary>
         public string TargetObjectName { get; set; }
         

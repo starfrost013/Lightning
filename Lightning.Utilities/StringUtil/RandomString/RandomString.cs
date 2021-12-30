@@ -90,7 +90,7 @@ namespace NuCore.Utilities
 
                     if (Settings.Flags.HasFlag(RandomStringFlags.All)) CharAccepted = true;
 
-                    if (!CharAccepted) CurrentChar = GenerateChar(); // character rejected, generate enough
+                    if (!CharAccepted) CurrentChar = GenerateChar(); // character rejected, generate another
                 }
 
                 SB.Append(CurrentChar);

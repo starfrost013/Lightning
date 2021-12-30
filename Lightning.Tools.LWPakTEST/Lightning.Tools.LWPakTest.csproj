@@ -4,10 +4,38 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
+    <AssemblyVersion>1.0.19.21364</AssemblyVersion>
+    <FileVersion>1.0.19.21364</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Content\LWPakImage.jpg" />
+    <None Remove="Content\LWPAKLargeFile.bin" />
+    <None Remove="Content\LWPAKSmallFile.bin" />
+    <None Remove="Content\LWPakXML.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\LWPakImage.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\LWPAKLargeFile.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\LWPAKSmallFile.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\LWPakXML.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Lightning.Packager\Lightning.Core.Packaging.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

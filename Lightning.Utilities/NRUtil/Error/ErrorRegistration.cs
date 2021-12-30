@@ -191,7 +191,9 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError(new Error { Name = "InstanceExperimentalException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 202 });
          ErrorManager.RegisterError(new Error { Name = "6BitCompressionFileNotFoundException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 203 });
          ErrorManager.RegisterError(new Error { Name = "6BitCompressionErrorException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 204 });
-            
+         ErrorManager.RegisterError(new Error { Name = "LWPakInvalidFilenameException", Description = "Attempted to write to an LWPak filename (null or with invalid characters)!", Severity = MessageSeverity.Error, Id = 205 });
+         ErrorManager.RegisterError(new Error { Name = "LWPakInvalidHeaderException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 206 });
+
          // todo: external-internal
         }
     }

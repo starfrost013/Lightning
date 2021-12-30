@@ -10,13 +10,18 @@ namespace Lightning.Core.Packaging
     /// <summary>
     /// LZMACompressionFormat
     /// 
-    /// December 25, 2021 (modified December 28, 2021)
+    /// December 25, 2021 (modified December 29, 2021: Additional error handling)
     /// 
     /// Defines the code for the LZMA compression format.
     /// Uses LZMA SDK v2104 beta.
     /// </summary>
     public class LZMACompressionFormat : CompressionFormat
     {
+        /// <summary>
+        /// Fake classname for errormanager.
+        /// </summary>
+        private static string ClassName => "SixBitCompressionFormat";
+
         public override byte[] Compress(byte[] Bytes)
         {
             // implementation doesn't support not compressing to file
@@ -28,31 +33,43 @@ namespace Lightning.Core.Packaging
             string CompressedFileName = (@$"{TempDir}\{DateTime.Now.ToString("yyy MM dd hh MM ss").Replace(" ", "")}");
 
             byte[] CompressedData = CompressFile(CompressedFileName);
+
+            #if RELEASE // debug - don't delete
             File.Delete(CompressedFileName);
+            #endif
+
             return CompressedData;
         }
 
         public override byte[] CompressFile(string FileNameIn, string FileNameOut = null)
         {
+            if (!FileNameIn.IsValidFileName())
+            {
+                ErrorManager.ThrowError(ClassName, "LWPakInvalidFilenameException");
+                return null;
+            }
+
             SevenZip.Compression.LZMA.Encoder LZMAEncoder = new SevenZip.Compression.LZMA.Encoder();
 
-            using (FileStream In = new FileStream(FileNameIn, FileMode.Open))
+            //open and write
+            using (FileStream In = new FileStream(FileNameIn, FileMode.OpenOrCreate))
             {
                 FileStream Out = null;
 
                 if (FileNameOut == null)
                 {
-                    Out = new FileStream(FileNameIn, FileMode.Open);
+                    Out = In; // this is fucking dumb
                 }
                 else
                 {
                     Out = new FileStream(FileNameOut, FileMode.Open);
-
-
                 }
 
                 LZMAEncoder.WriteCoderProperties(Out);
                 LZMAEncoder.Code(In, Out, -1, -1, null);
+
+                In.Close(); 
+                Out.Close(); 
             }
             
             if (FileNameOut == null)
@@ -82,6 +99,12 @@ namespace Lightning.Core.Packaging
 
         public override byte[] DecompressFile(string FileNameIn, string FileNameOut = null)
         {
+            if (!FileNameIn.IsValidFileName())
+            {
+                ErrorManager.ThrowError(ClassName, "LWPakInvalidFilenameException");
+                return null;
+            }
+            
             SevenZip.Compression.LZMA.Decoder LZMADecoder = new SevenZip.Compression.LZMA.Decoder();
 
             using (BinaryReader In = new BinaryReader(new FileStream(FileNameIn, FileMode.Open)))

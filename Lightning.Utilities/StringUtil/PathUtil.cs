@@ -37,7 +37,7 @@ namespace NuCore.Utilities
                 string[] XmlPathComponents = XmlPath.Split('\\');
 
                 StringBuilder SB = new StringBuilder();
-                
+
                 if (XmlPathComponents.Length < 1)
                 {
                     return Path; // obvious relative path
@@ -54,7 +54,7 @@ namespace NuCore.Utilities
 
                 SB.Append($@"\{Path}");
 
-                return SB.ToString(); 
+                return SB.ToString();
             }
 
         }
@@ -67,7 +67,7 @@ namespace NuCore.Utilities
         /// </summary>
         /// <param name="FileName">The file name to check</param>
         /// <returns>A boolean determining if this file has an extension indicating that it is a text file.</returns>
-        public static bool IsTextFile(string FileName) => (FileName.Contains(".lua") // Lua script
+        public static bool IsTextFile(this string FileName) => (FileName.Contains(".lua") // Lua script
         || FileName.Contains(".txt") // Text file
         || FileName.Contains(".asc") // Text file
         || FileName.Contains(".xml") // XML file
@@ -87,7 +87,7 @@ namespace NuCore.Utilities
         || FileName.Contains(".java") // Java source file
         || FileName.Contains(".jsp") // JavaServer Pages source file
         || FileName.Contains(".html") // HTML file
-        || FileName.Contains(".mhtml") // MHTML (single-file) filer
+        || FileName.Contains(".mhtml") // MHTML (single-file) file
         || FileName.Contains(".rs") // Rust source file
         || FileName.Contains(".css") // CSS file
         || FileName.Contains(".php") // PHP source file
@@ -106,5 +106,17 @@ namespace NuCore.Utilities
         || FileName.Contains(".cshtml") // ASP.NET Razor Pages file
         || FileName.Contains(".py") // Python source file
         || FileName.Contains(".js")); // Javascript source file
+
+        public static bool IsValidFileName(this string FileName) =>
+        FileName != null &&
+        (!FileName.Contains(@"\")
+        || !FileName.Contains(@"/")
+        || !FileName.Contains(":")
+        || !FileName.Contains("*")
+        || !FileName.Contains("?")
+        || !FileName.Contains("\"")
+        || !FileName.Contains("<")
+        || !FileName.Contains(">")
+        || !FileName.Contains("@"));
     }
 }

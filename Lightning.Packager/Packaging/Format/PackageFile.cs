@@ -56,18 +56,22 @@ namespace Lightning.Core.Packaging
         }
         public void Write()
         {
-            Logging.Log("Writing LWPak file", "Packaging Service");
+            Logging.Log("Writing LWPak file", ClassName);
 
             using (BinaryWriter BW = new BinaryWriter(new FileStream(FileName, FileMode.Create)))
             {
-                Logging.Log("Writing header...", "Packaging Service");
+                Logging.Log("Writing header...", ClassName);
+                Header.NumberOfEntries = Catalog.Entries.Count;
+                Header.Timestamp = DateTime.Now;
+                Header.CatalogPointer = PackageFileHeader.HeaderSize + 1;
+                Header.DataPointer = (ulong)((long)Header.CatalogPointer + ((Header.NumberOfEntries * Catalog.Entries[0].CatalogEntrySize) + 1));
                 Header.WriteHeader(BW);
 
                 for (int i = 0; i < Catalog.Entries.Count; i++)
                 {
 
                     PackageFileCatalogEntry PFCE = Catalog.Entries[i];
-                    Logging.Log($"Writing catalog entry and file for {PFCE.FileName}...", "Packaging Service");
+                    Logging.Log($"Writing catalog entry and file for {PFCE.FileName}...", ClassName);
 
                     // Compressed file size should be zero at this point.
                     PFCE.WriteEntry(BW);
@@ -79,27 +83,39 @@ namespace Lightning.Core.Packaging
 
                     if (PFCE.FileCompressionMode.HasFlag(PackageFileCompressionMode.SixBit))
                     {
+                        Logging.Log($"Packaging file {PFCE.FileName} using eight to six modulation...", ClassName);
+
                         SixBitCompressionFormat SBCF = new SixBitCompressionFormat();
                         CompressedFile = SBCF.Compress(CompressedFile);
                     }
 
                     if (PFCE.FileCompressionMode.HasFlag(PackageFileCompressionMode.LZMA))
                     {
+                        Logging.Log($"Packaging file {PFCE.FileName} using LZMA...", ClassName);
                         LZMACompressionFormat LZMA = new LZMACompressionFormat();
                         CompressedFile = LZMA.Compress(CompressedFile);
                     }
 
+                    //todo: currentdatarposition, write 00s as placeholder, etc
                     BW.Write(CompressedFile);
 
-                    BW.BaseStream.Seek(PackageFileHeader.HeaderSize + ((PFCE.CatalogEntrySize * i + 1) - 8), SeekOrigin.Begin); // - 8 to slot into position for header
+                    BW.BaseStream.Seek(PackageFileHeader.HeaderSize + 1 + ((PFCE.CatalogEntrySize * i) + PFCE.FileName.Length + 17), SeekOrigin.Begin); // - 8 to slot into position for header
 
                     BW.Write((ulong)CompressedFile.Length);
-
                 }
+
 
             }
 
 
+        }
+
+        public void Read()
+        {
+            using (BinaryReader BR = new BinaryReader(new FileStream(FileName, FileMode.Open)))
+            {
+                Header.ReadHeader(BR);
+            }
         }
     }
 }

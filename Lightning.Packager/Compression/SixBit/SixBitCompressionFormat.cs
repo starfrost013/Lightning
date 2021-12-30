@@ -8,8 +8,20 @@ using System.Text;
 
 namespace Lightning.Core.Packaging
 {
+    /// <summary>
+    /// SixBitCompressionFormat
+    /// 
+    /// December 24, 2021 (modified December 29, 2021: Additional error checking)
+    /// 
+    /// Defines a custom eight to six bit modulation used to optionally further compress files in Lightning's package format.
+    /// </summary>
     public class SixBitCompressionFormat : CompressionFormat
     {
+        /// <summary>
+        /// Fake classname for errormanager.
+        /// </summary>
+        private static string ClassName => "SixBitCompressionFormat";
+
         public override byte[] Compress(byte[] Bytes)
         {
             //Compress to 6-bit
@@ -91,6 +103,12 @@ namespace Lightning.Core.Packaging
         {
             try
             {
+                if (!FileNameIn.IsValidFileName())
+                {
+                    ErrorManager.ThrowError(ClassName, "LWPakInvalidFilenameException");
+                    return null; 
+                }
+
                 byte[] OldFileBytes = File.ReadAllBytes(FileNameIn);
 
                 // we already know it exists
@@ -176,6 +194,12 @@ namespace Lightning.Core.Packaging
         {
             try
             {
+                if (!FileNameIn.IsValidFileName())
+                {
+                    ErrorManager.ThrowError(ClassName, "LWPakInvalidFilenameException");
+                    return null;
+                }
+
                 byte[] CompressedInfo = File.ReadAllBytes(FileNameIn);
 
                 if (FileNameOut == null) File.Delete(FileNameIn);
