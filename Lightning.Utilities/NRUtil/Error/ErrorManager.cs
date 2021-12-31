@@ -47,21 +47,7 @@ namespace NuCore.Utilities
         }
 
         private static bool DoesErrorExist(Error Err) => Errors.ErrorList.Contains(Err);
-#if DEBUG
-        private static void ATest_CheckErrorSerialisedCorrectly()
-        {
-            foreach (Error Err in Errors.ErrorList)
-            {
-                string CompName = "Error Manager";
 
-                Logging.Log("Error: ", CompName);
-                Logging.Log($"Name: {Err.Name}", CompName);
-                Logging.Log($"Description: {Err.Description}", CompName);
-                Logging.Log($"Id: {Err.Id}", CompName);
-                Logging.Log($"Severity: {Err.Severity}", CompName);
-            }
-        }
-#endif
         /// <summary>
         /// temp: pre-result class
         /// 

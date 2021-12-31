@@ -24,14 +24,23 @@ namespace Lightning.Core.Packaging
             Entries = new List<PackageFileCatalogEntry>();
         }
 
-        public void WriteSection(BinaryWriter BW)
-        {
-            BW.Write(SectionMarker);
-        }
-
         public void AddEntry(PackageFileCatalogEntry Entry)
         {
             Entries.Add(Entry);
+        }
+
+        public int GetTotalCatalogSize(int LastEntry = Int32.MaxValue)
+        {
+            int CatalogSize = 0;
+
+            for (int i = 0; i < Entries.Count; i++)
+            {
+                PackageFileCatalogEntry PFCE = Entries[i];
+                if (i > LastEntry) return CatalogSize; 
+                CatalogSize += PFCE.CatalogEntrySize;
+            }
+
+            return CatalogSize; 
         }
     }
 }

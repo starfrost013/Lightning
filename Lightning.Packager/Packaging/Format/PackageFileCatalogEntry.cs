@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -46,6 +47,8 @@ namespace Lightning.Core.Packaging
         /// </summary>
         public PackageFileCompressionMode FileCompressionMode { get; set; }
 
+        private string ClassName => "Packaging Services";
+
         /// <summary>
         /// Size of this file. 
         /// 
@@ -53,6 +56,31 @@ namespace Lightning.Core.Packaging
         /// <see cref="PackageFile"/>.
         /// </summary>
         public ulong FileSize { get; set; }
+        
+        internal byte[] CompressedData { get; set; }
+        public void ReadEntry(BinaryReader BR)
+        {
+            // Assume we are already at the right position.
+
+            try
+            {
+                FileName = BR.ReadString();
+                FilePointer = BR.ReadUInt64();
+                Timestamp = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(BR.ReadInt64());
+                FileCompressionMode = (PackageFileCompressionMode)BR.ReadByte();
+                FileSize = BR.ReadUInt64();
+                Logging.Log($"Filename: {FileName}\n" +
+                $"File position: {FilePointer}\n" +
+                $"Timestamp: {Timestamp.ToString("yyyy-MM-dd HH:mm:ss")}\n" +
+                $"File compression mode: {FileCompressionMode}\n" +
+                $"File size: {FileSize}", ClassName);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ThrowError(ClassName, "LWPakInvalidCatalogException", $"An error occurred reading the LWPak file catalog.\n{ex}");
+            }
+            
+        }
 
         public void WriteEntry(BinaryWriter BW)
         {
@@ -60,8 +88,8 @@ namespace Lightning.Core.Packaging
             BW.Write(FilePointer);
             DateTimeOffset Offset = (DateTimeOffset)Timestamp;
             BW.Write(Offset.ToUnixTimeSeconds());
-            BW.Write((uint)FileCompressionMode);
-            BW.Write(FileSize); // See warning on property 
+            BW.Write((byte)FileCompressionMode);
+            //BW.Write(FileSize); // See warning on property 
         }
 
     }

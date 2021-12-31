@@ -11,6 +11,10 @@ namespace Lightning.Core.API
     public class GetGameSettingResult : IResult
     {
         public GameSetting Setting { get; set; }
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public string FailureReason { get; set; }
 
         /// <summary>

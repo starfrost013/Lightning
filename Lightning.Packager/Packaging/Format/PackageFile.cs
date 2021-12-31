@@ -66,13 +66,14 @@ namespace Lightning.Core.Packaging
                 Header.CatalogPointer = PackageFileHeader.HeaderSize + 1;
                 Header.DataPointer = (ulong)((long)Header.CatalogPointer + ((Header.NumberOfEntries * Catalog.Entries[0].CatalogEntrySize) + 1));
                 Header.WriteHeader(BW);
-
+                
                 for (int i = 0; i < Catalog.Entries.Count; i++)
                 {
 
                     PackageFileCatalogEntry PFCE = Catalog.Entries[i];
                     Logging.Log($"Writing catalog entry and file for {PFCE.FileName}...", ClassName);
 
+                    PFCE.Timestamp = DateTime.Now; 
                     // Compressed file size should be zero at this point.
                     PFCE.WriteEntry(BW);
 
@@ -96,18 +97,17 @@ namespace Lightning.Core.Packaging
                         CompressedFile = LZMA.Compress(CompressedFile);
                     }
 
-                    //todo: currentdatarposition, write 00s as placeholder, etc
-                    BW.Write(CompressedFile);
-
-                    BW.BaseStream.Seek(PackageFileHeader.HeaderSize + 1 + ((PFCE.CatalogEntrySize * i) + PFCE.FileName.Length + 17), SeekOrigin.Begin); // - 8 to slot into position for header
-
                     BW.Write((ulong)CompressedFile.Length);
+
+                    PFCE.CompressedData = CompressedFile;
+
                 }
 
-
+                foreach (PackageFileCatalogEntry PFCE in Catalog.Entries) // todo PackageFileCatalogEntryCollection
+                {
+                    BW.Write(PFCE.CompressedData);
+                }
             }
-
-
         }
 
         public void Read()
@@ -115,6 +115,14 @@ namespace Lightning.Core.Packaging
             using (BinaryReader BR = new BinaryReader(new FileStream(FileName, FileMode.Open)))
             {
                 Header.ReadHeader(BR);
+                
+                for (int i = 0; i < Header.NumberOfEntries; i++)
+                {
+                    // Add the entries to the file.
+                    PackageFileCatalogEntry PFCE = new PackageFileCatalogEntry();
+                    PFCE.ReadEntry(BR);
+                    Catalog.AddEntry(PFCE);
+                }
             }
         }
     }

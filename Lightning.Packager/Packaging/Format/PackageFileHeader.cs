@@ -11,9 +11,13 @@ namespace Lightning.Core.Packaging
     /// <summary>
     /// PackageHeader
     /// 
-    /// December 21, 2021
+    /// December 21, 2021 (modified December 31, 2021)
     /// 
     /// Defines a packaging format for lwpak (Lightning Package) files.
+    /// 
+    /// Version history:
+    /// V1.0 2021/12/21 initial version
+    /// V1.1 2021/12/31 Change uint to byte for compression mode
     /// </summary>
     public class PackageFileHeader
     {
@@ -30,7 +34,7 @@ namespace Lightning.Core.Packaging
         /// <summary>
         /// Minor component of LWPak file format version.
         /// </summary>
-        public const byte VersionMinor = 0; 
+        public const byte VersionMinor = 1; 
         
         /// <summary>
         /// Timestamp of this LWPak file. (time_t 64bit)
@@ -71,7 +75,7 @@ namespace Lightning.Core.Packaging
             Stream.Write(DataPointer);
         }
 
-        public void ReadHeader(BinaryReader Stream)
+        public void ReadHeader(BinaryReader Stream) // todo: headerreadresult so that it can be aborted
         {
             try
             {
@@ -98,17 +102,24 @@ namespace Lightning.Core.Packaging
                     if (FVersionMajor != VersionMajor
                     || FVersionMinor != VersionMinor)
                     {
-                        ErrorManager.ThrowError(ClassName, "LWPakInvalidHeaderException", $"Incompatible file format.\nThis version of Lightning implements version {VersionMajor}.{VersionMinor} of the LWPAK format.\nThis file is version {FVersionMajor}.{FVersionMinor}.");
+                        ErrorManager.ThrowError(ClassName, "LWPakInvalidHeaderException", $"Attempted to read an incompatible version of the LWPAK file format.\nThis version of Lightning implements version {VersionMajor}.{VersionMinor} of the LWPAK format.\nThis file is version {FVersionMajor}.{FVersionMinor}.");
+                        return;        
                     }
 
                     long UnixSeconds = Stream.ReadInt64();
-                    int NumberOfEntries = Stream.ReadInt32();
+                    NumberOfEntries = Stream.ReadInt32();
 
-                    ulong CatalogPointer = Stream.ReadUInt64();
-                    ulong DataPointer = Stream.ReadUInt64();
+                    if (NumberOfEntries < 0)
+                    {
+                        ErrorManager.ThrowError(ClassName, "LWPakInvalidHeaderException", $"Invalid number of entries! (must be above zero, got {NumberOfEntries}");
+                        return; 
+                    }
+
+                    CatalogPointer = Stream.ReadUInt64();
+                    DataPointer = Stream.ReadUInt64();
 #if DEBUG
                     DateTime FileDateTime = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(UnixSeconds);
-                    Logging.Log($"File format version {FVersionMajor}.{FVersionMinor}\nTimestamp {FileDateTime.ToString("yyyy-MM-dd HH:mm:ss")}\nNumber of entries {NumberOfEntries}\nCatalog pointer {CatalogPointer}\nData pointer {DataPointer}");
+                    Logging.Log($"File format version {FVersionMajor}.{FVersionMinor}\nTimestamp {FileDateTime.ToString("yyyy-MM-dd HH:mm:ss")}\nNumber of entries {NumberOfEntries}\nCatalog pointer {CatalogPointer}\nData pointer {DataPointer}", ClassName);
 #endif
 
                 }

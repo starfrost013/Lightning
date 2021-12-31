@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.4.1020.21364</AssemblyVersion>
-    <FileVersion>0.4.1020.21364</FileVersion>
+    <AssemblyVersion>0.4.1027.21365</AssemblyVersion>
+    <FileVersion>0.4.1027.21365</FileVersion>
     <PackageId>NuRender.Utilities</PackageId>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <Version>2.0.0</Version>

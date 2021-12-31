@@ -1,4 +1,5 @@
 ﻿using Lightning.Core.Packaging;
+using NuCore.Utilities; 
 using System;
 
 namespace Lightning.Tools.LWPakTest
@@ -7,6 +8,7 @@ namespace Lightning.Tools.LWPakTest
     {
         static void Main(string[] args)
         {
+            ErrorManager.Init();
             Console.WriteLine("Testing writing lwpak file...");
             WriteLWPakFile();
 

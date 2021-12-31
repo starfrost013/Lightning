@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <Description>Packaging Services</Description>
-    <AssemblyVersion>0.4.1080.21364</AssemblyVersion>
-    <FileVersion>0.4.1080.21364</FileVersion>
+    <AssemblyVersion>0.4.1077.21365</AssemblyVersion>
+    <FileVersion>0.4.1077.21365</FileVersion>
     <Product>Packaging Services</Product>
     <Company>Lightning Dev Team</Company>
     <Authors>Lightning Dev Team</Authors>

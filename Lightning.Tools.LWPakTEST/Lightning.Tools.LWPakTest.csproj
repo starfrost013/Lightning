@@ -4,8 +4,8 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.19.21364</AssemblyVersion>
-    <FileVersion>1.0.19.21364</FileVersion>
+    <AssemblyVersion>1.0.49.21365</AssemblyVersion>
+    <FileVersion>1.0.49.21365</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
