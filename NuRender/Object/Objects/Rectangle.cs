@@ -47,22 +47,22 @@ namespace NuRender
             {
                 if (Filled)
                 {
-                    SDL_gfx.boxRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)RSize.X, (int)Position.Y, (int)RSize.Y, Colour.R, Colour.G, Colour.B, Colour.A);
+                    SDL_gfx.boxRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)Position.Y, (int)Position.X + (int)RSize.X, (int)Position.Y + (int)RSize.Y, Colour.R, Colour.G, Colour.B, Colour.A);
                 }
                 else
                 {
-                    SDL_gfx.rectangleRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)RSize.X, (int)Position.Y, (int)RSize.Y, Colour.R, Colour.G, Colour.B, Colour.A);
+                    SDL_gfx.rectangleRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)Position.Y, (int)Position.X + (int)RSize.X, (int)Position.Y + (int)RSize.Y, Colour.R, Colour.G, Colour.B, Colour.A);
                 }
             }
             else
             {
                 if (Filled)
                 {
-                    SDL_gfx.roundedBoxRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)RSize.X, (int)Position.Y, (int)RSize.Y, BorderRadius, Colour.R, Colour.G, Colour.B, Colour.A);
+                    SDL_gfx.roundedBoxRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)Position.Y, (int)Position.X + (int)RSize.X, (int)Position.Y + (int)RSize.Y, BorderRadius, Colour.R, Colour.G, Colour.B, Colour.A);
                 }
                 else
                 {
-                    SDL_gfx.roundedRectangleRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)RSize.X, (int)Position.Y, (int)RSize.Y, BorderRadius, Colour.R, Colour.G, Colour.B, Colour.A);
+                    SDL_gfx.roundedRectangleRGBA(RenderInfo.RendererPtr, (int)Position.X, (int)Position.Y, (int)Position.X + (int)RSize.X, (int)Position.Y + (int)RSize.Y, BorderRadius, Colour.R, Colour.G, Colour.B, Colour.A);
                 }
             }
 

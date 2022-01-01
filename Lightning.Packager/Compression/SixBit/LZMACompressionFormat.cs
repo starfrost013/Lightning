@@ -30,9 +30,9 @@ namespace Lightning.Core.Packaging
             string TempDir = Path.GetTempPath();
             TempDir = @$"{TempDir}\NCLZMA";
             if (!Directory.Exists(TempDir)) Directory.CreateDirectory(TempDir);
-            string CompressedFileName = (@$"{TempDir}\{DateTime.Now.ToString("yyy MM dd hh MM ss").Replace(" ", "")}");
+            string CompressedFileName = (@$"{TempDir}\{DateTime.Now.ToString("yyy MM dd HH MM ss").Replace(" ", "")}");
 
-            byte[] CompressedData = CompressFile(CompressedFileName);
+            byte[] CompressedData = CompressFile(CompressedFileName, $"{CompressedFileName}.out");
 
             #if RELEASE // debug - don't delete
             File.Delete(CompressedFileName);
@@ -62,7 +62,7 @@ namespace Lightning.Core.Packaging
                 }
                 else
                 {
-                    Out = new FileStream(FileNameOut, FileMode.Open);
+                    Out = new FileStream(FileNameOut, FileMode.OpenOrCreate);
                 }
 
                 LZMAEncoder.WriteCoderProperties(Out);
@@ -93,7 +93,9 @@ namespace Lightning.Core.Packaging
             string CompressedFileName = (@$"{TempDir}\{DateTime.Now.ToString("yyy MM dd hh MM ss").Replace(" ", "")}");
 
             byte[] CompressedData = DecompressFile(CompressedFileName);
+            #if RELEASE
             File.Delete(CompressedFileName);
+            #endif
             return CompressedData;
         }
 
