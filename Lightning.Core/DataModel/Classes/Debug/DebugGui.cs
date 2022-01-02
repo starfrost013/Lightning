@@ -33,10 +33,16 @@ namespace Lightning.Core.API
         /// </summary>
         private bool Active { get; set; }
 
+        /// <summary>
+        /// Debug settings. Passed from IGDService.
+        /// </summary>
+        internal DebugSettings Settings { get; set; }
+
         public override void OnCreate()
         {
             // TODO: List building methods in RenderService, etc, need to be recursive
             OnKeyDownHandler += OnKeyDown;
+            Settings = new DebugSettings();
         }
 
         internal void DP_Init()
@@ -146,13 +152,69 @@ namespace Lightning.Core.API
 
             foreach (DebugPage DP in DebugPages)
             {
+                if (Settings.DisplayHitboxes) DoRender_RenderHitboxes(SDL_Renderer, Tx);
+
                 if (DP.IsOpen)
                 {
                     DP.Render(SDL_Renderer, Tx);
                     base.Render(SDL_Renderer, Tx); // render all elements
+
+                    // todo: remove this idiot hack 
                     break; // only render one page.
+                    // end todo: remove this idiot hack 
                 }
+
+                
            }
+        }
+
+        private void DoRender_RenderHitboxes(Scene SDL_Renderer, ImageBrush Tx)
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
+
+            if (GMIR.Successful)
+            {
+                List<Instance> Instances = GMIR.Instances;
+
+                foreach (PhysicalObject Instance in Instances)
+                {
+                    if (Instance.PhysicsEnabled)
+                    {
+                        if (Instance.AABB != null)
+                        {
+                            // this is a stupid fucking hack
+                            NuRender.Rectangle Rectangle = new NuRender.Rectangle(); // hack to make it get GC'd
+
+                            Rectangle.Size = (Vector2Internal)Instance.AABB.Size;
+
+                            if (Instance.ForceToScreen)
+                            {
+                                Rectangle.Position = (Vector2Internal)Instance.Position;
+                            }
+                            else
+                            {
+                                Rectangle.Position = (Vector2Internal)Instance.Position - MainWindow.Settings.RenderingInformation.CCameraPosition;
+                            }
+
+                            Rectangle.Colour = (Color4Internal)new Color4(255, 255, 255, 0);
+                            Rectangle.Filled = true;
+                            //todo: borders, backgrounds
+                            Rectangle.Render(MainWindow.Settings.RenderingInformation);
+                            // end this is a stupid fucking hack
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                ErrorManager.ThrowError(ClassName, "ErrorObtainingListOfPhysicalObjectsToRenderException", "Error obtaining list of physical objects for debug rendering!");
+                return;
+            }
         }
 
         internal List<DebugPage> GetDebugPages()
@@ -181,7 +243,19 @@ namespace Lightning.Core.API
         {
             string TheKey = EventArgs.Key.KeyCode.ToString();
 
-            if (TheKey == "ESCAPE") Active = !Active;
+            switch (TheKey)
+            {
+                // make these configurable
+                case "ESCAPE":
+                    Active = !Active;
+                    return;
+                case "F7":
+                    Settings.DisplayHitboxes = !Settings.DisplayHitboxes;
+                    return;
+                case "F8":
+                    Settings.DisplayCollision = !Settings.DisplayCollision;
+                    return;
+            }
 
         }
     }

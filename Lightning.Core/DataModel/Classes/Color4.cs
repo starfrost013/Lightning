@@ -11,11 +11,10 @@ namespace Lightning.Core.API
     /// <summary>
     /// Color4
     /// 
-    /// March 9, 2021 (modified July 12, 2021: add constructor)
+    /// March 9, 2021 (modified December 8, 2021: Now passes through to NR class <see cref="Color4Internal"/>)
     /// 
-    /// An ARGB colour.
+    /// Represents ARGB colour.
     /// </summary>
-    /// 
     [TypeConverter(typeof(Color4Converter))]
     public class Color4 : SerialisableObject
     {

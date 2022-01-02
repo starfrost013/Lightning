@@ -245,6 +245,7 @@ namespace Lightning.Core.API
 
             DGUI.Name = DebugGuiName;
             DGUI.Position = (Settings.WindowSize * DbgPageBegin);
+            DGUI.Settings = Settings; 
 
             TextBox Main = (TextBox)DGUI.AddChild("TextBox");
 
