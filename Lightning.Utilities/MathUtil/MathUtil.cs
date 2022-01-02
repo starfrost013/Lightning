@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace NuCore.Utilities
 {
     /// <summary>
-    /// Utilities: MathUtl
+    /// Utilities: MathUtIl
     /// 
     /// April 12, 2021
     /// 

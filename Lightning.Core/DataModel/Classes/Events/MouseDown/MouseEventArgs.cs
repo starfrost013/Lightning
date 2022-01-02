@@ -1,5 +1,5 @@
-﻿using Lightning.Core.SDL2;
-using Lightning.Utilities; 
+﻿using NuRender.SDL2;
+using NuCore.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;

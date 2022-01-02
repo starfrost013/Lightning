@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using NuRender; 
+using System;
 using System.Collections.Generic;
 using System.IO; 
 using System.Text;
@@ -22,6 +24,9 @@ namespace Lightning.Core.API
         private bool SPLASHSCREEN_INITIALISATION_FAILED { get; set; }
 
         private string TexturePath { get; set; }
+
+        internal override bool Deprecated => true;
+
         private void Init()
         {
             Workspace Ws = DataModel.GetWorkspace();
@@ -81,7 +86,7 @@ namespace Lightning.Core.API
             }
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!SPLASHSCREEN_INITIALISED)
             {

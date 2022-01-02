@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NuCore.NativeInterop.Win32;
+using NuCore.Utilities; 
+using System;
 using System.Collections.Generic;
 using System.Linq; 
 using System.Reflection;
@@ -9,15 +11,15 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 0.23.0) 
+    /// DataModel (API Version 1.1.0 - NR Integration) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
     /// </summary>
     public class DataModel
     {
-        public static int DATAMODEL_API_VERSION_MAJOR = 0;
-        public static int DATAMODEL_API_VERSION_MINOR = 23;
+        public static int DATAMODEL_API_VERSION_MAJOR = 1;
+        public static int DATAMODEL_API_VERSION_MINOR = 1;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
@@ -239,6 +241,17 @@ namespace Lightning.Core.API
                     Instance NewInstance = (Instance)IX.Instance;
 
                     NewInstance.GenerateInstanceInfo();
+
+                    // Trigger warnings on deprecated and experimental classes
+                    if (NewInstance.Deprecated)
+                    {
+                        ErrorManager.ThrowError(ClassName, "InstanceDeprecatedException", $"The {NewInstance.ClassName} class (an instance of which is presently being instantiated) is deprecated and will be removed soon - do not use it in new projects!");
+                    }
+
+                    if (NewInstance.Experimental)
+                    {
+                        ErrorManager.ThrowError(ClassName, "InstanceExperimentalException", $"The {NewInstance.ClassName} class (an instance of which is presently being instantiated) is experimental - using this in projects is not recommended as the API could change at any time.");
+                    }
 
                     // Return the object in the parent tree if not null 
                     if (Parent == null)

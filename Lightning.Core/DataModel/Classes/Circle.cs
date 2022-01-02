@@ -1,5 +1,6 @@
-﻿using Lightning.Core.SDL2;
-using Lightning.Utilities;
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Circle
     /// 
-    /// April 12, 2021
+    /// April 12, 2021 (modified December 11, 2021: Initial NR port)
     /// 
     /// Renders a circle.
     /// </summary>
@@ -17,134 +18,66 @@ namespace Lightning.Core.API
     {
         internal override string ClassName => "Circle";
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        private bool Circle_Initialised { get; set; }
+
+        private Ellipse NREllipse { get; set; }
+
+        private void Circle_Init(Scene SDL_Renderer)
         {
-            IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
+            Window MainWindow = SDL_Renderer.GetMainWindow();
 
-            SDL.SDL_SetRenderDrawBlendMode(SDL_RendererPtr, SDL.SDL_BlendMode.SDL_BLENDMODE_ADD);
+            Ellipse NewEllipse = (Ellipse)MainWindow.AddObject("Ellipse");
 
-            if (Colour != null)
+            if (Position != null) NewEllipse.Position = new Vector2Internal(Position.X, Position.Y);
+
+            if (Size != null)  NewEllipse.Size = new Vector2Internal(Size.X, Size.Y);
+            if (Colour != null) NewEllipse.Colour = new Color4Internal(Colour.A, Colour.R, Colour.G, Colour.B);
+            NewEllipse.Antialiased = !NotAntialiased; // antialias default in lightning, not in nurender
+            NewEllipse.Bordered = Bordered;
+            // todo: nr bordercolour
+            if (BorderSize != null) NewEllipse.BorderSize = new Vector2Internal(BorderSize.X, BorderSize.Y);
+            NewEllipse.Filled = Fill;
+            NREllipse = NewEllipse;
+            Circle_Initialised = true; 
+            // todo: nr zindex
+        }
+
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
+            Brush CBrush = GetBrush(); 
+
+            if (!Circle_Initialised)
             {
-                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, Colour.R, Colour.G, Colour.B, Colour.A);
+                Circle_Init(SDL_Renderer);
             }
             else
             {
-                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
-            }
-
-
-            // Midpoint ellipse algorithm
-            // June 5, 2021
-            // Old algo worked but was thousands of times (multiple orders of magnitude) slower
-
-            double StartX = 0;
-            double StartY = Position.Y;
-
-            // Decision parameter for the next stage of calculations
-
-            double DecisionParam1 = (Size.Y * Size.Y) - (Size.X * Size.X * Size.Y) + (0.25 * Size.X * Size.X);
-
-            // faster than Math.Pow()?
-            // why not use it 
-            double DecisionParamX = 2 * Size.Y * Size.Y * StartX;
-            double DecisionParamY = 2 * Size.X * Size.X * StartY;
-
-            // Initial points
-            Render_PlotPoints(SDL_Renderer, StartX, StartY);
-
-            while (DecisionParamX < DecisionParamY)
-            {
-                if (DecisionParam1 < 0)
+                if (CBrush != null)
                 {
-                    StartX++;
-                    DecisionParamX = DecisionParamX + (2 * Size.Y * Size.Y);
-                    DecisionParam1 = DecisionParam1 + DecisionParamX + (Size.Y * Size.Y);
+                    CBrush.Render(SDL_Renderer, Tx);
                 }
                 else
                 {
-                    StartX++;
-                    StartY--;
-                    DecisionParamX = DecisionParamX + (2 * Size.Y * Size.Y);
-                    DecisionParamY = DecisionParamY - (2 * Size.X * Size.X);
-                    DecisionParam1 = DecisionParam1 + DecisionParamX - DecisionParamY + (Size.Y * Size.Y);
+                    if (Position != null)
+                    {
+                        if (ForceToScreen)
+                        {
+                            NREllipse.Position = new Vector2Internal(Position.X, Position.Y);
+                        }
+                        else
+                        {
+                            NREllipse.Position = new Vector2Internal(Position.X - MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                            Position.Y - MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
+                        }
+
+                    }
+                    return;
+
                 }
-
-                // Region 1
-                Render_PlotPoints(SDL_Renderer, StartX, StartY);
-            }
-
-            // PERFORM MATHEMATICS 
-            double DecisionParam2 = ((Size.Y * Size.Y) * ((StartX + 0.5) * (StartX + 0.5)))
-                + (Size.X * Size.X) * ((StartY - 1) * (StartY - 1))
-                - (Size.X * Size.X * Size.Y * Size.Y);
-
-            while (StartY >= 0)
-            {
-                // Region 2
-                Render_PlotPoints(SDL_Renderer, StartX, StartY);
-
-                if (DecisionParam2 > 0)
-                {
-                    StartY--;
-                    DecisionParamY = DecisionParamY - (2 * Size.X * Size.X);
-                    DecisionParam2 = DecisionParam2 + (Size.X * Size.X) - DecisionParamY;
-                }
-                else
-                {
-                    StartY--;
-                    StartX++;
-                    DecisionParamX = DecisionParamX + (2 * Size.Y * Size.Y);
-                    DecisionParamY = DecisionParamY + (2 * Size.X * Size.X);
-                    DecisionParam2 = DecisionParam2 + DecisionParamX - DecisionParamY + (Size.X * Size.X); 
-                }
+  
             }
         }
-
-        /// <summary>
-        /// Plots the points of each region of a midpoint drawn circle. 
-        /// </summary>
-        /// <param name="SDL_Renderer"></param>
-        /// <param name="StartX">X position to start drawing for each regio.n</param>
-        /// <param name="StartY">Y position to start drawing for each region.</param>
-        private void Render_PlotPoints(Renderer SDL_Renderer, double StartX, double StartY)
-        {
-            // draw the points
-            if (!Fill)
-            {
-                // Set up the points we must draw for the circle.
-                SDL.SDL_FPoint[] FPointSet = new SDL.SDL_FPoint[]
-                {
-                        new SDL.SDL_FPoint
-                        {
-                            x = ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
-                        },
-                        new SDL.SDL_FPoint
-                        {
-                            x = ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
-                        },
-                        new SDL.SDL_FPoint
-                        {
-                            x = ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
-                        },
-                        new SDL.SDL_FPoint
-                        {
-                            x = ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X,
-                            y = ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y,
-                        },
-                };
-
-                SDL.SDL_RenderDrawPointsF(SDL_Renderer.RendererPtr, FPointSet, 4);
-            }
-            else
-            {
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
-                SDL.SDL_RenderDrawLineF(SDL_Renderer.RendererPtr, ((float)-StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y, ((float)StartX + (float)Position.X) - (float)SDL_Renderer.CCameraPosition.X, ((float)-StartY + (float)Position.Y) - (float)SDL_Renderer.CCameraPosition.Y);
-            }
-
-        }
-
     }
 }

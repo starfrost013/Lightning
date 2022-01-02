@@ -6,7 +6,7 @@ using System.Text;
 using ColorRef = System.UInt32;
 using LParam = System.IntPtr; 
 
-namespace Lightning.Core.NativeInterop.Win32
+namespace NuCore.NativeInterop.Win32
 {
     /// <summary>
     /// ChooseColor

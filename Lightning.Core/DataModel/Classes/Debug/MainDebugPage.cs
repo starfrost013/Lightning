@@ -1,4 +1,6 @@
 ﻿#if DEBUG
+using NuCore.Utilities;
+using NuRender; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +10,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// MainDebugPage
     /// 
-    /// August 20, 2021 (modified September 23, 2021)
+    /// August 20, 2021 (modified December 11, 2021: Initial NR port)
     /// 
     /// Defines the main debugging page.
     /// </summary>
@@ -19,7 +21,7 @@ namespace Lightning.Core.API
         public bool Active { get; set; }
         private bool MAINDEBUGPAGE_INITIALISED { get; set; }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!MAINDEBUGPAGE_INITIALISED)
             {
@@ -43,24 +45,9 @@ namespace Lightning.Core.API
             Txt.Position = DGUI.Position + new Vector2(0, 20);
             Txt.Colour = new Color4(255, 255, 255, 255);
             Txt.ForceToScreen = true; //TEMPHACK
-
-            MDP_SetTextFontFamilyForDebug(Txt);
+            Txt.DisableTTF = true;
 
             MAINDEBUGPAGE_INITIALISED = true; 
-        }
-
-        private void MDP_SetTextFontFamilyForDebug(Text Txt)
-        {
-            GlobalSettings GS = DataModel.GetGlobalSettings();
-
-            if (GS.DebugDefaultFontName != null)
-            {
-                Txt.FontFamily = GS.DebugDefaultFontName;
-            }
-            else
-            {
-                Txt.FontFamily = "Arial.14pt for DEBUG";
-            }
         }
 
         private DebugGui GetDebugGui()

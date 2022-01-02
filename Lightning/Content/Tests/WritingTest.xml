@@ -3,7 +3,7 @@
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-08-17 16:22:39</LastModifiedDate>
+    <LastModifiedDate>2021-12-18 22:07:26</LastModifiedDate>
     <RevisionID>71</RevisionID>
     <Version />
   </Metadata>
@@ -183,11 +183,11 @@
           </MenuItem>
         </Menu>
         <Button Content="I am an automatically resizing button using tons of temporary code because I forgot about class hierarchy and did buttons before textboxes OOPS" Position="400,150" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" BorderColour="255,0,0,255" BorderWidth="3" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-        <Button Content="I am a button" Position="400,202" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Centre" VerticalAlignment="Top"></Button>
-        <Button Content="I am a button" Position="400,254" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Right" VerticalAlignment="Top"></Button>
-        <Button Content="I am a button" Position="400,306" Colour="255,255,255,255" BackgroundColour="255,255,0,0" Fill="True" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-        <Button Content="I am a button" Position="400,358" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Centre"></Button>
-        <Button Content="I am a button" Position="400,410" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Button>
+        <Button Content="Button 1" Position="400,202" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Centre" VerticalAlignment="Top"></Button>
+        <Button Content="Button 2" Position="400,254" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Right" VerticalAlignment="Top"></Button>
+        <Button Content="Button 3" Position="400,306" Colour="255,255,255,255" BackgroundColour="255,255,0,0" Fill="True" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+        <Button Content="Button 4" Position="400,358" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Centre"></Button>
+        <Button Content="Button 5" Position="400,410" Colour="255,255,255,255" BackgroundColour="255,255,0,0" FontFamily="Arial.18pt" FontSize="18" Size="150,20" BorderColour="255,0,0,255" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Button>
         <CheckBox Content="I am a checkbox" Position="400,450" Colour="255,255,255,255" Checked="True" BackgroundColour="255,47,47,255" Fill="True" HorizontalAlignment="Left" VerticalAlignment="Centre" Size="100,100" FontFamily="Arial.18pt"></CheckBox>
       </SurfaceGui>
     </GuiRoot>

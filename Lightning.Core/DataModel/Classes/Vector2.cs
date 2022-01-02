@@ -1,6 +1,8 @@
 ﻿#if WINDOWS
-using Lightning.Core.NativeInterop.Win32;
+using NuCore.NativeInterop.Win32;
 #endif
+using NuCore.Utilities;
+using NuRender;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,20 +25,23 @@ namespace Lightning.Core.API
         /// <summary>
         /// The X component of this Vector2.
         /// </summary>
-        public double X { get; set; }
+        public double X { get { return V2Internal.X; } set { V2Internal.X = value; } }
 
         /// <summary>
         /// The Y component of this Vector2.. 
         /// </summary>
-        public double Y { get; set; }
+        public double Y { get { return V2Internal.Y; } set { V2Internal.Y = value; } }
+
+        private Vector2Internal V2Internal { get; set; }
 
         public Vector2()
         {
-
+            V2Internal = new Vector2Internal(); 
         }
 
         public Vector2(double NX, double NY)
         {
+            V2Internal = new Vector2Internal();
             X = NX;
             Y = NY;
         }
@@ -172,62 +177,23 @@ namespace Lightning.Core.API
 
         public override int GetHashCode() => base.GetHashCode();
 
-        public static Vector2 FromString(string Str, bool AddToDataModel = true)
+        public static Vector2 FromString(string Str, bool AddToDataModel = true, Instance Parent = null)
         {
-            // We do not add this to the DataModel, as it is an attribute
+            // December 9, 2021 (NuRender integration)
+            Vector2Internal V2I = Vector2Internal.FromString(Str);
 
-            // Do not change, as useless objects will pollute the workspace if we add it
-
-            Vector2 V2;
-
-            // Add it to the DataModel if it is not in it.
-            if (AddToDataModel)
+            if (!AddToDataModel)
             {
-                V2 = (Vector2)DataModel.CreateInstance("Vector2");
+                return new Vector2(V2I.X, V2I.Y);
             }
             else
             {
-                V2 = new Vector2();
+                Vector2 NV2 = (Vector2)DataModel.CreateInstance("Vector2", Parent); // create a new Color3 and add it to the datamodel
+                NV2.X = V2I.X;
+                NV2.Y = V2I.Y;
+
+                return NV2;
             }
-
-            string[] Str_Split = Str.Split(',');
-
-            if (Str_Split.Length != 2)
-            {
-                ErrorManager.ThrowError("Vector2Converter", "Vector2ConversionInvalidNumberOfComponentsException");
-                return null;
-            }
-            else
-            {
-                try
-                {
-                    // Convert to each component. 
-                    double X = Convert.ToDouble(Str_Split[0]);
-                    double Y = Convert.ToDouble(Str_Split[1]);
-
-                    V2.X = X;
-                    V2.Y = Y;
-                    return V2;
-                }
-                catch (OverflowException err)
-                {
-#if DEBUG
-                    ErrorManager.ThrowError("Vector2Converter", "Vector2InvalidConversionException", "An integer overflow occurred when converting to a Vector2!", err);
-#else
-                    ErrorManager.ThrowError("Vector2Converter", "Vector2InvalidConversionException", "An integer overflow occurred when converting to a Vector2!", err);             
-#endif
-                }
-                catch (FormatException err)
-                {
-#if DEBUG
-                    ErrorManager.ThrowError("Vector2Converter", "Vector2InvalidConversionException", err);
-#else
-                    ErrorManager.ThrowError("Vector2Converter", "Vector2InvalidConversionException");
-#endif
-                }
-            }
-
-            return V2;
         }
 
 #if WINDOWS
@@ -235,33 +201,23 @@ namespace Lightning.Core.API
         /// [WIN32-ONLY] Gets a Native Point.
         /// </summary>
         /// <returns></returns>
-        public static Vector2 FromNativePoint(Win32Point PointW32, bool AddToDataModel = true)
+        public static Vector2 FromNativePoint(Win32Point PointW32, bool AddToDataModel = true, Instance Parent = null)
         {
-            Vector2 V2 = null; // SHOULD NEVER STAY NULL
+            // December 9, 2021 (NuRender integration)
+            Vector2Internal V2I = Vector2Internal.FromNativePoint(PointW32);
 
             if (!AddToDataModel)
             {
-                V2 = new Vector2();
+                return new Vector2(V2I.X, V2I.Y);
             }
             else
             {
-                V2 = (Vector2)DataModel.CreateInstance("Vector2"); 
-            }
-           
-            
-            if (PointW32 == null)
-            {
-                ErrorManager.ThrowError("Vector2 Converter", "AttemptedToPassInvalidW32PointToVector2FromNativePointException");
-                return V2; 
-            }
-            else
-            {
-                V2.X = PointW32.X;
-                V2.Y = PointW32.Y;
+                Vector2 NV2 = (Vector2)DataModel.CreateInstance("Vector2", Parent); // create a new Color3 and add it to the datamodel
+                NV2.X = V2I.X;
+                NV2.Y = V2I.Y;
 
-                return V2;
+                return NV2;
             }
-
         }
 #endif
 
@@ -307,5 +263,16 @@ namespace Lightning.Core.API
         }
 
         #endregion
+
+        #region NuRender conversions 
+
+        // New: Dec 15, 2021
+
+        public static explicit operator Vector2(Vector2Internal V2I) => new Vector2(V2I.X, V2I.Y);
+
+        public static explicit operator Vector2Internal(Vector2 V2) => new Vector2Internal(V2.X, V2.Y);
+
+        #endregion
+
     }
 }

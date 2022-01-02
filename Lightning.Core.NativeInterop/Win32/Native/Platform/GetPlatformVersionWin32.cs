@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO; 
 using System.Text;
 
-namespace Lightning.Core.NativeInterop
+namespace NuCore.NativeInterop
 {
     /// <summary>
     /// GetPlatformVersion
@@ -113,7 +113,7 @@ namespace Lightning.Core.NativeInterop
                                     else
                                     {
                                         Version.OSBrandName = "Windows 11";
-                                        Version.OSUpdateVersion = "Nickel (22H2?)";
+                                        Version.OSUpdateVersion = "Nickel/22H2?";
                                         return Version;
                                     }
                                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuRender;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// MenuItem
     /// 
-    /// July 5, 2021
+    /// July 5, 2021 (modified December 11, 2021: Initial NR port)
     /// 
     /// Defines a menu item for UI.
     /// </summary>
@@ -29,6 +30,7 @@ namespace Lightning.Core.API
         private bool MENUITEM_INITIALISED { get; set; } 
 
         private Rectangle ItemRectangle { get; set; }
+
         private Text ItemText { get; set;  }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace Lightning.Core.API
         public bool Strikethrough { get; set; }
 
         public MenuState State { get; set; }
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             // rendered by menu
             if (!MENUITEM_INITIALISED)
@@ -134,7 +136,7 @@ namespace Lightning.Core.API
         }
 
 
-        private void RenderChildren(Renderer SDL_Renderer, ImageBrush Tx)
+        private void RenderChildren(Scene SDL_Renderer, ImageBrush Tx)
         { 
             // render second and lower level hierarchy
             foreach (Instance Ins in Children)

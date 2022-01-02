@@ -1,5 +1,6 @@
-﻿using Lightning.Core.SDL2;
-using Lightning.Utilities; 
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,9 +11,9 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// RenderService
+    /// RenderService (NuRender version)
     /// 
-    /// Handles rendering of all PhysicalInstances for Lightning using SDL2. 
+    /// Handles the render loop using the NuRender API.
     ///
     /// 2021-03-14: Created
     /// 2021-04-07: Added first functionality
@@ -31,23 +32,30 @@ namespace Lightning.Core.API
     /// 2021-07-19: Implemented many events
     /// 2021-07-21: KeyDown now an event
     /// 2021-08-15: Animation loading, even MORE events
+    /// 2021-12-10: Rewritten for NuRender
+    /// 2021-12-11: LoadTexture stuff rewritten for NuRender.
+    /// 2021-12-18: Moved font loading and unloading to here from UIService
     /// 
     /// </summary>
     public class RenderService : Service
     {
         internal override string ClassName => "RenderService";
         internal override ServiceImportance Importance => ServiceImportance.High;
-        internal Renderer Renderer { get; set; }
         private static bool RENDERER_INITIALISED { get; set; }
+
+        /// <summary>
+        /// The NuRender scene. 
+        /// </summary>
+        internal Scene MainScene { get; set; }
 
         public override ServiceStartResult OnStart()
         {
             // TEST code
             ServiceStartResult SSR = new ServiceStartResult();
 
-            Logging.Log("RenderService Init", ClassName);
+            Logging.Log("Initialising RenderService...", ClassName);
 
-            OnStart_InitSDL();
+            OnStart_InitNR();
 
             SSR.Successful = true;
             return SSR; 
@@ -58,46 +66,30 @@ namespace Lightning.Core.API
         /// Initialises the Lightning SDL2 renderer.
         /// </summary>
         /// <returns></returns>
-        private SDLInitialisationResult OnStart_InitSDL()
+        private SDLInitialisationResult OnStart_InitNR()
         {
             SDLInitialisationResult SDIR = new SDLInitialisationResult();
 
             // Initialises SDL.
-            Logging.Log("Initialising SDL2 Video, Audio, and Events subsystems...", ClassName);
-            int SDLErr = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_EVENTS);
+            Logging.Log("Initialising NuRender...", ClassName);
+
+            if (!NuRender.NuRender.NuRender_Init())
+            {
+                SDIR.FailureReason = "NuRender initialisation failed";
+                return SDIR;
+            }
+
+            // if NuRender_Init returned true, initialise scene 
+            MainScene = new Scene();
+            SDIR.Successful = true;
+            return SDIR;
 
             
-            if (SDLErr < 0)
-            {
-                SDIR.FailureReason = $"Failed to initialise an SDL subsystem: {SDL.SDL_GetError()}";
-                return SDIR; 
-            }
-            else
-            {
-
-                Logging.Log("Initialising SDL2_image...", ClassName);
-
-                int SDL_ImageErr = SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_PNG);
-
-                if (SDL_ImageErr < 0)
-                {
-                    SDIR.FailureReason = $"Failed to initialise SDL2_image: {SDL.SDL_GetError()}";
-                    return SDIR; 
-                }
-                else
-                {
-
-                    SDIR.Successful = true;
-                    return SDIR;
-                }
-                
-
-            }
         }
 
-        private SDLInitialisationResult OnStart_InitSDLWindow()
+        private SDLInitialisationResult OnStart_InitNRWindow()
         {
-            Logging.Log("Preparing to create SDL window...", ClassName);
+            Logging.Log("Preparing to create NuRender window...", ClassName);
 
             SDLInitialisationResult SDIR = new SDLInitialisationResult();
 
@@ -155,90 +147,61 @@ namespace Lightning.Core.API
                     int DefaultWindowY = (int)DefaultWindowY_Setting.SettingValue;
                     bool Fullscreen = false;
 
+                    // TODO: REPLACE WITH WINDOWMODE SETTING
                     if (Fullscreen_Setting != null)
                     {
                         Fullscreen = (bool)GGSR_FullScreen.Setting.SettingValue;
                     }
+                    // TODO: REPLACE WITH WINDOWMODE SETTING
 
                     Logging.Log("Initialising renderer...", ClassName);
 
-                    SDIR.Renderer = new Renderer();
+                    // initialise the NuRender window settings.
+                    WindowSettings WS = new WindowSettings();
 
                     if (WindowWidth == 0 || WindowHeight == 0)
                     {
-                        SDIR.Renderer.WindowSize = new Vector2(DefaultWindowX, DefaultWindowY);
+                        //todo: convert from vector2 to vector2internal
+                        WS.WindowSize = new Vector2Internal(DefaultWindowX, DefaultWindowY);
                     }
                     else
                     {
-                        SDIR.Renderer.WindowSize = new Vector2(WindowWidth, WindowHeight);
+                        WS.WindowSize = new Vector2Internal(WindowWidth, WindowHeight);
                     }
 
-                    Logging.Log("Calling SDL_CreateWindow to initialise window...", ClassName);
+                    WS.ApplicationName = WindowTitle;
+                    WS.WindowPosition = new Vector2Internal(DefaultWindowX, DefaultWindowY);
+
+                    Logging.Log("Initialising window...", ClassName);
 
                     // Create a fullscreen window if fullscreen is false.
                     if (Fullscreen)
                     {
-                        SDIR.Renderer.Window = SDL.SDL_CreateWindow(WindowTitle, DefaultWindowX, DefaultWindowY, WindowWidth, WindowHeight, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN | SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                        WS.WindowMode = WindowMode.Fullscreen;
+ 
                     }
                     else
                     {
-                        SDIR.Renderer.Window = SDL.SDL_CreateWindow(WindowTitle, DefaultWindowX, DefaultWindowY, WindowWidth, WindowHeight, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+                        WS.WindowMode = WindowMode.Windowed;
                     }
 
-                    if (SDIR.Renderer.Window == IntPtr.Zero)
-                    {
-                        SDIR.FailureReason = $"Failed to initialise window: {SDL.SDL_GetError()}";
-                        return SDIR;
+                    // Make sure this is the main window.
+                    WS.IsMainWindow = true; 
 
-                    }
-                    else
-                    {
-                        Logging.Log(ClassName, "Successfully created window! Calling SDL_CreateRenderer to initialise renderer...");
+                    MainScene.AddWindow(WS);
 
-                        SDIR.Renderer.RendererPtr = SDL.SDL_CreateRenderer(SDIR.Renderer.Window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
-
-                        if (SDIR.Renderer.RendererPtr == IntPtr.Zero)
-                        {
-                            SDIR.FailureReason = $"Failed to initialise renderer: {SDL.SDL_GetError()}";
-                            return SDIR;
-                        }
-                        else
-                        {
-                            SDIR.Successful = true;
-                            return SDIR;
-                        }
-                    }
+                    SDIR.Successful = true;
+                    return SDIR;
                 }
             }
         }
 
-#if DEBUG
-        public void ATest_RenderServiceQuerySettings()
-        {
-            Logging.Log("Query GameSettings Test:", "Automated Testing");
-
-            Workspace Wks = DataModel.GetWorkspace();
-           
-            GetInstanceResult GS = Wks.GetFirstChildOfType("GameSettings");
-
-            // It should always be loaded at this point.
-            Debug.Assert(GS.Successful && GS.Instance != null);
-
-            GameSettings Settings = (GameSettings)GS.Instance;
-
-            GetGameSettingResult GGSR = Settings.GetSetting("MaxFPS");
-
-            // assert - this means the setting failed to load previously.
-            Debug.Assert(GGSR.Successful && GGSR.Setting != null);
-
-            GameSetting Setting = GGSR.Setting;
-
-            Logging.Log($"MaxFPS: {Setting.SettingValue}");
-
-        }
-#endif
         public override ServiceShutdownResult OnShutdown()
         {
+            Logging.Log("Unloading fonts...");
+
+            UnloadAllFonts();
+
             Logging.Log("Shutting down SDL...", ClassName);
 
             SDL.SDL_Quit();
@@ -274,7 +237,7 @@ namespace Lightning.Core.API
 
             try
             {
-                SDLInitialisationResult SDIR = OnStart_InitSDLWindow();
+                SDLInitialisationResult SDIR = OnStart_InitNRWindow();
 
                 if (!SDIR.Successful)
                 {
@@ -289,13 +252,15 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    Renderer = SDIR.Renderer;
-
                     InitRendering_DisplaySplash();
 
                     InitRendering_GetBlendMode();
 
                     InitRendering_LoadAndCacheTextures();
+
+                    Window MainWindow = MainScene.GetMainWindow();
+
+                    LoadAllFonts(MainWindow.Settings.RenderingInformation);
 
                     TriggerOnSpawn();
 
@@ -315,12 +280,17 @@ namespace Lightning.Core.API
 
 
         }
-
+        
+        /// <summary>
+        /// Displays splash screen [DEPRECATED] 
+        /// </summary>
         private void InitRendering_DisplaySplash()
         {
             SplashScreen SS = (SplashScreen)DataModel.CreateInstance("SplashScreen");
 
             GetInstanceResult GIR = SS.GetFirstChildOfType("Texture");
+
+            Window MainWindow = MainScene.GetMainWindow();
 
             if (!GIR.Successful
                 || GIR.Instance == null)
@@ -332,13 +302,13 @@ namespace Lightning.Core.API
                 ImageBrush Tx = (ImageBrush)GIR.Instance;
 
                 Tx.Position = new Vector2(0, 0);
-                Tx.Size = Renderer.WindowSize;
+                Tx.Size = new Vector2(MainScene.GetMainWindow().Settings.WindowSize.X, MainScene.GetMainWindow().Settings.WindowSize.Y);
 
                 Tx.SDLTexturePtr = SDL_image.IMG_Load(Tx.Path);
 
-                SS.Render(Renderer, Tx);
+                SS.Render(MainScene, Tx);
 
-                SDL.SDL_RenderPresent(Renderer.RendererPtr); 
+                SDL.SDL_RenderPresent(MainWindow.Settings.RenderingInformation.RendererPtr); 
             }
 
             
@@ -353,6 +323,8 @@ namespace Lightning.Core.API
 
             GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
 
+            Window MainWindow = MainScene.GetMainWindow();
+
             if (!GIR.Successful
                 || GIR.Instance == null)
             {
@@ -366,7 +338,7 @@ namespace Lightning.Core.API
                 
                 if (!GGSR.Successful) // set a default if we do not work
                 {
-                    Renderer.BlendMode = RenderingBlendMode.None;
+                    MainWindow.Settings.RenderingInformation.BlendingMode = SDL.SDL_BlendMode.SDL_BLENDMODE_NONE;
                     return; 
                 }
                 else
@@ -374,14 +346,14 @@ namespace Lightning.Core.API
                     // if it has been successfully loaded...
                     GameSetting BlendModeSetting = GGSR.Setting;
 
-                    if (BlendModeSetting.SettingValue != null) // check for a valid logo
+                    if (BlendModeSetting.SettingValue != null) // check for a valid blending mode
                     {
-                        Renderer.BlendMode = (RenderingBlendMode)BlendModeSetting.SettingValue;
+                        MainWindow.Settings.RenderingInformation.BlendingMode = (SDL.SDL_BlendMode)BlendModeSetting.SettingValue;
                     }
                     else
                     {
                         // set a default and return if invalid value
-                        Renderer.BlendMode = RenderingBlendMode.None; // .default? 
+                        MainWindow.Settings.RenderingInformation.BlendingMode = SDL.SDL_BlendMode.SDL_BLENDMODE_NONE; // .default? 
                     }
 
                     return;
@@ -444,6 +416,7 @@ namespace Lightning.Core.API
 
         private void LoadTexture(PhysicalObject PO, ImageBrush Tx)
         {
+            Window MainWindow = MainScene.GetMainWindow();
 
             if (!File.Exists(Tx.Path))
             {
@@ -454,64 +427,17 @@ namespace Lightning.Core.API
             }
             else
             {
-                Logging.Log($"Loading texture at {Tx.Path}...", ClassName);
-                // Load an image to a surface and create a texture from it
-                IntPtr Surface = SDL_image.IMG_Load(Tx.Path);
+                // this bit rewritten for nurender
+                // as nurender has its own texture cache
 
-                if (Surface == IntPtr.Zero)
-                {
-                    ErrorManager.ThrowError(ClassName, "ErrorLoadingTextureException", $"An error occurred loading the Texture at {Tx.Path}: {SDL.SDL_GetError()}");
-                    ServiceNotification SN3 = new ServiceNotification { NotificationType = ServiceNotificationType.Crash, ServiceClassName = ClassName };
-                    ServiceNotifier.NotifySCM(SN3);
-                }
+                Image Image = new Image();
 
-                IntPtr Texture = SDL.SDL_CreateTextureFromSurface(Renderer.RendererPtr, Surface);
+                Image.TextureInfo.Path = Tx.Path;
 
-                // Do we add this texture to the cache?
-                bool AddToCache = true;
+                // set imagebrush stuff for compat
+                Image.Load(MainWindow.Settings.RenderingInformation);
 
-                List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects(); 
-
-                // Add a texture to the cache.
-                foreach (PhysicalObject PO2 in ObjectsToLoad)
-                {
-                    // don't check ourselves.
-                    if (PO2 == PO) continue;
-
-                    GetInstanceResult GIR2 = PO2.GetFirstChildOfType("Texture");
-
-                    if (!GIR2.Successful)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        ImageBrush TX2 = (ImageBrush)GIR2.Instance;
-
-                        foreach (ImageBrush CachedTx in Renderer.TextureCache)
-                        {
-                            if (Tx.Path == TX2.Path)
-                            {
-                                AddToCache = false;
-                            }
-                        }
-
-                    }
-                }
-
-                if (AddToCache)
-                {
-                    Logging.Log($"Caching texture at {Tx.Path}...", ClassName);
-                    Tx.SDLTexturePtr = Texture;
-                    Renderer.TextureCache.Add(Tx);
-                }
-                else
-                {
-                    // destroy textures we don't want
-                    // saves memory 
-                    SDL.SDL_FreeSurface(Surface);
-                    SDL.SDL_DestroyTexture(Texture);
-                }
+                Tx.SDLTexturePtr = Image.TextureInfo.TexPtr;
             }
         }
 
@@ -567,8 +493,9 @@ namespace Lightning.Core.API
 
         private void Rendering_RenderPhysicalObjects()
         {
-            // Clear the renderer
-            SDL.SDL_RenderClear(Renderer.RendererPtr);
+            Window MainWindow = MainScene.GetMainWindow();
+
+            SDL.SDL_RenderClear(MainWindow.Settings.RenderingInformation.RendererPtr);
 
             // Get the workspace.
             Workspace Ws = DataModel.GetWorkspace();
@@ -583,7 +510,10 @@ namespace Lightning.Core.API
                 // Render each object.
                 Rendering_DoRenderPhysicalObjects(ObjectsToRender);
 
-                SDL.SDL_RenderPresent(Renderer.RendererPtr);
+                // call nurender to do the legwork of scene rendering
+
+                MainScene.Render(false); // render nurender.
+
             }
             else
             {
@@ -599,13 +529,14 @@ namespace Lightning.Core.API
         {
             PhysicalObjects = PhysicalObjects.OrderBy(PO => PO.ZIndex).ToList();
 
+            Window MainWindow = MainScene.GetMainWindow();
 
-
+            
             foreach (PhysicalObject PO in PhysicalObjects)
             {
                 GetInstanceResult GIR = PO.GetFirstChildOfType("ImageBrush");
                 
-                if (PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)) continue;
+                if (PO.Attributes.HasFlag(InstanceTags.UsesCustomRenderPath)) continue; // object uses custom render path? (do we need this for NR?)
 
                 if (!GIR.Successful
                     && !PO.Invisible) // check for custom render path being used (i.e. render() is not being called by something else) 
@@ -613,15 +544,15 @@ namespace Lightning.Core.API
                     if (PO.OnRender == null)
                     {
                         RenderEventArgs REA = new RenderEventArgs();
-                        REA.SDL_Renderer = Renderer;
+                        REA.SDL_Renderer = MainScene;
 
-                        PO.Render(Renderer, null);
+                        PO.Render(MainScene, null);
                         continue;
                     }
                     else
                     {
                         RenderEventArgs REA = new RenderEventArgs();
-                        REA.SDL_Renderer = Renderer;
+                        REA.SDL_Renderer = MainScene;
                         PO.OnRender(this, REA);
                     }
 
@@ -634,41 +565,26 @@ namespace Lightning.Core.API
                     ImageBrush Tx = (ImageBrush)GIR.Instance;
 
                     // HACK: Until we actually have a proper loader.
+                    // might need to get rid of this one
                     if (!Tx.TEXTURE_INITIALISED)
                     {
                         PO.GetBrush();
-                        Tx.Init();
-                        
+                        Tx.Init(MainScene);
                     }
 
-                    // END VERY BAD HACK
-
-                    // Set the tiling mode and then render the texture.
-                    for (int i = 0; i < Renderer.TextureCache.Count; i++)
+                    // Made this code a bit less hackish (December 11, 2021):
+                    if (PO.OnRender == null)
                     {
-                        ImageBrush CachedTx = Renderer.TextureCache[i];
-
-                        if (CachedTx.Path == Tx.Path)
-                        {
-                            IntPtr TexturePointer = CachedTx.SDLTexturePtr;
-
-                            Tx.SDLTexturePtr = CachedTx.SDLTexturePtr;
-
-                            if (PO.OnRender == null)
-                            {
-                                PO.Render(Renderer, Tx);
-                            }
-                            else
-                            {
-                                RenderEventArgs REA = new RenderEventArgs();
-                                REA.SDL_Renderer = Renderer;
-                                REA.Tx = Tx;
-                                PO.OnRender(this, REA);
-                            }
-
-                            
-                        }
+                        PO.Render(MainScene, Tx);
                     }
+                    else
+                    {
+                        RenderEventArgs REA = new RenderEventArgs();
+                        REA.SDL_Renderer = MainScene;
+                        REA.Tx = Tx;
+                        PO.OnRender(MainScene, REA);
+                    }
+
                     
 
                 }
@@ -905,6 +821,80 @@ namespace Lightning.Core.API
 
             return;
         }
+
+        private void LoadAllFonts(WindowRenderingInformation RenderInfo)
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("Font");
+
+            Logging.Log("Loading fonts...", ClassName);
+
+            if (!GMIR.Successful
+                || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfFontsException");
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < GMIR.Instances.Count; i++)// collection is being modified
+                {
+                    Instance Instance = GMIR.Instances[i];
+
+                    Font Fnt = (Font)Instance;
+
+                    if (Fnt.Name != null)
+                    {
+                        Logging.Log($"Loading the font {Fnt.Name}...", ClassName);
+
+                        Fnt.Load(RenderInfo);
+
+                        if (!Fnt.FONT_LOADED)
+                        {
+                            // font failed to load
+                            GMIR.Instances.Remove(Instance);
+                        }
+                    }
+                    else
+                    {
+                        ErrorManager.ThrowError(ClassName, "FontMustDeclareNameException");
+                        GMIR.Instances.Remove(Instance);
+                    }
+
+                }
+            }
+
+        }
+
+        private void UnloadAllFonts()
+        {
+
+            Logging.Log($"Unloading all fonts...", ClassName);
+
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("Font");
+
+            if (!GMIR.Successful
+                || GMIR.Instances == null)
+            {
+                ErrorManager.ThrowError(ClassName, "FailedToObtainListOfFontsException");
+                return;
+            }
+            else
+            {
+                foreach (Instance Ins in GMIR.Instances)
+                {
+                    Font Fnt = (Font)Ins;
+
+                    Logging.Log($"Unloading the font {Fnt.Name}...", ClassName);
+                    Fnt.Unload();
+                }
+            }
+        }
+
+
 
 
     }

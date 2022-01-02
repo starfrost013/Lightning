@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using NuRender;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,13 +16,13 @@ namespace Lightning.Core.API
     public class SurfaceGui : Gui
     {
         /// <summary>
-        /// The target object name
+        /// The name of the object that this SurfaceGui will snap to.
         /// </summary>
         public string TargetObjectName { get; set; }
         
         private bool SURFACEGUI_INITIALISED { get; set; }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!SURFACEGUI_INITIALISED)
             {

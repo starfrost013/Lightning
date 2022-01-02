@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace NuCore.Utilities
 {
     public static class StringUtil
     {

@@ -1,4 +1,6 @@
-﻿using Lightning.Core.SDL2;
+﻿using NuCore.Utilities;
+using NuRender; 
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -272,7 +274,7 @@ namespace Lightning.Core.API
         /// 
         /// It has already been loaded, so the object is not required to load textures or anything similar.
         /// </summary>
-        public virtual void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public virtual void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!PHYSICALOBJECT_INITIALISED)
             {
@@ -284,7 +286,7 @@ namespace Lightning.Core.API
 
                 if (CBrush == null)
                 {
-                    DoRender(SDL_Renderer, Tx);
+                    return; 
                 }
                 else
                 {
@@ -295,14 +297,6 @@ namespace Lightning.Core.API
 
             
         }
-
-       
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
-        {
-            return;  
-
-        }
-         
 
         public virtual void OnClick(object Sender, MouseEventArgs EventArgs)
         {

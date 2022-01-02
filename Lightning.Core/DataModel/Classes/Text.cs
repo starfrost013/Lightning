@@ -1,4 +1,6 @@
-﻿using Lightning.Core.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +10,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Text
     /// 
-    /// June 30, 2021 (modified July 17, 2021: refactoring, anti-aliasing)
+    /// June 30, 2021 (modified December 8, 2021: NuRender integration, phase 2)
     /// 
     /// Defines text. :O
     /// </summary>
@@ -61,108 +63,106 @@ namespace Lightning.Core.API
         /// </summary>
         public int OutlinePixels { get; set; }
 
+        /// <summary>
+        /// If true, SDL2_ttf fonts will not be used - instead the basic text rendering of SDL2_gfx will be used.
+        /// </summary>
+        public bool DisableTTF { get; set; }
+
+        /// <summary>
+        /// Toggles word-wrapping.
+        /// </summary>
+        public bool WordWrap { get; set; }
+
+        private NuRender.Text NRText { get; set; }
+
+        private bool Text_Initialised { get; set; }
         public Text()
         {
             Position = new Vector2();
         }
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+
+        internal void Text_Init(Scene SDL_Renderer)
         {
-            if (Content == null) Content = "";
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+            NRText = (NuRender.Text)MainWindow.AddObject("Text");
 
-            FindFontResult FFR = FindFont();
-
-            if (!FFR.Successful)
+            if (Colour != null)
             {
-                return; 
+                NRText.Colour = (Color4Internal)Colour;
             }
             else
             {
-                Font TextFont = FFR.Font;
+                NRText.Colour = NuRender.NuRender.NURENDER_DEFAULT_SDL_DRAW_COLOUR;
+            }
+            
+            if (BackgroundColour != null) NRText.BackgroundColour = (Color4Internal)BackgroundColour;
+            if (Position != null) NRText.Position = (Vector2Internal)Position;
 
-                // Set font style flags
-                int FontStyleFlags = 0;
-                
-                if (Bold) FontStyleFlags += 1;
-                if (Italic) FontStyleFlags += 2;
-                if (Underline) FontStyleFlags += 4;
-                if (Strikethrough) FontStyleFlags += 8;
+            if (Bold) NRText.Style += (int)TextStyle.Bold;
+            if (Italic) NRText.Style += (int)TextStyle.Italic;
+            if (Underline) NRText.Style += (int)TextStyle.Underline;
+            if (Strikethrough) NRText.Style += (int)TextStyle.Strikethrough;
 
-                // Style the font if bold/italic/underline/strikethrough are set
+            NRText.WordWrap = WordWrap;
+            NRText.DisableTTF = DisableTTF;
+            NRText.Content = Content;
+            
+            // TEMP
+            
+            if (AntiAliasingDisabled)
+            {
+                NRText.RenderingMode = TextRenderingMode.NoAntialias;
+            }
+            else
+            {
+                NRText.RenderingMode = TextRenderingMode.Normal; 
+            }
 
-                if (FontStyleFlags > 0) SDL_ttf.TTF_SetFontStyle(TextFont.FontPointer, FontStyleFlags);
+            if (!DisableTTF)
+            {
+                FindFontResult FFR = FindFont();
 
-                // Init surface to be used
-                IntPtr SurfaceSDL = IntPtr.Zero;
-
-                Vector2 FontSize = GetApproximateFontSize(TextFont);
-
-                int FontWidth = (int)FontSize.X;
-                int FontHeight = (int)FontSize.Y;
-
-                SDL.SDL_Color SDLC = new SDL.SDL_Color();
-
-                if (Colour != null)
+                if (FFR.Successful)
                 {
-                    SDLC.r = Colour.R;
-                    SDLC.g = Colour.G;
-                    SDLC.b = Colour.B;
-                    SDLC.a = Colour.A;
-
-                    // Perform text rendering
-
+                    NRText.Font = FFR.Font.Name;
                 }
                 else
                 {
-                    SDLC.r = 255;
-                    SDLC.g = 255;
-                    SDLC.b = 255;
-                    SDLC.a = 255;
+                    ErrorManager.ThrowError(ClassName, "NRCannotFindFontException", $"Failed to find font {NRText.Font}! Fonts must be loaded before text containing them is used.");
+                    // delete this text
+                    Parent.RemoveChild(this);
                 }
 
-                if (AntiAliasingDisabled)
+                Text_Initialised = true;
+            }
+            else
+            {
+                Text_Initialised = true;
+                return; 
+            }
+
+
+
+        }
+
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+            
+            if (!Text_Initialised)
+            {
+                Text_Init(SDL_Renderer);
+            }
+            else
+            {
+                if (ForceToScreen)
                 {
-                    SurfaceSDL = SDL_ttf.TTF_RenderText_Solid(TextFont.FontPointer, Content, SDLC);
-                }
-                else
-                {
-                    SurfaceSDL = SDL_ttf.TTF_RenderText_Blended(TextFont.FontPointer, Content, SDLC);
-                }
-
-                // Convert to texture for hardware rendering
-                IntPtr TextTexture = SDL.SDL_CreateTextureFromSurface(SDL_Renderer.RendererPtr, SurfaceSDL);
-
-                // corre
-                SDL.SDL_Rect SourceRect = new SDL.SDL_Rect
-                {
-                    x = 0,
-                    y = 0,
-                    w = FontWidth,
-                    h = FontHeight,
-
-                };
-
-                SDL.SDL_Rect DestinationRect = new SDL.SDL_Rect();
-
-                if (ForceToScreen) // dumb hack that is BAD and NOT RECOMMENDED!
-                {
-                    DestinationRect.x = (int)Position.X;
-                    DestinationRect.y = (int)Position.Y;
-                    DestinationRect.w = FontWidth;
-                    DestinationRect.h = FontHeight;
+                    NRText.Position = (Vector2Internal)Position;
                 }
                 else
                 {
-                    DestinationRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                    DestinationRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
-                    DestinationRect.w = FontWidth;
-                    DestinationRect.h = FontHeight;
+                    NRText.Position = (Vector2Internal)Position - MainWindow.Settings.RenderingInformation.CCameraPosition;
                 }
-
-
-                SDL.SDL_RenderCopy(SDL_Renderer.RendererPtr, TextTexture, ref SourceRect, ref DestinationRect);
-
-                SDL.SDL_FreeSurface(SurfaceSDL);
-                SDL.SDL_DestroyTexture(TextTexture);
             }
 
         }
@@ -216,29 +216,29 @@ namespace Lightning.Core.API
             return FFR; 
         }
 
+        /// <summary>
+        /// Deprecated - NR 
+        /// </summary>
+        /// <param name="Fnt"></param>
+        /// <returns></returns>
         internal Vector2 GetApproximateFontSize(Font Fnt)
         {
+            // temporary workaround until TextBox ported to NR
+            if (!Fnt.FONT_LOADED) return new Vector2(10, 10);
 
-            Font FX = Fnt;
+            Vector2 FontSize = Fnt.GetFontSize(Content);
 
-            int FontWidth = 0;
-            int FontHeight = 0;
-
-            if (SDL_ttf.TTF_SizeText(FX.FontPointer, Content, out FontWidth, out FontHeight) < 0)
+            if (FontSize.X == 0
+            || FontSize.Y == 0) 
             {
                 ErrorManager.ThrowError(ClassName, "FailedToRenderTextException", $"Failed to render text: Error sizing text: {SDL.SDL_GetError()}");
                 return null;
             }
             else
             {
-                Vector2 FinalVec2 = new Vector2();
-                FinalVec2.X = FontWidth;
-                FinalVec2.Y = FontHeight;
-
-                return FinalVec2;
+                return FontSize;
             }
 
         }
-        
     }
 }

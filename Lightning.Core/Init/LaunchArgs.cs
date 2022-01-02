@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using NuCore.NativeInterop.Win32;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,7 +9,7 @@ namespace Lightning.Core
     /// <summary>
     /// LaunchArgs
     /// 
-    /// April 8, 2021 (modified July 29, 2021: Add comments)
+    /// April 8, 2021 (modified December 8, 2021: Use NuCore)
     /// 
     /// Defines launch arguments for the DataModel.
     /// </summary>
@@ -36,8 +38,9 @@ namespace Lightning.Core
             switch (Args.Length)
             {
                 case 0:
-                    if (!LAR.Arguments.AppName.Contains("Polaris")
-                    && !LAR.Arguments.AppName.Contains("LightningSDK"))
+                    if (LAR.Arguments.AppName == null || // fix crash
+                    (!LAR.Arguments.AppName.Contains("Polaris")
+                    && !LAR.Arguments.AppName.Contains("LightningSDK")))
                     {
                         MessageBox.Show("Lightning [GameXML]\nGameXML: path to the LGX (Lightning Game XML) file you wish to load.", "Lightning Game Engine", MessageBoxButton.OK, MessageBoxImage.Information);
                     }

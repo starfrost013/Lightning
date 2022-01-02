@@ -1,4 +1,6 @@
-﻿using Lightning.Core.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,53 +32,45 @@ namespace Lightning.Core.API
         /// <summary>
         /// Unmanaged ptr to SDL2_ttf font structure
         /// </summary>
-        internal IntPtr FontPointer { get; set; }
-
+        internal IntPtr FontPointer
+        {
+            get
+            {
+                return NRFont.Pointer;
+            }
+            set
+            {
+                throw new InvalidOperationException("Legacy font loading not supported");
+            }
+        }
 
         internal bool FONT_LOADED { get; set; }
+
+        private NuRender.Font NRFont { get; set; }
 
         /// <summary>
         /// Loads this font.
         /// </summary>
-        /// <param name="FontFamily">The name of the font family to laod.</param>
-        public void Load() // change to result class?
+        /// <param name="FontFamily">The name of the font family to load.</param>
+        public void Load(WindowRenderingInformation RenderInfo) // change to result class?
         {
-            base.PO_Init(); 
+            base.PO_Init();
 
-            if (FontPath == null
-                || FontPath.Length == 0)
-            {
-                ErrorManager.ThrowError(ClassName, "NullOrZeroLengthFileFontNameException");
-                return; 
-            }
-            else
-            {
-                if (FontSize == 0)
-                {
-                    ErrorManager.ThrowError(ClassName, "InvalidFontSizeException");
-                    return;
-                }
-                else
-                {
-                    FontPointer = SDL_ttf.TTF_OpenFont($"{FontPath}", FontSize);
+            // fonts are special, you see
+            NRFont = new NuRender.Font();
 
-                    if (FontPointer == IntPtr.Zero)
-                    {
-                        ErrorManager.ThrowError(ClassName, "FailedToLoadFontException", $"Failed to load font: {SDL.SDL_GetError()}");
-                        return;
-                    }
-                    else
-                    {
-                        FONT_LOADED = true;
-                        return; 
-                    }
-                }
-            }
-
-
+            NRFont.Name = Name;
+            NRFont.FontPath = FontPath;
+            NRFont.Size = FontSize;
+            NRFont.Load(RenderInfo);
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public Vector2 GetFontSize(string Content)
+        {
+            return (Vector2)NRFont.GetFontSize(Content);
+        }
+
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             return; // prevent crash from calling the wrong method
         }
@@ -86,11 +80,7 @@ namespace Lightning.Core.API
         /// </summary>
         public void Unload()
         {
-            if (FontPointer != IntPtr.Zero)
-            {
-                SDL_ttf.TTF_CloseFont(FontPointer);
-            }
-           
+            NRFont.Unload();
         }
     }
 }

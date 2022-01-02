@@ -1,4 +1,6 @@
-﻿using Lightning.Core.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +24,7 @@ namespace Lightning.Core.API
         public int DefaultTiming { get; set; }
 
         private bool ANIMATIONFRAME_INITIALISED { get; set; }
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!ANIMATIONFRAME_INITIALISED)
             {

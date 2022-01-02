@@ -31,7 +31,7 @@ using System;
 using System.Runtime.InteropServices;
 #endregion
 
-namespace Lightning.Core.SDL2
+namespace NuRender.SDL2
 {
 	public static class SDL_image
 	{
@@ -49,15 +49,15 @@ namespace Lightning.Core.SDL2
 #endif
 		private const string nativeLibName = "SDL2_image-v2.0.5-x86"; 
 #endif
-		#endregion
+        #endregion
 
-		#region SDL_image.h
+        #region SDL_image.h
 
-		/* Similar to the headers, this is the version we're expecting to be
+        /* Similar to the headers, this is the version we're expecting to be
 		 * running with. You will likely want to check this somewhere in your
 		 * program!
 		 */
-		public const int SDL_IMAGE_MAJOR_VERSION = 2;
+        public const int SDL_IMAGE_MAJOR_VERSION = 2;
 		public const int SDL_IMAGE_MINOR_VERSION = 0;
 		public const int SDL_IMAGE_PATCHLEVEL = 6;
 

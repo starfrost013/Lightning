@@ -1,4 +1,4 @@
-﻿using Lightning.Utilities; 
+﻿using NuCore.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,9 +15,6 @@ namespace Lightning.Core.API
         /// <inheritdoc/>
         /// </summary>
         public string FailureReason { get; set; }
-        public Renderer Renderer { get; set; }
-
-        public int SDLErrorCode { get; set; }
 
         /// <summary>
         /// <inheritdoc/>

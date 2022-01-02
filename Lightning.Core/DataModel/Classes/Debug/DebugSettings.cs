@@ -28,6 +28,7 @@ namespace Lightning.Core.API
         /// The current debug string.
         /// </summary>
         internal string CurrentDebugString { get; set; }
+
         internal int _windowwidth { get; set; }
 
         /// <summary>
@@ -69,7 +70,12 @@ namespace Lightning.Core.API
             }
         }
 
-        internal Vector2 WindowSize { get; set; } // bad, remove at some point
+        internal Vector2 WindowSize { get; set; } // bad, remove at some point#
+
+        public DebugSettings()
+        {
+            DisplayHitboxes = false; // default
+        }
     }
 }
 #endif

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace NuCore.Utilities
 {
     /// <summary>
     /// 2020-03-07  Moved from TrackMaker to Lightning.

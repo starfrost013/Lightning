@@ -1,4 +1,6 @@
-﻿using Lightning.Core.SDL2;
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +25,7 @@ namespace Lightning.Core.API
 
         private bool SKY_INITIALISED { get; set; }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!SKY_INITIALISED)
             {
@@ -44,11 +46,14 @@ namespace Lightning.Core.API
             
         }
 
-        private void Init(Renderer SDL_Renderer)
+        private void Init(Scene SDL_Renderer)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             // OnCreate not used as it is ran before the object is loaded - change this?
             // do this later
-            if (Size == null) Size = SDL_Renderer.WindowSize;
+            if (Size == null) Size = new Vector2(MainWindow.Settings.WindowSize.X, MainWindow.Settings.WindowSize.Y); //todo: conversions
+
             if (Position == null) Position = new Vector2(0, 0);
             if (ForceToBack) ZIndex = -2147483647; // low z-index = drawn earlier
 
@@ -64,7 +69,7 @@ namespace Lightning.Core.API
             else
             {
                 Brush GBrush = (ImageBrush)GIR.Instance;
-                GBrush.NotCameraAware = true;
+                GBrush.ForceToScreen = true;
 
                 // I ACTUALLY HAVE NO IDEA WHAT THE FUCK IS GOING ON HERE SO WE ARE DOING THIS STUPID SHIT INSTEAD
                 GBrush.BRUSH_INITIALISED = false;

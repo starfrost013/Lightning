@@ -1,10 +1,10 @@
-﻿using Lightning.Utilities;
+﻿using NuCore.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace NuCore.Utilities
 {
     public class TextChunkCollection : IEnumerable
     {

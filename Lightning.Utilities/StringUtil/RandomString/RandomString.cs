@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace NuCore.Utilities
 {
     /// <summary>
-    /// RandomString [Lightning.Utilities]
+    /// RandomString [NuCore.Utilities]
     /// 
     /// October 19, 2021
     /// 
@@ -90,7 +90,7 @@ namespace Lightning.Utilities
 
                     if (Settings.Flags.HasFlag(RandomStringFlags.All)) CharAccepted = true;
 
-                    if (!CharAccepted) CurrentChar = GenerateChar(); // character rejected, generate enough
+                    if (!CharAccepted) CurrentChar = GenerateChar(); // character rejected, generate another
                 }
 
                 SB.Append(CurrentChar);

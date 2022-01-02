@@ -5,7 +5,7 @@ using System.Text;
 using WParam = System.UInt32;
 using LParam = System.UInt32;
 
-namespace Lightning.Core.NativeInterop.Win32
+namespace NuCore.NativeInterop.Win32
 {
     /// <summary>
     /// Delegate used for redirecting window messages to the Print Setup dialog box.

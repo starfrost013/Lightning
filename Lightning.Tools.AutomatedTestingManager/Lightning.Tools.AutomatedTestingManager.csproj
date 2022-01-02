@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.18.21213</AssemblyVersion>
-    <FileVersion>1.0.18.21213</FileVersion>
+    <AssemblyVersion>1.0.19.21340</AssemblyVersion>
+    <FileVersion>1.0.19.21340</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
   </PropertyGroup>
 
@@ -36,11 +36,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lightning.Utilities\Lightning.Utilities.csproj" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\Lightning.Utilities\NuCore.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using Lightning.Core.SDL2;
+﻿using NuCore.Utilities;
+using NuRender; 
+using NuRender.SDL2;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,7 +38,7 @@ namespace Lightning.Core.API
             SOLIDCOLOURBRUSH_INITIALISED = true; 
         }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (!SOLIDCOLOURBRUSH_INITIALISED)
             {
@@ -49,19 +51,21 @@ namespace Lightning.Core.API
            
         }
 
-        private void DoRender(Renderer SDL_Renderer, ImageBrush Tx)
+        private void DoRender(Scene SDL_Renderer, ImageBrush Tx)
         {
             SDL.SDL_Rect DstRect = new SDL.SDL_Rect();
-            
-            if (SDL_Renderer.CCameraPosition == null)
+
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
+            if (MainWindow.Settings.RenderingInformation.CCameraPosition == null)
             {
                 DstRect.x = (int)Position.X;
                 DstRect.y = (int)Position.Y;
             }
             else
             {
-                DstRect.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                DstRect.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                DstRect.x = (int)Position.X - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
+                DstRect.y = (int)Position.Y - (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
             }
 
 
@@ -77,26 +81,29 @@ namespace Lightning.Core.API
                 DstRect.h = (int)Size.Y;
             }
 
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, BackgroundColour.R, BackgroundColour.G, BackgroundColour.B, BackgroundColour.A);
+            SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, BackgroundColour.R, BackgroundColour.G, BackgroundColour.B, BackgroundColour.A);
 
             if (BorderThickness > 0) RenderBorder(SDL_Renderer, Tx);
 
             if (!Fill) // todo: shape system
             {
-                SDL.SDL_RenderDrawRect(SDL_Renderer.RendererPtr, ref DstRect);
+                SDL.SDL_RenderDrawRect(MainWindow.Settings.RenderingInformation.RendererPtr, ref DstRect);
             }
             else
             {
-                SDL.SDL_RenderFillRect(SDL_Renderer.RendererPtr, ref DstRect);
+                SDL.SDL_RenderFillRect(MainWindow.Settings.RenderingInformation.RendererPtr, ref DstRect);
             }
 
 
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
+            SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, 0, 0, 0, 0);
         }
 
-        private void RenderBorder(Renderer SDL_Renderer, ImageBrush Tx)
+        private void RenderBorder(Scene SDL_Renderer, ImageBrush Tx)
         {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
             Vector2 BorderSize = new Vector2(Size.X + (BorderThickness * 2), Size.Y + (BorderThickness * 2));
+            //todo: frect 
             SDL.SDL_Rect SR2 = new SDL.SDL_Rect();
 
             SR2.x = (int)(Position.X - BorderThickness); // todo: position => int?
@@ -104,25 +111,25 @@ namespace Lightning.Core.API
             SR2.w = (int)BorderSize.X;
             SR2.h = (int)BorderSize.Y;
 
-            SR2.x -= (int)SDL_Renderer.CCameraPosition.X;
-            SR2.y -= (int)SDL_Renderer.CCameraPosition.Y;
+            SR2.x -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.X;
+            SR2.y -= (int)MainWindow.Settings.RenderingInformation.CCameraPosition.Y;
 
             BorderFill = true;
 
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, BorderColour.R, BorderColour.G, BorderColour.B, BorderColour.A);
+            SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, BorderColour.R, BorderColour.G, BorderColour.B, BorderColour.A);
 
             int Result = 0;
 
             if (!BorderFill)
             {
-                Result = SDL.SDL_RenderDrawRect(SDL_Renderer.RendererPtr, ref SR2);
+                Result = SDL.SDL_RenderDrawRect(MainWindow.Settings.RenderingInformation.RendererPtr, ref SR2);
             }
             else
             {
-                Result = SDL.SDL_RenderFillRect(SDL_Renderer.RendererPtr, ref SR2);
+                Result = SDL.SDL_RenderFillRect(MainWindow.Settings.RenderingInformation.RendererPtr, ref SR2);
             }
 
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
+            SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, 0, 0, 0, 0);
 
 
 #if DEBUG

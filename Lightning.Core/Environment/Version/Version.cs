@@ -1,4 +1,4 @@
-﻿using Lightning.Utilities; 
+﻿using NuCore.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -80,7 +80,7 @@ namespace Lightning.Core
 
             if (Version.Length != 4)
             {
-                Console.WriteLine($"Invalid version information (not 4 components!)");
+                Console.WriteLine($"Invalid version information (Must be four period-separated numbers!)");
                 //ERRORMANAGER needs to be no longer dependent on datamodel before this error can exist
                 //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionException");
                 return; 
@@ -96,7 +96,7 @@ namespace Lightning.Core
                 }
                 catch (FormatException)
                 {
-                    Console.WriteLine($"Invalid version information (all components must be numbers!)");
+                    Console.WriteLine($"Invalid version information(Must be four period-separated numbers!)");
                     //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionInformationException");
                     return; 
                 }
@@ -123,6 +123,15 @@ namespace Lightning.Core
 
         }
 
+        /// <summary>
+        /// Gets a shortened version string.
+        /// </summary>
+        /// <returns>A shortened version string</returns>
+        public static string GetShortenedVersionString()
+        {
+            return $"version {Major}.{Minor} (build {Build})";
+        }
+
         public static string GetVersionString()
         {
             if (BuildDate == null
@@ -134,9 +143,9 @@ namespace Lightning.Core
             else
             {
 #if DEBUG
-                return $"v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
+                return $"{Major}.{Minor}.{Build}.{Revision}\nBuilt {BuildDate} by {Owner}";
 #else
-                return $"v{Major}.{Minor}.{Build}.{Revision} - built at {BuildDate} by {Owner}";
+                return $"{Major}.{Minor}.{Build}.{Revision}\nbuilt {BuildDate} by {Owner}";
 #endif
             }
 

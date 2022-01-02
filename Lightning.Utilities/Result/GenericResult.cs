@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Utilities
+namespace NuCore.Utilities
 {
     /// <summary>
     /// A generic result class. Use this when you do not require any additional functionality in your result classes, in lieu of creaeting a useless result class.

@@ -1,4 +1,4 @@
-﻿using Lightning.Core.NativeInterop;
+﻿using NuCore.NativeInterop;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;

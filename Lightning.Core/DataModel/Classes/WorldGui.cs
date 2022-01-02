@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NuCore.Utilities;
+using NuRender;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,7 +17,7 @@ namespace Lightning.Core.API
     {
         private bool WORLDGUI_INITIALISED { get; set; }
 
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             if (WORLDGUI_INITIALISED)
             {

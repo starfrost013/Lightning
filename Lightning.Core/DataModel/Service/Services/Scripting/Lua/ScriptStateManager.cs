@@ -1,4 +1,4 @@
-﻿using Lightning.Utilities;
+﻿using NuCore.Utilities;
 using NLua;
 using NLua.Exceptions;
 using System;

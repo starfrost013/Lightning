@@ -1,4 +1,6 @@
-﻿using Lightning.Core.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,111 +10,74 @@ namespace Lightning.Core.API
     /// <summary>
     /// Rectangle
     /// 
-    /// April 12, 2021 (modified August 7, 2021: Brush)
+    /// April 12, 2021 (modified December 12, 2021: NR rewrite)
     /// 
     /// Defines a rectangle.
     /// </summary>
     public class Rectangle : Line
     {
         internal override string ClassName => "Rectangle";
-        public override void Render(Renderer SDL_Renderer, ImageBrush Tx)
+
+        private NuRender.Rectangle NRRectangle { get; set; }
+
+        private bool Rectangle_Initialised { get; set; }
+
+        /// <summary>
+        /// The radius of the border of this rectangle. If above 0, this rectangle will be rendered as a rounded rectangle. 
+        /// </summary>
+        public int BorderRadius { get; set; }
+        private void Rectangle_Init(Scene SDL_Renderer)
+        {
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+            NRRectangle = (NuRender.Rectangle)MainWindow.AddObject("Rectangle");
+
+            if (Size != null) NRRectangle.Size = new Vector2Internal(Size.X, Size.Y);
+            if (Colour != null) NRRectangle.Colour = new Color4Internal(Colour.A, Colour.R, Colour.G, Colour.B);
+            NRRectangle.Antialiased = !NotAntialiased; // antialias default in lightning, not in nurender
+            NRRectangle.Bordered = Bordered;
+            // todo: nr bordercolour
+            if (BorderSize != null) NRRectangle.BorderSize = new Vector2Internal(BorderSize.X, BorderSize.Y);
+            NRRectangle.BorderRadius = BorderRadius;
+            NRRectangle.Filled = Fill;
+
+            Rectangle_Initialised = true; 
+        }
+
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
             Brush Brush = GetBrush();
 
-            if (Brush != null)
+            Window MainWindow = SDL_Renderer.GetMainWindow();
+
+            if (!Rectangle_Initialised)
             {
-                
-                Brush.Render(SDL_Renderer, Tx); 
+                Rectangle_Init(SDL_Renderer);
             }
             else
             {
-                IntPtr SDL_RendererPtr = SDL_Renderer.RendererPtr;
-
-                SDL_Renderer.SetCurBlendMode();
-
-                if (BorderColour == null) BorderColour = new Color4(0, 0, 0, 0);
-
-                SDL.SDL_Rect SR1 = new SDL.SDL_Rect();
-
-                if (!ForceToScreen)
+                if (Brush != null)
                 {
-                    SR1.x = (int)Position.X - (int)SDL_Renderer.CCameraPosition.X;
-                    SR1.y = (int)Position.Y - (int)SDL_Renderer.CCameraPosition.Y;
+                    Brush.Render(SDL_Renderer, Tx);
                 }
                 else
                 {
-                    SR1.x = (int)Position.X;
-                    SR1.y = (int)Position.Y;
+                    if (Position != null)
+                    {
+                        if (ForceToScreen)
+                        {
+                            NRRectangle.Position = new Vector2Internal(Position.X, Position.Y);
+                        }
+                        else
+                        {
+                            NRRectangle.Position = new Vector2Internal(Position.X - MainWindow.Settings.RenderingInformation.CCameraPosition.X,
+                            Position.Y - MainWindow.Settings.RenderingInformation.CCameraPosition.Y);
+                        }
+
+                    }
+                    return;
+
                 }
-
-                SR1.w = (int)Size.X;
-                SR1.h = (int)Size.Y;
-
-                if (BorderThickness > 0) RenderBorder(SDL_Renderer, Tx);
-
-                if (Colour != null)
-                {
-                    SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, Colour.R, Colour.G, Colour.B, Colour.A);
-                }
-                else
-                {
-                    SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 255, 255, 255, 255);
-                }
-
-                if (!Fill)
-                {
-                    SDL.SDL_RenderDrawRect(SDL_RendererPtr, ref SR1);
-                }
-                else
-                {
-                    SDL.SDL_RenderFillRect(SDL_RendererPtr, ref SR1);
-                }
-
-
-
-                SDL.SDL_SetRenderDrawColor(SDL_RendererPtr, 0, 0, 0, 0);
             }
-            
-        }
-
-        private void RenderBorder(Renderer SDL_Renderer, ImageBrush Tx)
-        {
-            Vector2 BorderSize = new Vector2(Size.X + (BorderThickness * 2), Size.Y + (BorderThickness * 2));
-            SDL.SDL_Rect SR2 = new SDL.SDL_Rect();
-
-            SR2.x = (int)(Position.X - BorderThickness); // todo: position => int?
-            SR2.y = (int)(Position.Y - BorderThickness); // todo: position => int?
-            SR2.w = (int)BorderSize.X;
-            SR2.h = (int)BorderSize.Y;
-
-            if (!ForceToScreen)
-            {
-                SR2.x -= (int)SDL_Renderer.CCameraPosition.X;
-                SR2.y -= (int)SDL_Renderer.CCameraPosition.Y;
-            }
-
-
-            BorderFill = true; 
-
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, BorderColour.R, BorderColour.G, BorderColour.B, BorderColour.A);
-
-            int Result = 0;
-
-            if (!BorderFill)
-            {
-                Result = SDL.SDL_RenderDrawRect(SDL_Renderer.RendererPtr, ref SR2);
-            }
-            else
-            {
-                Result = SDL.SDL_RenderFillRect(SDL_Renderer.RendererPtr, ref SR2);
-            }
-
-            SDL.SDL_SetRenderDrawColor(SDL_Renderer.RendererPtr, 0, 0, 0, 0);
-
-
-#if DEBUG
-            if (Result < 0) Logging.Log(Result.ToString());
-#endif
         }
     }
 }

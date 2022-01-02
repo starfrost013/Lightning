@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lightning.Core
+namespace NuCore.NativeInterop.Win32
 {
     /// <summary>
     /// Options used for configuring messageboxes.

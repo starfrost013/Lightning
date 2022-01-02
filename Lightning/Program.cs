@@ -1,6 +1,6 @@
 ﻿using Lightning.Core;
 using Lightning.Core.API;
-using Lightning.Utilities;
+using NuCore.Utilities;
 using System;
 
 /// <summary>
@@ -34,7 +34,7 @@ namespace Lightning
             // Handle command-line arguments.
             LaunchArgsResult LAR = LaunchArgs.HandleArgs(Args);
 
-            // Based on the action LaunchArgs(
+            // Based on the action LaunchArgs
             switch (LAR.Action)
             {
                 case LaunchArgsAction.DoNothing:
@@ -42,14 +42,29 @@ namespace Lightning
                 case LaunchArgsAction.LaunchGameXML:
                     // Write some basic information to the screen
                     // Set the colour to blue temporarily
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("Light");
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Write("ning ");
+
+                    string InitString = "Lightning";
+
+                    for (int i = 0; i < InitString.Length; i++)
+                    {
+                        if (i % 3 == 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                        }
+
+                        Console.Write(InitString[i]);
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.White; 
+                    Console.Write(" (NR Integration Build)\n\n");
                     Console.ForegroundColor = ConsoleColor.Gray;
 
-                    Console.WriteLine("Pre-Alpha SDK release");
-                    Console.WriteLine($"© 2021 starfrost/Lightning Dev Team. All rights reserved");
+                    Console.WriteLine("Software Development Kit (pre-release, January 2022)");
+                    Console.WriteLine($"© 2021-2022 starfrost/Lightning Dev Team. All rights reserved.\n");
 
                     // Load version information
                     LVersion.LoadVersion();
@@ -58,7 +73,7 @@ namespace Lightning
                     Platform.PopulatePlatformInformation();
 
                     Console.WriteLine($"Running on {Platform.PlatformName}"); // 2021-06-26
-                    Console.WriteLine($"Platform version {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})");
+                    Console.WriteLine($"Platform version {Platform.Version.OSBrandName}, build {Platform.Version.OSBuildNumber} (update version {Platform.Version.OSUpdateVersion})\n");
                     // Display version information
                     string LVersionString = LVersion.GetVersionString();
                     Console.WriteLine($"Engine version {LVersionString}");

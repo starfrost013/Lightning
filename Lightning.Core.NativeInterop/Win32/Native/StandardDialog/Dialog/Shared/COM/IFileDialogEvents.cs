@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using HResult = System.UInt32;
 
-namespace Lightning.Core.NativeInterop.Win32
+namespace NuCore.NativeInterop.Win32
 {
     /// <summary>
     /// COM IFileDialogEvents interface
