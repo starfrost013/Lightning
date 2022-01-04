@@ -8,15 +8,15 @@ namespace NuRender
     /// <summary>
     /// NuRender [NuRenderDefines]
     /// 
-    /// August 17, 2021 (modified January 2, 2022: v0.4.3: General fixes and updates for SDL2-CS changes)
+    /// August 17, 2021 (modified January 4, 2022: v0.5.0: General fixes and updates, add Scene.Shutdown, Window.Unquittable 
     /// 
     /// Defines global defines for the NuRender API.
     /// </summary>
     public static partial class NuRender
     {
         public static int NURENDER_API_VERSION_MAJOR = 0;
-        public static int NURENDER_API_VERSION_MINOR = 4;
-        public static int NURENDER_API_VERSION_REVISION = 3;
+        public static int NURENDER_API_VERSION_MINOR = 5;
+        public static int NURENDER_API_VERSION_REVISION = 0;
 
         public static int NURENDER_SDL_API_VERSION_MAJOR = SDL.SDL_MAJOR_VERSION;
         public static int NURENDER_SDL_API_VERSION_MINOR = SDL.SDL_MINOR_VERSION;

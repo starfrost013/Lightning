@@ -159,6 +159,8 @@ namespace Lightning.Core.API
                     // initialise the NuRender window settings.
                     WindowSettings WS = new WindowSettings();
 
+                    WS.SetWindowID(1);
+
                     if (WindowWidth == 0 || WindowHeight == 0)
                     {
                         //todo: convert from vector2 to vector2internal
@@ -171,7 +173,7 @@ namespace Lightning.Core.API
 
                     WS.ApplicationName = WindowTitle;
                     WS.WindowPosition = new Vector2Internal(DefaultWindowX, DefaultWindowY);
-
+                    
                     Logging.Log("Initialising window...", ClassName);
 
                     // Create a fullscreen window if fullscreen is false.
@@ -448,41 +450,48 @@ namespace Lightning.Core.API
             
             if (SDL.SDL_PollEvent(out CurEvent) > 0)
             {
-                switch (CurEvent.type)
+                // Since January 4, 2022
+                // Window IDs are hardcoded.
+                // Window ID 1 is BootWindow.
+                if (CurEvent.window.windowID == 1) 
                 {
-                    case SDL.SDL_EventType.SDL_KEYUP:
-                        HandleKeyUp(CurEvent);
-                        return; 
-                    case SDL.SDL_EventType.SDL_KEYDOWN:
-                        HandleKeyDown(CurEvent); 
-                        return;
-                    case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
-                        HandleMouseUp(CurEvent);
-                        return;
-                    case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
-                        HandleMouseDown(CurEvent);
-                        return;
-                    case SDL.SDL_EventType.SDL_WINDOWEVENT:
-                        switch (CurEvent.window.windowEvent)
-                        {
-                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
-                                HandleMouseEnter(CurEvent);
-                                return;
-                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
-                                HandleMouseLeave(CurEvent);
-                                return;
-                            default:
-                                return; 
-                        }
+                    switch (CurEvent.type)
+                    {
+                        case SDL.SDL_EventType.SDL_KEYUP:
+                            HandleKeyUp(CurEvent);
+                            return;
+                        case SDL.SDL_EventType.SDL_KEYDOWN:
+                            HandleKeyDown(CurEvent);
+                            return;
+                        case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
+                            HandleMouseUp(CurEvent);
+                            return;
+                        case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                            HandleMouseDown(CurEvent);
+                            return;
+                        case SDL.SDL_EventType.SDL_WINDOWEVENT:
+                            switch (CurEvent.window.windowEvent)
+                            {
+                                case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
+                                    HandleMouseEnter(CurEvent);
+                                    return;
+                                case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
+                                    HandleMouseLeave(CurEvent);
+                                    return;
+                                default:
+                                    return;
+                            }
 
-                    case SDL.SDL_EventType.SDL_QUIT:
-                        ThrowQuitEvent(CurEvent); 
-                        // Less temp
-                        ServiceNotification SN = new ServiceNotification { ServiceClassName = ClassName, NotificationType = ServiceNotificationType.Shutdown_ShutDownEngine };
-                        ServiceNotifier.NotifySCM(SN); 
-                        
-                        return;
+                        case SDL.SDL_EventType.SDL_QUIT:
+                            ThrowQuitEvent(CurEvent);
+                            // Less temp
+                            ServiceNotification SN = new ServiceNotification { ServiceClassName = ClassName, NotificationType = ServiceNotificationType.Shutdown_ShutDownEngine };
+                            ServiceNotifier.NotifySCM(SN);
+
+                            return;
+                    }
                 }
+                
             }
             else
             {

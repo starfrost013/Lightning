@@ -9,7 +9,7 @@ namespace NuRender
     /// <summary>
     /// WindowSettings
     /// 
-    /// August 17, 2021 (modified December 11, 2021)
+    /// August 17, 2021 (modified January 4, 2022)
     /// 
     /// Define scene settings.
     /// </summary>
@@ -23,7 +23,7 @@ namespace NuRender
         /// <summary>
         /// Internal: The Window ID of this scene.
         /// </summary>
-        internal long WindowID { get; set; }
+        internal uint WindowID { get; set; }
 
         /// <summary>
         /// The default position that this window is
@@ -55,12 +55,15 @@ namespace NuRender
         /// </summary>
         public WindowRenderingInformation RenderingInformation { get; set; }
 
-
         /// <summary>
         /// Determines if this window is the primary rendering window.
         /// </summary>
         public bool IsMainWindow { get; set; }
 
+        /// <summary>
+        /// Determines if this window is unquittable.
+        /// </summary>
+        public bool Unquittable { get; set; }
         public WindowSettings()
         {
             WindowPosition = new Vector2Internal(200, 200);
@@ -72,6 +75,8 @@ namespace NuRender
             WindowID = 0; 
 
         }
+
+        public void SetWindowID(uint ID) => WindowID = ID; 
 
     }
 }

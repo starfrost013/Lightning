@@ -80,13 +80,13 @@ namespace NuRender
 
         private void Add_PerformAdd(Window Window)
         {
-            Window.Settings.WindowID = Windows.Count; // support up to 4 windows (December 10, 2021) 
+            Window.Settings.WindowID = (uint)Windows.Count; // support up to 4 windows (December 10, 2021) 
             Windows.Add(Window);
             
             if (!Window.Init())
             {
                 Windows.Remove(Window); // remove the window if it failed to init (this shouldn't run due to fatal errors but it's a failsafe)
-                Window.Settings.WindowID = Windows.Count;
+                Window.Settings.WindowID = (uint)Windows.Count;
             }
         }
 

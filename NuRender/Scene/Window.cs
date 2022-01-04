@@ -86,15 +86,20 @@ namespace NuRender
 
             if (IsEventIncoming != 0)
             {
-                switch (IncomingEvent.type)
+                if (IncomingEvent.window.windowID == Settings.WindowID)
                 {
-                    case SDL.SDL_EventType.SDL_QUIT:
-                        Logging.Log($"Window {Settings.WindowID}, title {Settings.ApplicationName} is exiting (user requested quit)...", ClassName);
+                    switch (IncomingEvent.type)
+                    {
+                        case SDL.SDL_EventType.SDL_QUIT:
+                            if (Settings.Unquittable) return;
 
-                        RaiseOnExitEventToAllObjects(new NREventArgs()); 
-                        // todo: raise event
-                        Shutdown(); 
-                        return; 
+                            Logging.Log($"Window {Settings.WindowID}, title {Settings.ApplicationName} is exiting (user requested quit)...", ClassName);
+
+                            RaiseOnExitEventToAllObjects(new NREventArgs());
+                            // todo: raise event
+                            Shutdown();
+                            return;
+                    }
                 }
             }
             else
@@ -105,9 +110,13 @@ namespace NuRender
 
         }
 
-        internal void Shutdown()
+        public void Shutdown()
         {
             Logging.Log("Shutting down SDL...", ClassName);
+
+            // clear all objects
+            // todo: Shutdown() method for NR Objects.
+            NRObjects.Clear(); 
 
             if (Settings.RenderingInformation.RendererPtr != null) SDL.SDL_DestroyRenderer(Settings.RenderingInformation.RendererPtr);
             if (Settings.RenderingInformation.WindowPtr != null) SDL.SDL_DestroyWindow(Settings.RenderingInformation.WindowPtr);

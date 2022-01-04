@@ -44,6 +44,11 @@ namespace Lightning.Core.API
         /// todo: make non-static
         /// </summary>
         private static InstanceCollection State;
+        
+        /// <summary>
+        /// The Lightning boot/splash window.
+        /// </summary>
+        private static BootWindow BootWindow { get; set; }
 
         public DataModel()
         {
@@ -138,6 +143,8 @@ namespace Lightning.Core.API
                 if (Args != null)
                 {
 
+
+
                     if (Args.AppName != null)
                     {
                         // Allow for SDK-specific behaviour.
@@ -150,6 +157,11 @@ namespace Lightning.Core.API
 
                     if (Args.InitServices)
                     {
+                        // Initialise the BootWindow.
+                        BootWindow = new BootWindow();
+                        BootWindow.Init();
+                        BootWindow.SetProgress(0, "TEST");
+
                         // assume normal init 
                         SCM.InitStartupServices(Settings.ServiceStartupCommands);
 
@@ -157,6 +169,8 @@ namespace Lightning.Core.API
                         {
                             if (LoadFile(Args.GameXMLPath))
                             {
+                                BootWindow.Shutdown();
+
                                 SCM.InitServiceUpdates();
                             }
                             else
@@ -172,6 +186,7 @@ namespace Lightning.Core.API
                     }
                     else
                     {
+                        
                         Logging.Log("Skipping service initialisation: NoInitServices supplied", "DataModel");
                         Logging.Log("Initialisation completed", "DataModel");
                         return;

@@ -61,7 +61,7 @@ namespace Lightning
 
                     Console.ForegroundColor = ConsoleColor.White; 
 
-                    Console.WriteLine("Software Development Kit (pre-release, January 2022)");
+                    Console.WriteLine(" Software Development Kit (pre-release, January 2022)");
                     Console.WriteLine($"© 2021-2022 starfrost/Lightning Dev Team. All rights reserved.\n");
 
                     // Load version information

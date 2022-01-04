@@ -1,0 +1,7 @@
+Lightning Window IDs
+January 4, 2022
+
+SDL2 supports up to 4 windows using a Window ID system. To facilitate the boot splashscreen, Lightning assigns hardcoded Window IDs to each window. As of 1/4/22 these are the following:
+
+ID 0: BootWindow (splash screen) 
+ID 1: MainWindow (main Lightning NuRender window)

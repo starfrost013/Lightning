@@ -194,6 +194,7 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError(new Error { Name = "LWPakInvalidFilenameException", Description = "Attempted to write to an LWPak filename (null or with invalid characters)!", Severity = MessageSeverity.Error, Id = 205 });
          ErrorManager.RegisterError(new Error { Name = "LWPakInvalidHeaderException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 206 });
          ErrorManager.RegisterError(new Error { Name = "LWPakInvalidCatalogException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 207 });
+         ErrorManager.RegisterError(new Error { Name = "BootWindowCannotFindPathException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 208 });
             // todo: external-internal
         }
     }

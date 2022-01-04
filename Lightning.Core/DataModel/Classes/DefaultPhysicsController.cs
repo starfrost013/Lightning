@@ -155,10 +155,10 @@ namespace Lightning.Core.API
                                     bool BlockTop;
                                     bool BlockBottom;
 
-                                    BlockLeft = (Object.AABB.Maximum.X < ObjectToTest.AABB.Position.X); // Determine if we are intersecting left.
-                                    BlockRight = (!BlockLeft && Object.AABB.Position.X > ObjectToTest.AABB.Centre.X); // Determine if we are intersecting right.
-                                    BlockTop = (Object.AABB.Maximum.Y < ObjectToTest.AABB.Position.Y);  // Determine if we are intersecting top.
-                                    BlockBottom = (!BlockTop && Object.AABB.Position.Y > ObjectToTest.AABB.Centre.Y) ;  // Determine if we are intersecting bottom.
+                                    BlockLeft = (Object.AABB.Position.X > ObjectToTest.AABB.Position.X && Object.AABB.Position.X < ObjectToTest.AABB.Centre.X); // Determine if we are intersecting left.
+                                    BlockRight = (!BlockLeft && (Object.AABB.Position.X > ObjectToTest.AABB.Centre.X) && (Object.AABB.Position.X < ObjectToTest.AABB.Maximum.X)); // Determine if we are intersecting right.
+                                    BlockTop = (Object.AABB.Maximum.Y > ObjectToTest.AABB.Position.Y && Object.AABB.Maximum.Y < ObjectToTest.AABB.Centre.Y); // Determine if we are intersecting top.
+                                    BlockBottom = (!BlockLeft && (Object.AABB.Maximum.Y > ObjectToTest.AABB.Centre.Y) && (Object.AABB.Maximum.Y < ObjectToTest.AABB.Maximum.Y)); // Determine if we are intersecting bottom.
 
                                     // Identify the velocity at normal.
                                     double NormalVelocity = Vector2.GetDotProduct(CollisionNormal, ObjectToTest.Velocity);
@@ -198,11 +198,11 @@ namespace Lightning.Core.API
 
                                         if (Object.Velocity.Y < 0)
                                         {
-                                            if (BlockBottom) Object.Velocity.Y -= CollisionImpulse.Y * Object.InverseMass;
+                                            if (BlockBottom) Object.Velocity.Y += CollisionImpulse.Y * Object.InverseMass;
                                         }
                                         else
                                         {
-                                            if (BlockTop) Object.Velocity.Y += CollisionImpulse.Y * Object.InverseMass;
+                                            if (BlockTop) Object.Velocity.Y -= CollisionImpulse.Y * Object.InverseMass;
                                         }
 
                                     }
@@ -211,18 +211,18 @@ namespace Lightning.Core.API
 
                                     if (!ObjectToTest.Anchored)
                                     {
-                                        if (Object.Velocity.X < 0)
+                                        if (ObjectToTest.Velocity.X < 0)
                                         {
                                             if (BlockLeft) ObjectToTest.Velocity.X -= CollisionImpulse.X * ObjectToTest.InverseMass;
                                         }
                                         else
                                         {
-                                            if (BlockRight) ObjectToTest.Velocity.X -= CollisionImpulse.X * ObjectToTest.InverseMass;
+                                            if (BlockRight) ObjectToTest.Velocity.X += CollisionImpulse.X * ObjectToTest.InverseMass;
                                         }
 
-                                        if (Object.Velocity.Y < 0)
+                                        if (ObjectToTest.Velocity.Y < 0)
                                         {
-                                            if (BlockBottom) ObjectToTest.Velocity.Y -= CollisionImpulse.Y * ObjectToTest.InverseMass;
+                                            if (BlockBottom) ObjectToTest.Velocity.Y += CollisionImpulse.Y * ObjectToTest.InverseMass;
                                         }
                                         else
                                         {

@@ -35,12 +35,16 @@ namespace NuRender
         /// NuRender (single-threaded) MAIN method. 
         /// 
         /// CURRENTLY HAS TO BE PUBLICLY CALLED
+        /// <paramref name="Clear"/>Determines if each window will automatically clear rendering. Turn off if you need to do non-NuRender rendering work.</paramref>
         /// </summary>
         public void Render(bool Clear = true)
         {
             foreach (Window Win in Windows) Win.Main(Clear);
         }
        
-        
+        public void Shutdown()
+        {
+            foreach (Window Win in Windows) Win.Shutdown();
+        }
     }
 }
