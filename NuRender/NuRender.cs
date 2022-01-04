@@ -29,7 +29,7 @@ namespace NuRender
 
             Logging.Log("Initialising SDL2...", ClassName);
 
-            if (SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) < 0)
+            if (SDL.SDL_Init(SDL.SDL_InitFlags.SDL_INIT_EVERYTHING) < 0)
             {
                 ErrorManager.ThrowError(ClassName, "NRCannotInitialiseSDL2Exception", $"A fatal error occurred during initialisation of SDL2: {SDL.SDL_GetError()}");
 
@@ -39,7 +39,7 @@ namespace NuRender
             {
                 // That was successful. Initialise SDL2_image.
                 Logging.Log("Initialising SDL2_image...", ClassName);
-                if (SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_JPG | SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_TIF | SDL_image.IMG_InitFlags.IMG_INIT_WEBP) < 0)
+                if (SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_EVERYTHING) < 0)
                 {
                     ErrorManager.ThrowError(ClassName, "NRCannotInitialiseSDL2ImageException", $"A fatal error occurred during initialisation of SDL2_image: {SDL.SDL_GetError()}");
 
@@ -51,7 +51,7 @@ namespace NuRender
                     // That was successful. Initialise SDL2_mixer.
                     Logging.Log("Initialising SDL2_mixer...", ClassName);
 
-                    if (SDL_mixer.Mix_Init(SDL_mixer.MIX_InitFlags.MIX_INIT_MP3 | SDL_mixer.MIX_InitFlags.MIX_INIT_FLAC | SDL_mixer.MIX_InitFlags.MIX_INIT_MID | SDL_mixer.MIX_InitFlags.MIX_INIT_MOD | SDL_mixer.MIX_InitFlags.MIX_INIT_OPUS | SDL_mixer.MIX_InitFlags.MIX_INIT_OGG) < 0)
+                    if (SDL_mixer.Mix_Init(SDL_mixer.MIX_InitFlags.MIX_INIT_EVERYTHING) < 0)
                     {
                         ErrorManager.ThrowError(ClassName, "NRCannotInitialiseSDL2MixerException", $"A fatal error occurred during initialisation of SDL2_mixer: {SDL.SDL_GetError()}");
                         return false; 

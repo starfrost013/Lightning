@@ -114,34 +114,51 @@ namespace Lightning.Core.API
                                 && ObjectToTest.Velocity == new Vector2(0, 0))
                                 {
                                     Manifold CollisionManifold = CollisionResult.Manifold;
-                                    
+
                                     // eww elseif
-                                    if (CollisionManifold.NormalVector == new Vector2(-1, 0))
+                                    if (CollisionManifold.NormalVector == new Vector2(-1, 0) && ObjectToTest.Solidity.HasFlag(Solidity.Sides))
                                     {
                                         if (!Object.Anchored) Object.Position.X += (CollisionManifold.PenetrationAmount / 2);
                                         if (!ObjectToTest.Anchored) ObjectToTest.Position.X -= (CollisionManifold.PenetrationAmount / 2);
                                     }
-                                    else if (CollisionManifold.NormalVector == new Vector2(0, 0))
+                                    else if (CollisionManifold.NormalVector == new Vector2(0, 0) && ObjectToTest.Solidity.HasFlag(Solidity.Sides))
                                     {
                                         if (!Object.Anchored) Object.Position.X -= (CollisionManifold.PenetrationAmount / 2);
                                         if (!ObjectToTest.Anchored) ObjectToTest.Position.X += (CollisionManifold.PenetrationAmount / 2);
                                     }
-                                    else if (CollisionManifold.NormalVector == new Vector2(0, -1)) 
+                                    else if (CollisionManifold.NormalVector == new Vector2(0, -1) && ObjectToTest.Solidity.HasFlag(Solidity.Top))
                                     {
                                         if (!Object.Anchored) Object.Position.Y += (CollisionManifold.PenetrationAmount / 2);
                                         if (!ObjectToTest.Anchored) ObjectToTest.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
                                     }
                                     else
                                     {
-                                        if (!Object.Anchored) Object.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
-                                        if (!ObjectToTest.Anchored) ObjectToTest.Position.Y += (CollisionManifold.PenetrationAmount / 2);
+                                        if (ObjectToTest.Solidity.HasFlag(Solidity.Bottom))
+                                        {
+                                            if (!Object.Anchored) Object.Position.Y -= (CollisionManifold.PenetrationAmount / 2);
+                                            if (!ObjectToTest.Anchored) ObjectToTest.Position.Y += (CollisionManifold.PenetrationAmount / 2);
+                                        }
+
                                     }
-                                    
+
                                 }
                                 else
                                 {
                                     // We have a collision. 
                                     Vector2 CollisionNormal = Object.Velocity - ObjectToTest.Velocity;
+
+                                    // Determine which side we are colliding from.
+                                    // Don't change velocity for axes we are not colliding from.
+
+                                    bool BlockLeft;
+                                    bool BlockRight;
+                                    bool BlockTop;
+                                    bool BlockBottom;
+
+                                    BlockLeft = (Object.AABB.Maximum.X < ObjectToTest.AABB.Position.X); // Determine if we are intersecting left.
+                                    BlockRight = (!BlockLeft && Object.AABB.Position.X > ObjectToTest.AABB.Centre.X); // Determine if we are intersecting right.
+                                    BlockTop = (Object.AABB.Maximum.Y < ObjectToTest.AABB.Position.Y);  // Determine if we are intersecting top.
+                                    BlockBottom = (!BlockTop && Object.AABB.Position.Y > ObjectToTest.AABB.Centre.Y) ;  // Determine if we are intersecting bottom.
 
                                     // Identify the velocity at normal.
                                     double NormalVelocity = Vector2.GetDotProduct(CollisionNormal, ObjectToTest.Velocity);
@@ -161,19 +178,61 @@ namespace Lightning.Core.API
 
                                     if (Double.IsNaN(ImpulseScalar) || ImpulseScalar == 0) // prevent going to infinity
                                     {
-                                        ImpulseScalar = 1; 
+                                        ImpulseScalar = 1;
                                     }
 
                                     // Apply force in OPPOSITE directions to force apart
                                     Vector2 CollisionImpulse = CollisionNormal * ImpulseScalar;
 
-                                    
-                                    if (!Object.Anchored) Object.Velocity -= CollisionImpulse * Object.InverseMass;
 
-                                    if (!ObjectToTest.Anchored) ObjectToTest.Velocity += CollisionImpulse * Object.InverseMass;;
+                                    if (!Object.Anchored)
+                                    {
+                                        if (Object.Velocity.X < 0)
+                                        {
+                                            if (BlockLeft) Object.Velocity.X -= CollisionImpulse.X * Object.InverseMass;
+                                        }
+                                        else
+                                        {
+                                            if (BlockRight) Object.Velocity.X += CollisionImpulse.X * Object.InverseMass;
+                                        }
+
+                                        if (Object.Velocity.Y < 0)
+                                        {
+                                            if (BlockBottom) Object.Velocity.Y -= CollisionImpulse.Y * Object.InverseMass;
+                                        }
+                                        else
+                                        {
+                                            if (BlockTop) Object.Velocity.Y += CollisionImpulse.Y * Object.InverseMass;
+                                        }
+
+                                    }
+
+                                    //TODO: method
+
+                                    if (!ObjectToTest.Anchored)
+                                    {
+                                        if (Object.Velocity.X < 0)
+                                        {
+                                            if (BlockLeft) ObjectToTest.Velocity.X -= CollisionImpulse.X * ObjectToTest.InverseMass;
+                                        }
+                                        else
+                                        {
+                                            if (BlockRight) ObjectToTest.Velocity.X -= CollisionImpulse.X * ObjectToTest.InverseMass;
+                                        }
+
+                                        if (Object.Velocity.Y < 0)
+                                        {
+                                            if (BlockBottom) ObjectToTest.Velocity.Y -= CollisionImpulse.Y * ObjectToTest.InverseMass;
+                                        }
+                                        else
+                                        {
+                                            if (BlockTop) ObjectToTest.Velocity.Y -= CollisionImpulse.Y * ObjectToTest.InverseMass;
+                                        }
+
+                                    }
+
+                                    PerformPositionalCorrection(CollisionResult.Manifold, PS);
                                 }
-
-                                PerformPositionalCorrection(CollisionResult.Manifold, PS);
                             }
                             else
                             {
@@ -190,8 +249,6 @@ namespace Lightning.Core.API
 
                             Object.IsColliding = (ObjCollisionCount > 0);
                             ObjectToTest.IsColliding = (ObjToTestCollisionCount > 0);
-
-
 
                         }
                     }

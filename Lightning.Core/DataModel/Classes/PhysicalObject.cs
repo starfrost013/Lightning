@@ -261,6 +261,7 @@ namespace Lightning.Core.API
         /// </summary>
         public bool Invisible { get; set; }
 
+        public Solidity Solidity { get; set; }
         public override void OnCreate()
         {
             PhysicsController = new DefaultPhysicsController(); 

@@ -65,6 +65,16 @@ namespace NuCore.NativeInterop.Win32
             [MarshalAs(UnmanagedType.U4)]
             MessageBoxType uType);
 
+        /// <summary>
+        /// Imported from Tiralen 2022/01/03
+        /// 
+        /// Acquires a system metric
+        /// </summary>
+        /// <param name="SysMetric">The <see cref="SystemMetric"/> to acquire.</param>
+        /// <returns>The value of the system metric specified by the parameter <paramref name="SysMetric"/>.</returns>
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(SystemMetric SysMetric); // temp
+
         public static uint Win32__AttachConsole_Default_PID = 0x0ffffffff; // .NET REQUIREMENT 
 
 

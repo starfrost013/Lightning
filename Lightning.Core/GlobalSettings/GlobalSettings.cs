@@ -67,9 +67,9 @@ namespace Lightning.Core
         public int MaxLuaScriptExecutionTime { get; set; }
 
         /// <summary>
-        /// The default font name for the debugging font.
+        /// Boot splash path 
         /// </summary>
-        public string DebugDefaultFontName { get; set; }
+        public string BootSplashPath { get; set; }
 
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 

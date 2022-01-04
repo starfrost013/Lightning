@@ -248,7 +248,7 @@ namespace NuRender
         }
 #endif
 
-        public static double GetDotProduct(Vector2Internal A, Vector2Internal B) => ((A.X * B.X) + (B.Y * B.Y));
+        public static double GetDotProduct(Vector2Internal A, Vector2Internal B) => A.X * B.X + A.Y * B.Y; // Per Box2D-Lite (GDC 2006)
 
         public Vector2Internal GetAbs() => new Vector2Internal(Math.Abs(X), Math.Abs(Y));
 
