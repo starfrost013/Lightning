@@ -44,7 +44,7 @@ namespace Lightning.Core.API
             }
         }
 
-        internal bool FONT_LOADED { get; set; }
+        internal bool FONT_LOADED => NRFont.Loaded;
 
         private NuRender.Font NRFont { get; set; }
 

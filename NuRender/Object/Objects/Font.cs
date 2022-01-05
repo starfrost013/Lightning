@@ -23,7 +23,7 @@ namespace NuRender
         /// <summary>
         /// Determines if this font is loaded.
         /// </summary>
-        private bool Loaded { get; set; }
+        public bool Loaded { get; private set; }
 
         /// <summary>
         /// Bcking field for <see cref="Size"/>.
@@ -132,5 +132,6 @@ namespace NuRender
             return; 
         }
 
+        
     }
 }
