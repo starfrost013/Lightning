@@ -57,6 +57,8 @@ namespace Lightning.Core
         /// Determines if the bootwindow loaded successfully. As BootWindow is not part of the datamodel it cannot unload itself.
         /// </summary>
         private bool Loaded { get; set; }
+
+        public bool Spun { get; set; }
         public void SetProgress(double NProgress, string NProgressString)
         {
             Progress = NProgress;
@@ -65,7 +67,17 @@ namespace Lightning.Core
             SDL_ttf.TTF_SizeText(CurrentProgressFont.Pointer, CurrentProgressString.Content, out SizeX, out SizeY);
 
             CurrentProgressString.Position = new Vector2Internal(960 / 2 - (SizeX / 2), CurrentProgressString.Position.Y);
-            Update();
+
+            
+            if (!Spun) // worst hack
+            {
+                Update(true);
+                Spun = true; 
+            }
+            else
+            {
+                Update(false);
+            }
         }
 
         public void Init() // result class?
@@ -90,7 +102,7 @@ namespace Lightning.Core
             Init_LoadBootSplash();
             Init_LoadText();
 
-            Update(true);
+            Update();
 
             Loaded = true;
             return;
