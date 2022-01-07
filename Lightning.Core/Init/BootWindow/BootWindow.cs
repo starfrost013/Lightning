@@ -170,7 +170,9 @@ namespace Lightning.Core
 
         public void Shutdown()
         {
-            //BWScene.Shutdown();
+            Window MainWindow = BWScene.GetMainWindow();
+
+            BWScene.ShutdownWindowWithID(MainWindow.Settings.WindowID);
             return;
         }
 

@@ -23,7 +23,7 @@ namespace NuRender
         /// <summary>
         /// Internal: The Window ID of this scene.
         /// </summary>
-        internal uint WindowID { get; set; }
+        public uint WindowID { get; internal set; }
 
         /// <summary>
         /// The default position that this window is

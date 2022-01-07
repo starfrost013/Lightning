@@ -1,4 +1,5 @@
-﻿using NuRender.SDL2; 
+﻿using NuCore.Utilities;
+using NuRender.SDL2; 
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,9 +43,43 @@ namespace NuRender
             foreach (Window Win in Windows) Win.Main(Clear);
         }
        
+        public void ShutdownWindowWithID(uint ID)
+        {
+            Window Window = Windows.FindWindowByID(ID);
+
+            if (Window == null)
+            {
+                ErrorManager.ThrowError("NuRender", "InvalidWindowIDForShutdownException", $"Attempted to shutdown invalid window ID {ID}");
+            }
+            else
+            {
+                if (Windows.Count == 1)
+                {
+                    Window.Shutdown(true);
+                }
+                else
+                {
+                    Window.Shutdown(false);
+                }
+            }
+        }
+
         public void Shutdown()
         {
-            foreach (Window Win in Windows) Win.Shutdown();
+            foreach (Window Win in Windows) 
+            { 
+                // if we are closing the last window, shutdown SDL2
+                if (Windows.Count == 1)
+                {
+                    Win.Shutdown(true);
+                }
+                else
+                {
+                    Win.Shutdown(false);
+                }
+
+                Windows.Remove(Win);
+            }
         }
     }
 }

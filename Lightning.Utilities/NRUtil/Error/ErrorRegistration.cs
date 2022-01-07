@@ -195,6 +195,7 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError(new Error { Name = "LWPakInvalidHeaderException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 206 });
          ErrorManager.RegisterError(new Error { Name = "LWPakInvalidCatalogException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 207 });
          ErrorManager.RegisterError(new Error { Name = "BootWindowCannotFindPathException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 208 });
+         ErrorManager.RegisterError(new Error { Name = "InvalidWindowIDForShutdownException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 209 });
             // todo: external-internal
         }
     }

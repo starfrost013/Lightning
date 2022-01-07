@@ -33,6 +33,7 @@ namespace NuRender
         /// </summary>
         public WindowSettings Settings { get; set; }
 
+        
         public Window()
         {
             NRObjects = new List<NRObject>(); 
@@ -97,7 +98,7 @@ namespace NuRender
 
                             RaiseOnExitEventToAllObjects(new NREventArgs());
                             // todo: raise event
-                            Shutdown();
+                            Shutdown(false);
                             return;
                     }
                 }
@@ -110,7 +111,7 @@ namespace NuRender
 
         }
 
-        public void Shutdown()
+        public void Shutdown(bool ShutdownSDL = false)
         {
             Logging.Log("Shutting down SDL...", ClassName);
 
@@ -121,7 +122,7 @@ namespace NuRender
             if (Settings.RenderingInformation.RendererPtr != null) SDL.SDL_DestroyRenderer(Settings.RenderingInformation.RendererPtr);
             if (Settings.RenderingInformation.WindowPtr != null) SDL.SDL_DestroyWindow(Settings.RenderingInformation.WindowPtr);
 
-            SDL.SDL_Quit();
+            if (ShutdownSDL) SDL.SDL_Quit();
 
         }
 

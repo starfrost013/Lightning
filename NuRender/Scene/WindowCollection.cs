@@ -90,7 +90,25 @@ namespace NuRender
             }
         }
 
+        internal Window FindWindowByID(uint ID)
+        {
+            foreach (Window Window in Windows)
+            { 
+                if (Window.Settings.WindowID == ID)
+                {
+                    return Window;
+                }
+            }
+
+
+            return null;
+        }
+
         public Window this[int i] => Windows[i];
+
+        public int Count => Windows.Count;
+
+        public void Remove(Window Window) => Windows.Remove(Window);
     }
 
     public class WindowCollectionEnumerator : IEnumerator
