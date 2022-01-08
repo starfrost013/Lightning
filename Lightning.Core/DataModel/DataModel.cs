@@ -11,7 +11,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 1.1.0 - NR Integration) 
+    /// DataModel (API Version 1.2.0 - Begin lighting) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
@@ -19,7 +19,7 @@ namespace Lightning.Core.API
     public class DataModel
     {
         public static int DATAMODEL_API_VERSION_MAJOR = 1;
-        public static int DATAMODEL_API_VERSION_MINOR = 1;
+        public static int DATAMODEL_API_VERSION_MINOR = 2;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
@@ -76,8 +76,9 @@ namespace Lightning.Core.API
                 if (!Reinitialising)
                 {
                     State = new InstanceCollection();
+
                 }
-                
+
                 if (!ErrorManager.ERRORMANAGER_LOADED)
                 {
                     ErrorManager.Init();
@@ -86,12 +87,37 @@ namespace Lightning.Core.API
                 Workspace WorkSvc = null;
                 ServiceControlManager SCM = null;
 
+                if (!GlobalSettings.GLOBALSETTINGS_LOADED)
+                {
+
+                    GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
+
+                    if (GSR.Successful)
+                    {
+                        // set the globalsettings if successful 
+                        Settings = GSR.Settings;
+#if DEBUG
+                        Settings.ATest();
+#endif
+                    }
+                    else
+                    {
+                        return; // this should not really be running rn 
+                    }
+                }
 
                 if (!Reinitialising)
                 {
+                    // Initialise the BootWindow.
+
+                    BootWindow = new BootWindow();
+                    BootWindow.Init();
+
+                    BootWindow.SetProgress(0, "Initialising Workspace...");
                     // init the SCM
                     WorkSvc = (Workspace)CreateInstance("Workspace");
 
+                    BootWindow.SetProgress(0, "Initialising Service Control Manager...");
                     SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
                 }
                 else
@@ -117,23 +143,6 @@ namespace Lightning.Core.API
                     ErrorManager.ThrowError("DataModel", "ReinitialisingBeforeInitialisingDataModelException");
                 }
 
-                if (!GlobalSettings.GLOBALSETTINGS_LOADED)
-                {
-                    GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
-
-                    if (GSR.Successful)
-                    {
-                        // set the globalsettings if successful 
-                        Settings = GSR.Settings;
-#if DEBUG
-                        Settings.ATest();
-#endif
-                    }
-                    else
-                    {
-                        return; // this should not really be running rn 
-                    }
-                }
 
 
 #if DEBUG_ATEST_DATAMODEL //todo: unit testing
@@ -157,11 +166,8 @@ namespace Lightning.Core.API
 
                     if (Args.InitServices)
                     {
-                        // Initialise the BootWindow.
-                        BootWindow = new BootWindow();
-                        BootWindow.Init();
-                        BootWindow.SetProgress(0, "TEST");
 
+                        BootWindow.SetProgress(0, "Initialising services...");
                         // assume normal init 
                         SCM.InitStartupServices(Settings.ServiceStartupCommands);
 
@@ -186,7 +192,7 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        
+                        BootWindow.Shutdown();
                         Logging.Log("Skipping service initialisation: NoInitServices supplied", "DataModel");
                         Logging.Log("Initialisation completed", "DataModel");
                         return;

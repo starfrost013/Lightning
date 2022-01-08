@@ -4,7 +4,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object =
     [ "OnClick", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a3531d599ea8e56b020cfa52a4d933195", null ],
     [ "OnCreate", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a91f752ea59ab82523fcd1f7bee0b0f70", null ],
     [ "OnSpawn", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a3f99454aa78ee135cddda25468c40693", null ],
-    [ "Render", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a43224d19da8564a3ed2eae2d355e7b2f", null ],
+    [ "Render", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a8dc360b87e14655815810d7fc678342e", null ],
     [ "_mass", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a1371281369b93209953931374edf9f4d", null ],
     [ "AABB", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a98295de4257435a20f723da6ced7aa52", null ],
     [ "Anchored", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adab647a99da7a6cd110aac024689637a", null ],
@@ -38,6 +38,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object =
     [ "PhysicsEnabled", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a8f40015e8c6a368be1b6b131a8f3a065", null ],
     [ "Position", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a896df782501e97fbe7786554275d8f03", null ],
     [ "Size", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a489e02d8ce982b987a03938a8df87f3e", null ],
+    [ "Solidity", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#ae038fbe93e505ff864798b3833f0fe3a", null ],
     [ "Velocity", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a2b80574a0f5db5b16153319701e131e4", null ],
     [ "ZIndex", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#abaaffbeaae54d8dc9fe431b34426a508", null ]
 ];

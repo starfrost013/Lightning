@@ -3,8 +3,8 @@
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-12-18 22:07:26</LastModifiedDate>
-    <RevisionID>71</RevisionID>
+    <LastModifiedDate>2022-01-08 18:18:30</LastModifiedDate>
+    <RevisionID>72</RevisionID>
     <Version />
   </Metadata>
   <Settings>
@@ -142,11 +142,11 @@
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
     
     <PhysicalObject Name="Block1" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0" Position="430,300" Size="200,150">
-      <ImageBrush Path="Content\Images\test_texture_small.png" ZIndex="0" Name="Block1_Texture" Position="60,60" Size="200,150"/>
+      <ImageBrush Path="Content\Textures\test_texture_small.png" ZIndex="0" Name="Block1_Texture" Position="60,60" Size="200,150"/>
     </PhysicalObject>
     
     <PhysicalObject CanCollide="False" Position="60,60" Size="50,50" ZIndex="0" Name="Block2" PhysicsEnabled="False" Mass="0">
-      <ImageBrush Path="Content\Images\test_texture_small2.png" CanCollide="False" ZIndex="0" Name="Block2_Texture" TextureDisplayMode="Tile" DisplayViewport="200,150"/>
+      <ImageBrush Path="Content\Textures\test_texture_small2.png" CanCollide="False" ZIndex="0" Name="Block2_Texture" TextureDisplayMode="Tile" DisplayViewport="200,150"/>
     </PhysicalObject>
 
     <Camera Active="True" CameraType="FollowObject" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" TargetName="Trincid2021TestOnly"/>

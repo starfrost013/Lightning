@@ -19,7 +19,7 @@ var hierarchy =
     ] ],
     [ "Lightning.Core.API.Instance", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html", [
       [ "Lightning.Core.API.DataModelDeserialiser", "class_lightning_1_1_core_1_1_a_p_i_1_1_data_model_deserialiser.html", null ],
-      [ "Lightning.Core.API.ScriptInterpreter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html", null ],
+      [ "Lightning.Core.API.ScriptStateManager", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_state_manager.html", null ],
       [ "Lightning.Core.API.ScriptingTest", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_test.html", null ],
       [ "Lightning.Core.API.SerialisableObject", "class_lightning_1_1_core_1_1_a_p_i_1_1_serialisable_object.html", [
         [ "Lightning.Core.API.Color3", "class_lightning_1_1_core_1_1_a_p_i_1_1_color3.html", null ],
@@ -65,6 +65,9 @@ var hierarchy =
               ] ]
             ] ]
           ] ],
+          [ "Lightning.Core.API.Light", "class_lightning_1_1_core_1_1_a_p_i_1_1_light.html", [
+            [ "Lightning.Core.API.PointLight", "class_lightning_1_1_core_1_1_a_p_i_1_1_point_light.html", null ]
+          ] ],
           [ "Lightning.Core.API.PhysicsController", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_controller.html", [
             [ "Lightning.Core.API.DefaultPhysicsController", "class_lightning_1_1_core_1_1_a_p_i_1_1_default_physics_controller.html", null ]
           ] ],
@@ -79,14 +82,17 @@ var hierarchy =
           [ "Lightning.Core.API.SplashScreen", "class_lightning_1_1_core_1_1_a_p_i_1_1_splash_screen.html", null ]
         ] ],
         [ "Lightning.Core.API.Script", "class_lightning_1_1_core_1_1_a_p_i_1_1_script.html", [
-          [ "Lightning.Core.API.CoreScript", "class_lightning_1_1_core_1_1_a_p_i_1_1_core_script.html", [
-            [ "Lightning.Core.API.LuaSandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox.html", null ]
+          [ "Lightning.Core.API.LuaSandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox.html", null ],
+          [ "Lightning.Core.API.TrustedScript", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_script.html", [
+            [ "Lightning.Core.API.TrustedLoad", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_load.html", null ],
+            [ "Lightning.Core.API.TrustedMetatable", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_metatable.html", null ]
           ] ]
         ] ],
         [ "Lightning.Core.API.Vector2", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html", null ],
         [ "Lightning.Core.API.Workspace", "class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html", null ]
       ] ],
       [ "Lightning.Core.API.Service", "class_lightning_1_1_core_1_1_a_p_i_1_1_service.html", [
+        [ "Lightning.Core.API.GameService", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html", null ],
         [ "Lightning.Core.API.IGDService", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html", null ],
         [ "Lightning.Core.API.PhysicsService", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html", null ],
         [ "Lightning.Core.API.RenderService", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html", null ],
@@ -130,13 +136,15 @@ var hierarchy =
     [ "Lightning.Core.API.Manifold", "class_lightning_1_1_core_1_1_a_p_i_1_1_manifold.html", null ],
     [ "Lightning.Core.API.MenuState", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_state.html", null ],
     [ "Lightning.Core.API.PhysicsState", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html", null ],
-    [ "Lightning.Core.API.Renderer", "class_lightning_1_1_core_1_1_a_p_i_1_1_renderer.html", null ],
     [ "Lightning.Core.API.RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", null ],
     [ "Lightning.Core.API.ScriptMethod", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method.html", null ],
     [ "Lightning.Core.API.ScriptMethodParameter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method_parameter.html", null ],
     [ "Lightning.Core.API.ServiceGlobalData", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_global_data.html", null ],
     [ "Lightning.Core.API.ServiceMessage", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_message.html", null ],
     [ "Lightning.Core.API.ServiceNotification", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_notification.html", null ],
+    [ "Stopwatch", null, [
+      [ "Lightning.Core.API.ScriptTimer", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_timer.html", null ]
+    ] ],
     [ "TypeConverter", null, [
       [ "Lightning.Core.API.Color3Converter", "class_lightning_1_1_core_1_1_a_p_i_1_1_color3_converter.html", null ],
       [ "Lightning.Core.API.Color4Converter", "class_lightning_1_1_core_1_1_a_p_i_1_1_color4_converter.html", null ],

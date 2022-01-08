@@ -11,8 +11,10 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service =
     [ "RegisterAPI", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a391abe2aa3bcd0ac12808f3de47fbb70", null ],
     [ "RegisterClass", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#afe53363414a238541c518a24cef4000f", null ],
     [ "SerialiseAll", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#ac8595e126a07008d94dca2ec845eeed6", null ],
+    [ "Wait", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#ab1ceb54f0c8aca81577d5e709be4d83f", null ],
     [ "ClassName", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a8b64d4b6b21a7fda9b413be37b3c7fa1", null ],
     [ "Importance", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a7bd8494c437515857ffde57fd2356356", null ],
-    [ "ScriptGlobals", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a50949476fb5d7c4fec8eaa7ce2d8118a", null ],
+    [ "LuaClassName", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a546cca06c0a0a956276d3d1c93a1d7ef", null ],
+    [ "ScriptGlobals", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#a703fabb465eadbedcc1587b7a0a0ef57", null ],
     [ "SCRIPTS_LOADED", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#acdfb26fb94d50f37144ca6b584186ca1", null ]
 ];

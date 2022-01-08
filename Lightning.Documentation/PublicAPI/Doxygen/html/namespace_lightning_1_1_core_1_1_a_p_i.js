@@ -43,6 +43,7 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "GuiRoot", "class_lightning_1_1_core_1_1_a_p_i_1_1_gui_root.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_gui_root" ],
     [ "Humanoid", "class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid" ],
     [ "ImageBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush" ],
+    [ "Light", "class_lightning_1_1_core_1_1_a_p_i_1_1_light.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_light" ],
     [ "Line", "class_lightning_1_1_core_1_1_a_p_i_1_1_line.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_line" ],
     [ "LinearGradientBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_linear_gradient_brush.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_linear_gradient_brush" ],
     [ "ScriptingService", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service" ],
@@ -50,6 +51,7 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "MenuItem", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_item.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_item" ],
     [ "PhysicalObject", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object" ],
     [ "PhysicsController", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_controller.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_controller" ],
+    [ "PointLight", "class_lightning_1_1_core_1_1_a_p_i_1_1_point_light.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_point_light" ],
     [ "Primitive", "class_lightning_1_1_core_1_1_a_p_i_1_1_primitive.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_primitive" ],
     [ "Rectangle", "class_lightning_1_1_core_1_1_a_p_i_1_1_rectangle.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_rectangle" ],
     [ "ScreenGui", "class_lightning_1_1_core_1_1_a_p_i_1_1_screen_gui.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_screen_gui" ],
@@ -99,16 +101,19 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
     [ "ServiceGlobalData", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_global_data.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_global_data" ],
     [ "ServiceMessage", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_message.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_message" ],
     [ "ServiceNotification", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_notification.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_notification" ],
+    [ "GameService", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_service" ],
     [ "IGDService", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service" ],
     [ "PhysicsService", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service" ],
     [ "RenderService", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service" ],
-    [ "Renderer", "class_lightning_1_1_core_1_1_a_p_i_1_1_renderer.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_renderer" ],
     [ "SDLInitialisationResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_s_d_l_initialisation_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_s_d_l_initialisation_result" ],
     [ "ScriptMethod", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method" ],
     [ "ScriptMethodParameter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method_parameter.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method_parameter" ],
-    [ "CoreScript", "class_lightning_1_1_core_1_1_a_p_i_1_1_core_script.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_core_script" ],
+    [ "ScriptStateManager", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_state_manager.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_state_manager" ],
+    [ "ScriptTimer", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_timer.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_timer" ],
     [ "LuaSandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox" ],
-    [ "ScriptInterpreter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter" ],
+    [ "TrustedLoad", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_load.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_load" ],
+    [ "TrustedMetatable", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_metatable.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_metatable" ],
+    [ "TrustedScript", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_script.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_script" ],
     [ "GetScriptMethodResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_script_method_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_script_method_result" ],
     [ "LoadScriptResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_load_script_result.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_load_script_result" ],
     [ "SoundService", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service" ],
@@ -160,11 +165,6 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
       [ "Internal", "namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78daafbf0897a5a83fdd873dfb032ec695d3", null ],
       [ "Private", "namespace_lightning_1_1_core_1_1_a_p_i.html#a9e9644a76f43fdee96912fab8bdbe78da47f9082fc380ca62d531096aa1d110f1", null ]
     ] ],
-    [ "InstanceSecurity", "namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78", [
-      [ "Public", "namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a3d067bedfe2f4677470dd6ccf64d05ed", null ],
-      [ "Private", "namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a47f9082fc380ca62d531096aa1d110f1", null ],
-      [ "LightningLocked", "namespace_lightning_1_1_core_1_1_a_p_i.html#ac19ce7e16b6c9510a12819a3ded22f78a37275dca18acef0938b667c120b31688", null ]
-    ] ],
     [ "InstanceTags", "namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ff", [
       [ "Instantiable", "namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa47def3380de1d081c8d43ffe96bbbd0b", null ],
       [ "ShownInIDE", "namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffaca2abf15382522498f20cca25289bbc4", null ],
@@ -193,6 +193,12 @@ var namespace_lightning_1_1_core_1_1_a_p_i =
       [ "Crash", "namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2ea275c74140224026380b29b2412d25121", null ],
       [ "UnrecoverableCrash", "namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eab1dd91df5973f5e94f54a7ba9ddbe314", null ],
       [ "MessageSend", "namespace_lightning_1_1_core_1_1_a_p_i.html#a2da0f4475f18cc5b24fa7ca6154cfc2eab14dad4ce56876fc73b7a47e9ee999b3", null ]
+    ] ],
+    [ "Solidity", "namespace_lightning_1_1_core_1_1_a_p_i.html#a9226758c12feb9731d97b68e96bed137", [
+      [ "Top", "namespace_lightning_1_1_core_1_1_a_p_i.html#a9226758c12feb9731d97b68e96bed137aa4ffdcf0dc1f31b9acaf295d75b51d00", null ],
+      [ "Sides", "namespace_lightning_1_1_core_1_1_a_p_i.html#a9226758c12feb9731d97b68e96bed137a23cacdef82dcc2b928a439e224c75d3f", null ],
+      [ "Bottom", "namespace_lightning_1_1_core_1_1_a_p_i.html#a9226758c12feb9731d97b68e96bed137a2ad9d63b69c4a10a5cc9cad923133bc4", null ],
+      [ "Default", "namespace_lightning_1_1_core_1_1_a_p_i.html#a9226758c12feb9731d97b68e96bed137a7a1920d61156abc05a60135aefe8bc67", null ]
     ] ],
     [ "TextureDisplayMode", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195", [
       [ "DisplayAsIs", "namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca", null ],

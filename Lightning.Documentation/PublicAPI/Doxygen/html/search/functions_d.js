@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['ungroup_580',['Ungroup',['../class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a7ea7a9235c8461980d65bad272aa9b97',1,'Lightning::Core::API::InstanceCollection']]],
-  ['unload_581',['Unload',['../class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#a0ddeaf95a7bf9582204855f0739ca5a5',1,'Lightning::Core::API::Font']]]
+  ['tick_617',['Tick',['../class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a3d04d4d81c4245ef5f670676d0c7f191',1,'Lightning::Core::API::Script']]]
 ];

@@ -52,5 +52,5 @@ Do not modify this file unless you know what you are doing.
   <DebugDefaultFontName>Arial.14pt for DEBUG</DebugDefaultFontName> <!-- BUT probably not this if you use debugging functionality -->
   <UseASTTokeniser>true</UseASTTokeniser>
   <MaxLuaScriptExecutionTime>300</MaxLuaScriptExecutionTime>
-  <BootSplashPath>Content\Splash\bigkurisu.png</BootSplashPath>
+  <BootSplashPath>Content\Splash\Splash.png</BootSplashPath>
 </GlobalSettings>

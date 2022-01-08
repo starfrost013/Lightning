@@ -6,5 +6,5 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_render_service =
     [ "Poll", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html#aaf6397f4c9389d5da9e82897fb16dce4", null ],
     [ "ClassName", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html#ac08e3f8ad811a6e4420755d4eaaedbf1", null ],
     [ "Importance", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html#afb1e930f1b69beeee616444776070829", null ],
-    [ "Renderer", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html#a3c0c1b8dae9b1a89643442d7949c6397", null ]
+    [ "MainScene", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html#a05c550a84d173fa4b1a39d61de70dbec", null ]
 ];

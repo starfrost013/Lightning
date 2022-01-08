@@ -6,6 +6,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_vector2 =
     [ "GetAbs", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html#ada5c95b4b80d1c5c6239905a25e09d92", null ],
     [ "GetHashCode", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html#a3cdf33c60cec79073cb95da78b7215e0", null ],
     [ "ClassName", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html#a603d31f6f440238da813779ac7c14e01", null ],
+    [ "V2Internal", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html#ad2e3d9b3b78a5a07beafe3e1820bf914", null ],
     [ "X", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html#a65cc411524731475883a9011c55a2ed2", null ],
     [ "Y", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html#aec917a214f6dfa4bfc4ae494a0442ea3", null ]
 ];

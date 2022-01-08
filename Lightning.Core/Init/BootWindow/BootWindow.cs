@@ -59,6 +59,7 @@ namespace Lightning.Core
         private bool Loaded { get; set; }
 
         public bool Spun { get; set; }
+
         public void SetProgress(double NProgress, string NProgressString)
         {
             Progress = NProgress;
@@ -92,7 +93,7 @@ namespace Lightning.Core
             BWScene.AddWindow(new WindowSettings { ApplicationName = "BootWindow (temporary)",
                 IsMainWindow = true,
                 WindowSize = new Vector2Internal(960, 480),
-                WindowPosition = new Vector2Internal(NativeMethodsWin32.GetSystemMetrics(SystemMetric.SM_CXSCREEN) / 2, NativeMethodsWin32.GetSystemMetrics(SystemMetric.SM_CYSCREEN) / 2),
+                WindowPosition = new Vector2Internal(NativeMethodsWin32.GetSystemMetrics(SystemMetric.SM_CXSCREEN) / 2 - (960 / 2), NativeMethodsWin32.GetSystemMetrics(SystemMetric.SM_CYSCREEN) / 2 - (480 / 2)),
                 WindowFlags = SDL.SDL_WindowFlags.SDL_WINDOW_BORDERLESS | SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN });
 #else
                 Logging.Log("BootWindow not implemented on Linux/OSX yet!");
@@ -118,7 +119,7 @@ namespace Lightning.Core
 
                 Image NRImage = (Image)(MainWindow.AddObject("Image"));
                 NRImage.TextureInfo.Path = GS.BootSplashPath;
-                NRImage.Size = new Vector2Internal(960, 640);
+                NRImage.Size = new Vector2Internal(960, 480);
                 NRImage.Load(MainWindow.Settings.RenderingInformation);
             }
             else
@@ -139,7 +140,7 @@ namespace Lightning.Core
             CurrentProgressFont.Load(MainWindow.Settings.RenderingInformation);
             CurrentProgressString = (NuRender.Text)MainWindow.AddObject("Text");
 
-            CurrentProgressString.Position = new Vector2Internal(250, 520);
+            CurrentProgressString.Position = new Vector2Internal(250, 360);
             CurrentProgressString.Colour = new Color4Internal(255, 255, 0, 0);
             CurrentProgressString.Font = "Arial";
             return; 

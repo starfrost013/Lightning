@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Lightning Game Engine: Lightning.Core.API.Instance Class Reference</title>
+<title>Lightning: Lightning.Core.API.Instance Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,8 +31,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Lightning Game Engine
-   &#160;<span id="projectnumber">10/2 - 0.3.939 - SDK</span>
+   <div id="projectname">Lightning
+   &#160;<span id="projectnumber">0.4.1110.3 1/8/22</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('class_lightning_1_1_core_1_1_a_p_i_1_1
   <img src="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.png" usemap="#Lightning.Core.API.Instance_map" alt=""/>
   <map id="Lightning.Core.API.Instance_map" name="Lightning.Core.API.Instance_map">
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model_deserialiser.html" title="Dynamic DataModel Serialiser" alt="Lightning.Core.API.DataModelDeserialiser" shape="rect" coords="0,56,259,80"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_script_interpreter.html" title="LightningScript" alt="Lightning.Core.API.ScriptInterpreter" shape="rect" coords="269,56,528,80"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_script_state_manager.html" title="ScriptStateManager" alt="Lightning.Core.API.ScriptStateManager" shape="rect" coords="269,56,528,80"/>
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_test.html" title="ScriptingTest" alt="Lightning.Core.API.ScriptingTest" shape="rect" coords="538,56,797,80"/>
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_serialisable_object.html" title="SerialisableObject" alt="Lightning.Core.API.SerialisableObject" shape="rect" coords="807,56,1066,80"/>
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_service.html" title="Lightning [DataModel API]" alt="Lightning.Core.API.Service" shape="rect" coords="1345,56,1604,80"/>
@@ -128,12 +128,13 @@ $(document).ready(function(){initNavTree('class_lightning_1_1_core_1_1_a_p_i_1_1
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html" title="Script" alt="Lightning.Core.API.Script" shape="rect" coords="1076,448,1335,472"/>
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html" title="Vector2" alt="Lightning.Core.API.Vector2" shape="rect" coords="1076,504,1335,528"/>
 <area href="class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html" title="Workspace" alt="Lightning.Core.API.Workspace" shape="rect" coords="1076,560,1335,584"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html" title="IGDService (In-Game Debugging Service)" alt="Lightning.Core.API.IGDService" shape="rect" coords="1614,112,1873,136"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html" title="PhysicsService" alt="Lightning.Core.API.PhysicsService" shape="rect" coords="1614,168,1873,192"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html" title="RenderService" alt="Lightning.Core.API.RenderService" shape="rect" coords="1614,224,1873,248"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html" title="LuaGlobalMethods (ScriptingService)" alt="Lightning.Core.API.ScriptingService" shape="rect" coords="1614,280,1873,304"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html" alt="Lightning.Core.API.SoundService" shape="rect" coords="1614,336,1873,360"/>
-<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_u_i_service.html" title="UIService" alt="Lightning.Core.API.UIService" shape="rect" coords="1614,392,1873,416"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html" title="GameService" alt="Lightning.Core.API.GameService" shape="rect" coords="1614,112,1873,136"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html" title="IGDService (In-Game Debugging Service)" alt="Lightning.Core.API.IGDService" shape="rect" coords="1614,168,1873,192"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html" title="PhysicsService" alt="Lightning.Core.API.PhysicsService" shape="rect" coords="1614,224,1873,248"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html" title="RenderService (NuRender version)" alt="Lightning.Core.API.RenderService" shape="rect" coords="1614,280,1873,304"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html" title="LuaGlobalMethods (ScriptingService)" alt="Lightning.Core.API.ScriptingService" shape="rect" coords="1614,336,1873,360"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html" alt="Lightning.Core.API.SoundService" shape="rect" coords="1614,392,1873,416"/>
+<area href="class_lightning_1_1_core_1_1_a_p_i_1_1_u_i_service.html" title="UIService" alt="Lightning.Core.API.UIService" shape="rect" coords="1614,448,1873,472"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -211,7 +212,7 @@ Properties</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_lightning.html">Lightning</a> <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html" title="Lightning">DataModel</a> </p>
-<p>DataModel/Instance Ver0.21.0</p>
+<p>DataModel/Instance Ver0.23.0</p>
 <p>Provides the root for all objects provided in <a class="el" href="namespace_lightning.html">Lightning</a>.</p>
 <p>2020-03-04 Created 2020-03-06 Refactored: renamed InstanceTag to attributes, made ClassName virtual and read-only. 2020-03-09 Added <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a>. Possibly merge InstanceTag and <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a>? 2020-03-11 Made InstanceTag an enum - InstanceTags 2020-03-12 Made <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info.html" title="InstanceInfo class.">InstanceInfo</a> 2020-03-18 DataModel.State only contains first-level instances; Instances store parent and child 2020-03-23 (need to move this comment block to DataModel.cs): worked on Standard <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> Library 2020-03-26 Added the ability to set an instance's parent at instantiation time. 2020-04-02 Error handling, implemented <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be" title="Adds the object Obj  to the children of this Object.">InstanceCollection.Add()</a>; 2020-04-05 Actually implemented <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be" title="Adds the object Obj  to the children of this Object.">InstanceCollection.Add()</a>; and <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a2d289c7b7508fbde57586a3bb9cdadb3" title="Clear the InstanceCollection.">InstanceCollection.Clear()</a>; - <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html" title="Lightning">DataModel</a> class itself now stores GlobalSettings. 2020-04-06 Added <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html" title="Workspace">Workspace</a>; made parent/child addition actually work... 2020-04-08 Modified <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7fe781c2a4ffc02e17f36eea6971b287" title="Adds a child of type ClassName to this Instance.">Instance.AddChild()</a>; to make it non-redundant (continues...)</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -383,7 +384,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the first child of this <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> with ClassName ClassName </p>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html" title="The result for getting an instance.">GetInstanceResult</a> object. The <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> is <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html#ae48603c2605f1ebb8c7e441efad3d09e" title="The instance; polymorphically will be the type we want">GetInstanceResult.Instance</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html" title="GetInstanceResult">GetInstanceResult</a> object. The <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> is <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html#ae48603c2605f1ebb8c7e441efad3d09e" title="The instance; polymorphically will be the type we want">GetInstanceResult.Instance</a>.</dd></dl>
 
 </div>
 </div>
@@ -414,7 +415,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the first child of this <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> with type </p>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html" title="The result for getting an instance.">GetInstanceResult</a> object. The <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> is <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html#ae48603c2605f1ebb8c7e441efad3d09e" title="The instance; polymorphically will be the type we want">GetInstanceResult.Instance</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html" title="GetInstanceResult">GetInstanceResult</a> object. The <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> is <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html#ae48603c2605f1ebb8c7e441efad3d09e" title="The instance; polymorphically will be the type we want">GetInstanceResult.Instance</a>.</dd></dl>
 
 </div>
 </div>

@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Lightning Game Engine", "index.html", [
+  [ "Lightning", "index.html", [
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ],
       [ "Package Functions", "namespacemembers.html", [
@@ -41,7 +41,7 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
-        [ "Properties", "functions_prop.html", null ]
+        [ "Properties", "functions_prop.html", "functions_prop" ]
       ] ]
     ] ]
   ] ]
@@ -50,9 +50,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html",
-"class_lightning_1_1_core_1_1_a_p_i_1_1_physics_controller.html#abcc583b7333389baa39046e542adc665",
-"class_lightning_1_1_core_1_1_a_p_i_1_1_world_gui.html#a203661db16348e20632434ccaa6ae6ee"
+"class_lightning_1_1_core_1_1_a_p_i_1_1_gui_element.html",
+"class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#abaaffbeaae54d8dc9fe431b34426a508",
+"class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

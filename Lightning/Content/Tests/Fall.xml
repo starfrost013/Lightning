@@ -1,0 +1,57 @@
+<Lightning>
+  <Metadata>
+    <!-- The first Lightning XML file -->
+    <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
+    <Author>starfrost</Author>
+    <Description>An empty game</Description>
+    <CreationDate>2021-03-22 19:32:04</CreationDate>
+    <LastModifiedDate>2021-06-05 19:22:11</LastModifiedDate>
+    <RevisionID>26</RevisionID> <!-- Rev25: update for new settings -->
+
+  </Metadata>
+  <Settings>
+    
+    <Setting>
+      <Name>MaxFPS</Name>
+      <Type>System.Int32</Type>
+      <Value>60</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionX</Name>
+      <Type>System.Int32</Type>
+      <Value>300</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionY</Name>
+      <Type>System.Int32</Type>
+      <Value>300</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowWidth</Name>
+      <Type>System.Int32</Type>
+      <Value>960</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowHeight</Name>
+      <Type>System.Int32</Type>
+      <Value>640</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowTitle</Name>
+      <Type>System.String</Type>
+      <Value>Lightning - Empty Game</Value>
+    </Setting>
+
+
+  </Settings>
+
+  <Workspace>
+      
+  </Workspace>
+
+</Lightning>

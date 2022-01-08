@@ -22,18 +22,19 @@ namespace Lightning.Core.API
             Strings = new List<string>();
 
             Strings.Add("Because Lightning is better than Thunder");
-            Strings.Add("COME ON INGERLAND, SCORE SOME FACKIN PENALTIES");
-            Strings.Add("Brought to you by Raid: Shadow Legends");
+            Strings.Add("Who wins: One england team boi, or the penalty shootout?");
+            Strings.Add("Brought to you by NordVPN");
             Strings.Add("Emerald died for this - and it was absolutely worth it!");
             Strings.Add("KFC > McDonalds, change my mind");
             Strings.Add("I'm voting Party that Teaches How not to Pay the NHK License Fee - are you?");
             Strings.Add("Probably not faster than Unity yet, but we'll get there!");
-            Strings.Add("Certified 100% managed code");
-            Strings.Add("This is happenin!");
-            Strings.Add("8/30/21");
+            Strings.Add("Certified 95% manage");
+            Strings.Add("Physics engine is fucked again sorry");
+            Strings.Add("2022...sometime...hopefully");
             Strings.Add("Guaranteed not an Unreal Licensed Product™!");
-            Strings.Add("kek!");
-            Strings.Add("Lightning - it's tiny and that's how it should be!");
+            Strings.Add("Asuka was best girl after all");
+            Strings.Add("Tiny and that's how it should be!");
+            Strings.Add("A-Level Further Maths was a mistake");
 
             DEBUGSTRINGS_INITIALISED = true; 
         }
