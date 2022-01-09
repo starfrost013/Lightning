@@ -8,7 +8,7 @@ namespace Lightning.Core.API
 {
     public class PointLight : Light
     {
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             Window MainWindow = SDL_Renderer.GetMainWindow();
 

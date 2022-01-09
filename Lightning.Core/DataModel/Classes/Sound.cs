@@ -81,7 +81,7 @@ namespace Lightning.Core.API
             MFDelegate += OnSoundFinished; 
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             
 

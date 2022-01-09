@@ -276,7 +276,7 @@ namespace Lightning.Core.API
         /// 
         /// It has already been loaded, so the object is not required to load textures or anything similar.
         /// </summary>
-        public virtual void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public virtual void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!PhysicalInstance_INITIALISED)
             {
@@ -292,7 +292,7 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    CBrush.Render(SDL_Renderer, Tx); 
+                    CBrush.Render(SDL_Renderer, Tx, IntPtr.Zero); 
                 }
             }
 

@@ -38,7 +38,7 @@ namespace Lightning.Core.API
             SOLIDCOLOURBRUSH_INITIALISED = true; 
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!SOLIDCOLOURBRUSH_INITIALISED)
             {

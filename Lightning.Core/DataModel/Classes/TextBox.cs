@@ -33,7 +33,7 @@ namespace Lightning.Core.API
         /// Determines if this text box will automatically resize to the size of its text.
         /// </summary>
         public bool DoNotAutoResize { get; set; }
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (TEXTBOX_INITIALISATION_FAILED) return;
 
@@ -165,9 +165,9 @@ namespace Lightning.Core.API
 
         internal void DoRender(Scene SDL_Renderer, ImageBrush Tx)
         {
-            ItemRectangle.Render(SDL_Renderer, Tx);
+            ItemRectangle.Render(SDL_Renderer, Tx, IntPtr.Zero);
 
-            base.Render(SDL_Renderer, Tx);
+            base.Render(SDL_Renderer, Tx, IntPtr.Zero);
         }
     }
 }

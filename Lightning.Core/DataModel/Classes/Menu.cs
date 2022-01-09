@@ -26,7 +26,7 @@ namespace Lightning.Core.API
         private Rectangle ItemRectangle { get; set; }
         
         private MenuState State { get; set; }
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!MENU_INITIALISED)
             {
@@ -40,7 +40,7 @@ namespace Lightning.Core.API
 
         private void Menu_RenderMenu(Scene SDL_Renderer, ImageBrush Tx)
         {
-            ItemRectangle.Render(SDL_Renderer, Tx);
+            ItemRectangle.Render(SDL_Renderer, Tx, IntPtr.Zero);
 
             // if the menu is open
             if (State.Open)
@@ -71,7 +71,7 @@ namespace Lightning.Core.API
                             Mn.Position = Pos;
                         }
 
-                        MenuItem.Render(SDL_Renderer, Tx);
+                        MenuItem.Render(SDL_Renderer, Tx, IntPtr.Zero);
                     }
 
                 }

@@ -42,7 +42,7 @@ namespace Lightning.Core.API
             // todo: nr zindex
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             Window MainWindow = SDL_Renderer.GetMainWindow();
 
@@ -56,7 +56,7 @@ namespace Lightning.Core.API
             {
                 if (CBrush != null)
                 {
-                    CBrush.Render(SDL_Renderer, Tx);
+                    CBrush.Render(SDL_Renderer, Tx, IntPtr.Zero);
                 }
                 else
                 {

@@ -17,11 +17,11 @@ namespace Lightning.Core.API
     {
         private bool WORLDGUI_INITIALISED { get; set; }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (WORLDGUI_INITIALISED)
             {
-                base.Render(SDL_Renderer, Tx);
+                base.Render(SDL_Renderer, Tx, IntPtr.Zero);
             }
             else
             {

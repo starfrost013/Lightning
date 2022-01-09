@@ -21,7 +21,7 @@ namespace Lightning.Core.API
         public bool Active { get; set; }
         private bool MAINDEBUGPAGE_INITIALISED { get; set; }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!MAINDEBUGPAGE_INITIALISED)
             {

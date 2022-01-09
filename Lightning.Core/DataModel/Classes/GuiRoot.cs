@@ -56,7 +56,7 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="SDL_Renderer"></param>
         /// <param name="Tx"></param>
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
 
             GetMultiInstanceResult GMIR = GetAllChildrenOfType("GuiRoot");
@@ -76,7 +76,7 @@ namespace Lightning.Core.API
                     GuiRoot GuiRoot = (GuiRoot)Instance;
 
                     // for now
-                    GuiRoot.Render(SDL_Renderer, null); 
+                    GuiRoot.Render(SDL_Renderer, null, IntPtr.Zero); 
                 }
             }
         }

@@ -24,7 +24,7 @@ namespace Lightning.Core.API
         public int DefaultTiming { get; set; }
 
         private bool ANIMATIONFRAME_INITIALISED { get; set; }
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!ANIMATIONFRAME_INITIALISED)
             {
@@ -32,7 +32,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                base.Render(SDL_Renderer, Tx); // call base imagebrush renderer
+                base.Render(SDL_Renderer, Tx, IntPtr.Zero); // call base imagebrush renderer
             }
         }
 

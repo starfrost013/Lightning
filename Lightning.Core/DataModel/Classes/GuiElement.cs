@@ -34,9 +34,9 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="SDL_Renderer"></param>
         /// <param name="Tx"></param>
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
-            base.Render(SDL_Renderer, Tx);
+            base.Render(SDL_Renderer, Tx, IntPtr.Zero);
         }
 
         /// <summary>

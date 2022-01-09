@@ -25,7 +25,7 @@ namespace Lightning.Core.API
 
         private bool SKY_INITIALISED { get; set; }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!SKY_INITIALISED)
             {
@@ -39,7 +39,7 @@ namespace Lightning.Core.API
                 ImageBrush IBrush = (ImageBrush)CurBrush;
 
                 IBrush.SnapToParent(); 
-                IBrush.Render(SDL_Renderer, Tx);
+                IBrush.Render(SDL_Renderer, Tx, IntPtr.Zero);
 
               
             }

@@ -254,8 +254,6 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    InitRendering_DisplaySplash();
-
                     InitRendering_GetBlendMode();
 
                     InitRendering_LoadAndCacheTextures();
@@ -283,38 +281,6 @@ namespace Lightning.Core.API
 
         }
         
-        /// <summary>
-        /// Displays splash screen [DEPRECATED] 
-        /// </summary>
-        private void InitRendering_DisplaySplash()
-        {
-            SplashScreen SS = (SplashScreen)DataModel.CreateInstance("SplashScreen");
-
-            GetInstanceResult GIR = SS.GetFirstChildOfType("Texture");
-
-            Window MainWindow = MainScene.GetMainWindow();
-
-            if (!GIR.Successful
-                || GIR.Instance == null)
-            {
-                return;
-            }
-            else
-            {
-                ImageBrush Tx = (ImageBrush)GIR.Instance;
-
-                Tx.Position = new Vector2(0, 0);
-                Tx.Size = new Vector2(MainScene.GetMainWindow().Settings.WindowSize.X, MainScene.GetMainWindow().Settings.WindowSize.Y);
-
-                Tx.SDLTexturePtr = SDL_image.IMG_Load(Tx.Path);
-
-                SS.Render(MainScene, Tx);
-
-                SDL.SDL_RenderPresent(MainWindow.Settings.RenderingInformation.RendererPtr); 
-            }
-
-            
-        }
 
         /// <summary>
         /// Private: Gets and sets up the rendering blend mode for this game.
@@ -572,7 +538,7 @@ namespace Lightning.Core.API
                         RenderEventArgs REA = new RenderEventArgs();
                         REA.SDL_Renderer = MainScene;
 
-                        PO.Render(MainScene, null);
+                        PO.Render(MainScene, null, IntPtr.Zero);
                         continue;
                     }
                     else
@@ -601,7 +567,7 @@ namespace Lightning.Core.API
                     // Made this code a bit less hackish (December 11, 2021):
                     if (PO.OnRender == null)
                     {
-                        PO.Render(MainScene, Tx);
+                        PO.Render(MainScene, Tx, IntPtr.Zero);
                     }
                     else
                     {

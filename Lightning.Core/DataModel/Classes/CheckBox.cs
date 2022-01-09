@@ -47,7 +47,7 @@ namespace Lightning.Core.API
             CHECKBOX_INITIALISED = true; 
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!CHECKBOX_INITIALISED)
             {
@@ -63,7 +63,7 @@ namespace Lightning.Core.API
 
         private void PerformRender(Scene SDL_Renderer, ImageBrush Tx)
         {
-            base.Render(SDL_Renderer, Tx);
+            base.Render(SDL_Renderer, Tx, IntPtr.Zero);
             L1.Invisible = !Checked;
             L2.Invisible = !Checked;
 

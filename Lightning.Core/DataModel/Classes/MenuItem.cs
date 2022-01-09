@@ -54,7 +54,7 @@ namespace Lightning.Core.API
         public bool Strikethrough { get; set; }
 
         public MenuState State { get; set; }
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             // rendered by menu
             if (!MENUITEM_INITIALISED)
@@ -149,10 +149,10 @@ namespace Lightning.Core.API
 
                     // menu options are automatically rendered?
 
-                    ItemRectangle.Render(SDL_Renderer, Tx); 
-                    ItemText.Render(SDL_Renderer, Tx);
+                    ItemRectangle.Render(SDL_Renderer, Tx, IntPtr.Zero); 
+                    ItemText.Render(SDL_Renderer, Tx, IntPtr.Zero);
                     
-                    if (MenuItem.Children.Count > 0) MenuItem.Render(SDL_Renderer, Tx);
+                    if (MenuItem.Children.Count > 0) MenuItem.Render(SDL_Renderer, Tx, IntPtr.Zero);
 
 
                 }

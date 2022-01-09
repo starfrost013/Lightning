@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.104.21341</AssemblyVersion>
-    <FileVersion>1.0.104.21341</FileVersion>
+    <AssemblyVersion>1.0.105.22009</AssemblyVersion>
+    <FileVersion>1.0.105.22009</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>NuRender.Test</PackageId>
     <Product>NuRender Testing Framework</Product>

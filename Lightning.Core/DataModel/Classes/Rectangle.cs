@@ -43,7 +43,7 @@ namespace Lightning.Core.API
             Rectangle_Initialised = true; 
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             Brush Brush = GetBrush();
 
@@ -57,7 +57,7 @@ namespace Lightning.Core.API
             {
                 if (Brush != null)
                 {
-                    Brush.Render(SDL_Renderer, Tx);
+                    Brush.Render(SDL_Renderer, Tx, IntPtr.Zero);
                 }
                 else
                 {

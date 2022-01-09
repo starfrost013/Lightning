@@ -41,7 +41,7 @@ namespace Lightning.Core.API
             }
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             base.PO_Init();
 
@@ -189,7 +189,7 @@ namespace Lightning.Core.API
                     }
 
                     // temporary hack code until render refactoring done
-                    AF.Render(SDL_Renderer, AF);
+                    AF.Render(SDL_Renderer, AF, IntPtr.Zero);
 
 
 

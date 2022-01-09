@@ -70,7 +70,7 @@ namespace Lightning.Core.API
             return (Vector2)NRFont.GetFontSize(Content);
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             return; // prevent crash from calling the wrong method
         }

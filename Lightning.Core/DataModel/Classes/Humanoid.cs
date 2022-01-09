@@ -170,7 +170,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx = null)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             // Some rendering temp stuff for humanoids
 
@@ -249,7 +249,7 @@ namespace Lightning.Core.API
                 SDL.SDL_SetRenderDrawColor(MainWindow.Settings.RenderingInformation.RendererPtr, 0, 0, 0, 255);
             }
 
-            base.Render(SDL_Renderer, Tx);
+            base.Render(SDL_Renderer, Tx, IntPtr.Zero);
         }
 
         private void Kill()

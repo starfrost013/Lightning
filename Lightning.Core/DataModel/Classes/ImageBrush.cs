@@ -60,7 +60,7 @@ namespace Lightning.Core.API
         }
 
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             base.PO_Init();
 

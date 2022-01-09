@@ -69,25 +69,14 @@ namespace NuRender
                 }
             }
 
-            IntPtr Surface = SDL_image.IMG_Load(TextureInfo.Path);
+            // January 9, 2022: use loadtexture here
+            TextureInfo.TexPtr = SDL_image.IMG_LoadTexture(WRI.RendererPtr, TextureInfo.Path);
 
-            if (Surface == IntPtr.Zero) 
+            if (TextureInfo.TexPtr == IntPtr.Zero) 
             {
                 ErrorManager.ThrowError(ClassName, "NRFailedToLoadTextureException", $"Error loading texture (NuRender.SDL2.SDL_image.IMG_Load(Path) or C++ failed: {SDL.SDL_GetError()}).");
                 return false;
             }
-
-            TextureInfo.TexPtr = SDL.SDL_CreateTextureFromSurface(WRI.RendererPtr, Surface);
-
-            if (TextureInfo.TexPtr == IntPtr.Zero)
-            {
-                ErrorManager.ThrowError(ClassName, "NRFailedToLoadTextureException", $"Error loading texture (error converting SDL_Surface to SDL_Texture): {SDL.SDL_GetError()}");
-                return false;
-            }
-
-            // prevent memory leaks
-
-            SDL.SDL_FreeSurface(Surface);
 
             return true; 
 

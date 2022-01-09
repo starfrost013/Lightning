@@ -22,7 +22,7 @@ namespace Lightning.Core.API
         
         private bool SURFACEGUI_INITIALISED { get; set; }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr RenderTarget)
         {
             if (!SURFACEGUI_INITIALISED)
             {
@@ -30,7 +30,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                base.Render(SDL_Renderer, Tx);
+                base.Render(SDL_Renderer, Tx, IntPtr.Zero);
             }
             
         }
