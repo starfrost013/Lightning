@@ -202,7 +202,7 @@ namespace Lightning.Core.API
         {
             Logging.Log("Unloading fonts...");
 
-            UnloadAllFonts();
+            Rendering_UnloadAllFonts();
 
             Logging.Log("Shutting down SDL...", ClassName);
 
@@ -262,7 +262,7 @@ namespace Lightning.Core.API
 
                     Window MainWindow = MainScene.GetMainWindow();
 
-                    LoadAllFonts(MainWindow.Settings.RenderingInformation);
+                    Rendering_LoadAllFonts(MainWindow.Settings.RenderingInformation);
 
                     TriggerOnSpawn();
 
@@ -496,13 +496,14 @@ namespace Lightning.Core.API
             else
             {
                 // Render the objects.
+                Rendering_PreRender(MainScene);
                 Rendering_RenderPhysicalInstances();
             }
         }
 
         private void Rendering_PreRender(Scene SDL_Renderer)
         {
-            InstanceCollection InsList = BuildListOfAllObjects();
+            InstanceCollection InsList = Rendering_BuildListOfAllObjects();
 
             foreach (Instance Ins in InsList)
             {
@@ -617,7 +618,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private InstanceCollection BuildListOfAllObjects()
+        private InstanceCollection Rendering_BuildListOfAllObjects()
         {
             Workspace Ws = DataModel.GetWorkspace();
 
@@ -627,7 +628,7 @@ namespace Lightning.Core.API
         private void HandleKeyDown(SDL.SDL_Event CurEvent)
         {
             
-            InstanceCollection AllObjects = BuildListOfAllObjects();
+            InstanceCollection AllObjects = Rendering_BuildListOfAllObjects();
 
             HandleKeyDown_NotifyAllPhysicalInstances(AllObjects, CurEvent);
         }
@@ -782,7 +783,7 @@ namespace Lightning.Core.API
 
         private void HandleKeyUp(SDL.SDL_Event CurEvent)
         {
-            InstanceCollection AllObjects = BuildListOfAllObjects();
+            InstanceCollection AllObjects = Rendering_BuildListOfAllObjects();
 
             HandleKeyUp_NotifyAllPhysicalInstances(CurEvent, AllObjects);
         }
@@ -847,7 +848,7 @@ namespace Lightning.Core.API
             return;
         }
 
-        private void LoadAllFonts(WindowRenderingInformation RenderInfo)
+        private void Rendering_LoadAllFonts(WindowRenderingInformation RenderInfo)
         {
             Workspace Ws = DataModel.GetWorkspace();
 
@@ -892,7 +893,7 @@ namespace Lightning.Core.API
 
         }
 
-        private void UnloadAllFonts()
+        private void Rendering_UnloadAllFonts()
         {
 
             Logging.Log($"Unloading all fonts...", ClassName);
