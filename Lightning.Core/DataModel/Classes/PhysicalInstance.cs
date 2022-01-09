@@ -14,7 +14,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a physically rendered object in Lightning, with a Position, Size, and a Texture (stored as a logical child). Rendered every frame by RenderService.
     /// </summary>
-    public class PhysicalObject : SerialisableObject
+    public class PhysicalInstance : SerialisableObject
     {
         /// <summary>
         /// <inheritdoc/> -- set to PhysicalObject.
@@ -159,7 +159,6 @@ namespace Lightning.Core.API
         /// </summary>
         public RenderEvent OnRender { get; set; }
 
-
         public AABB AABB
         {
             get
@@ -238,7 +237,6 @@ namespace Lightning.Core.API
         /// </summary>
         public bool PhysicsEnabled { get; set; }
 
-
         /// <summary>
         /// The PhysicsController of this PhysicsObject - see <see cref="PhysicsController"/>.
         /// </summary>
@@ -254,14 +252,17 @@ namespace Lightning.Core.API
         /// </summary>
         public Vector2 DisplayViewport { get; set; }
 
-        private bool PHYSICALOBJECT_INITIALISED { get; set; }
-
         /// <summary>
         /// Determines if this PhysicalObject is invisible.
         /// </summary>
         public bool Invisible { get; set; }
 
+        /// <summary>
+        /// The physics solidity of this object.
+        /// </summary>
         public Solidity Solidity { get; set; }
+
+        private bool PHYSICALOBJECT_INITIALISED { get; set; }
         public override void OnCreate()
         {
             PhysicsController = new DefaultPhysicsController(); 
@@ -294,9 +295,7 @@ namespace Lightning.Core.API
                     CBrush.Render(SDL_Renderer, Tx); 
                 }
             }
-            
 
-            
         }
 
         public virtual void OnClick(object Sender, MouseEventArgs EventArgs)
@@ -305,7 +304,7 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Applies an instantenous impulse force to this object.
+        /// Applies an instantenous impulse force to this object if physics is enabled.
         /// </summary>
         /// <param name="Impulse">A <see cref="Vector2"/> containing the impulse force to apply to this PhysicalObject.</param>
         public void ApplyImpulse(Vector2 Impulse)

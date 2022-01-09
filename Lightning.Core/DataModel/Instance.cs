@@ -312,6 +312,13 @@ namespace Lightning.Core.API
 
         public KeyDownEvent OnKeyDownHandler { get; set; }
 
+        /// <summary>
+        /// PreRender event handler.
+        /// 
+        /// Called before rendering if set to a valid method.
+        /// </summary>
+        public PreRenderEvent PreRender { get; set; }
+
         public GenericResult RemoveChild(Instance Chl)
         {
             GenericResult GR = new GenericResult();

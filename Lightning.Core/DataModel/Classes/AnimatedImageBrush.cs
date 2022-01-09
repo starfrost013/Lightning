@@ -33,8 +33,8 @@ namespace Lightning.Core.API
         {
             Type ParentType = Parent.GetType();
 
-            if (ParentType != typeof(PhysicalObject)
-            && !ParentType.IsSubclassOf(typeof(PhysicalObject))) 
+            if (ParentType != typeof(PhysicalInstance)
+            && !ParentType.IsSubclassOf(typeof(PhysicalInstance))) 
             {
                 ErrorManager.ThrowError(ClassName, "BrushMustHavePhysicalObjectParentException");
                 Parent.RemoveChild(this);
@@ -221,7 +221,7 @@ namespace Lightning.Core.API
                     SN.ServiceClassName = "RenderService";
                     SN.NotificationType = ServiceNotificationType.MessageSend;
                     SN.Data.Name = "LoadTexture";
-                    SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
+                    SN.Data.Data.Add((PhysicalInstance)Parent); // todo: messagedatacollection
                     SN.Data.Data.Add(Frame);
 
                     Frame.ForceToScreen = ForceToScreen;

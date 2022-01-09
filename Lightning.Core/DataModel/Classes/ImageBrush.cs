@@ -51,8 +51,8 @@ namespace Lightning.Core.API
         {
             Type ParentType = Parent.GetType();
 
-            if (ParentType != typeof(PhysicalObject)
-            && !ParentType.IsSubclassOf(typeof(PhysicalObject))) 
+            if (ParentType != typeof(PhysicalInstance)
+            && !ParentType.IsSubclassOf(typeof(PhysicalInstance))) 
             {
                 ErrorManager.ThrowError(ClassName, "BrushMustHavePhysicalObjectParentException");
                 Parent.RemoveChild(this);
@@ -83,7 +83,7 @@ namespace Lightning.Core.API
             SN.ServiceClassName = "RenderService";
             SN.NotificationType = ServiceNotificationType.MessageSend;
             SN.Data.Name = "LoadTexture";
-            SN.Data.Data.Add((PhysicalObject)Parent); // todo: messagedatacollection
+            SN.Data.Data.Add((PhysicalInstance)Parent); // todo: messagedatacollection
             SN.Data.Data.Add(this);
 
             ServiceNotifier.NotifySCM(SN);
@@ -215,7 +215,7 @@ namespace Lightning.Core.API
             // Very temporary code.
             // In the future you will only set these on the brushes,
             // this is temp until ~Aug 20 2021
-            PhysicalObject PParent = (PhysicalObject)Parent;
+            PhysicalInstance PParent = (PhysicalInstance)Parent;
             if (PParent.Position != null) Position = PParent.Position;
             if (PParent.Size != null) Size = PParent.Size;
             if (PParent.BorderColour != null) BorderColour = PParent.BorderColour;

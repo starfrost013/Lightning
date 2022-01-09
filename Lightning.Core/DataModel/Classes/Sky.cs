@@ -12,9 +12,9 @@ namespace Lightning.Core.API
     /// 
     /// May 26, 2021 (modified August 17, 2021)
     /// 
-    /// Defines a background. The <see cref="PhysicalObject.Size"/> property is optional for this object. It will stretch to the size of the game window.
+    /// Defines a background. The <see cref="PhysicalInstance.Size"/> property is optional for this object. It will stretch to the size of the game window.
     /// </summary>
-    public class Sky : PhysicalObject
+    public class Sky : PhysicalInstance
     {
         internal override string ClassName => "Sky";
 

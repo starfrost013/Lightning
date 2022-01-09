@@ -13,7 +13,7 @@ namespace Lightning.Core.API
     /// 
     /// A shared class for all primitive shapes. 
     /// </summary>
-    public class Primitive : PhysicalObject
+    public class Primitive : PhysicalInstance
     {
         internal override string ClassName => "Primitive";
 

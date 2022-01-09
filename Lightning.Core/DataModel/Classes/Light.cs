@@ -11,7 +11,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a light source in Lightning
     /// </summary>
-    public class Light : PhysicalObject
+    public class Light : PhysicalInstance
     {
         /// <summary>
         /// Determines if this Light will bounce off objects.
@@ -34,7 +34,7 @@ namespace Lightning.Core.API
         {
             // enable physics
             // so we can detect if we are colliding
-            PhysicsEnabled = true; 
+            ZIndex = 2147483647; // force to front
         }
 
     }

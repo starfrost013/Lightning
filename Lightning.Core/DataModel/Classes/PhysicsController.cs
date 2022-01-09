@@ -12,7 +12,7 @@ namespace Lightning.Core.API
     /// Defines a physics controller. A physics controller is a code-only API class that defines the physics behaviour
     /// for a particular class. It is designed to be natively extensible and additionally extensible through Lua
     /// </summary>
-    public abstract class PhysicsController : PhysicalObject
+    public abstract class PhysicsController : PhysicalInstance
     {
         internal override string ClassName => "PhysicsController";
         internal override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Destroyable;
@@ -25,7 +25,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Ran each frame.
         /// </summary>
-        public abstract void OnTick(PhysicalObject Object, PhysicsState PS); // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
+        public abstract void OnTick(PhysicalInstance Object, PhysicsState PS); // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
 
     }
 }

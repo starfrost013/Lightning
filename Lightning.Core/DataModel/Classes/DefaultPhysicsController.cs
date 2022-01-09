@@ -22,7 +22,7 @@ namespace Lightning.Core.API
             return; 
         }
 
-        public override void OnTick(PhysicalObject Object, PhysicsState PS) // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
+        public override void OnTick(PhysicalInstance Object, PhysicsState PS) // TODO: TEMP VERY VERY BAD DO NOT USE FOR LONGER THAN LIKE A DAY
         {
 
             Workspace Ws = DataModel.GetWorkspace();
@@ -60,7 +60,7 @@ namespace Lightning.Core.API
 
                     foreach (Instance Instance in ControllableObjectList)
                     {
-                        PhysicalObject ObjectToTest = (PhysicalObject)Instance;
+                        PhysicalInstance ObjectToTest = (PhysicalInstance)Instance;
 
                         if (Object == ObjectToTest)
                         {
@@ -264,7 +264,7 @@ namespace Lightning.Core.API
         /// <param name="AABB1">The first AABB you wish to check.</param>
         /// <param name="AABB2">The second </param>
         /// <returns>A boolean determining if the AABB represented by <paramref name="AABB1"/> is within the AABB represented by <paramref name="AABB2"/></returns>
-        private CollisionResult AABBtoAABB(PhysicalObject ObjA, PhysicalObject ObjB)
+        private CollisionResult AABBtoAABB(PhysicalInstance ObjA, PhysicalInstance ObjB)
         {
 
             CollisionResult CR = new CollisionResult();

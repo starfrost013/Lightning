@@ -11,7 +11,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines an object that can be controlled.
     /// </summary>
-    public class ControllableObject : PhysicalObject
+    public class ControllableObject : PhysicalInstance
     {
         internal override string ClassName => "ControllableObject";
         internal override InstanceTags Attributes => 0;

@@ -180,7 +180,7 @@ namespace Lightning.Core.API
             {
                 List<Instance> Instances = GMIR.Instances;
 
-                foreach (PhysicalObject Instance in Instances)
+                foreach (PhysicalInstance Instance in Instances)
                 {
                     if (Instance.PhysicsEnabled)
                     {

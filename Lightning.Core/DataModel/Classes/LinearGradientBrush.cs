@@ -34,15 +34,15 @@ namespace Lightning.Core.API
         {
             Type ParentType = Parent.GetType(); // parent cannot be null as parentcanbenull is not set
 
-            if (ParentType != typeof(PhysicalObject)
-            && !ParentType.IsSubclassOf(typeof(PhysicalObject)))
+            if (ParentType != typeof(PhysicalInstance)
+            && !ParentType.IsSubclassOf(typeof(PhysicalInstance)))
             {
                 ErrorManager.ThrowError(ClassName, "BrushMustHavePhysicalObjectParentException");
                 Parent.RemoveChild(this);
                 return;
             }
 
-            PhysicalObject ParentPE = (PhysicalObject)Parent;
+            PhysicalInstance ParentPE = (PhysicalInstance)Parent;
 
             if (ParentPE.Position == null
             || ParentPE.Size == null)
@@ -137,7 +137,7 @@ namespace Lightning.Core.API
 
                     GradientStop GradientStop = (GradientStop)GStop;
 
-                    PhysicalObject PEParent = (PhysicalObject)Parent;
+                    PhysicalInstance PEParent = (PhysicalInstance)Parent;
 
                     Vector2 PEParentPosition = PEParent.Position;
 

@@ -18,12 +18,12 @@ namespace Lightning.Core.API
         /// <summary>
         /// The first object to implement.
         /// </summary>
-        public PhysicalObject PhysicalObjectA { get; set; }
+        public PhysicalInstance PhysicalObjectA { get; set; }
 
         /// <summary>
         /// The second object to implement.
         /// </summary>
-        public PhysicalObject PhysicalObjectB { get; set; }
+        public PhysicalInstance PhysicalObjectB { get; set; }
 
         /// <summary>
         /// The amount penetrated as a part of the collision.

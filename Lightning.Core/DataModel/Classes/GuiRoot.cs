@@ -13,7 +13,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines the root class for all Lightning UI elements and objects.
     /// </summary>
-    public class GuiRoot : PhysicalObject
+    public class GuiRoot : PhysicalInstance
     {
         internal override string ClassName => "GuiRoot";
 

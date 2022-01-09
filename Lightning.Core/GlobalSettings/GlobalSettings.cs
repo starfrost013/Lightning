@@ -47,11 +47,6 @@ namespace Lightning.Core
         public ServiceStartupCommandCollection ServiceStartupCommands { get; set; }
 
         /// <summary>
-        /// The default font path used when no other font is available. This is ONLY used in debug builds!
-        /// </summary>
-        public string DebugDefaultFontPath { get; set; }
-
-        /// <summary>
         /// The default splash screen
         /// </summary>
         public string DefaultSplashScreen { get; set; }

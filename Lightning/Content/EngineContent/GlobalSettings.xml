@@ -40,16 +40,20 @@ Do not modify this file unless you know what you are doing.
     </ServiceStartupCommand>
 
     <ServiceStartupCommand>
-      <ServiceName>IGDService</ServiceName>
+      <ServiceName>LightingService</ServiceName>
       <StartOrder>5</StartOrder>
     </ServiceStartupCommand>
+
+    <ServiceStartupCommand>
+      <ServiceName>IGDService</ServiceName>
+      <StartOrder>6</StartOrder>
+    </ServiceStartupCommand>
+
   </ServiceStartupCommands>
 
   <!-- Stuff after here is slightly more safe to modify -->
   
   <LightningXsdPath>Content\Schema\Lightning.xsd</LightningXsdPath>
-  <DebugDefaultFontPath>Content\Fonts\Arial.ttf</DebugDefaultFontPath>
-  <DebugDefaultFontName>Arial.14pt for DEBUG</DebugDefaultFontName> <!-- BUT probably not this if you use debugging functionality -->
   <UseASTTokeniser>true</UseASTTokeniser>
   <MaxLuaScriptExecutionTime>300</MaxLuaScriptExecutionTime>
   <BootSplashPath>Content\Splash\Splash.png</BootSplashPath>

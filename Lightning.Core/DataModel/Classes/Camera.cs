@@ -30,7 +30,7 @@ namespace Lightning.Core.API
         /// 
         /// The instance we are targeting. 
         /// </summary>
-        public PhysicalObject Target { get; set; }
+        public PhysicalInstance Target { get; set; }
 
         /// <summary>
         /// The name of the target. 
@@ -97,10 +97,10 @@ namespace Lightning.Core.API
                 {
                     Type InstanceType = InsC.GetType();
 
-                    if (InstanceType == typeof(PhysicalObject)
-                        || InstanceType.IsSubclassOf(typeof(PhysicalObject)))
+                    if (InstanceType == typeof(PhysicalInstance)
+                        || InstanceType.IsSubclassOf(typeof(PhysicalInstance)))
                     {
-                        Target = (PhysicalObject)InsC;
+                        Target = (PhysicalInstance)InsC;
                     }
                     
                 }
@@ -355,7 +355,7 @@ namespace Lightning.Core.API
 
                 // First, check if the target inherits from physicalobject.
 
-                if (TargetType.IsSubclassOf(typeof(PhysicalObject)) || TargetType == typeof(PhysicalObject))
+                if (TargetType.IsSubclassOf(typeof(PhysicalInstance)) || TargetType == typeof(PhysicalInstance))
                 {
                     Workspace Ws = DataModel.GetWorkspace();
 

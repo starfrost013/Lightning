@@ -365,9 +365,9 @@ namespace Lightning.Core.API
 
         private void TriggerOnSpawn()
         {
-            List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects();
+            List<PhysicalInstance> ObjectsToLoad = BuildListOfPhysicalObjects();
 
-            foreach (PhysicalObject PO in ObjectsToLoad)
+            foreach (PhysicalInstance PO in ObjectsToLoad)
             {
                 PO.OnSpawn();
             }
@@ -379,35 +379,35 @@ namespace Lightning.Core.API
         {
             Logging.Log("Building list of object textures to load...", ClassName);
 
-            List<PhysicalObject> ObjectsToLoad = BuildListOfPhysicalObjects();
+            List<PhysicalInstance> ObjectsToLoad = BuildListOfPhysicalObjects();
 
             Logging.Log("Built list of object textures to load. Loading object textures...", ClassName);
             // Load the object textures from the physicalobjects we have acquired. 
             //LoadObjectTextures(ObjectsToLoad);
         }
 
-        private List<PhysicalObject> BuildListOfPhysicalObjects()
+        private List<PhysicalInstance> BuildListOfPhysicalObjects()
         {
             Workspace Ws = DataModel.GetWorkspace();
 
             InstanceCollection Children = Ws.Children;
 
-            List<PhysicalObject> ObjectsToLoad = new List<PhysicalObject>();
+            List<PhysicalInstance> ObjectsToLoad = new List<PhysicalInstance>();
 
             foreach (Instance WsChild in Children)
             {
                 Type ChiType = WsChild.GetType();
 
-                if (ChiType == typeof(PhysicalObject))
+                if (ChiType == typeof(PhysicalInstance))
                 {
-                    ObjectsToLoad.Add((PhysicalObject)WsChild);
+                    ObjectsToLoad.Add((PhysicalInstance)WsChild);
                 }
                 else
                 {
                     // If it's a subclass of PhysicalObject, add it. 
-                    if (ChiType.IsSubclassOf(typeof(PhysicalObject)))
+                    if (ChiType.IsSubclassOf(typeof(PhysicalInstance)))
                     {
-                        ObjectsToLoad.Add((PhysicalObject)WsChild);
+                        ObjectsToLoad.Add((PhysicalInstance)WsChild);
                     }
                 }
             }
@@ -416,7 +416,7 @@ namespace Lightning.Core.API
 
         }
 
-        private void LoadTexture(PhysicalObject PO, ImageBrush Tx)
+        private void LoadTexture(PhysicalInstance PO, ImageBrush Tx)
         {
             Window MainWindow = MainScene.GetMainWindow();
 
@@ -447,13 +447,13 @@ namespace Lightning.Core.API
         {
             // Get the current SDL event.
             SDL.SDL_Event CurEvent;
-            
+
             if (SDL.SDL_PollEvent(out CurEvent) > 0)
             {
                 // Since January 4, 2022
                 // Window IDs are hardcoded.
                 // Window ID 1 is BootWindow.
-                if (CurEvent.window.windowID == 1) 
+                if (CurEvent.window.windowID == 1)
                 {
                     switch (CurEvent.type)
                     {
@@ -491,12 +491,28 @@ namespace Lightning.Core.API
                             return;
                     }
                 }
-                
+
             }
             else
             {
                 // Render the objects.
-                Rendering_RenderPhysicalObjects(); 
+                Rendering_RenderPhysicalObjects();
+            }
+        }
+
+        private void Rendering_PreRender(Scene SDL_Renderer)
+        {
+            InstanceCollection InsList = BuildListOfAllObjects();
+
+            foreach (Instance Ins in InsList)
+            {
+                if (Ins.PreRender != null)
+                {
+                    PreRenderEventArgs PEEA = new PreRenderEventArgs();
+                    PEEA.SDL_Renderer = SDL_Renderer;
+
+                    Ins.PreRender(this, PEEA);
+                }
             }
         }
 
@@ -515,7 +531,7 @@ namespace Lightning.Core.API
                 && GMIR.Successful)
             {
                 // perhaps this works?
-                List<PhysicalObject> ObjectsToRender = ListTransfer<Instance, PhysicalObject>.TransferBetweenTypes(GMIR.Instances); 
+                List<PhysicalInstance> ObjectsToRender = ListTransfer<Instance, PhysicalInstance>.TransferBetweenTypes(GMIR.Instances); 
                 // Render each object.
                 Rendering_DoRenderPhysicalObjects(ObjectsToRender);
 
@@ -534,14 +550,14 @@ namespace Lightning.Core.API
 
         }
 
-        private void Rendering_DoRenderPhysicalObjects(List<PhysicalObject> PhysicalObjects)
+        private void Rendering_DoRenderPhysicalObjects(List<PhysicalInstance> PhysicalObjects)
         {
             PhysicalObjects = PhysicalObjects.OrderBy(PO => PO.ZIndex).ToList();
 
             Window MainWindow = MainScene.GetMainWindow();
 
             
-            foreach (PhysicalObject PO in PhysicalObjects)
+            foreach (PhysicalInstance PO in PhysicalObjects)
             {
                 GetInstanceResult GIR = PO.GetFirstChildOfType("ImageBrush");
                 
@@ -651,7 +667,7 @@ namespace Lightning.Core.API
 
         private void HandleMouseDown(SDL.SDL_Event Event)
         {
-            List<PhysicalObject> POList = BuildListOfPhysicalObjects();
+            List<PhysicalInstance> POList = BuildListOfPhysicalObjects();
 
             HandleMouseDown_NotifyAllPhysicalObjects(POList, Event); 
         }
@@ -661,9 +677,9 @@ namespace Lightning.Core.API
         /// </summary>
         /// <param name="PhysicalObjects"></param>
         /// <param name="CurEvent"></param>
-        private void HandleMouseDown_NotifyAllPhysicalObjects(List<PhysicalObject> PhysicalObjects, SDL.SDL_Event CurEvent)
+        private void HandleMouseDown_NotifyAllPhysicalObjects(List<PhysicalInstance> PhysicalObjects, SDL.SDL_Event CurEvent)
         {
-            foreach (PhysicalObject PO in PhysicalObjects)
+            foreach (PhysicalInstance PO in PhysicalObjects)
             {
                 if (PO.Click != null)
                 {
@@ -685,14 +701,14 @@ namespace Lightning.Core.API
 
         private void HandleMouseUp(SDL.SDL_Event CurEvent)
         {
-            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+            List<PhysicalInstance> PhysicalObjects = BuildListOfPhysicalObjects();
 
             HandleMouseUp_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
         }
 
-        private void HandleMouseUp_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        private void HandleMouseUp_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalInstance> PhysicalObjects)
         {
-            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            foreach (PhysicalInstance PhysicalObject in PhysicalObjects)
             {
                 if (PhysicalObject.OnMouseUp != null)
                 {
@@ -708,13 +724,13 @@ namespace Lightning.Core.API
 
         private void HandleMouseEnter(SDL.SDL_Event CurEvent)
         {
-            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+            List<PhysicalInstance> PhysicalObjects = BuildListOfPhysicalObjects();
             HandleMouseEnter_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
         }
 
-        private void HandleMouseEnter_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        private void HandleMouseEnter_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalInstance> PhysicalObjects)
         {
-            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            foreach (PhysicalInstance PhysicalObject in PhysicalObjects)
             {
                 if (PhysicalObject.OnMouseEnter != null)
                 {
@@ -725,14 +741,14 @@ namespace Lightning.Core.API
 
         private void HandleMouseLeave(SDL.SDL_Event CurEvent)
         {
-            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+            List<PhysicalInstance> PhysicalObjects = BuildListOfPhysicalObjects();
 
             HandleMouseLeave_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects);
         }
 
-        private void HandleMouseLeave_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects)
+        private void HandleMouseLeave_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalInstance> PhysicalObjects)
         {
-            foreach (PhysicalObject PhysicalObject in PhysicalObjects)
+            foreach (PhysicalInstance PhysicalObject in PhysicalObjects)
             {
                 if (PhysicalObject.OnMouseLeave != null)
                 {
@@ -743,15 +759,15 @@ namespace Lightning.Core.API
 
         private void ThrowQuitEvent(SDL.SDL_Event CurEvent, bool Expected = false) // not good need to change asap
         {
-            List<PhysicalObject> PhysicalObjects = BuildListOfPhysicalObjects();
+            List<PhysicalInstance> PhysicalObjects = BuildListOfPhysicalObjects();
 
             ThrowQuitEvent_NotifyAllPhysicalObjects(CurEvent, PhysicalObjects, Expected);
 
         }
 
-        private void ThrowQuitEvent_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalObject> PhysicalObjects, bool Expected = false)
+        private void ThrowQuitEvent_NotifyAllPhysicalObjects(SDL.SDL_Event CurEvent, List<PhysicalInstance> PhysicalObjects, bool Expected = false)
         {
-            foreach (PhysicalObject PO in PhysicalObjects)
+            foreach (PhysicalInstance PO in PhysicalObjects)
             {
                 if (PO.OnShutdown != null)
                 {
@@ -810,7 +826,7 @@ namespace Lightning.Core.API
                     {
                         try 
                         {
-                            PhysicalObject PO = (PhysicalObject)Data.Data[0];
+                            PhysicalInstance PO = (PhysicalInstance)Data.Data[0];
                             ImageBrush Tx = (ImageBrush)Data.Data[1];
 
                             LoadTexture(PO, Tx);

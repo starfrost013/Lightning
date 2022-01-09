@@ -12,7 +12,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a brush used for painting a PhysicalObject.
     /// </summary>
-    public abstract class Brush : PhysicalObject
+    public abstract class Brush : PhysicalInstance
     {
         internal override string ClassName => "Brush";
 

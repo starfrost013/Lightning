@@ -14,7 +14,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a splash screen
     /// </summary>
-    public class SplashScreen : PhysicalObject
+    public class SplashScreen : PhysicalInstance
     {
         internal override string ClassName => "SplashScreen";
 

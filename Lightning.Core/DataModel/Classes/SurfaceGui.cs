@@ -102,7 +102,7 @@ namespace Lightning.Core.API
             {
                 foreach (Instance GM in GMIR.Instances)
                 {
-                    PhysicalObject PO = (PhysicalObject)GM;
+                    PhysicalInstance PO = (PhysicalInstance)GM;
 
                     if (GM.Name == TargetObjectName)
                     {

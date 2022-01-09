@@ -247,7 +247,7 @@ namespace Lightning.Core.API
 
                 foreach (Instance Instance in InstanceList)
                 {
-                    PhysicalObject CO = (PhysicalObject)Instance;
+                    PhysicalInstance CO = (PhysicalInstance)Instance;
 
                     GetPhysicsControllerResult GPCR = GetPhysicsController(CO);
 
@@ -273,7 +273,7 @@ namespace Lightning.Core.API
 
         }
 
-        private GetPhysicsControllerResult GetPhysicsController(PhysicalObject CO) // COMPLETE THIS 2021-07-22 MORNING (ADD TYPE CHECKING ETC)
+        private GetPhysicsControllerResult GetPhysicsController(PhysicalInstance CO) // COMPLETE THIS 2021-07-22 MORNING (ADD TYPE CHECKING ETC)
         {
             GetPhysicsControllerResult GPCR = new GetPhysicsControllerResult();
 

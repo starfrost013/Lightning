@@ -14,7 +14,7 @@ namespace Lightning.Core.API
     ///  
     /// Defines a font
     /// </summary>
-    public class Font : PhysicalObject
+    public class Font : PhysicalInstance
     {
 
         internal override string ClassName => "Font";

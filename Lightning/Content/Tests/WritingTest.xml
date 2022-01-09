@@ -3,8 +3,8 @@
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2022-01-08 18:18:30</LastModifiedDate>
-    <RevisionID>72</RevisionID>
+    <LastModifiedDate>2022-01-09 01:17:29</LastModifiedDate>
+    <RevisionID>73</RevisionID>
     <Version />
   </Metadata>
   <Settings>
@@ -139,15 +139,16 @@
     </Rectangle>
     -->
 
+
     <Rectangle Colour="255,70,20,140" Fill="True" CanCollide="False" Position="360,66" Size="40,40" ZIndex="0" Name="FilledRectangleWithBorder" BorderWidth="2" BorderColour="255,0,0,0" />
-    
-    <PhysicalObject Name="Block1" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0" Position="430,300" Size="200,150">
+
+    <PhysicalInstance Name="Block1" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0" Position="430,300" Size="200,150">
       <ImageBrush Path="Content\Textures\test_texture_small.png" ZIndex="0" Name="Block1_Texture" Position="60,60" Size="200,150"/>
-    </PhysicalObject>
-    
-    <PhysicalObject CanCollide="False" Position="60,60" Size="50,50" ZIndex="0" Name="Block2" PhysicsEnabled="False" Mass="0">
+    </PhysicalInstance>
+
+    <PhysicalInstance CanCollide="False" Position="60,60" Size="50,50" ZIndex="0" Name="Block2" PhysicsEnabled="False" Mass="0">
       <ImageBrush Path="Content\Textures\test_texture_small2.png" CanCollide="False" ZIndex="0" Name="Block2_Texture" TextureDisplayMode="Tile" DisplayViewport="200,150"/>
-    </PhysicalObject>
+    </PhysicalInstance>
 
     <Camera Active="True" CameraType="FollowObject" CanCollide="False" Position="-100,0" ZIndex="0" Name="Camera1" TargetName="Trincid2021TestOnly"/>
     <Script Content="print('i am die');&#xD;&#xA;ScriptingTest.ScTest();&#xD;&#xA;local test = DataModel.GetWorkspace();" Name="WsTestScript" />
@@ -192,13 +193,15 @@
       </SurfaceGui>
     </GuiRoot>
 
-    <PhysicalObject Name="AnimationTest" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0">
+    <PhysicalInstance Name="AnimationTest" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0">
       <AnimatedImageBrush Size="300,200" Position="700,0">
         <Animation Type="Continuous" Active="True">
           <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF0.png" DefaultTiming="32"></AnimationFrame>
           <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF1.png" DefaultTiming="32"></AnimationFrame>
         </Animation>
       </AnimatedImageBrush>
-    </PhysicalObject>
+    </PhysicalInstance>
+
+    <PointLight Position="75,75" Range="30" Intensity="127" Name="PointLight" Colour="255,255,0,0"></PointLight>
   </Workspace>
 </Lightning>

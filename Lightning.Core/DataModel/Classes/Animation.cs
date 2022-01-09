@@ -13,7 +13,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines an animation.
     /// </summary>
-    public class Animation : PhysicalObject
+    public class Animation : PhysicalInstance
     {
         internal override string ClassName => "Animation";
 

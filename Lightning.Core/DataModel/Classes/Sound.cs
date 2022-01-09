@@ -14,7 +14,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a sound that can be played.
     /// </summary>
-    public class Sound : PhysicalObject
+    public class Sound : PhysicalInstance
     {
         internal override string ClassName => "Sound";
 
@@ -147,7 +147,7 @@ namespace Lightning.Core.API
         {
             Workspace WsQ = DataModel.GetWorkspace();
 
-            PhysicalObject NewPO = null;
+            PhysicalInstance NewPO = null;
 
             if (TargetObject != null)
             {
@@ -160,10 +160,10 @@ namespace Lightning.Core.API
 
                     Type InstanceType = TempInstance.GetType();
 
-                    if (InstanceType.IsSubclassOf(typeof(PhysicalObject))
-                        || InstanceType == typeof(PhysicalObject))
+                    if (InstanceType.IsSubclassOf(typeof(PhysicalInstance))
+                        || InstanceType == typeof(PhysicalInstance))
                     {
-                        NewPO = (PhysicalObject)TempInstance;
+                        NewPO = (PhysicalInstance)TempInstance;
                     }
                     else
                     {
