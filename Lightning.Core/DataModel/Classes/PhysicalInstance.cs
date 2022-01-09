@@ -8,7 +8,7 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// PhysicalObject
+    /// PhysicalInstance
     /// 
     /// April 9, 2021 (modified August 9, 2021)
     /// 
@@ -17,9 +17,9 @@ namespace Lightning.Core.API
     public class PhysicalInstance : SerialisableObject
     {
         /// <summary>
-        /// <inheritdoc/> -- set to PhysicalObject.
+        /// <inheritdoc/> -- set to PhysicalInstance.
         /// </summary>
-        internal override string ClassName => "PhysicalObject";
+        internal override string ClassName => "PhysicalInstance";
 
         /// <summary>
         /// <inheritdoc/>
@@ -248,12 +248,12 @@ namespace Lightning.Core.API
         public bool IsColliding { get; set; }
 
         /// <summary>
-        /// Defines the display viewport of this PhysicalObject. BRUSHES ONLY
+        /// Defines the display viewport of this PhysicalInstance. BRUSHES ONLY
         /// </summary>
         public Vector2 DisplayViewport { get; set; }
 
         /// <summary>
-        /// Determines if this PhysicalObject is invisible.
+        /// Determines if this PhysicalInstance is invisible.
         /// </summary>
         public bool Invisible { get; set; }
 
@@ -262,7 +262,7 @@ namespace Lightning.Core.API
         /// </summary>
         public Solidity Solidity { get; set; }
 
-        private bool PHYSICALOBJECT_INITIALISED { get; set; }
+        private bool PhysicalInstance_INITIALISED { get; set; }
         public override void OnCreate()
         {
             PhysicsController = new DefaultPhysicsController(); 
@@ -278,7 +278,7 @@ namespace Lightning.Core.API
         /// </summary>
         public virtual void Render(Scene SDL_Renderer, ImageBrush Tx)
         {
-            if (!PHYSICALOBJECT_INITIALISED)
+            if (!PhysicalInstance_INITIALISED)
             {
                 PO_Init();
             }
@@ -306,7 +306,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// Applies an instantenous impulse force to this object if physics is enabled.
         /// </summary>
-        /// <param name="Impulse">A <see cref="Vector2"/> containing the impulse force to apply to this PhysicalObject.</param>
+        /// <param name="Impulse">A <see cref="Vector2"/> containing the impulse force to apply to this PhysicalInstance.</param>
         public void ApplyImpulse(Vector2 Impulse)
         {
             if (Impulse == null)
@@ -323,7 +323,7 @@ namespace Lightning.Core.API
         {
             Brush CBrush = GetBrush();
 
-            PHYSICALOBJECT_INITIALISED = true; 
+            PhysicalInstance_INITIALISED = true; 
         }
 
         /// <summary>

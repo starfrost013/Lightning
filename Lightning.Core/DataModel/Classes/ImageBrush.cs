@@ -54,7 +54,7 @@ namespace Lightning.Core.API
             if (ParentType != typeof(PhysicalInstance)
             && !ParentType.IsSubclassOf(typeof(PhysicalInstance))) 
             {
-                ErrorManager.ThrowError(ClassName, "BrushMustHavePhysicalObjectParentException");
+                ErrorManager.ThrowError(ClassName, "BrushMustHavePhysicalInstanceParentException");
                 Parent.RemoveChild(this);
             }
         }

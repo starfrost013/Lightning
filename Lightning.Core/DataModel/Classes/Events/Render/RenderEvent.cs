@@ -9,7 +9,7 @@ namespace Lightning.Core.API
     /// 
     /// August 16, 2021
     /// 
-    /// Defines an event fired on the rendering of a PhysicalObject.
+    /// Defines an event fired on the rendering of a PhysicalInstance.
     /// </summary>
     public delegate void RenderEvent
     (

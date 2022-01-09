@@ -21,7 +21,7 @@ namespace Lightning.Core.API
         public Scene SDL_Renderer { get; set; }
 
         /// <summary>
-        /// The <see cref="ImageBrush"/> that is used for rendering the texture of this element. <c>null</c> if this PhysicalObject has no texture.
+        /// The <see cref="ImageBrush"/> that is used for rendering the texture of this element. <c>null</c> if this PhysicalInstance has no texture.
         /// </summary>
         public ImageBrush Tx { get; set; }
     }

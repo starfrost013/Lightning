@@ -167,7 +167,7 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} must be or inherit from the PhysicalObject class!");
+                        ErrorManager.ThrowError(ClassName, "Err3DSoundTargetObjectDoesNotExistException", $"The TargetObject specified for the sound located at {Path}, {TargetObject} must be or inherit from the PhysicalInstance class!");
                     }
                 }
                 else

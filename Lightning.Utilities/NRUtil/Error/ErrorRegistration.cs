@@ -80,7 +80,7 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "Err3DSoundRequiresSoundPositionAndRadiusException", Description = "To use 3D sound, a Sound must have a Position and Radius!", Severity = MessageSeverity.Error, Id = 61 } );
          ErrorManager.RegisterError( new Error { Name = "Err3DSoundRequiresTargetObjectException", Description = "To use 3D sound, a Sound must have a target object!", Severity = MessageSeverity.Error, Id = 62 } );
          ErrorManager.RegisterError( new Error { Name = "Err3DSoundTargetObjectDoesNotExistException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 63 } );
-         ErrorManager.RegisterError( new Error { Name = "ErrorObtainingListOfPhysicalObjectsToRenderException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 64 } );
+         ErrorManager.RegisterError( new Error { Name = "ErrorObtainingListOfPhysicalInstancesToRenderException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 64 } );
          ErrorManager.RegisterError( new Error { Name = "PolarisTabCollectionEnumeratorOverflowException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 65 } );
          ErrorManager.RegisterError( new Error { Name = "OverrideAppIdSpecifiedWithNoAppId", Description = "--overrideappid was specified without an appname to override, ignoring", Severity = MessageSeverity.Warning, Id = 66 } );
          ErrorManager.RegisterError( new Error { Name = "GameXmlFileRequiredException", Description = "Please provide a Game XML file to load!", Severity = MessageSeverity.FatalError, Id = 67 } );
@@ -91,7 +91,7 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "PolarisCannotLoadNonUserControlForTabUseException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 72 } );
          ErrorManager.RegisterError( new Error { Name = "PolarisCannotAddNullMessageToPolarisOutputTab", Description = "Cannot add a null message to the Polaris Output tab!", Severity = MessageSeverity.Error, Id = 73 } );
          ErrorManager.RegisterError( new Error { Name = "InstanceInfoErrorRemovingAmbiguousMatchesException", Description = "An error occurred removing ambiguous matches for generation of instance information.", Severity = MessageSeverity.Error, Id = 75 } );
-         ErrorManager.RegisterError( new Error { Name = "ErrorOccurredAcquiringPhysicalObjectListException", Description = "An error occurred acquiring the list of physical objects to render.", Severity = MessageSeverity.FatalError, Id = 76 } );
+         ErrorManager.RegisterError( new Error { Name = "ErrorOccurredAcquiringPhysicalInstanceListException", Description = "An error occurred acquiring the list of physical objects to render.", Severity = MessageSeverity.FatalError, Id = 76 } );
          ErrorManager.RegisterError( new Error { Name = "SkyObjectMustHaveTextureException", Description = "A Sky object must have an ImageBrush or AnimatedImageBrush as its child!", Severity = MessageSeverity.Error, Id = 77 } );
          ErrorManager.RegisterError( new Error { Name = "TokenCollectionIndexOutOfRangeException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 78 } );
          ErrorManager.RegisterError( new Error { Name = "CannotAddNonTokenToTokenCollectionException", Description = "Cannot add a non-Token to a TokenCollection!", Severity = MessageSeverity.Error, Id = 79 } );
@@ -126,7 +126,7 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "FailedToRenderTextException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 108 } );
          ErrorManager.RegisterError( new Error { Name = "FontMustDeclareNameException", Description = "Fonts must declare a name: This font will not be loaded. This will probably cause errors later down the line. Oh well", Severity = MessageSeverity.Warning, Id = 109 } );
          ErrorManager.RegisterError( new Error { Name = "RelativeColourOutOfRangeException", Description = "Attempted to load a RelativeColour where one or more of the components was outside of the range [0,1]!", Severity = MessageSeverity.Error, Id = 110 } );
-         ErrorManager.RegisterError( new Error { Name = "Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalObjectException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 111 } );
+         ErrorManager.RegisterError( new Error { Name = "Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalInstanceException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 111 } );
          ErrorManager.RegisterError( new Error { Name = "ErrorConvertingHexadecimalColourException", Description = "Attempted to convert an invalid length hexadecimal colour string to a Color3!", Severity = MessageSeverity.Error, Id = 112 } );
          ErrorManager.RegisterError( new Error { Name = "ErrorConvertingHexadecimalColourFormatException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 113 } );
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGuiElementsException", Description = "Failed to get a list of GUI elements", Severity = MessageSeverity.Error, Id = 114 });
@@ -136,14 +136,14 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "EnablePhysicsSetButNoPhysicsControllerSet", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 117 });
          ErrorManager.RegisterError( new Error { Name = "FailedToAcquireListOfControllableObjectsException", Description = "Failed to obtain a list of controllable objects!", Severity = MessageSeverity.FatalError, Id = 118 });
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainPhysicsControllerException", Description = "Failed to obtain physics controller", Severity = MessageSeverity.Error, Id = 119 });
-         ErrorManager.RegisterError( new Error { Name = "AttemptedToApplyInvalidImpulseException", Description = "Attempted to apply an invalid impulse to a PhysicalObject!", Severity = MessageSeverity.Error, Id = 120 });
+         ErrorManager.RegisterError( new Error { Name = "AttemptedToApplyInvalidImpulseException", Description = "Attempted to apply an invalid impulse to a PhysicalInstance!", Severity = MessageSeverity.Error, Id = 120 });
          ErrorManager.RegisterError( new Error { Name = "PhysicsStatePositionalCorrectionPercentageMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 121 });
          ErrorManager.RegisterError( new Error { Name = "PhysicsStatePositionalCorrectionSlopMustBeAboveZeroException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 122 });
          ErrorManager.RegisterError( new Error { Name = "AttemptedToSetInvalidPropertyException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning, Id = 123 });
          ErrorManager.RegisterError( new Error { Name = "FailedToObtainListOfGradientStopsException", Description = "Failed to obtain list of GradientStops!", Severity = MessageSeverity.FatalError, Id = 124 }); // nonfatal?
          ErrorManager.RegisterError( new Error { Name = "GradientMustHaveAboveZeroStopsException", Description = "A Gradient must have above zero stops!", Severity = MessageSeverity.Error, Id = 125 });
          ErrorManager.RegisterError( new Error { Name = "InvalidGradientException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 126 });
-         ErrorManager.RegisterError( new Error { Name = "BrushMustHavePhysicalObjectParentException", Description = "Brushes require a PhysicalObject as their parent!", Severity = MessageSeverity.Error, Id = 127 });
+         ErrorManager.RegisterError( new Error { Name = "BrushMustHavePhysicalInstanceParentException", Description = "Brushes require a PhysicalInstance as their parent!", Severity = MessageSeverity.Error, Id = 127 });
          ErrorManager.RegisterError( new Error { Name = "GradientParentMustHavePositionException", Description = "Gradients require that their parent has a set position and size!", Severity = MessageSeverity.Error, Id = 127 });
          ErrorManager.RegisterError( new Error { Name = "ErrorTryingToGetBrushException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 128 });
          ErrorManager.RegisterError( new Error { Name = "BrushMustHaveDefinedSizeException", Description = "Brushes must have a defined size! This object will not be rendered.", Severity = MessageSeverity.Error, Id = 129 });
@@ -196,6 +196,8 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError(new Error { Name = "LWPakInvalidCatalogException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 207 });
          ErrorManager.RegisterError(new Error { Name = "BootWindowCannotFindPathException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 208 });
          ErrorManager.RegisterError(new Error { Name = "InvalidWindowIDForShutdownException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 209 });
+         ErrorManager.RegisterError(new Error { Name = "AttemptedToRegisterInvalidClassException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 210 });
+
             // todo: external-internal
         }
     }

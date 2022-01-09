@@ -45,7 +45,7 @@ namespace Lightning.Core.API
 
                 AABB CAABB = Object.AABB;
 
-                GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
+                GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalInstance");
 
                 if (CAABB == null) return; 
 
@@ -270,8 +270,8 @@ namespace Lightning.Core.API
             CollisionResult CR = new CollisionResult();
 
             // is this required?
-            CR.Manifold.PhysicalObjectA = ObjA;
-            CR.Manifold.PhysicalObjectB = ObjB;
+            CR.Manifold.PhysicalInstanceA = ObjA;
+            CR.Manifold.PhysicalInstanceB = ObjB;
 
             if (ObjA.AABB == null
             || ObjB.AABB == null)
@@ -347,18 +347,18 @@ namespace Lightning.Core.API
         {
             double PenetrationMultiplier = M.PenetrationAmount * PS.PositionalCorrectionPercentage;
 
-            double PosToCheckA = M.PhysicalObjectA.Position.Y - M.PhysicalObjectA.Size.Y;
-            double PosToCheckB = M.PhysicalObjectB.Position.Y - M.PhysicalObjectB.Size.Y;
+            double PosToCheckA = M.PhysicalInstanceA.Position.Y - M.PhysicalInstanceA.Size.Y;
+            double PosToCheckB = M.PhysicalInstanceB.Position.Y - M.PhysicalInstanceB.Size.Y;
 
             if (PosToCheckA > PosToCheckB)
             {
-                if (!M.PhysicalObjectA.Anchored) M.PhysicalObjectA.Velocity.Y -= PenetrationMultiplier;
-                if (!M.PhysicalObjectB.Anchored) M.PhysicalObjectB.Velocity.Y += PenetrationMultiplier;
+                if (!M.PhysicalInstanceA.Anchored) M.PhysicalInstanceA.Velocity.Y -= PenetrationMultiplier;
+                if (!M.PhysicalInstanceB.Anchored) M.PhysicalInstanceB.Velocity.Y += PenetrationMultiplier;
             }
             else
             {
-                if (!M.PhysicalObjectA.Anchored) M.PhysicalObjectA.Velocity.Y += PenetrationMultiplier;
-                if (!M.PhysicalObjectB.Anchored) M.PhysicalObjectB.Velocity.Y -= PenetrationMultiplier;
+                if (!M.PhysicalInstanceA.Anchored) M.PhysicalInstanceA.Velocity.Y += PenetrationMultiplier;
+                if (!M.PhysicalInstanceB.Anchored) M.PhysicalInstanceB.Velocity.Y -= PenetrationMultiplier;
             }
                 
 

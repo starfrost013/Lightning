@@ -332,7 +332,7 @@ namespace Lightning.Core.API
                     Position.Y = (Target.Position.Y - (WindowHeight / 2) + (Target.Size.Y / 2));
 
                     MainWindow.Settings.RenderingInformation.CCameraPosition = new Vector2Internal(Position.X, Position.Y);
-                    // removed redundant physicalobject checks
+                    // removed redundant PhysicalInstance checks
                 }
 
 
@@ -353,7 +353,7 @@ namespace Lightning.Core.API
 
                 Type TargetType = Target.GetType();
 
-                // First, check if the target inherits from physicalobject.
+                // First, check if the target inherits from PhysicalInstance.
 
                 if (TargetType.IsSubclassOf(typeof(PhysicalInstance)) || TargetType == typeof(PhysicalInstance))
                 {

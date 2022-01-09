@@ -72,7 +72,7 @@ namespace Lightning.Core.API
             // luaglobalmethods will not be exposed
             RegisterClass("Lightning.Core.API.Menu");
             RegisterClass("Lightning.Core.API.MenuItem");
-            RegisterClass("Lightning.Core.API.PhysicalObject");
+            RegisterClass("Lightning.Core.API.PhysicalInstance");
             RegisterClass("Lightning.Core.API.PhysicsController");
             RegisterClass("Lightning.Core.API.Rectangle");
             RegisterClass("Lightning.Core.API.ScreenGui");

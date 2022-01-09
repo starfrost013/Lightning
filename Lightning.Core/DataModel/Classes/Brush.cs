@@ -10,7 +10,7 @@ namespace Lightning.Core.API
     /// 
     /// August 1, 2021 (modified August 5, 2021)
     /// 
-    /// Defines a brush used for painting a PhysicalObject.
+    /// Defines a brush used for painting a PhysicalInstance.
     /// </summary>
     public abstract class Brush : PhysicalInstance
     {

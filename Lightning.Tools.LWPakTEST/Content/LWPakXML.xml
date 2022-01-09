@@ -483,14 +483,14 @@ Do not change if you are not a dev
 
   <Error>
     <Description>!!this should be overridden in code!!</Description>
-    <Name>Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalObjectException</Name>
+    <Name>Err3DSoundTargetObjectMustInheritFromOrBeAPhysicalInstanceException</Name>
     <Id>63</Id>
     <Severity>Error</Severity>
   </Error>
 
   <Error>
     <Description>!!this should be overridden in code!!</Description>
-    <Name>ErrorObtainingListOfPhysicalObjectsToRenderException</Name>
+    <Name>ErrorObtainingListOfPhysicalInstancesToRenderException</Name>
     <Id>64</Id>
     <Severity>Error</Severity>
   </Error>
@@ -567,7 +567,7 @@ Do not change if you are not a dev
 
   <Error>
     <Description>An error occurred acquiring the list of physical objects to render.</Description>
-    <Name>ErrorOccurredAcquiringPhysicalObjectListException</Name>
+    <Name>ErrorOccurredAcquiringPhysicalInstanceListException</Name>
     <Id>76</Id>
     <Severity>FatalError</Severity>
   </Error>

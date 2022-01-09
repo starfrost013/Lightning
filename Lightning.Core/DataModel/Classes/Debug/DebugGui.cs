@@ -174,7 +174,7 @@ namespace Lightning.Core.API
 
             Window MainWindow = SDL_Renderer.GetMainWindow();
 
-            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalInstance");
 
             if (GMIR.Successful)
             {
@@ -212,7 +212,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                ErrorManager.ThrowError(ClassName, "ErrorObtainingListOfPhysicalObjectsToRenderException", "Error obtaining list of physical objects for debug rendering!");
+                ErrorManager.ThrowError(ClassName, "ErrorObtainingListOfPhysicalInstancesToRenderException", "Error obtaining list of physical objects for debug rendering!");
                 return;
             }
         }

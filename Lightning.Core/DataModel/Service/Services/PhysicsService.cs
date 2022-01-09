@@ -234,7 +234,7 @@ namespace Lightning.Core.API
         {
             Workspace Ws = DataModel.GetWorkspace();
 
-            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalObject");
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalInstance");
 
             if (!GMIR.Successful
                 || GMIR.Instances == null)
