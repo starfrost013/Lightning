@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuRender; 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,12 +24,19 @@ namespace Lightning.Core.API
 
         public override ServiceStartResult OnStart()
         {
+            // Subscribe to the pre-rendering event.
+            PreRender += DoPreRender; 
             return new ServiceStartResult { Successful = true };
         }
 
         public override ServiceShutdownResult OnShutdown()
         {
             return new ServiceShutdownResult { Successful = true };
+        }
+
+        private void DoPreRender(object Sender, PreRenderEventArgs PEAA)
+        {
+            return;
         }
 
         public override void Poll()

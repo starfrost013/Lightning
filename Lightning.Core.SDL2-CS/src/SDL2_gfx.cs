@@ -79,9 +79,9 @@ namespace NuRender.SDL2
         #region SDL2_gfxVersion.h 
         // requires 1.0.5 (Lightning/NuRender ONLY)
 
-        public const int SDLGFX_VERSION_MAJOR = 1;
-        public const int SDLGFX_VERSION_MINOR = 0;
-        public const int SDLGFX_VERSION_REVISION = 5;
+        public const int SDL_GFX_VERSION_MAJOR = 1;
+        public const int SDL_GFX_VERSION_MINOR = 0;
+        public const int SDL_GFX_VERSION_REVISION = 5;
 
         /// <summary>
         /// Returns the current version of SDL2_gfx. It is best to check this in your program.
@@ -91,9 +91,9 @@ namespace NuRender.SDL2
         {
             return new SDL.SDL_version()
             {
-                major = SDLGFX_VERSION_MAJOR,
-                minor = SDLGFX_VERSION_MINOR,
-                patch = SDLGFX_VERSION_REVISION
+                major = SDL_GFX_VERSION_MAJOR,
+                minor = SDL_GFX_VERSION_MINOR,
+                patch = SDL_GFX_VERSION_REVISION
             };
         }
 

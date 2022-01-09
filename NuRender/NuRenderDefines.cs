@@ -34,9 +34,9 @@ namespace NuRender
         public static int NURENDER_SDL_TTF_API_VERSION_MINOR = SDL_ttf.SDL_TTF_MINOR_VERSION;
         public static int NURENDER_SDL_TTF_API_VERSION_REVISION = SDL_ttf.SDL_TTF_PATCHLEVEL;
 
-        public static int NURENDER_SDL_GFX_API_VERSION_MAJOR = SDL_gfx.SDLGFX_VERSION_MAJOR;
-        public static int NURENDER_SDL_GFX_API_VERSION_MINOR = SDL_gfx.SDLGFX_VERSION_MINOR;
-        public static int NURENDER_SDL_GFX_API_VERSION_REVISION = SDL_gfx.SDLGFX_VERSION_REVISION;
+        public static int NURENDER_SDL_GFX_API_VERSION_MAJOR = SDL_gfx.SDL_GFX_VERSION_MAJOR;
+        public static int NURENDER_SDL_GFX_API_VERSION_MINOR = SDL_gfx.SDL_GFX_VERSION_MINOR;
+        public static int NURENDER_SDL_GFX_API_VERSION_REVISION = SDL_gfx.SDL_GFX_VERSION_REVISION;
 
         /// <summary>
         /// Fake class name to use for logging etc
