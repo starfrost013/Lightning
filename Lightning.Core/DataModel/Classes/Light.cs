@@ -29,12 +29,16 @@ namespace Lightning.Core.API
         /// </summary>
         public double Range { get; set; }
 
-
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        internal override InstanceTags Attributes => base.Attributes | InstanceTags.UsesCustomRenderPath;
         public override void OnCreate()
         {
             // enable physics
             // so we can detect if we are colliding
             ZIndex = 2147483647; // force to front
+            
         }
 
     }

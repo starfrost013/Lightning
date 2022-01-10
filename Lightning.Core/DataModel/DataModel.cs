@@ -44,7 +44,7 @@ namespace Lightning.Core.API
         /// todo: make non-static
         /// </summary>
         private static InstanceCollection State;
-        
+
         /// <summary>
         /// The Lightning boot/splash window.
         /// </summary>
@@ -133,7 +133,7 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        SCM = (ServiceControlManager)GIR.Instance; 
+                        SCM = (ServiceControlManager)GIR.Instance;
                     }
                 }
 
@@ -200,8 +200,8 @@ namespace Lightning.Core.API
 
                 }
             }
-            
-            
+
+
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Lightning.Core.API
             if (DM == null)
             {
                 RemoveInstance(DMS); // clean up when done
-                return false; 
+                return false;
             }
             else
             {
@@ -228,7 +228,7 @@ namespace Lightning.Core.API
                 return true;
             }
 
-            
+
         }
 
         private static bool Init_VerifyCompatibleSystem() => Environment.ProcessorCount > 1;
@@ -236,7 +236,7 @@ namespace Lightning.Core.API
         private static void HandleFailureToOpenDocument()
         {
             ErrorManager.ThrowError("DataModel", "FailedToOpenLgxException");
-            return; 
+            return;
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Lightning.Core.API
 
                                 ServiceControlManager SCM = (ServiceControlManager)SGIR.Instance;
                                 return SCM.Children[SCM.Children.Count - 1];
-                            
+
                             }
                             else
                             {
@@ -345,22 +345,22 @@ namespace Lightning.Core.API
                     ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationFailedException", IX.FailureReason);
                     return null;
                 }
-                
+
             }
             catch (AmbiguousMatchException err)
             {
                 ErrorManager.ThrowError(ClassName, "ArchitecturalIncapablityAmbiguousMatchException", err);
-                return null; 
+                return null;
             }
             catch (IndexOutOfRangeException err)
             {
                 ErrorManager.ThrowError(ClassName, "InternalInstanceAdditionErrorException", err);
-                return null; 
+                return null;
             }
             catch (Exception err) //TODO: HANDLE VARIOUS TYPES OF EXCEPTION
             {
-                ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationUnknownErrorException", err); 
-                return null; 
+                ErrorManager.ThrowError(ClassName, "DataModelInstanceCreationUnknownErrorException", err);
+                return null;
             }
         }
 
@@ -372,11 +372,11 @@ namespace Lightning.Core.API
             }
             else
             {
-                State.Remove(Ins, Parent); 
+                State.Remove(Ins, Parent);
             }
 
 
-            return; 
+            return;
         }
 
         public static void Clear(bool Reinitialising = true)
@@ -387,7 +387,7 @@ namespace Lightning.Core.API
             {
                 State.Clear();
             }
-            
+
             // Reinitialise
             Init(null, Reinitialising);
         }
@@ -396,108 +396,8 @@ namespace Lightning.Core.API
             Logging.Log("The DataModel is shutting down. Clearing it...", "DataModel");
             State.Clear();
         }
-        
 
-#if DEBUG
-        private void ATest()
-        {
-            Console.WriteLine("V0.1.27 2021-03-13 Testing DataModel...");
 
-            CreateInstance("Color3");
-            CreateInstance("Color4");
-            CreateInstance("Vector2");
-
-        }
-
-        /// <summary>
-        /// ATest #2 for DataModel - DDMS Serialisation
-        /// </summary>
-        public void ATest_Serialise()
-        {
-
-            DataModelDeserialiser DDX = (DataModelDeserialiser)CreateInstance("DataModelSerialiser");
-            DDX.DDMS_Deserialise(@"Content\Test\Test.xml");
-
-        }
-
-        
-
-        /// <summary>
-        /// Dump the current DataModel instance to console.
-        /// </summary>
-        public void InstanceDump(bool FilterAccessors = true)
-        {
-            // implement: 2021-03-09
-
-            Console.WriteLine("DataModel dump:\n");
-
-            foreach (Instance II in State)
-            {
-                InstanceDump_DumpInstance(II, FilterAccessors);
-            }
-
-            return; 
-        }
-
-        private void InstanceDump_DumpInstance(Instance II, bool FilterAccessors = true)
-        {
-            Console.WriteLine($"Instance: {II.ClassName}:");
-
-            if (II.Name != null) Console.WriteLine($"Instance: {II.ClassName} ({II.Name})");
-
-            Console.WriteLine($"Tags: {II.Attributes}");
-
-            InstanceInfo IIF = II.Info;
-
-            foreach (InstanceInfoMethod IIM in IIF.Methods)
-            {
-                if (FilterAccessors)
-                {
-                    if (IIM.MethodName.Contains("get_")
-                        || IIM.MethodName.Contains("set_"))
-                    {
-                        continue;
-                    }
-                }
-
-                Console.Write("Method: ");
-                Console.Write($"{IIM.MethodName}\n");
-
-                if (IIM.Parameters.Count == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    foreach (InstanceInfoMethodParameter IIMP in IIM.Parameters)
-                    {
-
-                        Console.Write("Parameter: ");
-                        Console.Write($"Name: {IIMP.ParamName} ");
-                        Console.Write($"Type: {IIMP.ParamType.Name}\n");
-                    }
-                }
-            }
-
-            // don't bother going any further than one level deep
-            foreach (InstanceInfoProperty IIP in IIF.Properties)
-            {
-                Console.Write("Property:");
-                Console.Write($"Name: {IIP.Name} ");
-                Console.Write($"Type: {IIP.Type}\n");
-            }
-
-            if (II.Children.Count > 0)
-            {
-                foreach (Instance IChild in II.Children)
-                {
-                    // check that this does not cause problems.s
-                    InstanceDump_DumpInstance(IChild, true);
-                }
-            }
-        }
-
-#endif
 
 
         /// <summary>
@@ -564,6 +464,9 @@ namespace Lightning.Core.API
 
         public static GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => State.GetAllChildrenOfType(ClassName);
 
+        // temp
+        public static GetMultiInstanceResult GetAll() => new GetMultiInstanceResult { Successful = true }; 
+        // end temp
 #if DEBUG
         #region DEBUG only
 
@@ -595,6 +498,85 @@ namespace Lightning.Core.API
 
             return InstanceCount;
         }
+
+       
+        /// <summary>
+        /// Dump the current DataModel instance to console.
+        /// </summary>
+        public void InstanceDump(bool FilterAccessors = true)
+        {
+            // implement: 2021-03-09
+
+            Console.WriteLine("DataModel dump:\n");
+
+            foreach (Instance II in State)
+            {
+                InstanceDump_DumpInstance(II, FilterAccessors);
+            }
+
+            return;
+        }
+
+        private void InstanceDump_DumpInstance(Instance II, bool FilterAccessors = true)
+        {
+            Console.WriteLine($"Instance: {II.ClassName}:");
+
+            if (II.Name != null) Console.WriteLine($"Instance: {II.ClassName} ({II.Name})");
+
+            Console.WriteLine($"Tags: {II.Attributes}");
+
+            InstanceInfo IIF = II.Info;
+
+            foreach (InstanceInfoMethod IIM in IIF.Methods)
+            {
+                if (FilterAccessors)
+                {
+                    if (IIM.MethodName.Contains("get_")
+                        || IIM.MethodName.Contains("set_"))
+                    {
+                        continue;
+                    }
+                }
+
+                Console.Write("Method: ");
+                Console.Write($"{IIM.MethodName}\n");
+
+                if (IIM.Parameters.Count == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    foreach (InstanceInfoMethodParameter IIMP in IIM.Parameters)
+                    {
+
+                        Console.Write("Parameter: ");
+                        Console.Write($"Name: {IIMP.ParamName} ");
+                        Console.Write($"Type: {IIMP.ParamType.Name}\n");
+                    }
+                }
+            }
+
+            // don't bother going any further than one level deep
+            foreach (InstanceInfoProperty IIP in IIF.Properties)
+            {
+                Console.Write("Property:");
+                Console.Write($"Name: {IIP.Name} ");
+                Console.Write($"Type: {IIP.Type}\n");
+            }
+
+            if (II.Children.Count > 0)
+            {
+                foreach (Instance IChild in II.Children)
+                {
+                    // check that this does not cause problems.s
+                    InstanceDump_DumpInstance(IChild, true);
+                }
+            }
+        }
+
+#endif
+
 
         #endregion
 #endif

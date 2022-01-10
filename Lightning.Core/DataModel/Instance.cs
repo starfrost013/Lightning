@@ -319,6 +319,14 @@ namespace Lightning.Core.API
         /// </summary>
         public PreRenderEvent PreRender { get; set; }
 
+
+        /// <summary>
+        /// Render event handler.
+        /// 
+        /// Called on render if set to a valid method.
+        /// </summary>
+        public RenderEvent OnRender { get; set; }
+
         public GenericResult RemoveChild(Instance Chl)
         {
             GenericResult GR = new GenericResult();

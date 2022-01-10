@@ -533,6 +533,8 @@ namespace Lightning.Core.API
                 if (!GIR.Successful
                     && !PO.Invisible) // check for custom render path being used (i.e. render() is not being called by something else) 
                 {
+                    //todo (January 10, 2022):
+                    //remove default render method, only call render method for objects that subscribe to OnRender.
                     if (PO.OnRender == null)
                     {
                         RenderEventArgs REA = new RenderEventArgs();

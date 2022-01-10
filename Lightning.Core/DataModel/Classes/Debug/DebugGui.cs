@@ -133,7 +133,7 @@ namespace Lightning.Core.API
 
         }
 
-        public override void Render(Scene SDL_Renderer, ImageBrush Tx)
+        public override void Render(Scene SDL_Renderer, ImageBrush Tx, IntPtr TextureCache)
         {
             if (!DEBUGPAGE_INITIALISED)
             {
@@ -156,8 +156,8 @@ namespace Lightning.Core.API
 
                 if (DP.IsOpen)
                 {
-                    DP.Render(SDL_Renderer, Tx);
-                    base.Render(SDL_Renderer, Tx); // render all elements
+                    DP.Render(SDL_Renderer, Tx, IntPtr.Zero);
+                    base.Render(SDL_Renderer, Tx, IntPtr.Zero); // render all elements
 
                     // todo: remove this idiot hack 
                     break; // only render one page.
