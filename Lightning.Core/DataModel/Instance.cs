@@ -372,17 +372,9 @@ namespace Lightning.Core.API
         /// Acquires the logical children of this object
         /// </summary>
         /// <returns></returns>
-        public GetMultiInstanceResult GetChildren()
+        public GetMultiInstanceResult GetChildren(bool Recursive = false)
         {
-            GetMultiInstanceResult GMIR = new GetMultiInstanceResult();
-
-            foreach (Instance Child in Children)
-            {
-                GMIR.Instances.Add(Child);
-            }
-
-            GMIR.Successful = true; 
-            return GMIR;
+            return Children.GetChildren(Recursive); 
         }
 
         /// <summary>

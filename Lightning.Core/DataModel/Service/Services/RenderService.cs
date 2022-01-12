@@ -586,11 +586,11 @@ namespace Lightning.Core.API
             }
         }
 
-        private InstanceCollection Rendering_BuildListOfAllObjects()
+        private InstanceCollection Rendering_BuildListOfAllObjects() // cahnge this to List<Instance> when i feel less lazy
         {
-            Workspace Ws = DataModel.GetWorkspace();
+            GetMultiInstanceResult GMIR = DataModel.GetChildren(); // will always be successful 
 
-            return Ws.Children;
+            return new InstanceCollection(GMIR.Instances);
         }
 
         private void HandleKeyDown(SDL.SDL_Event CurEvent)

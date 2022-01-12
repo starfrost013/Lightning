@@ -471,6 +471,41 @@ namespace Lightning.Core.API
         }
 
 
+        /// <summary>
+        /// Acquires the logical children of this object.
+        /// </summary>
+        /// <returns>A <see cref="GetMultiInstanceResult"/> object containing the success status of the method, with <see cref="GetMultiInstanceResult.Instances"/> containing the logical children of this object.</returns>
+        public GetMultiInstanceResult GetChildren(bool Recursive = false)
+        {
+            if (!Recursive)
+            {
+                GetMultiInstanceResult GMIR = new GetMultiInstanceResult();
+
+                foreach (Instance Child in this)
+                {
+                    GMIR.Instances.Add(Child);
+                }
+
+                GMIR.Successful = true;
+                return GMIR;
+            }
+            else
+            {
+                return GetChildren_Recursive(new GetMultiInstanceResult());
+            }
+        }
+
+        private GetMultiInstanceResult GetChildren_Recursive(GetMultiInstanceResult GMIR)
+        {
+
+            foreach (Instance Child in this)
+            {
+                GMIR.Instances.Add(Child);
+                if (Child.Children.Count > 0) GetChildren_Recursive(GMIR);
+            }
+
+            return GMIR;
+        }
     }
 
     public class InstanceCollectionEnumerator : IEnumerator

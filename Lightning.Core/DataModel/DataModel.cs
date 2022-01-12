@@ -397,9 +397,6 @@ namespace Lightning.Core.API
             State.Clear();
         }
 
-
-
-
         /// <summary>
         /// Gets the first child of this Instance with ClassName <see cref="ClassName"/>
         /// </summary>
@@ -462,11 +459,15 @@ namespace Lightning.Core.API
         /// <returns></returns>
         internal static InstanceCollection GetState() => State;
 
+
         public static GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => State.GetAllChildrenOfType(ClassName);
 
-        // temp
-        public static GetMultiInstanceResult GetAll() => new GetMultiInstanceResult { Successful = true }; 
-        // end temp
+
+        /// <summary>
+        /// Acquires the logical children of this object.
+        /// </summary>
+        /// <returns>A <see cref="GetMultiInstanceResult"/> object containing the success status of the method, with <see cref="GetMultiInstanceResult.Instances"/> containing the logical children of this object.</returns>
+        public static GetMultiInstanceResult GetChildren(bool Recursive = false) => State.GetChildren(Recursive);
 #if DEBUG
         #region DEBUG only
 
@@ -574,8 +575,6 @@ namespace Lightning.Core.API
                 }
             }
         }
-
-#endif
 
 
         #endregion
