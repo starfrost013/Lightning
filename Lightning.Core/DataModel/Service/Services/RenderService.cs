@@ -35,6 +35,8 @@ namespace Lightning.Core.API
     /// 2021-12-10: Rewritten for NuRender
     /// 2021-12-11: LoadTexture stuff rewritten for NuRender.
     /// 2021-12-18: Moved font loading and unloading to here from UIService
+    /// 2022-01-09: Implemented PreRender
+    /// 2022-01-13: Reimplemented OnRender
     /// 
     /// </summary>
     public class RenderService : Service
@@ -262,7 +264,7 @@ namespace Lightning.Core.API
 
                     Rendering_LoadAllFonts(MainWindow.Settings.RenderingInformation);
 
-                    TriggerOnSpawn();
+                    Rendering_TriggerOnSpawn(); // todo: onspawn event
 
                     Workspace Ws = DataModel.GetWorkspace();
 
@@ -329,7 +331,7 @@ namespace Lightning.Core.API
             }
         }
 
-        private void TriggerOnSpawn()
+        private void Rendering_TriggerOnSpawn()
         {
             List<PhysicalInstance> ObjectsToLoad = BuildListOfPhysicalInstances();
 
@@ -350,6 +352,54 @@ namespace Lightning.Core.API
             Logging.Log("Built list of object textures to load. Loading object textures...", ClassName);
             // Load the object textures from the PhysicalInstances we have acquired. 
             //LoadObjectTextures(ObjectsToLoad);
+        }
+
+        private List<PhysicalInstance> Rendering_BuildListOfCurrentlyRenderablePhysicalInstances()
+        {
+            Workspace Ws = DataModel.GetWorkspace();
+
+            Window MainWindow = MainScene.GetMainWindow();
+
+            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalInstance");
+
+            List<PhysicalInstance> RenderableObjects = new List<PhysicalInstance>();
+
+            if (!GMIR.Successful)
+            {
+                ErrorManager.ThrowError(ClassName, "ErrorObtainingListOfPhysicalInstancesToRenderException", $"Error acquiring list of PhysicalInstances to render: {GMIR.Successful}");
+                return null;
+            }
+            else // if successful...
+            {
+                foreach (PhysicalInstance PI in GMIR.Instances)
+                {
+
+                    // move this optimisation to nurender probably
+                    if (PI.ForceToScreen)
+                    {
+                        if (PI.Position.X > 0
+                        && PI.Position.Y > 0
+                        && PI.Position < (Vector2)MainWindow.Settings.WindowSize)
+                        {
+                            RenderableObjects.Add(PI);
+                        }
+                    }
+                    else
+                    {
+                        // todo: remove ccameraposition
+                        Vector2 CameraRelativePosition = PI.Position - (Vector2)MainWindow.Settings.RenderingInformation.CCameraPosition;
+
+                        if (CameraRelativePosition.X > 0
+                        && CameraRelativePosition.Y > 0
+                        && CameraRelativePosition < (Vector2)MainWindow.Settings.WindowSize)
+                        {
+                            RenderableObjects.Add(PI);
+                        }
+                    }
+                }
+
+                return RenderableObjects;
+            }
         }
 
         private List<PhysicalInstance> BuildListOfPhysicalInstances()
@@ -418,7 +468,8 @@ namespace Lightning.Core.API
             {
                 // Since January 4, 2022
                 // Window IDs are hardcoded.
-                // Window ID 1 is BootWindow.
+                // Window ID 0 is BootWindow.
+                // Window ID 1 is the main window.
                 if (CurEvent.window.windowID == 1)
                 {
                     switch (CurEvent.type)
@@ -492,29 +543,33 @@ namespace Lightning.Core.API
             // Get the workspace.
             Workspace Ws = DataModel.GetWorkspace();
 
-            GetMultiInstanceResult GMIR = Ws.GetAllChildrenOfType("PhysicalInstance");
+            // Acquire all PhysicalInstances currently being displayed
+            List<PhysicalInstance> RenderablePIs = Rendering_BuildListOfCurrentlyRenderablePhysicalInstances();
 
-            if (GMIR.Instances != null
-                && GMIR.Successful)
+            // Call Render events for objects that subscribe to the OnRender event.
+            Rendering_CallOnRender();
+            // Render each object.
+            Rendering_DoRenderPhysicalInstances(RenderablePIs);
+
+            // call nurender to do the legwork of scene rendering
+
+            MainScene.Render(false); // render nurender.
+
+        }
+
+        private void Rendering_CallOnRender()
+        {
+            InstanceCollection Instances = Rendering_BuildListOfAllObjects();
+
+            foreach (Instance Instance in Instances)
             {
-                // perhaps this works?
-                List<PhysicalInstance> ObjectsToRender = ListTransfer<Instance, PhysicalInstance>.TransferBetweenTypes(GMIR.Instances); 
-                // Render each object.
-                Rendering_DoRenderPhysicalInstances(ObjectsToRender);
-
-                // call nurender to do the legwork of scene rendering
-
-                MainScene.Render(false); // render nurender.
-
+                if (Instance.OnRender != null)
+                {
+                    RenderEventArgs REA = new RenderEventArgs();
+                    REA.SDL_Renderer = MainScene;
+                    Instance.OnRender(this, REA);
+                }
             }
-            else
-            {
-                ErrorManager.ThrowError(ClassName, "ErrorOccurredAcquiringPhysicalInstanceListException");
-                return; 
-            }
-
-            
-
         }
 
         private void Rendering_DoRenderPhysicalInstances(List<PhysicalInstance> PhysicalInstances)
@@ -543,12 +598,7 @@ namespace Lightning.Core.API
                         PO.Render(MainScene, null, IntPtr.Zero);
                         continue;
                     }
-                    else
-                    {
-                        RenderEventArgs REA = new RenderEventArgs();
-                        REA.SDL_Renderer = MainScene;
-                        PO.OnRender(this, REA);
-                    }
+                    // January 13, 2022: onrender already called here
 
                 }
                 else
@@ -601,7 +651,7 @@ namespace Lightning.Core.API
             HandleKeyDown_NotifyAllPhysicalInstances(AllObjects, CurEvent);
         }
 
-        private List<ControllableObject> BuildListOfControllableObjects()
+        private List<ControllableObject> Rendering_BuildListOfControllableObjects()
         {
             List<ControllableObject> ControllableObjects = new List<ControllableObject>();
 

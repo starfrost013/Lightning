@@ -343,7 +343,15 @@ namespace Lightning.Core.API
             
         }
 
-        
+        /// <summary>
+        /// Acquires the position of this PhysicalInstance relative to the <see cref="Camera"/> <paramref name="CCamera"/>
+        /// </summary>
+        /// <param name="CCamera">The camera you wish to obtain the relative position of this object to.</param>
+        /// <returns>The position of this PhysicalInstance relative to the position of <paramref name="CCamera"/>.</returns>
+        public Vector2 GetCameraPosition(Camera CCamera)
+        {
+            return new Vector2(Position.X - CCamera.Position.X, Position.Y - CCamera.Position.Y);
+        }
 
     }
 }

@@ -61,7 +61,9 @@ namespace Lightning.Core.API
 
             List<Instance> InstanceList = DoPreRender_GetLights();
 
-            GetInstanceResult GIR = DataModel.GetFirstChildOfType("GameSettings");
+            Workspace Ws = DataModel.GetWorkspace();
+
+            GetInstanceResult GIR = Ws.GetFirstChildOfType("GameSettings");
 
             // we already checked for gamesettings so we don't need to check them
             //

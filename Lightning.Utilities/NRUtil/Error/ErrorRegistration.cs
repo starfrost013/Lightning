@@ -197,7 +197,8 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError(new Error { Name = "BootWindowCannotFindPathException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 208 });
          ErrorManager.RegisterError(new Error { Name = "InvalidWindowIDForShutdownException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 209 });
          ErrorManager.RegisterError(new Error { Name = "AttemptedToRegisterInvalidClassException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 210 });
-        ErrorManager.RegisterError( new Error { Name = "ErrorAcquiringLightsException", Description = "An error occurred acquiring lights.", Severity = MessageSeverity.FatalError, Id = 211 });
+         ErrorManager.RegisterError(new Error { Name = "ErrorAcquiringLightsException", Description = "An error occurred acquiring lights.", Severity = MessageSeverity.FatalError, Id = 211 });
+         ErrorManager.RegisterError(new Error { Name = "UncaughtExceptionWindow", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Warning_NoPrompt, Id = 212 });
 
             // todo: external-internal
         }

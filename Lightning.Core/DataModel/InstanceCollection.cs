@@ -18,11 +18,11 @@ namespace Lightning.Core.API
             Instances = new List<Instance>(); 
         }
 
-        public InstanceCollection(List<Instance> Instances)
+        public InstanceCollection(List<Instance> NInstances)
         {
             Instances = new List<Instance>(); 
 
-            foreach (Instance Inx in Instances)
+            foreach (Instance Inx in NInstances)
             {
                 Instances.Add(Inx); 
             }

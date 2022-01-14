@@ -100,15 +100,13 @@ namespace Lightning.Core.API
                         OnStart_ShutdownDebugNotEnabled();
                         return; 
                     }
-
-                    
                 }
             }
 
 #if DEBUG
 
             Settings.CurrentDebugString = DebugStrings.GetDebugString();
-            CreateDebugText(); // call before font loading so we don't have to load the font again
+            Init_CreateDebugText(); // call before font loading so we don't have to load the font again
             Init_CreateDebugGui();
 #endif
             IGDSERVICE_INITIALISED = true;
@@ -169,7 +167,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// DEBUG ONLY: Renders engine debugging information.
         /// </summary>
-        private void CreateDebugText()
+        private void Init_CreateDebugText()
         {
 #if DEBUG
             // Because Text by definition must be within a GUI,
@@ -189,7 +187,7 @@ namespace Lightning.Core.API
             Text DebugTextLine2 = (Text)DataModel.CreateInstance("Text", SG);
             Text DebugTextLine3 = (Text)DataModel.CreateInstance("Text", SG);
             
-            Color4 DebugTextColour = new Color4(255, 255, 255, 255);
+            Color4 DebugTextColour = new Color4(255, 255, 0, 0);
 
             string DoNotUse = "Debug GUI Component - Do not use!";
 
@@ -211,8 +209,8 @@ namespace Lightning.Core.API
             GR.Position = Position;
             SG.Position = Position;
             DebugTextLine1.Position = Position;
-            DebugTextLine2.Position = new Vector2(Position.X, Position.Y + 16);
-            DebugTextLine3.Position = new Vector2(Position.X, Position.Y + 32);
+            DebugTextLine2.Position = new Vector2(Position.X, Position.Y + 12);
+            DebugTextLine3.Position = new Vector2(Position.X, Position.Y + 24);
 
             DebugTextLine1.DisableTTF = true;
             DebugTextLine2.DisableTTF = true;
