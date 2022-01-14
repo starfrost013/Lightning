@@ -2,7 +2,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_font =
 [
     [ "GetFontSize", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#a6027670a25a44c06c21e32ce3f7c97ce", null ],
     [ "Load", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#acfb4dab9eace065112d857aded600f6f", null ],
-    [ "Render", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#a562f639923871abeae3518d397fd71a7", null ],
+    [ "Render", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#ae700e048880229f2dd860abac328ee66", null ],
     [ "Unload", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#a0ddeaf95a7bf9582204855f0739ca5a5", null ],
     [ "ClassName", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#a0adae2bbe17a589ea4df448121d94e6f", null ],
     [ "FONT_LOADED", "class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#aa9a3c54d9c7c4cdc9a75b6c90824d1fc", null ],

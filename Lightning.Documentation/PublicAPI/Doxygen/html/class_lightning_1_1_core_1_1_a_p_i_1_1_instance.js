@@ -7,7 +7,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_instance =
     [ "GetAllChildrenOfType", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1f931b895045d6856316045a66963430", null ],
     [ "GetChild", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1039ea1fb46f9caca4d17ac498c386a0", null ],
     [ "GetChildAt", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a246d2c16a5e704897f509d4ca6e6234a", null ],
-    [ "GetChildren", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#ab1f0fcdecfeba9e5e03e01f5cd3d7b97", null ],
+    [ "GetChildren", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7e15753ca09c9f894c21add4d9183937", null ],
     [ "GetFirstChild", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a873af85dbfe563ce0fb2edb37ec5cbf2", null ],
     [ "GetFirstChildOfType", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#ab60024711a0a947c7727b6529f655a21", null ],
     [ "GetFirstChildOfTypeT", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#af1069722844a75455ce99ce9c249eee3", null ],
@@ -30,5 +30,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_instance =
     [ "OnCreated", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a4839e2c87a9b3424939a281d4b712a2c", null ],
     [ "OnDestroyed", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1cd19aacb14511e1e046782e95f67fab", null ],
     [ "OnKeyDownHandler", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7e54b72bb2c8e5c9c09cfebb38796387", null ],
-    [ "Parent", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a0fb4f04ad5bf7c5944f9a4cd8efc9291", null ]
+    [ "OnRender", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a933c190ab7dfe68059ab130dc88053db", null ],
+    [ "Parent", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a0fb4f04ad5bf7c5944f9a4cd8efc9291", null ],
+    [ "PreRender", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#ab342d6973753604556bffbc478f2e031", null ]
 ];

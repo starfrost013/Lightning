@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning
-   &#160;<span id="projectnumber">0.4.1110.3 1/8/22</span>
+   &#160;<span id="projectnumber">0.4.1139 2022/01/14</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7622cbd2c8cfa13c66a83194abc7e678">Lightning.Core.API.Instance</a>
 </li>
 <li>ApplyImpulse()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adfae95d8683554151e77b026c90391a4">Lightning.Core.API.PhysicalObject</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#afde539ad354a3dd2990ab1b86879d9e2">Lightning.Core.API.PhysicalInstance</a>
 </li>
 </ul>
 
@@ -157,6 +157,9 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
+<li>GetCameraPosition()
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#a8bb9b275088255ace165b4c7116dab20">Lightning.Core.API.PhysicalInstance</a>
+</li>
 <li>GetChild()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1039ea1fb46f9caca4d17ac498c386a0">Lightning.Core.API.Instance</a>
 </li>
@@ -164,7 +167,9 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a246d2c16a5e704897f509d4ca6e6234a">Lightning.Core.API.Instance</a>
 </li>
 <li>GetChildren()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#ab1f0fcdecfeba9e5e03e01f5cd3d7b97">Lightning.Core.API.Instance</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html#ad1417bf737d8ed431830c4de2c9d35ae">Lightning.Core.API.DataModel</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7e15753ca09c9f894c21add4d9183937">Lightning.Core.API.Instance</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a5c07c8a55fe207d51ed7aa64f70c6638">Lightning.Core.API.InstanceCollection</a>
 </li>
 <li>GetFirstChild()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a873af85dbfe563ce0fb2edb37ec5cbf2">Lightning.Core.API.Instance</a>
@@ -263,11 +268,11 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 </li>
 <li>OnSpawn()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_camera.html#ae9fa10848adff8b6266bb38db0e59f46">Lightning.Core.API.Camera</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a3f99454aa78ee135cddda25468c40693">Lightning.Core.API.PhysicalObject</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#aaa7fd98a300d05ccb4e48ff6d6bcd3f4">Lightning.Core.API.PhysicalInstance</a>
 </li>
 <li>OnTick()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_default_physics_controller.html#a392ef1665e28ed4abf5a7aa7d208b3b1">Lightning.Core.API.DefaultPhysicsController</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_controller.html#abcc583b7333389baa39046e542adc665">Lightning.Core.API.PhysicsController</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_default_physics_controller.html#a988be8a4562c5ffb1bc629cb8678c8a3">Lightning.Core.API.DefaultPhysicsController</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_controller.html#a455f2de21152ad4a59a1dd4ba8d7339f">Lightning.Core.API.PhysicsController</a>
 </li>
 </ul>
 
@@ -279,6 +284,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>Poll()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html#a4c0be1f129c8f47c36a92e7f42d3aabb">Lightning.Core.API.GameService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html#a885a7481dfab6c79be47c8e1079fa1b6">Lightning.Core.API.IGDService</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_lighting_service.html#a1d878370c51b98835e88b1b7df3e0e3a">Lightning.Core.API.LightingService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html#ab4de5d050c37658e19d3b21c480153b3">Lightning.Core.API.PhysicsService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html#aaf6397f4c9389d5da9e82897fb16dce4">Lightning.Core.API.RenderService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#adb9a908a5c55946b03b29df9a496b0d3">Lightning.Core.API.ScriptingService</a>
@@ -300,34 +306,33 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a29efc258a0066a08d6549075c89d2b14">Lightning.Core.API.Instance</a>
 </li>
 <li>Render()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush.html#ac31952ee910383f0dc9904cbecf9a43d">Lightning.Core.API.AnimatedImageBrush</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame.html#a966e325c1ab05e13045efb49e6c6a1a7">Lightning.Core.API.AnimationFrame</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_camera.html#a926fa2b26213acde9c9039dc47fd39c1">Lightning.Core.API.Camera</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_check_box.html#a9b5b641f6e4e79a1b98666f6b68138b2">Lightning.Core.API.CheckBox</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_circle.html#aebe6831123d7a431fe5d58bfd0add430">Lightning.Core.API.Circle</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_debug_gui.html#a1105c079b080f8f1a0754ec3cf416493">Lightning.Core.API.DebugGui</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#a562f639923871abeae3518d397fd71a7">Lightning.Core.API.Font</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_gui_element.html#a8e38f57c8cb10e7eb0f327640c887374">Lightning.Core.API.GuiElement</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_gui_root.html#a74d7e8a3fcb3fa32779e6da2d847ad64">Lightning.Core.API.GuiRoot</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a1e31818f3ce284db9a972da84aff9c31">Lightning.Core.API.Humanoid</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush.html#a58ce72e7854a63a9d2010d10aeb8577f">Lightning.Core.API.ImageBrush</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_line.html#ac10bc1e429509e20eac7cd843ae00906">Lightning.Core.API.Line</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_linear_gradient_brush.html#a37f8c831f4a040c7cdac04b7c6b5d88c">Lightning.Core.API.LinearGradientBrush</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_menu.html#a8e7c2ceda3d5f0a42068fb063047a469">Lightning.Core.API.Menu</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_menu_item.html#a9eb14c91009d0c8ea4185b2d1868b82b">Lightning.Core.API.MenuItem</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a8dc360b87e14655815810d7fc678342e">Lightning.Core.API.PhysicalObject</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_point_light.html#a02bbd71f5ac8413092d1ffee3a2e8d12">Lightning.Core.API.PointLight</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_primitive.html#af85530ac9e7fbb416ec7298a4f10ed45">Lightning.Core.API.Primitive</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_rectangle.html#ada0d547f2d249d6438e6a7fbb8217984">Lightning.Core.API.Rectangle</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_screen_gui.html#a5bab44a569350f05c96a1609651c0e15">Lightning.Core.API.ScreenGui</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html#a557b62ae981b26d0805c66fc562fe735">Lightning.Core.API.Sky</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_solid_colour_brush.html#a293869a668c744ecf55ff2f523c01391">Lightning.Core.API.SolidColourBrush</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html#a9de2174c05550c4b0899fc2e15735319">Lightning.Core.API.Sound</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_splash_screen.html#ae0bb454842a8f33b835e5ca2bee4c113">Lightning.Core.API.SplashScreen</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_surface_gui.html#a7f11143aa3ff411871a5635c9445c203">Lightning.Core.API.SurfaceGui</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a2b14e56d299ae65dfb7c72543ff64fb5">Lightning.Core.API.Text</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#ad8ab54c3a87089c20345bbe3751d1567">Lightning.Core.API.TextBox</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_world_gui.html#a2953036433275a6745226bbc9e580a29">Lightning.Core.API.WorldGui</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush.html#addb7cc030018eae6770550a3dc0da272">Lightning.Core.API.AnimatedImageBrush</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame.html#a587420b1360872be33358a446357682d">Lightning.Core.API.AnimationFrame</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_camera.html#a75b1af8300982714934cde93b4be0f28">Lightning.Core.API.Camera</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_check_box.html#ab1496f43bfbbbfe37b896ec6f950cc3c">Lightning.Core.API.CheckBox</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_circle.html#a04205d9394f757d9dfde72c75a87540f">Lightning.Core.API.Circle</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_debug_gui.html#ab91337e33969375279d7458eea732b50">Lightning.Core.API.DebugGui</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_font.html#ae700e048880229f2dd860abac328ee66">Lightning.Core.API.Font</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_gui_element.html#a51b1d9512047f29e4548ecf3bb1f4be3">Lightning.Core.API.GuiElement</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_gui_root.html#ae7c8c8f03cab04f899f4a1edc8bc2a23">Lightning.Core.API.GuiRoot</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#ae9852dd27d1a44419306eb395c7d9803">Lightning.Core.API.Humanoid</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush.html#a0ab458612cfc27b6c599f97120a08712">Lightning.Core.API.ImageBrush</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_line.html#ac5e2717541e47cbbf5233d06b3854500">Lightning.Core.API.Line</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_linear_gradient_brush.html#ae5f67c15130bd1d9fd484cd8ebafac72">Lightning.Core.API.LinearGradientBrush</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_menu.html#a5b4ad4d58a557897df03ddf9988015f9">Lightning.Core.API.Menu</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_menu_item.html#a950d30a916b0b16df858601eed25ec74">Lightning.Core.API.MenuItem</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#a6867f5208e1504e6aaba39f6cd682441">Lightning.Core.API.PhysicalInstance</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_point_light.html#a8b1441cd15c9e26f686dcb749e606686">Lightning.Core.API.PointLight</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_primitive.html#aeefb8af96875b9981f8e34cbf16f62a9">Lightning.Core.API.Primitive</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_rectangle.html#a5fecad4f63bb91a7e439f9eb7d8bc0a6">Lightning.Core.API.Rectangle</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_screen_gui.html#a4f2e9dcf3b383ccbc2a5f758651ff54c">Lightning.Core.API.ScreenGui</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html#a68eb9572b2eb5fb8fdeab53358c9e532">Lightning.Core.API.Sky</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_solid_colour_brush.html#a740c1d45a100533916e73070238ccb97">Lightning.Core.API.SolidColourBrush</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html#aa05e2cf75db4f092487c00021d3be351">Lightning.Core.API.Sound</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_surface_gui.html#a76b8a98f48503cd9a1287d54daf3937a">Lightning.Core.API.SurfaceGui</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a2158f0a58d0f663815118e93f06fa973">Lightning.Core.API.Text</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#a882acbb5c205f04d17dbe834e1bd8536">Lightning.Core.API.TextBox</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_world_gui.html#afe90041ba6072bd826438cc38577f80c">Lightning.Core.API.WorldGui</a>
 </li>
 </ul>
 

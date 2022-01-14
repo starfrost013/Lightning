@@ -29,7 +29,7 @@ var hierarchy =
         [ "Lightning.Core.API.GameSettings", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_settings.html", [
           [ "Lightning.Core.API.GameSetting", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_setting.html", null ]
         ] ],
-        [ "Lightning.Core.API.PhysicalObject", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html", [
+        [ "Lightning.Core.API.PhysicalInstance", "class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html", [
           [ "Lightning.Core.API.Animation", "class_lightning_1_1_core_1_1_a_p_i_1_1_animation.html", null ],
           [ "Lightning.Core.API.Brush", "class_lightning_1_1_core_1_1_a_p_i_1_1_brush.html", [
             [ "Lightning.Core.API.ImageBrush", "class_lightning_1_1_core_1_1_a_p_i_1_1_image_brush.html", [
@@ -78,8 +78,7 @@ var hierarchy =
             ] ]
           ] ],
           [ "Lightning.Core.API.Sky", "class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html", null ],
-          [ "Lightning.Core.API.Sound", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html", null ],
-          [ "Lightning.Core.API.SplashScreen", "class_lightning_1_1_core_1_1_a_p_i_1_1_splash_screen.html", null ]
+          [ "Lightning.Core.API.Sound", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html", null ]
         ] ],
         [ "Lightning.Core.API.Script", "class_lightning_1_1_core_1_1_a_p_i_1_1_script.html", [
           [ "Lightning.Core.API.LuaSandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox.html", null ],
@@ -94,6 +93,7 @@ var hierarchy =
       [ "Lightning.Core.API.Service", "class_lightning_1_1_core_1_1_a_p_i_1_1_service.html", [
         [ "Lightning.Core.API.GameService", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html", null ],
         [ "Lightning.Core.API.IGDService", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html", null ],
+        [ "Lightning.Core.API.LightingService", "class_lightning_1_1_core_1_1_a_p_i_1_1_lighting_service.html", null ],
         [ "Lightning.Core.API.PhysicsService", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html", null ],
         [ "Lightning.Core.API.RenderService", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html", null ],
         [ "Lightning.Core.API.ScriptingService", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html", null ],
@@ -136,6 +136,7 @@ var hierarchy =
     [ "Lightning.Core.API.Manifold", "class_lightning_1_1_core_1_1_a_p_i_1_1_manifold.html", null ],
     [ "Lightning.Core.API.MenuState", "class_lightning_1_1_core_1_1_a_p_i_1_1_menu_state.html", null ],
     [ "Lightning.Core.API.PhysicsState", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html", null ],
+    [ "Lightning.Core.API.PreRenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_pre_render_event_args.html", null ],
     [ "Lightning.Core.API.RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", null ],
     [ "Lightning.Core.API.ScriptMethod", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method.html", null ],
     [ "Lightning.Core.API.ScriptMethodParameter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method_parameter.html", null ],

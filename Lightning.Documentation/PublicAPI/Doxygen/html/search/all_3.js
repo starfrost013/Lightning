@@ -24,7 +24,7 @@ var searchData=
   ['displayasis_104',['DisplayAsIs',['../namespace_lightning_1_1_core_1_1_a_p_i.html#ab57909cc7e907e2246688f3fa6dac195a6e8d3a9c232b7aba874b9a71c84e3eca',1,'Lightning::Core::API']]],
   ['displayhealthbar_105',['DisplayHealthBar',['../class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#a375df81e1e8f5d04c4a4f219972363c8',1,'Lightning::Core::API::Humanoid']]],
   ['displayname_106',['DisplayName',['../class_lightning_1_1_core_1_1_a_p_i_1_1_humanoid.html#aa2551065f86c25c986f283d661e2db0a',1,'Lightning::Core::API::Humanoid']]],
-  ['displayviewport_107',['DisplayViewport',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#a8d15cf613cc591248cc2ed155a330b4c',1,'Lightning::Core::API::PhysicalObject']]],
+  ['displayviewport_107',['DisplayViewport',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#a0eadfbad4ef1ba076d7c114af10bb2a0',1,'Lightning::Core::API::PhysicalInstance']]],
   ['donotautoresize_108',['DoNotAutoResize',['../class_lightning_1_1_core_1_1_a_p_i_1_1_text_box.html#ac0729d37d2d8936559b982751ad85107',1,'Lightning::Core::API::TextBox']]],
   ['down_109',['Down',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a0944fbc6a02aea54d6247b8146edf165a08a38277b0309070706f6652eeae9a53',1,'Lightning::Core::API']]],
   ['downkeybinding_110',['DownKeyBinding',['../class_lightning_1_1_core_1_1_a_p_i_1_1_camera.html#adaf1f86ed593752e6c3e8ad7b852ffb8',1,'Lightning::Core::API::Camera']]]

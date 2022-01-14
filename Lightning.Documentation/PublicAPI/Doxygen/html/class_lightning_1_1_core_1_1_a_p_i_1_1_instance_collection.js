@@ -1,11 +1,12 @@
 var class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection =
 [
     [ "InstanceCollection", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a220ad61fa2953422284f5ad55529e23c", null ],
-    [ "InstanceCollection", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a5093379493ff6ee248a80f1fc85dcfe5", null ],
+    [ "InstanceCollection", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#ada0c24f9295af132f6b61945ed2597d2", null ],
     [ "Add", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#aed90f288fb60d2a60bb491c039d292be", null ],
     [ "Clear", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a2d289c7b7508fbde57586a3bb9cdadb3", null ],
     [ "Contains", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a20bf91d241de0aa7d07433ec29c235e3", null ],
     [ "GetAllChildrenOfType", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a90c8bda36a380936d6d0cff4cd96495a", null ],
+    [ "GetChildren", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a5c07c8a55fe207d51ed7aa64f70c6638", null ],
     [ "GetEnumerator", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a0574463d4e681f51fabc0dcc4744164e", null ],
     [ "GetFirstChildOfType", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#add900cdc41e3db25a4db0a7cbb5cbcbd", null ],
     [ "GetFirstChildOfTypeT", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a1a8a994f242cfb9ce9a143c6232900a3", null ],

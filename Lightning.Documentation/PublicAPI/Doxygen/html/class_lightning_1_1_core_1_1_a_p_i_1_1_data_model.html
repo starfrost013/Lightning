@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning
-   &#160;<span id="projectnumber">0.4.1110.3 1/8/22</span>
+   &#160;<span id="projectnumber">0.4.1139 2022/01/14</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -145,6 +145,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>Shutdown</b> (
 <tr class="memitem:a104ffdd8bb494340abfb0f8c394e260e"><td class="memItemLeft" align="right" valign="top"><a id="a104ffdd8bb494340abfb0f8c394e260e"></a>
 static <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetAllChildrenOfType</b> (string ClassName)</td></tr>
 <tr class="separator:a104ffdd8bb494340abfb0f8c394e260e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1417bf737d8ed431830c4de2c9d35ae"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html#ad1417bf737d8ed431830c4de2c9d35ae">GetChildren</a> (bool Recursive=false)</td></tr>
+<tr class="memdesc:ad1417bf737d8ed431830c4de2c9d35ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquires the logical children of this object.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html#ad1417bf737d8ed431830c4de2c9d35ae">More...</a><br /></td></tr>
+<tr class="separator:ad1417bf737d8ed431830c4de2c9d35ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -152,7 +155,7 @@ Static Public Attributes</h2></td></tr>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>DATAMODEL_API_VERSION_MAJOR</b> = 1</td></tr>
 <tr class="separator:a3337ec04a03971af58aeaa5c391852dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10b574c53ea8a57691999f0db8581ae8"><td class="memItemLeft" align="right" valign="top"><a id="a10b574c53ea8a57691999f0db8581ae8"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>DATAMODEL_API_VERSION_MINOR</b> = 2</td></tr>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>DATAMODEL_API_VERSION_MINOR</b> = 3</td></tr>
 <tr class="separator:a10b574c53ea8a57691999f0db8581ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac33ae719ea7224e90c3ca32c0cc3c7a5"><td class="memItemLeft" align="right" valign="top"><a id="ac33ae719ea7224e90c3ca32c0cc3c7a5"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>DATAMODEL_API_VERSION_REVISION</b> = 0</td></tr>
@@ -172,7 +175,7 @@ Properties</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_lightning.html">Lightning</a> </p>
-<p><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html" title="Lightning">DataModel</a> (<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html" title="ScriptingServiceLuaProfiling (partial class: ScriptingService)">API</a> Version 1.2.0 - Begin lighting)</p>
+<p><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html" title="Lightning">DataModel</a> (<a class="el" href="namespace_lightning_1_1_core_1_1_a_p_i.html" title="ScriptingServiceLuaProfiling (partial class: ScriptingService)">API</a> Version 1.3.0 - Recursive Get, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html#ad1417bf737d8ed431830c4de2c9d35ae" title="Acquires the logical children of this object.">GetChildren()</a>)</p>
 <p>Provides a unified object system for <a class="el" href="namespace_lightning.html">Lightning</a>. All objects inherit from the <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html" title="Lightning DataModel">Instance</a> class, which this class manages.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7e3edb9926eb88deee58c70757b2a490"></a>
@@ -257,6 +260,35 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ad1417bf737d8ed431830c4de2c9d35ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1417bf737d8ed431830c4de2c9d35ae">&#9670;&nbsp;</a></span>GetChildren()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a> Lightning.Core.API.DataModel.GetChildren </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Recursive</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Acquires the logical children of this object. </p>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html" title="GetMultiInstanceResult">GetMultiInstanceResult</a> object containing the success status of the method, with <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html#a82fd06c0889782df2c4fd24d65fbff08" title="A list of instances that will be returned by a method using this class.">GetMultiInstanceResult.Instances</a> containing the logical children of this object.</dd></dl>
 
 </div>
 </div>

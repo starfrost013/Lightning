@@ -10,7 +10,7 @@ var searchData=
   ['additiveblending_7',['AdditiveBlending',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a55b2009972903a90babbfccd52ab1ad8',1,'Lightning::Core::API']]],
   ['alignment_8',['Alignment',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a5e93cb03995573e974e673bfe9977d84',1,'Lightning::Core::API']]],
   ['alphablending_9',['AlphaBlending',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a81f9d1923363754ef8e36ee6f2cd6273a8bb7dc17a08b6afa19cc4c18c6334eee',1,'Lightning::Core::API']]],
-  ['anchored_10',['Anchored',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adab647a99da7a6cd110aac024689637a',1,'Lightning::Core::API::PhysicalObject']]],
+  ['anchored_10',['Anchored',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#aef8c26077da83962f41a4e0116148f1c',1,'Lightning::Core::API::PhysicalInstance']]],
   ['animatedimagebrush_11',['AnimatedImageBrush',['../class_lightning_1_1_core_1_1_a_p_i_1_1_animated_image_brush.html',1,'Lightning::Core::API']]],
   ['animation_12',['Animation',['../class_lightning_1_1_core_1_1_a_p_i_1_1_animation.html',1,'Lightning::Core::API']]],
   ['animationframe_13',['AnimationFrame',['../class_lightning_1_1_core_1_1_a_p_i_1_1_animation_frame.html',1,'Lightning::Core::API']]],
@@ -18,8 +18,8 @@ var searchData=
   ['animationupdated_15',['AnimationUpdated',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a58615b00744407a2440ff304ccc5d47e',1,'Lightning::Core::API']]],
   ['animationupdatedeventargs_16',['AnimationUpdatedEventArgs',['../class_lightning_1_1_core_1_1_a_p_i_1_1_animation_updated_event_args.html',1,'Lightning::Core::API']]],
   ['antialiasingdisabled_17',['AntiAliasingDisabled',['../class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a396d09181fa154a46aaec603aa3e2e24',1,'Lightning::Core::API::Text']]],
-  ['applyimpulse_18',['ApplyImpulse',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#adfae95d8683554151e77b026c90391a4',1,'Lightning::Core::API::PhysicalObject']]],
+  ['applyimpulse_18',['ApplyImpulse',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#afde539ad354a3dd2990ab1b86879d9e2',1,'Lightning::Core::API::PhysicalInstance']]],
   ['archivable_19',['Archivable',['../namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e',1,'Lightning::Core::API']]],
-  ['atrest_20',['AtRest',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_object.html#abe8f53d6edcdfa61f536d54a233357ea',1,'Lightning::Core::API::PhysicalObject']]],
+  ['atrest_20',['AtRest',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#ae869aabd050fac7e75562a1e3d90a6b0',1,'Lightning::Core::API::PhysicalInstance']]],
   ['author_21',['Author',['../class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3',1,'Lightning::Core::API::GameMetadata']]]
 ];

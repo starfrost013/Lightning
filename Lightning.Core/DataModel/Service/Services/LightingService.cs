@@ -90,10 +90,25 @@ namespace Lightning.Core.API
 
             // todo: make these enums
             ImageTexture = SDL.SDL_CreateTexture(MainWindow.Settings.RenderingInformation.RendererPtr, SDL.SDL_PIXELFORMAT_RGBA8888, (int)SDL.SDL_TextureAccess.SDL_TEXTUREACCESS_STREAMING, WindowWidth, WindowHeight);
-            
+
+            // Test code to be later implemented into NuRender.
+            SDL.SDL_Rect SrcRect = new SDL.SDL_Rect
+            {
+                x = 0,
+                y = 0,
+                w = (int)WindowSize.X,
+                h = (int)WindowSize.Y
+            };
+
+            IntPtr TxPixels = IntPtr.Zero;
+            int Pitch;
+
+            SDL.SDL_LockTexture(ImageTexture, ref SrcRect, out TxPixels, out Pitch);
+
+
             foreach (Light Light in InstanceList)
             {
-                Light.Render(PEEA.SDL_Renderer, null, ImageTexture);
+                Light.Render(PEEA.SDL_Renderer, null, TxPixels);
             }
 
             return;
@@ -136,6 +151,7 @@ namespace Lightning.Core.API
                 h = (int)WindowSize.Y
             };
 
+            SDL.SDL_UnlockTexture(ImageTexture);
             // Render the image texture to the display.
             SDL.SDL_RenderCopy(MainWindow.Settings.RenderingInformation.RendererPtr, ImageTexture, ref SrcRect, ref DstRect);
 

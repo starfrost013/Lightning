@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning
-   &#160;<span id="projectnumber">0.4.1110.3 1/8/22</span>
+   &#160;<span id="projectnumber">0.4.1139 2022/01/14</span>
    </div>
    <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
   </td>
@@ -113,9 +113,9 @@ $(document).ready(function(){initNavTree('class_lightning_1_1_core_1_1_a_p_i_1_1
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5093379493ff6ee248a80f1fc85dcfe5"><td class="memItemLeft" align="right" valign="top"><a id="a5093379493ff6ee248a80f1fc85dcfe5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>InstanceCollection</b> (List&lt; <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html">Instance</a> &gt; Instances)</td></tr>
-<tr class="separator:a5093379493ff6ee248a80f1fc85dcfe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada0c24f9295af132f6b61945ed2597d2"><td class="memItemLeft" align="right" valign="top"><a id="ada0c24f9295af132f6b61945ed2597d2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>InstanceCollection</b> (List&lt; <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html">Instance</a> &gt; NInstances)</td></tr>
+<tr class="separator:ada0c24f9295af132f6b61945ed2597d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0574463d4e681f51fabc0dcc4744164e"><td class="memItemLeft" align="right" valign="top"><a id="a0574463d4e681f51fabc0dcc4744164e"></a>
 <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection_enumerator.html">InstanceCollectionEnumerator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetEnumerator</b> ()</td></tr>
 <tr class="separator:a0574463d4e681f51fabc0dcc4744164e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,6 +146,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a90c8bda36a380936d6d0cff4cd96495a"><td class="memItemLeft" align="right" valign="top"><a id="a90c8bda36a380936d6d0cff4cd96495a"></a>
 <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetAllChildrenOfType</b> (string ClassName)</td></tr>
 <tr class="separator:a90c8bda36a380936d6d0cff4cd96495a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c07c8a55fe207d51ed7aa64f70c6638"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a5c07c8a55fe207d51ed7aa64f70c6638">GetChildren</a> (bool Recursive=false)</td></tr>
+<tr class="memdesc:a5c07c8a55fe207d51ed7aa64f70c6638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquires the logical children of this object.  <a href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a5c07c8a55fe207d51ed7aa64f70c6638">More...</a><br /></td></tr>
+<tr class="separator:a5c07c8a55fe207d51ed7aa64f70c6638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -246,6 +249,27 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Count</b><code> [get]<
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a5c07c8a55fe207d51ed7aa64f70c6638"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c07c8a55fe207d51ed7aa64f70c6638">&#9670;&nbsp;</a></span>GetChildren()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html">GetMultiInstanceResult</a> Lightning.Core.API.InstanceCollection.GetChildren </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Recursive</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Acquires the logical children of this object. </p>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html" title="GetMultiInstanceResult">GetMultiInstanceResult</a> object containing the success status of the method, with <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html#a82fd06c0889782df2c4fd24d65fbff08" title="A list of instances that will be returned by a method using this class.">GetMultiInstanceResult.Instances</a> containing the logical children of this object.</dd></dl>
 
 </div>
 </div>
