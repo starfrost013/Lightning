@@ -1,0 +1,20 @@
+NuRender 0.6.0 plans:
+
+* RenderTarget
+	* Render target to any texture
+
+* Dramatically enhanced texture API
+	* Arbitrary pixel write:
+		* WritePixel()
+		* ReadPixel()
+		* LockTexture()
+		* UnlockTexture()
+		* GetPixel()
+
+* Optimisation settings, optimised by default
+		* OptimisationSettings
+			* Enum flag, bits can be twiddled to change how optimised rendering is (may be helpful for debugging)
+
+* Lighting moved to NuRender?
+
+As of January 14, 2022
