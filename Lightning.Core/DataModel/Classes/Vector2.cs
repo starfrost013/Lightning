@@ -141,6 +141,25 @@ namespace Lightning.Core.API
             }
         }
 
+        public static bool operator <=(Vector2 A, Vector2 B) // January 14, 2022
+        {
+            if (A == null || B == null)
+            {
+                return false; // not sure what to do here
+            }
+            else
+            {
+                if ((A.X <= B.X) && (A.Y <= B.Y))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public static bool operator >(Vector2 A, Vector2 B)
         {
             if (A == null || B == null)
@@ -159,6 +178,26 @@ namespace Lightning.Core.API
                 }
             }
         }
+
+        public static bool operator >=(Vector2 A, Vector2 B) // January 14, 2022
+        {
+            if (A == null || B == null)
+            {
+                return false; // not sure what to do here
+            }
+            else
+            {
+                if ((A.X >= B.X) && (A.Y >= B.Y))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
 
         public override bool Equals(object obj)
         {

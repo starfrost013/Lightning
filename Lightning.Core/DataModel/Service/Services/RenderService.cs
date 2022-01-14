@@ -373,13 +373,13 @@ namespace Lightning.Core.API
             {
                 foreach (PhysicalInstance PI in GMIR.Instances)
                 {
-
+                    
                     // move this optimisation to nurender probably
                     if (PI.ForceToScreen)
                     {
-                        if (PI.Position.X > 0
-                        && PI.Position.Y > 0
-                        && PI.Position < (Vector2)MainWindow.Settings.WindowSize)
+                        if (PI.Position.X >= 0
+                        && PI.Position.Y >= 0
+                        && PI.Position <= (Vector2)MainWindow.Settings.WindowSize)
                         {
                             RenderableObjects.Add(PI);
                         }
@@ -387,11 +387,21 @@ namespace Lightning.Core.API
                     else
                     {
                         // todo: remove ccameraposition
+                        if (PI.Position == null)
+                        {
+                            // sky etc:
+                            // null by default
+                            // fix this bug
+
+                            RenderableObjects.Add(PI); // HACK
+                            continue; 
+                        }
+
                         Vector2 CameraRelativePosition = PI.Position - (Vector2)MainWindow.Settings.RenderingInformation.CCameraPosition;
 
-                        if (CameraRelativePosition.X > 0
-                        && CameraRelativePosition.Y > 0
-                        && CameraRelativePosition < (Vector2)MainWindow.Settings.WindowSize)
+                        if (CameraRelativePosition.X >= 0
+                        && CameraRelativePosition.Y >= 0
+                        && CameraRelativePosition <= (Vector2)MainWindow.Settings.WindowSize)
                         {
                             RenderableObjects.Add(PI);
                         }
