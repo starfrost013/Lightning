@@ -39,7 +39,6 @@ namespace Lightning.Core.API
         /// </summary>
         public static string XMLSCHEMA_VERSION = "0.3.0.0006";
 
-        public static string LASTXML_PATH { get; set; } // hacky test 
         public DataModel DDMS_Deserialise(string Path)
         {
             try
@@ -139,15 +138,13 @@ namespace Lightning.Core.API
                 }
                 else
                 {
-                    // TEMP UNTIL SERIALISATION ERRORS.XML
                     Logging.Log($"Failed to serialise DDMS component - {DDSRMS.FailureReason}", $"DDMS Serialiser - {DDMSComp}", MessageSeverity.Error);
                     return null;
-                    // END TEMP UNTIL SERIALISATION ERRORS.XML
                 }
 
             }
 
-            LASTXML_PATH = Path; 
+            DataModel.DATAMODEL_LASTXML_PATH = Path; 
             return DM; 
             
         }

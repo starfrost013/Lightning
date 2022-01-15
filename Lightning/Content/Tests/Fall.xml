@@ -1,11 +1,11 @@
 <Lightning>
   <Metadata>
-    <!-- The first Lightning XML file -->
+
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <Description>An empty game</Description>
-    <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-06-05 19:22:11</LastModifiedDate>
+    <CreationDate>2022-01-15 18:53:32</CreationDate>
+    <LastModifiedDate>2022-01-15 18:53:32</LastModifiedDate>
     <RevisionID>26</RevisionID> <!-- Rev25: update for new settings -->
 
   </Metadata>

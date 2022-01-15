@@ -11,42 +11,49 @@ Do not modify this file unless you know what you are doing.
   ESPECIALLY DO NOT MODIFY THIS PART UNLESS YOU **ABSOLUTELY 100%** KNOW WHAT YOU ARE DOING
   YOUR RUNTIME OR SDK INSTALLATION MAY NOT EVEN START IF YOU SCREW THIS PART UP.
   YOU HAVE BEEN WARNED. IF YOU MODIFY THIS AND YOUR SDK/RUNTIME INSTALL FAILS TO START PROPERLY, IT'S YOUR OWN FAULT. 
+
+  If you don't want any services to start, run the engine with the -noservices option at the command line instead of modifying this file.
   -->
   <ServiceStartupCommands>
 
     <ServiceStartupCommand>
-      <ServiceName>RenderService</ServiceName>
+      <ServiceName>RenderService</ServiceName> <!--- Provides rendering using NuRender -->
       <StartOrder>0</StartOrder>
     </ServiceStartupCommand>
 
     <ServiceStartupCommand>
-      <ServiceName>ScriptingService</ServiceName>
+      <ServiceName>CXScriptingService</ServiceName>  <!--- Implements C# scripting -->
       <StartOrder>1</StartOrder>
     </ServiceStartupCommand>
 
     <ServiceStartupCommand>
-      <ServiceName>PhysicsService</ServiceName>
+      <ServiceName>GameService</ServiceName> <!--- Allows GameDLLs to save without manually using DDMS -->
       <StartOrder>2</StartOrder>
     </ServiceStartupCommand>
 
     <ServiceStartupCommand>
-      <ServiceName>SoundService</ServiceName>
+      <ServiceName>PhysicsService</ServiceName> <!--- Implements Physics -->
       <StartOrder>3</StartOrder>
     </ServiceStartupCommand>
 
     <ServiceStartupCommand>
-      <ServiceName>UIService</ServiceName>
+      <ServiceName>SoundService</ServiceName>  <!--- Provides Sound -->
       <StartOrder>4</StartOrder>
     </ServiceStartupCommand>
 
     <ServiceStartupCommand>
-      <ServiceName>LightingService</ServiceName>
+      <ServiceName>UIService</ServiceName>  <!--- Provides UI -->
       <StartOrder>5</StartOrder>
     </ServiceStartupCommand>
 
     <ServiceStartupCommand>
-      <ServiceName>IGDService</ServiceName>
+      <ServiceName>LightingService</ServiceName> <!--- Renders lights using Screen-Space Lightmaps -->
       <StartOrder>6</StartOrder>
+    </ServiceStartupCommand>
+
+    <ServiceStartupCommand>
+      <ServiceName>IGDService</ServiceName> <!-- Implements in-game debugging -->
+      <StartOrder>7</StartOrder>
     </ServiceStartupCommand>
 
   </ServiceStartupCommands>

@@ -19,6 +19,7 @@ namespace Lightning.Core.API
 
         public override ServiceStartResult OnStart()
         {
+            Logging.Log("GameService Init", ClassName);
             return new ServiceStartResult { Successful = true };
         }
 

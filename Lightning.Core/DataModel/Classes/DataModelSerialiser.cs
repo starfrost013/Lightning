@@ -93,9 +93,22 @@ namespace Lightning.Core.API
                     }
                 }
 
+                try
+                {
+                    XD.Save(Path);
+                }
+                catch (Exception ex) // check for any I/O errors, etc
+                {
+                    string FailureReason = $"Error occurred saving XML document: {ex}";
+                    ErrorManager.ThrowError(ClassName, "FailedToSaveLgxException", FailureReason);
 
-                XD.Save(Path);
+                    GR.FailureReason = FailureReason;
+                    return GR;
+                }
+
+                DataModel.DATAMODEL_LASTXML_PATH = Path;
                 GR.Successful = true;
+
                 return GR; 
             }
             else

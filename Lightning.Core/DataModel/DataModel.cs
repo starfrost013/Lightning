@@ -61,6 +61,7 @@ namespace Lightning.Core.API
         /// <param name="Args"></param>
         public static void Init(LaunchArgs Args = null, bool Reinitialising = false)
         {
+
             if (!Init_VerifyCompatibleSystem())
             {
                 // Error Maanger isn't initialised so just throw a messagebox and exit
@@ -108,6 +109,7 @@ namespace Lightning.Core.API
 
                 if (!Reinitialising)
                 {
+                    
                     // Initialise the BootWindow.
 
                     BootWindow = new BootWindow();
@@ -117,12 +119,12 @@ namespace Lightning.Core.API
                     // init the SCM
                     WorkSvc = (Workspace)CreateInstance("Workspace");
 
-                    BootWindow.SetProgress(0, "Initialising Service Control Manager...");
+                    BootWindow.SetProgress(10, "Initialising Service Control Manager...");
                     SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
                 }
                 else
                 {
-                    WorkSvc = DataModel.GetWorkspace();
+                    WorkSvc = GetWorkspace();
 
                     GetInstanceResult GIR = WorkSvc.GetFirstChildOfType("ServiceControlManager");
 
@@ -167,7 +169,8 @@ namespace Lightning.Core.API
                     if (Args.InitServices)
                     {
 
-                        BootWindow.SetProgress(0, "Initialising services...");
+                        BootWindow.SetProgress(50, "Initialising services...");
+
                         // assume normal init 
                         SCM.InitStartupServices(Settings.ServiceStartupCommands);
 
@@ -193,7 +196,7 @@ namespace Lightning.Core.API
                     else
                     {
                         BootWindow.Shutdown();
-                        Logging.Log("Skipping service initialisation: NoInitServices supplied", "DataModel");
+                        Logging.Log("Skipping service initialisation: -noservices option supplied", "DataModel");
                         Logging.Log("Initialisation completed", "DataModel");
                         return;
                     }
@@ -459,15 +462,14 @@ namespace Lightning.Core.API
         /// <returns></returns>
         internal static InstanceCollection GetState() => State;
 
-
         public static GetMultiInstanceResult GetAllChildrenOfType(string ClassName) => State.GetAllChildrenOfType(ClassName);
-
 
         /// <summary>
         /// Acquires the logical children of this object.
         /// </summary>
         /// <returns>A <see cref="GetMultiInstanceResult"/> object containing the success status of the method, with <see cref="GetMultiInstanceResult.Instances"/> containing the logical children of this object.</returns>
         public static GetMultiInstanceResult GetChildren(bool Recursive = false) => State.GetChildren(Recursive);
+
 #if DEBUG
         #region DEBUG only
 
