@@ -11,15 +11,15 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning
     /// 
-    /// DataModel (API Version 1.3.0 - Recursive Get, GetChildren()) 
+    /// DataModel (API Version 2.0.0 - GameDLLs) 
     /// 
     /// Provides a unified object system for Lightning.
     /// All objects inherit from the Instance class, which this class manages. 
     /// </summary>
     public class DataModel
     {
-        public static int DATAMODEL_API_VERSION_MAJOR = 1;
-        public static int DATAMODEL_API_VERSION_MINOR = 3;
+        public static int DATAMODEL_API_VERSION_MAJOR = 2;
+        public static int DATAMODEL_API_VERSION_MINOR = 0;
         public static int DATAMODEL_API_VERSION_REVISION = 0;
 
         // shouldn't be static? idk
@@ -49,6 +49,8 @@ namespace Lightning.Core.API
         /// The Lightning boot/splash window.
         /// </summary>
         private static BootWindow BootWindow { get; set; }
+        internal static Assembly CurrentGameDLL { get; set; }
+
 
         public DataModel()
         {
@@ -470,6 +472,7 @@ namespace Lightning.Core.API
         /// <returns>A <see cref="GetMultiInstanceResult"/> object containing the success status of the method, with <see cref="GetMultiInstanceResult.Instances"/> containing the logical children of this object.</returns>
         public static GetMultiInstanceResult GetChildren(bool Recursive = false) => State.GetChildren(Recursive);
 
+        public static bool IsGameDLLLoaded => (CurrentGameDLL == null);
 #if DEBUG
         #region DEBUG only
 
