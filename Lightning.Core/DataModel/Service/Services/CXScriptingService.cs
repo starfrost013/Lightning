@@ -1,5 +1,4 @@
-﻿using NLua;
-using NuCore.Utilities;
+﻿using NuCore.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -69,6 +68,7 @@ namespace Lightning.Core.API
             if (LGDR.Successful)
             {
                 CurrentGameDLL = LGDR.GameDLL;
+                CX_Init_RunGStart(); 
 
             }
             else

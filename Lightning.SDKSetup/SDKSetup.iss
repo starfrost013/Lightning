@@ -1,6 +1,7 @@
-; Lightning SDK Setup ver 0.4.007.00016
+; Lightning SDK Setup ver 0.4.007.00017
 ; October 2, 2021
 
+; v0.4.007.00017  Jan 22, 2022  Remove Lua
 ; v0.4.007.00016  Jan 22, 2022  M4 SDK release prep
 ; v0.3.006.00015  Oct 2, 2021   Rename Lightning Game Project to Lightning Project
 ; v0.3.006.00014  Aug 15, 2021  Minor rearrangement of output file name
@@ -48,7 +49,7 @@
 ;#define LIGHTNING_LINUX64
 
 ; Setup version define
-#define SETUP_VERSION "0.4.007.00016"
+#define SETUP_VERSION "0.4.007.00017"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -84,7 +85,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "D:\Lightning_builds\latest\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Lightning_builds\latest\KeraLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\libFLAC-8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\libjpeg-9.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -109,7 +109,6 @@ Source: "D:\Lightning_builds\latest\NuCore.NativeInterop.dll"; DestDir: "{app}";
 ;Source: "D:\Lightning_builds\latest\NuCore.Test.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\NuCore.Utilities.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\NuRender.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Lightning_builds\latest\NLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 #ifdef INSTALLPACKAGE_INSTALL_SDK
 Source: "D:\Lightning_builds\latest\{#PolarisAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Polaris.deps.json"; DestDir: "{app}"; Flags: ignoreversion
@@ -127,13 +126,6 @@ Source: "D:\Lightning_builds\latest\SDL2_ttf-v2.0.15-x64.dll"; DestDir: "{app}";
 Source: "D:\Lightning_builds\latest\SDL2_gfx-v1.0.5-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Content\*"; DestDir: "{app}\Content"; Flags: ignoreversion recursesubdirs createallsubdirs
-#ifdef LIGHTNING_WIN64
-Source: "D:\Lightning_builds\latest\runtimes\win-x64\*"; DestDir: "{app}\runtimes"; Flags: ignoreversion recursesubdirs createallsubdirs
-#elif LIGHTNING_MACOS64
-Source: "D:\Lightning_builds\latest\runtimes\osx\*"; DestDir: "{app}\runtimes"; Flags: ignoreversion recursesubdirs createallsubdirs
-#elif LIGHTNING_LINUX64
-Source: "D:\Lightning_builds\latest\runtimes\linux-x64\*"; DestDir: "{app}\runtimes"; Flags: ignoreversion recursesubdirs createallsubdirs
-#endif
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

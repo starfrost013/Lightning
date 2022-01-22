@@ -34,15 +34,19 @@ namespace NuCore.Utilities
         /// </summary>
         public static string ERRORMANAGER_XML_PATH = @"Content\EngineContent\Errors.xml";
 
+        /// <summary>
+        /// A method used to register the errors for this ErrorManager.
+        /// </summary>
+        public static ErrorRegistrarMethod ErrorRegistrar { get; set; }
+
         public static void Init()
         {
             Errors = new ErrorCollection();
-            //pre-globalsettings
 
-            ErrorRegistration.RegisterErrors();
-//#if DEBUG Removed 2021-11-16 (NuRender 0.2.3)
-//            ATest_CheckErrorSerialisedCorrectly();
-//#endif
+            if (ErrorRegistrar == null) HandleError("Error Manager", new Error { Id = 0xDEA1BABE, Name = "NoErrorRegistrarException", Description = "Must have an Error Registrar to register the Error Manager!", Severity = MessageSeverity.FatalError });
+
+            ErrorRegistrar();
+
             ERRORMANAGER_LOADED = true; 
         }
 
@@ -402,6 +406,6 @@ namespace NuCore.Utilities
             Environment.Exit(0xDEAD * (int)Err.Id);
         }
        
-        internal static void RegisterError(Error Err) => Errors.Add(Err);
+        public static void RegisterError(Error Err) => Errors.Add(Err);
     }
 }

@@ -74,6 +74,7 @@ namespace Lightning.Core.API
 
             if (!ErrorManager.ERRORMANAGER_LOADED)
             {
+                ErrorManager.ErrorRegistrar += ErrorRegistration.RegisterErrors;
                 ErrorManager.Init();
             }
 

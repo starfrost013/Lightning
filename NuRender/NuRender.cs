@@ -16,7 +16,7 @@ namespace NuRender
 
         public static bool NuRender_Init()
         {
-            ErrorManager.Init();
+            if (!ErrorManager.ERRORMANAGER_LOADED) ErrorManager.Init();
             Logging.Log("NuRender", ClassName);
             Logging.Log("© 2022 starfrost\n", ClassName); // two lines
             Logging.Log("Version information:", ClassName);

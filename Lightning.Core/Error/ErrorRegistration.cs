@@ -1,8 +1,9 @@
+using NuCore.Utilities; 
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NuCore.Utilities
+namespace Lightning.Core
 {
 
  /// <summary>
@@ -16,11 +17,6 @@ namespace NuCore.Utilities
  {
      public static void RegisterErrors()
      {
-         ErrorManager.RegisterError( new Error { Name = "TestErrorException", Description = "Test Error from XML", Severity = MessageSeverity.FatalError, Id = 0 } );
-         ErrorManager.RegisterError( new Error { Name = "AttemptedToAcquireInvalidInstanceException", Description = "InstanceCollection: Attempted to acquire invalid Instance!", Severity = MessageSeverity.FatalError, Id = 1 } );
-         ErrorManager.RegisterError( new Error { Name = "InvalidVersionException", Description = "Versioning: Acquired invalid version - must have 4 components (delimiter is .)", Severity = MessageSeverity.Error, Id = 2 } );
-         ErrorManager.RegisterError( new Error { Name = "InvalidVersionAuxillaryInformationException", Description = "Versioning: Acquired invalid version - invalid owner or build date!", Severity = MessageSeverity.Error, Id = 3 } );
-         ErrorManager.RegisterError( new Error { Name = "InvalidVersionInformationException", Description = "Versioning: Acquired invalid version - major, minor, revision, or private/compressed build date", Severity = MessageSeverity.Error, Id = 4 } );
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAddNonErrorToErrorsException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 5 } );
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAddInvalidEnumNameException", Description = "EnumValue: Attempted to add EnumValue with zero-length or null to EnumInstance!", Severity = MessageSeverity.FatalError, Id = 6 } );
          ErrorManager.RegisterError( new Error { Name = "DataModelInstanceCreationFailedException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 7 } );
@@ -101,16 +97,9 @@ namespace NuCore.Utilities
          ErrorManager.RegisterError( new Error { Name = "AstPatternMustHaveAtLeast3Elements", Description = "An ASTPattern must have at least three elements - cannot access its index 2 or below!", Severity = MessageSeverity.Error, Id = 83 } );
          ErrorManager.RegisterError( new Error { Name = "SyntaxErrorException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 84 } );
          ErrorManager.RegisterError( new Error { Name = "ErrorAcquiredInvalidLineException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 85 } );
-         ErrorManager.RegisterError( new Error { Name = "LuaScriptCrashedException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 86 } );
-         ErrorManager.RegisterError( new Error { Name = "LuaStateFailureException", Description = "Lua state invalid or trying to parse a script before ScriptingService has started.", Severity = MessageSeverity.Error, Id = 87 } );
-         ErrorManager.RegisterError( new Error { Name = "LuaCannotObtainListOfScriptsToRunException", Description = "Cannot obtain a list of Lua scripts to run!", Severity = MessageSeverity.FatalError, Id = 88 } );
          ErrorManager.RegisterError( new Error { Name = "ReinitialisingBeforeInitialisingDataModelException", Description = "Attempted to reinitialise the DataModel before it has been initialised!", Severity = MessageSeverity.FatalError, Id = 89 } );
          ErrorManager.RegisterError( new Error { Name = "CannotHaveMultipleUnpausedScriptsRunningException", Description = "Multiple scripts are running while not paused! That is not allowed - stopping all except the first...", Severity = MessageSeverity.FatalError, Id = 90 } );
-         ErrorManager.RegisterError( new Error { Name = "InternalLuaStateErrorException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.FatalError, Id = 91 } );
-         ErrorManager.RegisterError( new Error { Name = "AttemptedToRunLuaScriptWithNoContentException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 92 } );
-         ErrorManager.RegisterError( new Error { Name = "AttemptedToRunLuaCoreScriptWithNoProtectedContentExceptionn", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 93 } );
          ErrorManager.RegisterError( new Error { Name = "InternalInstanceAdditionErrorException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 94 } );
-         ErrorManager.RegisterError( new Error { Name = "AttemptedToAddInvalidFunctionToSandboxException", Description = "Attempted to add an invalid function to the Lua sandbox!", Severity = MessageSeverity.FatalError, Id = 95 } );
          ErrorManager.RegisterError( new Error { Name = "AttemptedToConvertNonStringToStringListException", Description = "Attempted to convert a non-String to a list of strings.", Severity = MessageSeverity.Error, Id = 96 } );
          ErrorManager.RegisterError( new Error { Name = "AttemptedToConvertInvalidStringToStringListException", Description = "!!this should be overridden in code!!", Severity = MessageSeverity.Error, Id = 97 } );
          ErrorManager.RegisterError( new Error { Name = "AttemptedToAddANonTextChunkToATextChunkCollection", Description = "Attempted to add a non-TextChunk to a TextChunkCollection!", Severity = MessageSeverity.Error, Id = 98 } );
