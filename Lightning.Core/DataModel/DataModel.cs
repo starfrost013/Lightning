@@ -62,88 +62,80 @@ namespace Lightning.Core.API
         public static void Init(LaunchArgs Args = null, bool Reinitialising = false)
         {
 
-            if (!Init_VerifyCompatibleSystem())
+
+            string DataModel_String = $"{DATAMODEL_API_VERSION_MAJOR}.{DATAMODEL_API_VERSION_MINOR}.{DATAMODEL_API_VERSION_REVISION}";
+            Logging.Log($"DataModel\nAPI Version {DataModel_String}\nNow Initialising...", "DataModel");
+
+            if (!Reinitialising)
             {
-                // Error Maanger isn't initialised so just throw a messagebox and exit
-                MessageBox.Show("Your system is not compatible with Lightning.\nLightning requires a system with more than one hardware thread (i.e. a dual core processor or a single-core processor with hyperthreading or SMT).", "Fatal Error 0000", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(0x0001DEAD);
+                State = new InstanceCollection();
+
             }
-            else
+
+            if (!ErrorManager.ERRORMANAGER_LOADED)
+            {
+                ErrorManager.Init();
+            }
+
+            Workspace WorkSvc = null;
+            ServiceControlManager SCM = null;
+
+            if (!GlobalSettings.GLOBALSETTINGS_LOADED)
             {
 
-                string DataModel_String = $"{DATAMODEL_API_VERSION_MAJOR}.{DATAMODEL_API_VERSION_MINOR}.{DATAMODEL_API_VERSION_REVISION}";
-                Logging.Log($"DataModel\nAPI Version {DataModel_String}\nNow Initialising...", "DataModel");
+                GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
 
-                if (!Reinitialising)
+                if (GSR.Successful)
                 {
-                    State = new InstanceCollection();
-
-                }
-
-                if (!ErrorManager.ERRORMANAGER_LOADED)
-                {
-                    ErrorManager.Init();
-                }
-
-                Workspace WorkSvc = null;
-                ServiceControlManager SCM = null;
-
-                if (!GlobalSettings.GLOBALSETTINGS_LOADED)
-                {
-
-                    GlobalSettingsResult GSR = GlobalSettings.SerialiseGlobalSettings();
-
-                    if (GSR.Successful)
-                    {
-                        // set the globalsettings if successful 
-                        Settings = GSR.Settings;
+                    // set the globalsettings if successful 
+                    Settings = GSR.Settings;
 #if DEBUG
-                        Settings.ATest();
+                    Settings.ATest();
 #endif
-                    }
-                    else
-                    {
-                        return; // this should not really be running rn 
-                    }
-                }
-
-                if (!Reinitialising)
-                {
-                    
-                    // Initialise the BootWindow.
-
-                    BootWindow = new BootWindow();
-                    BootWindow.Init();
-
-                    BootWindow.SetProgress(0, "Initialising Workspace...");
-                    // init the SCM
-                    WorkSvc = (Workspace)CreateInstance("Workspace");
-
-                    BootWindow.SetProgress(10, "Initialising Service Control Manager...");
-                    SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
                 }
                 else
                 {
-                    WorkSvc = GetWorkspace();
-
-                    GetInstanceResult GIR = WorkSvc.GetFirstChildOfType("ServiceControlManager");
-
-                    if (!GIR.Successful
-                        && GIR.Instance == null)
-                    {
-                        ErrorManager.ThrowError("DataModel", "ReinitialisingBeforeInitialisingDataModelException");
-                    }
-                    else
-                    {
-                        SCM = (ServiceControlManager)GIR.Instance;
-                    }
+                    return; // this should not really be running rn 
                 }
+            }
 
-                if (WorkSvc == null
-                    || SCM == null)
+            if (!Reinitialising)
+            {
+
+                // Initialise the BootWindow.
+
+                BootWindow = new BootWindow();
+                BootWindow.Init();
+
+                BootWindow.SetProgress(0, "Initialising Workspace...");
+                // init the SCM
+                WorkSvc = (Workspace)CreateInstance("Workspace");
+
+                BootWindow.SetProgress(10, "Initialising Service Control Manager...");
+                SCM = (ServiceControlManager)CreateInstance("ServiceControlManager", WorkSvc);
+            }
+            else
+            {
+                WorkSvc = GetWorkspace();
+
+                GetInstanceResult GIR = WorkSvc.GetFirstChildOfType("ServiceControlManager");
+
+                if (!GIR.Successful
+                    && GIR.Instance == null)
                 {
                     ErrorManager.ThrowError("DataModel", "ReinitialisingBeforeInitialisingDataModelException");
                 }
+                else
+                {
+                    SCM = (ServiceControlManager)GIR.Instance;
+                }
+            }
+
+            if (WorkSvc == null
+                || SCM == null)
+            {
+                ErrorManager.ThrowError("DataModel", "ReinitialisingBeforeInitialisingDataModelException");
+            }
 
 
 
@@ -151,58 +143,57 @@ namespace Lightning.Core.API
             ATest();
 #endif
 
-                if (Args != null)
+            if (Args != null)
+            {
+
+                if (Args.AppName != null)
+                {
+                    // Allow for SDK-specific behaviour.
+                    if (Args.AppName.Contains("Polaris")
+                        || Args.AppName.Contains("LightningSDK"))
+                    {
+                        string SDKLaunchString = $"Launching Lightning SDK client application {Args.AppName}...";
+
+                        Logging.Log(SDKLaunchString, "DataModel");
+                        BootWindow.SetProgress(100, SDKLaunchString);
+                    }
+                }
+
+                if (Args.InitServices)
                 {
 
-                    if (Args.AppName != null)
+                    BootWindow.SetProgress(50, "Initialising services...");
+
+                    // assume normal init 
+                    SCM.InitStartupServices(Settings.ServiceStartupCommands);
+
+                    if (Args.GameXMLPath != null)
                     {
-                        // Allow for SDK-specific behaviour.
-                        if (Args.AppName.Contains("Polaris")
-                            || Args.AppName.Contains("LightningSDK"))
+                        if (LoadFile(Args.GameXMLPath))
                         {
-                            string SDKLaunchString = $"Launching Lightning SDK client application {Args.AppName}...";
+                            BootWindow.Shutdown();
 
-                            Logging.Log(SDKLaunchString, "DataModel");
-                            BootWindow.SetProgress(100, SDKLaunchString);
-                        }
-                    }
-
-                    if (Args.InitServices)
-                    {
-
-                        BootWindow.SetProgress(50, "Initialising services...");
-
-                        // assume normal init 
-                        SCM.InitStartupServices(Settings.ServiceStartupCommands);
-
-                        if (Args.GameXMLPath != null)
-                        {
-                            if (LoadFile(Args.GameXMLPath))
-                            {
-                                BootWindow.Shutdown();
-
-                                SCM.InitServiceUpdates();
-                            }
-                            else
-                            {
-                                HandleFailureToOpenDocument();
-                            }
+                            SCM.InitServiceUpdates();
                         }
                         else
                         {
-                            // failsafe
-                            ErrorManager.ThrowError("DataModel", "FailureToOpenLgxException", "No LGX file was supplied and the condition was not handled.");
+                            HandleFailureToOpenDocument();
                         }
                     }
                     else
                     {
-                        BootWindow.Shutdown();
-                        Logging.Log("Skipping service initialisation: -noservices option supplied", "DataModel");
-                        Logging.Log("Initialisation completed", "DataModel");
-                        return;
+                        // failsafe
+                        ErrorManager.ThrowError("DataModel", "FailureToOpenLgxException", "No LGX file was supplied and the condition was not handled.");
                     }
-
                 }
+                else
+                {
+                    BootWindow.Shutdown();
+                    Logging.Log("Skipping service initialisation: -noservices option supplied", "DataModel");
+                    Logging.Log("Initialisation completed", "DataModel");
+                    return;
+                }
+
             }
 
 
@@ -234,8 +225,6 @@ namespace Lightning.Core.API
 
 
         }
-
-        private static bool Init_VerifyCompatibleSystem() => Environment.ProcessorCount > 1;
 
         private static void HandleFailureToOpenDocument()
         {
