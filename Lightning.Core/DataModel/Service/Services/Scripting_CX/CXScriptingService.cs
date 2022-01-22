@@ -12,7 +12,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// CXScriptingService
     /// 
-    /// January 14, 2022 (modified January 15, 2022: add GameDLL loading functionality)
+    /// January 14, 2022 (modified January 22, 2022)
     /// 
     /// Provides C# scripting services for Lightning.
     /// </summary>
@@ -24,6 +24,18 @@ namespace Lightning.Core.API
         internal override string ClassName => "CXScriptingService";
 
         internal override ServiceImportance Importance => ServiceImportance.High; // may be rebootable?
+
+        /// <summary>
+        /// The client Lightning application.
+        /// </summary>
+        private App ClientApp { get; set; }
+
+        /// <summary>
+        /// The currently loaded GameDLL.
+        /// </summary>
+        private static Assembly CurrentGameDLL { get; set; }
+
+        public static bool IsGameDLLLoaded => (CurrentGameDLL == null);
 
         public override ServiceStartResult OnStart()
         {
@@ -40,7 +52,14 @@ namespace Lightning.Core.API
 
             if (DataModel.DATAMODEL_LASTXML_PATH != null)
             {
-                LGDR = CX_LoadGameDLL();
+                try
+                {
+                    LGDR = CX_LoadGameDLL();
+                }
+                catch (Exception ex)
+                {
+                    ErrorManager.ThrowError(ClassName, "ErrorLoadingGameDLLException", $"Error occurred loading GameDLL:\n\n{ex}");
+                }
             }
             else
             {
@@ -49,10 +68,13 @@ namespace Lightning.Core.API
 
             if (LGDR.Successful)
             {
-                DataModel.CurrentGameDLL = LGDR.GameDLL;
+                CurrentGameDLL = LGDR.GameDLL;
+
             }
             else
             {
+                ServiceNotification SN1 = new ServiceNotification(ServiceNotificationType.UnrecoverableCrash, ClassName, $"Failed to load GameDLL: {LGDR.FailureReason}");
+                ServiceNotifier.NotifySCM(SN1);
                 return;
             }
 
@@ -125,13 +147,18 @@ namespace Lightning.Core.API
                     
                 }
 
-                LGDR.Successful = CX_Init_FindGMain(LGDR.GameDLL);
+                LGDR.Successful = CX_Init_LoadGMain(LGDR.GameDLL);
                 return LGDR;
             }
         }
 
+        private void CX_Init_RunGStart()
+        {
+            Logging.Log("Loading GMain.Start()");
+            ClientApp.Start();
+        }
 
-        private bool CX_Init_FindGMain(Assembly GameDLL)
+        private bool CX_Init_LoadGMain(Assembly GameDLL)
         {
             Logging.Log("Finding GMain class...", ClassName);
 
@@ -139,14 +166,17 @@ namespace Lightning.Core.API
 
             foreach (Type Type in TheTypes)
             {
-                if (Type.Name == "GMain")
+                if (Type.IsSubclassOf(typeof(App)))
                 {
-                    if (Type.IsAbstract // static types are both abstract and sealed
-                    && Type.IsSealed)
-                    {
-                        Logging.Log("Found GMain!", ClassName);
-                        return true; 
-                    }
+                    Logging.Log("Found GMain!", ClassName);
+
+                    // hack to get around datamodel.createinstance problems
+                    ClientApp = (App)Activator.CreateInstance(Type);
+                    Workspace Ws = DataModel.GetWorkspace();
+                    Ws.AddChildI(ClientApp); // works as we have the assembly loaded
+
+
+                    return true;
                 }
             }
 
@@ -156,12 +186,12 @@ namespace Lightning.Core.API
 
         public override void Poll()
         {
-            return;
+            if (ClientApp != null) ClientApp.Render(); 
         }
 
         public override ServiceShutdownResult OnShutdown()
         {
-            Logging.Log("ScriptingService Shutdown", ClassName);
+            Logging.Log("CXScriptingService Shutdown", ClassName);
            
             ServiceShutdownResult SSR = new ServiceShutdownResult { Successful = true };
             return SSR; 

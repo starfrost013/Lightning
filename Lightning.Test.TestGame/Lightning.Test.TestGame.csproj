@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.2.22022</AssemblyVersion>
-    <FileVersion>1.0.2.22022</FileVersion>
+    <AssemblyVersion>1.0.3.22022</AssemblyVersion>
+    <FileVersion>1.0.3.22022</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

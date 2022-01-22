@@ -5,21 +5,22 @@ using System;
 /// Lightning Game Engine
 /// © 2022 starfrost
 /// 
-/// Test Project (January 22, 2022)
+/// Example Project (January 22, 2022)
 /// 
-/// Defines a test game for CXScriptingService.
+/// Defines an example game for CXScriptingService.
+/// GMain must inherit from the App class as this allows it to receive engine events.
 /// </summary>
 namespace Lightning.Test.TestGame
 {
-    public static class GMain
+    public class GMain : App
     {
-        public static void Start()
+        public override void Start()
         {
 
 
         }
 
-        public static void Render()
+        public override void Render()
         {
 
         }
