@@ -80,8 +80,6 @@ namespace Lightning.Core
                     if (LAR.Arguments.AppName == null && AmOverridingAppId) ErrorManager.ThrowError("DataModel", "OverrideAppIdSpecifiedWithNoAppId");
 
                     return LAR;
-
-
             }
         }
     }

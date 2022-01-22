@@ -477,10 +477,10 @@ namespace Lightning.Core.API
         /// <returns>A <see cref="GetMultiInstanceResult"/> object containing the success status of the method, with <see cref="GetMultiInstanceResult.Instances"/> containing the logical children of this object.</returns>
         public GetMultiInstanceResult GetChildren(bool Recursive = false)
         {
+            GetMultiInstanceResult GMIR = new GetMultiInstanceResult();
+
             if (!Recursive)
             {
-                GetMultiInstanceResult GMIR = new GetMultiInstanceResult();
-
                 foreach (Instance Child in this)
                 {
                     GMIR.Instances.Add(Child);
@@ -491,18 +491,29 @@ namespace Lightning.Core.API
             }
             else
             {
-                return GetChildren_Recursive(new GetMultiInstanceResult());
+                return GetChildren_Recursive(GMIR); 
             }
         }
 
-        private GetMultiInstanceResult GetChildren_Recursive(GetMultiInstanceResult GMIR)
+        private GetMultiInstanceResult GetChildren_Recursive(GetMultiInstanceResult GMIR, Instance Child = null)
         {
-
-            foreach (Instance Child in this)
+            if (Child == null)
             {
-                GMIR.Instances.Add(Child);
-                if (Child.Children.Count > 0) GetChildren_Recursive(GMIR);
+                foreach (Instance TChild in this)
+                {
+                    GMIR.Instances.Add(TChild);
+                    if (TChild.Children.Count > 0) GetChildren_Recursive(GMIR, TChild);
+                }
             }
+            else
+            {
+                foreach (Instance TChild in Child.Children)
+                {
+                    GMIR.Instances.Add(TChild);
+                    if (TChild.Children.Count > 0) GetChildren_Recursive(GMIR, TChild);
+                }
+            }
+
 
             return GMIR;
         }

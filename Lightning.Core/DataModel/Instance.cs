@@ -276,6 +276,7 @@ namespace Lightning.Core.API
         /// <param name="Ins">The Instance you wish to add to the children of this Instance.</param>
         public void AddChildI(Instance Ins) => Children.Add(Ins, this);
 
+        #region Events
         /// <summary>
         /// Event handler for the <see cref="ObjectCreated"/> event.
         /// 
@@ -326,6 +327,13 @@ namespace Lightning.Core.API
         /// Called on render if set to a valid method.
         /// </summary>
         public RenderEvent OnRender { get; set; }
+
+        /// <summary>
+        /// Called on successful load using DDMS.
+        /// </summary>
+        public OnLoadEvent OnLoad { get; set; }
+
+        #endregion
 
         public GenericResult RemoveChild(Instance Chl)
         {

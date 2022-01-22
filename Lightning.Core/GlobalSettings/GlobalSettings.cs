@@ -66,6 +66,7 @@ namespace Lightning.Core
         /// </summary>
         public string BootSplashPath { get; set; }
 
+
         /// <summary>
         /// Serialises \EngineContent\GlobalSettings.xml to an instance of GlobalSettings. 
         /// </summary>

@@ -1,11 +1,11 @@
 <Lightning>
   <Metadata>
-    <!-- The first Lightning XML file -->
+
     <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
     <Author>starfrost</Author>
     <Description>An empty game</Description>
-    <CreationDate>2021-03-22 19:32:04</CreationDate>
-    <LastModifiedDate>2021-06-05 19:22:11</LastModifiedDate>
+    <CreationDate>2022-01-15 18:53:32</CreationDate>
+    <LastModifiedDate>2022-01-15 18:53:32</LastModifiedDate>
     <RevisionID>26</RevisionID> <!-- Rev25: update for new settings -->
 
   </Metadata>
@@ -51,7 +51,22 @@
   </Settings>
 
   <Workspace>
-      
+
+    <PhysicalInstance Name="Block1" CanCollide="False" Mass="1" Position="0,200" Size="100,100">
+      <ImageBrush Path="Content\Textures\test_texture_small.png" ZIndex="0" Name="Block1_Texture" Position="60,60" Size="200,150"/>
+    </PhysicalInstance>
+
+    <PhysicalInstance CanCollide="False" Position="200,0" Size="100,100" ZIndex="0" Name="Block2" Mass="3">
+      <ImageBrush Path="Content\Textures\test_texture_small2.png" CanCollide="False" ZIndex="0" Name="Block2_Texture" TextureDisplayMode="Tile" DisplayViewport="200,150"/>
+    </PhysicalInstance>
+
+    <PhysicalInstance CanCollide="False" Position="400,0" Size="100,100" ZIndex="0" Name="Block3" Mass="5">
+      <ImageBrush Path="Content\Textures\test_texture_small2.png" CanCollide="False" ZIndex="0" Name="Block3_Texture" TextureDisplayMode="Tile" DisplayViewport="200,150"/>
+    </PhysicalInstance>
+
+    <PhysicalInstance CanCollide="False" Position="600,0" Size="100,100" ZIndex="0" Name="Block4" Mass="7">
+      <ImageBrush Path="Content\Textures\test_texture_small2.png" CanCollide="False" ZIndex="0" Name="Block4_Texture" TextureDisplayMode="Tile" DisplayViewport="200,150"/>
+    </PhysicalInstance>
   </Workspace>
 
 </Lightning>

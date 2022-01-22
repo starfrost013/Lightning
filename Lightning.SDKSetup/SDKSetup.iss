@@ -1,6 +1,7 @@
-; Lightning SDK Setup ver 0.3.006.00015
+; Lightning SDK Setup ver 0.4.007.00016
 ; October 2, 2021
 
+; v0.4.007.00016  Jan 22, 2022  M4 SDK release prep
 ; v0.3.006.00015  Oct 2, 2021   Rename Lightning Game Project to Lightning Project
 ; v0.3.006.00014  Aug 15, 2021  Minor rearrangement of output file name
 ; v0.3.006.00013  Aug 15, 2021  Split SDK/runtime based on INSTALLPACKAGE_INSTALL_SDK, define output filename based on appname, setupversion, and if SDK/Runtime
@@ -27,7 +28,7 @@
 #define MyAppName "Lightning Runtime"
 #define PolarisAppName "THIS SHOULD NOT HAVE BEEN INSTALLED - THERE IS A BUG WITH THE INSTALLER"
 #endif
-#define MyAppVersion "0.3.939.Debug.Win64.20211002-1405" ; set to version when a version is there
+#define MyAppVersion "0.4.XXXXXXXX" ; set to version when a version is there
 #define MyAppPublisher "starfrost/Lightning Dev Team"
 #define MyAppExeName "Lightning.exe"
 #define PolarisAppExeName "Polaris.exe"
@@ -47,7 +48,7 @@
 ;#define LIGHTNING_LINUX64
 
 ; Setup version define
-#define SETUP_VERSION "0.3.006.00015"
+#define SETUP_VERSION "0.4.007.00016"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -98,13 +99,16 @@ Source: "D:\Lightning_builds\latest\libvorbis-0.dll"; DestDir: "{app}"; Flags: i
 Source: "D:\Lightning_builds\latest\libvorbisfile-3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\libwebp-7.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Lightning_builds\latest\Lightning.Core.NativeInterop.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\Lightning.Core.Packaging.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.Core.SDL2-CS.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.deps.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.dev.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Lightning_builds\latest\Lightning.Utilities.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\Lightning.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion   
+Source: "D:\Lightning_builds\latest\NuCore.NativeInterop.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "D:\Lightning_builds\latest\NuCore.Test.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\NuCore.Utilities.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\NuRender.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\NLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 #ifdef INSTALLPACKAGE_INSTALL_SDK
 Source: "D:\Lightning_builds\latest\{#PolarisAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
@@ -120,6 +124,7 @@ Source: "D:\Lightning_builds\latest\SDL2.dll"; DestDir: "{app}"; Flags: ignoreve
 Source: "D:\Lightning_builds\latest\SDL2_image-v2.0.5-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\SDL2_mixer-v2.0.4-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\SDL2_ttf-v2.0.15-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Lightning_builds\latest\SDL2_gfx-v1.0.5-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Lightning_builds\latest\Content\*"; DestDir: "{app}\Content"; Flags: ignoreversion recursesubdirs createallsubdirs
 #ifdef LIGHTNING_WIN64

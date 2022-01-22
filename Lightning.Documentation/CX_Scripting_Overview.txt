@@ -1,0 +1,21 @@
+Lightning - C#/CX Scripting
+
+Version 2.0
+January 15, 2022
+
+January 14, 2022		Initial version
+January 15, 2022		Rewrote for XML events
+
+Lightning will load game code from a DLL defined in the game's CodeDLL and CodeNamespace GameSetting. Types are automatically loaded from the DLL at engine init.
+
+The engine will automatically call GMain.Init(); in the DLL. DLLs must have a static class of this name with this method, taking no parameters other than one NuRender.Scene, with a name of the developers' choosing. This is distinct to the main C# Main method in order to allow non-Lightning code to run before. 
+
+The game will be rejected for boot if its GameDLL does not fit these measures. Please note that CodeDLLs are optional and are only intended for advanced users.
+
+Events will be handled in XML by adding a simple reference to the code that is being submitted. The default class will be GMain, and it must be static. At some point (Lightning 2.0?) a real event handling infrastructure will be implemented.
+
+On the triggering of these events, ScriptingServiceCX will call all code that it can that has subscribed to that event. Alternatively, one can extend the DataModel and subscribe to Lightning-prebuilt events, or simply use GMain.Render();, which will be called each frame by default.
+
+Lightning usings will also be restricted to Lightning.Core.API 
+
+ 
