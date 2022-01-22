@@ -144,9 +144,23 @@ namespace Lightning.Core.API
 
             }
 
-            DataModel.DATAMODEL_LASTXML_PATH = Path; 
+            DataModel.DATAMODEL_LASTXML_PATH = Path;
+            DDMS_OnSucceed_NotifyAll(); 
             return DM; 
             
+        }
+
+        private void DDMS_OnSucceed_NotifyAll()
+        {
+            GetMultiInstanceResult GMIR = DataModel.GetChildren(true);
+
+            foreach (Instance DMChild in GMIR.Instances) // if this fails you have bigger problems
+            {
+                if (DMChild.OnLoad != null)
+                {
+                    DMChild.OnLoad();
+                }
+            }
         }
 
         private XmlSchemaResult DDMS_Validate(LightningXMLSchema Schema)

@@ -156,15 +156,16 @@ namespace Lightning.Core.API
                 if (Args != null)
                 {
 
-
-
                     if (Args.AppName != null)
                     {
                         // Allow for SDK-specific behaviour.
                         if (Args.AppName.Contains("Polaris")
                             || Args.AppName.Contains("LightningSDK"))
                         {
-                            Logging.Log($"SDK Launching...", "DataModel");
+                            string SDKLaunchString = $"Launching Lightning SDK client application {Args.AppName}...";
+
+                            Logging.Log(SDKLaunchString, "DataModel");
+                            BootWindow.SetProgress(100, SDKLaunchString);
                         }
                     }
 

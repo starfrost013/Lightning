@@ -40,7 +40,7 @@ namespace Lightning.Core.API
 
         public override void Poll()
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public void LoadGame(string XMLFile)

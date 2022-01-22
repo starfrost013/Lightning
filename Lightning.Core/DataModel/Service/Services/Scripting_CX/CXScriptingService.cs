@@ -29,11 +29,23 @@ namespace Lightning.Core.API
         {
             Logging.Log("ScriptingService Init [CX Enabled]", ClassName);
 
+            OnLoad += OnLoaded; // Register event handler for DLL loading.
+            return new ServiceStartResult { Successful = true };
+        }
+
+        public void OnLoaded()
+        {
             // check XML is loaded
             LoadGameDLLResult LGDR = new LoadGameDLLResult();
-            ServiceStartResult SSR = new ServiceStartResult();
 
-            if (DataModel.DATAMODEL_LASTXML_PATH != null) LGDR = CX_LoadGameDLL();
+            if (DataModel.DATAMODEL_LASTXML_PATH != null)
+            {
+                LGDR = CX_LoadGameDLL();
+            }
+            else
+            {
+                return;
+            }
 
             if (LGDR.Successful)
             {
@@ -41,14 +53,11 @@ namespace Lightning.Core.API
             }
             else
             {
-                SSR.FailureReason = $"Failed to load GameDLL for C# Scripting: {LGDR.FailureReason}";
-                return SSR; 
+                return;
             }
 
-            SSR.Successful = true;
-            return SSR;
+            return;
         }
-
 
         private LoadGameDLLResult CX_LoadGameDLL()
         {
@@ -65,12 +74,10 @@ namespace Lightning.Core.API
             GameSettings GS = (GameSettings)GMIR.Instance;
 
             GetGameSettingResult GGSR_DLL = GS.GetSetting("GameDLL");
-            GetGameSettingResult GGSR_NameSpace = GS.GetSetting("GameNamespace");
 
-            if (!GGSR_DLL.Successful
-            || !GGSR_NameSpace.Successful)
+            if (!GGSR_DLL.Successful)
             {
-                string ErrorString = $"Error loading GameDLL: Both GameDLL and GameNamespace setting must be found!\nScripts will not be run.";
+                string ErrorString = $"Error loading GameDLL: The GameDLL setting must be set!\nScripts will not be run.";
                 ErrorManager.ThrowError(ClassName, "ErrorLoadingGameDLLException", ErrorString);
                 LGDR.FailureReason = ErrorString;
                 return LGDR;
@@ -78,11 +85,9 @@ namespace Lightning.Core.API
             else
             {
                 GameSetting GameDLLSetting = GGSR_DLL.Setting;
-                GameSetting GameNameSpaceSetting = GGSR_NameSpace.Setting;
 
                 
-                if (GameDLLSetting.SettingValue == null
-                || GameNameSpaceSetting.SettingValue == null)
+                if (GameDLLSetting.SettingValue == null)
                 {
                     string ErrorString = $"Error loading GameDLL: Invalid GameDLL or GameNamespace setting!\nScripts will not be run.";
                     ErrorManager.ThrowError(ClassName, "ErrorLoadingGameDLLException", ErrorString);
@@ -92,7 +97,6 @@ namespace Lightning.Core.API
                 else
                 {
                     string GameDLLPath = (string)GameDLLSetting.SettingValue;
-                    string GameNamespace = (string)GameNameSpaceSetting.SettingValue;
 
                     try // attempt to load Game DLL
                     {
@@ -106,7 +110,8 @@ namespace Lightning.Core.API
                         else
                         {
                             Logging.Log($"Loading GameDLL at {GameDLLPath}", ClassName);
-                            LGDR.GameDLL = Assembly.LoadFile(GameDLLPath);
+
+                            LGDR.GameDLL = Assembly.LoadFile($"{AppDomain.CurrentDomain.BaseDirectory}\\{GameDLLPath}");
                         }
                     }
                     catch (Exception ex)
@@ -120,17 +125,17 @@ namespace Lightning.Core.API
                     
                 }
 
-                LGDR.Successful = CX_Init_FindGMain();
+                LGDR.Successful = CX_Init_FindGMain(LGDR.GameDLL);
                 return LGDR;
             }
         }
 
 
-        private bool CX_Init_FindGMain()
+        private bool CX_Init_FindGMain(Assembly GameDLL)
         {
             Logging.Log("Finding GMain class...", ClassName);
 
-            Type[] TheTypes = DataModel.CurrentGameDLL.GetTypes();
+            Type[] TheTypes = GameDLL.GetTypes();
 
             foreach (Type Type in TheTypes)
             {
@@ -139,6 +144,7 @@ namespace Lightning.Core.API
                     if (Type.IsAbstract // static types are both abstract and sealed
                     && Type.IsSealed)
                     {
+                        Logging.Log("Found GMain!", ClassName);
                         return true; 
                     }
                 }
@@ -150,7 +156,7 @@ namespace Lightning.Core.API
 
         public override void Poll()
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public override ServiceShutdownResult OnShutdown()
