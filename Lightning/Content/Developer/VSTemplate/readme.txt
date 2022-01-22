@@ -1,0 +1,1 @@
+Defines a Visual Studio Project Template for a Lightning GameDLL. At present these are not installed by the installer so you will have to install this yourself.

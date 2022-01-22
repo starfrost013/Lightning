@@ -18,8 +18,9 @@ var searchData=
   ['animationupdated_15',['AnimationUpdated',['../namespace_lightning_1_1_core_1_1_a_p_i.html#a58615b00744407a2440ff304ccc5d47e',1,'Lightning::Core::API']]],
   ['animationupdatedeventargs_16',['AnimationUpdatedEventArgs',['../class_lightning_1_1_core_1_1_a_p_i_1_1_animation_updated_event_args.html',1,'Lightning::Core::API']]],
   ['antialiasingdisabled_17',['AntiAliasingDisabled',['../class_lightning_1_1_core_1_1_a_p_i_1_1_text.html#a396d09181fa154a46aaec603aa3e2e24',1,'Lightning::Core::API::Text']]],
-  ['applyimpulse_18',['ApplyImpulse',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#afde539ad354a3dd2990ab1b86879d9e2',1,'Lightning::Core::API::PhysicalInstance']]],
-  ['archivable_19',['Archivable',['../namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e',1,'Lightning::Core::API']]],
-  ['atrest_20',['AtRest',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#ae869aabd050fac7e75562a1e3d90a6b0',1,'Lightning::Core::API::PhysicalInstance']]],
-  ['author_21',['Author',['../class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3',1,'Lightning::Core::API::GameMetadata']]]
+  ['app_18',['App',['../class_lightning_1_1_core_1_1_a_p_i_1_1_app.html',1,'Lightning::Core::API']]],
+  ['applyimpulse_19',['ApplyImpulse',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#afde539ad354a3dd2990ab1b86879d9e2',1,'Lightning::Core::API::PhysicalInstance']]],
+  ['archivable_20',['Archivable',['../namespace_lightning_1_1_core_1_1_a_p_i.html#aacab1f9bc59b558673892ef8cd3be4ffa18aecc16361ead8d632bf9cdbf88bd7e',1,'Lightning::Core::API']]],
+  ['atrest_21',['AtRest',['../class_lightning_1_1_core_1_1_a_p_i_1_1_physical_instance.html#ae869aabd050fac7e75562a1e3d90a6b0',1,'Lightning::Core::API::PhysicalInstance']]],
+  ['author_22',['Author',['../class_lightning_1_1_core_1_1_a_p_i_1_1_game_metadata.html#a1eaafcee8263088b186ca33d632178b3',1,'Lightning::Core::API::GameMetadata']]]
 ];

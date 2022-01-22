@@ -29,12 +29,12 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="LightningLogo_small.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="Logo@0.5x.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Lightning
-   &#160;<span id="projectnumber">0.4.1139 2022/01/14</span>
+   &#160;<span id="projectnumber">0.4.1163 [0.4-rc0] 2022/01/22</span>
    </div>
-   <div id="projectbrief">An extensible, Lua-scripted .NET game engine.</div>
+   <div id="projectbrief">An extensible, C#-scripted .NET game engine.</div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -231,15 +231,6 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>LoadFile()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_data_model.html#a117b8f6035d2c436385cd1301de989e2">Lightning.Core.API.DataModel</a>
 </li>
-<li>Lua_LoadScript()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script_state_manager.html#a02be22c20e51f7d60bb3492b47795f69">Lightning.Core.API.ScriptStateManager</a>
-</li>
-<li>Lua_RunLuaScripts()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script_state_manager.html#ae66137c62027db3980ba74890b0cd556">Lightning.Core.API.ScriptStateManager</a>
-</li>
-<li>LuaSandbox()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox.html#ada853ab4266d58134e72d865cc3f3434">Lightning.Core.API.LuaSandbox</a>
-</li>
 </ul>
 
 
@@ -278,16 +269,13 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 
 <h3><a id="index_p"></a>- p -</h3><ul>
-<li>Pause()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a34ae9972330fa8188bc3ae112fd1cbac">Lightning.Core.API.Script</a>
-</li>
 <li>Poll()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html#a4c0be1f129c8f47c36a92e7f42d3aabb">Lightning.Core.API.GameService</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_c_x_scripting_service.html#a61a049abe52d16018487cf88b5012d94">Lightning.Core.API.CXScriptingService</a>
+, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html#a4c0be1f129c8f47c36a92e7f42d3aabb">Lightning.Core.API.GameService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html#a885a7481dfab6c79be47c8e1079fa1b6">Lightning.Core.API.IGDService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_lighting_service.html#a1d878370c51b98835e88b1b7df3e0e3a">Lightning.Core.API.LightingService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html#ab4de5d050c37658e19d3b21c480153b3">Lightning.Core.API.PhysicsService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html#aaf6397f4c9389d5da9e82897fb16dce4">Lightning.Core.API.RenderService</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#adb9a908a5c55946b03b29df9a496b0d3">Lightning.Core.API.ScriptingService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_service.html#ab8fa06a59b6fca7ef8e8823fd5788816">Lightning.Core.API.Service</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html#a338a8712a7ad8d7400470a52cd3454c6">Lightning.Core.API.SoundService</a>
 , <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_u_i_service.html#a3262d3dcb1192172b77e5a16b17a504c">Lightning.Core.API.UIService</a>
@@ -296,9 +284,6 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 
 <h3><a id="index_r"></a>- r -</h3><ul>
-<li>RegisterClass()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html#afe53363414a238541c518a24cef4000f">Lightning.Core.API.ScriptingService</a>
-</li>
 <li>Remove()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_instance_collection.html#a8ad49f375b0e1cc991f7e322d80044eb">Lightning.Core.API.InstanceCollection</a>
 </li>
@@ -341,22 +326,11 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>ScTest()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_test.html#aa52c9ea7dfeb78eeb7c146e5c55acdb5">Lightning.Core.API.ScriptingTest</a>
 </li>
-<li>Start()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a8f426780d9cb4b882a74426aee065a4b">Lightning.Core.API.Script</a>
-</li>
 <li>StartService()
 : <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_service_control_manager.html#adbf4f4629dee4c112f0ce3297c38f8ba">Lightning.Core.API.ServiceControlManager</a>
 </li>
 <li>Stop()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a4717ff6851a05b2342180b4c8dd0a113">Lightning.Core.API.Script</a>
-, <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html#a23bc03a6c8b24f5fbff5d7557baff994">Lightning.Core.API.Sound</a>
-</li>
-</ul>
-
-
-<h3><a id="index_t"></a>- t -</h3><ul>
-<li>Tick()
-: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_script.html#a3d04d4d81c4245ef5f670676d0c7f191">Lightning.Core.API.Script</a>
+: <a class="el" href="class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html#a23bc03a6c8b24f5fbff5d7557baff994">Lightning.Core.API.Sound</a>
 </li>
 </ul>
 

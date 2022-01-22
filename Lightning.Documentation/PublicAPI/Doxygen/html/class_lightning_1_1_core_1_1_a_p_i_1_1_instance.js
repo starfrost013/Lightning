@@ -30,6 +30,7 @@ var class_lightning_1_1_core_1_1_a_p_i_1_1_instance =
     [ "OnCreated", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a4839e2c87a9b3424939a281d4b712a2c", null ],
     [ "OnDestroyed", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a1cd19aacb14511e1e046782e95f67fab", null ],
     [ "OnKeyDownHandler", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a7e54b72bb2c8e5c9c09cfebb38796387", null ],
+    [ "OnLoad", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a3d4b8f71a231f527ce5b516e86ea184d", null ],
     [ "OnRender", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a933c190ab7dfe68059ab130dc88053db", null ],
     [ "Parent", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#a0fb4f04ad5bf7c5944f9a4cd8efc9291", null ],
     [ "PreRender", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html#ab342d6973753604556bffbc478f2e031", null ]

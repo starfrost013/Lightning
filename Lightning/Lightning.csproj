@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.4.1162.22022</AssemblyVersion>
-    <FileVersion>0.4.1162.22022</FileVersion>
+    <AssemblyVersion>0.4.1163.22022</AssemblyVersion>
+    <FileVersion>0.4.1163.22022</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <PackageId>Lightning Runtime</PackageId>
     <Description>Lightning Runtime</Description>
@@ -47,6 +47,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Content\Developer\ExampleProject\Game.xml" />
+    <None Remove="Content\Developer\ExampleProject\Ground.pdn" />
+    <None Remove="Content\Developer\ExampleProject\Ground.png" />
+    <None Remove="Content\Developer\ExampleProject\Music.mp3" />
+    <None Remove="Content\Developer\ExampleProject\Sky.pdn" />
+    <None Remove="Content\Developer\ExampleProject\Sky.png" />
+    <None Remove="Content\Developer\ExampleProject\Snowman.png" />
+    <None Remove="Content\Developer\ExampleProject\TrincidStandingL.png" />
+    <None Remove="Content\Developer\ExampleProject\TrincidStandingR.png" />
+    <None Remove="Content\Developer\Logo%400.5x.png" />
+    <None Remove="Content\Developer\Logo.png" />
+    <None Remove="Content\Developer\ReleaseNotes.txt" />
+    <None Remove="Content\Developer\VSTemplate\Lightning GameDLL Project.zip" />
+    <None Remove="Content\Developer\VSTemplate\readme.txt" />
+    <None Remove="Content\Developer\Welcome to Lightning.docx" />
     <None Remove="Content\EngineContent\GlobalSettings.xml" />
     <None Remove="Content\Fonts\Arial.ttf" />
     <None Remove="Content\Licensing\LICENSE.freetype.txt" />
@@ -104,6 +119,51 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Content\Developer\ExampleProject\Game.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\Ground.pdn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\Ground.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\Music.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\Sky.pdn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\Sky.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\Snowman.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\TrincidStandingL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ExampleProject\TrincidStandingR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\Logo@0.5x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\ReleaseNotes.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\VSTemplate\Lightning GameDLL Project.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\VSTemplate\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Developer\Welcome to Lightning.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\EngineContent\GlobalSettings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

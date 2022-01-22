@@ -19,9 +19,9 @@ var hierarchy =
     ] ],
     [ "Lightning.Core.API.Instance", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance.html", [
       [ "Lightning.Core.API.DataModelDeserialiser", "class_lightning_1_1_core_1_1_a_p_i_1_1_data_model_deserialiser.html", null ],
-      [ "Lightning.Core.API.ScriptStateManager", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_state_manager.html", null ],
       [ "Lightning.Core.API.ScriptingTest", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_test.html", null ],
       [ "Lightning.Core.API.SerialisableObject", "class_lightning_1_1_core_1_1_a_p_i_1_1_serialisable_object.html", [
+        [ "Lightning.Core.API.App", "class_lightning_1_1_core_1_1_a_p_i_1_1_app.html", null ],
         [ "Lightning.Core.API.Color3", "class_lightning_1_1_core_1_1_a_p_i_1_1_color3.html", null ],
         [ "Lightning.Core.API.Color4", "class_lightning_1_1_core_1_1_a_p_i_1_1_color4.html", null ],
         [ "Lightning.Core.API.Control", "class_lightning_1_1_core_1_1_a_p_i_1_1_control.html", null ],
@@ -80,23 +80,16 @@ var hierarchy =
           [ "Lightning.Core.API.Sky", "class_lightning_1_1_core_1_1_a_p_i_1_1_sky.html", null ],
           [ "Lightning.Core.API.Sound", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound.html", null ]
         ] ],
-        [ "Lightning.Core.API.Script", "class_lightning_1_1_core_1_1_a_p_i_1_1_script.html", [
-          [ "Lightning.Core.API.LuaSandbox", "class_lightning_1_1_core_1_1_a_p_i_1_1_lua_sandbox.html", null ],
-          [ "Lightning.Core.API.TrustedScript", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_script.html", [
-            [ "Lightning.Core.API.TrustedLoad", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_load.html", null ],
-            [ "Lightning.Core.API.TrustedMetatable", "class_lightning_1_1_core_1_1_a_p_i_1_1_trusted_metatable.html", null ]
-          ] ]
-        ] ],
         [ "Lightning.Core.API.Vector2", "class_lightning_1_1_core_1_1_a_p_i_1_1_vector2.html", null ],
         [ "Lightning.Core.API.Workspace", "class_lightning_1_1_core_1_1_a_p_i_1_1_workspace.html", null ]
       ] ],
       [ "Lightning.Core.API.Service", "class_lightning_1_1_core_1_1_a_p_i_1_1_service.html", [
+        [ "Lightning.Core.API.CXScriptingService", "class_lightning_1_1_core_1_1_a_p_i_1_1_c_x_scripting_service.html", null ],
         [ "Lightning.Core.API.GameService", "class_lightning_1_1_core_1_1_a_p_i_1_1_game_service.html", null ],
         [ "Lightning.Core.API.IGDService", "class_lightning_1_1_core_1_1_a_p_i_1_1_i_g_d_service.html", null ],
         [ "Lightning.Core.API.LightingService", "class_lightning_1_1_core_1_1_a_p_i_1_1_lighting_service.html", null ],
         [ "Lightning.Core.API.PhysicsService", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_service.html", null ],
         [ "Lightning.Core.API.RenderService", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_service.html", null ],
-        [ "Lightning.Core.API.ScriptingService", "class_lightning_1_1_core_1_1_a_p_i_1_1_scripting_service.html", null ],
         [ "Lightning.Core.API.SoundService", "class_lightning_1_1_core_1_1_a_p_i_1_1_sound_service.html", null ],
         [ "Lightning.Core.API.UIService", "class_lightning_1_1_core_1_1_a_p_i_1_1_u_i_service.html", null ]
       ] ],
@@ -118,11 +111,10 @@ var hierarchy =
       [ "Lightning.Core.API.GetInstanceResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_instance_result.html", null ],
       [ "Lightning.Core.API.GetMultiInstanceResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_multi_instance_result.html", null ],
       [ "Lightning.Core.API.GetPhysicsControllerResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_physics_controller_result.html", null ],
-      [ "Lightning.Core.API.GetScriptMethodResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_script_method_result.html", null ],
       [ "Lightning.Core.API.GetTargetObjectResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_get_target_object_result.html", null ],
       [ "Lightning.Core.API.InstanceInfoResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_instance_info_result.html", null ],
       [ "Lightning.Core.API.InstantiationResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_instantiation_result.html", null ],
-      [ "Lightning.Core.API.LoadScriptResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_load_script_result.html", null ],
+      [ "Lightning.Core.API.LoadGameDLLResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_load_game_d_l_l_result.html", null ],
       [ "Lightning.Core.API.MemberInfoResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_member_info_result.html", null ],
       [ "Lightning.Core.API.SDLInitialisationResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_s_d_l_initialisation_result.html", null ],
       [ "Lightning.Core.API.ServiceShutdownResult", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_shutdown_result.html", null ],
@@ -138,14 +130,9 @@ var hierarchy =
     [ "Lightning.Core.API.PhysicsState", "class_lightning_1_1_core_1_1_a_p_i_1_1_physics_state.html", null ],
     [ "Lightning.Core.API.PreRenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_pre_render_event_args.html", null ],
     [ "Lightning.Core.API.RenderEventArgs", "class_lightning_1_1_core_1_1_a_p_i_1_1_render_event_args.html", null ],
-    [ "Lightning.Core.API.ScriptMethod", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method.html", null ],
-    [ "Lightning.Core.API.ScriptMethodParameter", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_method_parameter.html", null ],
     [ "Lightning.Core.API.ServiceGlobalData", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_global_data.html", null ],
     [ "Lightning.Core.API.ServiceMessage", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_message.html", null ],
     [ "Lightning.Core.API.ServiceNotification", "class_lightning_1_1_core_1_1_a_p_i_1_1_service_notification.html", null ],
-    [ "Stopwatch", null, [
-      [ "Lightning.Core.API.ScriptTimer", "class_lightning_1_1_core_1_1_a_p_i_1_1_script_timer.html", null ]
-    ] ],
     [ "TypeConverter", null, [
       [ "Lightning.Core.API.Color3Converter", "class_lightning_1_1_core_1_1_a_p_i_1_1_color3_converter.html", null ],
       [ "Lightning.Core.API.Color4Converter", "class_lightning_1_1_core_1_1_a_p_i_1_1_color4_converter.html", null ],

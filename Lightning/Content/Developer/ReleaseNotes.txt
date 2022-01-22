@@ -1,0 +1,159 @@
+Lightning
+A modular, extensible 2D C#-scripted game engine
+© 2022 starfrost
+
+RELEASE NOTES:
+0.4.1163 (2021-01-22)
+* Replaced Lua scripting with C#. See test game DLL. Should be loaded and run. Documentation coming soon.
+* We are now preparing for the first actual SDK release, several months later than intended.
+The feature set has been frozen, and mostly stabilisation work will be done here until the first public SDK release.
+* Added OnLoad event, run after game has loaded 
+* Removed ludicrous check for multiple hardware threads
+* Error Manager now takes a void delegate with no parameters so you can put errors in your own code without rebuilding Lightning.Utilities
+
+============================
+----------------------------
+----------------------------
+-!!OLD RELEASE NOTES HERE!!-
+----------------------------
+----------------------------
+============================
+
+0.4.1139 (2022-01-14)
+* RenderService refactoring
+* Optimised rendering: only render objects on display
+* Changed debug text
+* Renamed PhysicalObject to PhysicalInstance for consistency. PLEASE UPDATE XML
+* Rewrote lighting system as the working version was too slow, it doesn't presently work (waiting for NR improvements)
+* Implemented custom rendering target ability (added IntPtr to PhysicalObject.Render to render to something other than the Window rendering)
+* Removed SplashScreen
+
+0.4.1110.3 (2022-01-08)
+A large amount of the engine has been rewritten, mostly the renderer and physics engine. This build has some regressions from 999 (NR Phase2), although it is substantially better than 1016 and 1028 in this regard. Mostly the physics engine is fucked again.
+
+* Completely rewrote renderer - NuRender adds several new features such as pixel drawing, antialiased primitives, and automatic multi-line text.
+* Added splash screen
+* Began work on lighting, but it is not presently functional
+* Began work on packaging format (LWPak), not presently functional
+* Actually implemented deprecated and experimental classes.
+* Merged ForceToScreen and NotCameraAware
+* Rewrote Utilities DLL, errors are now registered there.
+* Implemented custom SDL2_gfx bindings
+* Rewrote Vector2, Color3, and Color4 to be part of NuCore
+* Implemented a default font (SDL2_gfx font) - added DisableTTF property to allow this font to be used. Simplified debugging code massively as a result.
+
+SplashScreen is deprecated - use the BootSplashPath setting in GlobalSettings.xml (960x480 size only for now), it will be removed in the next week.
+
+!!!!!XML FILES FROM OLDER BUILDS MAY NOT BE COMPATIBLE!!!!!
+
+KNOWN REGRESSIONS:
+Collision detection is weird.
+Some objects (debugging window, checkboxes) don't render properly.
+
+Engine version 0.3.939 (2021-10-02) release notes:
+I have been very busy (starting college), so development has slowed down quite a bit.  
+
+* Added an In-Game Debugging Service and ingame debug display. (IGDService, toggleable with Esc key or DebugMode GameSetting.)
+* Added a lot of events (ObjectCreated, ObjectDestroyed, etc)
+* Lua scripting is now actually functional and Scripts therefore now actually do stuff. Currently there is only one command though, ScriptingTest.ScTest.
+* Refactoring.
+* Began work on a completely new renderer, NuRender. It is currently outside of the main source tree, however. It will have many advantages like unlimited-thickness lines, actually good ellipses, multi-line text, borders, and possibly localisation ability.
+
+Engine version 0.3.885 (2021-08-17) release notes:
+Bugfix for AnimatedImageBrush and Sky. Also began work on texturedisplaymode, but it doesn't work yet so DON'T USE IT. Refactored Sky class.
+
+Engine version 0.3.878 (2021-08-15) release notes:
+This release mostly focuses on introducing animations and bugfixes, as well as improvements to the setup. 
+ALL RELEASES BEGINNING WITH THIS RELEASE WILL BE DISTRIBUTED IN THE FORM OF SETUP BINARIES FOR THE RUNTIME AND SDK!
+
+* Implemented the beginning of an Animation API with a new brush class, AnimatedImageBrush, and new classes for animations:
+- Animation
+- AnimationFrame
+
+To use animations, you currently add an AnimatedImageBrush to any PhysicalObject (or class that inherits from it).
+
+Example usage:
+    <PhysicalObject Name="AnimationTest" PhysicsEnabled="True" CanCollide="False" Anchored="True" Mass="0">
+      <AnimatedImageBrush Size="300,200" Position="700,0">
+        <Animation Type="Continuous" Active="True">
+          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF0.png" DefaultTiming="32"></AnimationFrame>
+          <AnimationFrame Path="Content\Textures\Animated\TestAnimation\TestAnimationF1.png" DefaultTiming="32"></AnimationFrame>
+        </Animation>
+      </AnimatedImageBrush>
+    </PhysicalObject>
+
+The position and size can either be set individually for each AnimationFrame or globally for all at the AnimationFrame level.
+
+There can be an infinite amount of Animations within any AnimatedImageBrush - you call GetBrush() on the PhysicalObject and can access the animations with GetAnimations() on the AnimatedImageBrush. An animation can be toggled by setting Active to true (there can only be one active animation - if multiple active animations are set, only the first one will be played); currently there is only one type of Animation (continuous) but a second type - OnTrigger - will be added in the next release that implements an event so that Lua scripts will be able to start and stop animations manually.
+
+AnimationFrames are essentially identical to ImageBrushes with extra code for playing as animations, and therefore all of the same properties exist.
+
+Other updates mostly surround minor brush system bugfixes and updates to the Inno Setup script, which now cleanly distinguishes between SDK and Runtime installations (they are now installed in separate folders.). 
+
+Engine version 0.3.854 (2021-08-09) release notes:
+Another big release.
+
+* Added an InsertObject window to Polaris (but it's not accessible yet)
+* Fixed "sinking" bug (although it's still kind of jittery) in PhysicsService by implementing positional correction
+* Implemented EpsilonVelocity GameSetting - the minimum velocity the engine considers movement
+* Implemented CheckBoxes:
+	- Implemented the Checked event for CheckBoxes. Fired by the Check
+	- Only property of note is IsChecked. Determines if it's checked.
+* Guis now only fire their OnClick event (IF THEY HAVE A DEFINED POSITION AND SIZE) if you are clicking on them
+* Bugfixes (mostly in physics)
+* Various other improvements
+* Fixed test character sprite to not have empty space
+
+Latest Doxygen run included!
+
+
+Engine version 0.3.826 (2021-08-08) release notes:
+
+Sorry for no nightly builds, was on holiday and had to do some pretty hasty code revisions.
+
+The rendering system has been substantially updated, with a brush system being introduced. Currently there are 3 brushes:
+- SolidColourBrush: Solid colours.
+- LinearGradientBrush: Linear gradients. These currently don't work right.
+- ImageBrush: Images.
+
+PLEASE NOTE: WHILE SOLIDCOLOURBRUSHES AND LINEARGRADIENTBRUSHES ARE CURRENTLY NOT MANDATORY, THEY WILL BE SOON. FURTHERMORE, TEXTURE HAS BEEN REPLACED WITH IMAGEBRUSH. THEREFORE, YOU MUST UPDATE YOUR GAMES!
+
+Additionally some old, dead code (EnumInstance and EnumValue) has been removed, and checkbox work has begun.
+
+Several other sections of the engine have also been improved. Message sending to services has been fixed (the SCM wouldn't notify the service before) and there have been overall bugfixes and security improvements.
+
+RenderService and PhysicalObject has been refactored.
+
+Latest Doxygen run included.
+
+
+Engine version 0.3.794 (2021-07-28) release notes:
+
+I have decided to provide nightly builds in order to maximise the stability of August 13th's SDK release
+
+The physics system and the default physics engine has been dramatically improved in this build. Collision detection is now dramatically improved and movement of Humanoids is mostly working. Furthermore, several potential crash issues (such as having an invalid property name) are now fixed.
+
+Anchoring has also been introduced - an object can now have physics enabled but still be immovable. This is exposed by the Anchored property for PhysicalObjects.
+
+An updated Doxygen package has been included as well, with the new additions in this build and a fix for the annoyingly large logo.
+
+Lightning
+Engine version 0.3.773 (2021-07-27) release notes:
+
+The changelog is far too big to list, but a lot of work has been done since the last release - mostly in the areas of physics, UI, and some work on Polaris and Lua scripting.
+
+This will (probably) be one of the last releases before the Pre-Alpha SDK is released, and is basically a test for that release.
+To that effect I have included documentation. It is basically a test run of Doxygen (with slightly-tweaked-from-default settings), and Doxygen probably won't be used for the final documentation simply because of how much that probably shouldn't be in there is in there.
+
+A quick runthrough of what is new in this release:
+* UI controls (some of them)
+* Kind of working physics!
+* Kind of working Lua!
+* Bugfixes!
+* More bugfixes!
+* Refactoring!
+* A new icon!
+* A new Polaris startup screen!
+* Working open dialogs in polaris!
+
+An install package for this release will be available at some point.

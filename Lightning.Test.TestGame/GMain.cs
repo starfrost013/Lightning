@@ -14,12 +14,18 @@ namespace Lightning.Test.TestGame
 {
     public class GMain : App
     {
+        /// <summary>
+        /// Run after the game has been loaded.
+        /// </summary>
         public override void Start()
         {
 
 
         }
 
+        /// <summary>
+        /// Run each frame. Subscribe to the OnRender event to get the current rendering context.
+        /// </summary>
         public override void Render()
         {
 

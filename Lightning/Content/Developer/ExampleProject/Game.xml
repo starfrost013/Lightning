@@ -1,0 +1,110 @@
+<Lightning>
+  <Metadata>
+    <!-- The first Lightning XML file -->
+    <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
+    <Author>i have no idea if he wants to be credited</Author>
+    <Description>A fake game used as the thumbnail for the pre-alpha build</Description>
+    <CreationDate>2021-07-27 10:44:24</CreationDate>
+    <LastModifiedDate>2021-07-27 10:44:24</LastModifiedDate>
+    <RevisionID>1</RevisionID> <!-- Rev6: Fixed bug -->
+  </Metadata>
+  <Settings>
+
+    <!-- nothing here yet -->
+    <Setting>
+      <Name>MaxFPS</Name>
+      <Type>System.Int32</Type>
+      <Value>60</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionX</Name>
+      <Type>System.Int32</Type>
+      <Value>30</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionY</Name>
+      <Type>System.Int32</Type>
+      <Value>30</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowWidth</Name>
+      <Type>System.Int32</Type>
+      <Value>1280</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowHeight</Name>
+      <Type>System.Int32</Type>
+      <Value>720</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowTitle</Name>
+      <Type>System.String</Type>
+      <Value>Snowy Island</Value>
+    </Setting>
+
+    <Setting>
+      <Name>Fullscreen</Name>
+      <Type>System.Boolean</Type>
+      <Value>False</Value>
+    </Setting>
+
+    <Setting>
+      <Name>FreeCameraMoveIntensityX</Name>
+      <Type>System.Int32</Type>
+      <Value>10</Value>
+    </Setting>
+
+    <Setting>
+      <Name>FreeCameraMoveIntensityY</Name>
+      <Type>System.Int32</Type>
+      <Value>10</Value>
+    </Setting>
+
+    <Setting>
+      <Name>ChaseCameraInFrontOrBehindObjectFactor</Name>
+      <Type>System.Int32</Type>
+      <Value>3</Value>
+    </Setting>
+
+    <Setting>
+      <Name>ChaseCameraAboveOrBelowObjectFactor</Name>
+      <Type>System.Int32</Type>
+      <Value>13</Value>
+    </Setting>
+
+  </Settings>
+
+  <Workspace>
+
+    <ServiceControlManager>
+      <RenderService/>
+    </ServiceControlManager>
+
+    <Sky Name="Sky">
+      <ImageBrush Path="Content\Developer\ExampleProject\Sky.png"/>
+    </Sky>
+    
+    <PhysicalObject Name="Ground" Size="1280,720" Position="0, 0">
+      <ImageBrush Path="Content\Developer\ExampleProject\Ground.png"/>
+    </PhysicalObject>
+
+    <PhysicalObject Name="Snowman" Size="150,150" Position="500, 525">
+      <ImageBrush Path="Content\Developer\ExampleProject\\Snowman.png"/>
+    </PhysicalObject>
+
+    <Camera Name="Camera1" Position="0, 0" CameraType="Free" Active="True"/>
+
+    <Sound Path="Content\Developer\ExampleProject\Music.mp3" Repeat="True" Volume="1.00" Is3D="True" Radius="30" TargetObject="Camera1" Position="0,0"></Sound>
+
+    <Humanoid Position="90, 315" Size="42, 68" CanCollide="True" Name="Trincid" DisplayHealthBar="False" Health="50" MaxHealth="100">
+      <ImageBrush Path="Content\Developer\ExampleProject\TrincidStandingR.png" Name="Trincid"/>
+    </Humanoid>
+
+  </Workspace>
+
+</Lightning>
