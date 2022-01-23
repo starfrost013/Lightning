@@ -57,11 +57,6 @@ namespace Lightning.Core
         public string LightningXsdPath { get; set; }
 
         /// <summary>
-        /// Maximum Lua script execution time in milliseconds.
-        /// </summary>
-        public int MaxLuaScriptExecutionTime { get; set; }
-
-        /// <summary>
         /// Boot splash path 
         /// </summary>
         public string BootSplashPath { get; set; }

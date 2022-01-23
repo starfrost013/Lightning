@@ -62,6 +62,5 @@ Do not modify this file unless you know what you are doing.
   
   <LightningXsdPath>Content\Schema\Lightning.xsd</LightningXsdPath>
   <UseASTTokeniser>true</UseASTTokeniser>
-  <MaxLuaScriptExecutionTime>300</MaxLuaScriptExecutionTime>
   <BootSplashPath>Content\Splash\Splash.png</BootSplashPath>
 </GlobalSettings>

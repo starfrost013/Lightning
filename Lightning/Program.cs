@@ -2,6 +2,7 @@
 using Lightning.Core.API;
 using NuCore.Utilities;
 using System;
+using System.Globalization;
 
 /// <summary>
 /// Lightning SDK Platform
@@ -31,6 +32,9 @@ namespace Lightning
 
         static void Main(string[] Args)
         {
+            // January 23, 2022: Fix bug where DDMS parsing crashes on de-DE locale and other countries that use comma period separators (thx AdrUlb)
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
             // Handle command-line arguments.
             LaunchArgsResult LAR = LaunchArgs.HandleArgs(Args);
 

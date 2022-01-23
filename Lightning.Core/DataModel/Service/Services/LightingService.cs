@@ -103,13 +103,14 @@ namespace Lightning.Core.API
             IntPtr TxPixels = IntPtr.Zero;
             int Pitch;
 
-            SDL.SDL_LockTexture(ImageTexture, ref SrcRect, out TxPixels, out Pitch);
-
-
             foreach (Light Light in InstanceList)
             {
                 Light.Render(PEEA.SDL_Renderer, null, TxPixels);
             }
+
+
+            SDL.SDL_LockTexture(ImageTexture, ref SrcRect, out TxPixels, out Pitch);
+            SDL.SDL_UpdateTexture(ImageTexture, ref SrcRect, TxPixels, Pitch);
 
             return;
         }
