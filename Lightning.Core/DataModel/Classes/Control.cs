@@ -12,7 +12,7 @@ namespace Lightning.Core.API
     /// 
     /// A control binding.
     /// </summary>
-    public class Control : SerialisableObject
+    public class Control : Instance
     {
         internal override string ClassName => "Control";
         internal override InstanceTags Attributes => InstanceTags.Archivable | InstanceTags.Destroyable | InstanceTags.Instantiable | InstanceTags.Serialisable;

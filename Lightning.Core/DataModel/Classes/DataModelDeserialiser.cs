@@ -779,7 +779,7 @@ namespace Lightning.Core.API
                                         continue; 
                                     }
 
-                                    if (PI.PropertyType.IsSubclassOf(typeof(SerialisableObject)))
+                                    if (PI.PropertyType.IsSubclassOf(typeof(Instance)))
                                     {
                                         Instance CInstanceObject = (Instance)CConvertedObject;
 

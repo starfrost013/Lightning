@@ -16,7 +16,7 @@ namespace Lightning.Core.API
     /// Defines an RGB colour.
     /// </summary>
     [TypeConverter(typeof(Color3Converter))]
-    public class Color3 : SerialisableObject
+    public class Color3 : Instance
     {
         internal override string ClassName => "Color3";
 

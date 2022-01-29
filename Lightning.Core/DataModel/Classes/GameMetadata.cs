@@ -5,11 +5,11 @@ using System.Text;
 namespace Lightning.Core.API
 {
     /// <summary>
-    /// Metadata (inherits from SerialisableObject)
+    /// Metadata (inherits from SerialisableInstance)
     /// 
     /// Contains information about the file. 
     /// </summary>
-    public class GameMetadata : SerialisableObject
+    public class GameMetadata : Instance
     {
         /// <summary>
         /// <inheritdoc/>

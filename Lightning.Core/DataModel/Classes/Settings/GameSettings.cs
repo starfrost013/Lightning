@@ -7,7 +7,7 @@ namespace Lightning.Core.API
     /// <summary>
     /// A setting that can be created for a game.
     /// </summary>
-    public class GameSettings : SerialisableObject
+    public class GameSettings : Instance
     {
         internal override string ClassName => "GameSettings";
 

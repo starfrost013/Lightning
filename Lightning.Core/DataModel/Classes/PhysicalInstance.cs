@@ -14,7 +14,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines a physically rendered object in Lightning, with a Position, Size, and a Texture (stored as a logical child). Rendered every frame by RenderService.
     /// </summary>
-    public class PhysicalInstance : SerialisableObject
+    public class PhysicalInstance : Instance
     {
         /// <summary>
         /// <inheritdoc/> -- set to PhysicalInstance.

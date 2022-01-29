@@ -16,7 +16,7 @@ namespace Lightning.Core.API
     /// Represents ARGB colour.
     /// </summary>
     [TypeConverter(typeof(Color4Converter))]
-    public class Color4 : SerialisableObject
+    public class Color4 : Instance
     {
         internal override string ClassName => "Color4";
 

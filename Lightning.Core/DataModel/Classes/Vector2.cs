@@ -18,7 +18,7 @@ namespace Lightning.Core.API
     /// Defines a two-dimensional vector.
     /// </summary>
     [TypeConverter(typeof(Vector2Converter))]
-    public class Vector2 : SerialisableObject
+    public class Vector2 : Instance
     {
         internal override string ClassName => "Vector2";
 

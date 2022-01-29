@@ -12,7 +12,7 @@ namespace Lightning.Core.API
     /// 
     /// Defines main class that GMain must inherit from
     /// </summary>
-    public abstract class App : SerialisableObject
+    public abstract class App : Instance
     {
         internal override string ClassName => "App";
 
