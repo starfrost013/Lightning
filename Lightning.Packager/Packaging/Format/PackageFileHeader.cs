@@ -24,7 +24,7 @@ namespace Lightning.Core.Packaging
         /// <summary>
         /// Magic byte indicator.
         /// </summary>
-        public static byte[] Magic { get { return new byte[] { 0x57, 0x5F, 0x5F, 0x41, 0x51, 0x13 }; } }
+        public static byte[] Magic { get { return new byte[] { 0xDE, 0xAD, 0xBA, 0xBE, 0x77, 0x77 }; } }
 
         /// <summary>
         /// Major component of LWPak file format version.
@@ -34,7 +34,7 @@ namespace Lightning.Core.Packaging
         /// <summary>
         /// Minor component of LWPak file format version.
         /// </summary>
-        public const byte VersionMinor = 1; 
+        public const byte VersionMinor = 2; 
         
         /// <summary>
         /// Timestamp of this LWPak file. (time_t 64bit)
@@ -83,15 +83,7 @@ namespace Lightning.Core.Packaging
 
                 byte[] Bytes = Stream.ReadBytes(6);
 
-                BitArray BA = new BitArray(Bytes);
-
-                // Magic :DDD
-
-                BitArray NBA = BA.Xor(new BitArray(new byte[] { 0x32, 0x31, 0x30, 0x33, 0x30, 0x32 }));
-
-                NBA.CopyTo(Bytes, 0);
-
-                if ((Bytes[0] + Bytes[1] + Bytes[2] + Bytes[3] + Bytes[4] + Bytes[5]) == 0x236)
+                if (Bytes == Magic)
                 {
                     Logging.Log("Valid header found!", ClassName);
 
