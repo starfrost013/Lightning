@@ -55,5 +55,10 @@ namespace Lightning.Core.API
         /// An optional version number.
         /// </summary>
         public string Version { get; set; }
+
+        /// <summary>
+        /// The minimum Lightning build for this game to run.
+        /// </summary>
+        public int MinimumLightningBuild { get; set; }
     }
 }

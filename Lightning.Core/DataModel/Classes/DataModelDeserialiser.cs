@@ -37,7 +37,7 @@ namespace Lightning.Core.API
         /// <summary>
         /// The XML schema version. 
         /// </summary>
-        public static string XMLSCHEMA_VERSION = "0.3.0.0006";
+        public static string XMLSCHEMA_VERSION = "0.3.1.0007";
 
         public DataModel DDMS_Deserialise(string Path)
         {
@@ -182,6 +182,11 @@ namespace Lightning.Core.API
             
         }
 
+        /// <summary>
+        /// Event handler for DDMS schema validation event
+        /// </summary>
+        /// <param name="sender">The sender of the DDMS schema validation event</param>
+        /// <param name="e">The event arguments for the DDMS schema validation event - see <see cref="ValidationEventArgs"/>.</param>
         private void DDMS_Validate_OnFail(object sender, ValidationEventArgs e)
         {
             IsSuccessful = false; 
@@ -204,7 +209,7 @@ namespace Lightning.Core.API
         }
 
         /// <summary>
-        /// Parses DDMS file components.
+        /// Parses the DDMS file components.
         /// </summary>
         /// <param name="XM">The XmlReader to use for reading</param>
         /// <param name="DM">The DataModel to serialise to</param>
@@ -239,6 +244,19 @@ namespace Lightning.Core.API
             return DDSR;
 
 
+        }
+
+        private bool DDMS_CheckCompatible(GameMetadata GM)
+        {
+            if (GM.MinimumLightningBuild == 0) // not specified
+            {
+                return true;
+            }
+            else
+            {
+                return (LVersion.Build >= GM.MinimumLightningBuild);
+            }
+            
         }
 
         /// <summary>
@@ -286,6 +304,7 @@ namespace Lightning.Core.API
                                     ElementName = XMetadataContentNode.Name.LocalName;
                                     string ElementValue = XMetadataContentNode.Value; 
 
+                                    // this can almost certainly be renamed
                                     if (XmlUtil.CheckForValidXmlElementContent(XMetadataContentNode))
                                     {
                                         // Log it
@@ -312,10 +331,15 @@ namespace Lightning.Core.API
                                                 {
                                                     continue;
                                                 }
+                                            // Minimum Lightning version
+                                            case "MinimumLightningBuild":
+                                                GM.MinimumLightningBuild = Convert.ToInt32(ElementValue);
+                                                continue;
                                             // Game last modified date
                                             case "LastModifiedDate":
                                                 GM.LastModifiedDate = DateTime.Parse(ElementValue);
                                                 continue;
+                                            // Game name
                                             case "Name":
                                                 GM.GameName = ElementValue;
                                                 continue;
@@ -341,6 +365,12 @@ namespace Lightning.Core.API
                             string ErrDesc = $"Attempted to serialise invalid XML\n{err}";
 
                             DDSR.FailureReason = ErrDesc;
+                            return DDSR;
+                        }
+
+                        if (!DDMS_CheckCompatible(GM)) 
+                        {
+                            DDSR.FailureReason = $"Incompatible Lightning version: Build {GM.MinimumLightningBuild} or later required, running build {LVersion.Build}!";
                             return DDSR;
                         }
 
@@ -584,70 +614,12 @@ namespace Lightning.Core.API
                             }
 
                         }
-                        catch (ArgumentNullException err)
-                        {
-#if DEBUG
-                            DDSR.FailureReason = $"DDMS: Conversion error: Data not found!\n\n{err}";
-#else
-                            DDSR.FailureReason = $"DDMS: Conversion error: Data not found!";                 
-#endif
-                            return DDSR;
-                        }
-                        catch (FormatException err)
-                        {
-#if DEBUG
-                            DDSR.FailureReason = $"DDMS: Conversion error: Format of data incorrect!\n\n{err}";
-#else
-                            DDSR.FailureReason = $"DDMS: Conversion error: Format of data incorrect!";
-#endif
-                            return DDSR;
-                        }
-                        catch (InvalidCastException err)
-                        {
-#if DEBUG
-                            DDSR.FailureReason = $"DDMS: Conversion error: Invalid data in XML!\n\n{err}";
-#else
-                            DDSR.FailureReason = $"DDMS: Conversion error: Invalid data in XML!";
-#endif
-                            return DDSR;
-                        }
-                        catch (OverflowException err)
-                        {
-#if DEBUG
-                            DDSR.FailureReason = $"DDMS: Conversion error: Integer overflow!\n\n{err}";
-#else
-                            DDSR.FailureReason = $"DDMS: Conversion error: Integer overflow!";
-#endif
-                            return DDSR;
-                        }
-                        catch (TargetInvocationException err)
-                        {
-#if DEBUG
-                            DDSR.FailureReason = $"DDMS: Conversion error: Error instantiating type!\n\n{err}";
-#else
-                            DDSR.FailureReason = $"DDMS: Conversion error: Error instantiating type!";
-#endif
-                            return DDSR;
-                        }
-                        catch (TypeLoadException err)
-                        {
-#if DEBUG
-                            DDSR.FailureReason = $"DDMS: Conversion error: Attempted to instantiate invalid type!\n\n{err}";
-#else
-                            DDSR.FailureReason = $"DDMS: Conversion error: Attempted to instantiate invalid type!";
-#endif
-                            return DDSR;
-                        }
                         catch (Exception err)
                         {
-#if DEBUG
-                            DDSR.FailureReason = $"DDMS: Unknown error parsing InstanceTree!\n\n{err}";
-#else
-                            DDSR.FailureReason = $"DDMS: Unknown error parsing InstanceTre!e";
-#endif
+                            DDSR.FailureReason = $"DDMS: Conversion error: An exception occurred during the node parsing process:\n\n{err}";
                             return DDSR;
                         }
-
+                   
                         continue;
 
                 }
@@ -783,24 +755,15 @@ namespace Lightning.Core.API
                                     {
                                         Instance CInstanceObject = (Instance)CConvertedObject;
 
-                                        if (CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable))
-                                        {
-                                            //todo: handle lists...they will have subnodes
-                                            PI.SetValue(XDRInstance, CConvertedObject);
-                                        }
-                                        else
+                                        if (!CInstanceObject.Attributes.HasFlag(InstanceTags.Serialisable)) // optimised (January 29, 2022)
                                         {
                                             // April 9, 2021: Don't fail on a non-serialisable object.
                                             DDSR.Successful = true;
                                             return DDSR;
                                         }
                                     }
-                                    else
-                                    {
-                                        // may need to serialsie non-datamodel objects
-                                        PI.SetValue(XDRInstance, CConvertedObject);
 
-                                    }
+                                    PI.SetValue(XDRInstance, CConvertedObject);
 
                                 }
                                 else
@@ -831,7 +794,7 @@ namespace Lightning.Core.API
             }
             else
             {
-                DDSR.FailureReason = "Error: attempted to instantiate invalid DataModel!";
+                DDSR.FailureReason = $"Error: attempted to instantiate invalid type {XDataModelName}!";
                 return DDSR; 
             }
 

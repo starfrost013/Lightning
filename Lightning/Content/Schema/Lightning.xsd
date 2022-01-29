@@ -18,7 +18,7 @@
   
   Serialised using a custom serialiser. InstanceTree is fully serialised using the DDMS to a DataModel object.s
   
-  Mandatory File Component: Metadata [V0.2.0] 
+  Mandatory File Component: Metadata [V0.4.0]
   
   v0.2.0.0001: Initial version                                                                                2021-03-14
   v0.2.1.0002: Added Metadata.Author                                                                          2021-03-17
@@ -26,7 +26,7 @@
   v0.2.2.0004: Added Description                                                                              2021-03-22
   v0.2.3.0005: Renamed InstanceTree to Workspace                                                              2021-04-06
   v0.3.0.0006: Added Metadata.Version (optional). Made Author optional. Added Metadata.Name.                  2021-04-14
-  
+  v0.3.1.0007: Added Metadata.MinimumLightningBuild                                                           2022-01-29
   -->
   <xs:complexType name="Lightning" id="LightningRoot">
     <xs:sequence>
@@ -38,6 +38,7 @@
             <xs:element name="Description" type="xs:string" minOccurs="0"></xs:element>
             <xs:element name="GameName" type="xs:string"></xs:element> 
             <xs:element name="CreationDate" type="xs:dateTime"></xs:element>
+            <xs:element name="MinimumLightningBuild" type="xs:int"></xs:element>
             <xs:element name="LastModifiedDate" type="xs:dateTime"></xs:element>
             <xs:element name="RevisionId" type="xs:int"></xs:element>
             <xs:element name="Version" type="xs:string" minOccurs="0"></xs:element>
