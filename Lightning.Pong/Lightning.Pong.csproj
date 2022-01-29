@@ -3,9 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.3.22022</AssemblyVersion>
-    <FileVersion>1.0.3.22022</FileVersion>
+    <AssemblyVersion>1.0.30.22029</AssemblyVersion>
+    <FileVersion>1.0.30.22029</FileVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Content\Games\Pong.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\Games\Pong.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Lightning.Core\Lightning.Core.csproj" />

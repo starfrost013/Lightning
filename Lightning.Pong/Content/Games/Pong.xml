@@ -1,0 +1,69 @@
+<Lightning>
+  <Metadata>
+    <!-- The first Lightning XML file -->
+    <DMSchemaVersion>0.3.0.0006</DMSchemaVersion>
+    <Author>starfrost</Author>
+    <Description>An empty game</Description>
+    <CreationDate>2021-03-22 19:32:04</CreationDate>
+    <LastModifiedDate>2021-06-05 19:22:11</LastModifiedDate>
+    <RevisionID>26</RevisionID> <!-- Rev25: update for new settings -->
+
+  </Metadata>
+  <Settings>
+    
+    <Setting>
+      <Name>MaxFPS</Name>
+      <Type>System.Int32</Type>
+      <Value>60</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionX</Name>
+      <Type>System.Int32</Type>
+      <Value>300</Value>
+    </Setting>
+
+    <Setting>
+      <Name>DefaultWindowPositionY</Name>
+      <Type>System.Int32</Type>
+      <Value>300</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowWidth</Name>
+      <Type>System.Int32</Type>
+      <Value>960</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowHeight</Name>
+      <Type>System.Int32</Type>
+      <Value>640</Value>
+    </Setting>
+
+    <Setting>
+      <Name>WindowTitle</Name>
+      <Type>System.String</Type>
+      <Value>Lightning Demonstration Program</Value>
+    </Setting>
+
+    <Setting>
+      <Name>GameDLL</Name>
+      <Type>System.String</Type>
+      <Value>Lightning.Pong.dll</Value>
+    </Setting>
+
+    <Setting>
+      <Name>Pong_AIError</Name>
+      <Type>System.Int32</Type>
+      <Value>5</Value>
+    </Setting>
+  </Settings>
+
+  <Workspace>
+    <Circle Name="Ball" Fill="True" Position="474,314" Size="6,6" Colour="255,255,255,255"></Circle> <!-- Ball used for pong -->
+    <Rectangle Name="Paddle1" Fill="True" Position="0,296" Size="12,48" Colour="255,255,0,0"></Rectangle> <!-- Paddle 1 (red) -->
+    <Rectangle Name="Paddle2" Fill="True" Position="948,296" Size="12,48" Colour="255,0,0,255"></Rectangle> <!-- Paddle 2 (blue) -->
+  </Workspace>
+
+</Lightning>

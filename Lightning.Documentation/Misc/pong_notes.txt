@@ -1,0 +1,9 @@
+Lightning Demonstration Program / Pong development notes
+
+* Remove requirement for GameDLLs (games may have no scripting)
+* Fix splashscreen assert
+* Level editor badly needed
+* Shift from enabling/disabling physics on object level to disabling physics on object level and having a level-wide physics toggle GameSetting
+* Fix GMain being added twice
+* Fix three error messages on file misisng
+* Fix crash when wrong type specified for GameSettings in code

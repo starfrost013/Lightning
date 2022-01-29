@@ -100,7 +100,6 @@ namespace Lightning.Core.API
             if (!GGSR_DLL.Successful)
             {
                 string ErrorString = $"Error loading GameDLL: The GameDLL setting must be set!\nScripts will not be run.";
-                ErrorManager.ThrowError(ClassName, "ErrorLoadingGameDLLException", ErrorString);
                 LGDR.FailureReason = ErrorString;
                 return LGDR;
             }
@@ -175,7 +174,7 @@ namespace Lightning.Core.API
                     Workspace Ws = DataModel.GetWorkspace();
                     Ws.AddChildI(ClientApp); // works as we have the assembly loaded
 
-
+                    // only do it once
                     return true;
                 }
             }

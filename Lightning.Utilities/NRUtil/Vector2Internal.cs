@@ -46,6 +46,7 @@ namespace NuRender
         public static Vector2Internal operator -(Vector2Internal A, Vector2Internal B) => new Vector2Internal(A.X - B.X, A.Y - B.Y);
         public static Vector2Internal operator -(Vector2Internal A, double B) => new Vector2Internal(A.X - B, A.Y - B);
         public static Vector2Internal operator -(double A, Vector2Internal B) => new Vector2Internal(A - B.X, A - B.Y);
+        public static Vector2Internal operator -(Vector2Internal A) => new Vector2Internal(-A.X, -A.Y);
         public static Vector2Internal operator *(Vector2Internal A, Vector2Internal B) => new Vector2Internal(A.X * B.X, A.Y * B.Y);
         public static Vector2Internal operator *(Vector2Internal A, double B) => new Vector2Internal(A.X * B, A.Y * B);
         

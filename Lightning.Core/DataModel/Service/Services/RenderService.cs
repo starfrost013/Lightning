@@ -648,7 +648,7 @@ namespace Lightning.Core.API
 
         private InstanceCollection Rendering_BuildListOfAllObjects() // cahnge this to List<Instance> when i feel less lazy
         {
-            GetMultiInstanceResult GMIR = DataModel.GetChildren(); // will always be successful 
+            GetMultiInstanceResult GMIR = DataModel.GetChildren(true); // will always be successful 
 
             return new InstanceCollection(GMIR.Instances);
         }

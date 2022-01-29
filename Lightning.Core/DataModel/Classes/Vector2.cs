@@ -52,6 +52,7 @@ namespace Lightning.Core.API
         public static Vector2 operator -(Vector2 A, Vector2 B) => new Vector2(A.X - B.X, A.Y - B.Y);
         public static Vector2 operator -(Vector2 A, double B) => new Vector2(A.X - B, A.Y - B);
         public static Vector2 operator -(double A, Vector2 B) => new Vector2(A - B.X, A - B.Y);
+        public static Vector2 operator -(Vector2 A) => new Vector2(-A.X, -A.Y);
         public static Vector2 operator *(Vector2 A, Vector2 B) => new Vector2(A.X * B.X, A.Y * B.Y);
         public static Vector2 operator *(Vector2 A, double B) => new Vector2(A.X * B, A.Y * B);
         

@@ -3,13 +3,12 @@ A modular, extensible 2D C#-scripted game engine
 © 2022 starfrost
 
 RELEASE NOTES:
-0.4.1163 (2021-01-22)
-* Replaced Lua scripting with C#. See test game DLL. Should be loaded and run. Documentation coming soon.
-* We are now preparing for the first actual SDK release, several months later than intended.
-The feature set has been frozen, and mostly stabilisation work will be done here until the first public SDK release.
-* Added OnLoad event, run after game has loaded 
-* Removed ludicrous check for multiple hardware threads
-* Error Manager now takes a void delegate with no parameters so you can put errors in your own code without rebuilding Lightning.Utilities
+
+0.4.1170 (2022-01-23) (0.4 RC1)
+* Slightly more sane lighting code
+* Fixed bug where DDMS parsing would crash with double values on locales with non-dot comma separators
+* Removed Lua leftovers
+* Other minor refactoring 
 
 ============================
 ----------------------------
@@ -18,6 +17,14 @@ The feature set has been frozen, and mostly stabilisation work will be done here
 ----------------------------
 ----------------------------
 ============================
+
+0.4.1163 (2022-01-22) (0.4 RC0)
+* Replaced Lua scripting with C#. See test game DLL. Should be loaded and run. Documentation coming soon.
+* We are now preparing for the first actual SDK release, several months later than intended.
+The feature set has been frozen, and mostly stabilisation work will be done here until the first public SDK release.
+* Added OnLoad event, run after game has loaded 
+* Removed ludicrous check for multiple hardware threads
+* Error Manager now takes a void delegate with no parameters so you can put errors in your own code without rebuilding Lightning.Utilities
 
 0.4.1139 (2022-01-14)
 * RenderService refactoring

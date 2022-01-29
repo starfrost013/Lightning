@@ -68,11 +68,6 @@
       <Type>System.Boolean</Type>
       <Value>True</Value>
     </Settings>
-    <Setting>
-      <Name>GameDLL</Name>
-      <Type>System.String</Type>
-      <Value>Lightning.Test.TestGame.dll</Value>
-    </Setting>
 
   </Settings>
   <Workspace>
