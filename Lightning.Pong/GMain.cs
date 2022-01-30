@@ -45,6 +45,7 @@ namespace Lightning.Pong
             // error checking would usually? be here
             Players.Add(new GPlayer(GPlayerMode.Player, (Rectangle)gir1.Instance));
             Players.Add(new GPlayer(GPlayerMode.AI, (Rectangle)gir2.Instance)); // horror
+
             Ball.Circle = (Circle)ballresult.Instance;
 
             Ball.Velocity.X = -4; // start it off going straight

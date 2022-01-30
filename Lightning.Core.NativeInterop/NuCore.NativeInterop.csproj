@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>0.3.776.22029</AssemblyVersion>
-    <FileVersion>0.3.776.22029</FileVersion>
+    <AssemblyVersion>0.4.1183.22029</AssemblyVersion>
+    <FileVersion>0.4.1183.22029</FileVersion>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
     <AssemblyName>NuCore.NativeInterop</AssemblyName>
     <RootNamespace>NuCore.NativeInterop</RootNamespace>
@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="Linux\" />
+    <Folder Include="Properties\" />
     <Folder Include="Properties\" />
     <Folder Include="OSX\" />
   </ItemGroup>

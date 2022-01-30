@@ -5,7 +5,7 @@
     <Authors>NuCore.Test</Authors>
     <Description>NuCore Test Framework</Description>
     <Configurations>Debug;Release;Debug.Win64;Release.Win64</Configurations>
-    <AssemblyVersion>1.0.12.22009</AssemblyVersion>
+    <AssemblyVersion>0.4.1183.22009</AssemblyVersion>
     <FileVersion>1.0.12.22009</FileVersion>
   </PropertyGroup>
 

@@ -248,12 +248,16 @@ namespace NuRender
                     IntPtr Texture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, Surface);
 
                     SDL.SDL_RenderCopy(RenderInfo.RendererPtr, Texture, ref SourceRect, ref DestinationRect);
+                    SDL.SDL_FreeSurface(Surface);
+                    SDL.SDL_DestroyTexture(Texture);
                     return; 
                 case TextRenderingMode.Normal: // blended text specified
                     IntPtr NSurface = SDL_ttf.TTF_RenderText_Blended(Fnt.Pointer, Text, RenderColour);
                     IntPtr NTexture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, NSurface);
 
                     SDL.SDL_RenderCopy(RenderInfo.RendererPtr, NTexture, ref SourceRect, ref DestinationRect);
+                    SDL.SDL_FreeSurface(NSurface);
+                    SDL.SDL_DestroyTexture(NTexture);
                     return; 
                 case TextRenderingMode.Shaded: // shaded text specified 
                     if (BackgroundColour != null)
@@ -270,6 +274,8 @@ namespace NuRender
                         IntPtr STexture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, SSurface);
 
                         SDL.SDL_RenderCopy(RenderInfo.RendererPtr, STexture, ref SourceRect, ref DestinationRect);
+                        SDL.SDL_FreeSurface(SSurface);
+                        SDL.SDL_DestroyTexture(STexture); 
                         return; 
                     }
                     else
@@ -278,6 +284,8 @@ namespace NuRender
                         IntPtr BTexture = SDL.SDL_CreateTextureFromSurface(RenderInfo.RendererPtr, BSurface);
 
                         SDL.SDL_RenderCopy(RenderInfo.RendererPtr, BTexture, ref SourceRect, ref DestinationRect);
+                        SDL.SDL_FreeSurface(BSurface);
+                        SDL.SDL_DestroyTexture(BTexture);
                         return;
                     }
 
