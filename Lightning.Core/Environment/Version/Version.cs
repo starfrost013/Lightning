@@ -81,8 +81,6 @@ namespace Lightning.Core
             if (Version.Length != 4)
             {
                 Console.WriteLine($"Invalid version information (Must be four period-separated numbers!)");
-                //ERRORMANAGER needs to be no longer dependent on datamodel before this error can exist
-                //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionException");
                 return; 
             }
             else
@@ -94,10 +92,9 @@ namespace Lightning.Core
                     Build = Convert.ToInt32(Version[2]);
                     Revision = Convert.ToInt32(Version[3]);
                 }
-                catch (FormatException)
+                catch (Exception ex)
                 {
-                    Console.WriteLine($"Invalid version information(Must be four period-separated numbers!)");
-                    //ErrorManager.ThrowError("Engine Version Identifier", "InvalidVersionInformationException");
+                    Console.WriteLine($"Invalid version information (Must be four period-separated numbers!)\n\n{ex}");
                     return; 
                 }
             }
@@ -143,9 +140,9 @@ namespace Lightning.Core
             else
             {
 #if DEBUG
-                return $"{Major}.{Minor}.{Build}.{Revision}\nBuilt {BuildDate} by {Owner}";
+                return $"{Major}.{Minor}.{Build}.{Revision}\nbuilt: {BuildDate} by {Owner}";
 #else
-                return $"{Major}.{Minor}.{Build}.{Revision}\nbuilt {BuildDate} by {Owner}";
+                return $"{Major}.{Minor}.{Build}.{Revision}\nbuilt: {BuildDate} by {Owner}";
 #endif
             }
 

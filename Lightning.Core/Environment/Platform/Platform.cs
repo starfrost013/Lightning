@@ -27,7 +27,7 @@ namespace Lightning.Core
         public static void PopulatePlatformInformation()
         {
             PlatformName = GetPlatformIdentifier();
-            Version = GetPlatformVersion(); // move to method? perhaps
+            Version = PlatformVersionAcquirer.GetPlatformVersion(); // move to method? perhaps
         }
 
         private static Platforms GetPlatformIdentifier()

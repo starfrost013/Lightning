@@ -80,26 +80,14 @@ namespace Lightning
                     string LVersionString = LVersion.GetVersionString();
                     Console.WriteLine($"Engine version {LVersionString}");
                     
-
                     // Turns out this is how we will init after all. 
                     DataModel.Init(LAR.Arguments);
 
                     // -- EXITS AFTER END OF SESSION -- 
-                    Exit();
+                    Environment.Exit(0);
 
                     return; 
             }
-
-        }
-
-        /// <summary>
-        /// Exits the Engine. 
-        /// </summary>
-        public static void Exit()
-        {
-            // This is the last line of code that runs. 
-            Environment.Exit(0);
-
         }
     }
 }
