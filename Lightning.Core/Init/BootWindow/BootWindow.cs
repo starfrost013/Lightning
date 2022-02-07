@@ -141,7 +141,8 @@ namespace Lightning.Core
             CurrentProgressString = (NuRender.Text)MainWindow.AddObject("Text");
 
             CurrentProgressString.Position = new Vector2Internal(250, 360);
-            CurrentProgressString.Colour = new Color4Internal(255, 255, 0, 0);
+            CurrentProgressString.BackgroundColour = new Color4Internal(127, 255, 0, 0);
+            CurrentProgressString.Colour = new Color4Internal(255, 255, 255, 255);
             CurrentProgressString.Font = "Arial";
             return; 
             

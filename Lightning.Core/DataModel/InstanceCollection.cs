@@ -129,28 +129,22 @@ namespace Lightning.Core.API
                     }
                     else
                     {
-                        // for some reason this is completely fucked up and i need to figure out why
-                        //if (Add_CheckThatParentIsInCollection(Parent))
-                        //{
-                            if (ObjType.IsSubclassOf(ParentType))
-                            {
-                                Add_PerformAdd(Obj, TestInstanceParent);
-                                return;
-                            }
-                            else if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
-                            {
-                                Add_PerformAdd(Obj, TestInstanceParent);
-                                return;
-                            }
-                            else
-                            {
+                        if (ObjType.IsSubclassOf(ParentType))
+                        {
+                            Add_PerformAdd(Obj, TestInstanceParent);
+                            return;
+                        }
+                        else if (TestInstance.Attributes.HasFlag(InstanceTags.ParentCanBeNull))
+                        {
+                            Add_PerformAdd(Obj, TestInstanceParent);
+                            return;
+                        }
+                        else
+                        {
 
-                                ErrorManager.ThrowError("DataModel", "CannotAddThatInstanceAsChildException", $"{ObjType.Name} cannot be a child of {ParentType.Name}!");
-                                return;
-                            }
-                        //}
-
-
+                            ErrorManager.ThrowError("DataModel", "CannotAddThatInstanceAsChildException", $"{ObjType.Name} cannot be a child of {ParentType.Name}!");
+                            return;
+                        }
                     }
                 }
             }

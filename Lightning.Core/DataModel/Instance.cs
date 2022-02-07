@@ -9,52 +9,32 @@ namespace Lightning.Core.API
     /// <summary>
     /// Lightning DataModel
     /// 
-    /// DataModel/Instance Ver0.23.0
+    /// DataModel/Instance Ver2.0.0
     /// 
     /// Provides the root for all objects provided in Lightning.
     /// 
-    /// 2020-03-04  Created
-    /// 2020-03-06  Refactored: renamed InstanceTag to attributes, made ClassName virtual and read-only.
-    /// 2020-03-09  Added InstanceInfo. Possibly merge InstanceTag and InstanceInfo?
-    /// 2020-03-11  Made InstanceTag an enum - InstanceTags
-    /// 2020-03-12  Made InstanceInfo 
-    /// 2020-03-18  DataModel.State only contains first-level instances; Instances store parent and child
-    /// 2020-03-23  (need to move this comment block to DataModel.cs): worked on Standard Instance Library
-    /// 2020-03-26  Added the ability to set an instance's parent at instantiation time. 
-    /// 2020-04-02  Error handling, implemented InstanceCollection.Add(); 
-    /// 2020-04-05  Actually implemented InstanceCollection.Add(); and InstanceCollection.Clear(); - DataModel class itself now stores GlobalSettings.
-    /// 2020-04-06  Added Workspace; made parent/child addition actually work...
-    /// 2020-04-08  Modified Instance.AddChild(); to make it non-redundant
+    /// 2021-03-04  Created
+    /// 2021-03-06  Refactored: renamed InstanceTag to attributes, made ClassName virtual and read-only.
+    /// 2021-03-09  Added InstanceInfo. Possibly merge InstanceTag and InstanceInfo?
+    /// 2021-03-11  Made InstanceTag an enum - InstanceTags
+    /// 2021-03-12  Made InstanceInfo 
+    /// 2021-03-18  DataModel.State only contains first-level instances; Instances store parent and child
+    /// 2021-03-23  (need to move this comment block to DataModel.cs): worked on Standard Instance Library
+    /// 2021-03-26  Added the ability to set an instance's parent at instantiation time. 
+    /// 2021-04-02  Error handling, implemented InstanceCollection.Add(); 
+    /// 2021-04-05  Actually implemented InstanceCollection.Add(); and InstanceCollection.Clear(); - DataModel class itself now stores GlobalSettings.
+    /// 2021-04-06  Added Workspace; made parent/child addition actually work...
+    /// 2021-04-08  Modified Instance.AddChild(); to make it non-redundant
     /// (continues...)
     /// </summary>
     /// 
     public abstract class Instance
     {
-        /// <summary>
-        /// Backing field for <see cref="Parent"/>
-        /// </summary>
-        private Instance _parent { get; set; }
 
         /// <summary>
-        /// The parent of this instance.
+        /// The logical parent of this instance.
         /// </summary>
-        internal Instance Parent { get
-            {
-
-                // we used to do a lot more in this code block,
-                // but code overhauls have occurred that means they're now done somehwere else.
-                return _parent; 
-                 
-            }
-
-            set
-            {
-
-                _parent = value; 
-
-            }
-
-        }
+        internal Instance Parent { get; set; }
 
         /// <summary>
         /// The children of this instance.

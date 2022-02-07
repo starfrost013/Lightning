@@ -236,31 +236,6 @@ namespace Lightning.Core.API
             }
         }
 
-#if WINDOWS
-        /// <summary>
-        /// [WIN32-ONLY] Gets a Native Point.
-        /// </summary>
-        /// <returns></returns>
-        public static Vector2 FromNativePoint(Win32Point PointW32, bool AddToDataModel = true, Instance Parent = null)
-        {
-            // December 9, 2021 (NuRender integration)
-            Vector2Internal V2I = Vector2Internal.FromNativePoint(PointW32);
-
-            if (!AddToDataModel)
-            {
-                return new Vector2(V2I.X, V2I.Y);
-            }
-            else
-            {
-                Vector2 NV2 = (Vector2)DataModel.CreateInstance("Vector2", Parent); // create a new Color3 and add it to the datamodel
-                NV2.X = V2I.X;
-                NV2.Y = V2I.Y;
-
-                return NV2;
-            }
-        }
-#endif
-
         #region Math operations
         public static double GetDotProduct(Vector2 A, Vector2 B) => ((A.X * B.X) + (B.Y * B.Y));
 

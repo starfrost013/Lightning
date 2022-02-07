@@ -117,24 +117,6 @@ namespace Lightning.Core.API
                         {
                             continue;
                         }
-                    case "Deprecated":
-                        bool Deprecated = (bool)PropInfo.GetValue(TestObject);
-
-                        if (Deprecated)
-                        {
-                            Logging.Log($"{Typ.Name} is deprecated. It may be removed at any time in the future. Using this in new projects is not recommended.", "DataModel", MessageSeverity.Warning);
-                        }
-
-                        return true;
-                    case "Experimental":
-                        bool Experimental = (bool)PropInfo.GetValue(TestObject);
-
-                        if (Experimental)
-                        {
-                            Logging.Log($"{Typ.Name} is experimental. It may be removed at any time in the future. Using this in projects you intend to release is not recommended.", "DataModel", MessageSeverity.Warning);
-                        }
-
-                        return true;
 
                 }
             }

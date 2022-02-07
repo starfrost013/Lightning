@@ -17,11 +17,6 @@ namespace NuCore.NativeInterop.Win32
 {
     public static class NativeMethodsWin32
     {
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool AllocConsole(); // allocconsole probably works better
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr GetConsoleWindow();
 
         /// <summary>
         /// Polaris: Create a process using win32
@@ -49,14 +44,6 @@ namespace NuCore.NativeInterop.Win32
         ref StartupInfoEx lpStartupInfo,
         out ProcessInformation lpProcessInformation);
 
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool EnumDisplayDevicesW(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool EnumDisplaySettingsW(string lpszDeviceName, uint iModeNum, ref DEVMODE lpDevMode);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern int MessageBoxA(IntPtr Hwnd,

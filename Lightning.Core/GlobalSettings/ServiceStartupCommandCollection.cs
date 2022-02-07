@@ -38,15 +38,9 @@ namespace Lightning.Core
         /// <param name="Obj"></param>
         public void Add(object Obj)
         {
-            if (Obj == null)
-            {
-                ErrorManager.ThrowError("GlobalSettings Loader", "InternalSerialisationErrorException", "Attempted to serialise a null object.");
-            }
+            if (Obj == null) ErrorManager.ThrowError("GlobalSettings Loader", "InternalSerialisationErrorException", "Attempted to serialise a null object.");
 
-            Type ObjType = Obj.GetType();
-            Type SSCType = typeof(ServiceStartupCommand);
-
-            if (ObjType == SSCType) 
+            if (Obj.GetType() == typeof(ServiceStartupCommand)) 
             {
                 Add_PerformAdd(Obj);
             }
@@ -89,10 +83,6 @@ namespace Lightning.Core
             get
             {
                 return Commands[Position];
-            }
-            set
-            {
-                throw new InvalidOperationException(); // you can't do this
             }
         }
 
