@@ -89,12 +89,15 @@
     <None Remove="Content\Tests\Empty - Copy.xml" />
     <None Remove="Content\Tests\Empty.xml" />
     <None Remove="Content\Tests\Fall.xml" />
+    <None Remove="Content\Tests\Performance\10000primitives.xml" />
     <None Remove="Content\Tests\Performance\1000primitives.xml" />
     <None Remove="Content\Tests\Performance\100primitives.xml" />
     <None Remove="Content\Tests\Performance\2000primitives.xml" />
     <None Remove="Content\Tests\Performance\200primitives.xml" />
     <None Remove="Content\Tests\Performance\500primitives.xml" />
     <None Remove="Content\Tests\Performance\50primitives.xml" />
+    <None Remove="Content\Tests\Performance\XmlPerf\XPerf50NestedObjects.xml" />
+    <None Remove="Content\Tests\Performance\XmlPerf\XPerfALotOfObjects.xml" />
     <None Remove="Content\Tests\WritingTest.xml" />
     <None Remove="Content\test_texture.png" />
     <None Remove="Content\test_texture_2.png" />
@@ -173,6 +176,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tests\Fall.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tests\Performance\10000primitives.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tests\Performance\XmlPerf\XPerfALotOfObjects.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tests\Performance\XmlPerf\XPerf50NestedObjects.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\test_texture_small.png">

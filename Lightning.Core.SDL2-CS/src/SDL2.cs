@@ -4021,7 +4021,7 @@ namespace NuRender.SDL2
 			{
 				x = NX;
 				y = NY;
-				w = NH;
+				w = NW;
 				h = NH;
 			}
 		}

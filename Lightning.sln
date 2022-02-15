@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lightning", "Lightning\Lightning.csproj", "{70F68B4D-C4B5-4D6C-84BB-2D4CAAC8049A}"
 EndProject
@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polaris", "Polaris\Polaris.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polaris.UI", "Polaris.UI\Polaris.UI.csproj", "{1415B2C2-7238-497B-B7E6-E00B96056D87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lightning.Tools.AutomatedTestingManager", "Lightning.Tools.AutomatedTestingManager\Lightning.Tools.AutomatedTestingManager.csproj", "{587C8652-C1C0-427B-910F-175DC5F934AF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NuRender", "NuRender\NuRender.csproj", "{0B4D058C-EB3C-41ED-A1F2-94EFBC1953A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NuCore.Test", "NuCore.Test\NuCore.Test.csproj", "{DA6F56FB-B992-4CB6-873C-0A23DA897329}"
@@ -31,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lightning.Core.Packaging", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lightning.Tools.LWPakTest", "Lightning.Tools.LWPakTEST\Lightning.Tools.LWPakTest.csproj", "{4C9CBD5E-0C96-4E0F-9B2D-F644A27E4FEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lightning.Pong", "Lightning.Pong\Lightning.Pong.csproj", "{3977D0EB-CFCF-48F6-A69F-EAD6DF99F844}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lightning.Pong", "Lightning.Pong\Lightning.Pong.csproj", "{3977D0EB-CFCF-48F6-A69F-EAD6DF99F844}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,22 +171,6 @@ Global
 		{1415B2C2-7238-497B-B7E6-E00B96056D87}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1415B2C2-7238-497B-B7E6-E00B96056D87}.Release|x64.ActiveCfg = Release|Any CPU
 		{1415B2C2-7238-497B-B7E6-E00B96056D87}.Release|x64.Build.0 = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug.Win64|Any CPU.ActiveCfg = Debug.Win64|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug.Win64|Any CPU.Build.0 = Debug.Win64|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug.Win64|x64.ActiveCfg = Debug|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug.Win64|x64.Build.0 = Debug|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Debug|x64.Build.0 = Debug|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release.Win64|Any CPU.ActiveCfg = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release.Win64|Any CPU.Build.0 = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release.Win64|x64.ActiveCfg = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release.Win64|x64.Build.0 = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release|x64.ActiveCfg = Release|Any CPU
-		{587C8652-C1C0-427B-910F-175DC5F934AF}.Release|x64.Build.0 = Release|Any CPU
 		{0B4D058C-EB3C-41ED-A1F2-94EFBC1953A7}.Debug.Win64|Any CPU.ActiveCfg = Debug.Win64|Any CPU
 		{0B4D058C-EB3C-41ED-A1F2-94EFBC1953A7}.Debug.Win64|Any CPU.Build.0 = Debug.Win64|Any CPU
 		{0B4D058C-EB3C-41ED-A1F2-94EFBC1953A7}.Debug.Win64|x64.ActiveCfg = Debug.Win64|Any CPU

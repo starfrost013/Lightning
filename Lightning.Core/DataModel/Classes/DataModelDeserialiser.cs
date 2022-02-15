@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq; 
 using System.Reflection; 
-using System.Text;
 using System.Xml;
 using System.Xml.Linq; 
 using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace Lightning.Core.API
 {
@@ -43,14 +42,25 @@ namespace Lightning.Core.API
         {
             try
             {
+#if DEBUG
+                Stopwatch SW = new Stopwatch();
+                SW.Start();
+#endif
                 LightningXMLSchema LXMLS = new LightningXMLSchema();
 
                 GlobalSettings GS = DataModel.GetGlobalSettings();
 
                 LXMLS.XSI.SchemaPath = GS.LightningXsdPath;
-                LXMLS.XSI.XmlPath = Path; 
+                LXMLS.XSI.XmlPath = Path;
 
-                return DDMS_DoDeserialise(LXMLS, Path);
+                DataModel NewDM = DDMS_DoDeserialise(LXMLS, Path);
+
+#if DEBUG
+                Logging.Log($"DDMS Load Time: {SW.ElapsedMilliseconds}ms!");
+                SW.Stop();
+#endif
+                return NewDM;
+                
             }
             catch (DirectoryNotFoundException err)
             {
